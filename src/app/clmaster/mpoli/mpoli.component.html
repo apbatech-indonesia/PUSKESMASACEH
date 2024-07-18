@@ -1,0 +1,223 @@
+
+
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+       Master Poliklinik
+      </div>
+      <div class="card-body">
+        <form [formGroup]="poliform">
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Nama Poli</label>
+            <input  formControlName="nampoli" [(ngModel)]="nampoli"   placeholder="Poliklinik" type="text" class="form-control">
+          </div>
+       
+        
+          <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label">JENIS POLI</label>
+            <select formControlName="hakakses" [(ngModel)]="hakakses"   placeholder="Pilih Jenis Poli" class="form-select">
+              <option value="">--PILIH--</option>
+              <option value="ri">RJ</option>
+              <option value="lab">LABORAT</option>
+              <option value="rad">RADIOLOGI</option>
+              <option value="igd">IGD</option>
+        
+            </select>
+          </div>
+        </form>
+         
+        <div class="position-relative mb-3">
+          <label for="exampleSelect" class="form-label">MAPING POLI BPJS</label>
+          <select [(ngModel)]="polibpjs"   placeholder="Pilih Jenis Poli" class="form-select">
+            <option value="">--PILIH--</option>
+            <option  *ngFor="let x of tpolibpjs" value="{{x.kdPoli}}">{{x.nmPoli}} - Poli Sakit :{{x.poliSakit}}  </option>
+          
+          </select>
+        </div>
+       
+            <div class="row">
+              <div class="col-md-5">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-info"   [disabled]="!poliform.valid" *ngIf="!showedit"  (click)="simpan()">Simpan
+                </button>
+              </div>
+              </div>
+              <div class="col-md-5">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-focus"  [disabled]="!poliform.valid"  *ngIf="showedit"  (click)="edituser()">Edit
+                </button>
+              </div>
+              </div>
+              <div class="col-md-2">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-danger" (click)="batal()">Batal
+                </button>
+              </div>
+              </div>
+          </div>
+         
+         
+        <!-- </form> -->
+       
+
+       
+
+      </div>
+      <!-- <button type="button" class="btn btn-info btn-lg"  routerLink="/dashboards/management">SIMPAN</button> -->
+   
+      
+    </div>
+ 
+   
+  </div>
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+        Data Poli
+      </div>
+      <div class="p-2">
+        <div class="row">
+          <label for="staticEmail" class="col-auto col-form-label">Cari Nama:</label>
+          <div class="col-auto">
+            <input type="text" class="form-control ms-2" [(ngModel)]="cariuser" (keyup)="cariuserx($event)" >
+           
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="example-container">
+          
+
+          <div class="main-card mb-3 card">
+            
+            <div class="table-responsive">
+              <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th>Poliklinik</th>
+                  
+                  
+                    <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let a of poliklinik">
+                    <td class="text-center text-muted">#</td>
+                    <td>
+                      <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                         
+                          <div class="widget-content-left flex2">
+                            <div class="widget-heading">{{a.nampoli}}</div>
+                            <!-- <div class="widget-subheading opacity-7">{{a.cabang}}</div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  
+                    
+                    <td class="text-center">
+                      <button class="mb-2 me-2 btn-pill btn btn-outline-primary" (click)="edit(a.kdpoli,a.nampoli,a.sts,a.kdpolibpjs)">Edit
+                      </button>
+                      <button class="mb-2 me-2 btn-pill btn btn-outline-danger" (click)="delete(a.kdpoli,a.nampoli)">Delete
+                      </button>
+
+                   
+
+                      <button class="mb-2 me-2 btn-pill btn btn-outline-primary" (click)="maping(content,a.kdpoli,a.nampoli,a.sts,a.idsatusehat,a.kodepos,a.hp,
+                      a.email,a.diskripsipoli,a.longtitude,a.latitude)">Maping Satusehat
+                      </button>
+
+                      
+                    </td>
+                  </tr>
+               
+                </tbody>
+              </table>
+            </div>
+           
+          </div>
+
+
+        </div>
+      </div>
+    
+    </div>
+  
+    
+  </div>
+
+  
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h6 class="modal-title">Maping Lokasi Poli Satu Sehat</h6>
+    <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">ID SATU SEHAT</label>
+      <input   [(ngModel)]="idsatusehat"  disabled placeholder="ID SATU SEHAT" type="text" class="form-control">
+    </div>
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">Kode organisasi</label>
+      <input   [(ngModel)]="kodeorg"   placeholder="Poliklinik" type="text" class="form-control">
+    </div>
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">Kode Poli</label>
+      <input   [(ngModel)]="kodepoli"   placeholder="Poliklinik" type="text" class="form-control">
+    </div>
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">nama</label>
+      <input  [(ngModel)]="nampoli"   placeholder="Poliklinik" type="text" class="form-control">
+    </div>
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">Diskripsi Lokasi Poli</label>
+      <input  [(ngModel)]="diskripsipoli"   placeholder="Poliklinik" type="text" class="form-control">
+    </div>
+
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">Hp</label>
+      <input  [(ngModel)]="hp"   placeholder="Poliklinik" type="text" class="form-control">
+    </div>
+
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">Email</label>
+      <input  [(ngModel)]="email"   placeholder="Poliklinik" type="text" class="form-control">
+    </div>
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">Kode POS</label>
+      <input  [(ngModel)]="kodepos"   placeholder="Poliklinik" type="text" class="form-control">
+    </div>
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">Lokasi Longtitude</label>
+      <input  [(ngModel)]="longtitude"   placeholder="Poliklinik" type="number" class="form-control">
+    </div>
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">Lokasi Latitude</label>
+      <input  [(ngModel)]="latitude"   placeholder="Poliklinik" type="number" class="form-control">
+    </div>
+
+
+    
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="simpanlokasi()">Simpan</button>
+  </div>
+</ng-template>

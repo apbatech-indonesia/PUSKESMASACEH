@@ -1,0 +1,266 @@
+<!-- 
+<div class="app-page-title">
+  <div class="page-title-wrapper">
+    <div class="page-title-heading">
+      <div class="page-title-icon">
+        <i class="icon {{icon}}"></i>
+      </div>
+      <div>
+        {{heading}}
+        <div class="page-title-subheading">
+          {{subheading}}
+        </div>
+      </div>
+    </div>
+    <div class="page-title-actions">
+  
+    </div>
+  </div>
+</div> -->
+
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+       Master Dokter
+      </div>
+      <div class="card-body">
+        <form [formGroup]="dokterform">
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">NIK</label>
+            <input formControlName="nik"  [(ngModel)]="nik"   placeholder="NIK" type="number" class="form-control">
+          </div>
+
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Nama Dokter</label>
+            <input formControlName="namadokter"  [(ngModel)]="namadokter"   placeholder="Nama Dokter" type="text" class="form-control">
+          </div>
+      
+          <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label">Online</label>
+            <select  formControlName="online"  [(ngModel)]="online" id="exampleSelect" class="form-select">
+              <option value="" >-PILIH-</option>
+              <option value="Ya" >Ya</option>
+              <option value="Tidak" >Tidak</option>
+            </select>
+          </div>
+
+          <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label">Status</label>
+            <select  formControlName="aktif"  [(ngModel)]="aktif" id="exampleSelect" class="form-select">
+              <option value="" >-PILIH-</option>
+              <option value="0" >Aktif</option>
+              <option value="1" >Non Aktif</option>
+              
+            </select>
+          </div>
+       
+          <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label">Status Nama</label>
+            <select  formControlName="sn"  [(ngModel)]="sn" id="exampleSelect" class="form-select">
+              <option value="" >-PILIH-</option>
+              <option value="Dokter" >Dokter</option>
+              <option value="Perawat" >Perawat</option>
+              
+            </select>
+          </div>
+
+      
+
+          
+        </form>
+        <div class="position-relative mb-3">
+          <label for="exampleSelect" class="form-label">Dokter BPJS</label>
+          <select  [(ngModel)]="kddokterbpjs" id="exampleSelect" class="form-select">
+            <option value="" >-Tidak ada -</option>
+            <option *ngFor="let x of tdokterbpjs" value="{{x.kdDokter}}">{{x.nmDokter}}</option>
+            
+          </select>
+        </div>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-info"  *ngIf="!showedit" [disabled]="!dokterform.valid"   (click)="!showedit ? simpan() : edi">Simpan
+                </button>
+            
+              </div>
+              </div>
+              <div class="col-md-5">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-focus"  *ngIf="showedit"  [disabled]="!dokterform.valid"   (click)="edituser()">Edit
+                </button>
+              </div>
+              <!-- <div class="col-md-5">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-info"  *ngIf="!showedit" [disabled]="!dokterform.valid"   (click)="simpan()">Simpan
+                </button>
+            
+              </div>
+              </div>
+              <div class="col-md-5">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-focus"  *ngIf="!showedit"  [disabled]="!dokterform.valid"   (click)="edituser()">Edit
+                </button>
+              </div> -->
+              </div>
+              <div class="col-md-2">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-danger" (click)="batal()">Batal
+                </button>
+              </div>
+              </div>
+          </div>
+         
+         
+        <!-- </form> -->
+       
+
+       
+
+      </div>
+      <!-- <button type="button" class="btn btn-info btn-lg"  routerLink="/dashboards/management">SIMPAN</button> -->
+   
+      
+    </div>
+ 
+   
+  </div>
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+        Data Dokter
+      </div>
+      <div class="p-2">
+        <div class="row">
+          <label for="staticEmail" class="col-auto col-form-label">Cari Nama:</label>
+          <div class="col-auto">
+            <input type="text" class="form-control ms-2" [(ngModel)]="cariuser" (keyup)="cariuserx($event)" >
+           
+          </div>
+        </div>
+      </div>
+
+  
+
+      <div class="card-body">
+        <div class="example-container">
+          
+
+          <div class="main-card mb-3 card">
+            
+            <div class="table-responsive">
+              <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                <thead>
+                  <tr>
+                 
+                    <th>Dokter</th>
+                    <th>Online</th>
+                    <th>Status</th>
+                    <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+               
+
+
+                
+
+                 <tbody>
+
+                  <tr *ngFor="let a of tdokter">
+         
+                    <td style="font-size: 12px;color:black">
+                      {{a.namdokter}}
+                     
+                    </td>
+                    <td >
+                      {{a.statusonline}}
+                    </td>
+                    <td >
+                    
+
+                      <p *ngIf="a.aktif === '0'">Aktif</p>
+                      <p *ngIf="a.aktif === '1'">Non Aktif</p>
+                    </td>
+                    <td class="text-center">
+                      <div class="badge bg-pill bg-info"   (click)="setting(content,a.kddokter,a.namdokter)">Maping</div>
+                      <div class="badge bg-pill bg-danger" (click)="edit(a.kddokter,a.namdokter,a.statusonline,a.aktif,a.kddokterbpjs)">P</div>
+                      <div class="badge bg-pill bg-warning" [routerLink]="['/master/mdokterprofil',a.kddokter,a.namdokter]">Profil</div>
+                      <div class="badge bg-pill bg-info"   (click)="maping(contentid,a.nik,a.kddokter)">SATU SEHAT</div>
+                    </td>
+                  </tr>
+
+
+                 
+                </tbody>
+              </table>
+            </div>
+           
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  
+  
+   
+
+  </div>
+
+  
+
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h6 class="modal-title">Tambah Dokter <b>{{dokter}}</b> di Poli</h6>
+      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+  
+
+<p *ngFor="let x of tdokterperpoli" style="font-size: 11px;color:black;" >{{x.nampoli}} |
+   <span style="color:red;font-weight:bold" (click)="delete(x.kddokter,x.kdpoli)"> X</span>
+  
+  
+  </p>
+
+   
+
+
+<hr>
+<span>Tambah Poli</span>
+     <ng-select [items]="poliklinik" bindLabel="nampoli"  bindValue="kdpoli" placeholder="Select city" [(ngModel)]="selectedCity" >
+    </ng-select>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+      <button type="button" class="btn btn-primary" (click)="simpanc()">Simpan</button>
+    </div>
+  </ng-template>
+
+  <ng-template #contentid let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h6 class="modal-title">MAPING NIK ID DOKTER</h6>
+      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+      <button class="mb-2 me-2 btn-pill btn btn-outline-danger" (click)="pilihdokter()" >{{kodeihs}}
+      </button>
+    
+    </div>
+
+  </ng-template>
+
+
+
+
+
+</div>
+
+
+

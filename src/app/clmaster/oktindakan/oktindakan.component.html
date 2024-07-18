@@ -1,0 +1,205 @@
+<!-- 
+<div class="app-page-title">
+  <div class="page-title-wrapper">
+    <div class="page-title-heading">
+      <div class="page-title-icon">
+        <i class="icon {{icon}}"></i>
+      </div>
+      <div>
+        {{heading}}
+        <div class="page-title-subheading">
+          {{subheading}}
+        </div>
+      </div>
+    </div>
+    <div class="page-title-actions">
+  
+    </div>
+  </div>
+</div> -->
+
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+       Master Tindakan
+      </div>
+      <div class="card-body">
+        <form [formGroup]="dokterform">
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Nama Tindakan</label>
+            <input formControlName="namadokter"  [(ngModel)]="namadokter"   placeholder="Nama Dokter" type="text" class="form-control">
+          </div>
+      
+          <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label">Jenis Tindakan</label>
+            <select  formControlName="online"  [(ngModel)]="online" id="exampleSelect" class="form-select">
+              <option value="" >-PILIH-</option>
+              <option value="OK" >OK</option>
+              <option value="VK" >VK</option>
+              
+            </select>
+          </div>
+
+      
+        </form>
+       
+            <div class="row">
+              <div class="col-md-5">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-info"  *ngIf="!showedit" [disabled]="!dokterform.valid"   (click)="simpan()">Simpan
+                </button>
+            
+              </div>
+              </div>
+              <div class="col-md-5">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-focus"  *ngIf="showedit"  [disabled]="!dokterform.valid"   (click)="edituser()">Edit
+                </button>
+              </div>
+              </div>
+              <div class="col-md-2">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-danger" (click)="batal()">Batal
+                </button>
+              </div>
+              </div>
+          </div>
+         
+         
+        <!-- </form> -->
+       
+
+       
+
+      </div>
+      <!-- <button type="button" class="btn btn-info btn-lg"  routerLink="/dashboards/management">SIMPAN</button> -->
+   
+      
+    </div>
+ 
+   
+  </div>
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+        Data Tindakan
+      </div>
+      <div class="p-2">
+        <div class="row">
+          <label for="staticEmail" class="col-auto col-form-label">Cari Tindakan:</label>
+          <div class="col-auto">
+            <input type="text" class="form-control ms-2" [(ngModel)]="cariuser" (keyup)="cariuserx($event)" >
+           
+          </div>
+        </div>
+      </div>
+
+  
+
+      <div class="card-body">
+        <div class="example-container">
+          
+
+          <div class="main-card mb-3 card">
+            
+            <div class="table-responsive">
+              <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                <thead>
+                  <tr>
+                 
+                    <th>Tindakan</th>
+                   
+                    <th>Status</th>
+                    <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+               
+
+
+                
+
+                 <tbody>
+
+                  <tr *ngFor="let a of tdokter">
+         
+                    <td style="font-size: 12px;color:black">
+                      {{a.nama}}
+                     
+                    </td>
+                  
+                    <td >
+                    
+                      {{a.jenis}}
+                   
+                    </td>
+                    <td class="text-center">
+                      <div class="badge bg-pill bg-warning" 
+                       (click)="pilihtindakan(a.kdtindakan,a.nama,a.jenis)">E</div>
+                     
+                        
+                        <div class="badge bg-pill bg-danger"     (click)="delete(a.kdtindakan,a.nama,a.jenis)">X</div>
+                       
+             
+
+                    </td>
+                  </tr>
+
+
+                 
+                </tbody>
+              </table>
+            </div>
+           
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  
+  
+   
+
+  </div>
+
+  
+
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h6 class="modal-title">Tambah Dokter <b>{{dokter}}</b> di Poli</h6>
+      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+  
+
+<p *ngFor="let x of tdokterperpoli" style="font-size: 11px;color:black;" >{{x.nampoli}} |
+   <span style="color:red;font-weight:bold" (click)="delete(x.kddokter,x.kdpoli)"> X</span>
+  
+  
+  </p>
+
+   
+
+
+<hr>
+<span>Tambah Poli</span>
+     <ng-select [items]="poliklinik" bindLabel="nampoli"  bindValue="kdpoli" placeholder="Select city" [(ngModel)]="selectedCity" >
+    </ng-select>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+      <button type="button" class="btn btn-primary" (click)="simpanc()">Simpan</button>
+    </div>
+  </ng-template>
+
+
+</div>
+
+
+

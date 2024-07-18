@@ -1,0 +1,55 @@
+<div class="table-responsive" style="font-size: 12px;">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+         
+          <th scope="col">noKunjungan</th>
+          <th scope="col" >nmProvider </th>
+         
+          <th scope="col" >tglKunjungan</th>
+          <th scope="col" >keluhan</th>
+          <th scope="col" >diagnosa1</th>
+          <th scope="col" >statusPulang</th>
+         
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let  x of tdata">
+       
+          <td style="font-size: 12px;color: black;">
+          {{x.noKunjungan}}
+
+          </td>
+         
+          <td  style="font-size: 12px;color: black;">
+           {{x.providerPelayanan.nmProvider}}
+          
+          </td>
+          <td  style="font-size: 12px;color: black;">
+            {{x.tglKunjungan}}
+          
+     
+          </td>
+          <td  style="font-size: 12px;color: black;">
+        
+            {{x.keluhan}}
+          </td>
+          <td  style="font-size: 12px;color: black;">
+            {{x.diagnosa1.nmDiag}}
+          </td>
+          <td  style="font-size: 12px;color: black;">
+            {{x.statusPulang.nmStatusPulang}}
+          
+          </td>
+         
+        </tr>
+
+
+        
+      
+        
+      </tbody>
+    </table>
+  </div>   
+        
+      

@@ -1,0 +1,561 @@
+<ng-template #modalCreate let-c="close" let-d="dismiss">
+  <div class="modal-header bg-info-cust text-white">Tambah Laporan Kunjungan Bumil</div>
+  <div class="modal-body">
+
+    <div class="form-bumilForm">
+      <div class="mb-3">
+        <form [formGroup]="bumilForm" novalidate autocomplete="false">
+          <label for="tanggal_kunjungan" class="form-label">
+            Tanggal Kunjungan
+            <span class="text-danger">*</span>
+          </label>
+          <input type="date" [(ngModel)]="bumil.tanggal_kunjungan" formControlName="tanggal_kunjungan"
+            name="tanggal_kunjungan" class="form-control">
+          <div *ngIf="bumilForm.get('tanggal_kunjungan').invalid && bumilForm.get('tanggal_kunjungan').touched">
+            <div *ngIf="bumilForm.get('tanggal_kunjungan').hasError('required')" class="text-danger">
+              Input is required.
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="mb-3">
+        <form [formGroup]="bumilForm">
+          <label for="dokter" class="col-form-label">
+            Dokter{{bumil.dokter}}
+            <span class="text-danger">*</span>
+          </label>
+          <ng-select #selDok [items]="dokterList" bindLabel="namdokter" bindValue="namdokter" [(ngModel)]="bumil.dokter"
+            formControlName="dokter" name="dokter" class="ngsl-placeholder" placeholder="Cari dokter">
+          </ng-select>
+          <div *ngIf="bumilForm.get('dokter').invalid && bumilForm.get('dokter').touched">
+            <div *ngIf="bumilForm.get('dokter').hasError('required')" class="text-danger">
+              Input is required.
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="mb-3">
+        <form [formGroup]="bumilForm">
+          <label for="no_rm" class="col-form-label">
+            Pasien
+            <span class="text-danger">*</span>
+          </label>
+          <ng-select #selPasienCreate [items]="pasienList" bindLabel="pasien_label" bindValue="pasien_norm" (keyup)="caripasien($event)"
+            [(ngModel)]="bumil.no_rm" formControlName="no_rm" name="no_rm" class="ngsl-placeholder"
+            placeholder="Cari Pasien">
+          </ng-select>
+          <div *ngIf="bumilForm.get('dokter').invalid && bumilForm.get('dokter').touched">
+            <div *ngIf="bumilForm.get('dokter').hasError('required')" class="text-danger">
+              Input is required.
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- <div class="mb-3">
+        <label for="nama" class="form-label">
+          Nama
+        </label>
+        <input type="text" [(ngModel)]="bumil.nama" name="nama" class="form-control">
+      </div> -->
+      <!-- <div class="mb-3">
+        <label for="umur" class="form-label">
+          Umur
+        </label>
+        <input type="text" [(ngModel)]="bumil.umur" name="umur" class="form-control">
+      </div> -->
+      <!-- <div class="mb-3">
+        <label for="alamat" class="col-form-label">
+          Alamat
+        </label>
+        <textarea [(ngModel)]="bumil.alamat" name="alamat" class="form-control" rows="3" maxlength="300"></textarea>
+      </div> -->
+      <div class="mb-3">
+        <label for="g" class="form-label">
+          Gravida
+        </label>
+        <input type="number" [(ngModel)]="bumil.g" name="g" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="p" class="form-label">
+          Partus
+        </label>
+        <input type="number" [(ngModel)]="bumil.p" name="p" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="a" class="form-label">
+          Abortus
+        </label>
+        <input type="number" [(ngModel)]="bumil.a" name="a" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="bb" class="form-label">
+          Berat Badan
+        </label>
+        <input type="number" [(ngModel)]="bumil.bb" name="bb" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="tb" class="form-label">
+          Tinggi Badan
+        </label>
+        <input type="number" [(ngModel)]="bumil.tb" name="tb" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="lila" class="form-label">
+          Lila
+        </label>
+        <input type="number" [(ngModel)]="bumil.lila" name="lila" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="td" class="form-label">
+          Tekanan darah
+        </label>
+        <input type="number" [(ngModel)]="bumil.td" name="td" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="hb" class="form-label">
+          HB
+        </label>
+        <input type="number" [(ngModel)]="bumil.hb" name="hb" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="jarak_persalinan" class="form-label">
+          Jarak Persalinan
+        </label>
+        <input type="number" [(ngModel)]="bumil.jarak_persalinan" name="jarak_persalinan" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="imunisasi" class="form-label">
+          Imunisasi
+        </label>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" [(ngModel)]="bumil.imunisasi" name="tt1" value="TT I">
+          <label class="form-check-label" for="tt1">
+            TT I
+          </label>
+        </div>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" [(ngModel)]="bumil.imunisasi" name="tt2" value="TT II">
+          <label class="form-check-label" for="tt2">
+            TT II
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="fe" class="form-label">
+          FE
+        </label>
+        <input type="number" [(ngModel)]="bumil.fe" name="fe" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="umur_kehamilan" class="form-label">
+          Umur kehamilan
+        </label>
+        <input type="number" [(ngModel)]="bumil.umur_kehamilan" name="umur_kehamilan" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="keterangan" class="col-form-label">
+          Keterangan
+        </label>
+        <textarea [(ngModel)]="bumil.keterangan" id="keterangan" class="form-control" rows="3"
+          maxlength="300"></textarea>
+      </div>
+    </div>
+    <!-- end form -->
+
+  </div>
+  <div class="modal-footer">
+    <div class="pull-right">
+      <button type="button" (click)="modalService.dismissAll();" class="btn btn-danger min-width-100">Batal</button>
+      <button type="button" (click)="store()" [disabled]="bumilForm.invalid"
+        class="btn btn-warning min-width-100 btn-disab ml1">Simpan</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalEdit let-c="close" let-d="dismiss">
+  <div class="modal-header bg-info-cust text-white">Ubah Laporan Kunjungan Bumil</div>
+  <div class="modal-body">
+
+    <div class="form-bumilForm">
+      <div class="mb-3">
+        <form [formGroup]="bumilForm" novalidate autocomplete="false">
+          <label for="tanggal_kunjungan" class="form-label">
+            Tanggal Kunjungan
+            <span class="text-danger">*</span>
+          </label>
+          <input type="date" [(ngModel)]="bumil.tanggal_kunjungan" formControlName="tanggal_kunjungan"
+            name="tanggal_kunjungan" class="form-control">
+          <div *ngIf="bumilForm.get('tanggal_kunjungan').invalid && bumilForm.get('tanggal_kunjungan').touched">
+            <div *ngIf="bumilForm.get('tanggal_kunjungan').hasError('required')" class="text-danger">
+              Input is required.
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="mb-3">
+        <form [formGroup]="bumilForm">
+          <label for="dokter" class="col-form-label">
+            Dokter
+            <span class="text-danger">*</span>
+          </label>
+          <ng-select #selDok [items]="dokterList" bindLabel="namdokter" bindValue="namdokter" [(ngModel)]="bumil.dokter"
+            formControlName="dokter" name="dokter" class="ngsl-placeholder" placeholder="Cari dokter">
+          </ng-select>
+          <div *ngIf="bumilForm.get('dokter').invalid && bumilForm.get('dokter').touched">
+            <div *ngIf="bumilForm.get('dokter').hasError('required')" class="text-danger">
+              Input is required.
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="mb-3">
+        <label for="no_rm" class="col-form-label">
+          Pasien
+          <span class="text-danger">*</span>
+        </label>
+        <form [formGroup]="bumilForm">
+          <input type="text" [(ngModel)]="bumil.nama" formControlName="no_rm" name="nama" class="form-control" disabled>
+        </form>
+        <!-- <form [formGroup]="bumilForm">
+          <ng-select #selPasien [items]="pasienList" bindLabel="pasien_label" bindValue="pasien_norm"
+            [(ngModel)]="bumil.no_rm" formControlName="no_rm" name="no_rm" class="ngsl-placeholder"
+            placeholder="Cari Pasien" disabled>
+          </ng-select>
+          <div *ngIf="bumilForm.get('dokter').invalid && bumilForm.get('dokter').touched">
+            <div *ngIf="bumilForm.get('dokter').hasError('required')" class="text-danger">
+              Input is required.
+            </div>
+          </div>
+        </form> -->
+      </div>
+      <!-- <div class="mb-3">
+        <label for="nama" class="form-label">
+          Nama
+        </label>
+        <input type="text" [(ngModel)]="bumil.nama" name="nama" class="form-control">
+      </div> -->
+      <!-- <div class="mb-3">
+        <label for="umur" class="form-label">
+          Umur
+        </label>
+        <input type="text" [(ngModel)]="bumil.umur" name="umur" class="form-control">
+      </div> -->
+      <!-- <div class="mb-3">
+        <label for="alamat" class="col-form-label">
+          Alamat
+        </label>
+        <textarea [(ngModel)]="bumil.alamat" name="alamat" class="form-control" rows="3" maxlength="300"></textarea>
+      </div> -->
+      <div class="mb-3">
+        <label for="g" class="form-label">
+          Gravida
+        </label>
+        <input type="number" [(ngModel)]="bumil.g" name="g" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="p" class="form-label">
+          Partus
+        </label>
+        <input type="number" [(ngModel)]="bumil.p" name="p" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="a" class="form-label">
+          Abortus
+        </label>
+        <input type="number" [(ngModel)]="bumil.a" name="a" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="bb" class="form-label">
+          Berat Badan
+        </label>
+        <input type="number" [(ngModel)]="bumil.bb" name="bb" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="tb" class="form-label">
+          Tinggi Badan
+        </label>
+        <input type="number" [(ngModel)]="bumil.tb" name="tb" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="lila" class="form-label">
+          Lila
+        </label>
+        <input type="number" [(ngModel)]="bumil.lila" name="lila" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="td" class="form-label">
+          Tekanan darah
+        </label>
+        <input type="number" [(ngModel)]="bumil.td" name="td" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="hb" class="form-label">
+          HB
+        </label>
+        <input type="number" [(ngModel)]="bumil.hb" name="hb" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="jarak_persalinan" class="form-label">
+          Jarak Persalinan
+        </label>
+        <input type="number" [(ngModel)]="bumil.jarak_persalinan" name="jarak_persalinan" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="imunisasi" class="form-label">
+          Imunisasi
+        </label>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" [(ngModel)]="bumil.imunisasi" name="tt1" value="TT I">
+          <label class="form-check-label" for="tt1">
+            TT I
+          </label>
+        </div>
+        <div class="form-check">
+          <input type="radio" class="form-check-input" [(ngModel)]="bumil.imunisasi" name="tt2" value="TT II">
+          <label class="form-check-label" for="tt2">
+            TT II
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="fe" class="form-label">
+          FE
+        </label>
+        <input type="number" [(ngModel)]="bumil.fe" name="fe" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="umur_kehamilan" class="form-label">
+          Umur kehamilan
+        </label>
+        <input type="number" [(ngModel)]="bumil.umur_kehamilan" name="umur_kehamilan" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="keterangan" class="col-form-label">
+          Keterangan
+        </label>
+        <textarea [(ngModel)]="bumil.keterangan" id="keterangan" class="form-control" rows="3"
+          maxlength="300"></textarea>
+      </div>
+    </div>
+    <!-- end form -->
+
+  </div>
+  <div class="modal-footer">
+    <div class="pull-right">
+      <button type="button" (click)="modalService.dismissAll();" class="btn btn-danger min-width-100">Batal</button>
+      <button type="button" (click)="update()" [disabled]="bumilForm.invalid"
+        class="btn btn-warning min-width-100 btn-disab ml1">Simpan</button>
+    </div>
+  </div>
+</ng-template>
+
+<div class="row" id="contentToPrint">
+  <div class="col-sm">
+    <div class="card">
+      <div class="card-header bg-info-cust text-white">
+        <h4>Laporan Pemrikasaan Kehamilan</h4>
+      </div>
+
+      <div class="card-body">
+        <div class="mb-3">
+          <button type="button" class="btn btn-success" (click)="showCreate(modalCreate)">Tambah Laporan</button>
+        </div>
+
+        <div class="content-card min-height-400">
+          <div class="row mb-3">
+            <div class="col-sm-3 mb-3">
+              <label for="tanggal_mulai" class="col-form-label">Tanggal Awal</label>
+              <input type="date" [(ngModel)]="cari.tanggal_mulai" name="tanggal_mulai" class="form-control">
+            </div>
+            <div class="col-sm-3 mb-3">
+              <label for="tanggal_akhir" class="col-form-label">Tanggal Akhir</label>
+              <input type="date" [(ngModel)]="cari.tanggal_akhir" name="tanggal_akhir" class="form-control">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-3 mb-3">
+              <label for="dokter" class="col-form-label">Dokter</label>
+              <!-- <input type="text" [(ngModel)]="cari.dokter" name="dokter" class="form-control"> -->
+              <ng-select #selDokCari [items]="dokterList" bindLabel="namdokter" bindValue="namdokter" 
+                [(ngModel)]="cari.dokter" name="dokter" class="ngsl-placeholder" placeholder="Cari dokter">
+              </ng-select>
+            </div>
+            <div class="col-sm-3 mb-3">
+              <label for="nama" class="col-form-label">Nama Pasien</label>
+              <input type="text" [(ngModel)]="cari.nama" name="nama" class="form-control">
+              <!-- <ng-select #selPasienCari [items]="pasienList" bindLabel="pasien_label" bindValue="pasien_nama"
+                [(ngModel)]="cari.nama" name="nama" class="ngsl-placeholder"
+                placeholder="Cari Pasien">
+              </ng-select> -->
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm">
+              <button type="button" (click)="search()" class="btn btn-primary">Cari</button>
+              <a [routerLink]="'/emrform/Kebidanan/KunjunganBumil/'+cari.tanggal_mulai+'/'+cari.tanggal_akhir" 
+                [ngClass]="bumilList.length == 0 ? 'disabled' : ''" 
+                target="_blank" class="btn btn-primary pull-right">
+                Print
+              </a>
+            </div>
+          </div>
+          <br>
+          <h3 class="text-center">LAPORAN PEMRIKASAAN KEHAMILAN
+            <!-- <span><br>{{cari.tanggal_mulai}} - {{cari.tanggal_akhir}}</span> -->
+            <!-- <span *ngIf="cariNew.dokter" style="text-transform: uppercase;"><br>DOKTER : {{cariNew.dokter}}</span>
+            <span *ngIf="cariNew.nama" style="text-transform: uppercase;"><br>PASIEN : {{cariNew.nama}}</span> -->
+          </h3>
+          <br>
+          <h5>
+          <table class="d-inline" style="text-transform: uppercase;">
+            <tbody>
+            <tr *ngIf="cariNew.dokter">
+              <td>DOKTER / BIDAN </td>
+              <td> : {{cariNew.dokter}}</td>
+            </tr>
+            <tr *ngIf="cariNew.alamat">
+              <td>ALAMAT </td>
+              <td> : {{cariNew.alamat}}</td>
+            </tr>
+            <tr *ngIf="cariNew.month">
+              <td>BULAN / TAHUN </td>
+              <td> : {{cariNew.month}} / {{cariNew.year}}</td>
+            </tr>
+            <!-- <tr *ngIf="cariNew.nik">
+              <td>NIK </td>
+              <td> : {{cariNew.nik}}</td>
+            </tr>
+            <tr *ngIf="cariNew.nama">
+              <td>Nama </td>
+              <td> : {{cariNew.nama}}</td>
+            </tr> -->
+            </tbody>
+          </table>
+          </h5>
+          <br>
+
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="bg-info-cust text-white">
+                <tr>
+                  <th rowspan="2">No</th>
+                  <th rowspan="2">Tgl</th>
+                  <th rowspan="2">Nama Ibu/Suami</th>
+                  <th rowspan="2">Umur</th>
+                  <th rowspan="2">Alamat</th>
+                  <th colspan="3">Hamil Ke</th>
+                  <th rowspan="2">BB&lt;45 Kg</th>
+                  <th rowspan="2">TB&lt;145 Cm</th>
+                  <th rowspan="2">Lila&lt;23 Cm</th>
+                  <th rowspan="2">TD&lt;130/90</th>
+                  <th rowspan="2">HB&lt;Bgr%</th>
+                  <th colspan="2">Jarak Peralihan</th>
+                  <th colspan="2">Imunisasi</th>
+                  <th>FE</th>
+                  <th colspan="3">Umur Kehamilan</th>
+                  <th>Keterangan</th>
+                  <th rowspan="2">Aksi</th>
+                </tr>
+                <tr>
+                  <th>G</th>
+                  <th>P</th>
+                  <th>A</th>
+                  <!-- <th>Jarak Peralihan</th> -->
+                  <th>&lt;2 Th</th>
+                  <th>&gt;2 Th</th>
+                  <!-- <th>Imunisasi</th> -->
+                  <th>TT&nbsp;I</th>
+                  <th>TT&nbsp;II</th>
+                  <!-- <th>FE</th> -->
+                  <th>Ke</th>
+                  <!-- <th>Umur Kehamilan</th> -->
+                  <th>0&nbsp;&minus;&nbsp;12 Mg</th>
+                  <th>13&nbsp;&minus;&nbsp;24 Mg</th>
+                  <th>&gt;24 Mg</th>
+                  <!-- <th>Ket</th> -->
+                  <th>Diteksi Risti</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr>
+                  <td>No</td>
+                  <td>Tgl</td>
+                  <td>Nama Ibu/Suami</td>
+                  <td>Umur</td>
+                  <td>Alamat</td>
+                  <td>G</td>
+                  <td>P</td>
+                  <td>A</td>
+                  <td>BB&lt;45 Kg</td>
+                  <td>TB&lt;145 Cm</td>
+                  <td>Lila&lt;23 Cm</td>
+                  <td>TD&lt;130/90</td>
+                  <td>HB&lt;Bgr %</td>
+                  <td>&lt;2 Th</td>
+                  <td>&gt;2 Th</td>
+                  <td>TT I</td>
+                  <td>TT II</td>
+                  <td>Ke</td>
+                  <td>0-12 Mg</td>
+                  <td>13-24 Mg</td>
+                  <td>&gt;24 Mg</td>
+                  <td>Diteksi Risti</td>
+                  <td>Aksi</td>
+                </tr> -->
+                <tr *ngFor="let val of bumilPage; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{val.tanggal_kunjungan}}</td>
+                  <td>{{val.nama}}</td>
+                  <td>{{val.umur}}</td>
+                  <td>{{val.alamat_pengunjung}}</td>
+                  <td>{{val.g}}</td>
+                  <td>{{val.p}}</td>
+                  <td>{{val.a}}</td>
+                  <td><i class="fa fa-check" [class]="val.bb < 45 && val.bb > 0 ? '' : 'd-none'" title="{{val.bb}}"></i>
+                  </td>
+                  <td><i class="fa fa-check" [class]="val.tb < 145 && val.tb > 0 ? '' : 'd-none'"
+                      title="{{val.tb}}"></i></td>
+                  <td><i class="fa fa-check" [class]="val.lila < 23 && val.lila > 0 ? '' : 'd-none'"
+                      title="{{val.lila}}"></i></td>
+                  <td>{{val.td}}</td>
+                  <td>{{val.hb}}</td>
+                  <!-- jarak persalinan -->
+                  <td>{{ val.jarak_persalinan < 2 ? val.jarak_persalinan : '' }}</td>
+                  <td>{{ val.jarak_persalinan > 2 ? val.jarak_persalinan : '' }}</td>
+                  <!-- imunisasi -->
+                  <td><i class="fa fa-check" [class]="val.imunisasi == 'TT I' ? '' : 'd-none'"
+                      title="{{val.imunisasi}}"></i></td>
+                  <td><i class="fa fa-check" [class]="val.imunisasi == 'TT II' ? '' : 'd-none'"
+                      title="{{val.imunisasi}}"></i></td>
+                  <!-- fe -->
+                  <td>{{val.fe}}</td>
+                  <!-- umur kehamilan -->
+                  <td>{{ val.umur_kehamilan >= 0 && val.umur_kehamilan <= 12 ? val.umur_kehamilan : '' }}</td>
+                  <td>{{ val.umur_kehamilan >= 13 && val.umur_kehamilan <= 24 ? val.umur_kehamilan : '' }}</td>
+                  <td>{{ val.umur_kehamilan > 24 ? val.umur_kehamilan : '' }}</td>
+                  <!-- ket -->
+                  <td>{{val.keterangan}}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="delete(val.id)">Delete</button>
+                    <button type="button" class="btn btn-warning" (click)="showEdit(modalEdit, val.id)">Ubah</button>
+                  </td>
+                </tr>
+                <tr *ngIf="bumilList.length <= 0">
+                  <td class="text-center" colspan="23"> Tidak ditemukan</td>
+                </tr>
+              </tbody>
+            </table>
+            <mat-paginator [length]="bumilList.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+              (page)="onPageChange($event)">
+            </mat-paginator>
+          </div>
+
+        </div>
+        <!-- end form -->
+
+      </div>
+      <!-- end card-body -->
+    </div>
+    <!-- end card -->
+  </div>
+</div>

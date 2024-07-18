@@ -1,0 +1,290 @@
+
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+      Promo
+      </div>
+      <div class="card-body">
+      <form [formGroup]="dokterform" >
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Judul</label>
+            <input maxlength="50"  formControlName="sp"  [(ngModel)]="sp"   placeholder="" type="text" class="form-control">
+          </div>
+
+          
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Keterangan</label>
+            <input  maxlength="100"   formControlName="diskripsi"  [(ngModel)]="diskripsi"   placeholder="" type="text" class="form-control">
+          </div>
+          <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label" style="color:black;">Status</label>
+            <select   formControlName="statusaktif"   [(ngModel)]="statusaktif"  id="exampleSelect" class="form-select">
+              <option value="">-PILIH-</option>
+              <option value="1" >AKTIF</option>
+              <option value="0" >NON AKTIF</option>
+              
+
+            </select>
+          </div>
+         
+          <div class="position-relative mb-3">
+            <div *ngIf="!showkkk">
+              <!-- <img style="width: 50%;" src="{{imageSrc}}" > -->
+            </div>
+
+            <label for="exampleEmail" class="form-label">Foto</label>
+            <input   (change)="onFileChange($event)" #takeInput  id="file" type="file" class="form-control">
+          </div>
+        
+       
+        </form>
+       
+            <div class="row">
+              <div class="col-md-4">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-info"  *ngIf="!showedit"  [disabled]="!dokterform.valid"  (click)="simpan()">Simpan
+                </button>
+            
+              </div>
+              </div>
+              <div class="col-md-4">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-focus"  *ngIf="showedit"  [disabled]="!dokterform.valid"    (click)="edituser()">Edit
+                </button>
+              </div>
+              </div>
+              <div class="col-md-2">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-danger"  *ngIf="showedit"  [disabled]="!dokterform.valid"    (click)="delete()">Hapus
+                </button>
+              </div>
+              </div>
+              <div class="col-md-2">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-warning" (click)="batal()">Batal
+                </button>
+              </div>
+              </div>
+          </div>
+         
+         
+        <!-- </form> -->
+       
+
+       
+
+      </div>
+      <!-- <button type="button" class="btn btn-info btn-lg"  routerLink="/dashboards/management">SIMPAN</button> -->
+   
+      
+    </div>
+ 
+   
+  </div>
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+        LIST PROMO
+      </div>
+
+      <div class="input-group">
+        <div class="input-group-text" >
+          <div class="">
+            
+            <!-- <fa-icon [icon]="faSearch" ></fa-icon> -->
+          </div>
+        </div>
+        <input placeholder="Search..." (keyup)="caripass($event)"   type="text" class="form-control">
+      </div>
+      <!-- <table class="table table-striped">
+        
+        <tbody style="color:black;" *ngFor="let x of tdokter">
+          <tr >
+         
+            <td style="font-size: 20px;color:black;font-weight: bold;" colspan="2">
+              
+            {{dokter}}
+            </td>
+         
+            
+          </tr>
+          <tr >
+         
+            <td style="color:black;" >
+              
+             SPESIALIS : {{x.spesialis}}
+            </td>
+            <td>
+            
+            </td>
+            
+          </tr>
+          <tr >
+         
+            <td style="color:black;">
+              
+             LULUSAN : {{x.lulusan}}
+            </td>
+            <td>
+            
+            </td>
+            
+          </tr>
+          <tr >
+         
+            <td style="color:black;">
+              
+             DISKRIPSI :   {{x.deskripsi}}
+            </td>
+            <td>
+             
+            </td>
+            
+          </tr>
+
+          <tr >
+         
+            <td style="color:black;">
+              
+             PENGALAMAN :  {{x.total_pengalaman}}
+            </td>
+            <td>
+             
+            </td>
+            
+          </tr>
+          <tr >
+         
+            <td >
+              
+             RATING PADA APP :  {{x.total_rating}}
+            </td>
+            <td>
+            
+            </td>
+            
+          </tr>
+          <tr>
+            <div class="position-relative mb-3">
+              <div>
+                <img style="width: 50%;" src="{{x.gambar}}" >
+              </div>
+  
+             
+            </div>
+          </tr>
+       
+          <tr >
+         
+            <td >
+              
+              <i style="font-size:20px ;"  (click)="pilihe(x.spesialis,x.lulusan,x.deskripsi,x.total_pengalaman)"  class="font-icon-wrapper pe-7s-note"> </i>
+  
+  
+            </td>
+            <td>
+            
+            </td>
+            
+          </tr>
+
+
+      
+        </tbody>
+
+
+       
+
+
+      </table> -->
+
+      <div class="vertical-without-time vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+        <div class="vertical-timeline-item vertical-timeline-element" *ngFor="let x of tdokter">
+          <div ><span class="vertical-timeline-element-icon bounce-in"><i
+                class="badge badge-dot badge-dot-xl bg-success"> </i></span>
+            <div class="vertical-timeline-element-content bounce-in">
+              <h4 class="timeline-title">{{x.tgl}}   
+                <!-- kdpromo": "1",
+    "tgl": "2022-09-23",
+    "judulpromo": "judul",
+    "keterangan": "keterangan detail",
+    "gambar": "https://clenicapp.com/clenic/gmb/nama.png",
+    "kdcabang": "002",
+    "kdklinik": "1",
+    "aktif": "0 -->
+                <i style="font-size:20px ;color:chocolate;" (click)="pilix(x.kdpromo,x.judulpromo,x.keterangan,
+                x.gambar,x.aktif)" class="font-icon-wrapper pe-7s-note"> </i>
+         
+
+              </h4>
+              <b>{{x.judulpromo}}</b>
+    
+              <p>{{x.keterangan}}    </p>
+              <div class="position-relative mb-3">
+                <div>
+                  <img style="width: 50%;" src="{{x.gambar}}" >
+                </div>
+    
+                <div *ngIf="x.aktif == 1" class="badge bg-pill bg-success" >
+          
+              Aktif
+                </div>
+                <div *ngIf="x.aktif == 0" class="badge bg-pill bg-danger" >
+          
+                  Non Aktif
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+        
+
+    </div>
+  
+  
+   
+
+  </div>
+
+  
+
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h6 class="modal-title">Tambah Dokter <b>{{dokter}}</b> di Poli</h6>
+      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+  
+
+<p *ngFor="let x of tdokterperpoli" style="font-size: 11px;color:black;" >{{x.nampoli}} |
+   <span style="color:red;font-weight:bold" (click)="delete(x.kddokter,x.kdpoli)"> X</span>
+  
+  
+  </p>
+
+   
+
+
+<hr>
+<span>Tambah Poli</span>
+     <ng-select [items]="poliklinik" bindLabel="nampoli"  bindValue="kdpoli" placeholder="Select city" [(ngModel)]="selectedCity" >
+    </ng-select>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+      <button type="button" class="btn btn-primary" (click)="simpanc()">Simpan</button>
+    </div>
+  </ng-template>
+
+
+</div>
+
+
+

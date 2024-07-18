@@ -1,0 +1,151 @@
+
+
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+      Overview Radiologi Laborat
+      </div>
+      <div class="card-body">
+     
+        <div class="d-inline-block" ngbDropdown>
+
+      
+    
+           <div ngbDropdownMenu class="dropdown-menu-rounded">
+      
+            <button class="dropdown-item" (click)="laprj('Kunjungan Rawat Jalan')">Kunjungan Radiologi</button>
+            <button class="dropdown-item" (click)="laprj('Pendapatan Rawat Jalan')">Pendapatan Radiologi</button>
+
+            <div class="dropdown-divider"></div>
+            <button class="dropdown-item"  (click)="laprj('Jasa Dokter')">Jasa Dokter Radiologi</button>
+            <button class="dropdown-item"   (click)="laprj('Per Komponen')">Pendapatan Perproduk</button>
+          </div>
+          </div>
+
+      </div>
+    
+      
+    </div>
+ 
+   
+  </div>
+  <div class="col-md-8">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+      {{judul}}
+      </div>
+    
+
+      <div class="card-body">
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label">Tgl Dari</label>
+          <input [(ngModel)]="tgldari"  type="date" class="form-control">
+        </div>
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label">Tgl Sampai</label>
+          <input [(ngModel)]="tglsampai"  type="date" class="form-control">
+        </div>
+      
+        <div *ngIf="judul ==='Pendapatan RJ/Konsumen'  || judul ==='Kunjungan Rawat Jalan' || judul ==='Pendapatan Rawat Jalan' || judul ==='Jasa Dokter' || judul === 'Per Komponen'  ">
+        <div class="position-relative mb-3">
+          <label for="exampleSelect" class="form-label"  style="color:black">Poliklinik</label>
+          <select [(ngModel)]="kdklinik" id="exampleSelect" class="form-select" >
+          
+            <option  *ngFor="let x of tklinik" value="{{x.kdpoli}}" ><b  *ngIf="x.sts === 'rad'">{{x.nampoli}}</b></option>
+           </select>
+        </div>
+</div>
+        <div *ngIf="judul ==='Pendapatan RJ/Konsumen' ">
+
+         
+        <div class="position-relative mb-3">
+          <label for="exampleSelect" class="form-label"  style="color:black">Kostumer</label>
+          <select [(ngModel)]="kdcus" id="exampleSelect" class="form-select" >
+        
+            <option  *ngFor="let x of tkostumer" value="{{x.kdkostumerd}}" ><b >{{x.nama}}</b></option>
+           </select>
+        </div>
+
+      </div>
+
+
+      <div *ngIf="judul ==='Jasa Dokter' ">
+
+         
+        <div class="position-relative mb-3">
+          <label for="exampleSelect" class="form-label"  style="color:black">Dokter</label>
+          <select [(ngModel)]="kddokter" id="exampleSelect" class="form-select" >
+            <option  value="1" ><b >SEMUA</b></option>
+            <option  *ngFor="let x of tdokter" value="{{x.kddokter}}" ><b >{{x.namdokter}}</b></option>
+           </select>
+        </div>
+
+      </div>
+
+
+      <!-- <div *ngIf="judul ==='Per Komponen' ">
+
+         
+        <div class="position-relative mb-3">
+          <label for="exampleSelect" class="form-label"  style="color:black">Komponen</label>
+          <select [(ngModel)]="kdkom" id="exampleSelect" class="form-select" >
+         
+            <option  *ngFor="let x of tkom" value="{{x.kdkomponen}}" ><b >{{x.tarif}}</b></option>
+           </select>
+        </div>
+
+      </div> -->
+
+      <div *ngIf="judul ==='Kunjungan Rawat Jalan' ">
+        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatkunjungan()">Lihat Kunjungan
+        </button>
+        <button class="mb-2 me-2 btn-pill btn btn-info"  (click)="lihatkunjunganexcel()">Export Excel Kunjungan
+        </button>
+      </div>
+      <div *ngIf="judul ==='Pendapatan Rawat Jalan' ">
+        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatrj()">Pendapatan Rawat Jalan
+        </button>
+        <button class="mb-2 me-2 btn-pill btn btn-info"  (click)="lihatrjexcel()">Export Excel Pendapatan Rawat Jalan
+        </button>
+
+      </div>
+
+
+      <div *ngIf="judul ==='Pendapatan RJ/Konsumen' ">
+        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatrjkon()">Pendapatan RJ/Konsumen
+        </button>
+        <button class="mb-2 me-2 btn-pill btn btn-info"  (click)="lihatrjkonexcel()">Export Excel RJ/Konsumen
+        </button>
+
+      </div>
+
+      <div *ngIf="judul ==='Jasa Dokter' ">
+        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatrjkondok()">Jasa Dokter
+        </button>
+        <button class="mb-2 me-2 btn-pill btn btn-info"  (click)="lihatrjkondokexcel()">Jasa Dokter Export Excel 
+        </button>
+
+
+        </div>
+
+        <div *ngIf="judul ==='Per Komponen' ">
+          <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatrjkom()">Rekap Produk
+          </button>
+          <button class="mb-2 me-2 btn-pill btn btn-info"  (click)="lihatrjkomexcel()">Rekap Produk Export Excel 
+          </button>
+  
+  
+          </div>
+      </div>
+    
+    </div>
+  
+    
+  </div>
+
+
+
+  
+</div>

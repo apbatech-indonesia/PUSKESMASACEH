@@ -1,0 +1,325 @@
+<!-- <app-page-title [heading]="heading" [subheading]="subheading" [icon]="icon"></app-page-title> -->
+
+<div class="row">
+  <div class="col-md-6 col-xl-3">
+    <div class="card mb-3 widget-content bg-night-fade">
+      <div class="widget-content-wrapper text-white">
+        <div class="widget-content-left">
+          <div class="widget-heading">Jumlah Pasien Laborat</div>
+          <div class="widget-subheading">Jumlah Pasien Hari Ini</div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-white"><span>{{totalall}}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <div class="card mb-3 widget-content bg-arielle-smile">
+      <div class="widget-content-wrapper text-white">
+        <div class="widget-content-left">
+          <div class="widget-heading">Pasien UMUM</div>
+          <div class="widget-subheading">Jumlah Pasien Umum</div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-white"><span>{{totalumum}}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xl-3">
+    <div class="card mb-3 widget-content bg-happy-green">
+      <div class="widget-content-wrapper text-white">
+        <div class="widget-content-left">
+          <div class="widget-heading">Pasien BPJS</div>
+          <div class="widget-subheading">Jumlah Pasien BPJS</div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-white"><span>{{totalbpjs}}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="col-md-6 col-xl-3">
+    <div class="card mb-3 widget-content bg-sunny-morning">
+      <div class="widget-content-wrapper text-white">
+        <div class="widget-content-left">
+          <div class="widget-heading">Pasien Asuransi</div>
+          <div class="widget-subheading">Jumlah Pasien Asuransi</div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-white"><span>{{totalasuransi}}</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+ 
+</div>
+
+<div class="row" >
+  <div class="col-md-12 col-lg-6 col-xl-5" *ngIf="akses === 'Manajemen'">
+    <div class="card main-card mb-3 card-tabbed-header">
+      <ul ngbNav #nav="ngbNav" class="nav-tabs nav-justified tabs-animated tabs-animated-line" justify="justified">
+        <li ngbNavItem >
+          <a ngbNavLink><span>Progres</span></a>
+          <ng-template ngbNavContent>
+        
+
+
+              
+    <div class="card mb-3 widget-chart widget-chart2 bg-warm-flame text-start">
+      <div class="widget-chat-wrapper-outer">
+        <div class="widget-chart-content text-white">
+          <div class="widget-chart-flex">
+            <div class="widget-title">Penjualan Obat</div>
+            <div class="widget-subtitle text-white">Harian</div>
+          </div>
+          <div class="widget-chart-flex">
+            <div class="widget-numbers">
+              <small>Rp.</small>
+              {{totalpenjualan}}
+            </div>
+            <!-- <div class="widget-description ms-auto text-white">
+              <fa-icon [icon]="faAngleUp"></fa-icon>
+              <span class="ps-1">175.5%</span>
+            </div> -->
+          </div>
+        </div>
+        <div class="widget-progress-wrapper">
+          <div class="progress-bar-sm progress-bar-animated-alt progress">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="65" aria-valuemin="0"
+              aria-valuemax="100" style="width: 65%;"></div>
+          </div>
+          <div class="progress-sub-label text-white">Progres</div>
+        </div>
+      </div>
+    </div>
+           
+          </ng-template>
+        </li>
+        <li ngbNavItem>
+          <a ngbNavLink (click)="pendapatan()"><span>Pendapatan RJ Hari Ini</span></a>
+          <ng-template ngbNavContent>
+            
+            <div class="scroll-area-lg">
+              <perfect-scrollbar [autoPropagation]="true">
+                <ul class="rm-list-borders rm-list-borders-scroll list-group list-group-flush">
+                 
+                  <li class="list-group-item" *ngFor="let x of tdapat">
+                    <div class="widget-content p-0">
+                      <div class="widget-content-wrapper">
+                       
+                        <div class="widget-content-left">
+                          <div class="widget-heading">{{x.nama}}</div>
+                          <div class="widget-subheading">Nominal</div>
+                        </div>
+                        <div class="widget-content-right" *ngFor="let y of x.detail">
+                          <div class="font-size-xlg text-muted">
+                           
+                            <span>{{y.total | currency:'IDR'}}</span>
+                           
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+              
+
+                  
+                
+                </ul>
+                
+              </perfect-scrollbar>
+              
+            </div>
+            <!-- <div class="widget-content-left">
+              <div class="widget-heading"  style="font-size:10px;color: #01244a;" (click)="ktglrad()">TGL.PENDAPATAN :</div>
+              <div class="widget-subheading">
+                <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;" type="date" [(ngModel)]="tglpx"  >
+        
+
+                
+              </div>
+            </div> -->
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav"></div>
+    </div>
+
+
+    <div class="card mb-3 widget-chart widget-chart2 text-start w-100">
+      <div class="widget-chat-wrapper-outer">
+        <!-- <div class="card-header">
+         Pembayaran
+        </div> -->
+       
+          <apx-chart [series]="listtot" [labels]="listpol"
+            [chart]="{
+              height: '350',
+              type: 'pie'
+            }"></apx-chart>
+        
+
+       
+      </div>
+    </div>
+    
+
+  </div>
+
+  
+  <div class="col-md-12" *ngIf="akses === 'Manajemen' || akses === 'Laborat' ">
+    <div class="mb-3 card">
+      <div class="card-header-tab card-header">
+        <div class="card-header-title">
+          <i class="header-icon lnr-rocket icon-gradient bg-tempting-azure"> </i>
+         Grafik Pasien Laboratorium
+        </div>
+      
+      </div>
+    
+      
+
+      <div class="main-card mb-3">
+      
+        <div class="card-body">
+          <apx-chart [series]="[
+              {
+                name: 'BPJS',
+                data: bpjssvalue
+              }, {
+                name: 'UMUM',
+                data: umumvalue
+              }, {
+                name: 'ASURANSI',
+                data: bpjsvalue
+              }
+            ]" [chart]="{
+              height: '390',
+              type: 'bar'
+            }" [stroke]="{
+              show: true,
+              width: 2,
+              colors: ['transparent']
+            }" [plotOptions]="{
+              bar: {
+                horizontal: false,
+                endingShape: 'rounded',
+                columnWidth: '55%'
+              }
+            }" [dataLabels]="{
+              enabled: false
+            }"
+            [labels]="['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003', '08/01/2003', '09/01/2003', '10/01/2003', '11/01/2003']"
+            [xaxis]="{
+              categories:tgl
+            }" [yaxis]="{
+              title: {
+                text: 'Jumlah'
+              }
+            }" [fill]="{
+              opacity: 1
+            }"></apx-chart>
+        </div>
+
+
+      
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div *ngIf="akses === 'Dokter' || akses === 'Perawat'
+  || akses === 'RM'  || akses === 'Kasir' || akses === 'Admisi'  || akses === 'Kasir RJ' || akses === 'Kasir Koordinator' || akses === 'administrator'
+  ">
+    <div class="mb-3 card">
+      <div class="card-header-tab card-header">
+        <div class="card-header-title">
+          <i class="header-icon lnr-rocket icon-gradient bg-tempting-azure"> </i>
+         Grafik Pasien
+        </div>
+      
+      </div>
+    
+      
+
+      <div class="main-card mb-3">
+      
+        <div class="card-body">
+          <apx-chart [series]="[
+              {
+                name: 'BPJS',
+                data: bpjssvalue
+              }, {
+                name: 'UMUM',
+                data: umumvalue
+              }, {
+                name: 'ASURANSI',
+                data: bpjsvalue
+              }
+            ]" [chart]="{
+              height: '390',
+              type: 'bar'
+            }" [stroke]="{
+              show: true,
+              width: 2,
+              colors: ['transparent']
+            }" [plotOptions]="{
+              bar: {
+                horizontal: false,
+                endingShape: 'rounded',
+                columnWidth: '55%'
+              }
+            }" [dataLabels]="{
+              enabled: false
+            }"
+            [labels]="['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003', '08/01/2003', '09/01/2003', '10/01/2003', '11/01/2003']"
+            [xaxis]="{
+              categories:tgl
+            }" [yaxis]="{
+              title: {
+                text: 'Jumlah'
+              }
+            }" [fill]="{
+              opacity: 1
+            }"></apx-chart>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  
+</div>

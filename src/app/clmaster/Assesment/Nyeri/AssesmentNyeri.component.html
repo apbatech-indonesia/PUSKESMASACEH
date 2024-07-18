@@ -1,0 +1,209 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card main-card mb-3">
+            <div class="card-header text-light" style="text-align: center; background-color: #107a8a;">
+                {{ heading }}
+            </div>
+            <!-- <div class="col-md-3" *ngIf="validasiCreateUpdate=='Update'">
+                <a [routerLink]="'../../AsesmenAwal/' + no_rm + '/' + no_transaksi" routerLinkActive="active" class="vsm-link" style="cursor: pointer;" target="_blank">
+                    <fa-icon [icon]="faPrint"></fa-icon>
+                </a>
+            </div> -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor RM" class="form-label" style="color:black;">Nomor RM</label>
+                            <input [(ngModel)]="no_rm" disabled placeholder="Nomor RM" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor Transaksi" class="form-label" style="color:black;">Nomor Transaksi</label>
+                            <input [(ngModel)]="no_transaksi" disabled placeholder="Nomor Transaksi" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6" [hidden]="true">
+                        <div class="position-relative mb-3">
+                            <label for="Validasi Button" class="form-label" style="color:black;">Validasi Button</label>
+                            <input [(ngModel)]="validasiCreateUpdate" disabled placeholder="Validasi Button" type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="loading" class="overlay">
+                    <div class="position-absolute top-50 start-50">  
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div> 
+                
+                <div class="mb-3" style="text-align: center; background-color: #107a8a;">
+                    <Span style="color: white;">
+                        <b>
+                            ASSEMEN NYERI
+                        </b>
+                    </Span>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label class="form-label" style="color:black;">Tanggal</label>
+                            <div class="position-relative mb-3">
+                                <mat-form-field>
+                                  <input matInput [matDatepicker]="dp1" [(ngModel)]="tanggal" (dateChange)="tambahTanggal('change', $event)"  >
+                                  <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                                  <mat-datepicker #dp1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Waktu" class="form-label" style="color:black;">Waktu</label>
+                        </div>
+                        <div class="position-relative mb-3">
+                            <input [(ngModel)]="jam" (ngModelChange)="onTimeChange($event)" type="time" id="appt" name="appt" min="09:00" max="18:00" required>
+                            <!-- <ngb-timepicker [(ngModel)]="time" [meridian]="meridian" (ngModelChange)="onTimeChange($event)"></ngb-timepicker> -->
+                            <!-- <pre>Jam: {{ jam }}</pre> -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label for="Provokasi" class="form-label" style="color:black;">Provokasi</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input [(ngModel)]="provokasi" type="text" id="Provokasi" style="width: 60%;" class="form-control" placeholder="Jenis aktivitas">
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label for="Kualitas" class="form-label" style="color:black;">Kualitas</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input [(ngModel)]="kualitas" type="text" id="Kualitas" style="width: 60%;" class="form-control" placeholder="Deskripsi kualitas nyeri">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label for="Lokasi" class="form-label" style="color:black;">Lokasi</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input [(ngModel)]="lokasi" type="text" id="Lokasi" style="width: 60%;" class="form-control" placeholder="Bagian tubuh tempat nyeri dirasakan">
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label for="Skala" class="form-label" style="color:black;">Skala</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input [(ngModel)]="skala" (keyup)="periksaNilaiSkala($event)" type="text" id="Skala" style="width: 60%;" class="form-control" placeholder="Skala nyeri">
+                        <small *ngIf="alertNilaiSkala" class="text-danger">Nilai Skala tidak boleh huruf</small>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label for="Waktu" class="form-label" style="color:black;">Waktu</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input [(ngModel)]="waktu" type="text" id="Waktu" style="width: 60%;" class="form-control" placeholder="Kapan nyeri dirasakan">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <label for="Intervensi" class="form-label" style="color:black;">Intervensi</label>
+                    </div>
+                    <div class="col-md-10">
+                        <input [(ngModel)]="intervensi" type="text" id="Intervensi" style="width: 60%;" class="form-control" placeholder="Tindakan atau pengobatan yang telah diambil">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="position-relative mb-3">
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative mb-3">
+                            <button type="button" class="badge rounded-pill ps-2 pe-2 bg-warning" (click)="simpan()" style="width:100%">{{ validasiButtonCreateUpdate }}</button>
+                        </div>
+                    </div>
+                    <!-- <div class="position-relative mb-3">
+                        <button type="button" class="badge rounded-pill ps-2 pe-2 bg-warning" (click)="simpanKebidanan()" style="width:100%">Simpan</button>
+                    </div> -->
+                </div>
+
+                <div *ngIf="asesmentNyeriPerNoRM.length != 0" class="row">
+                    <div class="col-md-12">
+                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                            <thead>
+                                <th>No</th>
+                                <th>Tanggal</th>
+                                <th>Provokasi</th>
+                                <th>Kualitas</th>
+                                <th>Lokasi</th>
+                                <th>Skala</th>
+                                <th>Waktu</th>
+                                <th>Intervensi</th>
+                                <th>Aksi</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of asesmentNyeriPerNoRM; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ row.tanggal }} {{ row.jam }}</td>
+                                    <td>{{ row.provokasi }}</td>
+                                    <td>{{ row.kualitas }}</td>
+                                    <td>{{ row.lokasi }}</td>
+                                    <td>{{ row.skala }}</td>
+                                    <td>{{ row.waktu }}</td>
+                                    <td>{{ row.intervensi }}</td>
+                                    <td>
+                                        <a (click)="ambilAssesmentBaru(row.id)" data-title={{row.no_transaksi}} style="cursor: pointer;">
+                                            <span style="color: cornflowerblue;">EDIT</span>
+                                        </a>/<a (click)="hapusAsesmenNyeri(row.id)" style="cursor: pointer;">
+                                            <span style="color: cornflowerblue;">HAPUS</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-md-2">
+        <div class="row" style="text-align: center;">
+            <Span style="color: blue;">
+                <b>
+                    Riwayat
+                </b>
+            </Span>
+        </div>
+        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <tbody>
+                <tr *ngFor="let row of listNotransaksiPerNoRM">
+                    <td class="text-center text-muted"  style="width: 78px;">
+                        <div class="widget-heading">
+                            <a (click)="ambilAssesmentBaru(row.no_transaksi)" data-title={{row.no_transaksi}} style="cursor: pointer;">
+                                <span style="color: cornflowerblue;"> {{ row.created_at | date: format }}</span>
+                            </a>
+                        </div>
+                        {{row.no_transaksi}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+</div>

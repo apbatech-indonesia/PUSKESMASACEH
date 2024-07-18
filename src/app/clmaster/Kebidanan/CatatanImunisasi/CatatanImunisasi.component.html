@@ -1,0 +1,657 @@
+<ng-template #modalCreate let-c="close" let-d="dismiss">
+  <div class="modal-header bg-info-cust text-white">Tambah Catatan Immunisasi</div>
+  <div class="modal-body">
+
+    <div class="form-imnsForm">
+      <div class="mb-3">
+        <label for="no_rm" class="col-form-label">
+          Nama Bayi
+          <span class="text-danger">*</span>
+        </label>
+        <!-- <input type="text" [(ngModel)]="imns.nama" name="nama" class="form-control" disabled> -->
+        <form [formGroup]="imnsForm">
+          <ng-select #selPasienEdit [items]="pasienList" bindLabel="pasien_label" bindValue="pasien_norm" (keyup)="caripasien($event)"
+            [(ngModel)]="imns.no_rm" formControlName="no_rm" name="no_rm" class="ngsl-placeholder"
+            placeholder="Cari Pasien" disabled>
+          </ng-select>
+          <div *ngIf="imnsForm.get('no_rm').invalid && imnsForm.get('no_rm').touched">
+            <div *ngIf="imnsForm.get('no_rm').hasError('required')" class="text-danger">
+              Input is required.
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="mb-3">
+        <label for="nik" class="form-label">
+          NIK
+          <span class="text-danger">*</span>
+        </label>
+        <form [formGroup]="imnsForm">
+          <input type="text" [(ngModel)]="imns.nik" name="nik" formControlName="nik" class="form-control">
+          <div *ngIf="imnsForm.get('nik').invalid && imnsForm.get('nik').touched">
+            <div *ngIf="imnsForm.get('nik').hasError('required')" class="text-danger">
+              Input is required.
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- <div class="mb-3">
+        <label for="nik" class="form-label">
+          Tanggal Lahir
+        </label>
+        <input type="date" [(ngModel)]="imns.tgl_lahir" name="nama_orang_tua" class="form-control">
+      </div> -->
+      <div class="mb-3">
+        <label for="nik" class="form-label">
+          Jenis Kelamin
+        </label>
+        <br>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="imns.jenis_kelamin" name="jenis_kelamin" value="L">
+          <label class="form-check-label" for="iud">
+            Laki-laki
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="imns.jenis_kelamin" name="jenis_kelamin" value="P">
+          <label class="form-check-label" for="mow">
+            Perempuan
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="nama_orang_tua" class="form-label">
+          Nama Orang Tua (Ayah Dan Ibu)
+        </label>
+        <input type="text" [(ngModel)]="imns.nama_orang_tua" name="nama_orang_tua" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="alamat_lengkap" class="col-form-label">
+          Alamat
+        </label>
+        <textarea [(ngModel)]="imns.alamat_lengkap" name="alamat_lengkap" class="form-control" rows="3"
+          maxlength="300"></textarea>
+      </div>
+
+    <div class="row">
+      <div class="col-sm mb-3">
+        <label for="hb0" class="form-label">
+          HB 0
+        </label>
+        <input type="date" [(ngModel)]="imns.hb0" name="hb0" class="form-control">
+      </div>
+      <div class="col-sm mb-3">
+        <label for="bcg" class="form-label">
+          BCG
+        </label>
+        <input type="date" [(ngModel)]="imns.bcg" name="bcg" class="form-control">
+      </div>
+      <div class="col-sm mb-3">
+        <label for="polio1" class="form-label">
+          Polio 1
+        </label>
+        <input type="date" [(ngModel)]="imns.polio1" name="polio1" class="form-control">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm mb-3">
+        <label for="dpt_hb_hib1" class="form-label">
+          DPT-HB-HIB-1
+        </label>
+        <input type="date" [(ngModel)]="imns.dpt_hb_hib1" name="dpt_hb_hib1" class="form-control">
+      </div>
+      <div class="col-sm mb-3">
+        <label for="polio2" class="form-label">
+          Polio 2
+        </label>
+        <input type="date" [(ngModel)]="imns.polio2" name="polio2" class="form-control">
+      </div>
+      <div class="col-sm mb-3">
+        <label for="pcv1" class="form-label">
+          PCV 1
+        </label>
+        <input type="date" [(ngModel)]="imns.pcv1" name="pcv1" class="form-control">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm mb-3">
+        <label for="rv1" class="form-label">
+          RV 1
+        </label>
+        <input type="date" [(ngModel)]="imns.rv1" name="rv1" class="form-control">
+      </div>
+      <div class="col-sm mb-3">
+        <label for="dpt_hb_hib2" class="form-label">
+          DPT-HB-HIB-2
+        </label>
+        <input type="date" [(ngModel)]="imns.dpt_hb_hib2" name="dpt_hb_hib2" class="form-control">
+      </div>
+      <div class="col-sm mb-3">
+        <label for="polio3" class="form-label">
+          Polio 3
+        </label>
+        <input type="date" [(ngModel)]="imns.polio3" name="polio3" class="form-control">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm mb-3">
+        <label for="pcv2" class="form-label">
+          PCV 2
+        </label>
+        <input type="date" [(ngModel)]="imns.pcv2" name="pcv2" class="form-control">
+      </div>
+      <div class="col-sm mb-3">
+        <label for="rv2" class="form-label">
+          RV 2
+        </label>
+        <input type="date" [(ngModel)]="imns.rv2" name="rv2" class="form-control">
+      </div>
+      <div class="col-sm mb-3">
+        <label for="dpt_hb_hib3" class="form-label">
+          DPT-HB-HIB-3
+        </label>
+        <input type="date" [(ngModel)]="imns.dpt_hb_hib3" name="dpt_hb_hib3" class="form-control">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm mb-3">
+        <label for="polio4" class="form-label">
+          POLIO 4
+        </label>
+        <input type="date" [(ngModel)]="imns.polio4" name="polio4" class="form-control">
+      </div>
+      <div class="col-sm mb-3">
+        <label for="ipv1" class="form-label">
+          IPV 1
+        </label>
+        <input type="date" [(ngModel)]="imns.ipv1" name="ipv1" class="form-control">
+      </div>
+      <div class="col-sm mb-3">
+        <label for="rv3" class="form-label">
+          RV 3
+        </label>
+        <input type="date" [(ngModel)]="imns.rv3" name="rv3" class="form-control">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm mb-3">
+        <label for="mr1" class="form-label">
+          MR 1
+        </label>
+        <input type="date" [(ngModel)]="imns.mr1" name="mr1" class="form-control">
+      </div>
+      <div class="col-sm mb-3">
+        <label for="ipv2" class="form-label">
+          IPV 2
+        </label>
+        <input type="date" [(ngModel)]="imns.ipv2" name="ipv2" class="form-control">
+      </div>
+      <div class="col-sm mb-3">
+        <label for="pcv3" class="form-label">
+          PCV 3
+        </label>
+        <input type="date" [(ngModel)]="imns.pcv3" name="pcv3" class="form-control">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 mb-3">
+        <label for="dpt_hb_hib4" class="form-label">
+          DPT-HB-HIB-4
+        </label>
+        <input type="date" [(ngModel)]="imns.dpt_hb_hib4" name="dpt_hb_hib4" class="form-control">
+      </div>
+      <div class="col-sm-4 mb-3">
+        <label for="mr2" class="form-label">
+          MR 2
+        </label>
+        <input type="date" [(ngModel)]="imns.mr2" name="mr2" class="form-control">
+      </div>
+    </div>
+
+      <div class="mb-3">
+        <label for="keterangan" class="col-form-label">
+          Keterangan
+        </label>
+        <textarea [(ngModel)]="imns.keterangan" id="keterangan" class="form-control" rows="3"
+          maxlength="300"></textarea>
+      </div>
+    </div>
+    <!-- end form -->
+
+  </div>
+  <div class="modal-footer">
+    <div class="pull-right">
+      <button type="button" (click)="modalService.dismissAll();" class="btn btn-danger min-width-100">Batal</button>
+      <button type="button" (click)="store()" [disabled]="imnsForm.invalid"
+        class="btn btn-warning min-width-100 btn-disab ml1">Simpan</button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #modalEdit let-c="close" let-d="dismiss">
+  <div class="modal-header bg-info-cust text-white">Ubah Catatan Immunisasi</div>
+  <div class="modal-body">
+
+    <div class="form-imnsForm">
+      <div class="mb-3">
+        <label for="no_rm" class="col-form-label">
+          Nama bayi
+        </label>
+        <input type="text" [(ngModel)]="imns.nama" name="nama" class="form-control" disabled>
+        <!-- <form [formGroup]="imnsForm">
+          <ng-select #selPasienEdit [items]="pasienList" bindLabel="pasien_label" bindValue="pasien_norm"
+            [(ngModel)]="imns.no_rm" formControlName="no_rm" name="no_rm" class="ngsl-placeholder"
+            placeholder="Cari Pasien" disabled>
+          </ng-select>
+          <div *ngIf="imnsForm.get('no_rm').invalid && imnsForm.get('no_rm').touched">
+            <div *ngIf="imnsForm.get('no_rm').hasError('required')" class="text-danger">
+              Input is required.
+            </div>
+          </div>
+        </form> -->
+      </div>
+      <div class="mb-3">
+        <label for="nik" class="form-label">
+          NIK
+        </label>
+        <input type="number" [(ngModel)]="imns.nik" name="nik" class="form-control" disabled>
+        <!-- <form [formGroup]="imnsForm">
+          <input type="text" [(ngModel)]="imns.nik" name="nik" formControlName="nik" class="form-control">
+          <div *ngIf="imnsForm.get('nik').invalid && imnsForm.get('nik').touched">
+            <div *ngIf="imnsForm.get('nik').hasError('required')" class="text-danger">
+              Input is required.
+            </div>
+          </div>
+        </form> -->
+      </div>
+      <!-- <div class="mb-3">
+        <label for="nik" class="form-label">
+          Tanggal Lahir
+        </label>
+        <input type="date" [(ngModel)]="imns.tgl_lahir" name="nama_orang_tua" class="form-control">
+      </div> -->
+      <div class="mb-3">
+        <label for="nik" class="form-label">
+          Jenis Kelamin
+        </label>
+        <br>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="imns.jenis_kelamin" name="jenis_kelamin" value="L">
+          <label class="form-check-label" for="iud">
+            Laki-laki
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="imns.jenis_kelamin" name="jenis_kelamin" value="P">
+          <label class="form-check-label" for="mow">
+            Perempuan
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="nama_orang_tua" class="form-label">
+          Nama Orang Tua (Ayah Dan Ibu)
+        </label>
+        <input type="text" [(ngModel)]="imns.nama_orang_tua" name="nama_orang_tua" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="alamat_lengkap" class="col-form-label">
+          Alamat
+        </label>
+        <textarea [(ngModel)]="imns.alamat_lengkap" name="alamat_lengkap" class="form-control" rows="3"
+          maxlength="300"></textarea>
+      </div>
+
+      <div class="row">
+        <div class="col-sm mb-3">
+          <label for="hb0" class="form-label">
+            HB 0
+          </label>
+          <input type="date" [(ngModel)]="imns.hb0" name="hb0" class="form-control">
+        </div>
+        <div class="col-sm mb-3">
+          <label for="bcg" class="form-label">
+            BCG
+          </label>
+          <input type="date" [(ngModel)]="imns.bcg" name="bcg" class="form-control">
+        </div>
+        <div class="col-sm mb-3">
+          <label for="polio1" class="form-label">
+            Polio 1
+          </label>
+          <input type="date" [(ngModel)]="imns.polio1" name="polio1" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm mb-3">
+          <label for="dpt_hb_hib1" class="form-label">
+            DPT-HB-HIB-1
+          </label>
+          <input type="date" [(ngModel)]="imns.dpt_hb_hib1" name="dpt_hb_hib1" class="form-control">
+        </div>
+        <div class="col-sm mb-3">
+          <label for="polio2" class="form-label">
+            Polio 2
+          </label>
+          <input type="date" [(ngModel)]="imns.polio2" name="polio2" class="form-control">
+        </div>
+        <div class="col-sm mb-3">
+          <label for="pcv1" class="form-label">
+            PCV 1
+          </label>
+          <input type="date" [(ngModel)]="imns.pcv1" name="pcv1" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm mb-3">
+          <label for="rv1" class="form-label">
+            RV 1
+          </label>
+          <input type="date" [(ngModel)]="imns.rv1" name="rv1" class="form-control">
+        </div>
+        <div class="col-sm mb-3">
+          <label for="dpt_hb_hib2" class="form-label">
+            DPT-HB-HIB-2
+          </label>
+          <input type="date" [(ngModel)]="imns.dpt_hb_hib2" name="dpt_hb_hib2" class="form-control">
+        </div>
+        <div class="col-sm mb-3">
+          <label for="polio3" class="form-label">
+            Polio 3
+          </label>
+          <input type="date" [(ngModel)]="imns.polio3" name="polio3" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm mb-3">
+          <label for="pcv2" class="form-label">
+            PCV 2
+          </label>
+          <input type="date" [(ngModel)]="imns.pcv2" name="pcv2" class="form-control">
+        </div>
+        <div class="col-sm mb-3">
+          <label for="rv2" class="form-label">
+            RV 2
+          </label>
+          <input type="date" [(ngModel)]="imns.rv2" name="rv2" class="form-control">
+        </div>
+        <div class="col-sm mb-3">
+          <label for="dpt_hb_hib3" class="form-label">
+            DPT-HB-HIB-3
+          </label>
+          <input type="date" [(ngModel)]="imns.dpt_hb_hib3" name="dpt_hb_hib3" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm mb-3">
+          <label for="polio4" class="form-label">
+            POLIO 4
+          </label>
+          <input type="date" [(ngModel)]="imns.polio4" name="polio4" class="form-control">
+        </div>
+        <div class="col-sm mb-3">
+          <label for="ipv1" class="form-label">
+            IPV 1
+          </label>
+          <input type="date" [(ngModel)]="imns.ipv1" name="ipv1" class="form-control">
+        </div>
+        <div class="col-sm mb-3">
+          <label for="rv3" class="form-label">
+            RV 3
+          </label>
+          <input type="date" [(ngModel)]="imns.rv3" name="rv3" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm mb-3">
+          <label for="mr1" class="form-label">
+            MR 1
+          </label>
+          <input type="date" [(ngModel)]="imns.mr1" name="mr1" class="form-control">
+        </div>
+        <div class="col-sm mb-3">
+          <label for="ipv2" class="form-label">
+            IPV 2
+          </label>
+          <input type="date" [(ngModel)]="imns.ipv2" name="ipv2" class="form-control">
+        </div>
+        <div class="col-sm mb-3">
+          <label for="pcv3" class="form-label">
+            PCV 3
+          </label>
+          <input type="date" [(ngModel)]="imns.pcv3" name="pcv3" class="form-control">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 mb-3">
+          <label for="dpt_hb_hib4" class="form-label">
+            DPT-HB-HIB-4
+          </label>
+          <input type="date" [(ngModel)]="imns.dpt_hb_hib4" name="dpt_hb_hib4" class="form-control">
+        </div>
+        <div class="col-sm-4 mb-3">
+          <label for="mr2" class="form-label">
+            MR 2
+          </label>
+          <input type="date" [(ngModel)]="imns.mr2" name="mr2" class="form-control">
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="keterangan" class="col-form-label">
+          Keterangan
+        </label>
+        <textarea [(ngModel)]="imns.keterangan" id="keterangan" class="form-control" rows="3"
+          maxlength="300"></textarea>
+      </div>
+    </div>
+    <!-- end form -->
+
+  </div>
+  <div class="modal-footer">
+    <div class="pull-right">
+      <button type="button" (click)="modalService.dismissAll();" class="btn btn-danger min-width-100">Batal</button>
+      <button type="button" (click)="update()" class="btn btn-warning min-width-100 btn-disab ml1">Simpan</button>
+    </div>
+  </div>
+</ng-template>
+
+<div class="row" id="contentToPrint">
+  <div class="col-sm">
+    <div class="card">
+      <div class="card-header bg-info-cust text-white">
+        <h4>Catatan Imunisasi</h4>
+      </div>
+
+      <div class="card-body">
+        <div class="mb-3">
+          <button type="button" class="btn btn-success" (click)="showCreate(modalCreate)">Tambah Laporan</button>
+        </div>
+
+        <div class="content-card min-height-400">
+          <div class="row mb-3">
+            <div class="col-sm-3 mb-3">
+              <label for="tanggal_mulai" class="col-form-label">Tanggal Awal</label>
+              <input type="date" [(ngModel)]="cari.tanggal_mulai" name="tanggal_mulai" class="form-control">
+            </div>
+            <div class="col-sm-3 mb-3">
+              <label for="tanggal_akhir" class="col-form-label">Tanggal Akhir</label>
+              <input type="date" [(ngModel)]="cari.tanggal_akhir" name="tanggal_akhir" class="form-control">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm-3 mb-3">
+              <label for="nik" class="col-form-label">NIK</label>
+              <input type="text" [(ngModel)]="cari.nik" name="nik" class="form-control">
+            </div>
+            <div class="col-sm-3 mb-3">
+              <label for="nama" class="col-form-label">Nama Bayi</label>
+              <input type="text" [(ngModel)]="cari.nama_bayi" name="nama_bayi" class="form-control">
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-sm">
+              <button type="button" (click)="search()" class="btn btn-primary">Cari</button>
+              <a [routerLink]="'/emrform/Kebidanan/CatatanImunisasi/'+cari.tanggal_mulai+'/'+cari.tanggal_akhir" 
+                  [ngClass]="imnsList.length == 0 ? 'disabled' : ''" 
+                  target="_blank" class="btn btn-primary pull-right">
+                  Print
+                </a>
+            </div>
+          </div>
+
+          <br>
+          <h3 class="text-center" style="text-transform: uppercase;">
+            CATATAN IMUNISASI
+            <!-- <span><br>{{cariNew.tanggal_mulai}} - {{cariNew.tanggal_akhir}}</span>
+            <span *ngIf="cariNew.nik" style="text-transform: uppercase;"><br>NIK : {{cariNew.nik}}</span>
+            <span *ngIf="cariNew.nama_bayi" style="text-transform: uppercase;"><br>PASIEN : {{cariNew.nama_bayi}}</span>
+            <span *ngIf="cariNew.faskes"><br>faskes</span>
+            <span *ngIf="cariNew.year" style="text-transform: uppercase;"><br>JML SASARAN / TAHUN : {{cariNew.year}}</span>
+            <span *ngIf="cariNew.month" style="text-transform: uppercase;"><br>PERIODE : {{cariNew.month}}</span> -->
+          </h3>
+          <br>
+          <h5>
+          <table class="d-inline" style="text-transform: uppercase;">
+            <tbody>
+            <tr *ngIf="cariNew.faskes">
+              <td>FASKES </td>
+              <td>: {{cariNew.faskes}}</td>
+            </tr>
+            <!-- <tr *ngIf="cariNew.year">
+              <td>JML SASARAN / TAHUN </td>
+              <td> : {{cariNew.jml_sasaran ?? '.......'}} / {{cariNew.year}}</td>
+            </tr> -->
+            <tr *ngIf="cariNew.month">
+              <td>PERIODE </td>
+              <td> : {{cariNew.month}}</td>
+            </tr>
+            <!-- <tr *ngIf="cariNew.dokter">
+              <td>DOKTER / BIDAN </td>
+              <td> : {{cariNew.dokter}}</td>
+            </tr>
+            <tr *ngIf="cariNew.alamat">
+              <td>ALAMAT </td>
+              <td> : {{cariNew.alamat}}</td>
+            </tr>
+            <tr *ngIf="cariNew.month">
+              <td>BULAN / TAHUN </td>
+              <td> : {{cariNew.month}} / {{cariNew.year}}</td>
+            </tr> -->
+            <!-- <tr *ngIf="cariNew.dokter">
+              <td>DOKTER </td>
+              <td> : {{cariNew.dokter}}</td>
+            </tr> -->
+            <!-- <tr *ngIf="cariNew.nik">
+              <td>NIK </td>
+              <td> : {{cariNew.nik}}</td>
+            </tr>
+            <tr *ngIf="cariNew.nama_bayi">
+              <td>Nama </td>
+              <td> : {{cariNew.nama_bayi}}</td>
+            </tr> -->
+            </tbody>
+          </table>
+          </h5>
+          <br>
+
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="bg-info-cust text-white">
+                <tr>
+                  <th rowspan="3">No</th>
+                  <th rowspan="3">NIK</th>
+                  <th rowspan="3">Nama Bayi</th>
+                  <th rowspan="3">Tanggl Lahir</th>
+                  <th rowspan="3">Jenis Kelamin</th>
+                  <th rowspan="3">Nama Orang Tua(Ayah dan Ibu)</th>
+                  <th rowspan="3">Alamat RT/RW</th>
+                  <th colspan="17">Imunisasi Dasar</th>
+                  <th colspan="3">Imunisasi Lanjutan</th>
+                  <th rowspan="3">Ket</th>
+                  <th rowspan="3">Aksi</th>
+                </tr>
+                <tr>
+                  <th colspan="17">
+                    Bayi
+                  </th>
+                  <th colspan="3">
+                    Booster / Balita
+                  </th>
+                </tr>
+                <tr>
+                  <th>HB&nbsp;0</th>
+                  <th>BCG</th>
+                  <th>Polio 1</th>
+                  <th>DPT-HB-HIB 1</th>
+                  <th>Polio 2</th>
+                  <th>PCV 1</th>
+                  <th>RV 1</th>
+                  <th>DPT-HB-HIB 2</th>
+                  <th>Polio 3</th>
+                  <th>PCV 2</th>
+                  <th>RV 2</th>
+                  <th>DPT-HB-HIB 3</th>
+                  <th>Polio 4</th>
+                  <th>IPV 1</th>
+                  <th>RV 3</th>
+                  <th>MR 1</th>
+                  <th>IPV 2</th>
+                  <th>PCV 3</th>
+                  <th>DPT-HB-HIB 4</th>
+                  <th>MR 2</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let val of imnsPage; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{val.nik}}</td>
+                  <td>{{val.nama}}</td>
+                  <td>{{val.tgl_lahir}}</td>
+                  <td>{{val.jenis_kelamin}}</td>
+                  <td>{{val.nama_orang_tua}}</td>
+                  <td>{{val.alamat_lengkap}}</td>
+                  <td>{{val.hb0}}</td>
+                  <td>{{val.bcg}}</td>
+                  <td>{{val.polio1}}</td>
+                  <td>{{val.dpt_hb_hib1}}</td>
+                  <td>{{val.polio2}}</td>
+                  <td>{{val.pcv1}}</td>
+                  <td>{{val.rv1}}</td>
+                  <td>{{val.dpt_hb_hib2}}</td>
+                  <td>{{val.polio3}}</td>
+                  <td>{{val.pcv2}}</td>
+                  <td>{{val.rv2}}</td>
+                  <td>{{val.dpt_hb_hib3}}</td>
+                  <td>{{val.polio4}}</td>
+                  <td>{{val.ipv1}}</td>
+                  <td>{{val.rv3}}</td>
+                  <td>{{val.mr1}}</td>
+                  <td>{{val.ipv2}}</td>
+                  <td>{{val.pcv3}}</td>
+                  <td>{{val.dpt_hb_hib4}}</td>
+                  <td>{{val.mr2}}</td>
+                  <td>{{val.keterangan}}</td>
+                  <td>
+                    <button type="button" class="btn btn-danger" (click)="delete(val.id)">Delete</button>
+                    <button type="button" class="btn btn-warning" (click)="showEdit(modalEdit, val.id)">Ubah</button>
+                  </td>
+                </tr>
+                <tr *ngIf="imnsList.length <= 0">
+                  <td class="text-center" colspan="29"> Tidak ditemukan</td>
+                </tr>
+              </tbody>
+            </table>
+            <mat-paginator [length]="imnsList.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+              (page)="onPageChange($event)">
+            </mat-paginator>
+          </div>
+
+        </div>
+        <!-- end form -->
+
+      </div>
+      <!-- end card-body -->
+    </div>
+    <!-- end card -->
+  </div>
+</div>

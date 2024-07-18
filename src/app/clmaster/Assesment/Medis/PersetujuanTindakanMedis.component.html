@@ -1,0 +1,449 @@
+<div class="row">
+    <div class="col-md-10">
+        <div class="card main-card mb-3">
+            <!-- <div class="card-header">
+                {{ heading }}
+            </div> -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-11">
+                        <div style="text-align: center; border-radius: 25px;" class="bg-info-cust">
+                            <Span style="color: white;">
+                                <b>
+                                    Informed Concent
+                                </b>
+                            </Span>
+                        </div>
+                    </div>
+                    <div class="col-md-1" *ngIf="validasiCreateUpdate=='Update'">
+                        <!-- <a (click)="cetak()" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faPrint"></fa-icon></a> -->
+                        <button style="background-color: powderblue;border-radius: 5px;border:none;">
+                            <a  [routerLink]="'/emrform/icbidan'" routerLinkActive="active" class="vsm-link" style="cursor: pointer;" target="_blank">
+                                Print <fa-icon [icon]="faPrint"></fa-icon>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+               
+                
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>
+                            Data Keluarga
+                        </b>
+                    </div>
+                </div>
+                <br>
+                <!-- <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor RM" class="form-label" style="color:black;">Nomor RM</label>
+                            <input [(ngModel)]="no_rm" disabled placeholder="Nomor RM" type="text" class="form-control" style="border-radius: 25px;">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor Transaksi" class="form-label" style="color:black;">Nomor Transaksi</label>
+                            <input [(ngModel)]="no_transaksi" disabled placeholder="Nomor Transaksi" type="text" class="form-control" style="border-radius: 25px;">
+                        </div>
+                    </div>
+                    <div class="col-md-6" [hidden]="true" >
+                        <div class="position-relative mb-3">
+                            <label for="Validasi Button" class="form-label" style="color:black;">Validasi Button</label>
+                            <input [(ngModel)]="validasiCreateUpdate" disabled placeholder="Validasi Button" type="text" class="form-control" style="border-radius: 25px;">
+                        </div>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col-md-2">
+                        Nama
+                        <div *ngIf="namaKeluarga == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-9">
+                        <input [(ngModel)]="namaKeluarga" placeholder="Nama" type="text" class="form-control rounded-pill">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-2">
+                        NIK
+                        <div *ngIf="nikKeluarga == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-9">
+                        <input [(ngModel)]="nikKeluarga" placeholder="NIK" type="text" class="form-control rounded-pill">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-2">
+                        Tempat / Tanggal Lahir
+                        <div *ngIf="tempatLahirKeluarga == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-5">
+                        <input [(ngModel)]="tempatLahirKeluarga" placeholder="Tempat Lahir" type="text" class="form-control rounded-pill">
+                    </div>
+                    <div class="col-md-4">
+                        <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tanggalLahirKeluarga"  type="date" >
+               
+                        <!-- <mat-form-field>
+                          <input matInput [matDatepicker]="dp1" [(ngModel)]="tanggalLahirKeluarga" (dateChange)="addDatePickerTanggalLahirKeluarga('change', $event)"  >
+                          <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                          <mat-datepicker #dp1></mat-datepicker>
+                        </mat-form-field> -->
+                    </div>
+                </div>
+                <br>
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        Jenis Kelamin
+                        <div *ngIf="jenisKelaminKeluarga == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-9">
+                        <select [(ngModel)]="jenisKelaminKeluarga" id="jenisKelaminKeluarga" class="form-select rounded-pill">
+                            <option value="">-PILIH-</option>
+                            <option value="Laki - Laki">Laki - Laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        Alamat
+                        <div *ngIf="alamatKeluarga == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-9">
+                        <form [formGroup]="formIsi">
+                            <textarea maxlength="300" formControlName="alamatKeluarga" 
+                                [(ngModel)]="alamatKeluarga" id="alamatKeluarga" placeholder="Alamat"
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        Telp
+                        <div *ngIf="telpKeluarga == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-9">
+                        <input [(ngModel)]="telpKeluarga" placeholder="Telp" type="text" class="form-control rounded-pill">
+                    </div>
+                </div>
+                <br>
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        Hubungan Keluarga
+                        <div *ngIf="hubunganDenganPasien == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <!-- Suami dan istri dipisah serta tidak jadi 1 variabel yaitu pasangan dikarenakan keperluan untuk halaman cetak -->
+                    <div class="col-md-9">
+                        <select [(ngModel)]="hubunganDenganPasien" id="hubunganDenganPasien" class="form-select rounded-pill">
+                            <option value="">-PILIH-</option>
+                            <option value="Saya Sendiri">Saya Sendiri</option>
+                            <option value="Suami">Suami</option>
+                            <option value="Istri">Istri</option>
+                            <option value="Ayah">Ayah</option>
+                            <option value="Ibu">Ibu</option>
+                            <option value="Anak">Anak</option>
+                            <option value="Saudara">Saudara</option>
+                        </select>
+                    </div>
+                </div>
+                <br><br><br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>
+                            Data Pasien
+                        </b>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-2">
+                        Nama
+                        <div *ngIf="namaPasien == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-9">
+                        <input [(ngModel)]="namaPasien" placeholder="Nama" type="text" class="form-control rounded-pill">
+                    </div>
+                </div>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-md-2">
+                        NIK
+                        <div *ngIf="nikPasien == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-9">
+                        <input [(ngModel)]="nikPasien" placeholder="NIK" type="text" class="form-control rounded-pill">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-2">
+                        Tempat / Tanggal Lahir
+                        <div *ngIf="tempatLahirPasien == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-5">
+                        <input [(ngModel)]="tempatLahirPasien" placeholder="Tempat Lahir" type="text" class="form-control rounded-pill">
+                    </div>
+                    <div class="col-md-4">
+                        <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tanggalLahirPasien"  type="date" >
+               
+                        <!-- <mat-form-field>
+                          <input matInput [matDatepicker]="dp2" [(ngModel)]="tanggalLahirPasien" (dateChange)="addDatePickerTanggalLahirPasien('change', $event)"  >
+                          <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+                          <mat-datepicker #dp2></mat-datepicker>
+                        </mat-form-field> -->
+                    </div>
+                </div>
+                <br>
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        Jenis Kelamin
+                        <div *ngIf="jenisKelaminPasien == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-9">
+                        <select [(ngModel)]="jenisKelaminPasien" id="jenisKelaminPasien" class="form-select rounded-pill">
+                            <option value="">-PILIH-</option>
+                            <option value="Laki - Laki">Laki - Laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        Alamat
+                        <div *ngIf="alamatPasien == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-9">
+                        <form [formGroup]="formIsi">
+                            <textarea maxlength="300" formControlName="alamatPasien" 
+                                [(ngModel)]="alamatPasien" id="alamatPasien" placeholder="Alamat"
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        Telp
+                        <div *ngIf="telpPasien == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-9">
+                        <input [(ngModel)]="telpPasien" placeholder="Telp" type="text" class="form-control rounded-pill">
+                    </div>
+                </div>
+                <br><br><br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>
+                            Tindakan Medis
+                        </b>
+                    </div>
+                </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        Tindakan Medis
+                        <div *ngIf="tindakanMedis == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-9">
+                        <form [formGroup]="formIsi">
+                            <textarea maxlength="300" formControlName="tindakanMedis" 
+                                [(ngModel)]="tindakanMedis" id="tindakanMedis" placeholder="Tindakan Medis"
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                
+                <div class="row">
+                    <div class="col-md-2">
+                        Kota
+                        <div *ngIf="kota == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-1 text-end">
+                        :
+                    </div>
+                    <div class="col-md-9">
+                        <input [(ngModel)]="kota" placeholder="Kota" type="text" class="form-control rounded-pill">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        Tanggal
+                    </div>
+                    <div class="col-md-4">
+                        <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tanggal"  type="date" >
+               
+                        <!-- <mat-form-field>
+                          <input matInput [matDatepicker]="dp3" [(ngModel)]="tanggal" (dateChange)="addDatePickerTanggal('change', $event)"  >
+                          <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                          <mat-datepicker #dp3></mat-datepicker>
+                        </mat-form-field> -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        Dokter
+                        <div *ngIf="dokter == ''" class="text-danger">
+                           *
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="position-relative mb-3">
+                            <ng-select #selDok [items]="select2ListDokter" bindLabel="namdokter" bindValue="kddokter" [(ngModel)]="dokter"
+                            formControlName="dokter" name="dokter" class="ngsl-placeholder" placeholder="Cari dokter">
+                          </ng-select>
+
+
+                            <!-- <select2 [data]="select2ListDokter" placeholder="Dokter" [value]="dokter" [(ngModel)]="dokter">
+                            </select2> -->
+                        </div>
+                    </div>
+                </div>
+                
+                <br>
+                <div class="row">
+                    <div class="position-relative mb-3">
+                        <button type="button" class="badge rounded-pill ps-2 pe-2 bg-warning" (click)="simpan()" style="width:100%">Simpan</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Table -->
+
+    <div class="col-md-2">
+        <div class="row bg-info-cust" style="text-align: center;">
+            <span class="text-white">
+                <b>
+                    Riwayat
+                </b>
+            </span>
+        </div>
+        <div class="row" style="background-color: white;height: 100%">
+            <table class="mb-0 table table-borderless table-hover">
+                <tbody>
+                    <tr *ngFor="let row of listNotransaksiPerNoRM">
+                        <td class="text-center text-muted"  style="width: 78px;" (click)="ambilAssesmentBaru(row.no_transaksi)">
+                            <div class="widget-heading">
+                                <Span style="color: black;">
+                                    <b>
+                                        Tanggal
+                                    </b>
+                                </Span>
+                            </div>
+                            <div class="widget-heading">
+                               
+                                <a (click)="ambilDataPerNoRMNoTransaksi(row.no_rm, row.no_transaksi)" data-title={{row.no_transaksi}} style="cursor: pointer;">
+                                    <span style="color: cornflowerblue;">{{ row.tanggal_persetujuan | date: format }}</span>
+                                </a>
+                          
+                            </div>
+                            <hr>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+</div>
+

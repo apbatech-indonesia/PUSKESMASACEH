@@ -1,0 +1,263 @@
+<div class="app-inner-layout">
+ 
+  <!-- <div *ngFor="let message of messageList">
+    <li >
+        {{message}}
+    </li>
+  </div>
+  
+  <input
+    [(ngModel)]="newMessage"
+    (keyup)="$event.keyCode == 13 && sendMessage()"
+  />
+  <button (click)="sendMessage()">Send Message</button>
+
+
+  {{received}} -->
+  <div class="main-card mb-3 card"  style="height: 650px;">
+    <div class="card-header" style="background-color: #19bc9d;text-align: center;">
+      <div>
+        <b class="menu-header-title text-capitalize" style="color:black;font-size: 35px;">ANTREAN DIPANGGIL {{subheading}}</b>
+      </div>
+   
+    </div>
+
+
+    <div class="table-responsive tableFixHeadx">
+      <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+      
+        <tbody>
+          <tr>
+            <td>
+
+              <div class="main-card mb-3 card" style="height: 500px;width: 700px;border: 5px grey solid;">
+                <div style="text-align: center;">
+                  <b style="font-size: 50px;">{{namadoker}}</b><br>
+                  <b style="font-size: 50px;">{{nampoliv}}</b><br>
+                  <b style="font-size: 150px;">{{kdantrian}} {{Nomor}}</b><br>
+
+                  <hr style="border: 2px grey solid;">
+
+                 
+                  <b style="font-size: 40px;">{{pasienv}}</b>
+                 <br>
+                </div>
+              
+                </div>
+
+            </td>
+
+            <td>
+              <div class="main-card mb-3 card" style="height: 400px;border: 5px grey solid;">
+          
+                <video id="my_video_1" class="video-js vjs-default-skin" width="700px" height="400px" controls preload="none" autoplay loop
+                poster="https://dokar.kendalkab.go.id/upload/berita/1658038600Aplikasi%20JKN.jpg"
+                data-setup='{ "aspectRatio":"700:370", "playbackRates": [1, 1.5, 2] }'>
+                <source src="https://knm.clenicapp.com/clenic/sound/bhinao.mp4" type='video/mp4' />
+               
+              </video>
+
+              
+              </div>
+            </td>
+
+
+
+          </tr>
+        
+      
+
+        </tbody>
+      </table>
+    </div>
+
+
+
+
+ 
+</div>
+
+
+<table>
+  
+
+  <tr>
+    <td style="border: 1px solid black;">  
+      
+      <div class="card-header" style="background-color:  #19bc9d;text-align: center;">
+      <div>
+        <b class="menu-header-title text-capitalize" style="color:black;font-size: 35px;">
+          <input [(ngModel)]="namadokter1" style="background-color:  #19bc9d;border: 1px  #19bc9d dashed;"
+          (keyup)="caridokter($event)"
+          placeholder="Nama Dokter" > 
+        </b>
+
+    
+
+
+      </div>
+
+
+   
+    </div>
+
+    <table class="table table-striped" *ngIf="showdoktersatu" >
+     
+      <tbody>
+        <tr *ngFor="let x of tdokter" style="font-size: 12px;color:black">
+       
+          <td >
+            
+          {{x.namdokter}}
+          </td>
+   
+    
+          <td >
+            <button class="mb-2 me-2 btn-hover-shine btn-pill btn btn-success" (click)="pilihdokter1(x.kddokter,x.namdokter,'1')" >+
+            </button>
+
+          </td>
+        </tr>
+     
+      </tbody>
+    </table>
+   
+
+
+
+    <div class="card-header" style="height: 150px;border: 1px solid grey;text-align: center;">
+      <div style="text-align: center">
+       <b style="font-size: 70px;color:black;">{{kdnoantrian1}} {{noantrian1}}</b>
+      </div>
+
+
+   
+    </div>
+
+
+</td>
+
+<td style="border: 1px solid black;">  
+      
+  <div class="card-header" style="background-color:  #19bc9d;text-align: center;">
+  <div>
+    <b class="menu-header-title text-capitalize" style="color:black;font-size: 35px;">
+      <input [(ngModel)]="namadokter2" style="background-color:  #19bc9d;border: 1px  #19bc9d dashed;"
+      (keyup)="caridokterx($event)"
+      placeholder="Nama Dokter" > 
+    </b>
+
+
+  </div>
+
+
+  
+
+
+
+</div>
+
+<table class="table table-striped" *ngIf="showdokterdua" >
+     
+  <tbody>
+    <tr *ngFor="let x of tdokter" style="font-size: 12px;color:black">
+   
+      <td >
+        
+      {{x.namdokter}}
+      </td>
+
+
+      <td >
+        <button class="mb-2 me-2 btn-hover-shine btn-pill btn btn-success" (click)="pilihdokter2(x.kddokter,x.namdokter,'2')" >+
+        </button>
+
+      </td>
+    </tr>
+ 
+  </tbody>
+</table>
+
+
+
+
+<div class="card-header" style="height: 150px;border: 1px solid grey;text-align: center;">
+  <div style="text-align: center">
+   <b style="font-size: 70px;color:black;">{{kdnoantrian2}} {{noantrian2}}</b>
+  </div>
+
+
+
+</div>
+
+
+</td>
+
+
+
+
+
+<td style="border: 1px solid black;">  
+      
+<div class="card-header" style="background-color:  #19bc9d;text-align: center;">
+<div>
+<b class="menu-header-title text-capitalize" style="color:black;font-size: 35px;">
+  <input [(ngModel)]="namadokter3" style="background-color:  #19bc9d;border: 1px  #19bc9d dashed;"
+  (keyup)="caridoktery($event)"
+  placeholder="Nama Dokter" > 
+</b>
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+<table class="table table-striped" *ngIf="showdoktertiga" >
+ 
+<tbody>
+<tr *ngFor="let x of tdokter" style="font-size: 12px;color:black">
+
+  <td >
+    
+  {{x.namdokter}}
+  </td>
+
+
+  <td >
+    <button class="mb-2 me-2 btn-hover-shine btn-pill btn btn-success" (click)="pilihdokter3(x.kddokter,x.namdokter,'2')" >+
+    </button>
+
+  </td>
+</tr>
+
+</tbody>
+</table>
+
+
+
+
+<div class="card-header" style="height: 150px;border: 1px solid grey;text-align: center;">
+<div style="text-align: center">
+<b style="font-size: 70px;color:black;">{{kdnoantrian3}} {{noantrian3}}</b>
+</div>
+
+
+
+</div>
+
+
+</td>
+
+
+
+
+  </tr>
+
+  </table>
+  
+</div>

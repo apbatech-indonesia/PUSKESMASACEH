@@ -1,0 +1,803 @@
+
+
+<div class="row">
+  <!-- <div class="col-md-8"> -->
+    <div class="card main-card mb-3">
+   
+      <div class="card-body">
+
+        <form [formGroup]="masterform" >
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label"><b>NAMA OBAT*</b></label>
+            <input formControlName="obat"  [(ngModel)]="obat"    style="text-transform:uppercase" placeholder="Obat" type="text" class="form-control" >
+          </div>
+        </form>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="position-relative mb-3">
+                <label for="exampleCity" class="form-label"><b>KAPASITAS</b></label>
+              
+               
+                <input [(ngModel)]="zakaktif"  id="exampleCity" type="text" class="form-control">
+               
+              </div>
+            </div>
+           
+        
+
+           
+          </div>
+
+
+      
+          <b>HARGA OBAT</b>
+          <hr>
+
+          <div class="row">
+            <div class="col-md-3">
+              <div class="position-relative mb-3">
+                <label for="exampleCity" class="form-label">HNA*</label>
+                <!-- <p>{{20000 | currency:'IDR'}}</p> -->
+                <input  [(ngModel)]="hna"   id="exampleCity" type="number" class="form-control" (keyup)="chna($event)">
+                <!-- <input currencyMask [(ngModel)]="ngModelExample" [options]="{ prefix: ' ', thousands: '.', decimal: ',' }"/> -->
+              </div> 
+            </div>
+            <div class="col-md-3">
+              <div class="position-relative mb-3">
+                <label for="exampleState" class="form-label">Discount</label>
+                <input [(ngModel)]="disc" id="exampleState" type="number" class="form-control" (keyup)="cdisc($event)">
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="position-relative mb-3">
+                <label for="exampleState" class="form-label">PPN*</label>
+                <input  [(ngModel)]="ppn" id="exampleState" class="form-control" (keyup)="cppn($event)">
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="position-relative mb-3">
+                <label for="exampleState" class="form-label">Harga Beli*</label>
+                <input currencyMask [(ngModel)]="hargabeli" [options]="{ prefix: ' ', thousands: '.', decimal: ',' }" class="form-control"/>
+
+            
+              </div>
+            </div>
+      
+          </div>
+
+
+
+
+          <div class="row">
+            <div class="col-md-3">
+              <div class="position-relative mb-3">
+                <label for="exampleCity" class="form-label">Margin*</label>
+                <input [(ngModel)]="margin" id="exampleState" type="number"  class="form-control" (keyup)="cmargin($event)">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="position-relative mb-3">
+                <label for="exampleState" class="form-label">Harga Jual*</label>
+     
+                <input currencyMask [(ngModel)]="hargajual" [options]="{ prefix: ' ', thousands: '.', decimal: ',' }" class="form-control"/>
+
+              </div>
+            </div>
+
+            <div class="col-md-3">
+             
+              <div class="position-relative mb-3">
+                <label for="exampleSelect" class="form-label">BHP/NON*</label>
+                <select  [(ngModel)]="bhp"  id="exampleSelect" class="form-select">
+                  <option value="" >-PILIH-</option>
+                  <option value="BHP">BHP</option>
+               
+                  <option value="NON BHP" >NON BHP</option>
+              
+                </select>
+              </div>
+
+
+            </div>
+
+            <div class="col-md-3">
+              <div class="position-relative mb-3">
+                <label for="exampleSelect" class="form-label">Rak Simpan*</label>
+              
+                <div class="badge bg-pill bg-success" (click)="open(content,'1')"> + </div>
+
+                <select  [(ngModel)]="rakinput" id="exampleSelect" class="form-select">
+                  <option value="">-PILIH-</option>
+                  <option *ngFor="let x of rak" value="{{x.kdrak}}" >{{x.namarak}}</option>
+                
+
+                </select>
+              </div>
+            </div>
+      
+          </div>
+
+
+          <b>ASAL OBAT</b>
+          <hr>
+          <div class="row">
+            <div class="col-md-6">
+              <form [formGroup]="masterform" >
+              <div class="position-relative mb-3">
+                <label for="exampleCity" class="form-label">Suplier*</label>
+                 <div class="badge bg-pill bg-success" (click)="open(content,'2')"> + </div><br>
+              
+                <input  formControlName="supplierd" [(ngModel)]="supplierd"  disabled type="text" class="form-control">
+
+
+              </div>
+              </form>
+            </div>
+            <div class="col-md-6">
+              <form [formGroup]="masterform" >
+              <div class="position-relative mb-3">
+                <label for="exampleState" class="form-label">Pabrikan*</label>
+              
+                <div class="badge bg-pill bg-success" (click)="open(content,'3')"> + </div>
+               
+             
+
+
+                <input  formControlName="pabrikand" [(ngModel)]="pabrikand"  disabled type="text" class="form-control">
+
+
+
+              </div>
+
+            </form>
+            </div>
+
+        
+
+           
+          </div>
+          <b>KATEGORI</b>
+          <hr>
+          <div class="row">
+            <div class="col-md-6">
+              <form [formGroup]="masterform" >
+              <div class="position-relative mb-3">
+                <label for="exampleCity" class="form-label">Golongan Obat*</label>
+                <div class="badge bg-pill bg-success" (click)="open(content,'4')"> + </div>
+           
+
+               <input  formControlName="golonganobatd"  [(ngModel)]="golonganobatd"  disabled type="text" class="form-control">
+
+          
+
+
+               
+              
+              </div>
+            </form>
+            </div>
+            <div class="col-md-6">
+              <form [formGroup]="masterform" >
+              <div class="position-relative mb-3">
+                <label for="exampleState" class="form-label">Jenis Obat*</label>
+                <div class="badge bg-pill bg-success" (click)="open(content,'5')"> + </div>
+             
+              
+               <input   formControlName="jenisobatd" [(ngModel)]="jenisobatd"  disabled type="text" class="form-control">
+
+
+              </div>
+            </form>
+            </div>
+      
+          </div>
+
+     
+
+       
+
+<b>SATUAN</b>
+<hr>
+
+
+          <div class="row">
+            <div class="col-md-2">
+              <form [formGroup]="masterform" >
+              <div class="position-relative mb-3">
+                <label for="exampleCity" class="form-label">Standart*</label>
+                <input formControlName="standart" [(ngModel)]="standart" id="exampleCity" type="text" class="form-control">
+              </div>
+              </form>
+            </div>
+            <div class="col-md-2">
+              <div class="position-relative mb-3">
+                <label for="exampleCity" class="form-label"><span style="font-size: 10px;">/tablet*</span></label>
+                <input [(ngModel)]="standartd"  id="exampleCity" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div class="position-relative mb-3">
+                <label for="exampleState" class="form-label"> Sedang</label>
+                <input [(ngModel)]="sedang" id="exampleState" type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="position-relative mb-3">
+                <label for="exampleCity" class="form-label"><span style="font-size: 10px;">/tablet</span></label>
+                <input [(ngModel)]="sedangd" id="exampleState" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div class="position-relative mb-3">
+                <label for="exampleState" class="form-label"> Kemasan</label>
+                <input [(ngModel)]="kemasan" id="exampleState" type="text" class="form-control">
+              </div>
+            </div>
+
+            <div class="col-md-2">
+              <div class="position-relative mb-3">
+                <label for="exampleCity" class="form-label"><span style="font-size: 10px;">/box</span></label>
+                <input [(ngModel)]="kemasand" id="exampleState" type="text" class="form-control">
+              </div>
+            </div>
+
+          </div>
+
+
+
+
+        
+
+       
+         
+       
+            <div class="row">
+              <div class="col-md-2">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-danger" (click)="batal()">Batal
+                </button>
+              </div>
+              </div>
+
+              <div class="col-md-5">
+               
+              </div>
+              <div class="col-md-5">
+                <div class="d-grid gap-2">
+                  <button class="mb-2 me-2 btn-pill btn btn-focus" *ngIf="!showedit" [disabled]="!masterform.valid"  (click)="edituser()">Edit
+                  </button>
+                </div>
+              </div>
+             
+          </div>
+         
+         
+        <!-- </form> -->
+       
+
+       
+
+      </div>
+      <!-- <button type="button" class="btn btn-info btn-lg"  routerLink="/dashboards/management">SIMPAN</button> -->
+   
+      
+    </div>
+ 
+   
+  <!-- </div> -->
+  <!-- <div class="col-md-4">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+       
+        
+        <div class="input-group">
+          <div class="input-group-text" >
+            <div class="">
+              Cari
+           
+            </div>
+          </div>
+          <input placeholder="Cari Obat..."  [(ngModel)]="cariuser" (keyup)="cariuserx($event)" type="text" class="form-control">
+        </div>
+
+
+      </div>
+    
+      <table class="table table-striped">
+        <thead>
+          <tr>
+           
+            <th scope="col">Obat</th>
+            <th scope="col" style="text-align:center ;">Act</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of tobat">
+         
+            <td style="font-size: 10px;color:black">
+              
+            {{x.obat}}
+            </td>
+            <td class="text-center">
+         
+              <div  class="badge bg-pill bg-info" (click)="pilihobat(x.kdobat,
+              x.	obat,
+              x.	golonganobat,
+              x.	jenisobat,
+              x.	hna,
+              x.	disc,
+              x.	ppn,
+              x.	hargabeli,
+              x.	margin,
+              x.	hargajual,
+              x.	bhp,
+              x.	raksimpan,
+              x.	kdsuplier,
+              x.	kdpabrikan,
+              x.	zakaktif,
+              x.	standart,
+              x.	standartd,
+              x.	sedang,
+              x.	sedangd,
+              x.	kemasan,
+              x.	kemasand,
+              x.	kdklinik,
+              x.	kdcabang,
+              x.	nama,
+              x.	sup,
+              x.	jenis,
+              x.	golongan)">P</div>
+              <div style="font-size: 10px;color:black" class="badge bg-pill bg-warning" (click)="lihatstok(content1,x.kdobat)">Stok</div>
+              <div class="badge bg-pill bg-danger" (click)="hapus(x.kdobat,
+              x.	obat,
+              x.	golonganobat,
+              x.	jenisobat,
+              x.	hna,
+              x.	disc,
+              x.	ppn,
+              x.	hargabeli,
+              x.	margin,
+              x.	hargajual,
+              x.	bhp,
+              x.	raksimpan,
+              x.	kdsuplier,
+              x.	kdpabrikan,
+              x.	zakaktif,
+              x.	standart,
+              x.	standartd,
+              x.	sedang,
+              x.	sedangd,
+              x.	kemasan,
+              x.	kemasand,
+              x.	kdklinik,
+              x.	kdcabang,
+              x.	nama,
+              x.	sup,
+              x.	jenis,
+              x.	golongan)">X</div>
+
+            </td>
+            
+          </tr>
+         
+        </tbody>
+      </table>
+    </div>
+  
+    
+  </div> -->
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h7 class="modal-title" *ngIf="judulmodal == '1'">Tambah Rak</h7>
+      <h7 class="modal-title" *ngIf="judulmodal == '2'">Tambah Supplier</h7>
+      <h7 class="modal-title" *ngIf="judulmodal == '3'">Tambah Pabrikan</h7>
+      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+    
+      <div  class="row" *ngIf="judulmodal == '5'" >
+        <div class="position-relative mb-3">
+          <label for="exampleCity" class="form-label">Cari Jenis</label>
+          <input name="state" id="exampleState" type="text" class="form-control"  (keyup)="carijenisobat($event)">
+        </div>
+
+        <div class="table-responsive" style="font-size: 11px;">
+          <table  class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <thead>
+              <tr>
+             
+                <th>Jenis Obat</th>
+              
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+           
+
+
+            
+
+             <tbody>
+           
+              <tr  *ngFor="let x of tjenisobat">
+     
+                <td style="font-size: 12px;color:black">
+          
+                 {{x.jenis}}
+                </td>
+             
+           
+                <td class="text-center">
+         
+                  <div class="badge bg-pill bg-warning"  (click)="pilihjenis(x.kdjenis,x.jenis)"  >P</div>             
+                  
+                </td>
+              </tr>
+
+
+             
+            </tbody>
+          </table>
+        </div>
+
+
+       </div>
+
+
+      <div  class="row" *ngIf="judulmodal == '4'" >
+        <div class="position-relative mb-3">
+          <label for="exampleCity" class="form-label">Cari Golongan</label>
+          <input name="state" id="exampleState" type="text" class="form-control" (keyup)="carigol($event)">
+        </div>
+
+        <div class="table-responsive" style="font-size: 11px;">
+          <table  class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <thead>
+              <tr>
+             
+                <th>Golongan Obat</th>
+              
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+           
+
+
+            
+
+             <tbody>
+           
+              <tr  *ngFor="let x of golbat">
+     
+                <td style="font-size: 12px;color:black">
+          
+                 {{x.golongan}}
+                </td>
+             
+           
+                <td class="text-center">
+         
+                  <div class="badge bg-pill bg-warning"  (click)="pilihgol(x.kdgolongan,x.golongan)"  >P</div>             
+                  
+                </td>
+              </tr>
+
+
+             
+            </tbody>
+          </table>
+        </div>
+
+
+       </div>
+
+
+      <div  class="row" *ngIf="judulmodal == '1'" >
+        <div class="position-relative mb-3">
+          <label for="exampleCity" class="form-label">Cari Rak</label>
+          <input name="state" id="exampleState" type="text" class="form-control" (keyup)="carirak($event)">
+        </div>
+
+        <div class="table-responsive" style="font-size: 11px;">
+          <table  class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <thead>
+              <tr>
+             
+                <th>Nama Rak</th>
+              
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+           
+
+
+            
+
+             <tbody>
+           
+              <tr  *ngFor="let x of rak">
+     
+                <td style="font-size: 12px;color:black">
+          
+                 {{x.namarak}}
+                </td>
+             
+           
+                <td class="text-center">
+                  <div class="badge bg-pill bg-info" (click)="pilihrak(x.kdrak,x.namarak)" >E</div>                
+                  <div class="badge bg-pill bg-danger" (click)="deleterak(x.kdrak,x.namarak)" >X</div>
+                </td>
+              </tr>
+
+
+             
+            </tbody>
+          </table>
+        </div>
+
+<form [formGroup]="rakform">
+       <div class="position-relative mb-3">
+            <label for="exampleCity" class="form-label">+ Nama Rak</label>
+            <input formControlName="inrak"  id="exampleState"  [(ngModel)]="inrak" type="text" class="form-control">
+          </div>
+        </form>
+       </div>
+     
+      
+
+
+
+
+       <div  class="row" *ngIf="judulmodal == '2'" >
+        <div class="position-relative mb-3">
+          <label for="exampleCity" class="form-label">Cari Supplier</label>
+          <input id="exampleState" type="text" class="form-control"  (keyup)="carisupplier($event)">
+        </div>
+
+        <div class="table-responsive" style="font-size: 11px;">
+          <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <thead>
+              <tr>
+             
+                <th>Nama Suplier/<span style="font-size: 10px;">5 terkahir</span></th>
+              
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+           
+
+
+            
+
+             <tbody>
+
+              <tr   *ngFor="let x of tsupplier">
+     
+                <td style="font-size: 12px;color:black">
+                     {{x.nama}}
+                 
+                </td>
+             
+           
+                <td class="text-center">
+                
+                  <div class="badge bg-pill bg-info" (click)="pilihsup(x.kdsup,x.nama,x.alamat,x.hp)" >E</div>                
+                  <div class="badge bg-pill bg-danger" (click)="deletesup(x.kdsup,x.nama,x.alamat,x.hp)" >X</div>
+                  <div class="badge bg-pill bg-warning" (click)="cx(x.kdsup,x.nama,x.alamat,x.hp)"  >P</div>
+                </td>
+              </tr>
+
+
+             
+            </tbody>
+          </table>
+        </div>
+
+
+     
+
+      
+       </div>
+       <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngIf="judulmodal == '2'">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <span class="card-header--title">Tambah Supplier</span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+
+            <form [formGroup]="supform">
+            <div class="position-relative mb-3">
+              <label for="exampleCity" class="form-label">Nama Supplier*</label>
+              <input formControlName="insup"  type="text"  [(ngModel)]="insup" class="form-control">
+            </div>
+            
+         <div class="position-relative mb-3">
+          <label for="exampleCity" class="form-label">Alamat*</label>
+          <input  formControlName="inalamat"   type="text" [(ngModel)]="inalamat" class="form-control">
+        </div>
+  
+      </form>
+        <div class="position-relative mb-3">
+          <label for="exampleCity" class="form-label">Hp</label>
+          <input [(ngModel)]="inhp"  type="number" class="form-control">
+        </div>
+     
+
+          </ng-template>
+        </ngb-panel>
+  
+      </ngb-accordion>
+
+
+
+      
+
+
+
+    
+
+
+
+       
+
+  
+       
+       <div  class="row" *ngIf="judulmodal == '3'" >
+        <div class="position-relative mb-3">
+          <label for="exampleCity" class="form-label">Cari Pabrikan</label>
+          <input name="state" id="exampleState" type="text" class="form-control" (keyup)="caripabrikan($event)" >
+        </div>
+
+        <div class="table-responsive"  style="font-size: 11px;">
+          <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <thead>
+              <tr>
+             
+                <th>Nama Pabrikan</th>
+              
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+           
+
+
+            
+
+             <tbody>
+
+              <tr  *ngFor="let x of tpabrikan">
+     
+                <td style="font-size: 12px;color:black">
+                  {{x.nama}}
+                 
+                </td>
+             
+           
+                <td class="text-center">
+                
+                  <div class="badge bg-pill bg-info" (click)="pilihpab(x.kdpabrikan,x.nama,x.alamat,x.hp)" >E</div>                
+                  <div class="badge bg-pill bg-danger" (click)="deletepab(x.kdpabrikan,x.nama,x.alamat,x.hp)" >X</div>
+                  <div class="badge bg-pill bg-warning" (click)="cxpab(x.kdpabrikan,x.nama,x.alamat,x.hp)" >P</div>
+                </td>
+              </tr>
+
+
+             
+            </tbody>
+          </table>
+        </div>
+
+
+     
+
+
+
+       </div>
+
+       <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngIf="judulmodal == '3'">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <span class="card-header--title">Tambah Pabrikan</span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <form [formGroup]="pabform">
+            <div class="position-relative mb-3">
+              <label for="exampleCity" class="form-label">Nama Pabrikan</label>
+              <input  formControlName="inpabrik"   type="text"  [(ngModel)]="inpabrik" class="form-control">
+            </div>
+            
+         <div class="position-relative mb-3">
+          <label for="exampleCity" class="form-label">Alamat</label>
+          <input   formControlName="inalamatp"  type="text" [(ngModel)]="inalamatp" class="form-control">
+        </div>
+      
+      </form>
+        <div class="position-relative mb-3">
+          <label for="exampleCity" class="form-label">Hp</label>
+          <input [(ngModel)]="inhpp"  type="number" class="form-control">
+        </div>
+
+        
+
+          </ng-template>
+        </ngb-panel>
+  
+      </ngb-accordion>
+       
+
+
+    </div>
+    <div class="modal-footer">
+
+      <div  *ngIf="judulmodal == '1'" >
+        <button type="button" *ngIf="showeditrak"  [disabled]="!rakform.valid"  class="btn btn-info" (click)="editc()">Edit</button>
+        <button type="button"   *ngIf="!showeditrak"   [disabled]="!rakform.valid" class="btn btn-primary" (click)="simpanc()">Simpan</button>
+      </div>
+
+      <div  *ngIf="judulmodal == '2'" >
+        <button type="button"  *ngIf="showeditsup"  [disabled]="!supform.valid"  class="btn btn-info" (click)="edit2()">Edit</button>
+        <button type="button" *ngIf="!showeditsup" [disabled]="!supform.valid"  class="btn btn-primary" (click)="simpan2()">Simpan</button>
+      </div>
+
+      <div  *ngIf="judulmodal == '3'" >
+        <button type="button"  *ngIf="showeditpab"  [disabled]="!pabform.valid" class="btn btn-info" (click)="edit3()">Edit</button>
+        <button type="button"  *ngIf="!showeditpab" [disabled]="!pabform.valid" class="btn btn-primary" (click)="simpan3()">Simpan</button>
+      </div>
+     
+    </div>
+  </ng-template>
+
+
+  <ng-template #content1 let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h7 class="modal-title" >Stok</h7>
+   
+      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <table  class="align-middle mb-0 table table-borderless table-striped table-hover">
+        <thead>
+          <tr>
+         
+            <th> Gudang</th>
+          
+            <th class="text-center">Stok</th>
+          </tr>
+        </thead>
+       
+
+
+        
+
+         <tbody>
+       
+          <tr  *ngFor="let x of tstokoabt">
+ 
+            <td style="font-size: 12px;color:black">
+      
+             {{x.gudang}}
+            </td>
+         
+       
+            <td class="text-center">
+     
+              {{x.stok}}
+              
+            </td>
+          </tr>
+
+
+         
+        </tbody>
+      </table>
+      </div>
+  </ng-template>
+</div>

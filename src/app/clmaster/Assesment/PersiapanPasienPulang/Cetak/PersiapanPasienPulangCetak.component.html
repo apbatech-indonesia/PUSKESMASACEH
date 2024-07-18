@@ -1,0 +1,119 @@
+<div class = row>
+    <div class="col-md-4">
+        
+    </div>
+    <div class="col-md-4">
+        
+    </div>
+    <div class="col-md-4">
+        <a (click)="cetak()" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faPrint"></fa-icon></a>
+    </div>
+</div>
+<div id="halamanCetak" class="row">
+    <div class="card main-card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-12">
+                    {{ heading }} <b>(Sebagai Bukti Informasi Consent dan Tanda Terima)</b>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    Nama = {{ dataPasien['pasien'] }}
+                </div>
+
+                <div class="col-md-4">
+                    No RM = {{ no_rm }}
+                </div>
+
+                <div class="col-md-4">
+                    Tanggal Lahir = {{ tanggalLahirPasien }}
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="Tanggal Pasien Pulang" class="form-label" style="color:black;"><b>Tanggal Pasien Pulang</b> : </label>
+                    {{ tanggal_pulang }}
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="Anjuran Untuk Pasien" class="form-label" style="color:black;"><b>Anjuran Untuk Pasien</b> : </label>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ keterangan_anjuran }}
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="Respon Keluarga" class="form-label" style="color:black;"><b>Respon Keluarga</b> : </label>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ keterangan_respon }}
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="Obat Yang Akan Dibawa Pulang" class="form-label" style="color:black;"><b>Obat Yang Akan Dibawa Pulang</b> : </label>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                        <tbody>
+                            <tr *ngFor="let row of listObat; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>
+                                    <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                        {{ row.obat }} / {{ row.label }}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="Hasil Yang Dibawa Pulang" class="form-label" style="color:black;"><b>Hasil Yang Dibawa Pulang</b> : </label>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ keterangan_hasil }}
+                </div>
+            </div>
+            <br>
+
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="Keterangan Lain" class="form-label" style="color:black;"><b>Keterangan Lain</b> : </label>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ keterangan_lain }}
+                </div>
+            </div>
+            <br>
+
+        </div>
+    </div>
+</div>

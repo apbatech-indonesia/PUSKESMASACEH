@@ -1,0 +1,430 @@
+
+
+
+
+<ul ngbNav #nav="ngbNav" class=" nav-tabs tabs-animated tabs-animated-shadow">
+  <li ngbNavItem>
+    <a ngbNavLink><span>Kelas Kamar</span></a>
+    <ng-template ngbNavContent>
+      <div class="card main-card mb-3">
+        <div class="card-header">
+  
+          <b>Tambah Kelas</b>
+          <!-- <p [innerHTML]="body | nl2br"></p> -->
+          
+        </div>
+        <div class="card-body">
+          <!-- <form> -->
+            <div class="row">
+             
+              <div class="col-md-6">
+                <div class="row">
+                  <div >
+                   
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Kd Kelas*</label>
+                      <input    [(ngModel)]="kdKelas"  disabled  placeholder="Kd Kelas" type="text" class="form-control">
+                    </div>
+               
+                    </div>
+                    
+                </div>
+            
+            
+                <div class="row">
+                  <div >
+                    <form [formGroup]="profileForm" >
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Nama Kelas*</label>
+                      <input   formControlName="kelas" [(ngModel)]="kelas"   placeholder="Nama Kelas" type="text" class="form-control" >
+                    </div>
+                    </form>
+                    
+                 
+
+
+
+                  </div>
+               
+
+                 
+
+
+                </div>
+      
+
+                  <div class="row">
+                    <div class="col-md-2">
+                      <div class="d-grid gap-2">
+                      <button class="mb-2 me-2 btn-pill btn btn-focus" (click)="bataltes()">Batal
+                      </button>
+                    </div>
+                    </div>
+                    <div class="col-md-5">
+                      <div class="d-grid gap-2">
+                      <button class="mb-2 me-2 btn-pill btn btn-warning"   *ngIf="showedit"    [disabled]="!profileForm.valid"  (click)="editusertes()">Edit
+                      </button>
+                    </div>
+                    </div>
+      
+                    <div class="col-md-5">
+                      <div class="d-grid gap-2">
+                      <button class="mb-2 me-2 btn-pill btn btn-info"   *ngIf="!showedit"  [disabled]="!profileForm.valid"  (click)="simpantes()">Simpan
+                      </button>
+                    </div>
+                    </div>
+                    
+                </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <!-- <span style="font-size: 14px;padding: 10px;">Cari Tarif Detail</span> -->
+                      <label for="exampleSelect" class="form-label">Cari Kelas </label>
+                      
+                      <input type="text" class="form-control ms-2" placeholder="Cari Kelas" (keyup)="cariteslab($event)" >
+                     
+                    </div>
+                  
+                   
+                    </div>
+                    <br>
+
+
+                    <div class="table-responsive tableFixHead">
+                     
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                         
+                          <th scope="col">Kd Kelas</th>
+                          <th scope="col">Nama Kelas</th>
+                          <th scope="col">Aksi</th>
+                         
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of tlisttes">
+                          <!-- <td  *ngIf="x.status == 0"  style="font-size: 11px;color:red;font-style: italic;">{{x.nama}}</td> -->
+                          <td  style="font-size: 11px;color:black">{{x.kdkelas}}</td>
+                          <td  style="font-size: 11px;color:black">{{x.namakelas}}</td>
+                         
+                          <td>
+              
+                            
+              
+                            <div class="badge bg-pill bg-warning" (click)="pilihtes(x.kdkelas,x.namakelas)">E</div>
+                         
+           
+                            <div class="badge bg-pill bg-danger" (click)="hapustes(x.kdkelas,x.namakelas)" >X</div>
+                           
+                          </td>
+                        </tr>
+                      
+                      </tbody>
+                    </table>
+                  </div>
+
+
+                </div>
+              </div>
+        
+           
+           
+          <!-- </form> -->
+         
+  
+         
+  
+        </div>
+      
+       
+      </div>
+      </ng-template>
+    </li>
+
+    <li ngbNavItem>
+      <a ngbNavLink (click)="klikmetodelab()"><span>Kamar Induk</span></a>
+      <ng-template ngbNavContent>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card main-card mb-3">
+              <div class="card-header">
+        
+                <b>Tambah Kamar Induk</b>
+                <!-- <p [innerHTML]="body | nl2br"></p> -->
+                
+              </div>
+              <div class="card-body">
+                <!-- <form> -->
+                  <form [formGroup]="golonganform" >
+                  <div class="position-relative mb-3">
+                    <label for="exampleEmail" class="form-label">Nama Kamar Induk</label>
+                    <input formControlName="namatamplates"  [(ngModel)]="namatamplates"   placeholder="Nama Kamar Induk" type="text" class="form-control">
+                  </div>
+              </form>
+                 
+        
+                
+               
+                 
+               
+                    <div class="row">
+                      <div class="col-md-2">
+                        <div class="d-grid gap-2">
+                        <button class="mb-2 me-2 btn-pill btn btn-focus" (click)="batals()">Batal
+                        </button>
+                      </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="d-grid gap-2">
+                        <button class="mb-2 me-2 btn-pill btn btn-warning"  *ngIf="showeditg"  [disabled]="!golonganform.valid" (click)="edituserx()">Edit
+                        </button>
+                      </div>
+                      </div>
+        
+                      <div class="col-md-5">
+                        <div class="d-grid gap-2">
+                        <button class="mb-2 me-2 btn-pill btn btn-info"   *ngIf="!showeditg"  [disabled]="!golonganform.valid" (click)="simpanx()">Simpan
+                        </button>
+                      </div>
+                      </div>
+                      
+                  </div>
+                 
+                 
+                <!-- </form> -->
+               
+        
+               
+        
+              </div>
+            
+             
+            </div>
+          
+            
+          </div>
+          <div class="col-md-6">
+         <div class="card main-card mb-3">
+          <div class="row">
+            <div class="col-md-8">
+           
+              <span style="font-size: 14px;padding: 10px;">Cari Kamar Induk</span>
+           
+              <input type="text" class="form-control ms-2" (keyup)="cariuserxxx($event)" >
+             
+            </div>
+           
+            </div>
+            
+             
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                     
+                      <th scope="col">Nama</th>
+                  
+                      <th scope="col">Act</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let x of tgolonganlab">
+                      <td  style="font-size: 11px;color:black;font-weight: bold;">{{x.indukkamar}}</td>
+                      
+                      <td>
+          
+                        
+          
+                        <div class="badge bg-pill bg-warning" 
+                       (click)="pilihsubjek(x.kdindukkamar,x.indukkamar)">E</div>
+                     
+                        
+                        <div class="badge bg-pill bg-danger" (click)="deletesubjekx(x.kdindukkamar,x.indukkamar)">X</div>
+                       
+                      </td>
+                    </tr>
+                  
+                  </tbody>
+                </table>
+        
+        
+            </div>
+            </div>
+        </div>
+        </ng-template>
+      </li>
+
+      
+    <li ngbNavItem>
+      <a ngbNavLink (click)="klikkamar()"><span >Kamar</span></a>
+      <ng-template ngbNavContent>
+     
+
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card main-card mb-3">
+              <div class="card-header">
+        
+                <b>Tambah Kamar</b>
+           
+                
+              </div>
+              <div class="card-body">
+             
+
+                  
+                  <form [formGroup]="metodeform" >
+                  <div class="position-relative mb-3">
+                    <label for="exampleEmail" class="form-label">Kamar Induk</label>
+                 
+
+                       <select   formControlName="kamarinduki"  [(ngModel)]="kamarinduki"  class="form-select">
+                      <option value="">-PILIH-</option>
+                
+                        <option   *ngFor="let x of tgolonganlab" value="{{x.kdindukkamar}}" >{{x.indukkamar}}</option>
+                      
+                        
+                
+                      </select>
+               
+
+
+
+                  </div>
+            </form>
+              
+                  <form [formGroup]="metodeform" >
+                  <div class="position-relative mb-3">
+                    <label for="exampleEmail" class="form-label">Kamar</label>
+                    <input formControlName="kamari" [(ngModel)]="kamari"   placeholder="Nama Kamar" type="text" class="form-control">
+                  </div>
+
+                  </form>
+                  <form [formGroup]="metodeform" >
+                  <div class="position-relative mb-3">
+                    <label for="exampleEmail" class="form-label">Kelas Kamar</label>
+                    <select formControlName="kelaskamari" [(ngModel)]="kelaskamari"  class="form-select"
+                    
+                
+                      
+                      >
+                      <option value="">-PILIH-</option>
+                
+                        <option   *ngFor="let x of tlisttes" value="{{x.kdkelas}}" >{{x.namakelas}}</option>
+                      
+                        
+                
+                      </select>
+                  </div>
+                  </form>
+                  <form [formGroup]="metodeform" >
+                  <div class="position-relative mb-3">
+                    <label for="exampleEmail" class="form-label">Jumlah Bed</label>
+                    <input  formControlName="jmlbed"  [(ngModel)]="jmlbed"   placeholder="Jumlah Bed" type="text" class="form-control">
+                  </div>
+                </form>
+
+
+                    <div class="row">
+                      <div class="col-md-2">
+                        <div class="d-grid gap-2">
+                        <button class="mb-2 me-2 btn-pill btn btn-focus" (click)="batalkamar()">Batal
+                        </button>
+                      </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="d-grid gap-2">
+                        <button class="mb-2 me-2 btn-pill btn btn-warning" *ngIf="showeditg"  [disabled]="!metodeform.valid"  (click)="edituser()">Edit
+                        </button>
+                      </div>
+                      </div>
+        
+                      <div class="col-md-5">
+                        <div class="d-grid gap-2">
+                        <button class="mb-2 me-2 btn-pill btn btn-info"  *ngIf="!showeditg"  [disabled]="!metodeform.valid"  (click)="simpan()">Simpan
+                        </button>
+                      </div>
+                      </div>
+                      
+                  </div>
+                 
+    
+               
+        
+               
+        
+              </div>
+            
+             
+            </div>
+          
+            
+          </div>
+          <div class="col-md-6">
+         <div class="card main-card mb-3">
+          <div class="row">
+            <div class="col-md-8">
+           
+              <span style="font-size: 14px;padding: 10px;">Cari Kamar</span>
+           
+              <input type="text" class="form-control ms-2" (keyup)="carikamar($event)" >
+             
+            </div>
+           
+            </div>
+            
+             
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Induk</th>                     
+                      <th scope="col">Nama</th>
+                      <th scope="col">Kelas</th>
+                      <th scope="col">Jml Bed</th>
+                      <th scope="col">Act</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let x of tmetodelab">
+                      <td  style="font-size: 11px;color:black;font-weight: bold;">{{x.indukkamar}}</td>
+                      
+                      
+                        <td  style="font-size: 11px;color:black;font-weight: bold;">{{x.nama}}</td>
+                      
+                       
+                        
+                          <td  style="font-size: 11px;color:black;">{{x.namakelas}}</td>
+                          <td  style="font-size: 11px;color:black;">{{x.jmlbed}}</td>
+                       <td>
+                        <div class="badge bg-pill bg-warning" 
+                       (click)="pilihkamar(x.kdkamar,x.kdkelas,x.kdinduk,x.nama,x.jmlbed,x.kdindukkamar,x.indukkamar,x.namakelas)">E</div>
+                     
+                        
+                        <div class="badge bg-pill bg-danger" (click)="deletesubjek(x.kdkamar,x.kdkelas,x.kdinduk,x.nama,x.jmlbed,x.kdindukkamar,x.indukkamar,x.namakelas)">X</div>
+                       
+                      </td>
+                    </tr>
+                  
+                  </tbody>
+                </table>
+        
+        
+            </div>
+            </div>
+        </div>
+       
+
+
+        </ng-template>
+      </li>
+
+
+   
+
+
+</ul>
+<div [ngbNavOutlet]="nav"></div>

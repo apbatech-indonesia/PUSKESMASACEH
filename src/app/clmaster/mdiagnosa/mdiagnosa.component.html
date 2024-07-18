@@ -1,0 +1,250 @@
+<!-- 
+<div class="app-page-title">
+  <div class="page-title-wrapper">
+    <div class="page-title-heading">
+      <div class="page-title-icon">
+        <i class="icon {{icon}}"></i>
+      </div>
+      <div>
+        {{heading}}
+        <div class="page-title-subheading">
+          {{subheading}}
+        </div>
+      </div>
+    </div>
+    <div class="page-title-actions">
+  
+    </div>
+  </div>
+</div> -->
+
+<ul ngbNav #nav="ngbNav" class=" nav-tabs tabs-animated tabs-animated-shadow">
+  <li ngbNavItem>
+    <a ngbNavLink><span>Diagnosa</span></a>
+    <ng-template ngbNavContent>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+        Cari Diangosa
+        <div class="col-auto">
+          
+          <input type="text" class="form-control ms-2" [(ngModel)]="cariuser" (keyup)="cariuserx($event)" >
+         
+     
+         
+        </div>
+      
+        <div class="col-auto">
+          
+         
+            <select  [(ngModel)]="type"   placeholder="Pilih Jenis Poli" class="form-select">
+             
+              <option value="1">By Diagnosa</option>
+              <option value="3">By Kode diagnosa</option>
+            
+        
+            </select>
+     
+         
+        </div>
+        <div class="col-auto">
+          <div class="badge bg-pill bg-success" (click)="opencx(content7)">Tambah Diagnosa</div>
+          </div>
+        
+      </div>
+      
+    
+      <table class="table table-striped">
+        <thead>
+          <tr>
+           
+            <th scope="col">Kode Diagnosa</th>
+            <th scope="col">Diagnosa</th>
+            <th scope="col">Hapus</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of diagnos">
+         
+            <td style="font-size: 12px;color:black">
+              
+            {{x.kddiagnosa}}
+            </td>
+            <td >
+              {{x.diagnosa}}
+            </td>
+<td>
+  <div class="badge bg-pill bg-danger" (click)="hapus(x.kddiagnosa)">Hapus</div>
+
+</td>
+            
+          </tr>
+       
+        </tbody>
+      </table>
+    </div>
+  
+    
+  </div>
+</div>
+      </ng-template>
+    </li>
+    <li ngbNavItem>
+      <a ngbNavLink><span>Tindakan</span></a>
+      <ng-template ngbNavContent>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card main-card mb-3">
+              <div class="card-header">
+                Cari Tindakan
+                <div class="col-auto">
+                  
+                  <input type="text" class="form-control ms-2" [(ngModel)]="crtindak" (keyup)="caritindak($event)"  >
+                 
+             
+                 
+                </div>
+              
+                <div class="col-auto">
+                <select  [(ngModel)]="type"   class="form-select">
+                 
+                  <option value="1">By Tindakan</option>
+                  <option value="3">By Kode Tindakan</option>
+                
+            
+                </select>
+                </div>
+                <div class="col-auto">
+                  <div class="badge bg-pill bg-success" (click)="opencxx(content8)">Tambah Tindakan</div>
+                
+                
+              </div>
+                
+                
+              </div>
+            
+           
+             
+         
+            
+
+              
+            
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                   
+                    <th scope="col">Kd Tindakan</th>
+                    <th scope="col">Tindakan</th>
+                    <th scope="col">Hapus</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let x of tindak">
+                 
+                    <td style="font-size: 12px;color:black">
+                      
+                    {{x.kdtindakan}}
+                    </td>
+                    <td >
+                      {{x.tindakan}}
+                    </td>
+                    <td>
+                      <div class="badge bg-pill bg-danger" (click)="hapust(x.kdtindakan)">Hapus</div>
+                    
+                    </td>
+                  </tr>
+               
+                </tbody>
+              </table>
+            </div>
+          
+            
+          </div>
+        </div>
+        </ng-template>
+      </li>
+</ul>
+
+
+<ng-template #content7 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h6 class="modal-title">Tambah Diagnosa</h6>
+    <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label" style="font-weight: bold;"> Kode </label>
+      <input   placeholder="kode" [(ngModel)]="kddaignosa" type="text" class="form-control">
+
+
+    </div>
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label" style="font-weight: bold;"> Nama Diagnosa </label>
+      <input   placeholder="Nama Diangosa"  [(ngModel)]="diagnosa" type="text" class="form-control">
+
+
+    </div>
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label" style="font-weight: bold;"> Free Text </label>
+      <input   placeholder="Free Text"  [(ngModel)]="freetext" type="text" class="form-control">
+
+
+    </div>
+
+
+    </div>
+  
+   
+
+    <div class="modal-footer">
+      <button type="button"  class="btn btn-secondary"  (click)="simpanl()">Simpan </button>
+    
+    </div>
+</ng-template>
+
+
+<ng-template #content8 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h6 class="modal-title">Tambah Tindakan</h6>
+    <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label" style="font-weight: bold;"> Kode </label>
+      <input   placeholder="kode" [(ngModel)]="kdtindakan" type="text" class="form-control">
+
+
+    </div>
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label" style="font-weight: bold;"> Nama Tindakan </label>
+      <input   placeholder="Nama Tindakan"  [(ngModel)]="tindakan" type="text" class="form-control">
+
+
+    </div>
+
+
+
+    </div>
+  
+   
+
+    <div class="modal-footer">
+      <button type="button"  class="btn btn-secondary"  (click)="simpant()">Simpan </button>
+    
+    </div>
+</ng-template>
+
+
+
+
+<div [ngbNavOutlet]="nav"></div>

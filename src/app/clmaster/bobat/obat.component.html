@@ -1,0 +1,369 @@
+<div class="column">
+    <div class="col-md-12">
+        <div class="card main-card mb-12">
+            <div class="card-header flex-container" style="padding: 0; margin: 0;">
+                <div>
+                    <h4><small>List Obat</small></h4>
+                </div>
+                <div style="flex-basis: 70%;"></div>
+                <div>
+                    <button class="btn" (click)="showAddDialog()">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+
+                <dialog id="addDialog">
+                    <h3 [(ngModel)]="addDialogTitle">{{addDialogTitle}}</h3>
+                    <p>
+                        <small [(ngModel)]="addDialogContent">
+                            {{addDialogContent}}
+                        </small>
+                    </p>
+                    <hr>
+                    <div class="flex-container">
+                        <div style="flex-basis: 100%; margin: 0px; padding: 0px;">
+                            <form [formGroup]="addObatForm">
+                                <div class="container-main" style="margin: 12px 0;">
+                                    <div class="container-child">
+                                        <div class="form-group">
+                                            <span><small>Kode Tindakan SK</small></span>
+                                            <input formControlName="valueOfTindakanSK" class="form-field" type="text"
+                                                placeholder="Kode tindakan SK">
+                                        </div>
+                                        <div style="margin: 16px 0;" *ngIf="
+                                addObatForm.get('valueOfTindakanSK').invalid &&
+                                 (
+                                  addObatForm.get('valueOfTindakanSK').dirty ||
+                                  addObatForm.get('valueOfTindakanSK').touched
+                                 )">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="addObatForm.get('valueOfTindakanSK').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin: 0px 8px;"></div>
+                                    <div class="container-child">
+                                        <div class="form-group">
+                                            <span><small>Kode Tindakan</small></span>
+                                            <input formControlName="valueOfTindakan" class="form-field" type="text"
+                                                placeholder="Kode tindakan">
+                                        </div>
+                                        <div style="margin: 16px 0;" *ngIf="
+                                addObatForm.get('valueOfTindakan').invalid &&
+                                 (
+                                  addObatForm.get('valueOfTindakan').dirty ||
+                                  addObatForm.get('valueOfTindakan').touched
+                                 )">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="addObatForm.get('valueOfTindakan').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="margin: 12px 0;"></div>
+                                <div class="form-group">
+                                    <span><small>Nomor Kunjungan</small></span>
+                                    <input formControlName="valueOfKunjungan" class="form-field" type="text"
+                                        placeholder="Nomor kunjungan">
+                                </div>
+                                <div style="margin: 16px 0;" *ngIf="
+                                addObatForm.get('valueOfKunjungan').invalid &&
+                                 (
+                                  addObatForm.get('valueOfKunjungan').dirty ||
+                                  addObatForm.get('valueOfKunjungan').touched
+                                 )">
+                                    <div style="color: red; text-align: end;"
+                                        *ngIf="addObatForm.get('valueOfKunjungan').errors?.['required']">
+                                        Kolom ini harus diisi.
+                                    </div>
+                                </div>
+                                <div style="margin: 12px 0;"></div>
+                                <div class="container-main">
+                                    <div class="container-child">
+                                        <div class="form-group">
+                                            <span><small>Biaya</small></span>
+                                            <input formControlName="amountOfBiaya" class="form-field" type="text"
+                                                placeholder="Jumlah Biaya">
+                                        </div>
+                                        <div style="margin: 16px 0;" *ngIf="
+                                        addObatForm.get('amountOfBiaya').invalid &&
+                                         (
+                                          addObatForm.get('amountOfBiaya').dirty ||
+                                          addObatForm.get('amountOfBiaya').touched
+                                         )">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="addObatForm.get('amountOfBiaya').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="margin: 0px 8px;"></div>
+                                    <div class="container-child">
+                                        <div class="form-group">
+                                            <span><small>Hasil</small></span>
+                                            <input formControlName="amountOfhasil" class="form-field" type="text"
+                                                placeholder="Jumlah Hasil">
+                                        </div>
+                                        <div style="margin: 16px 0;" *ngIf="
+                                        addObatForm.get('amountOfhasil').invalid &&
+                                         (
+                                          addObatForm.get('amountOfhasil').dirty ||
+                                          addObatForm.get('amountOfhasil').touched
+                                         )">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="addObatForm.get('amountOfhasil').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="margin: 12px 0;"></div>
+                                <div class="form-group">
+                                    <span><small>Keterangan</small></span>
+                                    <input formControlName="valueOfKeterangan" class="form-field" type="text"
+                                        placeholder="Keterangan">
+                                </div>
+                                <div style="margin: 16px 0;" *ngIf="
+                                addObatForm.get('valueOfKeterangan').invalid &&
+                                 (
+                                  addObatForm.get('valueOfKeterangan').dirty ||
+                                  addObatForm.get('valueOfKeterangan').touched
+                                 )">
+                                    <div style="color: red; text-align: end;"
+                                        *ngIf="addObatForm.get('valueOfKeterangan').errors?.['required']">
+                                        Kolom ini harus diisi.
+                                    </div>
+                                </div>
+                            </form>
+                            <div style="margin: 24px 0;"></div>
+                            <button id="save" class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg"
+                                style="background-color: #678EFE; width: 100%;" [disabled]="addObatForm.invalid">
+                                <span class="me-2 opacity-7">
+                                    <i class="icon icon-anim-pulse ion-ios-analytics-outline"></i>
+                                </span>
+                                <span class="me-1">Tambahkan Obat</span>
+                            </button>
+                        </div>
+                    </div>
+                </dialog>
+            </div>
+
+            <div class="card-body">
+                <div>
+                    <div class="flex-container data-header" style="flex-basis: 100%;">
+                        <div style="flex-basis: 20%;">
+                            <h6>Kode Obat</h6>
+                        </div>
+                        <div style="flex-basis: 20%;">
+                            <h6>Nama Obat</h6>
+                        </div>
+                        <div style="flex-basis: 20%;">
+                            <h6>Stok Obat</h6>
+                        </div>
+                        <div style="flex-basis: 20%;">
+                            <h6>Keterangan</h6>
+                        </div>
+                        <div style="flex-basis: 20%;">
+                            <h6>Aksi</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- <ng-template #contentKegiatan> -->
+                    <div *ngFor="let obat of listOfObat">
+                        <div class="flex-container" style="align-items: baseline; flex-basis: 100%;">
+                            <div class="flex-container item-kegiatan"
+                                style="padding: 0; margin: 0;" style="flex-basis: 80%;">
+                                <div style="flex-basis: 25%;">
+                                    <p>{{obat.obat.kdObat}}</p>
+                                </div>
+                                <div style="flex-basis: 25%;">
+                                    <p>{{obat.obat.nmObat}}</p>
+                                </div>
+                                <div style="flex-basis: 25%;">
+                                    <p>{{obat.obat.sedia}}</p>
+                                </div>
+                                <div style="flex-basis: 25%;">
+                                    <p>Lorem Ipsum Dolor Sit Amet</p>
+                                </div>
+                            </div>
+                            <div style="flex-basis: 10%;">
+                                <ul class="wrapper">
+                                    <li class="icon youtube" (click)="onDeleteClicked()">
+                                        <span class="tooltip">Hapus</span>
+                                        <span>
+                                            <i class="fa fa-trash"></i>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </ng-template> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <div>
+        <dialog id="confirmSaveDialog">
+            <h3>Yakin Ingin Data Sudah Benar?</h3>
+            <p>
+                <small>
+                    Anda akan menyimpan data yang telah anda masukkan sebelumnya dan proses ini tidak dapat dibatalkan.
+                </small>
+            </p>
+            <hr>
+            <div class="row">
+                <a class="button-save" id="save">Ya, simpan</a>
+            </div>
+            <button onclick="window.confirmSaveDialog.close();" aria-label="close" class="x">❌</button>
+        </dialog>
+    </div>
+</div>
+
+<div class="box">
+    <div>
+        <dialog id="failedDialog">
+            <h3>Terjadi Kesalahan</h3>
+            <p>
+                <small [(ngModel)]="failedMsg">
+                    {{failedMsg}}
+                </small>
+            </p>
+            <hr>
+            <div class="row">
+                <a class="button-close" id="close">Tutup</a>
+            </div>
+            <button onclick="window.confirmSaveDialog.close();" aria-label="close" class="x">❌</button>
+        </dialog>
+    </div>
+</div>
+
+<div class="box">
+    <div>
+        <dialog id="successDialog">
+            <h3>Selamat</h3>
+            <p>
+                <small [(ngModel)]="successMsg">
+                    {{successMsg}}
+                </small>
+            </p>
+            <div style="margin: 24px 0;"></div>
+            <button id="close" class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg"
+                style="background-color: #A85751; width: 100%;">
+                <span class="me-1">Tutup</span>
+            </button>
+            <button onclick="window.successDialog.close();" aria-label="close" class="x">❌</button>
+        </dialog>
+    </div>
+</div>
+
+<div class="card-header flex-container" style="padding: 0; margin: 0;">
+    <dialog id="pasienDialog">
+        <div class="column">
+            <h3>Pilih Pasien</h3>
+            <p>
+                <small>
+                    Pilih pasien terlebih dahulu
+                </small>
+            </p>
+            <hr>
+            <div style="margin: 12px 0;"></div>
+            <div class="flex-container data-header">
+                <div style="flex-basis: 15%;">
+                    <h6>No Kunjungan</h6>
+                </div>
+                <div style="flex-basis: 15%;">
+                    <h6>Pasien</h6>
+                </div>
+                <div style="flex-basis: 15%;">
+                    <h6>Nama Poli</h6>
+                </div>
+                <div style="flex-basis: 15%;">
+                    <h6>Tanggal Periksa</h6>
+                </div>
+            </div>
+            <div *ngFor="let pasien of listOfPasien">
+                <div class="flex-container" style="align-items: baseline;">
+                    <div class="flex-container item-kegiatan"
+                        (click)="selectedPasien(pasien.noTransaksi, pasien.noKunjungan)" style="flex-basis: 100%;">
+                        <div style="flex-basis: 15%;">
+                            <p><small>{{pasien.noKunjungan}}</small></p>
+                        </div>
+                        <div style="flex-basis: 15%;">
+                            <p><small>{{pasien.pasien}}</small></p>
+                        </div>
+                        <div style="flex-basis: 15%;">
+                            <p><small>{{pasien.namaPoli}}</small></p>
+                        </div>
+                        <div style="flex-basis: 15%;">
+                            <p><small>{{pasien.tglPeriksa}}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+    <dialog id="failedDialog">
+        <h3>Proses Gagal</h3>
+        <p>
+            <small [(ngModel)]="failedMsg">
+                {{failedMsg}}
+            </small>
+        </p>
+        <button onclick="window.failedDialog.close();" aria-label="close" class="x">❌</button>
+        <hr>
+        <button id="close" class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg"
+            style="background-color: #A85751; width: 100%;">
+            <span class="me-1">Tutup</span>
+        </button>
+    </dialog>
+
+    <dialog id="confirmDialog">
+        <h3 ([ngModel])="confirmDialogTitle">{{confirmDialogTitle}}</h3>
+        <p>
+            <small ([ngModel])="confirmDialogContent">
+                {{confirmDialogContent}}
+            </small>
+        </p>
+        <div style="margin: 24px 0;"></div>
+        <div class="container-main">
+            <div class="container-child">
+                <button id="notSure" class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg"
+                    style="background-color: #A85751; width: 100%;" ([ngModel])="confirmDialogNegativeButtonLabel">
+                    <span class="me-1">{{confirmDialogNegativeButtonLabel}}</span>
+                </button>
+            </div>
+            <div class="container-child">
+                <button id="sure" class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg"
+                    [disabled]="addObatForm.invalid" style="background-color: #ACF7C1; width: 100%; color: black;">
+                    <span class="me-1" ([ngModel])="confirmDialogPositiveButtonLabel">
+                        {{confirmDialogPositiveButtonLabel}}
+                    </span>
+                </button>
+            </div>
+        </div>
+        <button onclick="window.confirmDialog.close();" aria-label="close" class="x">❌</button>
+    </dialog>
+
+    <dialog id="detailDialog">
+        <h3>Detail MCU</h3>
+        <p>
+            <small>
+                Anda bisa melihat detailnya dibawah ini.
+            </small>
+        </p>
+        <hr>
+        <div class="row">
+            <a class="button" id="close">Tutup</a>
+        </div>
+        <button onclick="window.detailDialog.close();" aria-label="close" class="x">❌</button>
+    </dialog>
+</div>

@@ -1,0 +1,1118 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { ApiserviceService } from 'src/app/apiservice.service';
+import Swal from 'sweetalert2';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+
+// 1103072308910001
+@Component({
+  selector: 'app-mpasien',
+  templateUrl: './mpasien.component.html',
+  styles: [
+    `.example-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .example-container > * {
+      width: 100%;
+    }
+
+    .example-container form {
+      margin-bottom: 20px;
+    }
+
+    .example-container form > * {
+      margin: 5px 0;
+    }
+
+    .example-container .mat-radio-button {
+      margin: 0 5px;
+    }`
+  ],
+  providers: [
+    DatePipe,
+    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+    // `MatMomentDateModule` in your applications root module. We provide it at the component level
+    // here, due to limitations of our example generation script.
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+  ],
+})
+export class MpasienComponent implements OnInit {
+  date2 = new FormControl(new Date());
+  heading = 'Tambah Pasien';
+  subheading :any;
+  icon = 'pe-7s-diamond icon-gradient bg-warm-flame';
+
+  options: FormGroup;
+  public userDetails: any;
+  nama:any;
+  akses:any;
+ 
+  kdklinik:any;
+  cabangarr:any;
+  Username:'';
+  password:'';
+  namal:'';
+  hakakses:'';
+  kdcb:'';
+  cariuser:any;
+
+  norm:any;
+  pasien:any;
+ tgllahir:any;
+ tahun:any;
+ bulan:any;
+ hari:any;
+ tempatlahir:any;
+ an:string='An';
+ kelamin:string='';
+ alamat:'';
+ alamats:'';
+ indetitas:string='KTP';
+ noindetitas:any='';
+ nohp:any='';
+ agama:string='TIDAK TAHU';
+ marital:string='TIDAK TAHU';
+ pendidikan:string='TIDAK TAHU';
+ perkerjaan:string='TIDAK TAHU';
+
+
+ 
+ golda:string='Tidak Tahu';
+ kdcabang:any;
+ myDate = new Date();
+ usia:string='';
+ noasuransi:string='';
+
+  constructor(public http :HttpClient,private datepipe: DatePipe,private modalService: NgbModal,public toastr: ToastrService, private authService:ApiserviceService , private fb: FormBuilder) {
+    // this.options = fb.group({
+    //   hideRequired: false,
+    //   floatLabel: 'auto',
+    // });
+
+
+
+    const data = JSON.parse(localStorage.getItem("userDatacl"));
+    this.userDetails=data.userData
+    this.nama = this.userDetails.nama
+    this.akses = this.userDetails.hakakses
+this.kdklinik = this.userDetails.kdklinik;
+this.kdcabang = this.userDetails.kdcabang;
+this.tgllahir = this.datepipe.transform(this.myDate, 'yyyy-MM-dd')
+
+
+
+  }
+  profileForm = this.fb.group({
+    pasien: ['',Validators.required],
+    kelamin: ['',Validators.required],
+    tempatlahir: ['',Validators.required],
+    alamat: ['',Validators.required],
+   
+    keluarahan: ['',Validators.required],
+    indetitas: ['',Validators.required],
+    // noindetitas: ['',Validators.required],
+    // nohp: ['',Validators.required],
+    agama: ['',Validators.required],
+    marital: ['',Validators.required],
+    pendidikan: ['',Validators.required],
+    perkerjaan: ['',Validators.required],
+    golda: ['',Validators.required],
+  });
+
+  ngOnInit() {
+    this.klinik()
+    // this.tmppuser()
+    this.tmpantri()
+
+
+    // let body = {"id" : 'ax'};
+
+
+//     this.http.post<any>('https://clenicapp.com/phpjwt/crud-file/get-single-products.php',body).subscribe(data => {
+     
+
+// console.log(data.message)
+
+
+
+//   })
+
+
+
+//   this.authService.lit(body)
+// .subscribe(response => {
+
+
+//   console.log(response.message)
+
+
+// })
+
+
+ 
+
+
+
+  }
+
+  klinik(){
+    this.authService.klinikper(this.kdklinik)
+    .subscribe(
+      data => {
+      
+        this.subheading = Array.prototype.map.call(data,s=>s.nama).toString();
+    
+    
+    },
+      Error => {
+    
+       console.log(Error)
+      }
+    )
+    
+    this.authService.cabangper(this.kdklinik)
+    .subscribe(
+      data => {
+      
+this.cabangarr = data;
+
+    },
+      Error => {
+    
+       console.log(Error)
+      }
+    )
+    
+    
+
+
+  }
+tantri:any;
+tpropinsi:any;
+tpasien:any;
+totalpasien:any;
+
+  tmpantri(){
+    this.authService.pasien(this.kdcabang,'2','')
+    .subscribe(
+      data => {
+      
+this.tpasien = data;
+
+    },
+      Error => {
+    
+       console.log(Error)
+      }
+    )
+
+    this.authService.propinsi('')
+    .subscribe(
+      data => {
+      
+this.tpropinsi = data;
+
+    },
+      Error => {
+    
+       console.log(Error)
+      }
+    )
+
+    this.authService.totalpasien(this.kdcabang)
+    .subscribe(
+      data => {
+this.totalpasien = data
+
+    },
+      Error => {
+    
+       console.log(Error)
+      }
+    )
+    
+
+
+  }
+
+ 
+
+tmpusers:any;
+  tmppuser(){
+    this.authService.tampiluser(this.kdcabang)
+    .subscribe(
+      data => {
+      
+this.tmpusers = data;
+
+
+    },
+      Error => {
+    
+       console.log(Error)
+      }
+    )
+  }
+
+
+  cariuserx(a){
+console.log(a.target.value)
+
+this.authService.cariuser(this.kdcabang,a.target.value)
+.subscribe(data => {
+  this.tmpusers = data;
+
+ 
+ 
+})
+
+  }
+
+ edit(){
+ 
+ }
+
+
+
+//  delete(a){
+ 
+//     const swalWithBootstrapButtons = Swal.mixin({
+//       customClass: {
+//         confirmButton: 'btn btn-success',
+//         cancelButton: 'btn btn-danger'
+//       },
+//       buttonsStyling: false
+//     });
+
+//     swalWithBootstrapButtons.fire({
+//       title: 'Hapus User?',
+//       text: 'Yakin Akan Menghapus User',
+//       icon: 'warning',
+//       showCancelButton: true,
+//       confirmButtonText: 'Hapus',
+//       cancelButtonText: 'Batal',
+//       reverseButtons: true
+//     }).then((result) => {
+//       if (result.value) {
+//         swalWithBootstrapButtons.fire(
+//           'Berhasil Hapus User',
+//           'User Telah Terhapus Dari Database.',
+//           'success'
+//         );
+
+
+//         this.authService.deleteuser(a).then(data =>{
+//           this.tmppuser()
+    
+
+      
+//       })
+
+
+//       } else if (
+//         /* Read more about handling dismissals below */
+//         result.dismiss === Swal.DismissReason.cancel
+//       ) {
+//         swalWithBootstrapButtons.fire(
+//           'Cancelled',
+//           'Your imaginary file is safe :)',
+//           'error'
+//         );
+//       }
+//     });
+  
+//  }
+
+
+ panggil(a){
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  });
+
+  swalWithBootstrapButtons.fire({
+    title: 'Paggil Pasien?',
+    text: 'Yakin Akan Panggil Pasin User',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Panggil',
+    cancelButtonText: 'Batal',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.value) {
+      swalWithBootstrapButtons.fire(
+        'Berhasil Pangil ',
+        'User Telah Pangil ',
+        'success'
+      );
+
+      this.norm= a
+
+
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+     
+    }
+  });
+
+ }
+
+ propinsi:'';
+ propinsiid:'';
+ tkab:any;
+ kabupaten:'';
+ pilihpro(prov_id,prov_name){
+   
+this.propinsiid =  prov_id;
+this.propinsi = prov_name;
+
+this.modalService.dismissAll()
+
+   this.authService.kabupaten(this.propinsiid,'')
+   .subscribe(
+     data => {
+     
+this.tkab = data;
+
+
+   },
+     Error => {
+   
+      console.log(Error)
+     }
+   )
+ }
+
+ tkec:any;
+ kecamatan:'';
+ kabupatenid;
+ pilihkab(city_id,city_name){
+  this.kabupatenid = city_id;
+  this.kabupaten = city_name;
+
+this.modalService.dismissAll()
+
+  this.authService.kecamatan(this.kabupatenid,'')
+  .subscribe(
+    data => {
+    
+this.tkec = data;
+
+
+  },
+    Error => {
+  
+     console.log(Error)
+    }
+  )
+ }
+ tkelurahan:any;
+keluarahan=''
+kecamatanid='';
+
+ pilihkec(dis_id,dis_name){
+ 
+
+  this.kecamatanid = dis_id
+  this.kecamatan = dis_name
+
+this.modalService.dismissAll()
+
+
+  this.authService.keluarahan(this.kecamatanid,'')
+  .subscribe(
+    data => {
+    
+this.tkelurahan = data;
+
+
+  },
+    Error => {
+  
+     console.log(Error)
+    }
+  )
+
+ }
+
+ edituser(){
+  let body = {"nama" : this.pasien,"tlahir":this.tempatlahir,"jeniskelamin":this.kelamin,"tanggallahir":this.tgllahir,
+  "alamat":this.alamat,"kodekel":this.keluarahanid,"identitas":this.indetitas,"noidentitas":this.noindetitas,"nohp":this.nohp,"agama":this.agama,"marital":this.marital,
+"pendidikan":this.pendidikan,"perkerjaan":this.perkerjaan,
+"golda":this.golda,"norm":this.norm,"stssimpan":'2',"kdcabang":this.kdcabang,"noasuransi":this.noasuransi,
+"kdklinik":this.kdklinik,"kdpanggil":this.an,"usia":this.usia};
+
+
+
+this.authService.simpanpasbaru(body)
+.subscribe(response => {
+
+
+
+  if(response ){
+    this.toastr.success(''+response, 'Sukses', {
+      timeOut: 2000,
+    });
+
+
+
+    this.authService.pasien(this.kdcabang,'2','')
+    .subscribe(
+      data => {
+      
+this.tpasien = data;
+
+    },
+      Error => {
+    
+       console.log(Error)
+      }
+    )
+
+  
+    this.Batal()
+
+
+  
+   }else{
+    this.toastr.error('Simpan  Gagal', 'Eror');
+  
+   }
+
+
+
+
+
+})
+
+}
+
+Hapus(){
+
+   
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    });
+
+    swalWithBootstrapButtons.fire({
+      title: 'Hapus Pasien?',
+      text: 'Yakin Akan Menghapus Pasien',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Hapus',
+      cancelButtonText: 'Batal',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+     
+        let body = {"nama" : this.pasien,"tlahir":this.tempatlahir,"jeniskelamin":this.kelamin,"tanggallahir":this.tgllahir,
+        "alamat":this.alamat,"kodekel":this.keluarahanid,"identitas":this.indetitas,"noidentitas":this.noindetitas,"nohp":this.nohp,"agama":this.agama,"marital":this.marital,
+      "pendidikan":this.pendidikan,"perkerjaan":this.perkerjaan,"golda":this.golda,"norm":this.norm,"stssimpan":'3',"kdcabang":this.kdcabang,"kdklinik":this.kdklinik};
+      
+      
+      
+      this.authService.simpanpasbaru(body)
+      .subscribe(response => {
+      
+      
+      
+        if(response ){
+      
+      
+          if(response.metadata.code === 201){
+            this.toastr.error(response.metadata.message, 'Eror');
+        
+          }else if(response.metadata.code === 200){
+       this.toastr.success(response.metadata.message, 'Sukses', {
+            timeOut: 2000,
+          });
+      
+      
+            setTimeout(() => {
+              this.authService.pasien(this.kdcabang,'2','')
+              .subscribe(
+                data => {
+                
+          this.tpasien = data;
+          
+              },
+                Error => {
+              
+                 console.log(Error)
+                }
+              )
+            }, 150);
+       
+            
+          this.Batal()
+          this.verifsimpan = '1'
+      
+      
+          }
+         
+      
+      
+      
+      
+      //     this.authService.pasien(this.kdcabang,'2','')
+      //     .subscribe(
+      //       data => {
+            
+      // this.tpasien = data;
+      
+      //     },
+      //       Error => {
+          
+      //        console.log(Error)
+      //       }
+      //     )
+      
+          
+          // this.norm='';
+          // this.pasien='';
+      
+          // this.tempatlahir='';
+          
+          // // this.kelamin='';
+          // this.alamat='';
+          // this.alamats='';
+          // // this.indetitas='';
+          // this.noindetitas='';
+          // this.nohp='';
+          // this.agama='';
+          // this.marital='';
+          // this.pendidikan='';
+          // this.perkerjaan='';
+          // this.golda='';
+          // this.kabupaten='';
+          // this.kabupatenid='';
+          // this.propinsi='';
+          // this.propinsiid='';
+          // this.kecamatan ='';
+          // this.kecamatanid='';
+          // this.keluarahan='';
+          // this.keluarahanid='';
+      
+      
+      
+      
+      
+        
+         }else{
+          this.toastr.error('Simpan  Gagal', 'Eror');
+        
+         }
+      
+      
+      
+      
+      
+      })
+
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        // swalWithBootstrapButtons.fire(
+        //   'Cancelled',
+        //   'Your imaginary file is safe :)',
+        //   'error'
+        // );
+      }
+    });
+
+
+
+
+  
+
+}
+
+ simpan(){
+
+
+if(this.verifsimpan === '1'){
+  let body = {"nama" : this.pasien,"tlahir":this.tempatlahir,"jeniskelamin":this.kelamin,"tanggallahir":this.tgllahir,
+  "alamat":this.alamat,"kodekel":this.keluarahanid,"identitas":this.indetitas,"noidentitas":this.noindetitas,"nohp":this.nohp,"agama":this.agama,"marital":this.marital,
+"pendidikan":this.pendidikan,"perkerjaan":this.perkerjaan,
+"golda":this.golda,"norm":this.norm,"stssimpan":'1',"kdcabang":this.kdcabang,"noasuransi":this.noasuransi,
+"kdklinik":this.kdklinik,"kdpanggil":this.an,"usia":this.usia};
+
+
+
+this.authService.simpanpasbaru(body)
+.subscribe(response => {
+
+
+
+  if(response ){
+    this.toastr.success(''+response, 'Sukses', {
+      timeOut: 2000,
+    });
+
+
+
+    this.authService.pasien(this.kdcabang,'2','')
+    .subscribe(
+      data => {
+      
+this.tpasien = data;
+
+    },
+      Error => {
+    
+       console.log(Error)
+      }
+    )
+
+
+
+    this.Batal()
+
+  
+   }else{
+    this.toastr.error('Simpan  Gagal', 'Eror');
+  
+   }
+
+
+
+
+
+})
+
+}else{
+  this.toastr.error('Pakai Tombol edit', 'Eror');
+}
+
+
+
+
+  
+  
+    }
+
+
+
+    
+    namalurah:any;
+    open(content,sts) {
+
+if(sts == '1'){
+this.namalurah = 'Propinsi'
+}else if(sts == '2'){
+  this.namalurah = 'Kabupaten'
+}else if(sts == '3'){
+  this.namalurah = 'kecamatan'
+}else if(sts == '4'){
+  this.namalurah = 'Kelurahan'
+}
+   
+      
+          this.modalService.open(content).result.then((result) => {
+        
+      
+            
+          
+          }, (reason) => {
+         
+          
+          });
+        }
+
+
+
+        cariprox(a){
+          this.authService.propinsi(a.target.value)
+          .subscribe(
+            data => {
+            
+        this.tpropinsi = data;
+        
+          },
+            Error => {
+          
+             console.log(Error)
+            }
+          )
+        }
+
+        carikab(a){
+          this.authService.kabupaten(this.propinsiid,a.target.value)
+          .subscribe(
+            data => {
+            
+        this.tkab = data;
+        
+          },
+            Error => {
+          
+             console.log(Error)
+            }
+          )
+        }
+
+        carikec(a){
+          this.authService.kecamatan(this.kabupatenid,a.target.value)
+          .subscribe(
+            data => {
+            
+        this.tkec = data;
+        
+          },
+            Error => {
+          
+             console.log(Error)
+            }
+          )
+        }
+
+        carikel(a){
+          this.authService.keluarahan(this.kecamatanid,a.target.value)
+          .subscribe(
+            data => {
+            
+        this.tkelurahan = data;
+        
+          },
+            Error => {
+          
+             console.log(Error)
+            }
+          )
+        }
+
+
+
+        keluarahanid:'';
+
+        pilihkel(subdis_id,subdis_name){
+   
+          this.keluarahanid =  subdis_id;
+          this.keluarahan =subdis_name;
+    
+
+          this.modalService.dismissAll()
+           }
+
+           caripas:'2';
+           onChange(a){
+             this.caripas = a;
+
+             console.log(this.caripas)
+
+           }
+           caripass(a){
+
+            this.authService.pasien(this.kdcabang,this.caripas,a.target.value)
+            .subscribe(
+              data => {
+              
+        this.tpasien = data;
+        
+            },
+              Error => {
+            
+               console.log(Error)
+              }
+            )
+           }  
+           
+
+           res:any;
+
+           datax = [];     
+           Batal(){
+             
+    this.norm='';
+    this.pasien='';
+
+    this.tempatlahir='';
+    this.an='';
+    this.kelamin='';
+    this.alamat='';
+    this.alamats='';
+    this.indetitas='';
+    this.noindetitas='';
+    this.nohp='';
+    this.agama='TIDAK TAHU';
+    this.marital='TIDAK TAHU';
+    this.pendidikan='TIDAK TAHU';
+    this.perkerjaan='TIDAK TAHU';
+    this.golda='Tidak Tahu';
+    this.kabupaten='';
+    this.kabupatenid='';
+    this.propinsi='';
+    this.propinsiid='';
+    this.kecamatan ='';
+    this.kecamatanid='';
+    this.keluarahan='';
+    this.keluarahanid='';
+    this.tgllahir = this.datepipe.transform(this.myDate, 'yyyy-MM-dd')
+
+
+//     this.authService.tmpbpjs()
+//     .subscribe(
+//       data => {
+      
+// console.log(data.response.jnsPeserta.nama)
+
+
+// this.res = data;
+
+
+//     },
+//       Error => {
+    
+//        console.log(Error)
+//       }
+//     )
+
+
+
+
+           }
+
+
+
+triwayat:any;
+
+           riwayatpas(norm,
+            kdkelurahan,
+            pasien,
+            tgllahir,
+            jeniskelamin,
+            statusmarital,
+            agama,
+            alamat,
+            alamatsekarang,
+            hp,
+            kdasuransi,
+            noasuransi,
+            tandapengenal,
+            nopengenal,
+            tempatlahir,
+            golda, aktif,pendidikan,perkerjaan,keluarahan,content2){
+
+    this.authService.riwayatpriksa(this.kdcabang,norm)
+    .subscribe(
+      data => {
+      
+this.triwayat = data
+
+
+    },
+      Error => {
+    
+       console.log(Error)
+      }
+    )
+
+              this.modalService.open(content2).result.then((result) => {
+        
+      
+            
+          
+              }, (reason) => {
+             
+              
+              });
+
+            }
+verifsimpan='1';
+
+           pilihpasien(norm,
+            kdkelurahan,
+            pasien,
+            tgllahir,
+            jeniskelamin,
+            statusmarital,
+            agama,
+            alamat,
+            alamatsekarang,
+            hp,
+            kdasuransi,
+            noasuransi,
+            tandapengenal,
+            nopengenal,
+            tempatlahir,
+            golda, aktif,pendidikan,perkerjaan,keluarahan,kdpanggil,usia){
+
+
+
+              
+              this.norm=norm
+              this.pasien=pasien;
+          
+              this.tempatlahir=tempatlahir;
+           
+              this.kelamin=jeniskelamin;
+              this.alamat=alamat;
+              this.alamats=alamatsekarang;
+              this.indetitas=tandapengenal;
+              this.noindetitas=nopengenal;
+              this.nohp=hp;
+              this.agama=agama;
+              this.marital=statusmarital;
+              this.pendidikan=pendidikan;
+              this.perkerjaan=perkerjaan;
+              this.golda=golda;
+            this.tgllahir = tgllahir
+            this.noasuransi = noasuransi
+
+              this.keluarahanid=kdkelurahan;
+              this.keluarahan = keluarahan
+this.verifsimpan = '0';
+              this.usia =  usia
+
+
+  this.an = kdpanggil;
+
+
+
+
+
+
+            }
+
+
+
+
+
+            cekbpjsnik(){
+              this.authService.tmpbpjs(this.noindetitas,'nik')
+              .subscribe(
+                data => {
+
+                   
+                    if(data){
+
+                      console.log(data.metaData.code)
+                      if(data.metaData.code == 200){
+                        this.pasien = data.response.nama
+                        this.kelamin = data.response.sex
+                        this.tgllahir =  this.datepipe.transform(data.response.tglLahir , 'yyyy-MM-dd')
+                        this.noindetitas =  data.response.noKTP
+                        this.nohp =  data.response.noHP
+                        this.noasuransi = data.response.noKartu
+                   
+                      
+                      }else if(data.metaData.code == 204){
+                        this.pasien = ""
+                        this.kelamin = ""
+                        this.tgllahir =  ""
+                        this.noindetitas =  ""
+                        this.nohp = ""
+                        this.noasuransi = ""
+                        this.toastr.error( "data tidak di temukan", 'Eror');
+                      
+                        
+
+
+                      }else{
+                        this.pasien = ""
+                        this.kelamin = ""
+                        this.tgllahir =  ""
+                        this.noindetitas =  ""
+                        this.nohp = ""
+                        this.noasuransi = ""
+                        this.toastr.error(data.metaData.message + data.response.message, 'Eror');
+          
+                      }
+
+                    }else{
+                      this.toastr.error('Gagal Memuat Data BPJS', 'Eror');
+          
+
+                    }
+                
+                  
+              },
+                Error => {
+              
+                 console.log(Error)
+                }
+              )
+            }
+
+
+
+            cekbpjs(){
+
+              this.authService.tmpbpjs(this.noasuransi,'noka')
+              .subscribe(
+                data => {
+
+                   
+                    if(data){
+
+                      console.log(data.metaData.code)
+                      if(data.metaData.code == 200){
+                        this.pasien = data.response.nama
+                        this.kelamin = data.response.sex
+                        this.tgllahir =  this.datepipe.transform(data.response.tglLahir , 'yyyy-MM-dd')
+                        this.noindetitas =  data.response.noKTP
+                        this.nohp =  data.response.noHP
+                        
+                   
+                
+                        
+                      }else if(data.metaData.code == 204){
+                        this.pasien = ""
+                        this.kelamin = ""
+                        this.tgllahir =  ""
+                        this.noindetitas =  ""
+                        this.nohp = ""
+                        this.noasuransi = ""
+                        this.toastr.error(data.metaData.message, 'Eror');
+                      
+
+                      }else{
+                        this.pasien = ""
+                        this.kelamin = ""
+                        this.tgllahir =  ""
+                        this.noindetitas =  ""
+                        this.nohp = ""
+                        this.noasuransi = ""
+                        this.toastr.error(data.metaData.message + data.response.message, 'Eror');
+          
+          
+                      }
+
+                    }else{
+                      this.toastr.error('Gagal Memuat Data BPJS', 'Eror');
+          
+
+                    }
+                
+                  
+              },
+                Error => {
+              
+                 console.log(Error)
+                }
+              )
+            }
+
+
+
+
+          
+}

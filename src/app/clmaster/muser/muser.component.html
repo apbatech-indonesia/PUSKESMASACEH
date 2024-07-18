@@ -1,0 +1,302 @@
+<!-- <div class="row">
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+        Basic
+      </div>
+
+      </div>
+      <div class="card-body">
+        <div class="example-container">
+          <mat-form-field>
+            <input matInput placeholder="Input">
+          </mat-form-field>
+          <mat-form-field>
+            <textarea matInput placeholder="Textarea"></textarea>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Select">
+              <mat-option value="option">Option</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        </div>
+
+  </div>
+
+
+</div> -->
+
+
+<!-- <app-page-title [heading]="heading" [subheading]="subheading" [icon]="icon"></app-page-title> -->
+
+
+
+<!-- <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+  <label for="first-name">First Name: </label>
+  <input id="Username" type="text" formControlName="Username"  [(ngModel)]="Username">
+
+  <label for="last-name">Last Name: </label>
+  <input id="last-name" type="text" formControlName="lastName">
+  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+  <button  (click)="batal()">batal</button>
+</form> -->
+<div class="row">
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header" >
+       Master User
+      </div>
+      <div class="card-body">
+        <!-- <form> -->
+          <form [formGroup]="profileForm" >
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Username*</label>
+            <input formControlName="Username"  [(ngModel)]="Username"   placeholder="Username" type="text" class="form-control">
+          </div>
+          <div class="position-relative mb-3">
+            <label for="examplePassword" class="form-label">Password*</label>
+            <input formControlName="password" [(ngModel)]="password"   placeholder="Password" type="password" class="form-control">
+          </div>
+
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Nama Lengkap*</label>
+            <input   formControlName="namal" [(ngModel)]="namal" placeholder="Nama..." type="text" class="form-control">
+          </div>
+
+
+          <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label">Hak Akses*</label>
+            <select   formControlName="hakakses"  [(ngModel)]="hakakses" id="exampleSelect" class="form-select">
+              <option value="">--PILIH--</option>
+              <option >Admisi</option>
+              <option >administrator</option>
+              <option >Manajemen</option>
+              <option >Kasir</option>
+              <option >Kasir RJ</option>
+              <option >Kasir Koordinator</option>
+              <option >Dokter</option>
+              <option >Perawat</option>
+              <option >RM</option>
+              <option >Laborat</option>
+              <option >Radiologi</option>
+              <option >farmasi</option>
+              <option >Antrian</option>
+            </select>
+          </div>
+        
+          <!-- <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label">Kode Cabang*</label>
+            <select  formControlName="kdcb"  [(ngModel)]="kdcb" id="exampleSelect" class="form-select">
+              <option value="">--PILIH--</option>
+              <option *ngFor="let x of cabangarr" value="{{x.kdcabang}}" >{{x.nama}}</option>
+              
+            </select>
+          </div> -->
+        </form>
+       
+         
+       
+            <div class="row">
+              <div class="col-md-5">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-info"  [disabled]="!profileForm.valid"  *ngIf="!showedit" (click)="simpan()">Simpan
+                </button>
+              </div>
+              </div>
+              <div class="col-md-5">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-focus" [disabled]="!profileForm.valid"  *ngIf="showedit" (click)="edituser()">Edit
+                </button>
+              </div>
+              </div>
+              <div class="col-md-2">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-danger" (click)="batal()">Batal
+                </button>
+              </div>
+              </div>
+          </div>
+         
+         
+        <!-- </form> -->
+       
+
+       
+
+      </div>
+      <!-- <button type="button" class="btn btn-info btn-lg"  routerLink="/dashboards/management">SIMPAN</button> -->
+   
+      
+    </div>
+ 
+   
+  </div>
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+        Data User
+      </div>
+      <div class="p-2">
+        <div class="row">
+          <label for="staticEmail" class="col-auto col-form-label">Cari Nama:</label>
+          <div class="col-auto">
+            <input type="text" class="form-control ms-2" [(ngModel)]="cariuser" (keyup)="cariuserx($event)" >
+           
+          </div>
+        </div>
+      </div>
+
+    
+        <div class="example-container">
+          
+
+          <div class="main-card mb-3 card" style="font-size:12px ;">
+            
+            <div class="table-responsive">
+              <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th>Username</th>
+                    <th>Nama</th>
+                    <th class="text-center">Hak Akses</th>
+                  
+                    <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let a of tmpusers; index as i">
+                    <td class="text-center text-muted">{{i+1}}</td>
+                    <td class="text-center text-muted">{{a.username}}</td>
+                    <td>
+                      <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                         
+                          <div class="widget-content-left flex2">
+                           
+                           
+                            <div class="widget-heading" (click)="open(content6,a.hakakses,a.username)">{{a.nama}}</div>
+                           
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center" (click)="open(content6,a.hakakses,a.username)">{{a.hakakses}}<br>
+                      <b *ngIf="a.hakakses === 'Dokter'">Silahkan Maping User Dokter</b>
+
+
+                    </td>
+                    
+                    <td class="text-center">
+                      <button class="mb-2 me-2 btn-pill btn btn-outline-primary" (click)="edit(a.kduser,a.username,a.nama,a.hakakses,a.kdcabang,a.password,a.pass)">Pilih
+                      </button>
+                      <button class="mb-2 me-2 btn-pill btn btn-outline-danger" (click)="delete(a.kduser,a.username)">Delete
+                      </button>
+                    </td>
+                  </tr>
+               
+                </tbody>
+              </table>
+            </div>
+           
+          </div>
+
+
+        </div>
+    
+    
+    </div>
+  
+    
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="card-body">
+    <ng-template #content6 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">List Dokter</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="input-group">
+          <div class="input-group-text" >
+            <div class="">
+              
+              <fa-icon [icon]="faSearch" ></fa-icon>
+            </div>
+          </div>
+          <input placeholder="Search..."  (keyup)="caripass($event)" type="text" class="form-control">
+        </div>
+      
+              
+              <div class="table-responsive">
+                <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                  <thead>
+                    <tr>
+                   
+                      <th>Dokter</th>
+                      <th>Online</th>
+                     
+                      <th class="text-center">Actions</th>
+                    </tr>
+                  </thead>
+                 
+  
+  
+                  
+  
+                   <tbody>
+  
+                    <tr *ngFor="let a of tdokter">
+           
+                      <td style="font-size: 12px;color:black">
+                        {{a.namdokter}}
+                       
+                      </td>
+                      <td >
+                        {{a.statusonline}}
+                      </td>
+                 
+                      <td class="text-center">
+                        <div class="badge bg-pill bg-info"   (click)="setting(a.kddokter,'',a.kdcabang)">P</div>
+                     
+                      </td>
+                    </tr>
+  
+  
+                   
+                  </tbody>
+                </table>
+              </div>
+             
+        
+
+
+     
+      </div>
+      <div class="modal-footer">
+      
+      </div>
+    </ng-template>
+   
+  </div>
+
+
+  
+</div>

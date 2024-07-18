@@ -1,0 +1,76 @@
+
+
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+      Overview Laporan Laba Rugi
+      </div>
+      <div class="card-body">
+     
+        <div class="d-inline-block" ngbDropdown>
+
+      
+    
+           <div ngbDropdownMenu class="dropdown-menu-rounded">
+      
+            <button class="dropdown-item" (click)="laprj('Laporan Laba Rugi Klinik')">Laporan Laba Rugi Klinik</button>
+            <button class="dropdown-item" (click)="laprj('Laporan Laba Rugi Farmasi')">Laporan Laba Rugi Farmasi</button>
+
+            <!-- <div class="dropdown-divider"></div>
+            <button class="dropdown-item"  (click)="laprj('Laporan 10 Besar Penyakit')">Laporan 10 Besar Penyakit</button>
+            <button class="dropdown-item"  (click)="laprj('Laporan 10 Besar Tindakan')">Laporan 10 Besar Tindakan</button>
+            <button class="dropdown-item"   (click)="laprj('Laporan Pasien Baru')">Laporan Pasien Baru</button> -->
+          </div>
+          </div>
+
+      </div>
+    
+      
+    </div>
+ 
+   
+  </div>
+  <div class="col-md-8">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+      {{judul}}
+      </div>
+    
+
+      <div class="card-body">
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label">Tgl Dari</label>
+          <input [(ngModel)]="tgldari"  type="date" class="form-control">
+        </div>
+        <div *ngIf="judul ==='Laporan Laba Rugi Farmasi' "  class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label">Tgl Sampai</label>
+          <input [(ngModel)]="tglsampai"  type="date" class="form-control">
+        </div>
+      
+ 
+
+      <div *ngIf="judul ==='Laporan Laba Rugi Klinik' ">
+        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="laprl()">Laba Rugi Klinik
+        </button>
+      
+      </div>
+   
+      <div *ngIf="judul ==='Laporan Laba Rugi Farmasi' ">
+        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="labarugiobat()">Laba Rugi Farmasi
+        </button>
+     
+      </div>
+   
+      </div>
+    
+    </div>
+  
+    
+  </div>
+
+
+
+  
+</div>

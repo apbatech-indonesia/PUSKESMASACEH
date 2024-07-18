@@ -1,0 +1,1683 @@
+<div class="app-inner-layout">
+  <div class="card mb-3">
+    <div class="card-header-tab card-header">
+      <div class="card-header-title font-size-lg text-capitalize fw-normal">
+        <i class="header-icon lnr-charts icon-gradient bg-happy-green"> </i>
+        <b style="font-size:18px;color:rgb(75, 75, 75)">POS LABORATORIUM</b>
+      </div>
+      <div class="btn-actions-pane-right text-capitalize">
+        <button class="btn-wide btn-outline-2x me-md-2 btn btn-outline-focus btn-sm"   (click)="openLarge(content6)">  Lihat Pasien</button>
+
+
+
+      </div>
+    </div>
+    <div class="g-0 row" *ngIf="showdata">
+      <div class="col-md-12 col-lg-4">
+        <ul class="list-group list-group-flush">
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading">NO TRANSAKSI :</div>
+                    <div class="widget-subheading">{{notransaksi}}</div>
+                  </div>
+                
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading">PASIEN</div>
+                    <div class="widget-subheading">{{norm}} - {{pasien}}</div>
+                  </div>
+                  <!-- <div class="widget-content-right">
+                    <div class="widget-numbers text-primary">$12.6k</div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-12 col-lg-4">
+        <ul class="list-group list-group-flush">
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading">JENIS PASIEN</div>
+                    <div class="widget-subheading"> {{costumer}} - {{namacus}}</div>
+                  </div>
+                  <!-- <div class="widget-content-right">
+                    <div class="widget-numbers text-danger">45,9%</div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading" (click)="opendokx(contentdokx)">DOKTER LABORATORIUM</div>
+                    <div class="widget-subheading"> {{namdokter}}</div>
+                    <i style="font-weight: bold;" class="nav-link-icon pe-7s-search"></i>
+                  </div>
+                  <div class="widget-content-right"  (click)="opendok(contentdok)">
+                    <div class="widget-heading">DOKTER PENGIRIM</div>
+                    <div class="widget-subheading"> {{dokterkirim}}</div>
+                    <i style="font-weight: bold;" class="nav-link-icon pe-7s-search"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-12 col-lg-4">
+        <ul class="list-group list-group-flush">
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading">POLIKLINIK</div>
+                    <div class="widget-subheading"> {{nampoli}}</div>
+                  </div>
+                  <!-- <div class="widget-content-right">
+                    <div class="widget-numbers text-success">1896</div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading">ALAMAT</div>
+                    <div class="widget-subheading">{{alamat}}</div>
+                  </div>
+                  <div class="widget-content-right">
+                    <button *ngIf="akses === 'Manajemen'" class="btn-wide btn-outline-2x me-md-2 btn btn-outline-focus btn-sm" 
+                    (click)="batalpriksa()"
+                    >Batal Priksa</button>
+
+
+                    <!-- <div class="widget-numbers text-primary">Batal Priksa</div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-3" *ngIf="statusverif">
+    <div class="card-header-tab card-header">
+      <div class="card-header-title font-size-lg text-capitalize fw-normal">
+        <i class="header-icon lnr-charts icon-gradient bg-happy-green"> </i>
+        <b style="font-size:14px;color:rgb(75, 75, 75)">VERIFIKASI PERMINTAAN LABORATORIUM</b>
+      </div>
+     
+    </div>
+    <table class="table table-striped">
+     
+      <tbody>
+        <tr *ngFor="let x of tlistrad">
+ 
+          <td style="font-size: 11px;color: black" >
+            
+{{x.nama}} 
+          </td>
+        
+    </tr>
+     </tbody>
+
+      </table>
+      <div class="card-shadow-info border mb-3 card card-body border-info">
+        <h6 class="card-title">KLINIS</h6>
+        {{keteranganakhirrad}}
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <form [formGroup]="profileFormx" >
+            <div class="position-relative mb-3">
+              <label for="exampleSelect" class="form-label"  style="color:black">Dokter Laborat</label>
+              <select formControlName="drradd"  [(ngModel)]="drradd" id="exampleSelect" class="form-select">
+                <option   ></option>
+                <option  *ngFor="let x of tdok" value="{{x.kddokter}}" >{{x.namdokter}}</option>
+             
+                
+    
+              </select>
+            </div>
+            </form>
+</div>
+<div class="col-md-6">
+
+</div>
+            </div>
+
+            <table *ngIf="shotombolxl" class="table table-striped">
+              <thead>
+                <tr>
+                 
+                  <th scope="col">Pasien</th>
+                  <th scope="col">Act</th>
+               
+              
+                </tr>
+              </thead>
+
+     
+              <tbody>
+                <tr *ngFor="let x of tkk">
+         
+                  <td style="font-size: 11px;color: black" >
+                    
+        {{x.pasien}} 
+                  </td>
+                  <td  >
+                    <div class="badge bg-pill bg-danger" (click)="pilihpasien(
+                      x.norm,x.kdpoli
+                          ,x.tglpriksa
+                          ,x.kddokter
+                          ,x.kdkostumerd
+                          ,x.notransaksi
+                          ,x.pasien
+                          ,x.tgllahir
+        
+                          ,x.nampoli
+                          ,x.namdokter
+                          ,x.nama
+                          ,x.costumer
+                          ,x.alamat,x.kdtarif,x.kelas,x.dokterkirim,x.nofaktur,x.jeniskelamin,x.statusverif,x.kddokterpengirim)">VERIFIKASI</div>
+                   
+                              </td>
+                
+            </tr>
+             </tbody>
+        
+              </table>
+
+
+
+         
+        
+
+
+            <div class="row">
+              <div class="col-md-2">
+               
+              </div>
+              <div class="col-md-8">
+                <!-- <div  *ngIf="shotombolx" class="loader">
+                  <div class="ball-pulse">
+                    <div style="background-color: rgb(63, 106, 216);"></div>
+                    <div style="background-color: rgb(63, 106, 216);"></div>
+                    <div style="background-color: rgb(63, 106, 216);"></div>
+                  </div>
+                </div> -->
+
+
+                <div class="d-grid gap-2">
+    
+
+                <button class="mb-2 me-2 btn-pill btn btn-info"  *ngIf="shotombol"  [disabled]="!profileFormx.valid" (click)="verifpermintaanx()">Verifikasi Permintaan
+                </button>
+
+              </div>
+              </div>
+              <div class="col-md-2">
+               
+              </div>
+             
+          </div>
+
+
+    
+
+  </div>
+
+
+<div  *ngIf="!statusverif">
+  <ul ngbNav #nav1="ngbNav" class="nav-tabs">
+    <li ngbNavItem>
+      <a ngbNavLink><span>Transaksi</span></a>
+      <ng-template ngbNavContent>
+        <div class="app-inner-layout__wrapper" [ngClass]="{'open-mobile-menu' : toggleMobileSidebar}">
+          <div class="app-inner-layout__content card">
+                <div class="app-inner-layout__top-pane pe-2">
+                  
+                  <div class="pane-left">
+                    <div class="mobile-app-menu-btn">
+                      <button type="button" class="hamburger hamburger--elastic" [ngClass]="{'is-active' : toggleMobileSidebar}"
+                        (click)="toggleMobileSidebar = !toggleMobileSidebar">
+                        <span class="hamburger-box">
+                          <span class="hamburger-inner"></span>
+                        </span>
+                      </button>
+                    </div>
+          
+                    
+                    <!-- <div class="input-group">
+                      <div class="input-group-text" >
+                        <div class="">
+                          
+                          <fa-icon [icon]="faSearch" ></fa-icon>
+                        </div>
+                      </div>
+                      <input placeholder="Search..." type="text" class="form-control" (keyup)="cproduk($event)">
+                    </div> -->
+                  </div>
+
+
+                  <div class="pane-right"   *ngIf="showtomboltarif">
+                    <div class="input-group"  *ngIf="showdata">
+                      <div class="input-group-text" (click)="openLargex(content7)">
+                        <div class="">
+                          <fa-icon [icon]="faPlus" ></fa-icon>
+                        </div>
+                      </div>
+
+
+                      <!-- <div class="input-group-text" *ngIf="netto <= 0" (click)="openLargex(content7)">
+                        <div class="">
+                          <fa-icon [icon]="faPlus" ></fa-icon>
+                        </div>
+                      </div>
+                       -->
+                    </div>
+                  </div>
+          
+                </div>
+                <div class="bg-white">
+                  <div class="table-responsive tableFixHead">
+                    <table  class="table">
+                      <thead >
+                        <tr >
+                         
+                          <th scope="col">No</th>
+                          <th scope="col" >Kode</th>
+                         
+                          <th scope="col" >Produk</th>
+                          <th scope="col" >Tanggal</th>
+                          <th scope="col" >Harga</th>
+                          <th scope="col" >Qty</th>
+                          <th scope="col" >Debet</th>
+                          <th scope="col" >Kredit</th>
+                          <th scope="col" >Disc</th>
+                        </tr>
+                      </thead>
+          
+                      <tbody style="font-size:11px;color:black"  >
+                        
+                      <tr *ngFor="let x of ttransaksi">
+                          <td  class="text-center" style="width: 78px;">
+                          
+                          
+          
+                            <div class="btn-group" ngbDropdown  *ngIf="netto <= 0" >
+                              <button *ngIf="notransaksi === nofaktur" type="button" class="btn btn-link btn-icon btn-icon-only"  (click)="transaksit(x.jenistransaksi,x.prosestutup)"  ngbDropdownToggle>
+                                <span>
+                                  <div class="ms-auto badge rounded-pill bg-success">{{x.nomor}}</div>
+          
+          
+                                  
+                                
+                                </span>
+                              </button>
+
+                              <button  *ngIf="notransaksi != nofaktur" type="button" class="btn btn-link btn-icon btn-icon-only"  (click)="transaksitx()" ngbDropdownToggle>
+                                <span>
+                                  <div class="ms-auto badge rounded-pill bg-success">{{x.nomor}}</div>
+          
+          
+                                  
+                                
+                                </span>
+                              </button>
+
+
+                              </div>
+                            <div class="btn-group" ngbDropdown *ngIf="netto > 0">
+                              <button type="button" class="btn btn-link btn-icon btn-icon-only" ngbDropdownToggle>
+                                <span>
+                                  <div class="ms-auto badge rounded-pill bg-success">{{x.nomor}}</div>
+          
+          
+                                  
+                                
+                                </span>
+                              </button>
+                              <div class="dropdown-menu-lg" ngbDropdownMenu>
+                                <div class="dropdown-menu-header">
+                                  <div class="dropdown-menu-header-inner bg-primary">
+                                    <div class="menu-header-image dd-header-bg-2"></div>
+                                    <div class="menu-header-content">
+                                      <h5 class="menu-header-title">Transaksi </h5>
+                                      <h6 class="menu-header-subtitle">{{x.produk}}</h6>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="grid-menu grid-menu-2col overflow-hidden">
+                                  <div class="g-0 row">
+                                    <div class="col-sm-6" (click)="qtyproduk(x.nomor,x.kdproduk,x.produk,x.notransaksi,x.harga,x.nofaktur)">
+                                      <button class="btn-icon-vertical btn-transition btn btn-outline-primary"><i
+                                          class="lnr-license btn-icon-wrapper"  ></i>Qty
+                                      </button>
+                                    </div>
+                                    <div class="col-sm-6" *ngIf="akses === 'Kasir Koordinator' || akses === 'Manajemen'" (click)="diskonprodukp(content8,x.nomor,x.kdproduk,x.produk,x.notransaksi,x.harga,x.nofaktur)">
+                                      <button class="btn-icon-vertical btn-transition btn btn-outline-secondary"><i
+                                          class="lnr-license btn-icon-wrapper"></i>Diskon
+                                      </button>
+                                    </div>
+                                
+                                    <div class="col-sm-6">
+                                      <button class="btn-icon-vertical btn-transition btn btn-outline-info"
+                                      (click)="hapusproduk(x.nomor,x.kdproduk,x.produk,x.notransaksi,x.harga,x.nofaktur,x.kridita,x.kdpoli)"
+                                      ><i
+                                          class="lnr-heart btn-icon-wrapper"></i>Hapus
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                             
+                              </div>
+                            </div>
+          
+          
+                          </td>
+                          <td >
+                            {{x.kdproduk}}
+                          </td>
+                          <td  style="width: 210px;">
+                            <!-- <p> {{x.produk}}</p> -->
+                            <p *ngIf="x.nomor == '100'"> <b>{{x.produk}}</b> By {{x.user}}</p>
+                            
+                            <p *ngIf="x.nomor !== '100'"> {{x.produk}} </p>
+
+                          </td>
+                          <td >
+                            {{x.tgltransaksi}}
+                          </td>
+                          <td>
+                            {{x.harga}}
+                          </td>
+                          <td>
+                            {{x.qty}}
+                          </td>
+          
+                          <td>
+                            {{x.debet}}
+                          </td>
+                         
+                          <td >
+                            {{x.kridit}}
+                          </td>
+                          <td >
+                            {{x.disc}}
+                          </td>
+                        </tr> 
+                       
+                       
+                      </tbody>
+                    </table>
+                  </div>
+              
+                </div>
+              </div>
+          
+              
+              <div class="app-inner-layout__sidebar card">
+                <ul class="nav flex-column">
+                  <li class="pt-4 ps-3 pe-3 pb-3 nav-item">
+                    <div class="d-grid" *ngIf="showstatus">
+                      <button class="btn-pill btn-shadow btn btn-primary" *ngIf="netto <= 0">LUNAS</button>
+                      <button class="btn-pill btn-shadow btn btn-danger" *ngIf="netto > 0">BELUM LUNAS</button>
+                    </div>
+                  </li>
+                  <li class="nav-item-header nav-item">My Bill</li>
+                  <li class="nav-item">
+                    <a [routerLink]="" class="nav-link">
+                      <i class="nav-link-icon pe-7s-wallet"></i><span>Total Tagihan</span>
+                      <div class="ms-auto badge rounded-pill bg-info">{{totaltagihan | currency:'IDR'}}</div>
+                    </a>
+                  </li>
+          
+                  <li class="nav-item">
+                    <a [routerLink]="" class="nav-link">
+                      <i class="nav-link-icon pe-7s-wallet"></i><span>Terbayar</span>
+                      <div class="ms-auto badge rounded-pill bg-info">{{totalbayar | currency:'IDR'}}</div>
+                    </a>
+                  </li>
+                  <!-- <li class="nav-item">
+                    <a [routerLink]="" class="nav-link">
+                      <i class="nav-link-icon pe-7s-wallet"></i>
+                      <span>Kurang</span>
+                      <div class="ms-auto badge rounded-pill bg-info">8</div>
+                    </a>
+                  </li> -->
+                  <li class="nav-item">
+                    <a (click)="diskonproduk()" class="nav-link">
+                      <i class="nav-link-icon pe-7s-gift"></i>
+                      <span>Total Diskon</span>
+                      <div class="ms-auto badge bg-success">{{totaldisc | currency:'IDR' }}</div>
+                    </a>
+                  </li>
+                  <li class="nav-item-divider nav-item"></li>
+                  <li class="nav-item">
+                    <a [routerLink]="" class="nav-link">
+                      <i class="nav-link-icon pe-7s-cash"></i>
+                      <span>Total Netto</span>
+                      <div class="ms-auto badge bg-warning">{{netto | currency:'IDR'}}</div>
+                    </a>
+                  </li>
+          
+                  <!-- <li class="nav-item">
+                    <a [routerLink]="" class="nav-link">
+                      <i class="nav-link-icon pe-7s-cash"></i>
+                      <span>Sudah Masuk</span>
+                      <div class="ms-auto badge bg-warning">{{nettosudahmasuk | currency:'IDR'}}</div>
+                    </a>
+                  </li> -->
+          
+                  <li class="nav-item">
+                    <a [routerLink]="" class="nav-link">
+                      <i class="nav-link-icon pe-7s-cash"></i>
+                      <span>Netto RJ</span>
+                      <div class="ms-auto badge bg-warning">{{totalrjsaja | currency:'IDR'}}</div>
+                    </a>
+                  </li>
+                
+                  <li class="nav-item-divider nav-item"></li>
+              
+                  <li class="nav-item-btn text-center nav-item" *ngIf="notransaksi === nofaktur">
+                    <button class="btn-wide btn-pill btn btn-success btn-sm" *ngIf="!showtransfer" (click)="bayartagihan(content9)">Bayar Tagihan</button>
+
+                    <button class="btn-wide btn-pill btn btn-success btn-sm" *ngIf="showtransfer" (click)="bayartransfer(contenttf)">Transfer Tagihan</button>
+
+
+
+                  </li>
+                  <!-- <div *ngIf="showtransfer">
+                    <li class="nav-item-btn text-center nav-item" >
+                      <button class="btn-wide btn-pill btn btn-success btn-sm" (click)="bayartransfer(contenttf)">Transfer Tagihan</button>
+                    </li>
+
+                  </div> -->
+                  <div *ngIf="!showtransfer">
+                    <li class="nav-item-btn text-center nav-item" *ngIf="notransaksi != nofaktur">
+                      <button class="btn-wide btn-pill btn btn-success btn-sm" >Rujuk Internal Bayar Di Kasir Rj</button>
+                    </li>
+
+                  </div>
+
+                
+
+
+                  <li class="nav-item-divider nav-item"></li>
+                
+              
+          
+                 
+                
+                  
+                    <div class="btn-group" ngbDropdown>
+                      <button type="button" class="btn btn-link btn-icon btn-icon-only" ngbDropdownToggle>
+                        <span>
+                          <div class="badge ms-0 me-3 badge-dot badge-dot-xl bg-primary">Dark</div> Cetak Laporan
+                          <fa-icon [icon]="faAngleDown"></fa-icon>
+                        </span>
+                      </button>
+                      <div class="dropdown-menu-lg" ngbDropdownMenu>
+                        <div class="dropdown-menu-header">
+                          <div class="dropdown-menu-header-inner bg-primary">
+                            <div class="menu-header-image dd-header-bg-2"></div>
+                            <div class="menu-header-content">
+                              <h5 class="menu-header-title">Cetak Laporan</h5>
+                         
+                            </div>
+                          </div>
+                        </div>
+                        <div class="grid-menu grid-menu-2col overflow-hidden">
+                          <div class="g-0 row">
+                            <div class="col-sm-6" (click)="cetakinvoice()">
+                              <button class="btn-icon-vertical btn-transition btn btn-outline-primary"><i
+                                  class="lnr-license btn-icon-wrapper"></i>Invoice
+                              </button>
+                            </div>
+                            <div class="col-sm-6" (click)="cetakikwitansi()">
+                              <button class="btn-icon-vertical btn-transition btn btn-outline-secondary"><i
+                                  class="lnr-license btn-icon-wrapper"></i>Kwitansi
+                              </button>
+                            </div>
+                            <!-- <div class="col-sm-6"  >
+                              <button class="btn-icon-vertical btn-transition btn btn-outline-success"><i
+                                  class="lnr-license btn-icon-wrapper"></i>Pendapatan RJ
+                              </button>
+                            </div> -->
+                            <!-- 
+                            <div class="col-sm-6" (click)="kpendapatan(content10,'2')">
+                              <button class="btn-icon-vertical btn-transition btn btn-outline-info"><i
+                                  class="lnr-license btn-icon-wrapper"></i>Rekapitulasi Kasir
+                              </button>
+                            </div>
+                           -->
+                          </div>
+                        </div>
+                     
+                      </div>
+                    </div>
+                  
+          
+          
+                </ul>
+              </div>
+          
+              
+            </div>
+      </ng-template>
+    </li>
+    <li ngbNavItem >
+      <a ngbNavLink (click)="lihathasil()"><b >Hasil Laboratorium</b></a>
+      <ng-template ngbNavContent>
+
+        <div class="app-inner-layout__wrapper" [ngClass]="{'open-mobile-menu' : toggleMobileSidebar}">
+          <div class="app-inner-layout__content card">
+                <div class="app-inner-layout__top-pane pe-2">
+                  
+                  <div class="pane-left">
+                    <div class="mobile-app-menu-btn">
+                      <button type="button" class="hamburger hamburger--elastic" [ngClass]="{'is-active' : toggleMobileSidebar}"
+                        (click)="toggleMobileSidebar = !toggleMobileSidebar">
+                        <span class="hamburger-box">
+                          <span class="hamburger-inner"></span>
+                        </span>
+                      </button>
+                    </div>
+          
+<!--                     
+                    <div class="input-group">
+                      <div class="input-group-text" >
+                        <div class="">
+                          
+                          <fa-icon [icon]="faSearch" ></fa-icon>
+                        </div>
+                      </div>
+                      <input placeholder="Search..." type="text" class="form-control" (keyup)="cprodukobat($event)">
+                    </div> -->
+                  </div>
+                
+          
+                </div>
+                <div class="bg-white">
+                  <div class="table-responsive tableFixHead">
+                    <table  class="table">
+                      <thead >
+                        <tr >
+                         
+                          <th scope="col">Pemeriksaan</th>
+                          <th scope="col" >Hasil</th>
+                         
+                          <th scope="col" >Satuan</th>
+                          <th scope="col" >Keterangan</th>
+                          <th scope="col" >Nilai Normal</th>
+                          <th scope="col" >Golongan</th>
+                          <th scope="col" >Warna</th>
+                         
+                        
+                        </tr>
+                      </thead>
+          
+                      <tbody style="font-size:11px;color:black" *ngFor="let y of thasillab; let i= index">
+                        
+                        <tr >
+                          <td  >
+                          
+                          
+          
+                           
+                           <b> {{y.golongan}}</b>
+          
+          
+                          </td>
+                          <td >
+                            
+                           
+                          </td>
+                          <td >
+          
+                          </td>
+                          <td >
+                           
+                          
+                          </td>
+                          <td>
+                      
+                          </td>
+                          <td>
+                         
+                          </td>
+          
+                          <td>
+                           
+                          </td>
+                         
+                        </tr> 
+
+
+
+                      <tr *ngFor="let x of y.detail; let i= index">
+                          <td  >
+                          
+                          
+
+                              {{x.nama}}
+                           
+          
+          
+                          </td>
+                          <td >
+                            
+                            <input style="border-radius: 5px;border:solid 1px #ccc" placeholder="Hasil..." type="text" [(ngModel)]="x.hasil" >
+                          </td>
+                          <td >
+                            {{x.satuan}}
+                          </td>
+                          <td >
+                           
+                            <input style="border-radius: 5px;border:solid 1px #ccc" placeholder="keterangan..." type="text" [(ngModel)]="x.keterangan" >
+                          </td>
+                          <td>
+                            {{x.refrensi}} 
+                          </td>
+                          <td>
+                            {{x.golongan}}
+                          </td>
+          
+                          <td>
+                            <select  [(ngModel)]="x.warna" class="form-select">
+                             
+                              <option value="Hitam" >Hitam/Normal</option>
+                              <option value="Merah" >Merah/Upnormal(Hi)</option>
+                              <option value="Merahl" >Merah/Upnormal(Low)</option>
+                              <option value="Kuning" >Kuning/Hati"</option>
+            
+                            </select>
+                          </td>
+                         
+                        </tr> 
+                       
+                       
+                      </tbody>
+                    </table>
+                  </div>
+              
+                </div>
+              </div>
+          
+              
+              <div class="app-inner-layout__sidebar card">
+                <ul class="nav flex-column">
+                
+                  <li class="nav-item-header nav-item">Pemeriksaan</li>
+                  <li class="nav-item" *ngFor="let x of ttransaksi">
+                    <a  class="nav-link" *ngIf="x.kridita == 0" (click)="openLargemap(content11,x.kdproduk,x.produk)">
+                      <i class="nav-link-icon pe-7s-angle-right" ></i><span>{{x.produk}}</span>
+                      <!-- <div class="ms-auto badge rounded-pill bg-info">{{totaltagihanfar | currency:'IDR'}}</div> -->
+                    </a>
+                  </li>
+          
+                 
+                
+                
+                  <li class="nav-item-header nav-item">Keterangan</li>
+                    <div class="position-relative mb-3">
+                   
+                    <textarea name="text" [(ngModel)]="keteranganakhir" class="form-control"></textarea>
+                  </div>
+              
+
+
+                  <li class="pt-4 ps-3 pe-3 pb-3 nav-item">
+                    <div class="d-grid">
+                      <button class="btn-pill btn-shadow btn btn-primary" (click)="hasilalb()">SIMPAN HASIL</button>
+                 
+                    </div>
+                  
+                    
+                  </li>
+                
+                  <div class="card main-card mb-3" *ngIf="showloading">
+                    
+                    <div class="card-body">
+                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </div>
+                  </div>
+                  
+                  <!-- <li class="nav-item-btn text-center nav-item">
+                    <button class="btn-wide btn-pill btn btn-success btn-sm" (click)="bayartagihan(content9)">Bayar Tagihan</button>
+                  </li> -->
+                  <li class="nav-item-divider nav-item"></li>
+                  <div class="row">
+                  <div class="col-md-6" (click)="lihathasilfix()">
+                    <div class="font-icon-wrapper"><i class="lnr-book"> </i>
+                      <p>Lihat Hasil</p></div>
+                  </div>
+                  <div class="col-md-6" (click)="cetakhasil()">
+                    <div class="font-icon-wrapper"><i class="lnr-printer"> </i>
+                      <p>Cetak Hasil</p></div>
+                  </div>
+                 
+                </div>
+                  
+                
+                  
+          
+          
+                </ul>
+              </div>
+          
+              
+            </div>
+            
+      </ng-template>
+    </li>
+  
+  </ul>
+  <div [ngbNavOutlet]="nav1"></div>
+</div>
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+  <div class="card-body">
+    <ng-template #content6 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">List Pasien</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+         
+              <select [(ngModel)]="statuscari" style="font-size:12px;" class="form-select" (change)="onChangestscari($event.target.value)">
+                <option value="tanggal" >By Tanggal</option>
+                <option value="semua" >By Semua</option>
+               
+    
+              </select>
+            </div>
+          
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              
+            <input style="border-radius: 5px;border:solid 1px #ccc; width: 50em;height: 2em;"  type="date" [(ngModel)]="tglp" (change)="ktglrad()" >
+            
+            </div>
+          </div>
+
+
+          </div>
+<hr/>
+
+
+
+
+        <div class="row">
+          <div class="col-md-6">
+          
+            <div class="input-group">
+              <div class="input-group-text" >
+                <div class="">
+                  
+                  <fa-icon [icon]="faSearch" ></fa-icon>
+                </div>
+              </div>
+              <input placeholder="Search..."  (keyup)="caripass($event)" type="text" class="form-control">
+            </div>
+            
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+         
+            <select [(ngModel)]="caripas" style="font-size:12px;" class="form-select" (change)="onChange($event.target.value)">
+              <option value="5" >By Nama</option>
+              <option value="6" >By Norm</option>
+              <option value="51" >By Nik</option>
+              <option value="61" >By Hp</option>
+  
+  
+            </select>
+          </div>
+          </div>
+          
+
+         </div>
+   
+
+         <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+         
+          <th scope="col">Norm</th>
+          <th scope="col" >Pasien</th>
+         
+          <th scope="col" >Poli</th>
+          <th scope="col" >Dokter</th>
+          <th scope="col" >Kostumer</th>
+          <th scope="col" >Act</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of tpasien">
+       
+          <td style="font-size: 12px;color: black;">
+            
+{{x.norm}} 
+          </td>
+          <td  style="font-size: 12px;color: black;">
+            {{x.pasien}}
+         
+          </td>
+          <td  style="font-size: 12px;color: black;">
+            {{x.nampoli}}
+         
+          </td>
+          <td  style="font-size: 12px;color: black;">
+           
+                 
+            <div class="badge bg-pill bg-primary" *ngIf="x.namdokter === ''" >Belum Verif</div>
+            <div  *ngIf="x.namdokter != ''" > {{x.namdokter}}</div>
+
+          </td>
+          <td  style="font-size: 12px;color: black;">
+           
+           <p>{{x.nama}}</p>
+          </td>
+          <td>
+             <div class="badge bg-pill bg-danger" (click)="pilihpasien(
+              x.norm,x.kdpoli
+                  ,x.tglpriksa
+                  ,x.kddokter
+                  ,x.kdkostumerd
+                  ,x.notransaksi
+                  ,x.pasien
+                  ,x.tgllahir
+
+                  ,x.nampoli
+                  ,x.namdokter
+                  ,x.nama
+                  ,x.costumer
+                  ,x.alamat,x.kdtarif,x.kelas,x.dokterkirim,x.nofaktur,x.jeniskelamin,x.statusverif,x.kddokterpengirim,x.kdcppt)">P</div>
+          
+          
+          </td>
+        </tr>
+
+
+        
+      
+        
+      </tbody>
+    </table>
+  </div>  
+
+     
+      </div>
+      <div class="modal-footer">
+        <b>Total Pasien Rawat Jalan : {{totalpasien}}</b>
+        <!-- <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button> -->
+      
+      </div>
+    </ng-template>
+
+
+
+
+
+
+
+
+    <ng-template #content7 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">Tarif Rawat Jalan</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md-6">
+            <p-tree [style]="{'text-align': 'center', 'font-size': '1em'}"  [value]="files1" [filter]="true"  selectionMode="single" [(selection)]="selectedFile"  (onNodeSelect)="nodeSelect($event)"></p-tree>
+
+          </div>
+
+          <div class="col-md-6">
+            <div class="input-group">
+          <div class="input-group-text" >
+            <div class="">
+              
+              <fa-icon [icon]="faSearch" ></fa-icon>
+            </div>
+          </div>
+          <input placeholder="Cari tarif..." type="text" class="form-control" (keyup)="caritarif($event)" >
+        </div>
+     
+
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+             
+              <th scope="col">Produk</th>
+              <th scope="col" >Harga</th>
+             
+             
+              <th scope="col" >Act</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of ttarif">
+           
+              <td style="font-size: 11px;color: black;width: 500px;" >
+                
+    {{x.nama}} 
+              </td>
+              <td  style="font-size: 11px;color: black;">
+                {{x.harga | currency:'IDR'}}
+    
+               
+              </td>
+        
+              <td>
+                 <div class="badge bg-pill bg-danger" (click)="tambahtarif(x.kdtarif,x.nama,x.harga,contentdokter,contentperawat)">+</div>
+              
+              
+              </td>
+            </tr>
+    
+    
+            
+          
+            
+          </tbody>
+        </table>
+
+
+
+
+
+
+
+
+          </div>
+
+
+        </div>
+
+        
+        <!-- <div class="input-group">
+          <div class="input-group-text" >
+            <div class="">
+              
+              <fa-icon [icon]="faSearch" ></fa-icon>
+            </div>
+          </div>
+          <input placeholder="Search..." type="text" class="form-control" (keyup)="caritarif($event)" >
+        </div>
+     
+
+          
+    <table class="table table-striped">
+      <thead>
+        <tr>
+         
+          <th scope="col">Produk</th>
+          <th scope="col" >Harga</th>
+         
+         
+          <th scope="col" >Act</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of ttarif">
+       
+          <td style="font-size: 11px;color: black;width: 500px;" >
+            
+{{x.nama}} 
+          </td>
+          <td  style="font-size: 11px;color: black;">
+            {{x.harga | currency:'IDR'}}
+
+           
+          </td>
+    
+          <td>
+             <div class="badge bg-pill bg-danger" (click)="tambahtarif(x.kdtarif,x.nama,x.harga)">P</div>
+          
+          
+          </td>
+        </tr>
+
+
+        
+      
+        
+      </tbody>
+    </table> -->
+
+
+     
+      </div>
+      <!-- <div class="modal-footer">
+      
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+      
+      </div> -->
+    </ng-template>
+
+
+
+    <ng-template #content8 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">Tarif {{produkdise}}</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+       
+     
+
+          
+    <table class="table table-striped">
+      <thead>
+        <tr>
+         
+          <th scope="col">Komponen</th>
+          <th scope="col" >Nominal</th>
+          <th scope="col" >Disc%</th>
+          <th scope="col" >Hasil</th>
+         
+          <th scope="col" >Disc%</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of tkomp">
+          <!-- ;let index = index;trackBy:trackByIndex; -->
+          <td style="font-size: 11px;color: black" >
+            
+{{x.tarif}} 
+          </td>
+          <td  style="font-size: 11px;color: black;">
+            {{x.jasa | currency:'IDR'}}
+
+           
+          </td>
+          <td  style="font-size: 11px;color: black;">
+            {{x.discp}}
+
+           
+          </td>
+          <td  style="font-size: 11px;color: black;">
+            {{x.nominal | currency:'IDR'}}
+
+           
+          </td>
+
+          <td>
+            <div class="badge bg-pill bg-info"   (click)="discpp(x.nomor,x.kdproduk,x.notrans,x.kdkomponen)">Disc</div>
+          </td>
+          
+        
+        </tr>
+
+
+        
+      
+        
+      </tbody>
+    </table>
+
+
+     
+      </div>
+      <div class="modal-footer">
+        Total Disc : <span style="color:red">{{totaldiscnom | currency:'IDR'}}</span>
+        Total Nominal :  <span style="color:red">{{totaljasakom | currency:'IDR'}}</span>
+
+      
+      </div>
+    </ng-template>
+
+   
+
+
+    <ng-template #content9 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title" *ngIf="showbayarrjasa">Pembayaran RJ</h6>
+        <h6 class="modal-title" *ngIf="!showbayarrjasa">Pembayaran Semua</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="showbayarrjasa">
+       <b>Nominal Tagihan : {{totalrjsaja | currency:'IDR'}} </b>
+       <form [formGroup]="profileForm" > 
+       <div class="position-relative mb-3">
+        <label for="exampleSelect" class="form-label">Jenis Pembayaran</label>
+        <select  formControlName="jbayari" [(ngModel)]="jbayari" id="exampleSelect" class="form-select" (change)="jbayar($event.target.value)">
+          <option  value="x" ></option>
+          <option  *ngFor="let x of tjenisbayar" value="{{x.kd}}" >{{x.bayar}}</option>
+         
+        </select>
+      </div>
+      </form>
+      <table class="table table-striped" *ngIf="showlstbank">
+        <tbody>
+          <tr >
+         
+            <td >
+                   
+       <div class="position-relative mb-3">
+        <label for="exampleEmail" class="form-label">Pendapatan </label>
+        <input [(ngModel)]="yangmasuk"  disabled placeholder="Jumlah Uang" type="number" class="form-control" (keyup)="jmlym($event)">
+        
+      </div>
+             
+            </td>
+            <td  *ngIf="kdshowbank === '3' || kdshowbank === '4'  ">
+              <label for="exampleSelect" class="form-label">Bank</label>
+              <select [(ngModel)]="banklis" id="exampleSelect" class="form-select">
+                <option  value="x" ></option>
+                <option  *ngFor="let x of lstbank" value="{{x.kdakun}}" >{{x.akun}}</option>
+               
+              </select>
+            </td>
+            <td *ngIf="kdshowbank === '3' || kdshowbank === '4'  ">
+              <div class="position-relative mb-3">
+                <label for="exampleEmail" class="form-label">Keterangan </label>
+                <input [(ngModel)]="keterangb"   placeholder="Keterangan" type="text" class="form-control">
+              </div>
+            </td>
+            
+          
+          </tr>
+  
+  
+          
+        
+          
+        </tbody>
+        </table>
+
+          
+       <div class="position-relative mb-3">
+        <!-- <label for="exampleEmail" class="form-label">Jumlah Di Bayar </label> -->
+        <input [(ngModel)]="jumlahpasien" disabled  placeholder="Jumlah Uang" type="hidden" class="form-control" (keyup)="jmlymx($event)" >
+        <!-- <b>Kurang</b>: {{kurangbayar | currency:'IDR'}} -->
+      </div>
+
+      <div class="position-relative mb-3">
+        <label for="exampleEmail" class="form-label">Jumlah Uang Dari Pasien</label>
+        <input [(ngModel)]="jumlahpasienx"   placeholder="Jumlah Uang Dari Pasien" type="number" class="form-control" (keyup)="jmlu($event)">
+      </div>
+  
+      <div class="position-relative mb-3">
+        <label for="exampleEmail" class="form-label">Kembalian</label>
+ 
+        <input currencyMask [(ngModel)]="kembalian" [options]="{ prefix: ' ',precision: 0, thousands: '.', decimal: ',' }" class="form-control"/>
+
+
+
+      </div>
+
+      <div class="position-relative mb-3">
+        <label for="exampleEmail" class="form-label">Tanggal Bayar</label>
+ 
+        <input  [(ngModel)]="tgldari" type="date" class="form-control"/>
+
+
+
+      </div>
+     
+      </div>
+
+
+      <div class="modal-body" *ngIf="!showbayarrjasa">
+        <b>Nominal Tagihan : {{sisanumber | currency:'IDR'}} </b>
+      
+        <div class="position-relative mb-3">
+         <label for="exampleSelect" class="form-label">Jenis Pembayaran</label>
+         <select [(ngModel)]="jbayarii" id="exampleSelect" class="form-select" (change)="jbayariix($event.target.value)">
+           <option  value="" ></option>
+           <option  *ngFor="let x of tjenisbayar" value="{{x.kd}}" >{{x.bayar}}</option>
+          
+         </select>
+       </div>
+       <table class="table table-striped" *ngIf="showlstbank">
+         <tbody>
+           <tr >
+          
+             <td >
+                    
+        <div class="position-relative mb-3">
+         <label for="exampleEmail" class="form-label">Pendapatan </label>
+         <input [(ngModel)]="yangmasuki"   placeholder="Jumlah Uang" type="number" class="form-control" (keyup)="jmlymi($event)">
+         
+       </div>
+              
+             </td>
+             <td  >
+               <label for="exampleSelect" class="form-label">Bank</label>
+               <select [(ngModel)]="banklis" id="exampleSelect" class="form-select">
+                 <option  value="x" ></option>
+                 <option  *ngFor="let x of lstbank" value="{{x.kdakun}}" >{{x.akun}}</option>
+                
+               </select>
+             </td>
+             <td>
+               <div class="position-relative mb-3">
+                 <label for="exampleEmail" class="form-label">Keterangan </label>
+                 <input [(ngModel)]="keterangb"   placeholder="Keterangan" type="text" class="form-control">
+               </div>
+             </td>
+             
+           
+           </tr>
+   
+   
+           
+         
+           
+         </tbody>
+         </table>
+ 
+           
+        <div class="position-relative mb-3">
+         <!-- <label for="exampleEmail" class="form-label">Jumlah Di Bayar </label> -->
+         <input [(ngModel)]="jumlahpasieni" disabled  placeholder="Jumlah Uang" type="hidden" class="form-control" (keyup)="jmlymxi($event)" >
+         <!-- <b>Kurang</b>: {{kurangbayari | currency:'IDR'}} -->
+       </div>
+ 
+       <div class="position-relative mb-3">
+         <label for="exampleEmail" class="form-label">Jumlah Uang Dari Pasien</label>
+         <input [(ngModel)]="jumlahpasienxi"   placeholder="Jumlah Uang Dari Pasien" type="number" class="form-control" (keyup)="jmlui($event)">
+       </div>
+   
+       <div class="position-relative mb-3">
+         <label for="exampleEmail" class="form-label">Kembalian</label>
+  
+         <input currencyMask [(ngModel)]="kembaliani" [options]="{ prefix: ' ',precision: 0, thousands: '.', decimal: ',' }" class="form-control"/>
+ 
+ 
+ 
+       </div>
+ 
+ 
+      
+       </div>
+
+
+
+      <div class="modal-footer">
+      <button *ngIf="showbayarrjasa"   [disabled]="!profileForm.valid"  class="btn-pill btn-shadow btn btn-primary" (click)="bayartagihanakhir()">BAYAR</button>
+      <button  *ngIf="!showbayarrjasa" class="btn-pill btn-shadow btn btn-primary" (click)="bayartagihanakhirall()">BAYAR ALL</button>
+      </div>
+
+
+
+    </ng-template>
+
+
+
+
+    <ng-template #content10 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">Laporan</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label" style="font-weight: bold;"> DARI </label>
+          <input [(ngModel)]="tglp"   placeholder="Pasien" type="date" class="form-control">
+
+  
+        </div>
+     
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label" style="font-weight: bold;"> SAMPAI </label>
+          <input [(ngModel)]="tglpp"   placeholder="Pasien" type="date" class="form-control">
+
+  
+        </div>
+          
+    
+        <div class="position-relative mb-3">
+          <label for="exampleSelect" class="form-label"  style="color:black">Poliklinik</label>
+          <select [(ngModel)]="kliniks" id="exampleSelect" class="form-select" >
+            <option  value="1" ><b >SEMUA</b></option>
+            <option  *ngFor="let x of tklinik" value="{{x.kdpoli}}" ><b *ngIf="x.filter === '1'">{{x.nampoli}}</b></option>
+           </select>
+        </div>
+        <div class="position-relative mb-3" *ngIf="showuser">
+          <label for="exampleEmail" class="form-label" style="font-weight: bold;"> User </label>
+        <ng-select [items]="tmpusers" bindLabel="nama"  bindValue="username" placeholder="pasien" [(ngModel)]="usercetak" (keyup)="caripasienc($event)" (change)="pilihpasienc()"  >
+        </ng-select>
+        </div>
+      </div>
+      <div class="modal-footer">
+      
+
+        <!-- Total Nominal : {{totaljasakom | currency:'IDR'}} -->
+        <button type="button" *ngIf="showuser" class="btn btn-secondary"  (click)="klihatsx()">Rekapitulasi User</button>
+        <button type="button" *ngIf="showuser" class="btn btn-secondary"  (click)="klihatsxx()">Bukti TF</button>
+        <button type="button" *ngIf="!showuser" class="btn btn-secondary" (click)="klihats()">Lihat</button>
+        
+      </div>
+    </ng-template>
+
+
+
+
+
+
+
+
+    <ng-template #content11 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">Maping Produk {{prod}}</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+        
+            <div class="row">
+              <div class="col-md-8">
+                <!-- <span style="font-size: 14px;padding: 10px;">Cari Tarif Detail</span> -->
+                <label for="exampleSelect" class="form-label">Cari Tes </label>
+                
+                <input type="text" class="form-control ms-2" (keyup)="cariteslab($event)" >
+               
+              </div>
+              <div class="col-md-4">
+                <label for="exampleSelect" class="form-label">Jenis</label>
+                <!-- (change)="onChange($event.target.value)">
+                    
+                (change)="updateSorting($event)" -->
+                <select  [(ngModel)]="jenistc" id="exampleSelect" class="form-select" (change)="onChangex($event.target.value)">
+                  <option *ngFor="let x of tgolonganlab " value="{{x.kdmetode}}">{{x.metode}}</option>
+                 
+                </select>
+              </div>
+             
+              </div>
+
+
+              <div class="table-responsive tableFixHead">
+               
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                   
+                    <th scope="col">Tes</th>
+                  
+                    <th scope="col">ACT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let x of tlisttes">
+                    <!-- <td  *ngIf="x.status == 0"  style="font-size: 11px;color:red;font-style: italic;">{{x.nama}}</td> -->
+                    <td  style="font-size: 11px;color:black">{{x.nama}}</td>
+                    
+                    <td>
+        
+                      
+        
+                      <div class="badge bg-pill bg-warning" (click)="pilihtes(x.kdlab)">P</div>
+                   
+     
+                     
+                    </td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+
+            </div>
+            <div class="col-md-6">
+              <b>Maping Tes</b>
+
+              <div class="table-responsive tableFixHead">
+               
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                     
+                      <th scope="col">Maping</th>
+                    
+                      <th scope="col">ACT</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let x of tlistmaping">
+                      <!-- <td  *ngIf="x.status == 0"  style="font-size: 11px;color:red;font-style: italic;">{{x.nama}}</td> -->
+                      <td  style="font-size: 11px;color:black">{{x.nama}}</td>
+                      
+                      <td>
+          
+                        
+          
+                        <div class="badge bg-pill bg-danger" (click)="pilihteshapus(x.kdtes,x.kdproduk)">X</div>
+                     
+       
+                       
+                      </td>
+                    </tr>
+                  
+                  </tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+       
+      </div>
+      <div class="modal-footer">
+      
+
+      
+        
+      </div>
+    </ng-template>
+
+  
+    <ng-template #contentdok let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">Dokter</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+       
+        
+        
+         
+              <div class="col-md-12">
+                <!-- <span style="font-size: 14px;padding: 10px;">Cari Tarif Detail</span> -->
+                <label for="exampleSelect" class="form-label">Cari Dokter </label>
+                
+                <input type="text" class="form-control ms-2" (keyup)="caridokx($event)" >
+               
+              </div>
+            
+           
+
+
+              <div class="table-responsive tableFixHead">
+               
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                   
+                    <th scope="col">Dokter</th>
+                  
+                    <th scope="col">ACT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let x of tdokx">
+                   
+                    <td  style="font-size: 11px;color:black">{{x.namdokter}}</td>
+                    
+                    <td>
+        
+                      
+        
+                      <div class="badge bg-pill bg-warning" (click)="pilihdokx(x.kddokter,x.namdokter)">P</div>
+                   
+     
+                     
+                    </td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+
+        
+           
+       
+       
+      </div>
+    
+    </ng-template>
+    <ng-template #contentdokx let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">Dokter</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+       
+        
+        
+         
+              <div class="col-md-12">
+                <!-- <span style="font-size: 14px;padding: 10px;">Cari Tarif Detail</span> -->
+                <label for="exampleSelect" class="form-label">Cari Dokter </label>
+                
+                <input type="text" class="form-control ms-2" (keyup)="caridokx($event)" >
+               
+              </div>
+            
+           
+
+
+              <div class="table-responsive tableFixHead">
+               
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                   
+                    <th scope="col">Dokter</th>
+                  
+                    <th scope="col">ACT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let x of tdokx">
+                   
+                    <td  style="font-size: 11px;color:black">{{x.namdokter}}</td>
+                    
+                    <td>
+        
+                      
+        
+                      <div class="badge bg-pill bg-warning" (click)="pilihdokxx(x.kddokter,x.namdokter)">P</div>
+                   
+     
+                     
+                    </td>
+                  </tr>
+                
+                </tbody>
+              </table>
+            </div>
+
+        
+           
+       
+       
+      </div>
+    
+    </ng-template>
+
+    <ng-template #contenttf let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">    <b>Transfer Laborat Ke Rawat Inap </b></h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+    
+
+
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label">Notransaksi RI</label>
+          <input [(ngModel)]="notransaksiri" disabled   class="form-control"  >
+        
+        </div>
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label">Kamar</label>
+          <input [(ngModel)]="kamarri" disabled   class="form-control"  >
+        
+        </div>
+    
+
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label">Jumlah Biaya</label>
+          <input [(ngModel)]="totalrjsaja" disabled   class="form-control"  >
+        
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button    class="btn-pill btn-shadow btn btn-primary" (click)="kliktransfer()" >TRANSFER BIAYA</button>
+         
+          </div>
+
+
+      </ng-template>
+
+  </div>
+  
+</div>

@@ -1,0 +1,1644 @@
+<div class="column">
+    <div class="col-md-12">
+        <div class="card main-card mb-12">
+            <div class="card-header flex-container" style="padding: 0; margin: 0;">
+                <div>
+                    <h4><small>List MCU</small></h4>
+                </div>
+                <div style="flex-basis: 70%;"></div>
+                <div>
+                    <button class="btn" (click)="showAddDialog()">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+
+                <dialog id="dialog">
+                    <h3 [(ngModel)]="addDialogTitle">{{addDialogTitle}}</h3>
+                    <p>
+                        <small [(ngModel)]="addDialogContent">
+                            {{addDialogContent}}
+                        </small>
+                    </p>
+                    <hr>
+                    <mat-stepper orientation="vertical" [linear]="true" #stepper>
+                        <ng-template matStepperIcon="edit">
+                            <mat-icon>done</mat-icon>
+                        </ng-template>
+                        <mat-step [stepControl]="kodeForm">
+                            <form [formGroup]="kodeForm">
+                                <ng-template matStepLabel>Informasi kode</ng-template>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="row">
+                                            <div class="column child">
+                                                <div class="form-group">
+                                                    <span>
+                                                        <small>MCU</small>
+                                                    </span>
+                                                    <input formControlName="codeOfMCU" class="form-field"
+                                                        [(ngModel)]="codeOfMCU" type="text" placeholder="Kode MCU"
+                                                        disabled>
+                                                </div>
+                                                <div style="margin: 16px 0;"
+                                                    *ngIf="kodeForm.get('codeOfMCU').invalid && (kodeForm.get('codeOfMCU').dirty || kodeForm.get('codeOfMCU').touched)">
+                                                    <div style="color: red; text-align: end;"
+                                                        *ngIf="kodeForm.get('codeOfMCU').errors?.['required']">
+                                                        Kolom ini harus diisi.
+                                                    </div>
+                                                    <div style="color: red; text-align: end;"
+                                                        *ngIf="kodeForm.controls['codeOfMCU'].errors?.['minlength'] || kodeForm.controls['codeOfMCU'].errors?.['maxlength']">
+                                                        Panjang karakter harus 6.
+                                                    </div>
+                                                    <div style="color: red; text-align: end;"
+                                                        *ngIf="kodeForm.controls['codeOfMCU'].hasError('pattern')">
+                                                        Nilai harus berupa angka.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="child">
+                                                <div class="form-group">
+                                                    <span>
+                                                        <small>Provider</small>
+                                                    </span>
+                                                    <input formControlName="codeOfProvider" class="form-field"
+                                                        type="text" placeholder="Kode Provider" disabled>
+                                                </div>
+                                                <div style="margin: 16px 0;"
+                                                    *ngIf="kodeForm.get('codeOfProvider').invalid && (kodeForm.get('codeOfProvider').dirty || kodeForm.get('codeOfProvider').touched)">
+                                                    <div style="color: red; text-align: end;"
+                                                        *ngIf="kodeForm.get('codeOfProvider').errors?.['required']">
+                                                        Kolom ini harus diisi.
+                                                    </div>
+                                                    <div style="color: red; text-align: end;"
+                                                        *ngIf="kodeForm.controls['codeOfProvider'].errors?.['minlength'] || kodeForm.controls['codeOfProvider'].errors?.['maxlength']">
+                                                        Panjang karakter harus 6.
+                                                    </div>
+                                                    <div style="color: red; text-align: end;"
+                                                        *ngIf="kodeForm.controls['codeOfProvider'].hasError('pattern')">
+                                                        Nilai harus berupa angka.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn-container">
+                                    <button mat-raised-button color="primary" matStepperNext>
+                                        Selanjutnya
+                                    </button>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="kunjunganForm">
+                            <form [formGroup]="kunjunganForm">
+                                <ng-template matStepLabel>Informasi nomor dan tanggal kunjungan</ng-template>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Nomor</small>
+                                            </span>
+                                            <input formControlName="numberOfKunjungan" class="form-field" type="text"
+                                                placeholder="Nomor Kunjungan" disabled>
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="kunjunganForm.get('numberOfKunjungan').invalid && (kunjunganForm.get('numberOfKunjungan').dirty || kunjunganForm.get('numberOfKunjungan').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="kunjunganForm.get('numberOfKunjungan').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="kunjunganForm.controls['numberOfKunjungan'].errors?.['minlength'] || kunjunganForm.controls['numberOfKunjungan'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="kunjunganForm.controls['numberOfKunjungan'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Tanggal</small>
+                                            </span>
+                                            <input formControlName="dateOfPelayanan" class="form-field" type="text"
+                                                placeholder="Provider" value="dateOfPelayanan" disabled>
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="kunjunganForm.get('dateOfPelayanan').invalid && (kunjunganForm.get('dateOfPelayanan').dirty || kunjunganForm.get('dateOfPelayanan').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="kunjunganForm.get('dateOfPelayanan').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="kunjunganForm.controls['dateOfPelayanan'].errors?.['minlength'] || kunjunganForm.controls['dateOfPelayanan'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="kunjunganForm.controls['dateOfPelayanan'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-container">
+                                        <button mat-raised-button color="warn" matStepperPrevious>
+                                            Sebelumnya
+                                        </button>
+                                        <button mat-raised-button color="primary" matStepperNext
+                                            [disabled]="!kunjunganForm.valid">
+                                            Selanjutnya
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="tekananDarahForm">
+                            <form [formGroup]="tekananDarahForm">
+                                <ng-template matStepLabel>Informasi Tekanan Darah</ng-template>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Sistole</small>
+                                            </span>
+                                            <input formControlName="numberOfSistole" class="form-field" type="text"
+                                                placeholder="Sistole" maxlength="6">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="tekananDarahForm.get('numberOfSistole').invalid && (tekananDarahForm.get('numberOfSistole').dirty || tekananDarahForm.get('numberOfSistole').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="tekananDarahForm.get('numberOfSistole').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="tekananDarahForm.controls['numberOfSistole'].errors?.['minlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="tekananDarahForm.controls['numberOfSistole'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Diastole</small>
+                                            </span>
+                                            <input formControlName="numberOfDiastole" class="form-field" type="text"
+                                                placeholder="Diastole" maxlength="6">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="tekananDarahForm.get('numberOfDiastole').invalid && (tekananDarahForm.get('numberOfDiastole').dirty || tekananDarahForm.get('numberOfDiastole').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="tekananDarahForm.get('numberOfDiastole').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="tekananDarahForm.controls['numberOfDiastole'].errors?.['minlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="tekananDarahForm.controls['numberOfDiastole'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-container">
+                                        <button mat-raised-button color="warn" matStepperPrevious>
+                                            Sebelumnya
+                                        </button>
+                                        <button mat-raised-button color="primary" matStepperNext
+                                            [disabled]="!tekananDarahForm.valid">
+                                            Selanjutnya
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="darahRutinForm">
+                            <form [formGroup]="darahRutinForm">
+                                <ng-template matStepLabel>Informasi Darah Rutin</ng-template>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Hemoglobin</small>
+                                            </span>
+                                            <input formControlName="numberOfHemo" class="form-field" type="text"
+                                                placeholder="Darah Hemoglobin">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="darahRutinForm.get('numberOfHemo').invalid && (darahRutinForm.get('numberOfHemo').dirty || darahRutinForm.get('numberOfHemo').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.get('numberOfHemo').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.controls['numberOfHemo'].errors?.['minlength'] || darahRutinForm.controls['numberOfHemo'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.controls['numberOfHemo'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Leukosit</small>
+                                            </span>
+                                            <input formControlName="numberOfLeu" class="form-field" type="text"
+                                                placeholder="Darah Leukosit">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="darahRutinForm.get('numberOfLeu').invalid && (darahRutinForm.get('numberOfLeu').dirty || darahRutinForm.get('numberOfLeu').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.get('numberOfLeu').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.controls['numberOfLeu'].errors?.['minlength'] || darahRutinForm.controls['numberOfLeu'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.controls['numberOfLeu'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Eritrosit</small>
+                                            </span>
+                                            <input formControlName="numberOfErit" class="form-field" type="text"
+                                                placeholder="Darah Eritrosit">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="darahRutinForm.get('numberOfErit').invalid && (darahRutinForm.get('numberOfErit').dirty || darahRutinForm.get('numberOfErit').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.get('numberOfErit').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.controls['numberOfErit'].errors?.['minlength'] || darahRutinForm.controls['numberOfErit'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.controls['numberOfErit'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Laju</small>
+                                            </span>
+                                            <input formControlName="numberOfLaju" class="form-field" type="text"
+                                                placeholder="Laju Darah">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="darahRutinForm.get('numberOfLaju').invalid && (darahRutinForm.get('numberOfLaju').dirty || darahRutinForm.get('numberOfLaju').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.get('numberOfLaju').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.controls['numberOfLaju'].errors?.['minlength'] || darahRutinForm.controls['numberOfLaju'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.controls['numberOfLaju'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Hematokrit</small>
+                                            </span>
+                                            <input formControlName="numberOfHema" class="form-field" type="text"
+                                                placeholder="Darah Hematokrit">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="darahRutinForm.get('numberOfHema').invalid && (darahRutinForm.get('numberOfHema').dirty || darahRutinForm.get('numberOfHema').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.get('numberOfHema').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.controls['numberOfHema'].errors?.['minlength'] || darahRutinForm.controls['numberOfHema'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="darahRutinForm.controls['numberOfHema'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Trombosit</small>
+                                            </span>
+                                            <input formControlName="numberOfTrom" class="form-field" type="text"
+                                                placeholder="Darah Trombosit">
+                                            <div style="margin: 16px 0;"
+                                                *ngIf="darahRutinForm.get('numberOfTrom').invalid && (darahRutinForm.get('numberOfTrom').dirty || darahRutinForm.get('numberOfTrom').touched)">
+                                                <div style="color: red; text-align: end;"
+                                                    *ngIf="darahRutinForm.get('numberOfTrom').errors?.['required']">
+                                                    Kolom ini harus diisi.
+                                                </div>
+                                                <div style="color: red; text-align: end;"
+                                                    *ngIf="darahRutinForm.controls['numberOfTrom'].errors?.['minlength'] || darahRutinForm.controls['numberOfTrom'].errors?.['maxlength']">
+                                                    Panjang karakter harus 6.
+                                                </div>
+                                                <div style="color: red; text-align: end;"
+                                                    *ngIf="darahRutinForm.controls['numberOfTrom'].hasError('pattern')">
+                                                    Nilai harus berupa angka.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-container">
+                                        <button mat-raised-button color="warn" matStepperPrevious>
+                                            Sebelumnya
+                                        </button>
+                                        <button mat-raised-button color="primary" matStepperNext
+                                            [disabled]="!darahRutinForm.valid">
+                                            Selanjutnya
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="lemakDarahForm">
+                            <form [formGroup]="lemakDarahForm">
+                                <ng-template matStepLabel>Informasi Lemak Darah</ng-template>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>HDL</small>
+                                            </span>
+                                            <input formControlName="numberOfHDL" class="form-field" type="text"
+                                                placeholder="Lemak Darah HDL">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="lemakDarahForm.get('numberOfHDL').invalid && (lemakDarahForm.get('numberOfHDL').dirty || lemakDarahForm.get('numberOfHDL').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="lemakDarahForm.get('numberOfHDL').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="lemakDarahForm.controls['numberOfHDL'].errors?.['minlength'] || lemakDarahForm.controls['numberOfHDL'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="lemakDarahForm.controls['numberOfHDL'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>LDL</small>
+                                            </span>
+                                            <input formControlName="numberOfLDL" class="form-field" type="text"
+                                                placeholder="Lemak Darah LDL">
+
+                                            <div style="margin: 16px 0;"
+                                                *ngIf="lemakDarahForm.get('numberOfLDL').invalid && (lemakDarahForm.get('numberOfLDL').dirty || lemakDarahForm.get('numberOfLDL').touched)">
+                                                <div style="color: red; text-align: end;"
+                                                    *ngIf="lemakDarahForm.get('numberOfLDL').errors?.['required']">
+                                                    Kolom ini harus diisi.
+                                                </div>
+                                                <div style="color: red; text-align: end;"
+                                                    *ngIf="lemakDarahForm.controls['numberOfLDL'].errors?.['minlength'] || lemakDarahForm.controls['numberOfLDL'].errors?.['maxlength']">
+                                                    Panjang karakter harus 6.
+                                                </div>
+                                                <div style="color: red; text-align: end;"
+                                                    *ngIf="lemakDarahForm.controls['numberOfLDL'].hasError('pattern')">
+                                                    Nilai harus berupa angka.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Kolesterol</small>
+                                            </span>
+                                            <input formControlName="numberOfChol" class="form-field" type="text"
+                                                placeholder="Lemak Darah Kolesterol">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="lemakDarahForm.get('numberOfChol').invalid && (lemakDarahForm.get('numberOfChol').dirty || lemakDarahForm.get('numberOfChol').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="lemakDarahForm.get('numberOfChol').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="lemakDarahForm.controls['numberOfChol'].errors?.['minlength'] || lemakDarahForm.controls['numberOfChol'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="lemakDarahForm.controls['numberOfChol'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Trigli</small>
+                                            </span>
+                                            <input formControlName="numberOfTrigli" class="form-field" type="text"
+                                                placeholder="Lemak Darah Trigli">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="lemakDarahForm.get('numberOfTrigli').invalid && (lemakDarahForm.get('numberOfTrigli').dirty || lemakDarahForm.get('numberOfTrigli').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="lemakDarahForm.get('numberOfTrigli').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="lemakDarahForm.controls['numberOfTrigli'].errors?.['minlength'] || lemakDarahForm.controls['numberOfTrigli'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="lemakDarahForm.controls['numberOfTrigli'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-container">
+                                        <button mat-raised-button color="warn" matStepperPrevious>
+                                            Sebelumnya
+                                        </button>
+                                        <button mat-raised-button color="primary" matStepperNext
+                                            [disabled]="!lemakDarahForm.valid">
+                                            Selanjutnya
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="gulaDarahForm">
+                            <form [formGroup]="gulaDarahForm">
+                                <ng-template matStepLabel>Informasi Gula Darah</ng-template>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Sewaktu</small>
+                                            </span>
+                                            <input formControlName="numberOfGDSewaktu" class="form-field" type="text"
+                                                placeholder="Gula Darah Sewaktu">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="gulaDarahForm.get('numberOfGDSewaktu').invalid && (gulaDarahForm.get('numberOfGDSewaktu').dirty || gulaDarahForm.get('numberOfGDSewaktu').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="gulaDarahForm.get('numberOfGDSewaktu').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="gulaDarahForm.controls['numberOfGDSewaktu'].errors?.['minlength'] || gulaDarahForm.controls['numberOfGDSewaktu'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="gulaDarahForm.controls['numberOfGDSewaktu'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Puasa</small>
+                                            </span>
+                                            <input formControlName="numberOfGDPuasa" class="form-field" type="text"
+                                                placeholder="Gula Darah Puasa">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="gulaDarahForm.get('numberOfGDPuasa').invalid && (gulaDarahForm.get('numberOfGDPuasa').dirty || gulaDarahForm.get('numberOfGDPuasa').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="gulaDarahForm.get('numberOfGDPuasa').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="gulaDarahForm.controls['numberOfGDPuasa'].errors?.['minlength'] || gulaDarahForm.controls['numberOfGDPuasa'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="gulaDarahForm.controls['numberOfGDPuasa'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Prandial</small>
+                                            </span>
+                                            <input formControlName="numberOfGDPrandial" class="form-field" type="text"
+                                                placeholder="Gula Darah Prandial">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="gulaDarahForm.get('numberOfGDPrandial').invalid && (gulaDarahForm.get('numberOfGDPrandial').dirty || gulaDarahForm.get('numberOfGDPrandial').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="gulaDarahForm.get('numberOfGDPrandial').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="gulaDarahForm.controls['numberOfGDPrandial'].errors?.['minlength'] || gulaDarahForm.controls['numberOfGDPrandial'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="gulaDarahForm.controls['numberOfGDPrandial'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>HBA1c</small>
+                                            </span>
+                                            <input formControlName="numberOfGDHba1c" class="form-field" type="text"
+                                                placeholder="Gula Darah Puasa">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="gulaDarahForm.get('numberOfGDHba1c').invalid && (gulaDarahForm.get('numberOfGDHba1c').dirty || gulaDarahForm.get('numberOfGDHba1c').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="gulaDarahForm.get('numberOfGDHba1c').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="gulaDarahForm.controls['numberOfGDHba1c'].errors?.['minlength'] || gulaDarahForm.controls['numberOfGDHba1c'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="gulaDarahForm.controls['numberOfGDHba1c'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-container">
+                                        <button mat-raised-button color="warn" matStepperPrevious>
+                                            Sebelumnya
+                                        </button>
+                                        <button mat-raised-button color="primary" matStepperNext
+                                            [disabled]="!gulaDarahForm.valid">
+                                            Selanjutnya
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="fungsiHatiForm">
+                            <form [formGroup]="fungsiHatiForm">
+                                <ng-template matStepLabel>Informasi Fungsi Hati</ng-template>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>SGOT</small>
+                                            </span>
+                                            <input formControlName="numberOfFHSGOT" class="form-field" type="text"
+                                                placeholder="Fungsi Hati SGOT">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="fungsiHatiForm.get('numberOfFHSGOT').invalid && (fungsiHatiForm.get('numberOfFHSGOT').dirty || fungsiHatiForm.get('numberOfFHSGOT').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.get('numberOfFHSGOT').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.controls['numberOfFHSGOT'].errors?.['minlength'] || fungsiHatiForm.controls['numberOfFHSGOT'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.controls['numberOfFHSGOT'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>SGPT</small>
+                                            </span>
+                                            <input formControlName="numberOfFHSGPT" class="form-field" type="text"
+                                                placeholder="Fungsi Hati SGPT">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="fungsiHatiForm.get('numberOfFHSGPT').invalid && (fungsiHatiForm.get('numberOfFHSGPT').dirty || fungsiHatiForm.get('numberOfFHSGPT').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.get('numberOfFHSGPT').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.controls['numberOfFHSGPT'].errors?.['minlength'] || fungsiHatiForm.controls['numberOfFHSGPT'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.controls['numberOfFHSGPT'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Gamma</small>
+                                            </span>
+                                            <input formControlName="numberOfFHGamma" class="form-field" type="text"
+                                                placeholder="Fungsi Hati Gamma">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="fungsiHatiForm.get('numberOfFHGamma').invalid && (fungsiHatiForm.get('numberOfFHGamma').dirty || fungsiHatiForm.get('numberOfFHGamma').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.get('numberOfFHGamma').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.controls['numberOfFHGamma'].errors?.['minlength'] || fungsiHatiForm.controls['numberOfFHGamma'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.controls['numberOfFHGamma'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Albumin</small>
+                                            </span>
+                                            <input formControlName="numberOfFHAlbumin" class="form-field" type="text"
+                                                placeholder="Fungsi Hati Albumin">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="fungsiHatiForm.get('numberOfFHAlbumin').invalid && (fungsiHatiForm.get('numberOfFHAlbumin').dirty || fungsiHatiForm.get('numberOfFHAlbumin').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.get('numberOfFHAlbumin').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.controls['numberOfFHAlbumin'].errors?.['minlength'] || fungsiHatiForm.controls['numberOfFHAlbumin'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.controls['numberOfFHAlbumin'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Prot Kual</small>
+                                            </span>
+                                            <input formControlName="numberOfFHProtKual" class="form-field" type="text"
+                                                placeholder="Fungsi Hati Prot Kual">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="fungsiHatiForm.get('numberOfFHProtKual').invalid && (fungsiHatiForm.get('numberOfFHProtKual').dirty || fungsiHatiForm.get('numberOfFHProtKual').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.get('numberOfFHProtKual').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.controls['numberOfFHProtKual'].errors?.['minlength'] || fungsiHatiForm.controls['numberOfFHProtKual'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiHatiForm.controls['numberOfFHProtKual'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-container">
+                                        <button mat-raised-button color="warn" matStepperPrevious>
+                                            Sebelumnya
+                                        </button>
+                                        <button mat-raised-button color="primary" matStepperNext
+                                            [disabled]="!fungsiHatiForm.valid">
+                                            Selanjutnya
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="fungsiGinjalForm">
+                            <form [formGroup]="fungsiGinjalForm">
+                                <ng-template matStepLabel>Informasi Fungsi Ginjal</ng-template>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Crea</small>
+                                            </span>
+                                            <input formControlName="numberOfFGCrea" class="form-field" type="text"
+                                                placeholder="Fungsi Ginjal Crea">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="fungsiGinjalForm.get('numberOfFGCrea').invalid && (fungsiGinjalForm.get('numberOfFGCrea').dirty || fungsiGinjalForm.get('numberOfFGCrea').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiGinjalForm.get('numberOfFGCrea').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiGinjalForm.controls['numberOfFGCrea'].errors?.['minlength'] || fungsiGinjalForm.controls['numberOfFGCrea'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiGinjalForm.controls['numberOfFGCrea'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Ureum</small>
+                                            </span>
+                                            <input formControlName="numberOfFGUreum" class="form-field" type="text"
+                                                placeholder="Fungsi Ginjal Ureum">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="fungsiGinjalForm.get('numberOfFGUreum').invalid && (fungsiGinjalForm.get('numberOfFGUreum').dirty || fungsiGinjalForm.get('numberOfFGUreum').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiGinjalForm.get('numberOfFGUreum').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiGinjalForm.controls['numberOfFGUreum'].errors?.['minlength'] || fungsiGinjalForm.controls['numberOfFGUreum'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiGinjalForm.controls['numberOfFGUreum'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Asam</small>
+                                            </span>
+                                            <input formControlName="numberOfFGAsam" class="form-field" type="text"
+                                                placeholder="Fungsi Ginjal Asam">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="fungsiGinjalForm.get('numberOfFGAsam').invalid && (fungsiGinjalForm.get('numberOfFGAsam').dirty || fungsiGinjalForm.get('numberOfFGAsam').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiGinjalForm.get('numberOfFGAsam').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiGinjalForm.controls['numberOfFGAsam'].errors?.['minlength'] || fungsiGinjalForm.controls['numberOfFGAsam'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiGinjalForm.controls['numberOfFGAsam'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-container">
+                                        <button mat-raised-button color="warn" matStepperPrevious>
+                                            Sebelumnya
+                                        </button>
+                                        <button mat-raised-button color="primary" matStepperNext
+                                            [disabled]="!fungsiGinjalForm.valid">
+                                            Selanjutnya
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="fungsiJantungForm">
+                            <form [formGroup]="fungsiJantungForm">
+                                <ng-template matStepLabel>Informasi Fungsi Jantung</ng-template>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>ABI</small>
+                                            </span>
+                                            <input formControlName="numberOfFJABI" class="form-field" type="text"
+                                                placeholder="Fungsi Jantung ABI">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="fungsiJantungForm.get('numberOfFJABI').invalid && (fungsiJantungForm.get('numberOfFJABI').dirty || fungsiJantungForm.get('numberOfFJABI').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiJantungForm.get('numberOfFJABI').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiJantungForm.controls['numberOfFJABI'].errors?.['minlength'] || fungsiJantungForm.controls['numberOfFJABI'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiJantungForm.controls['numberOfFJABI'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>EKG</small>
+                                            </span>
+                                            <input formControlName="numberOfFJEKG" class="form-field" type="text"
+                                                placeholder="Fungsi Jantung EKG">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="fungsiJantungForm.get('numberOfFJEKG').invalid && (fungsiJantungForm.get('numberOfFJEKG').dirty || fungsiJantungForm.get('numberOfFJEKG').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiJantungForm.get('numberOfFJEKG').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiJantungForm.controls['numberOfFJEKG'].errors?.['minlength'] || fungsiJantungForm.controls['numberOfFJEKG'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiJantungForm.controls['numberOfFJEKG'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Echo</small>
+                                            </span>
+                                            <input formControlName="numberOfFJEcho" class="form-field" type="text"
+                                                placeholder="Fungsi Jantung Echo">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="fungsiJantungForm.get('numberOfFJEcho').invalid && (fungsiJantungForm.get('numberOfFJEcho').dirty || fungsiJantungForm.get('numberOfFJEcho').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiJantungForm.get('numberOfFJEcho').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiJantungForm.controls['numberOfFJEcho'].errors?.['minlength'] || fungsiJantungForm.controls['numberOfFJEcho'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="fungsiJantungForm.controls['numberOfFJEcho'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-container">
+                                        <button mat-raised-button color="warn" matStepperPrevious>
+                                            Sebelumnya
+                                        </button>
+                                        <button mat-raised-button color="primary" matStepperNext
+                                            [disabled]="!fungsiJantungForm.valid">
+                                            Selanjutnya
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="infoTambahanForm">
+                            <form [formGroup]="infoTambahanForm">
+                                <ng-template matStepLabel>Informasi Tambahan</ng-template>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Radiologi Foto</small>
+                                            </span>
+                                            <input formControlName="valueOfRadiologiFoto" class="form-field" type="text"
+                                                placeholder="Radiologi Foto">
+                                        </div>
+                                        <div style="margin: 16px 0;"
+                                            *ngIf="infoTambahanForm.get('valueOfRadiologiFoto').invalid && (infoTambahanForm.get('valueOfRadiologiFoto').dirty || infoTambahanForm.get('valueOfRadiologiFoto').touched)">
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="infoTambahanForm.get('valueOfRadiologiFoto').errors?.['required']">
+                                                Kolom ini harus diisi.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="infoTambahanForm.controls['valueOfRadiologiFoto'].errors?.['minlength'] || infoTambahanForm.controls['valueOfRadiologiFoto'].errors?.['maxlength']">
+                                                Panjang karakter harus 6.
+                                            </div>
+                                            <div style="color: red; text-align: end;"
+                                                *ngIf="infoTambahanForm.controls['valueOfRadiologiFoto'].hasError('pattern')">
+                                                Nilai harus berupa angka.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Funduskopi</small>
+                                            </span>
+                                            <input formControlName="valueOfFunduskopi" class="form-field" type="text"
+                                                placeholder="Funduskopi">
+                                        </div>
+                                    </div>
+                                    <div style="margin: 16px 0;"
+                                        *ngIf="infoTambahanForm.get('valueOfFunduskopi').invalid && (infoTambahanForm.get('valueOfFunduskopi').dirty || infoTambahanForm.get('valueOfFunduskopi').touched)">
+                                        <div style="color: red; text-align: end;"
+                                            *ngIf="infoTambahanForm.get('valueOfFunduskopi').errors?.['required']">
+                                            Kolom ini harus diisi.
+                                        </div>
+                                        <div style="color: red; text-align: end;"
+                                            *ngIf="infoTambahanForm.controls['valueOfFunduskopi'].errors?.['minlength'] || infoTambahanForm.controls['valueOfFunduskopi'].errors?.['maxlength']">
+                                            Panjang karakter harus 6.
+                                        </div>
+                                        <div style="color: red; text-align: end;"
+                                            *ngIf="infoTambahanForm.controls['valueOfFunduskopi'].hasError('pattern')">
+                                            Nilai harus berupa angka.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Pemeriksaan Lainnya</small>
+                                            </span>
+                                            <input formControlName="valueOfPemeriksaLainnya" class="form-field"
+                                                type="text" placeholder="Pemeriksaan Lainnya">
+                                        </div>
+                                    </div>
+                                    <div style="margin: 16px 0;"
+                                        *ngIf="infoTambahanForm.get('valueOfPemeriksaLainnya').invalid && (infoTambahanForm.get('valueOfPemeriksaLainnya').dirty || infoTambahanForm.get('valueOfPemeriksaLainnya').touched)">
+                                        <div style="color: red; text-align: end;"
+                                            *ngIf="infoTambahanForm.get('valueOfPemeriksaLainnya').errors?.['required']">
+                                            Kolom ini harus diisi.
+                                        </div>
+                                        <div style="color: red; text-align: end;"
+                                            *ngIf="infoTambahanForm.controls['valueOfPemeriksaLainnya'].errors?.['minlength'] || infoTambahanForm.controls['valueOfPemeriksaLainnya'].errors?.['maxlength']">
+                                            Panjang karakter harus 6.
+                                        </div>
+                                        <div style="color: red; text-align: end;"
+                                            *ngIf="infoTambahanForm.controls['valueOfPemeriksaLainnya'].hasError('pattern')">
+                                            Nilai harus berupa angka.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-container">
+                                        <button mat-raised-button color="warn" matStepperPrevious>
+                                            Sebelumnya
+                                        </button>
+                                        <button mat-raised-button color="primary" matStepperNext
+                                            [disabled]="!infoTambahanForm.valid">
+                                            Selanjutnya
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="keteranganForm">
+                            <form [formGroup]="keteranganForm">
+                                <ng-template matStepLabel>Keterangan</ng-template>
+                                <div class="parent">
+                                    <div class="child">
+                                        <div class="form-group">
+                                            <span>
+                                                <small>Keterangan</small>
+                                            </span>
+                                            <textarea formControlName="valueOfKeterangan" class="form-field" type="text"
+                                                placeholder="Pemeriksaan Lainnya" rows="4" cols="50"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="btn-container">
+                                        <button mat-raised-button color="warn" matStepperPrevious>
+                                            Sebelumnya
+                                        </button>
+                                        <button id="save" mat-raised-button color="primary"
+                                            (click)="showingSaveDialog()" [(ngModel)]="addDialogButtonLabel">
+                                            {{addDialogButtonLabel}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-step>
+                    </mat-stepper>
+                </dialog>
+            </div>
+
+            <div class="card-body">
+                <div>
+                    <div style="display: flex; margin: 12px 0; flex-basis: 50%;">
+                        <div style="flex-basis: 60%;"></div>
+                        <div style="flex-basis: 40%;">
+                            <div class="form-group">
+                                <input [(ngModel)]="searchKeyword" class="form-field" type="text"
+                                    placeholder="Cari MCU" name="searchKeyword">
+                                <span (click)="onSearchMCU()">
+                                    <i class="fa fa-search"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex-container data-header" style="flex-basis: 100%;">
+                        <div style="flex-basis: 20%;">
+                            <h6>No Kunjungan</h6>
+                        </div>
+                        <div style="flex-basis: 20%;">
+                            <h6>Kode Provider</h6>
+                        </div>
+                        <div style="flex-basis: 20%;">
+                            <h6>Tanggal Pelayanan</h6>
+                        </div>
+                        <div style="flex-basis: 20%;">
+                            <h6>Keterangan</h6>
+                        </div>
+                        <div style="flex-basis: 20%;">
+                            <h6>Aksi</h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- <ng-template #contentKegiatan> -->
+                    <div *ngFor="let mcu of listOfMCU">
+                        <div class="flex-container" style="align-items: baseline; flex-basis: 100%;">
+                            <div class="flex-container item-kegiatan" (click)="readUpdateItem(mcu)"
+                                style="padding: 0; margin: 0;" style="flex-basis: 80%;">
+                                <div style="flex-basis: 25%;">
+                                    <p>{{mcu.noKunjungan}}</p>
+                                </div>
+                                <div style="flex-basis: 25%;">
+                                    <p>{{mcu.kdProvider}}</p>
+                                </div>
+                                <div style="flex-basis: 25%;">
+                                    <p>{{mcu.tglPelayanan}}</p>
+                                </div>
+                                <div style="flex-basis: 25%;">
+                                    <p>{{mcu.keterangan}}</p>
+                                </div>
+                            </div>
+                            <div style="flex-basis: 10%;">
+                                <ul class="wrapper">
+                                    <li class="icon info-btn" (click)="showDetailDialog(mcu)">
+                                        <span class="tooltip info">Detail</span>
+                                        <span>
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                    </li>
+                                    <li class="icon youtube" (click)="showConfirmDialog(mcu)">
+                                        <span class="tooltip">Hapus</span>
+                                        <span>
+                                            <i class="fa fa-trash"></i>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </ng-template> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box">
+    <div>
+        <dialog id="confirmSaveDialog">
+            <h3>Yakin Ingin Data Sudah Benar?</h3>
+            <p>
+                <small>
+                    Anda akan menyimpan data yang telah anda masukkan sebelumnya dan proses ini tidak dapat dibatalkan.
+                </small>
+            </p>
+            <hr>
+            <div class="row">
+                <a class="button-save" id="save">Ya, simpan</a>
+            </div>
+            <button onclick="window.confirmSaveDialog.close();" aria-label="close" class="x">❌</button>
+        </dialog>
+    </div>
+</div>
+
+<div class="box">
+    <div>
+        <dialog id="failedDialog">
+            <h3>Terjadi Kesalahan</h3>
+            <p>
+                <small [(ngModel)]="failedMsg">
+                    {{failedMsg}}
+                </small>
+            </p>
+            <hr>
+            <div class="row">
+                <a class="button-close" id="close">Tutup</a>
+            </div>
+            <button onclick="window.confirmSaveDialog.close();" aria-label="close" class="x">❌</button>
+        </dialog>
+    </div>
+</div>
+
+<div class="box">
+    <div>
+        <dialog id="successDialog">
+            <h3>Selamat</h3>
+            <p>
+                <small [(ngModel)]="successMsg">
+                    {{successMsg}}
+                </small>
+            </p>
+            <hr>
+            <div class="row">
+                <a class="button-close" id="close">Tutup</a>
+            </div>
+            <button onclick="window.successDialog.close();" aria-label="close" class="x">❌</button>
+        </dialog>
+    </div>
+</div>
+
+<div class="card-header flex-container" style="padding: 0; margin: 0;">
+
+    <dialog id="pasienDialog">
+        <div class="column">
+            <h3    (click)="close()">Pilih Pasien</h3>
+            <p>
+                <small>
+                    Pilih pasien terlebih dahulu
+                </small>
+            </p>
+            <hr>
+            <div style="margin: 12px 0;"></div>
+            <div class="flex-container data-header">
+                <div style="flex-basis: 15%;">
+                    <h6>No Kunjungan</h6>
+                </div>
+                <div style="flex-basis: 15%;">
+                    <h6>Pasien</h6>
+                </div>
+                <div style="flex-basis: 15%;">
+                    <h6>Nama Poli</h6>
+                </div>
+                <div style="flex-basis: 15%;">
+                    <h6>Tanggal Periksa</h6>
+                </div>
+            </div>
+            <div *ngFor="let pasien of listOfPasien">
+                <div class="flex-container" style="align-items: baseline;">
+                    <div class="flex-container item-kegiatan"
+                        (click)="selectedPasien(pasien.noTransaksi, pasien.noKunjungan)" style="flex-basis: 100%;">
+                        <div style="flex-basis: 15%;">
+                            <p><small>{{pasien.noKunjungan}}</small></p>
+                        </div>
+                        <div style="flex-basis: 15%;">
+                            <p><small>{{pasien.pasien}}</small></p>
+                        </div>
+                        <div style="flex-basis: 15%;">
+                            <p><small>{{pasien.namaPoli}}</small></p>
+                        </div>
+                        <div style="flex-basis: 15%;">
+                            <p><small>{{pasien.tglPeriksa}}</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+    <dialog id="failedDialog">
+        <h3>Proses Gagal</h3>
+        <p>
+            <small [(ngModel)]="failedMsg">
+                {{failedMsg}}
+            </small>
+        </p>
+        <button onclick="window.failedDialog.close();" aria-label="close" class="x">❌</button>
+        <hr>
+        <div class="row" class="button-close">
+            <a id="close">Tutup</a>
+        </div>
+    </dialog>
+
+    <dialog id="confirmDialog">
+        <h3>Yakin Ingin Menghapus Item?</h3>
+        <p>
+            <small>
+                Anda akan menghapus item dan item tidak dapat dikembalikan kembali.
+            </small>
+        </p>
+        <hr>
+        <div class="row">
+            <a class="button" id="delete">Ya, hapus</a>
+        </div>
+        <button onclick="window.confirmDialog.close();" aria-label="close" class="x">❌</button>
+    </dialog>
+
+    <dialog id="detailDialog">
+        <h3>Detail MCU</h3>
+        <p>
+            <small>
+                Anda bisa melihat detailnya dibawah ini.
+            </small>
+        </p>
+        <hr>
+        <form [formGroup]="viewDataForm" style="padding: 8px;">
+            <p class="preview-main-title">---Kode</p>
+            <div class="row flex-container preview-container">
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            MCU
+                        </small>
+                    </p>
+                    <input formControlName="codeOfMCU" class="form-field-preview" type="text" placeholder="Kode MCU"
+                        maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Provider
+                        </small>
+                    </p>
+                    <input formControlName="codeOfProvider" class="form-field-preview" type="text"
+                        placeholder="Kode MCU" maxlength="6" disabled>
+                </div>
+            </div>
+            <p class="preview-main-title">---Kunjungan</p>
+            <div class="row flex-container preview-container">
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Nomor
+                        </small>
+                    </p>
+                    <input formControlName="numberOfKunjungan" class="form-field-preview" type="text"
+                        placeholder="Kode MCU" maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Tanggal
+                        </small>
+                    </p>
+                    <input formControlName="dateOfKunjungan" class="form-field-preview" type="text"
+                        placeholder="Kode MCU" maxlength="6" disabled>
+                </div>
+            </div>
+            <p class="preview-main-title">---Tekanan Darah</p>
+            <div class="row flex-container preview-container">
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Sistole
+                        </small>
+                    </p>
+                    <input formControlName="numberOfSistole" class="form-field-preview" type="text"
+                        placeholder="Sistole" maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Diastole
+                        </small>
+                    </p>
+                    <input formControlName="numberOfDiastole" class="form-field-preview" type="text"
+                        placeholder="Diastole" maxlength="6" disabled>
+                </div>
+            </div>
+            <p class="preview-main-title">---Darah Rutin</p>
+            <div class="row preview-container">
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Hemoglobin
+                        </small>
+                    </p>
+                    <input formControlName="numberOfHemo" class="form-field-preview" type="text" placeholder="Sistole"
+                        maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Leukosit
+                        </small>
+                    </p>
+                    <input formControlName="numberOfLeu" class="form-field-preview" type="text" placeholder="Diastole"
+                        maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Eritrosit
+                        </small>
+                    </p>
+                    <input formControlName="numberOfErit" class="form-field-preview" type="text" placeholder="Diastole"
+                        maxlength="6" disabled>
+                </div>
+            </div>
+            <div class="row flex-container preview-container">
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Laju
+                        </small>
+                    </p>
+                    <input formControlName="numberOfLaju" class="form-field-preview" type="text" placeholder="Sistole"
+                        maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Hematokrit
+                        </small>
+                    </p>
+                    <input formControlName="numberOfHema" class="form-field-preview" type="text" placeholder="Diastole"
+                        maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Trombosit
+                        </small>
+                    </p>
+                    <input formControlName="numberOfTrom" class="form-field-preview" type="text" placeholder="Sistole"
+                        maxlength="6" disabled>
+                </div>
+            </div>
+            <p class="preview-main-title">---Lemak Darah</p>
+            <div class="row flex-container preview-container">
+                <div class="column preview-container-child-4">
+                    <p class="preview-title">
+                        <small>
+                            HDL
+                        </small>
+                    </p>
+                    <input formControlName="numberOfHDL" class="form-field-preview" type="text" placeholder="Sistole"
+                        maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child-4">
+                    <p class="preview-title">
+                        <small>
+                            LDL
+                        </small>
+                    </p>
+                    <input formControlName="numberOfLDL" class="form-field-preview" type="text" placeholder="Diastole"
+                        maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child-4">
+                    <p class="preview-title">
+                        <small>
+                            Kolesterol
+                        </small>
+                    </p>
+                    <input formControlName="numberOfChol" class="form-field-preview" type="text" placeholder="Diastole"
+                        maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child-4">
+                    <p class="preview-title">
+                        <small>
+                            Trigli
+                        </small>
+                    </p>
+                    <input formControlName="numberOfTrigli" class="form-field-preview" type="text"
+                        placeholder="Diastole" maxlength="6" disabled>
+                </div>
+            </div>
+            <!-- <div class="row flex-container preview-container">
+                
+            </div> -->
+            <p class="preview-main-title">---Gula Darah</p>
+            <div class="row flex-container preview-container">
+                <div class="column preview-container-child-4">
+                    <p class="preview-title">
+                        <small>
+                            Sewaktu
+                        </small>
+                    </p>
+                    <input formControlName="numberOfGDSewaktu" class="form-field-preview" type="text"
+                        placeholder="Sistole" maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child-4">
+                    <p class="preview-title">
+                        <small>
+                            Puasa
+                        </small>
+                    </p>
+                    <input formControlName="numberOfGDPuasa" class="form-field-preview" type="text"
+                        placeholder="Diastole" maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child-4">
+                    <p class="preview-title">
+                        <small>
+                            Post Prandial
+                        </small>
+                    </p>
+                    <input formControlName="numberOfGDPrandial" class="form-field-preview" type="text"
+                        placeholder="Diastole" maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child-4">
+                    <p class="preview-title">
+                        <small>
+                            HbA1c
+                        </small>
+                    </p>
+                    <input formControlName="numberOfGDHba1c" class="form-field-preview" type="text"
+                        placeholder="Diastole" maxlength="6" disabled>
+                </div>
+            </div>
+            <p class="preview-main-title">---Fungsi Hati</p>
+            <div class="row flex-container preview-container-wrap">
+                <div class="column preview-container-child-5">
+                    <p class="preview-title">
+                        <small>
+                            SGOT
+                        </small>
+                    </p>
+                    <input formControlName="numberOfFHSGOT" class="form-field-preview" type="text" placeholder="Sistole"
+                        maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child-5">
+                    <p class="preview-title">
+                        <small>
+                            SGPT
+                        </small>
+                    </p>
+                    <input formControlName="numberOfFHSGPT" class="form-field-preview" type="text"
+                        placeholder="Diastole" maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child-5">
+                    <p class="preview-title">
+                        <small>
+                            Gamma
+                        </small>
+                    </p>
+                    <input formControlName="numberOfFHGamma" class="form-field-preview" type="text"
+                        placeholder="Diastole" maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child-5">
+                    <p class="preview-title">
+                        <small>
+                            Prot Kual
+                        </small>
+                    </p>
+                    <input formControlName="numberOfFHProtKual" class="form-field-preview" type="text"
+                        placeholder="Diastole" maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child-5">
+                    <p class="preview-title">
+                        <small>
+                            Albumin
+                        </small>
+                    </p>
+                    <input formControlName="numberOfFHAlbumin" class="form-field-preview" type="text"
+                        placeholder="Diastole" maxlength="6" disabled>
+                </div>
+            </div>
+            <p class="preview-main-title">---Fungsi Ginjal</p>
+            <div class="row flex-container preview-container">
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Crea
+                        </small>
+                    </p>
+                    <input formControlName="numberOfFGCrea" class="form-field-preview" type="text" placeholder="Sistole"
+                        maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Ureum
+                        </small>
+                    </p>
+                    <input formControlName="numberOfFGUreum" class="form-field-preview" type="text"
+                        placeholder="Diastole" maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Asam
+                        </small>
+                    </p>
+                    <input formControlName="numberOfFGAsam" class="form-field-preview" type="text"
+                        placeholder="Diastole" maxlength="6" disabled>
+                </div>
+            </div>
+            <p class="preview-main-title">---Fungsi Jantung</p>
+            <div class="row flex-container preview-container">
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            ABI
+                        </small>
+                    </p>
+                    <input formControlName="numberOfFJABI" class="form-field-preview" type="text" maxlength="6"
+                        disabled>
+                </div>
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            EKG
+                        </small>
+                    </p>
+                    <input formControlName="numberOfFJEKG" class="form-field-preview" type="text" maxlength="6"
+                        disabled>
+                </div>
+                <div class="column preview-container-child">
+                    <p class="preview-title">
+                        <small>
+                            Echo
+                        </small>
+                    </p>
+                    <input formControlName="numberOfFJEcho" class="form-field-preview" type="text" maxlength="6"
+                        disabled>
+                </div>
+            </div>
+            <p class="preview-main-title">---Lainnya</p>
+            <div class="row flex-container preview-container-wrap">
+                <div class="column preview-container-child-3">
+                    <p class="preview-title">
+                        <small>
+                            Radiologi Foto
+                        </small>
+                    </p>
+                    <input formControlName="valueOfRadiologiFoto" class="form-field-preview" type="text" maxlength="6"
+                        disabled>
+                </div>
+                <div class="column preview-container-child-3">
+                    <p class="preview-title">
+                        <small>
+                            Funduskopi
+                        </small>
+                    </p>
+                    <input formControlName="valueOfFunduskopi" class="form-field-preview" type="text" maxlength="6"
+                        disabled>
+                </div>
+                <div class="column preview-container-child-3">
+                    <p class="preview-title">
+                        <small>
+                            Pemeriksaan Lainnya
+                        </small>
+                    </p>
+                    <input formControlName="valueOfPemeriksaLainnya" class="form-field-preview" type="text"
+                        maxlength="6" disabled>
+                </div>
+                <div class="column preview-container-child-3">
+                    <p class="preview-title">
+                        <small>
+                            Keterangan
+                        </small>
+                    </p>
+                    <input formControlName="valueOfKeterangan" class="form-field-preview" type="text" maxlength="6"
+                        disabled>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <a class="button" id="close">Tutup</a>
+        </div>
+        <button onclick="window.detailDialog.close();" aria-label="close" class="x">❌</button>
+    </dialog>
+</div>

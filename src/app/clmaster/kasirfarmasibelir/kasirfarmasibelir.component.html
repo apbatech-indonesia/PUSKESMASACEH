@@ -1,0 +1,766 @@
+<div class="app-inner-layout">
+ 
+ 
+  
+  <div class="card mb-3" style="border:0.5px solid grey ;">
+    <div class="card-header-tab card-header">
+      <div class="card-header-title font-size-lg text-capitalize fw-normal">
+        <i class="header-icon lnr-charts icon-gradient bg-happy-green"> </i>
+        <b style="font-size:18px;color:rgb(75, 75, 75)">RETUR PEMBELIAN OBAT</b>
+      </div>
+      <div class="btn-actions-pane-right text-capitalize">
+        <button class="btn-wide btn-outline-2x me-md-2 btn btn-outline-focus btn-sm"  [disabled]="tomboledit"  (click)="tambahmodal()"> Tambah  </button>
+        <button class="btn-wide btn-outline-2x me-md-2 btn btn-outline-focus btn-sm"  [disabled]="tombolsimpan" (click)="simpanbeli()" >Simpan</button>
+ 
+        <button class="btn-wide btn-outline-2x me-md-2 btn btn-outline-focus btn-sm"   [disabled]="tombolhapus" (click)="hapusall()"> Hapus</button>
+        <!-- <button class="btn-wide btn-outline-2x me-md-2 btn btn-outline-focus btn-sm"   [disabled]="tombolbatal" (click)="batalt()"> Batal</button> -->
+        <!-- <button class="btn-wide btn-outline-2x me-md-2 btn btn-outline-focus btn-sm"   [disabled]="tombolmobat"(click)="goToLink()"> M.Obat</button> -->
+        <div class="d-inline-block" ngbDropdown>
+
+      
+        <button class="btn-wide btn-outline-2x me-md-2 btn btn-outline-focus btn-sm"
+          type="button" ngbDropdownToggle> Cetak</button>
+         <div ngbDropdownMenu class="dropdown-menu-rounded">
+          <h6 class="dropdown-header">Cetak Faktur Retur</h6>
+          <button class="dropdown-item" [disabled]="tombolcetak"  (click)="cetakfaktur()">Cetak Faktur Retur</button>
+          <button class="dropdown-item" (click)="openlaporan(content7,'1')">Cetak Faktur Retur Priodik</button>
+
+        </div>
+        </div>
+   
+        <button class="btn-wide btn-outline-2x me-md-2 btn btn-outline-focus btn-sm"  (click)="openLargemapr(content8)">  Lihat </button>
+
+      
+
+
+      </div>
+    </div>
+    <div class="g-0 row" >
+     
+      <div class="col-md-12 col-lg-4">
+        <ul class="list-group list-group-flush">
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">NO FAKTUR :</div>
+                    <form [formGroup]="profileFormfar" >
+                    <div class="widget-subheading">
+                      <!-- (keyup.enter)="onKeyUp($event)" -->
+                      <input  formControlName="nofakturbeli" [(ngModel)]="nofakturbeli" style="border-radius: 5px;border:solid 1px #ccc" placeholder="Hasil..." type="text" >
+
+                    </div>
+
+                  </form>
+                     
+
+
+                  </div>
+                  <div class="widget-content-right">
+                    <button class="btn-wide btn-outline-2x me-md-2 btn btn-outline-focus btn-sm" (click)="openLargemap(content6)">Cari Faktur</button>
+                 </div>
+
+             
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    
+                    <div class="widget-heading" style="font-size:10px;color: #01244a;">SUPPLIER</div>
+                    <form [formGroup]="profileFormfar" >
+                    <input  formControlName="suplier"  [(ngModel)]="suplier"  style="border-radius: 5px;border:solid 1px #ccc;width: 15em" 
+                    placeholder="Hasil..." type="text" (keyup)="carisup($event)">
+                    <div *ngIf="tsupshow">
+             <p *ngFor="let x of tsupplier" (click)="pilihsup(x.kdsup,x.nama)">{{x.nama}}</p>
+            </div>      
+            </form>
+
+                  
+                  </div>
+               
+                  <!-- <div class="widget-content-right">
+                    <div class="widget-numbers text-primary">$12.6k</div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading" style="font-size:10px;color: #01244a;">SYSTEM BAYAR</div>
+                    <!-- <input style="border-radius: 5px;border:solid 1px #ccc" placeholder="Hasil..." type="text" > -->
+                    <form [formGroup]="profileFormfar" >
+                    <select formControlName="kdbayar" [(ngModel)]="kdbayar" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em">
+                      <option value="2">Kridit</option>
+                      <option value="1">Cash</option>
+                    </select>
+                    </form>
+                  </div>
+                  <!-- <div class="widget-content-right">
+                    <div class="widget-numbers text-primary">$12.6k</div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+      <div class="col-md-12 col-lg-4">
+        <ul class="list-group list-group-flush">
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">GUDANG :</div>
+                    <div class="widget-subheading">
+                      <form [formGroup]="profileFormfar" >
+                      <select formControlName="kdgudang" [(ngModel)]="kdgudang"  style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em">
+                        <option  *ngFor="let x of tgudang" value="{{x.kdgudang}}">{{x.gudang}}</option>
+                       
+                      </select>
+                      </form>
+                    </div>
+                  </div>
+                
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">FAKTUR PAJAK</div>
+                    <input [(ngModel)]="nofakturpajak" style="border-radius: 5px;border:solid 1px #ccc" placeholder="Hasil..." type="text" >
+                  </div>
+                  <!-- <div class="widget-content-right">
+                    <div class="widget-numbers text-primary">$12.6k</div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">NO RETUR</div>
+                    <input [(ngModel)]="noretur" disabled style="border-radius: 5px;border:solid 1px #ccc" placeholder="Hasil..." type="text" >
+                  </div>
+                  <!-- <div class="widget-content-right">
+                    <div class="widget-numbers text-primary">$12.6k</div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    
+      <div class="col-md-12 col-lg-4">
+        <ul class="list-group list-group-flush">
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">TGL.FAKTUR :</div>
+                    <div class="widget-subheading">
+
+                      <input  style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em" placeholder="Hasil..." type="date"  [(ngModel)]="tglpx" value="{{tglpx}}" >
+
+                    </div>
+                  </div>
+                
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">TGL RETUR</div>
+                    <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em" placeholder="Hasil..." type="date"  [(ngModel)]="tglpxx" value="{{tglpxx}}" >
+                  </div>
+                  <!-- <div class="widget-content-right">
+                    <div class="widget-numbers text-primary">$12.6k</div>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">KETERANGAN</div>
+                    <input [(ngModel)]="keterangan" style="border-radius: 5px;border:solid 1px #ccc" placeholder="Hasil..." type="text"   (keyup.enter)="onKeyUp($event)">
+                  </div>
+                  <div class="widget-content-right">
+                     <!-- <button class="btn-wide btn-outline-2x me-md-2 btn btn-outline-focus btn-sm"  *ngIf="showtransaksi" [disabled]="!profileFormfar.valid"  (click)="tambah()">Create LPB</button> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- -->
+
+  <div   *ngIf="!showtransaksi"  class="bg-white" style="border:0.5px solid grey ;">
+         
+
+    <div class="tableFixHeadL">
+      <table  class="table">
+        <thead >
+          <tr >
+           
+           
+            <!-- <th scope="col" style="color: #01244a;background-color: #cecbcb;" >Tgl Ex</th> -->
+           
+            <th scope="col" style="color: #01244a;background-color: #cecbcb;" >Obat</th>
+            <th scope="col"  style="color: #01244a;background-color: #cecbcb;" >Satuan</th>
+            <th scope="col" style="color: #01244a;background-color: #cecbcb;" >HNA</th>
+            <th scope="col" style="color: #01244a;background-color: #cecbcb;" >Qty</th>
+            <th scope="col" style="color: #01244a;background-color: #cecbcb;" >Qty Retur</th>
+            <th scope="col" style="color: #01244a;background-color: #cecbcb;" >Disc %</th>
+            <th scope="col" style="color: #01244a;background-color: #cecbcb;" >Disc Rp</th>
+            <th scope="col" style="color: #01244a;background-color: #cecbcb;" >Total</th>
+            <!-- <th scope="col" style="color: #01244a;background-color: #cecbcb;" >No Batch</th> -->
+            <th scope="col" style="color: #01244a;background-color: #cecbcb;" >Verif</th>
+          </tr>
+        </thead>
+
+        <tbody style="font-size:11px;color:black"  >
+          
+        <tr *ngFor="let x of ttrxbeli">
+           
+            <!-- <td>
+              <input style="border-radius: 5px;border:solid 1px #ccc; width: 7em" placeholder="Hasil..." type="date"  [(ngModel)]="x.TGLEX"  (change)="kgantiex($event,x.KDOBAT,x.NOMOR)" >
+            </td> -->
+
+         
+            <td  style="width: 210px;" >
+             {{x.OBAT}}
+            </td>
+            <td >
+              {{x.SATUAN}}
+            </td>
+            <td>
+              {{x.HNARP }}
+            </td>
+            <td>
+              
+              <input   style="border-radius: 5px;border:solid 1px #ccc;width:7em;color:black;font-weight: bold;" 
+              placeholder="Hasil..."  type="number" value="{{x.QTY}}" >
+      
+            </td>
+            <td>
+              
+              <input   style="border-radius: 5px;border:solid 1px #ccc;width:7em;color:black;font-weight: bold;" 
+              placeholder="Retur..."  type="number" value="{{x.QTYR}}" (keyup.enter)="ubahqty($event,x.KDOBAT,x.NOMOR,x.HNA,x.QTY,x.DISCRP,x.DISCPERSEN,x.DISCPERSENR,x.DISCRPR,x.QTYR)">
+      
+            </td>
+            <td>
+              <input style="border-radius: 5px;border:solid 1px #ccc;width:7em;color:black;font-weight: bold;"
+               placeholder="Disc..."  type="number"  value="{{x.DISCPERSENR}}" 
+               (keyup.enter)="ubahdiscpersen($event,x.KDOBAT,x.NOMOR,x.HNA,x.QTY,x.DISCRP,x.QTYR)" >
+            </td>
+
+            <td>
+              
+              
+           
+              <input  style="border-radius: 5px;border:solid 1px #ccc;width:7em;color:black;font-weight: bold;"
+               placeholder="Disc Rp..."   type="number"   value="{{x.DISCRPR}}" (keyup.enter)="ubahdiscrp($event,x.KDOBAT,x.NOMOR,x.HNA,x.QTY,x.DISCPERSEN,x.QTYR,x.DISCPERSENR)">
+            </td>
+           
+            <td >
+
+              {{x.TOTALRN }}
+        
+            </td>
+      
+            <!-- <td >
+              <input style="border-radius: 5px;border:solid 1px #ccc;color:black;font-weight: bold;" 
+              placeholder="No Batch..."  type="text" value="{{x.NOBATCH}}"  (keyup.enter)="ubahbatch($event,x.KDOBAT,x.NOMOR)" >
+              
+            </td> -->
+            <td >
+              <div *ngIf="x.STATUSRV  === '1'" class="mb-2 me-2 badge badge-dot bg-primary">Sudah</div>
+              <div *ngIf="x.STATUSRV  === '0'" class="mb-2 me-2 badge badge-dot bg-danger">belum</div>
+              </td>
+          </tr> 
+
+         
+           
+
+
+        </tbody>
+
+    </table>
+    </div>
+
+   
+   
+
+
+ <hr>
+
+
+<div class="g-0 row" style="background-color:#cecbcb ;">
+  <div class="col-md-12 col-lg-4">
+    <ul class="list-group list-group-flush">
+      <li class="bg-transparent list-group-item">
+        <div class="widget-content p-0">
+          <div class="widget-content-outer">
+            <div class="widget-content-wrapper">
+              <div class="widget-content-left">
+                <div class="widget-heading"  style="font-size:10px;color: #01244a;">DPP RETUR</div>
+               
+              </div>
+              <div class="widget-content-right">
+                <input currencyMask style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em" placeholder="Hasil..." 
+                [(ngModel)]="totalsebelumpajakr"  [options]="{ prefix: ' ', thousands: '.', decimal: ',' }"
+                >
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="bg-transparent list-group-item">
+        <div class="widget-content p-0">
+          <div class="widget-content-outer">
+            <div class="widget-content-wrapper">
+              <div class="widget-content-left">
+                <div class="widget-heading"  style="font-size:10px;color: #01244a;">PPN RETUR {{ppnobat}} %</div>
+               
+              </div>
+              <div class="widget-content-right">
+                <input currencyMask   [options]="{ prefix: ' ', thousands: '.', decimal: ',' }"
+                 style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em"
+                  placeholder="Hasil..."   [(ngModel)]="jmlppnr"  >
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="bg-transparent list-group-item">
+        <div class="widget-content p-0">
+          <div class="widget-content-outer">
+            <div class="widget-content-wrapper">
+              <div class="widget-content-left">
+                <div class="widget-heading"  style="font-size:10px;color: #01244a;">TOTAL RETUR</div>
+               
+              </div>
+              <div class="widget-content-right">
+                <input currencyMask style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em" 
+                [options]="{ prefix: ' ', thousands: '.', decimal: ',' }"
+                placeholder="Hasil..."     [(ngModel)]="totalsetelahppnr" >
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+
+  </div>
+</div>
+
+ 
+    <!-- <div class="g-0 row" >
+      <div class="col-md-12 col-lg-4">
+        <ul class="list-group list-group-flush">
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">DASAR PENGENAAN PAJAK</div>
+                   
+                  </div>
+                  <div class="widget-content-right">
+                    <input currencyMask style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em" placeholder="Hasil..." 
+                    [(ngModel)]="totalsebelumpajak"  [options]="{ prefix: ' ', thousands: '.', decimal: ',' }"
+                    >
+
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">PPN {{ppnobat}} %</div>
+                   
+                  </div>
+                  <div class="widget-content-right">
+                    <input currencyMask   [options]="{ prefix: ' ', thousands: '.', decimal: ',' }"
+                     style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em"
+                      placeholder="Hasil..."   [(ngModel)]="jmlppn"  >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">TOTAL</div>
+                   
+                  </div>
+                  <div class="widget-content-right">
+                    <input currencyMask style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em" 
+                    [options]="{ prefix: ' ', thousands: '.', decimal: ',' }"
+                    placeholder="Hasil..."     [(ngModel)]="totalsetelahppn" >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+      <div class="col-md-12 col-lg-4">
+        <ul class="list-group list-group-flush">
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">ADM/MATERAI</div>
+                   
+                  </div>
+                  <div class="widget-content-right">
+                    <input currencyMask   [options]="{ prefix: ' ', thousands: '.', decimal: ',' }"
+                     style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em"
+                      placeholder="Hasil..."   [(ngModel)]="adm" (keyup)="tambahadm($event)"  >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="bg-transparent list-group-item">
+            <div class="widget-content p-0">
+              <div class="widget-content-outer">
+                <div class="widget-content-wrapper">
+                  <div class="widget-content-left">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">NETTO</div>
+                   
+                  </div>
+                  <div class="widget-content-right">
+                    <input currencyMask   [options]="{ prefix: ' ', thousands: '.', decimal: ',' }"
+                     style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em"
+                      placeholder="Hasil..."   [(ngModel)]="totalakhir"  >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+       
+
+        </ul>
+      </div>
+      <div class="col-md-12 col-lg-4">
+      
+      </div>
+    </div>  -->
+
+  </div>
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+  <div class="card-body">
+    <ng-template #content6 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">List Pembelian</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md-4">
+          
+            <div class="input-group">
+              <div class="input-group-text" >
+                <div class="">
+                  
+                  <fa-icon [icon]="faSearch" ></fa-icon>
+                </div>
+              </div>
+              <input placeholder="Search..."  (keyup)="caripass($event)" type="text" class="form-control">
+            </div>
+            
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+         
+            <select [(ngModel)]="caripas" style="font-size:12px;" class="form-select" (change)="onChange($event.target.value)">
+              <option value="1" >By NoFaktur</option>
+              <option value="2" >By Suplier</option>
+  
+            </select>
+          </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <label for="exampleSelect" class="form-label"  style="color:black">Tanggal</label>
+            <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em" type="date" [(ngModel)]="tglp" (change)="ktglrad()" >
+            
+            </div>
+          </div>
+         </div>
+   
+
+         <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+         
+          <th scope="col">NO FAKTUR</th>
+          <th scope="col" >TGL FAKTUR</th>
+         
+          <th scope="col" >SUPLIER</th>
+          <th scope="col" >ACT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let  x of tbeli">
+       
+          <td style="font-size: 12px;color: black;">
+            {{x.NOFAKTUR}}
+
+          </td>
+         
+          <td  style="font-size: 12px;color: black;">
+           
+            {{x.TGLFAKTUR}}
+          </td>
+          <td  style="font-size: 12px;color: black;">
+            {{x.nama}}
+     
+          </td>
+
+          <td>
+             <div class="badge bg-pill bg-danger" (click)="pilihpasien(x.NOFAKTUR,x.KDSUPPLIER,x.SYSTEMBAYAR,x.KDGUDANG,
+             x.FAKTURPAJAK,x.NOLPB,x.TGLFAKTUR,x.TGLJATUHTEMPO,x.KETERANGAN,x.PPN,x.JMLPPN,x.TOTAL,x.ADM,x.NETTO,x.nama)" >P</div>
+          
+          
+          </td>
+        </tr>
+
+
+        
+      
+        
+      </tbody>
+    </table>
+  </div>   
+
+     
+      </div>
+      <div class="modal-footer">
+      
+     
+      </div>
+    </ng-template>
+
+
+
+
+
+
+
+
+
+
+
+    <ng-template #content7 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">Laporan</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label" style="font-weight: bold;"> DARI </label>
+          <input [(ngModel)]="tgldari"   placeholder="Pasien" type="date" class="form-control">
+
+  
+        </div>
+     
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label" style="font-weight: bold;"> SAMPAI </label>
+          <input [(ngModel)]="tglsampai"   placeholder="Pasien" type="date" class="form-control">
+
+  
+        </div>
+        <!-- <div class="position-relative mb-3"  *ngIf="num2">
+      
+
+          <input type="checkbox"  value="Bike" [(ngModel)]="detaillap">
+          <label for="vehicle1"> Detail</label>
+        </div> -->
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" *ngIf="num1" class="btn btn-secondary"  (click)="cetakfakturp()">Lihat </button>
+          <button type="button"  *ngIf="num2" class="btn btn-secondary"  (click)="cetakfakturbp()">Lihat </button>.
+          <button type="button"  *ngIf="num2" class="btn btn-secondary"  (click)="cetakd()">Lihat Detail</button>
+          <button type="button" *ngIf="num3" class="btn btn-secondary"  (click)="cetakfaktursp()">Lihat </button>
+       
+        </div>
+    </ng-template>
+ 
+
+
+  
+
+
+
+
+    <ng-template #content8 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">List Pembelian</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="col-md-4">
+          
+            <div class="input-group">
+              <div class="input-group-text" >
+                <div class="">
+                  
+                  <fa-icon [icon]="faSearch" ></fa-icon>
+                </div>
+              </div>
+              <input placeholder="Search..."  (keyup)="caripassr($event)" type="text" class="form-control">
+            </div>
+            
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+         
+            <select [(ngModel)]="caripas" style="font-size:12px;" class="form-select" (change)="onChangec($event.target.value)">
+              <option value="1" >By NoFaktur</option>
+              <option value="2" >By Suplier</option>
+  
+            </select>
+          </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <label for="exampleSelect" class="form-label"  style="color:black">Tanggal</label>
+            <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em" type="date" [(ngModel)]="tglp" (change)="ktglradr()" >
+            
+            </div>
+          </div>
+         </div>
+   
+
+         <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+         
+          <th scope="col">NO FAKTUR</th>
+          <th scope="col" >TGL FAKTUR</th>
+         
+          <th scope="col" >SUPLIER</th>
+          <th scope="col" >ACT</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let  x of tbelir">
+       
+          <td style="font-size: 12px;color: black;">
+            {{x.NOFAKTUR}}
+
+          </td>
+         
+          <td  style="font-size: 12px;color: black;">
+           
+            {{x.TGLRETUR}}
+          </td>
+          <td  style="font-size: 12px;color: black;">
+            {{x.nama}}
+     
+          </td>
+
+          <td>
+             <div class="badge bg-pill bg-danger" (click)="pilihpasienr(x.NOFAKTUR,x.KDSUPPLIER,x.SYSTEMBAYAR,x.KDGUDANG,
+             x.FAKTURPAJAK,x.NOLPB,x.TGLFAKTUR,x.TGLJATUHTEMPO,x.KETERANGANR,x.PPN,x.JMLPPN,x.TOTAL,x.ADM,x.NETTO,x.nama,x.NORETUR,x.TGLRETUR)" >P</div>
+          
+          
+          </td>
+        </tr>
+
+
+        
+      
+        
+      </tbody>
+    </table>
+  </div>   
+
+     
+      </div>
+      <div class="modal-footer">
+      
+     
+      </div>
+    </ng-template>
+
+
+
+
+  </div>
+  
+</div>

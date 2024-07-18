@@ -1,0 +1,197 @@
+<div class = row style="padding-bottom: 5px;">
+    <div class="col-md-4">
+        <button style="background-color: powderblue;border-radius: 5px;border:none;">
+            <a (click)="cetak()" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faPrint"></fa-icon></a>
+        </button>
+    </div>
+    <div class="col-md-4">
+        
+    </div>
+    <div class="col-md-4">
+        
+    </div>
+</div>
+<div id="halamanCetak" class="row">
+    <div class="card main-card mb-3">
+        <div class="card-header">
+            <div class="col-md-4">
+                {{ heading }}
+            </div>
+            <div class="col-md-4">
+                Nomor RM = {{ no_rm }}
+            </div>
+        </div>
+        <div class="card-body">
+            
+            <div class="row">
+                <div class="col-md-6">
+                    Nomor RM = {{ no_rm }}
+                </div>
+                <div class="col-md-6">
+                    <div class="position-relative mb-3">
+                        Nomor Transaksi = {{ no_transaksi }}
+                    </div>
+                </div>
+                <div class="col-md-6" [hidden]="true" >
+                    Validasi Create Update = {{ validasiCreateUpdate }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    Pembayaran = {{ pembayaranPasien }}
+                </div>
+                <div class="col-md-6">
+                    Nama Pasien = {{ namaPasien }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    Tempate Lahir = {{ tempatLahirPasien }}
+                </div>
+                <div class="col-md-6">
+                    Tanggal Lahir = {{ tanggalLahirPasien }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    Alamat = {{ alamat }}
+                </div>
+                <div class="col-md-6">
+                    Umur = {{ umur }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    Jenis Kelamin = {{ jenis_kelamin }}
+                </div>
+                <div class="col-md-6">
+                    Agama = {{ agama }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    Status Pernikahan = {{ status_pernikahan }}
+                </div>
+                <div class="col-md-6">
+                    Telp = {{ telepon }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    Pendidikan = {{ pendidikan }}
+                </div>
+                <div class="col-md-6">
+                    Pekerjaan = {{ pekerjaan }}
+                </div>
+            </div>
+            <br><br>
+
+            <b>Daftar Alergi</b>
+
+            <div class="row">
+                <div class="col-md-4">
+                    Diagnosis = {{ diagnosis }}
+                </div>
+                <div class="col-md-4">
+                    Indikasi RI = {{ indikasi_rawat_inap }}
+                </div>
+                <div class="col-md-4">
+                    Anamnesis = {{ anamnesis }}
+                </div>
+            </div>
+            <br><br>
+
+            <b>Keluhan dan Riwayat Pasien</b>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    Keluhan Utama = {{ keluhan_utama }}
+                </div>
+                <div class="col-md-3">
+                    Riwayat Penyakit Sekarang = {{ riwayat_penyakit_sekarang }}
+                </div>
+                <div class="col-md-3">
+                    Riwayat Penyakit Dahulu = {{ riwayat_penyakit_dahulu }}
+                </div>
+                <div class="col-md-3">
+                    Riwayat Penyakit Keluarga = {{ riwayat_penyakit_keluarga }}
+                </div>
+            </div>
+            <br><br>
+
+            <b>Pemeriksaan Fisik</b>
+
+            <div class="row">
+                <div class="col-md-4">
+                    TD = {{ td }} mmHg
+                </div>
+                <div class="col-md-4">
+                    Suhu = {{ suhu }} °C
+                </div>
+                <div class="col-md-4">
+                    BB = {{ bb }} Kg
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    Saturasi = {{ saturasi }} %
+                </div>
+                <div class="col-md-4">
+                    HR = {{ hr }} Menit
+                </div>
+                <div class="col-md-4">
+                    RR = {{ rr }} Menit
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    Eye = {{ eye }}
+                </div>
+                <div class="col-md-3">
+                    Motorik = {{ motorik }}
+                </div>
+                <div class="col-md-3">
+                    Verbal = {{ verbal }}
+                </div>
+                <div class="col-md-3">
+                    GCS = {{ gcs }}
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    Pemeriksaan Fisik = {{ keterangan_pemeriksaan_fisik }}
+                </div>
+                <div class="col-md-6">
+                    Gambar = 
+                    <img src="{{ gambar }}">
+                </div>
+            </div>
+            <br><br>
+
+            <b>Diagnosis</b>
+            <div class="row">
+                <div class="col-md-4">
+                    Primer Kerja = {{ primer_kerja }}
+                </div>
+                <div class="col-md-4">
+                    Diferensial Diagnosis = {{ diferensial_diagnosis }}
+                </div>
+                <div class="col-md-4">
+                    Sekunder = {{ sekunder }}
+                </div>
+            </div>
+            <br><br>
+
+            <b>Tambahan Planing dan Instruksi</b>
+            {{ isi_rencana }}
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+.ng-select.ngsl-placeholder .ng-select-container .ng-value-container .ng-placeholder {
+    /* color text-mute */
+    color: #6c757d;
+}
+
+.ng-select.ngsl-disabled.ng-select-disabled .ng-select-container {
+ background-color: #e9ecef;
+}
+  
+  /* .bg-cust-info {
+    background-color: #107a8a;
+  }
+   */
+  .bg-info-cust {
+    background-color: #125386;
+  }
+  .min-height-400 {
+    min-height: 400px;
+  }
+  
+  .min-width-100 {
+    min-width: 100px;
+  }
+  .minw-100 {
+    min-width: 100px;
+  }
+  .minw-150 {
+    min-width: 150px;
+  }
+  .minw-200 {
+    min-width: 200px;
+  }
+  .minw-300 {
+    min-width: 300px;
+  }
+  .ml1 {
+    margin-left: 4px;
+  }
+  .btn-disab:disabled {
+    opacity: 40%;
+  }
+
+  /* style print */
+
+  .font-formal{
+    font-family: 'Times New Roman', Times, serif;
+  }
+  .font-formal-wrap *{
+    font-family: 'Times New Roman', Times, serif;
+  }
+  /* .print-bg{
+    min-height: 100%;
+  } */
+  .cust-paper {
+    width: 842px; 
+    margin-left: auto; 
+    margin-right: auto;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+  }
+  .cust-paper-lanscape {
+    width: 100%; 
+    min-height: 800px;
+    margin-left: auto; 
+    margin-right: auto;
+    padding: 20px;
+    border: 0px solid #dee2e6;
+    background-color: white;
+  }
+  .cust-paper input{
+    background-color: white;
+  }
+  .cust-paper textarea{
+    background-color: white;
+  }
+  
+  .hr-kop-3{
+    border: 3px solid black;
+  }
+  .hr-kop{
+    border: 1px solid black;
+  }
+  
+  @media print {
+    .cust-paper {
+      padding: 0;
+      border: none;
+    }
+    .print-hidden {
+      visibility: hidden;
+    }
+    .print-visible {
+      visibility: visible;
+    }
+  }
+
+  /* end style print */

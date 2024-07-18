@@ -1,0 +1,332 @@
+<!-- <div class = row>
+    <div class="col-md-11">
+        
+    </div>
+    <div class="col-md-1">
+        <a (click)="cetak()" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faPrint"></fa-icon></a>
+    </div>
+</div> -->
+
+<div id="halamanCetak" class="row">
+    <div class="row">
+        <div class="col-md-12">
+            <div >
+                <div style="text-align: center;color:black">
+                   <h3> {{ heading }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            Saya yang bertanda tangan dibawah ini:
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            Nama
+        </div>
+        <div class="col-md-1 text-end">
+            :
+        </div>
+        <div class="col-md-8">
+            {{ namaKeluarga }}
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            NIK
+        </div>
+        <div class="col-md-1 text-end">
+            :
+        </div>
+        <div class="col-md-8">
+            {{ nikKeluarga }}
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            Tempat / Tgl Lhr
+        </div>
+        <div class="col-md-1 text-end">
+            :
+        </div>
+        <div class="col-md-8">
+            {{ tempatLahirKeluarga }} / {{ tanggalLahirKeluarga}}
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            Jenis Kelamin
+        </div>
+        <div class="col-md-1 text-end">
+            :
+        </div>
+        <div class="col-md-8">
+            {{ jenisKelaminKeluarga }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            Alamat
+        </div>
+        <div class="col-md-1 text-end">
+            :
+        </div>
+        <div class="col-md-8">
+            {{ alamatKeluarga }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            Nomor Telepon
+        </div>
+        <div class="col-md-1 text-end">
+            :
+        </div>
+        <div class="col-md-8">
+            {{ telpKeluarga }}
+        </div>
+    </div>
+    <br><br>
+
+    <div class="row">
+        <div class="col-md-6">
+            Dengan ini menyatakan dengan sesungguhnya bahwa saya
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" style="text-align: center;">
+            <b>MENYETUJUI</b>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            Untuk dilakukan Tindakan Medis berupa **
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {{ tindakanMedis }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            Terhadap diri {{ hubunganDenganPasien }} dengan : 
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            Nama
+        </div>
+        <div class="col-md-1 text-end">
+            :
+        </div>
+        <div class="col-md-8">
+            {{ namaPasien }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            NIK
+        </div>
+        <div class="col-md-1 text-end">
+            :
+        </div>
+        <div class="col-md-8">
+            {{ nikPasien }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            Tempat / Tanggal Lahir
+        </div>
+        <div class="col-md-1 text-end">
+            :
+        </div>
+        <div class="col-md-8">
+            {{ tempatLahirPasien }} / {{ tanggalLahirPasien }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            Jenis Kelamin
+        </div>
+        <div class="col-md-1 text-end">
+            :
+        </div>
+        <div class="col-md-8">
+            {{ jenisKelaminPasien }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            Alamat
+        </div>
+        <div class="col-md-1 text-end">
+            :
+        </div>
+        <div class="col-md-8">
+            {{ alamatPasien }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-2">
+            No Telepon
+        </div>
+        <div class="col-md-1 text-end">
+            :
+        </div>
+        <div class="col-md-8">
+            {{ telpPasien }}
+        </div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-md-12">
+            Saya juga telah menyatakan dengan sesungguhnya dengan tanpa paksaan bahwa saya :
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-11">
+            a. Telah diberikan informasi dan penjelasan serta peringatan akan bahaya, resiko serta
+            kemungkinan - kemungkinan yang timbul apabila tidak dilakukan tindakan medis tersebut.
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-11">
+            b. Telah saya pahami sepenuhnya informasi dan penjelasan yang diberikan
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-11">
+            c. Atas tanggung jawab dan resiko sendiri, saya setuju untuk dilakukan tindakan medis yang dianjurkan
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+        <div class="col-md-3">
+            
+        </div>
+        <div class="col-md-3">
+            {{ kota }}, {{ tanggal }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            Dokter / Bidan
+        </div>
+        <div class="col-md-3">
+            
+        </div>
+        <div class="col-md-3">
+            Yang membuat pernyataan
+        </div>
+    </div>
+    <br><br><br><br><br>    
+    <div class="row">
+        <div class="col-md-3">
+            (.................................)
+        </div>
+        <div class="col-md-3">
+            
+        </div>
+        <div class="col-md-3">
+            (.................................)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            Nama Jelas
+        </div>
+        <div class="col-md-3">
+            
+        </div>
+        <div class="col-md-3">
+            Nama Jelas
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            Saksi pertama
+        </div>
+        <div class="col-md-3">
+            
+        </div>
+        <div class="col-md-3">
+            Saksi kedua
+        </div>
+    </div>
+
+</div>
+

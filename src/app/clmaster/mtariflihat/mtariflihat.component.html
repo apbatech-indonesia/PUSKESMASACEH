@@ -1,0 +1,315 @@
+
+
+
+<div class="row">
+  <div class="col-md-4">
+    
+    
+    <div class="card main-card mb-3">
+    
+     
+      <!-- <div class="card-header">
+
+
+
+      
+      
+      </div> -->
+     
+    
+      <table class="table table-striped">
+     
+        <thead>
+          <tr>
+            <!-- <th scope="col">Kd Kelompok</th> -->
+            <th scope="col">Tarif</th>
+            <th scope="col" class="text-center">Act</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of tkelompok">
+         
+            <td *ngIf="x.status == 0" style="font-size: 12px;color:red;font-style: italic;">
+              
+             {{x.nama}}
+            </td>
+
+            <td *ngIf="x.status == 1" style="font-size: 12px;color:black">
+              
+              {{x.nama}}
+             </td>
+
+            <td class="text-center">
+            
+
+              
+              <div class="badge bg-pill bg-secondary" (click)="lihat(x.kdtarifm,x.nama)">P</div>
+              
+            
+             
+              
+            </td>
+            
+          </tr>
+        
+         
+        </tbody>
+      </table>
+    </div>
+   
+  </div>
+  <div class="col-md-8">
+   
+    <div class="card main-card mb-3">
+
+      <div class="row">
+        <div class="col-md-8">
+          <!-- <span style="font-size: 14px;padding: 10px;">Cari Tarif Detail</span> -->
+          <label for="exampleSelect" class="form-label">Cari Tarif Detail</label>
+          
+          <input type="text" class="form-control ms-2" (keyup)="cariuserxx($event)" >
+         
+        </div>
+        <div class="col-md-4">
+          <label for="exampleSelect" class="form-label">Jenis</label>
+          <!-- (change)="onChange($event.target.value)">
+              
+          (change)="updateSorting($event)" -->
+          <select  [(ngModel)]="jenistc" id="exampleSelect" class="form-select" (change)="onChange($event.target.value)">
+            <option value="RJ">Rawat Jalan</option>
+            <option  value="LAB">Laborat</option>
+            <option value="RAD">Radiologi</option>
+            <option value="IGD">IGD</option>
+            <option value="RI">Rawat Inap</option>
+          </select>
+        </div>
+       
+        </div>
+
+<b>{{judulnama}} </b>
+    
+      <table class="table table-striped">
+        <thead>
+          <tr>
+           
+            <th scope="col">Nama Tarif</th>
+            <th scope="col">Harga</th>
+          
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of ttarifd">
+            <!-- <td  *ngIf="x.status == 0"  style="font-size: 11px;color:red;font-style: italic;">{{x.nama}}</td> -->
+            <td  style="font-size: 11px;color:black">{{x.nama}}<br>
+            <span style="font-size:9px ;color:red">{{x.tglberlaku}} sd {{x.tglberakhir}}</span>
+            </td>
+            <td  style="font-size: 11px;color:black">{{x.harga | currency:'IDR'}}</td>
+           
+          
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+
+     <ng-template #content5 let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h7 class="modal-title">Tambah Kostumer {{namakus}}</h7>
+            <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+            </button>
+          </div>
+          <div class="modal-body">
+          
+              <!-- <form> -->
+                <div class="position-relative mb-3">
+                  <!-- <label for="exampleEmail" class="form-label">Kode Kelompok</label> -->
+                  <input [(ngModel)]="kdkelompok" disabled    class="form-control">
+                </div>
+
+                <label for="exampleSelect" class="form-label">Jenis</label>
+              
+              
+
+                <select  [(ngModel)]="jenist" id="exampleSelect" class="form-select">
+                  <option value="RJ">Rawat Jalan</option>
+                  <option  value="LAB">Laborat</option>
+                  <option value="RAD">Radiologi</option>
+                  <option value="IGD">IGD</option>
+                  <option value="RI">Rawat Inap</option>
+                </select>
+              <form [formGroup]="tarifform">
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label"><b>Nama Tarif</b></label>
+                
+                  <textarea  formControlName="namatarif" [(ngModel)]="namatarif"  class="form-control" autosize></textarea>
+
+                </div>
+              </form>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label"><b>Jasa Klinik</b></label>
+                      <input [(ngModel)]="jasaklinik"  type="number" class="form-control" (keyup)="cjasaklinik($event)">
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                 
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label"><b>Jasa Pelayanan</b></label>
+                      <input  [(ngModel)]="jasapel"  type="number" class="form-control" (keyup)="cjasapel($event)">
+                    
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label"><b>Jasa Dokter</b></label>
+                      <input [(ngModel)]="jasadokter"  type="number" class="form-control" (keyup)="cjasadokter($event)">
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                 
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label"><b>Jasa Sewa Tempat</b></label>
+                      <input  [(ngModel)]="jasasewa"  type="number" class="form-control" (keyup)="cjasasewa($event)">
+                    
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label"><b>Jasa Sewa Alat</b></label>
+                      <input [(ngModel)]="jasaalat" (keyup)="cjasaalat($event)"  type="number" class="form-control">
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                 
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label"><b>Jasa Asisten Dokter</b></label>
+                      <input  [(ngModel)]="jasaasisdok"  (keyup)="cjasaasisdok($event)" type="number" class="form-control">
+                    
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label"><b>Jasa Perawat/Bidan</b></label>
+                      <input [(ngModel)]="jasajp" (keyup)="cjasajp($event)"  type="number" class="form-control">
+                      
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                 
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label"><b>Jasa Dokter Pengirim</b></label>
+                      <input  [(ngModel)]="jasdokp"  (keyup)="cjasdokp($event)" type="number" class="form-control">
+                    
+                    </div>
+                  </div>
+                </div>
+
+
+              
+              
+<div class="position-relative mb-3">
+  <label for="exampleEmail" class="form-label"><b>Total</b></label>
+  <input currencyMask [(ngModel)]="totaltarif" [options]="{ prefix: ' ',precision :0, thousands: '.', decimal: ',' }" class="form-control"/>
+
+ 
+  
+</div>
+
+      
+<div class="row">
+  <div class="col-md-6">
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label"><b>Tgl Berlaku</b></label>
+      <input [(ngModel)]="tglb"  type="date" class="form-control">
+      
+    </div>
+  </div>
+  <div class="col-md-6">
+ 
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label"><b>Tgl Berakhir</b></label>
+      <input  [(ngModel)]="tgla"   type="date" class="form-control">
+    
+    </div>
+  </div>
+</div>
+
+      
+          </div>
+          <div class="modal-footer">
+            <button  *ngIf="cosshowd == '2'" [disabled]="!tarifform.valid" type="button" class="btn btn-secondary" (click)="editkd()" >Edit</button>
+            <button *ngIf="cosshowd == '1'" [disabled]="!tarifform.valid" type="button" class="btn btn-primary" (click)="simpankd()">Simpan</button>
+          </div>
+        </ng-template>
+
+
+
+
+
+
+        <ng-template #contentc let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Tambah Tarif Master</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+            </button>
+          </div>
+          <div class="modal-body">
+         
+              <!-- <form> -->
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Kode Kelompok</label>
+                  <input [(ngModel)]="kdkelompok"  disabled type="text" class="form-control">
+                </div>
+
+                <form [formGroup]="golonganform">
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Kode Tarif</label>
+                  <input formControlName="kdtarifm"    [(ngModel)]="kdtarifm" placeholder="Kelompok" type="text" class="form-control">
+                </div>
+
+
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Nama Tarif</label>
+                  <input   formControlName="kelompok"   [(ngModel)]="kelompok" placeholder="Kelompok" type="text" class="form-control">
+                </div>
+            
+                <div class="position-relative mb-3">
+                  <label for="exampleSelect" class="form-label"  style="color:black">Jenis Tarif</label>
+                  <select   formControlName="jenistarif"   [(ngModel)]="jenistarif" id="exampleSelect" class="form-select" (click)="pilkel(cusi)" >
+                    <option value="BPJS">BPJS </option>   
+                    <option value="UMUM">UMUM </option>   
+                    <option value="ASURANSI">ASURANSI </option>   
+          
+                  
+                    
+            
+                  </select>
+                </div>
+              </form>
+        
+          </div>
+          <div class="modal-footer">
+            <button *ngIf="editshow ==  '2'"  [disabled]="!golonganform.valid" type="button" class="btn btn-secondary" (click)="editkel()" >Edit</button>
+            <button *ngIf="editshow ==  '1'" [disabled]="!golonganform.valid" type="button" class="btn btn-primary"  (click)="simpankelompok()">Simpan</button>
+          </div>
+        </ng-template>
+
+
+</div>

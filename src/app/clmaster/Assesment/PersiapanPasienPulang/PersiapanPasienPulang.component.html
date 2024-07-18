@@ -1,0 +1,415 @@
+<div class="row">
+    <div class="col-md-10">
+        <div class="card main-card mb-3">
+            <div class="card-header text-light" style="text-align: center; background-color: #107a8a;">
+                {{ heading }}
+            </div>
+            
+            <div class="card-body">
+                
+                <div class="row">
+                    <div class="col-md-2" *ngIf="validasiCreateUpdate=='Create'">
+                        <button style="background-color: greenyellow;border-radius: 5px;border:none;" (click)="openModalTemplate(modalTemplate)">
+                            Template <fa-icon [icon]="faBook"></fa-icon>
+                        </button>        
+                    </div>
+                    <div class="col-md-2" *ngIf="validasiCreateUpdate=='Update'">
+                        <button style="background-color: powderblue;border-radius: 5px;border:none;">
+                            <a [routerLink]="'../../PersiapanPasienPulangCetak/' + no_rm + '/' + no_transaksi + '/' + idPasienPulang" routerLinkActive="active" class="vsm-link" style="cursor: pointer;" target="_blank">
+                                Print <fa-icon [icon]="faPrint"></fa-icon>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor RM" class="form-label" style="color:black;">Nomor RM</label>
+                            <input [(ngModel)]="no_rm" disabled placeholder="Nomor RM" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor Transaksi" class="form-label" style="color:black;">Nomor Transaksi</label>
+                            <input [(ngModel)]="no_transaksi" disabled placeholder="Nomor Transaksi" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6" [hidden]="true">
+                        <div class="position-relative mb-3">
+                            <label for="Validasi Button" class="form-label" style="color:black;">Validasi Button</label>
+                            <input [(ngModel)]="validasiCreateUpdate" disabled placeholder="Validasi Button" type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="validasiCreateUpdate=='Create'">
+                    <div class="col-md-3">
+                        <label for="Tanggal Pasien Pulang" class="form-label" style="color:black;">Tanggal Pasien Pulang</label>
+                        &nbsp;
+                        <mat-form-field>
+                          <input matInput [matDatepicker]="tglpulang" [(ngModel)]="tanggal_pulang">
+                          <mat-datepicker-toggle matSuffix [for]="tglpulang"></mat-datepicker-toggle>
+                          <mat-datepicker #tglpulang></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="validasiCreateUpdate=='Update'">
+                    <div class="col-md-3">
+                        <label for="Tanggal Pasien Pulang" class="form-label" style="color:black;width: 100%;">Tanggal Pasien Pulang</label>
+                        &nbsp;
+                        {{ tanggal_pulang }}
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="validasiCreateUpdate=='Create'">
+                    <div class="col-md-3">
+                        <label for="Template Anjuran Untuk Pasien" class="form-label" style="color:black;">Template Anjuran Untuk Pasien</label>
+                        <select2 [data]="select2ListAnjuran"
+                        placeholder="Anjuran"
+                        [value]="anjuran"
+                        [(ngModel)]="anjuran" (update)="pasangNilaiAnjuran($event)"
+                        ></select2>    
+                    </div>
+                    <div class="col-md-9">
+                        <label for="Anjuran Untuk Pasien" class="form-label" style="color:black;">Anjuran Untuk Pasien</label>
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="keterangan_anjuran" 
+                                [(ngModel)]="keterangan_anjuran" id="keterangan_anjuran" placeholder="Anjuran Untuk Pasien" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <div class="row" *ngIf="validasiCreateUpdate=='Update'">
+                    <div class="col-md-3">
+                        <label for="Template Anjuran Untuk Pasien" class="form-label" style="color:black;" style="width: 100%;">Template Anjuran Untuk Pasien</label>
+                        {{ anjuran }}
+                    </div>
+                    <div class="col-md-9">
+                        <label for="Anjuran Untuk Pasien" class="form-label" style="color:black;" style="width: 100%;">Anjuran Untuk Pasien</label>
+                        {{ keterangan_anjuran }}
+                    </div>
+                </div>
+                <br>
+                <div class="row" *ngIf="validasiCreateUpdate=='Create'">
+                    <div class="col-md-3">
+                        <label for="Template Respon Keluarga" class="form-label" style="color:black;">Template Respon Keluarga</label>
+                        <select2 [data]="select2ListRespon"
+                        placeholder="Respon"
+                        [value]="respon"
+                        [(ngModel)]="respon" (update)="pasangNilaiRespon($event)"
+                        ></select2>
+                    </div>
+                    <div class="col-md-9">
+                        <label for="Respon Keluarga" class="form-label" style="color:black;">Respon Keluarga</label>
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="keterangan_respon" 
+                                [(ngModel)]="keterangan_respon" id="keterangan_respon" placeholder="Respon Keluarga" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <div class="row" *ngIf="validasiCreateUpdate=='Update'">
+                    <div class="col-md-3">
+                        <label for="Template Respon Keluarga" class="form-label" style="color:black;" style="width: 100%;">Template Respon Keluarga</label>
+                        {{ respon }}
+                    </div>
+                    <div class="col-md-9">
+                        <label for="Respon Keluarga" class="form-label" style="color:black;" style="width: 100%;">Respon Keluarga</label>
+                        {{ keterangan_respon }}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                            <thead *ngIf="listObat.length > 0">
+                                <th>No</th>
+                                <th>Obat</th>
+                                <th>Label</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of listObat; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>
+                                        <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                            {{ row.obat }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                            {{ row.label }}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <a (click)="hapusArrayListObat(i)" class="vsm-link" style="cursor: pointer;" *ngIf="validasiCreateUpdate=='Create'"><fa-icon [icon]="faTrash"></fa-icon></a>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="validasiCreateUpdate =='Create'">
+                                    <td>
+                                        {{ listObat.length + 1 }}
+                                    </td>
+                                    <td>
+                                        <input class="rounded-pill col-md-12" type="text" [(ngModel)]="arrayObat" placeholder="Obat">
+                                    </td>
+                                    <td>
+                                        <input class="rounded-pill col-md-12" type="text" [(ngModel)]="arrayLabel" placeholder="Label">
+                                    </td>
+                                    <td>
+                                        <a (click)="tambahArrayListObat()" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faPlusCircle"></fa-icon></a>
+                                    </td>
+                                </tr>     
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+                
+                <br>
+                <div class="row" *ngIf="validasiCreateUpdate=='Create'">
+                    <div class="col-md-3">
+                        <label for="Template Hasil Lain Yang Dibawakan Pulang" class="form-label" style="color:black;">Template Hasil Lain Yang Dibawakan Pulang</label>
+                        <select2 [data]="select2ListHasil"
+                        placeholder="Hasil"
+                        [value]="hasil"
+                        [(ngModel)]="hasil" (update)="pasangNilaiHasil($event)"
+                        ></select2>
+                    </div>
+                    <div class="col-md-9">
+                        <label for="Hasil Lain Yang Dibawakan Pulang" class="form-label" style="color:black;">Hasil Lain Yang Dibawakan Pulang</label>
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="keterangan_hasil" 
+                                [(ngModel)]="keterangan_hasil" id="keterangan_hasil" placeholder="Laboratorium, Resum Medis, Kartu Kontrol" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="validasiCreateUpdate=='Update'">
+                    <div class="col-md-3">
+                        <label for="Template Hasil Lain Yang Dibawakan Pulang" class="form-label" style="color:black;width: 100%;">Template Hasil Lain Yang Dibawakan Pulang</label>
+                        {{ hasil }}
+                    </div>
+                    <div class="col-md-9">
+                        <label for="Hasil Lain Yang Dibawakan Pulang" class="form-label" style="color:black;width: 100%;">Hasil Lain Yang Dibawakan Pulang</label>
+                        {{ keterangan_hasil }}
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="validasiCreateUpdate=='Create'">
+                    <div class="col-md-12">
+                        <label for="Keterangan Lain" class="form-label" style="color:black;">Keterangan Lain</label>
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="keterangan_lain" 
+                                [(ngModel)]="keterangan_lain" id="keterangan_lain" placeholder="Laboratorium, Resum Medis, Kartu Kontrol" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <div class="row" *ngIf="validasiCreateUpdate=='Update'">
+                    <div class="col-md-12">
+                        <label for="Keterangan Lain" class="form-label" style="color:black;">Keterangan Lain</label>
+                        {{ keterangan_lain }}
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="position-relative mb-3">
+                        <button type="button" class="badge rounded-pill ps-2 pe-2 bg-warning" (click)="Simpan()" style="width:100%"
+                        *ngIf="validasiCreateUpdate=='Create'">
+                            Simpan
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Modal Template -->
+                <ng-template #modalTemplate let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title" id="modal-template">Template Pasien Pulang</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="position-relative mb-3">   
+                            <div style="text-align: center; background-color: #107a8a;border-radius: 25px;">
+                                <Span style="color: white;">
+                                    <b>
+                                        List Template
+                                    </b>
+                                </Span>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button style="background-color: rgb(186, 196, 48);border-radius: 5px;border:none;" (click)="openModalTambahTemplate(modalTambahTemplate, '')">
+                                        Tambah Template <fa-icon [icon]="faPlusCircle"></fa-icon>
+                                    </button>    
+                                </div>
+                                <div class="col-md-6">
+                                    <select [(ngModel)]="selectTemplate" id="selectTemplate" class="form-select" style="border-radius: 25px;"
+                                    (change)="pasangListTemplate()"
+                                    >
+                                        <option value="">-PILIH-</option>
+                                        <option value="Anjuran">Anjuran Pasien</option>
+                                        <option value="Respon">Respon Keluarga</option>
+                                        <option value="Hasil">Hasil Lain Yang Dibawa Pulang</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                        <thead *ngIf="listTemplate.length > 0">
+                                            <th>No</th>
+                                            <th>Judul</th>
+                                            <th>Jenis</th>
+                                            <th>Isi</th>
+                                            <th>Status</th>
+                                            <th>Tanggal Buat</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of listTemplate; let i = index">
+                                                <td>{{ i + 1 }}</td>
+                                                <td>
+                                                    <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                                        <button style="background-color: burlywood;border-radius: 5px;border:none;" (click)="pasangNilaiModal(row);openModalTambahTemplate(modalTambahTemplate, row.id)">
+                                                            {{ row.judul }} 
+                                                        </button>    
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                                        {{ row.jenis }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                                        {{ row.isi }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;" *ngIf="row.status=='Active'">
+                                                        Aktif
+                                                    </div>
+                                                    <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;" *ngIf="row.status=='Inactive'">
+                                                        Non Aktif
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                                        {{ row.created_at }}
+                                                    </div>
+                                                </td>
+                                            </tr>     
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                <!-- Akhir Modal Template -->
+
+                <!-- Modal Tambah Template -->
+                <ng-template #modalTambahTemplate let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title" id="modal-tambah-template">Tambah Template Pasien Pulang</h4>
+                        <button id="closeModalTambahTemplate" type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="position-relative mb-3">
+                            <div class="row">
+                                <div class="col-md-6" [hidden]="true">
+                                    <div class="position-relative mb-3">
+                                        <label for="ID Modal Template" class="form-label" style="color:black;">ID Modal Template</label>
+                                        <input [(ngModel)]="idModalTambahTemplate" disabled placeholder="ID Modal Template" type="text" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="Judul" class="form-label" style="color:black;">Judul</label> <label style="color:red">*</label>
+                                    <input [(ngModel)]="judulModalTambahTemplate" placeholder="Masukkan Nama Template" type="text" class="form-control" style="width:100%;border-radius: 25px;">
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="Detail" class="form-label" style="color:black;">Detail</label> <label style="color:red">*</label>
+                                    <form [formGroup]="formInput">
+                                        <textarea maxlength="300" formControlName="detailModalTambahTemplate" 
+                                            [(ngModel)]="detailModalTambahTemplate" id="detailModalTambahTemplate" 
+                                            class="form-control" style="border-radius: 10px;"
+                                            placeholder="Masukkan Isi Template"
+                                            > 
+                                        </textarea>
+                                    </form>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="Jenis" class="form-label" style="color:black;">Jenis</label> <label style="color:red">*</label>
+                                    <select [(ngModel)]="jenisModalTambahTemplate" id="jenisModalTambahTemplate" class="form-select" style="width:100%;border-radius: 25px;">
+                                        <option value="">-PILIH-</option>
+                                        <option value="anjuran pasien">Anjuran Pasien</option>
+                                        <option value="respon keluarga">Respon Keluarga</option>
+                                        <option value="hasil yang dibawa pulang">Hasil Yang Dibawa Pulang</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" class="badge rounded-pill ps-2 pe-2 bg-warning" (click)="SimpanTemplate()" style="width:100%;border-radius: 25px;">Simpan</button>
+                                </div>
+                            </div>
+            
+                        </div>
+                    </div>
+                </ng-template>
+                <!-- Akhir Tambah Modal Template -->
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="row" style="text-align: center;">
+            <Span style="color: blue;">
+                <b>
+                    Riwayat
+                </b>
+            </Span>
+        </div>
+        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <tbody>
+                <tr *ngFor="let row of listNotransaksiPerNoRM">
+                    <td class="text-center text-muted"  style="width: 78px;">
+                        <div class="widget-heading">
+                            <a (click)="ambilDataPerNoRMNoTransaksi(row.no_rm, row.no_transaksi, row.id)" data-title={{row.no_transaksi}} style="cursor: pointer;">
+                                <span style="color: cornflowerblue;"> 
+                                    {{row.no_transaksi}}
+                                </span>
+                            </a>
+                        </div>
+                        <div class="widget-heading">{{row.created_at}}</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

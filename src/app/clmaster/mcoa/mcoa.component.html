@@ -1,0 +1,186 @@
+<!-- 
+<div class="app-page-title">
+  <div class="page-title-wrapper">
+    <div class="page-title-heading">
+      <div class="page-title-icon">
+        <i class="icon {{icon}}"></i>
+      </div>
+      <div>
+        {{heading}}
+        <div class="page-title-subheading">
+          {{subheading}}
+        </div>
+      </div>
+    </div>
+    <div class="page-title-actions">
+  
+    </div>
+  </div>
+</div> -->
+
+
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+        Cari COA
+        <div class="col-auto">
+          <input type="text" class="form-control ms-2" [(ngModel)]="cariuser" (keyup)="cariuserx($event)" >
+         
+        </div>
+        
+      </div>
+    
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">KD COA</th>
+            <th scope="col">COA</th>
+            <th scope="col" style="text-align:center ;">Act</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+
+            <p-tree [style]="{'text-align': 'center', 'font-size': '1em'}"  [value]="files1" [filter]="true"  selectionMode="single"
+            
+            [(selection)]="selectedFile"  
+            
+            (onNodeSelect)="open(content,$event)"
+            ></p-tree>
+
+
+
+            <!-- <td class="text-center text-muted">{{x.kdakun}}</td>
+            <td style="font-size: 12px;color:black">
+              
+              {{x.akun}}
+            </td>
+            <td class="text-center">
+              <div class="badge bg-pill bg-info" (click)="open(content,x.kdakun)">T</div>
+
+              <div class="badge bg-pill bg-danger" (click)="lihatcoa(x.kdakun)">P</div>
+              
+              
+            </td> -->
+            
+          </tr>
+        
+         
+        </tbody>
+      </table>
+    </div>
+   
+  </div>
+  <div class="col-md-6">
+   
+    <div class="card main-card mb-3">
+      <div class="card-header">
+        Detail COA
+        <div class="col-auto">
+          <input type="text" class="form-control ms-2"  (keyup)="cariuserxx($event)" >
+         
+        </div>
+        
+      </div>
+    
+      <table class="table table-striped">
+        <thead>
+          <tr>
+           
+            <th scope="col">KD COA</th>
+            <th scope="col">COA</th>
+            <th scope="col" class="text-center">ACT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of coadetail">
+            <td class="text-muted">{{x.kdakun}}</td>
+            <td style="font-size: 12px;color:black">
+              
+              {{x.akun}}
+            </td>
+           
+            <td class="text-center">
+      
+
+              <div class="badge bg-pill bg-warning" (click)="opene(contente,x.kdakun,x.parent,x.akun)">E</div>
+
+              <div class="badge bg-pill bg-danger" (click)="hapus(x.kdakun,x.parent,x.akun)">X</div>
+              
+              
+            </td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+
+     <ng-template #content let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Tambah COA</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="card-body">
+              <!-- <form> -->
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Kode Parent</label>
+                  <input [(ngModel)]="kdparent"  type="text" class="form-control">
+                </div>
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Nama COA</label>
+                  <input  [(ngModel)]="coa" placeholder="Coa" type="text" class="form-control">
+                </div>
+             
+            
+      
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+            <button type="button" class="btn btn-primary" (click)="simpanc()">Simpan</button>
+          </div>
+        </ng-template>
+
+
+        <ng-template #contente let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">EDIT COA</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="card-body">
+              <!-- <form> -->
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Kode Parent</label>
+                  <input [(ngModel)]="kdparente"  type="text" class="form-control">
+                </div>
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Kode Akun</label>
+                  <input [(ngModel)]="kdakune"  type="text" class="form-control">
+                </div>
+
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Nama COA</label>
+                  <input  [(ngModel)]="coae" placeholder="Coa" type="text" class="form-control">
+                </div>
+             
+            
+      
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+            <button type="button" class="btn btn-primary" (click)="simpane()">Edit</button>
+          </div>
+        </ng-template>
+
+
+</div>

@@ -1,0 +1,820 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card main-card mb-3">
+            <div class="card-header text-light" style="text-align: center; background-color: #107a8a;">
+                {{ heading }}
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3" *ngIf="validasiCreateUpdate=='Update'">
+                        <!-- <a (click)="cetak()" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faPrint"></fa-icon></a> -->
+                        <button style="background-color: powderblue;border-radius: 5px;border:none;">
+                            <a [routerLink]="'../../AsesmenAwal/' + no_rm + '/' + no_transaksi" routerLinkActive="active" class="vsm-link" style="cursor: pointer;" target="_blank">
+                                Print <fa-icon [icon]="faPrint"></fa-icon>
+                            </a>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor RM" class="form-label" style="color:black;">Nomor RM</label>
+                            <input [(ngModel)]="no_rm" disabled placeholder="Nomor RM" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor Transaksi" class="form-label" style="color:black;">Nomor Transaksi</label>
+                            <input [(ngModel)]="no_transaksi" disabled placeholder="Nomor Transaksi" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                    <div class="col-md-6" [hidden]="true">
+                        <div class="position-relative mb-3">
+                            <label for="Validasi Button" class="form-label" style="color:black;">Validasi Button</label>
+                            <input [(ngModel)]="validasiCreateUpdate" disabled placeholder="Validasi Button" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Pembayaran" class="form-label" style="color:black;">Pembayaran</label>
+                            <input [(ngModel)]="pembayaranPasien" disabled placeholder="Pembayaran" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nama Pasien" class="form-label" style="color:black;">Nama Pasien</label>
+                            <input [(ngModel)]="namaPasien" disabled placeholder="Nama Pasien" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Tempat Lahir" class="form-label" style="color:black;">Tempat Lahir</label>
+                            <input [(ngModel)]="tempatLahirPasien" disabled placeholder="Tempat Lahir" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Tanggal Lahir" class="form-label" style="color:black;">Tanggal Lahir</label>
+                            <input [(ngModel)]="tanggalLahirPasien" disabled placeholder="Tanggal Lahir" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Alamat" class="form-label" style="color:black;">Alamat</label>
+                            <input [(ngModel)]="alamat" disabled placeholder="Alamat" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Umur" class="form-label" style="color:black;">Umur</label>
+                            <input [(ngModel)]="umur" disabled placeholder="Umur" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Jenis Kelamin" class="form-label" style="color:black;">Jenis Kelamin</label>
+                            <input [(ngModel)]="jenis_kelamin" disabled placeholder="Jenis Kelamin" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Agama" class="form-label" style="color:black;">Agama</label>
+                            <input [(ngModel)]="agama" disabled placeholder="Agama" type="text" class="form-control rounded-pill">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Status Pernikahan" class="form-label" style="color:black;">Status Pernikahan</label>
+                            <input [(ngModel)]="status_pernikahan" disabled placeholder="Status Pernikahan" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Telepon" class="form-label" style="color:black;">Telepon</label>
+                            <input [(ngModel)]="telepon" disabled placeholder="Telepon" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Pendidikan" class="form-label" style="color:black;">Pendidikan</label>
+                            <input [(ngModel)]="pendidikan" disabled placeholder="Pendidikan" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Pekerjaan" class="form-label" style="color:black;">Pekerjaan</label>
+                            <input [(ngModel)]="pekerjaan" disabled placeholder="Pekerjaan" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="rounded-pill" style="text-align: center; background-color: #107a8a;">
+                    <Span style="color: white;">
+                        <b>
+                            Daftar Alergi
+                        </b>
+                    </Span>
+                </div>
+
+                <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                    <thead>
+                        <th>No</th>
+                        <th>Obat</th>
+                        <th>Keterangan</th>
+                        <th>Jenis</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of listDaftarAlergi; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>
+                                <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                    {{ row.obat_alergi }}
+                                </div>
+                                <!-- <input type="text" value="{{ row.obat_alergi }}" (keyup)="ubahlistNamaObatAlergi(i,$event);"> -->
+                            </td>
+                            <td>
+                                <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                    {{ row.keterangan_alergi }}
+                                </div>
+                                <!-- <input type="text" value="{{ row.keterangan_alergi }}" (keyup)="ubahlistKeteranganAlergi(i,$event);"> -->
+                            </td>
+                            <td>
+                                <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                    {{ row.jenis_alergi }}
+                                </div>
+                                <!-- <select value="{{ row.jenis_alergi }}" id="arrayJenisAlergi" class="form-select rounded-pill" (change)="ubahlistJenisAlergi(i,$event)">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Obat">Obat</option>
+                                    <option value="Makanan">Makanan</option>
+                                </select> -->
+                            </td>
+                            <td>
+                                <a (click)="hapusArrayDaftarAlergi(i)" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faTrash"></fa-icon></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ listDaftarAlergi.length + 1 }}
+                            </td>
+                            <td>
+                                <input class="rounded-pill col-md-12" type="text" [(ngModel)]="arrayObatMakanan" placeholder="Obat">
+                            </td>
+                            <td>
+                                <form [formGroup]="formInput">
+                                    <textarea maxlength="300" formControlName="arrayKeteranganAlergi" 
+                                        [(ngModel)]="arrayKeteranganAlergi" id="arrayKeteranganAlergi" placeholder="Keterangan" 
+                                        class="form-control" style="border-radius: 10px;">
+                                    </textarea>
+                                </form>
+                                <!-- <input class="rounded-pill col-md-12" type="text" [(ngModel)]="arrayKeteranganAlergi" placeholder="Keterangan"> -->
+                            </td>
+                            <td>
+                                <select [(ngModel)]="arrayJenisAlergi" id="arrayJenisAlergi" class="form-select rounded-pill">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Obat">Obat</option>
+                                    <option value="Makanan">Makanan</option>
+                                </select>
+                            </td>
+                            <td>
+                                <a (click)="tambahArrayDaftarAlergi()" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faPlusCircle"></fa-icon></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        Diagnosis
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="diagnosis" 
+                                [(ngModel)]="diagnosis" id="diagnosis" placeholder="Diagnosis" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        Indikasi Rawat Inap
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="indikasi_rawat_inap" 
+                                [(ngModel)]="indikasi_rawat_inap" id="indikasi_rawat_inap" placeholder="Indikasi Rawat Inap" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="position-relative mb-3">
+                            <label for="Anamnesa / Alloanamnesa " class="form-label" style="color:black;">Anamnesis </label>
+                            <select [(ngModel)]="anamnesis" id="anamnesis" class="form-select" style="border-radius: 25px;">
+                                <option value="">-PILIH-</option>
+                                <option value="Anamnesa">Anamnesa</option>
+                                <option value="Alloanamnesa">Alloanamnesa</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- <div class="row">
+                    <div class="col-md-4">
+                        Diagnosis
+                    </div>
+                    <div class="col-md-4">
+                        Indikasi Rawat Inap
+                    </div>
+                    <div class="col-md-4">
+                        Anamnesis
+                    </div>
+                </div> -->
+
+                <!-- <div class="row">
+                    <div class="col-md-4">
+                        <input class="rounded-pill" type="text" [(ngModel)]="diagnosis">
+                    </div>
+                    <div class="col-md-4">
+                        <input class="rounded-pill" placeholder="Indikasi Rawat Inap" type="text" [(ngModel)]="indikasi_rawat_inap">
+                    </div>
+                    <div class="col-md-4">
+                        <input class="rounded-pill" type="text" [(ngModel)]="anamnesis">
+                    </div>
+                </div> -->
+                <br>
+                <div class="rounded-pill" style="text-align: center; background-color: #107a8a;">
+                    <Span style="color: white;">
+                        <b>
+                            Keluhan dan Riwayat Pasien
+                        </b>
+                    </Span>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        Keluhan Utama <label style="color:red">*</label>
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="keluhan_utama" 
+                                [(ngModel)]="keluhan_utama" id="keluhan_utama" placeholder="Keluhan Utama" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                        <div *ngIf="keluhan_utama == ''" class="text-danger">
+                            Diperlukan data untuk dimasukkan.
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        Riwayat Penyakit Sekarang
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="riwayat_penyakit_sekarang" 
+                                [(ngModel)]="riwayat_penyakit_sekarang" id="riwayat_penyakit_sekarang" placeholder="Riwayat Penyakit Sekarang" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        Riwayat Penyakit Dahulu
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="riwayat_penyakit_dahulu" 
+                                [(ngModel)]="riwayat_penyakit_dahulu" id="riwayat_penyakit_dahulu" placeholder="Riwayat Penyakit Dahulu" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        Riwayat Penyakit Keluarga
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="riwayat_penyakit_keluarga" 
+                                [(ngModel)]="riwayat_penyakit_keluarga" id="riwayat_penyakit_keluarga" placeholder="Riwayat Penyakit Keluarga" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="rounded-pill" style="text-align: center; background-color: #107a8a;">
+                    <Span style="color: white;">
+                        <b>
+                            Pemeriksaan Fisik
+                        </b>
+                    </Span>
+                </div>
+                <br>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        TD / mmHg
+                    </div>
+                    <div class="col-md-4">
+                        Suhu / C
+                    </div>
+                    <div class="col-md-4">
+                        BB / Kg
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <input class="rounded-pill" type="text" [(ngModel)]="td" placeholder="mmHg" (keyup)="periksaAngkaInput('TD');" [disabled]="disabledPemeriksaanFisik">
+                    </div>
+                    <div class="col-md-4">
+                        <input class="rounded-pill" type="text" [(ngModel)]="suhu" placeholder="°C" (keyup)="periksaAngkaInput('Suhu');" [disabled]="disabledPemeriksaanFisik">
+                    </div>
+                    <div class="col-md-4">
+                        <input class="rounded-pill" type="text" [(ngModel)]="bb" placeholder="Kg" (keyup)="periksaAngkaInput('BB');" [disabled]="disabledPemeriksaanFisik">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        Saturasi / %
+                    </div>
+                    <div class="col-md-4">
+                        HR / Menit
+                    </div>
+                    <div class="col-md-4">
+                        RR / Menit
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <input class="rounded-pill" type="text" [(ngModel)]="saturasi" placeholder="%" (keyup)="periksaAngkaInput('Saturasi');" [disabled]="disabledPemeriksaanFisik">
+                    </div>
+                    <div class="col-md-4">
+                        <input class="rounded-pill" type="text" [(ngModel)]="hr" placeholder="Menit" (keyup)="periksaAngkaInput('HR');" [disabled]="disabledPemeriksaanFisik">
+                    </div>
+                    <div class="col-md-4">
+                        <input class="rounded-pill" type="text" [(ngModel)]="rr" placeholder="Menit" (keyup)="periksaAngkaInput('RR');" [disabled]="disabledPemeriksaanFisik">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="Eye" class="form-label" style="color:black;">Eye</label>
+                        <select [(ngModel)]="eye" id="eye" class="form-select rounded-pill" (change)="pasangNilaiGCSPemeriksaanFisik()" [disabled]="disabledPemeriksaanFisik">
+                            <option value="">-PILIH-</option>
+                            <option value="4">Spontan (4)</option>
+                            <option value="3">Dengan Rangsang Suara (3)</option>
+                            <option value="2">Dengan Rangsang Nyeri (2)</option>
+                            <option value="1">Spontan (1)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="Motorik" class="form-label" style="color:black;">Motorik</label>
+                        <select [(ngModel)]="motorik" id="motorik" class="form-select rounded-pill" (change)="pasangNilaiGCSPemeriksaanFisik()" [disabled]="disabledPemeriksaanFisik">
+                            <option value="">-PILIH-</option>
+                            <option value="6">Mengikutai Perintah (6)</option>
+                            <option value="5">Melokalisir Nyeri (5)</option>
+                            <option value="4">Withdraws (4)</option>
+                            <option value="3">Flexi Abnormal (3)</option>
+                            <option value="2">Extensi Abnormal (2)</option>
+                            <option value="1">Tidak Ada Respon (1)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="Verbal" class="form-label" style="color:black;">Verbal</label>
+                        <select [(ngModel)]="verbal" id="verbal" class="form-select rounded-pill" (change)="pasangNilaiGCSPemeriksaanFisik()" [disabled]="disabledPemeriksaanFisik">
+                            <option value="">-PILIH-</option>
+                            <option value="5">Orientasi Baik (5)</option>
+                            <option value="4">Bingung, Berbicara Mengacau (4)</option>
+                            <option value="3">Kata - Kata Tidak Jelas (3)</option>
+                            <option value="2">Suara Tanpa Arti (2)</option>
+                            <option value="1">Tidak Ada Respon (1)</option>
+                            <option value="0">ETT (0)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="GCS" class="form-label" style="color:black;">GCS</label><br>
+                        <input class="rounded-pill" type="text" [(ngModel)]="gcs" placeholder="GCS" (keyup)="periksaAngkaInput('GCS');" disabled="true">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        Pemeriksaan Fisik
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="keterangan_pemeriksaan_fisik" 
+                                [(ngModel)]="keterangan_pemeriksaan_fisik" id="keterangan_pemeriksaan_fisik" placeholder="Pemeriksaan Fisik" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+
+                    </div>
+                    <div class="col-md-4">
+
+                    </div>
+                    <div class="col-md-4">
+                        <!-- <button type="button" class="badge rounded-pill ps-2 pe-2 bg-warning" (click)="ubahDisabledPemeriksaanFisik()" style="width:100%">{{stringButtonUbahPemeriksaanFisik}}</button> -->
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <label for="Gambar Anatomi" class="form-label" style="color:black;">Gambar Anatomi</label>
+                        </div>
+        
+                        <div class="mb-2 me-2 badge rounded-pill bg-info" (click)="createSignaturePad('Tubuh')" style="cursor: pointer;">Tubuh</div>
+                        <div class="mb-2 me-2 badge rounded-pill bg-info" (click)="createSignaturePad('Organ')" style="cursor: pointer;">Organ</div>
+                        <div class="mb-2 me-2 badge rounded-pill bg-info" (click)="createSignaturePad('Kepala')" style="cursor: pointer;">Kepala</div>
+                        <div class="mb-2 me-2 badge rounded-pill bg-info" (click)="createSignaturePad('Mata Hidung')" style="cursor: pointer;">Mata Hidung</div>
+                        <div class="mb-2 me-2 badge rounded-pill bg-info" (click)="createSignaturePad('Mulut')" style="cursor: pointer;">Mulut</div>
+                        <div class="mb-2 me-2 badge rounded-pill bg-info" (click)="createSignaturePad('Kemaluan')" style="cursor: pointer;">Kemaluan</div>
+        
+                        <div class="mb-2 me-2 badge rounded-pill bg-success" (click)="uploadSignaturePad()" style="cursor: pointer;">Upload</div>
+                        <div class="mb-2 me-2 badge rounded-pill bg-danger" (click)="clearSignaturePad()" style="cursor: pointer;">Clear</div>
+        
+                        <div class="row" [hidden]="hiddenGambarAnatomi">
+                            <signature-pad #signature [options]="signaturePadOptions" (drawStart)="drawStart($event)" (drawEnd)="drawComplete($event)"></signature-pad>
+                            <div>
+                                <span><b>{{gambar_anatomi}}</b></span>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+
+
+
+                <div class="rounded-pill" style="text-align: center; background-color: #107a8a;">
+                    <Span style="color: white;">
+                        <b>
+                            Diagnosis
+                        </b>
+                    </Span>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Primer / Kerja</b>
+                    </div>
+                    <div class="col-md-12">
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="primer_kerja" 
+                                [(ngModel)]="primer_kerja" id="primer_kerja" placeholder="Primer / Kerja" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Diferensial Diagnosis</b>
+                    </div>
+                    <div class="col-md-12">
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="diferensial_diagnosis" 
+                                [(ngModel)]="diferensial_diagnosis" id="diferensial_diagnosis" placeholder="Diferensial Diagnosis" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Sekunder</b>
+                    </div>
+                    <div class="col-md-12">
+                        <form [formGroup]="formInput">
+                            <textarea maxlength="300" formControlName="sekunder" 
+                                [(ngModel)]="sekunder" id="sekunder" placeholder="Sekunder" 
+                                class="form-control" style="border-radius: 10px;">
+                            </textarea>
+                        </form>
+                    </div>
+                </div>
+                <br>
+        
+                <div class="rounded-pill" style="text-align: center; background-color: #107a8a;">
+                    <Span style="color: white;">
+                        <b>
+                            Konsul Dokter
+                        </b>
+                    </Span>
+                </div>
+
+                <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                    <thead>
+                        <th>No</th>
+                        <th>Kode Dokter</th>
+                        <th>Nama Dokter</th>
+                        <th style="text-align: center;">Isi Konsul</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of listDokter; let i = index">
+                            <td>{{ i + 1 }}</td>
+                            <td>
+                                <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                    {{ row.kode_dokter }}
+                                </div>
+                                <br>
+                                <a (click)="updateStatusRaber(row.id)" *ngIf="row.status_konsul == 0" style="color:red;cursor: pointer;"> Stop</a>
+                                <a (click)="updateStatusRaber(row.id)" *ngIf="row.status_konsul == 1" style="color:green;cursor: pointer;"> Lanjut</a>
+                            </td>
+                            <td>
+                                <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                    {{ row.nama_dokter }}
+                                </div>
+                                <!-- <input type="text" value="{{ row.nama_dokter }}" (keyup)="ubahlistNamaDokter(i,$event);ambilListDokterDenganParams($event, i);" style="width: 75%;"> -->
+                                <br>
+                                <Span style="color:red;" *ngIf="row.status_konsul == 0">Status : Masih Raber</Span>
+                                <Span style="color:green;" *ngIf="row.status_konsul == 1">Status : Selesai Raber</Span>
+                            </td>
+                            <td>
+                                <div class="widget-heading" style="word-wrap: break-word; word-break: break-word;">
+                                    {{ row.isi_konsul }}
+                                </div>
+                            </td>
+                            <td>
+                                <a (click)="hapusArrayDokter(i)" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faTrash"></fa-icon></a>
+                            </td>
+    
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ listDokter.length + 1 }}
+                            </td>
+                            <td>
+                                <input class="rounded-pill col-md-12" type="text" [(ngModel)]="arrayKodeDokter" (keyup)="ambilListDokterDenganParams($event, '')" disabled  placeholder="Kode Dokter">
+                            </td>
+                            <td>
+                                <!-- <input class="rounded-pill col-md-12" type="text" [(ngModel)]="arrayNamaDokter" (keyup)="ambilListDokterDenganParams($event, '');periksaNamaDokterDenganParams();" placeholder="Nama Dokter"> -->
+                                <input class="rounded-pill col-md-12" type="text" [(ngModel)]="arrayNamaDokter" (keyup)="ambilListDokterDenganParams($event, '');periksaNamaDokterDenganParams();" (change)="fungsiHiddenListDokter('Keluar')" (mouseenter)="fungsiHiddenListDokter('Tampil')" placeholder="Nama Dokter">
+                            </td>
+                            <td>
+                                <input class="rounded-pill col-md-12" type="text" [(ngModel)]="arrayIsiKonsulDokter" style="width: 100%;" placeholder="Isi Konsul">
+                            </td>
+                            <td>
+                                <a (click)="tambahArrayDokter()" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faPlusCircle"></fa-icon></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                    <tbody>
+                        <tr *ngFor="let row of listNamaDokter; let i = index" [hidden]="hiddenListDokter">
+                            <td>
+                                <span (click)="pasangNilaiCreateNamaDokter(row.kddokter, row.namdokter)" style="cursor:pointer;">{{row.namdokter}}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div class="rounded-pill" style="text-align: center; background-color: #107a8a;">
+                    <Span style="color: white;">
+                        <b>
+                            Tambahan Planing dan Instruksi
+                        </b>
+                    </Span>
+                </div>
+                <div class="row">
+                    <Span style="color: red;">
+                        <b>
+                            Tambahan Perencanaan dan Instruksi
+                        </b>
+                        <button class="border-0 btn-transition btn btn-outline-success" (click)="ubahJudulModal('Asesmen Awal');openModal(modal);">
+                          <fa-icon [icon]="faBook"></fa-icon>
+                        </button>
+                    </Span>
+                </div>
+                <div class="row">
+                    <form [formGroup]="formInput">
+                        <textarea maxlength="300" formControlName="isi_rencana"  (keyup)="ambilFilterTemplate($event);"
+                            [(ngModel)]="isi_rencana" id="isi_rencana" placeholder="Isi Rencana" style="border-radius: 10px;"
+                            class="form-control" (keyup)="keyupFilterTemplate($event);ambilFilterTemplate($event)">
+                        </textarea>
+                    </form>
+                </div>
+                
+                <table class="align-middle mb-0 table table-borderless table-striped table-hover" [hidden]="hiddenFilterTemplate">
+                    <thead>
+                        <th><b>Nama Rencana</b></th>
+                        <th><b>Isi Rencana</b></th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of listFilterTemplate; let i = index">
+                            <td>
+                                <a (click)="pilihArrayTemplate(row.judul, row.isi)" class="vsm-link" style="cursor: pointer;">{{ row.judul }}</a>
+                            </td>
+                            <td>
+                                <a (click)="pilihArrayTemplate(row.judul, row.isi)" class="vsm-link" style="cursor: pointer;">{{ row.isi }}</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <!-- Modal -->
+                <ng-template #modal let-modal>
+                    <div class="modal-header" style="text-align: center; background-color: #107a8a;">
+                        <h4 class="modal-title" id="modal">
+                            <Span style="color: white;">
+                                <b>
+                                    Template {{judulModal}}
+                                </b>
+                            </Span>
+                        </h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <Span style="color: red;">
+                                    <b>
+                                        Nama Rencana *
+                                    </b>
+                                </Span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form [formGroup]="formInput">
+                                    <textarea maxlength="300" formControlName="rencana_template" 
+                                        [(ngModel)]="rencana_template" id="rencana_template" placeholder="Nama Rencana" 
+                                        class="form-control" style="border-radius: 10px;">
+                                    </textarea>
+                                </form>
+                            </div>
+                        </div>
+
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <Span style="color: red;">
+                                    <b>
+                                        Isi Rencana *
+                                    </b>
+                                </Span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <form [formGroup]="formInput">
+                                    <textarea maxlength="300" formControlName="isi_rencana_template" 
+                                        [(ngModel)]="isi_rencana_template" id="isi_rencana_template" placeholder="Isi Rencana" 
+                                        class="form-control" style="border-radius: 10px;">
+                                    </textarea>
+                                </form>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="position-relative mb-3">
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="position-relative mb-3">
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative mb-3">
+                                    <button type="button" class="badge rounded-pill ps-2 pe-2 bg-warning" (click)="buatTemplate()" style="width:100%">Tambah Template</button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                            <thead>
+                                <th>No</th>
+                                <th>Nama Rencana</th>
+                                <th>Isi Rencana</th>
+                                <th>Aksi</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let row of listTemplate; let i = index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>
+                                        {{ row.judul }}
+                                    </td>
+                                    <td>
+                                        {{ row.isi }}
+                                    </td>
+                                    <td>
+                                        <a (click)="openModalHapusTemplate(modalHapusTemplate, row.id)" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faTrash"></fa-icon></a>&nbsp;&nbsp;
+                                        <a (click)="editArrayTemplate(row.id, row.judul, row.isi)" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faPencilAlt"></fa-icon></a>&nbsp;&nbsp;
+                                        <a (click)="pilihArrayTemplate(row.judul, row.isi)" class="vsm-link" style="cursor: pointer;"><fa-icon [icon]="faBook"></fa-icon></a>&nbsp;&nbsp;
+                                    </td>
+            
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="position-relative mb-3">
+                            <tr *ngFor="let row of listIsiModal">
+                                <a (click)="pasangIsiModal(row.isi)" style="cursor: pointer;">
+                                    {{row.isi}}
+                                </a>
+                            </tr>
+                        </div>
+                    </div>
+                </ng-template>
+                <!-- Akhir Modal-->
+
+                <!-- Modal Hapus -->
+                <ng-template #modalHapusTemplate let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title" id="modal-hapus-template">Hapus Template</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="position-relative mb-3">
+                            <input [(ngModel)]="idHapusTemplate" [hidden]="true" placeholder="ID Hapus Template" type="text" class="form-control rounded-pill">
+                            <span>Apakah anda yakin ingin menghapus template ini?</span>
+                        </div>
+                        <div class="col-md-12">
+                            <a (click)="batalHapusTemplate()" data-title="Hapus" style="cursor: pointer;">
+                                <span>Batal</span>
+                            </a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a (click)="hapusTemplate()" style="cursor: pointer;">
+                                <span>Hapus</span>
+                            </a>
+                        </div>
+                    </div>
+                </ng-template>
+                
+                <!-- Akhir Modal Hapus -->
+                <br>
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="position-relative mb-3">
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative mb-3">
+                            <button type="button" class="badge rounded-pill ps-2 pe-2 bg-warning" (click)="simpan()" style="width:100%">Simpan</button>
+                            <!-- <button type="button" class="badge rounded-pill ps-2 pe-2 bg-warning" (click)="simpan()" style="width:100%" *ngIf="!disabledButtonSimpan">Simpan</button> -->
+                            <!-- <button type="button" class="badge rounded-pill ps-2 pe-2" style="width:100%; color: black;" [disabled]="true" *ngIf="disabledButtonSimpan">Simpan</button> -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-md-2">
+        <div class="row" style="text-align: center;">
+            <Span style="color: blue;">
+                <b>
+                    Riwayat
+                </b>
+            </Span>
+        </div>
+        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <tbody>
+                <tr *ngFor="let row of listNotransaksiPerNoRM">
+                    <td class="text-center text-muted"  style="width: 75%;">
+                        <div class="widget-heading">
+                            <a (click)="ambilAssesmentBaru(row.no_transaksi)" data-title={{row.no_transaksi}} style="cursor: pointer;">
+                                <span style="color: cornflowerblue;"> {{ row.created_at | date: format }}</span>
+                            </a>
+                        </div>
+                        {{row.no_transaksi}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+</div>

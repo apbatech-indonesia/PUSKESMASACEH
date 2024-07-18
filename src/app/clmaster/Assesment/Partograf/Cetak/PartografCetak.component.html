@@ -1,0 +1,304 @@
+<div class="row mb-3">
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <button (click)="cetak()" class="btn btn-light">Print</button>
+                </div>
+                <div class="col-md-6">
+                    <h5>Print Preview</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="halamanCetak" class="row">
+    <div class="card main-card mb-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3"></div>
+                <div class="col-4">
+                    <p>No RM : {{no_rm}}</p>
+                    <p>No Transaksi : {{no_transaksi}}</p>
+                    <p>Ketuban pecah sejak jam : {{waktuPecahKetuban}}</p>
+                    <p>Mules sejak jam : {{waktuMules}}</p>
+                </div>
+                <div class="col-4">
+                    <p>Nama Pasien : {{namaPasien}}</p>
+                    <p>Masuk Tanggal : {{tanggal_masuk}}</p>
+                    <p class="test1">Waktu Masuk : {{waktuMasuk}}</p>
+                    <p>G:{{nilaiG}} P:{{nilaiP}} A:{{nilaiA}} Hamil: {{minggu}} Minggu</p>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center" style="padding: 5px;">
+                <span class="text-white" style="cursor: pointer;"><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</small></span>
+                <svg class="svg-waktu-atas" height="41" width="625" style="background: url({{imageWaktuAtas}}) no-repeat 0 0;border-bottom: 1px solid black">
+                    <ng-container *ngIf="nilaiJamKe1;">
+                        <text x="17" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe1 }}
+                        </text>
+                    </ng-container>
+                    
+                    <ng-container *ngIf="nilaiJamKe2;">
+                        <text x="55" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe2 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe3;">
+                        <text x="93" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe3 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe4;">
+                        <text x="131" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe4 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe5;">
+                        <text x="169" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe5 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe6;">
+                        <text x="207" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe6 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe7;">
+                        <text x="245" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe7 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe8;">
+                        <text x="283" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe8 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe9;">
+                        <text x="321" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe9 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe10;">
+                        <text x="359" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe10 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe11;">
+                        <text x="397" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe11 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe12;">
+                        <text x="435" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe12 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe13;">
+                        <text x="473" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe13 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe14;">
+                        <text x="511" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe14 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe15;">
+                        <text x="549" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe15 }}
+                        </text>
+                    </ng-container>
+
+                    <ng-container *ngIf="nilaiJamKe16;">
+                        <text x="587" y="35" fill="black" style="font-size: 12px">
+                          {{ nilaiJamKe16 }}
+                        </text>
+                    </ng-container>
+
+                </svg>
+            </div>
+
+            <div class="d-flex justify-content-center" style="padding: 5px;">
+                <span class="text-dark"><small>Denyut<br>Jantung<br>Janin<br>(X/Menit)</small></span>
+                <svg class="svg-denyut" height="242" width="625" style="background: url({{imageDenyut}}) no-repeat 0 0;border-bottom: 1px solid black">
+                    <g *ngFor="let titik of titikDjj">
+                        <circle [attr.cx]="titik.titikX" [attr.cy]="titik.titikY" r="4" fill="black">10</circle>
+                        <text [attr.x]="titik.titikX" [attr.y]="titik.titikY" fill="red" style="font-size: 11px;">{{titik.nilaiDjj}}</text>
+                    </g>
+                    <g *ngFor="let line of garisDjj">
+                        <polyline [attr.points]="line.point" style="fill:none;stroke:black;stroke-width:2"></polyline>
+                    </g>
+                                            
+                </svg>
+            </div>
+            
+            <div class="d-flex justify-content-center" style="padding: 5px;">
+                <span class="text-dark"><small>Air Ketbn<br>Penyusup</small></span>
+                <svg class="svg-air-ketuban" height="41" width="625" style="background: url({{imageAirKetuban}}) no-repeat 0 0;border-bottom: 1px solid black">
+                    <g *ngFor="let titik of titikKetubanPenyusup">
+                        <text [attr.x]="titik.titikKetubanX" [attr.y]="titik.titikKetubanY" fill="black" style="font-size: 13px;">{{titik.nilaiKetuban}}</text>
+                        <text [attr.x]="titik.titikPenyusupX" [attr.y]="titik.titikPenyusupY" fill="black" style="font-size: 13px;">{{titik.nilaiPenyusup}}</text>
+                    </g>
+                </svg>
+            </div>
+            
+            <div class="d-flex justify-content-center" style="padding: 5px;">
+                <p class="text-dark">
+                    <small>
+                        <span>Pembu<br>kaan<br>Serviks<br>Tanda X</span>
+                        <br>
+                        <br>
+                        <span>Turunya<br>Kepala<br>Tanda O &nbsp;</span>
+                        <br>
+                        <br>
+                        <br>
+                        <span class="text-dark">Waktu</span>
+                    </small>
+                </p>
+                <svg class="svg-pembukaan-serviks" height="243" width="625" style="background: url({{imageBukaServik}}) no-repeat 0 0;border-bottom: 1px solid black">
+                    <g *ngFor="let titik of titikPembukaan">
+                        <text [attr.x]="titik.titikX - 5" [attr.y]="titik.titikY + 5" fill="red" style="font-size: 11px; font-weight: bold; cursor: pointer;">X</text>
+                    </g>
+                    <g *ngFor="let line of garisPembukaan">
+                        <polyline [attr.points]="line.point" style="fill:none;stroke:black;stroke-width:2"></polyline>
+                    </g>
+                    <g *ngFor="let titik of titikTurun">
+                        <text [attr.x]="titik.titikX - 5" [attr.y]="titik.titikY + 5" fill="blue" style="font-size: 11px; font-weight: bold; cursor: pointer;">O</text>
+                    </g>
+                    <g *ngFor="let line of garisTurun">
+                        <polyline [attr.points]="line.point" style="fill:none;stroke:black;stroke-width:2"></polyline>
+                    </g>
+                    <g *ngFor="let titik of waktuBawah">
+                        <text [attr.x]="titik.titikX + 2" [attr.y]="titik.titikY" fill="black" style="font-size: 12px">
+                            {{ titik.jam }}
+                        </text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="d-flex justify-content-center" style="padding: 5px;">
+                <span class="text-dark"><small>Kontraksi<br>Hitam>40<br>Biru<br>20-40<br>Merah<br><20</small></span>
+                <svg class="svg-kontraksi" height="104" width="625" style="background: url({{imageKontraksi}}) no-repeat 0 0;border-bottom: 1px solid black">
+                    <g *ngFor="let titik of titikKontraksi">
+                        <rect [attr.x]="titik.titikX" [attr.y]="titik.titikY" width="20" [attr.height]="titik.height + 1" [style.fill]="titik.warna"/>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="d-flex justify-content-center" style="padding: 5px;">
+                <span class="text-dark"><small>OksitosU/I<br>Tts/menit</small></span>
+                <svg class="svg-oksitosin" height="43" width="625" style="background: url({{imageKetuban}}) no-repeat 0 0;border-bottom: 1px solid black">
+                    <g *ngFor="let titik of titikOksitosin">
+                        <text [attr.x]="titik.titikOxtX + 2" [attr.y]="titik.titikOxtY" fill="black" style="font-size: 10px;">{{titik.labelOxt}}</text>
+                        <text  [attr.x]="titik.titikTetesX + 2" [attr.y]="titik.titikTetesY" fill="black" style="font-size: 11px;">{{titik.nilaiOksitosin}}</text>
+                    </g>
+                </svg>
+            </div>
+            
+            <div class="d-flex justify-content-center" style="padding: 5px;">
+                <p class="text-dark"><small>Obat &<br>Cairan IV</small></p>
+                <svg class="svg-obat" height="75" width="625" style="background: url({{imageObatCairan}}) no-repeat 0 0; border-bottom: 1px solid black">
+                    <g *ngFor="let titik of titikObat">
+                      <ng-container *ngFor="let obat of titik.dataObat; let last = last; let i = index">
+                        <text [attr.x]="titik.titikX + 2" [attr.y]="titik.titikY + (10 * i)" fill="black" style="font-size: 8px;">
+                          {{ obat }}
+                        </text>
+                      </ng-container>
+                    </g>
+                  </svg>
+            </div>
+            
+            <div class="d-flex justify-content-center" style="padding: 5px;">
+                <p class="text-dark" style="cursor: pointer;">
+                    <span style="cursor: pointer;">
+                        <small>Nadi <br></small>
+                    </span>
+                    <br>
+                    <br>
+                    <br>
+                    <span>
+                        <small>Tekanan<br>Darah</small>
+                    </span>
+                </p>
+                <svg class="svg-nadi" height="243" width="625" style="background: url({{imageTekananDarah}}) no-repeat 0 0;border-bottom: 1px solid black">
+                    <g *ngFor="let titik of titikNadi">
+                        <circle [attr.cx]="titik.titikX" [attr.cy]="titik.titikY" r="4" fill="black">10</circle>
+                        <text [attr.x]="titik.titikX" [attr.y]="titik.titikY" fill="red" style="font-size: 11px;">{{titik.nilaiNadi}}</text>
+                    </g>
+                    <g *ngFor="let line of garisNadi">
+                        <polyline [attr.points]="line.point" style="fill:none;stroke:black;stroke-width:2"></polyline>
+                    </g>
+
+                    <g *ngFor="let titik of titikSystole">
+                        <circle [attr.cx]="titik.titikX" [attr.cy]="titik.titikY" r="4" fill="black">10</circle>
+                        <text [attr.x]="titik.titikX" [attr.y]="titik.titikY" fill="red" style="font-size: 11px;">A {{titik.nilaiSystole}}</text>
+                    </g>
+                    <g *ngFor="let line of garisSystole">
+                        <polyline [attr.points]="line.point" style="fill:none;stroke:black;stroke-width:2"></polyline>
+                    </g>
+
+                    <g *ngFor="let titik of titikDistole">
+                        <circle [attr.cx]="titik.titikX" [attr.cy]="titik.titikY" r="4" fill="black">10</circle>
+                        <text [attr.x]="titik.titikX" [attr.y]="titik.titikY" fill="blue" style="font-size: 11px;">V {{titik.nilaiDistole}}</text>
+                    </g>
+                    <g *ngFor="let line of garisDistole">
+                        <polyline [attr.points]="line.point" style="fill:none;stroke:black;stroke-width:2"></polyline>
+                    </g>
+                    
+                </svg>
+            </div>
+
+            <div class="d-flex justify-content-center" style="padding: 5px;">
+                <span class="text-dark"><small>Temp C</small></span>
+                <svg class="svg-temp" height="22" width="625" style="background: url({{imageTemperatur}}) no-repeat 0 0;border-bottom: 1px solid black">
+                    <g *ngFor="let titik of titikTempC">
+                        <text [attr.x]="titik.titikX + 4" [attr.y]="titik.titikY" fill="black" style="font-size: 11px;">{{titik.dataTemp}} C</text>
+                    </g>
+                </svg>
+            </div>
+            
+            <div class="d-flex justify-content-center" style="padding: 5px;">
+                <p class="text-dark"><small>Protein<br>Aseton<br>Volume</small></p>
+                <svg class="svg-urin" height="62" width="625" style="background: url({{imageUrine}}) no-repeat 0 0;border-bottom: 1px solid black">
+                    <g *ngFor="let titik of titikUrin">
+                        <text [attr.x]="titik.titikX + 4" [attr.y]="titik.titikProY" fill="black" style="font-size: 11px;">{{titik.dataPro}}</text>
+                        <text [attr.x]="titik.titikX + 4" [attr.y]="titik.titikAseY" fill="black" style="font-size: 11px;">{{titik.dataAse}}</text>
+                        <text [attr.x]="titik.titikX + 4" [attr.y]="titik.titikVolY" fill="black" style="font-size: 11px;">{{titik.dataVol}}</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="row">
+                <div class="col-2"></div>
+                <div class="col-3">
+                    <p>Makan terakhir : {{makan_terakhir}}</p>    
+                    <p>Minum terakhir : {{minum_terakhir}}</p>    
+                </div>
+                <div class="col-3">
+                    <p>Jenis : {{makan_jenis}}</p>    
+                    <p>Jenis : {{minum_jenis}}</p>    
+                </div>
+                <div class="col-3">
+                    <p>Porsi : {{makan_porsi}}</p>    
+                    <p>Porsi : {{minum_porsi}}</p>    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

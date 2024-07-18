@@ -1,0 +1,63 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+// import { PageTitleModule } from '../../../../Layout/Components/page-title/page-title.module';
+import { PageTitleModule } from 'src/app/Layout/Components/page-title/page-title.module';
+import {  kasirrjComponent } from './kasirrj.component';
+import { kasirrjRoutingModule } from './kasirrj-routing.module';
+import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {TreeModule} from 'primeng/tree'
+import {ButtonModule} from 'primeng/button';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    NgSelectModule,
+    NgMultiSelectDropDownModule,
+    MatDatepickerModule,
+    CurrencyMaskModule,
+    NgbModule,
+    FontAwesomeModule,
+    TextareaAutosizeModule,
+    kasirrjRoutingModule,
+    FormsModule, ReactiveFormsModule,
+    MatCheckboxModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatCardModule,
+    MatStepperModule,
+    MatButtonToggleModule,
+    MatChipsModule,
+    MatIconModule,
+    PageTitleModule,
+    TreeModule,
+    ButtonModule,
+  ],
+  declarations: [kasirrjComponent]
+})
+export class kasirrjModule { }

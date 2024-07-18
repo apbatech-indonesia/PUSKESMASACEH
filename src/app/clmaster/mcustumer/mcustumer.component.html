@@ -1,0 +1,244 @@
+<!-- 
+<div class="app-page-title">
+  <div class="page-title-wrapper">
+    <div class="page-title-heading">
+      <div class="page-title-icon">
+        <i class="icon {{icon}}"></i>
+      </div>
+      <div>
+        {{heading}}
+        <div class="page-title-subheading">
+          {{subheading}}
+        </div>
+      </div>
+    </div>
+    <div class="page-title-actions">
+  
+    </div>
+  </div>
+</div> -->
+
+
+
+<div class="row">
+  <div class="col-md-6">
+    
+    
+    <div class="card main-card mb-3">
+    
+      <div class="row">
+        <div class="col-md-6">
+          <span style="font-size: 14px;padding: 10px;">Cari Kelompok</span>
+         
+            <input type="text" class="form-control ms-2" [(ngModel)]="cariuser" (keyup)="cariuserx($event)" >
+           
+         
+        </div>
+        <div class="col-md-6" >
+         
+        
+          <span style="font-size: 12px;padding: 10px;"></span>
+         <br>
+          <button class="mb-2 me-2 btn btn-success"  (click)="openc(contentc,'1','','','')">Kelompok<span class="badge bg-light">+</span></button>
+     
+        
+        </div>
+        </div>
+      <!-- <div class="card-header">
+
+
+
+      
+      
+      </div> -->
+     
+    
+      <table class="table table-striped">
+     
+        <thead>
+          <tr>
+            <!-- <th scope="col">Kd Kelompok</th> -->
+            <th scope="col">Kelompok</th>
+            <th scope="col">Act</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of tkelompok">
+            <!-- <td class="text-muted">{{x.kdkostumer}}</td> -->
+            <td *ngIf="x.status == 0" style="font-size: 12px;color:red;font-style: italic;">
+              
+             {{x.costumer}}
+            </td>
+
+            <td *ngIf="x.status == 1" style="font-size: 12px;color:black">
+              
+              {{x.costumer}}
+             </td>
+
+            <td class="text-center">
+              <div class="badge bg-pill bg-warning" (click)="openc(contentc,'2',x.kdkostumer,x.costumer,x.kdtarif)">E</div>
+              <div class="badge bg-pill bg-info" (click)="open(content,x.kdkostumer,'1')">T</div>
+              <div class="badge bg-pill bg-secondary" (click)="lihat(x.kdkostumer,x.costumer)">P</div>
+              
+              <div class="badge bg-pill bg-danger" (click)="Aktif(x.kdkostumer,x.costumer)">X</div>
+             
+              
+            </td>
+            
+          </tr>
+        
+         
+        </tbody>
+      </table>
+    </div>
+   
+  </div>
+  <div class="col-md-6">
+   
+    <div class="card main-card mb-3">
+
+      <div class="row">
+        <div class="col-md-8">
+          <span style="font-size: 14px;padding: 10px;">Cari Kelompok Detail</span>
+         
+          <input type="text" class="form-control ms-2" (keyup)="cariuserxx($event)" >
+         
+        </div>
+       
+        </div>
+
+
+    
+      <table class="table table-striped">
+        <thead>
+          <tr>
+           
+            <th scope="col">Kostumer</th>
+            <!-- <th scope="col">Alamat</th> -->
+            <th scope="col">Act</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of tcusd">
+            <td  *ngIf="x.status == 0"  style="font-size: 11px;color:red;font-style: italic;">{{x.nama}}</td>
+            <td *ngIf="x.status == 1"  style="font-size: 11px;color:black">{{x.nama}}</td>
+   
+           
+            <td>
+
+              
+
+              <div class="badge bg-pill bg-warning" 
+              (click)="open(content,x.kdkostumer,'2',x.kdkostumerd,
+              x.nama,x.alamat,x.hp)">E</div>
+           
+              
+              <div class="badge bg-pill bg-danger" (click)="Aktifx(x.kdkostumer,x.kdkostumerd,
+              x.nama,x.alamat,x.hp)">X</div>
+             
+            </td>
+          </tr>
+        
+        </tbody>
+      </table>
+    </div>
+    
+  </div>
+
+     <ng-template #content let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h7 class="modal-title">Tambah Kostumer</h7>
+            <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+            </button>
+          </div>
+          <div class="modal-body">
+          
+              <!-- <form> -->
+               
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Kode Kelompok</label>
+                  <input [(ngModel)]="kdkelompok" disabled  type="text" class="form-control">
+                </div>
+                <form [formGroup]="kostumerform" >
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Nama Kostumer</label>
+                  <input  formControlName="Kostumerd"  [(ngModel)]="Kostumerd"  type="text" class="form-control">
+                  
+                </div>
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Alamat</label>
+
+                  <textarea  formControlName="alamatd"    [(ngModel)]="alamatd"  class="form-control" autosize></textarea>
+
+                </div>
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">HP</label>
+                  <input   formControlName="hpd"   [(ngModel)]="hpd" placeholder="Hp" type="number" maxlength="13" class="form-control">
+                </div>
+                </form>
+            
+      
+          </div>
+          <div class="modal-footer">
+            <button  *ngIf="cosshowd == '2'"  [disabled]="!kostumerform.valid" type="button" class="btn btn-secondary" (click)="editkd()" >Edit</button>
+            <button *ngIf="cosshowd == '1'"  [disabled]="!kostumerform.valid" type="button" class="btn btn-primary" (click)="simpankd()">Simpan</button>
+          </div>
+        </ng-template>
+
+
+
+
+
+
+        <ng-template #contentc let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title">Tambah Kelompok</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+            </button>
+          </div>
+          <div class="modal-body">
+         
+              <!-- <form> -->
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Kode Kelompok</label>
+                  <input [(ngModel)]="kdkelompok"  disabled type="text" class="form-control">
+                </div>
+                <form [formGroup]="kelompokform" >
+
+             
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">Nama Kelompok</label>
+                  <input  formControlName="kelompok"  [(ngModel)]="kelompok" placeholder="Kelompok" type="text" class="form-control">
+                </div>
+                <div class="position-relative mb-3">
+                  <label for="exampleSelect" class="form-label"  style="color:black">Kelompok Tarif</label>
+                  <select formControlName="cusi" [(ngModel)]="cusi" id="exampleSelect" class="form-select" (click)="pilkel(cusi)" >
+                    <option value="">-PILIH KELOMPOK-</option>   
+          
+                    <option  *ngFor="let x of tcus" value="{{x.kdtarifm}}"    
+                    
+                   
+                    
+                    >
+                    <span> {{x.nama}}</span>
+                   
+                   </option>
+                  
+                    
+            
+                  </select>
+                </div>
+              </form>
+      
+        
+          </div>
+          <div class="modal-footer">
+            <button *ngIf="editshow ==  '2'" type="button" class="btn btn-secondary"  [disabled]="!kelompokform.valid" (click)="editkel()" >Edit</button>
+            <button *ngIf="editshow ==  '1'" type="button" class="btn btn-primary" [disabled]="!kelompokform.valid"  (click)="simpankelompok()">Simpan</button>
+          </div>
+        </ng-template>
+
+
+</div>

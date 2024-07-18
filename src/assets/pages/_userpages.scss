@@ -1,0 +1,50 @@
+// User Pages
+
+.app-logo {
+  height: $logo-height;
+  width: $logo-width;
+  background: url('/assets/images/logo-inverse.svg');
+}
+
+.app-logo-inverse {
+  height: $logo-height;
+  width: $logo-width;
+  background: url('/assets/images/logo.png');
+}
+
+.app-logo-inversex {
+  height: $logo-heightc;
+  width: $logo-widthc;
+  background: url('/assets/images/clenic.png');
+}
+
+
+
+.bg-cl{
+  background-image: url('/assets/images/clenicbgg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 2px solid #333;
+
+}
+
+
+
+.app-login-box {
+  .app-logo {
+    margin-bottom: $layout-spacer-lg;
+  }
+
+  h4 {
+    margin-bottom: $layout-spacer-x;
+    font-weight: normal;
+
+    div {
+      opacity: .6;
+    }
+
+    span {
+      font-size: $font-size-lg;
+    }
+  }
+}

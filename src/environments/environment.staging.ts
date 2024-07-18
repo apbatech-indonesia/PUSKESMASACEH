@@ -1,0 +1,20 @@
+export const environment = {
+  production: false,
+  name: "staging",
+  subDomainName: "",
+  emrUrl: "",
+  baseUrl: "https://puskesmas.stagingapbatech.com/clenic/",
+  pcareUrl: "",
+  socketUrl: "",
+  satuSehatUrl: "https://sasehat.stagingapbatech.com/api/",
+  rawatJalanUrl: "",
+  apiPath: "api/",
+  masterPath: "master/",
+  cabangPath: "api/master-data/cabang/",
+  rawatJalanPath: "/asesmen-rawat-jalan",
+  pcareMcuPath: "/pcare/mcu",
+  pcareObatPath: "/pcare/obat",
+  pcareKelompokPath: "/pcare/kelompok",
+  antrianFktpPath: "/antrean-fktp/bpjs/",
+  version: 'v4.0.0'
+};

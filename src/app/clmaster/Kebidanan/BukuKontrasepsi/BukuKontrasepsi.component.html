@@ -1,0 +1,568 @@
+<ng-template #modalCreate let-c="close" let-d="dismiss">
+  <div class="modal-header bg-info-cust text-white">Tambah Catatan Immunisasi</div>
+  <div class="modal-body">
+
+    <div class="form-ktssForm">
+      <div class="mb-3">
+        <label for="tanggal_kunjungan" class="form-label">
+          Tanggal Kunjungan
+          <span class="text-danger">*</span>
+        </label>
+        <form [formGroup]="ktssForm">  
+        <input type="date" [(ngModel)]="ktss.tanggal" name="tanggal" formControlName="tanggal" class="form-control">
+        </form>
+      </div>
+      <div class="mb-3">
+        <label for="dokter" class="col-form-label">
+          Dokter
+          <span class="text-danger">*</span>
+        </label>
+        <form [formGroup]="ktssForm">  
+        <ng-select #selDok [items]="dokterList" bindLabel="namdokter" bindValue="namdokter"
+          [(ngModel)]="ktss.dokter" name="dokter" formControlName="dokter" class="ngsl-placeholder" placeholder="Cari dokter">
+        </ng-select>
+        <div *ngIf="ktssForm.get('dokter').invalid && ktssForm.get('dokter').touched">
+          <div *ngIf="ktssForm.get('dokter').hasError('required')" class="text-danger">
+            Input is required.
+          </div>
+        </div>
+        </form>
+      </div>
+      <div class="mb-3">
+        <label for="no_rm" class="col-form-label">
+          Pasien
+          <span class="text-danger">*</span>
+        </label>
+        <form [formGroup]="ktssForm">  
+        <ng-select #selPasienEdit [items]="pasienList" bindLabel="pasien_label" bindValue="pasien_norm"  (keyup)="caripasien($event)"
+          [(ngModel)]="ktss.no_rm" formControlName="no_rm" name="no_rm" class="ngsl-placeholder" placeholder="Cari Pasien" disabled>
+        </ng-select>
+        <div *ngIf="ktssForm.get('no_rm').invalid && ktssForm.get('no_rm').touched">
+          <div *ngIf="ktssForm.get('no_rm').hasError('required')" class="text-danger">
+            Input is required.
+          </div>
+        </div>
+        </form>
+      </div>
+      <div class="mb-3">
+        <label for="pemberian_informed_content" class="form-label">
+          Jumlah Anak Hidup
+        </label>
+        <input type="number" [(ngModel)]="ktss.jml_anak_hidup" name="jml_anak_hidup" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="pemberian_informed_content" class="form-label">
+          Pemberian Informed Concent
+        </label>
+        <br>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.pemberian_informed_content" name="pemberian_informed_content" 
+            value="1">
+          <label class="form-check-label" for="iud">
+            Ya
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.pemberian_informed_content" name="pemberian_informed_content" 
+            value="0">
+          <label class="form-check-label" for="mow">
+            Tidak
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Peserta KB Baru
+        </label>
+        <br>
+        <div class="form-check form-check-inline" *ngFor="let val of ktssBaru; let i = index ">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ktssBaru[i].value" name="{{val.key}}" 
+            [checked]="ktss[val.key]" value="implant">
+          <label class="form-check-label" for="{{val.key}}">
+            {{val.label}}
+          </label>
+        </div>
+        <!-- <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.peserta_baru_metode" name="peserta_baru_metode" 
+            [checked]="ktss.iud" value="iud">
+          <label class="form-check-label" for="iud">
+            IUD
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.peserta_baru_metode" name="peserta_baru_metode" 
+            [checked]="ktss.mow" value="mow">
+          <label class="form-check-label" for="mow">
+            MOW
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.peserta_baru_metode" name="peserta_baru_metode"
+            [checked]="ktss.mop" value="mop">
+          <label class="form-check-label" for="mop">
+            MOP
+          </label>
+        </div> -->
+      </div>
+      <div class="mb-3">
+        <label for="hb0" class="form-label">
+          Peserta Baru Pasca Persalinan / Pasca Keguguran
+        </label>
+        <br>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.peserta_kb_baru" name="peserta_kb_baru_pasca" 
+            value="1">
+          <label class="form-check-label" for="iud">
+            Ya
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.peserta_kb_baru" name="peserta_kb_baru_pasca" 
+            value="0">
+          <label class="form-check-label" for="mow">
+            Tidak
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Pencabutan
+        </label>
+        <br>
+        <div class="form-check form-check-inline" *ngFor="let val of ktssCabut; let i = index ">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ktssCabut[i].value" 
+            name="{{val.key}}">
+          <label class="form-check-label" for="{{val.key}}">
+            {{val.label}}
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Pemasangan Ulang
+        </label>
+        <br>
+        <div class="form-check form-check-inline" *ngFor="let val of ktssPasangUlang; let i = index ">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ktssPasangUlang[i].value" 
+            name="{{val.key}}">
+          <label class="form-check-label" for="{{val.key}}">
+            {{val.label}}
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Pemberian Kontrasepsi Ulang
+        </label>
+        <br>
+        <div class="form-check form-check-inline" *ngFor="let val of ktssBeriUlang; let i = index ">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ktssBeriUlang[i].value" 
+            name="{{val.key}}">
+          <label class="form-check-label" for="{{val.key}}">
+            {{val.label}}
+          </label>
+        </div>
+        <!-- <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ktss.kontrasepsi_ulang_kondom" name="kontrasepsi_ulang_kondom"
+            [checked]="ktss.kontrasepsi_ulang_kondom == '1'">
+          <label class="form-check-label" for="kontrasepsi_ulang_kondom">
+            Kondom
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ktss.kontrasepsi_ulang_suntikan" name="kontrasepsi_ulang_suntikan"
+            [checked]="ktss.kontrasepsi_ulang_suntikan == '1'">
+          <label class="form-check-label" for="kontrasepsi_ulang_suntikan">
+            Suntikan
+          </label>
+        </div> -->
+      </div>
+      <div class="mb-3">
+        <label for="keterangan" class="col-form-label">
+          Keterangan
+        </label>
+        <textarea [(ngModel)]="ktss.keterangan" id="keterangan" class="form-control" rows="3" maxlength="300"></textarea>
+      </div>
+    </div>
+    <!-- end form -->
+
+  </div>
+  <div class="modal-footer">
+    <div class="pull-right">
+      <button type="button" (click)="modalService.dismissAll();"  class="btn btn-danger min-width-100">Batal</button>
+      <button type="button" (click)="store()" [disabled]="ktssForm.invalid" class="btn btn-warning min-width-100 btn-disab ml1">Simpan</button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #modalEdit let-c="close" let-d="dismiss">
+  <div class="modal-header bg-info-cust text-white">Ubah Catatan </div>
+  <div class="modal-body">
+
+    <div class="form-ktssForm">
+      <div class="mb-3">
+        <label for="tanggal_kunjungan" class="form-label">
+          Tanggal Kunjungan
+          <span class="text-danger">*</span>
+        </label>
+        <form [formGroup]="ktssForm">  
+        <input type="date" [(ngModel)]="ktss.tanggal" name="tanggal" formControlName="tanggal" class="form-control">
+        </form>
+      </div>
+      <div class="mb-3">
+        <label for="dokter" class="col-form-label">
+          Dokter
+          <span class="text-danger">*</span>
+        </label>
+        <form [formGroup]="ktssForm">  
+        <ng-select #selDok [items]="dokterList" bindLabel="namdokter" bindValue="namdokter"
+          [(ngModel)]="ktss.dokter" name="dokter" formControlName="dokter" class="ngsl-placeholder" placeholder="Cari dokter">
+        </ng-select>
+        <div *ngIf="ktssForm.get('dokter').invalid && ktssForm.get('dokter').touched">
+          <div *ngIf="ktssForm.get('dokter').hasError('required')" class="text-danger">
+            Input is required.
+          </div>
+        </div>
+        </form>
+      </div>
+      <div class="mb-3">
+        <label for="no_rm" class="col-form-label">
+          Pasien
+          <span class="text-danger">*</span>
+        </label>
+        <form [formGroup]="ktssForm">  
+        <input type="text" [(ngModel)]="ktss.nama" name="nama" formControlName="no_rm" class="form-control" disabled>
+        </form>
+        <!-- <form [formGroup]="ktssForm">  
+        <ng-select #selPasienEdit [items]="pasienList" bindLabel="pasien_label" bindValue="pasien_norm"
+          [(ngModel)]="ktss.no_rm" formControlName="no_rm" name="no_rm" class="ngsl-placeholder" placeholder="Cari Pasien" disabled>
+        </ng-select>
+        <div *ngIf="ktssForm.get('no_rm').invalid && ktssForm.get('no_rm').touched">
+          <div *ngIf="ktssForm.get('no_rm').hasError('required')" class="text-danger">
+            Input is required.
+          </div>
+        </div>
+        </form> -->
+      </div>
+      <div class="mb-3">
+        <label for="pemberian_informed_content" class="form-label">
+          Jumlah Anak Hidup
+        </label>
+        <input type="number" [(ngModel)]="ktss.jml_anak_hidup" name="jml_anak_hidup" class="form-control">
+      </div>
+      <div class="mb-3">
+        <label for="pemberian_informed_content" class="form-label">
+          Pemberian Informed Concent
+        </label>
+        <br>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.pemberian_informed_content" name="pemberian_informed_content" 
+            value="1">
+          <label class="form-check-label" for="iud">
+            Ya
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.pemberian_informed_content" name="pemberian_informed_content" 
+            value="0">
+          <label class="form-check-label" for="mow">
+            Tidak
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Peserta KB Baru
+        </label>
+        <br>
+        <div class="form-check form-check-inline" *ngFor="let val of ktssBaru; let i = index ">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ktssBaru[i].value" name="{{val.key}}" 
+            [checked]="ktss[val.key]" value="implant">
+          <label class="form-check-label" for="{{val.key}}">
+            {{val.label}}
+          </label>
+        </div>
+        <!-- <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.peserta_baru_metode" name="peserta_baru_metode" 
+            [checked]="ktss.iud" value="iud">
+          <label class="form-check-label" for="iud">
+            IUD
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.peserta_baru_metode" name="peserta_baru_metode" 
+            [checked]="ktss.mow" value="mow">
+          <label class="form-check-label" for="mow">
+            MOW
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.peserta_baru_metode" name="peserta_baru_metode"
+            [checked]="ktss.mop" value="mop">
+          <label class="form-check-label" for="mop">
+            MOP
+          </label>
+        </div> -->
+      </div>
+      <div class="mb-3">
+        <label for="hb0" class="form-label">
+          Peserta Baru Pasca Persalinan / Pasca Keguguran
+        </label>
+        <br>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.peserta_kb_baru" name="peserta_kb_baru_pasca" 
+            value="1">
+          <label class="form-check-label" for="iud">
+            Ya
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" [(ngModel)]="ktss.peserta_kb_baru" name="peserta_kb_baru_pasca" 
+            value="0">
+          <label class="form-check-label" for="mow">
+            Tidak
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Pencabutan
+        </label>
+        <br>
+        <div class="form-check form-check-inline" *ngFor="let val of ktssCabut; let i = index ">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ktssCabut[i].value" 
+            name="{{val.key}}">
+          <label class="form-check-label" for="{{val.key}}">
+            {{val.label}}
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Pemasangan Ulang
+        </label>
+        <br>
+        <div class="form-check form-check-inline" *ngFor="let val of ktssPasangUlang; let i = index ">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ktssPasangUlang[i].value" 
+            name="{{val.key}}">
+          <label class="form-check-label" for="{{val.key}}">
+            {{val.label}}
+          </label>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Pemberian Kontrasepsi Ulang
+        </label>
+        <br>
+        <div class="form-check form-check-inline" *ngFor="let val of ktssBeriUlang; let i = index ">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ktssBeriUlang[i].value" 
+            name="{{val.key}}">
+          <label class="form-check-label" for="{{val.key}}">
+            {{val.label}}
+          </label>
+        </div>
+        <!-- <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ktss.kontrasepsi_ulang_kondom" name="kontrasepsi_ulang_kondom"
+            [checked]="ktss.kontrasepsi_ulang_kondom == '1'">
+          <label class="form-check-label" for="kontrasepsi_ulang_kondom">
+            Kondom
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="ktss.kontrasepsi_ulang_suntikan" name="kontrasepsi_ulang_suntikan"
+            [checked]="ktss.kontrasepsi_ulang_suntikan == '1'">
+          <label class="form-check-label" for="kontrasepsi_ulang_suntikan">
+            Suntikan
+          </label>
+        </div> -->
+      </div>
+      <div class="mb-3">
+        <label for="keterangan" class="col-form-label">
+          Keterangan
+        </label>
+        <textarea [(ngModel)]="ktss.keterangan" id="keterangan" class="form-control" rows="3" maxlength="300"></textarea>
+      </div>
+    </div>
+    <!-- end form -->
+
+  </div>
+  <div class="modal-footer">
+    <div class="pull-right">
+      <button type="button" (click)="modalService.dismissAll();"  class="btn btn-danger min-width-100">Batal</button>
+      <button type="button" (click)="update()" [disabled]="ktssForm.invalid" class="btn btn-warning min-width-100 btn-disab ml1">Simpan</button>
+    </div>
+  </div>
+</ng-template>
+
+<div class="row" id="contentToPrint">
+  <div class="col-sm">
+    <div class="card">
+      <div class="card-header bg-info-cust text-white">
+        <h4>Buku Bantuan Hasil Pelayanan Kontrasepsi</h4>
+      </div>
+
+      <div class="card-body">
+        <div class="mb-3">
+          <button type="button" class="btn btn-success" (click)="showCreate(modalCreate)">Tambah Laporan</button>
+        </div>
+
+        <div class="content-card min-height-400">
+            <div class="row mb-3">
+              <div class="col-sm-3 mb-3">
+                <label for="tanggal_mulai" class="col-form-label">Tanggal awal</label>
+                <input type="date" [(ngModel)]="cari.tanggal_mulai" name="tanggal_mulai"
+                  class="form-control">
+              </div>
+              <div class="col-sm-3 mb-3">
+                <label for="tanggal_akhir" class="col-form-label">Tanggal akhir</label>
+                <input type="date" [(ngModel)]="cari.tanggal_akhir" name="tanggal_akhir"
+                  class="form-control">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="row mb-3">
+                <div class="col-sm-3 mb-3">
+                  <label for="dokter" class="col-form-label">Dokter</label>
+                  <!-- <input type="text" [(ngModel)]="cari.dokter" name="dokter" class="form-control"> -->
+                  <ng-select #selDokCari [items]="dokterList" bindLabel="namdokter" bindValue="namdokter" 
+                    [(ngModel)]="cari.dokter" name="dokter" class="ngsl-placeholder" placeholder="Cari dokter">
+                  </ng-select>
+                </div>
+                <div class="col-sm-3 mb-3">
+                  <label for="nama" class="col-form-label">Nama Pasien</label>
+                  <input type="text" [(ngModel)]="cari.nama" name="nama" class="form-control">
+                  <!-- <ng-select #selPasienCari [items]="pasienList" bindLabel="pasien_label" bindValue="pasien_nama"
+                    [(ngModel)]="cari.nama" name="nama" class="ngsl-placeholder"
+                    placeholder="Cari Pasien">
+                  </ng-select> -->
+                </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm">
+                <button type="button" (click)="search()" class="btn btn-primary">Cari</button>
+                <a [routerLink]="'/emrform/Kebidanan/BukuKontrasepsi/'+cari.tanggal_mulai+'/'+cari.tanggal_akhir" 
+                  [ngClass]="ktssList.length == 0 ? 'disabled' : ''" 
+                  target="_blank" class="btn btn-primary pull-right">
+                  Print
+                </a>
+              </div>
+            </div>
+            <br>
+            <h3 class="text-center">
+              BUKU BANTUAN HASIL PELAYANAN KONTRASEPSI
+              <!-- <span><br>{{cari.tanggal_mulai}} - {{cari.tanggal_akhir}}</span> -->
+              <!-- <span *ngIf="cariNew.dokter" style="text-transform: uppercase;"><br>DOKTER/BIDAN : {{cariNew.dokter}}</span>
+              <span *ngIf="cariNew.nama" style="text-transform: uppercase;"><br>PASIEN : {{cariNew.nama}}</span> -->
+              <!-- <span *ngIf="cariNew.nama" style="text-transform: uppercase;"><br>BULAN DAN TAHUN : {{'a'}}</span> -->
+            </h3>
+            <br>
+            <h5>
+            <table class="d-inline" style="text-transform: uppercase;">
+              <tbody>
+                <tr [class]="cariNew.dokter ? '' : 'd-none'">
+                  <td>DOKTER </td>
+                  <td> : {{cariNew.dokter}}</td>
+                </tr>
+                <tr [class]="cariNew.month ? '' : 'd-none'">
+                  <td>BULAN / TAHUN </td>
+                  <td> : {{cariNew.month}} / {{cariNew.year}}</td>
+                </tr>
+                <tr [class]="cariNew.nik ? '' : 'd-none'">
+                  <td>NIK </td>
+                  <td> : {{cariNew.nik}}</td>
+                </tr>
+                <tr [class]="cariNew.nama ? '' : 'd-none'">
+                  <td>Nama </td>
+                  <td> : {{cariNew.nama}}</td>
+                </tr>
+              </tbody>
+            </table>
+            </h5>
+            <br>
+          
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="bg-info-cust text-white">
+                <tr>
+                  <th rowspan="2">No</th>
+                  <th rowspan="2">Tanggal</th>
+                  <th rowspan="2">Nama</th>
+                  <th rowspan="2">Alamat</th>
+                  <th rowspan="2">Umur Istri</th>
+                  <th rowspan="2">Jumlah anak hidup</th>
+                  <th rowspan="2">Pemberian Informed Concent (Untuk IUD, MOW, MOP & Implant)</th>
+                  <th colspan="7">Peserta KB Baru Menurut Metode Kontrasepsi</th>
+                  <th rowspan="2">Peserta KB Baru Pasca Persalinan / Pasca Keguguran</th>
+                  <th colspan="2">Pencabutan</th>
+                  <th colspan="2">Pemasangan Ulang</th>
+                  <th colspan="3">Pemberian Kontrasepsi Ulang</th>
+                  <th rowspan="2">Keterangan</th>
+                  <th rowspan="2">Aksi</th>
+                </tr>
+                <tr>
+                  <th>IUD</th>
+                  <th>MOW</th>
+                  <th>MOP</th>
+                  <th>Kondom</th>
+                  <th>Implant</th>
+                  <th>Suntikan</th>
+                  <th>Pil</th>
+                  <th>IUD</th>
+                  <th>Implant</th>
+                  <th>IUD</th>
+                  <th>Implant</th>
+                  <th>Kondom</th>
+                  <th>Suntikan</th>
+                  <th>Pil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let val of ktssPage; let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{val.tanggal}}</td>
+                  <td>{{val.nama}}</td>
+                  <td>{{val.alamat}}</td>
+                  <td>{{val.umur}}</td>
+                  <td>{{val.jml_anak_hidup}}</td>
+                  <td><i class="fa fa-check" [class]="val.pemberian_informed_content == '1' ? '' : 'd-none'" title="Ya"></i></td>
+                  <td><i class="fa fa-check" [class]="val.iud == '1' ? '' : 'd-none'" title="iud"></i></td>
+                  <td><i class="fa fa-check" [class]="val.mow == '1' ? '' : 'd-none'" title="mow"></i></td>
+                  <td><i class="fa fa-check" [class]="val.mop == '1' ? '' : 'd-none'" title="mop"></i></td>
+                  <td><i class="fa fa-check" [class]="val.kondom == '1' ? '' : 'd-none'" title="kondom"></i></td>
+                  <td><i class="fa fa-check" [class]="val.implant == '1' ? '' : 'd-none'" title="implant"></i></td>
+                  <td><i class="fa fa-check" [class]="val.suntikan == '1' ? '' : 'd-none'" title="suntikan"></i></td>
+                  <td><i class="fa fa-check" [class]="val.pil == '1' ? '' : 'd-none'" title="pil"></i></td>
+                  <td><i class="fa fa-check" [class]="val.peserta_kb_baru == '1' ? '' : 'd-none'" title="Ya"></i></td>
+                  <td><i class="fa fa-check" [class]="val.pencabutan_iud == '1' ? '' : 'd-none'" title="iud"></i></td>
+                  <td><i class="fa fa-check" [class]="val.pencabutan_implant == '1' ? '' : 'd-none'" title="implant"></i></td>
+                  <td><i class="fa fa-check" [class]="val.pasang_ulang_iud == '1' ? '' : 'd-none'" title="iud"></i></td>
+                  <td><i class="fa fa-check" [class]="val.pasang_ulang_implant == '1' ? '' : 'd-none'" title="implant"></i></td>
+                  <td><i class="fa fa-check" [class]="val.kontrasepsi_ulang_kondom == '1' ? '' : 'd-none'" title="kondom"></i></td>
+                  <td><i class="fa fa-check" [class]="val.kontrasepsi_ulang_suntikan == '1' ? '' : 'd-none'" title="suntikan"></i></td>
+                  <td><i class="fa fa-check" [class]="val.kontrasepsi_ulang_pil == '1' ? '' : 'd-none'" title="pil"></i></td>
+                  <td>{{val.keterangan}}</td>
+                  <td>
+                    <div>
+                      <button type="button" class="btn btn-danger" (click)="delete(val.id)">Delete</button>
+                      <button type="button" class="btn btn-warning" (click)="showEdit(modalEdit, val.id)">Ubah</button>  
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngIf="ktssList.length <= 0">
+                  <td class="text-center" colspan="29"> Tidak ditemukan</td>
+                </tr>
+              </tbody>
+            </table>
+            <mat-paginator [length]="ktssList.length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="onPageChange($event)">
+            </mat-paginator>
+          </div>
+
+        </div>
+        <!-- end form -->
+
+      </div>
+      <!-- end card-body -->
+    </div>
+    <!-- end card -->
+  </div>
+</div>

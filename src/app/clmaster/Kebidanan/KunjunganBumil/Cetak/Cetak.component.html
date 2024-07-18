@@ -1,0 +1,133 @@
+<div class="bg-dark p-3 print-bg">
+  <div class="bg-white p-2 m-auto mb-3 print-hidden" style="width: 100%;">
+    <h3 class="text-center">
+      <button (click)="print()" class="btn btn-primary print-hide pull-left">Print</button>
+      PRINT PREVIEW
+    </h3>
+  </div>
+
+  <div class="cust-paper-lanscape font-formal-wrap">
+    <h3 class="text-center">
+      LAPORAN PEMRIKASAAN KEHAMILAN
+      <!-- <span><br>{{page.tanggal_mulai}} - {{page.tanggal_akhir}}</span>
+      <span *ngIf="page.dokter" style="text-transform: uppercase;"><br>DOKTER : {{page.dokter}}</span>
+      <span *ngIf="page.nama" style="text-transform: uppercase;"><br>PASIEN : {{page.nama}}</span> -->
+    </h3>
+    <br>
+    <h5>
+    <table class="d-inline" style="text-transform: uppercase;">
+      <tbody>
+      <tr *ngIf="page.dokter">
+        <td>DOKTER / BIDAN </td>
+        <td> : {{page.dokter}}</td>
+      </tr>
+      <tr *ngIf="page.alamat">
+        <td>ALAMAT </td>
+        <td> : {{page.alamat}}</td>
+      </tr>
+      <tr *ngIf="page.month">
+        <td>BULAN / TAHUN </td>
+        <td> : {{page.month}} / {{page.year}}</td>
+      </tr>
+      <tr *ngIf="page.nik">
+        <td>NIK </td>
+        <td> : {{page.nik}}</td>
+      </tr>
+      <tr *ngIf="page.nama">
+        <td>Nama </td>
+        <td> : {{page.nama}}</td>
+      </tr>
+      </tbody>
+    </table>
+    </h5>
+    <br>
+
+    <div>
+      <div>
+
+        <table class="table table-bordered">
+          <thead class="">
+            <tr>
+              <th rowspan="2">No</th>
+              <th rowspan="2">Tgl</th>
+              <th rowspan="2">Nama Ibu/Suami</th>
+              <th rowspan="2">Umur</th>
+              <th rowspan="2">Alamat</th>
+              <th colspan="3">Hamil Ke</th>
+              <th rowspan="2">BB&lt;45 Kg</th>
+              <th rowspan="2">TB&lt;145 Cm</th>
+              <th rowspan="2">Lila&lt;23 Cm</th>
+              <th rowspan="2">TD&lt;130/90</th>
+              <th rowspan="2">HB&lt;Bgr%</th>
+              <th colspan="2">Jarak Peralihan</th>
+              <th colspan="2">Imunisasi</th>
+              <th>FE</th>
+              <th colspan="3">Umur Kehamilan</th>
+              <th>Keterangan</th>
+            </tr>
+            <tr>
+              <th>G</th>
+              <th>P</th>
+              <th>A</th>
+              <!-- <th>Jarak Peralihan</th> -->
+              <th>&lt;2 Th</th>
+              <th>&gt;2 Th</th>
+              <!-- <th>Imunisasi</th> -->
+              <th>TT&nbsp;I</th>
+              <th>TT&nbsp;II</th>
+              <!-- <th>FE</th> -->
+              <th>Ke</th>
+              <!-- <th>Umur Kehamilan</th> -->
+              <th>0&nbsp;&minus;&nbsp;12 Mg</th>
+              <th>13&nbsp;&minus;&nbsp;24 Mg</th>
+              <th>&gt;24 Mg</th>
+              <!-- <th>Ket</th> -->
+              <th>Diteksi Risti</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let val of bumilList; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{val.tanggal_kunjungan}}</td>
+              <td>{{val.nama}}</td>
+              <td>{{val.umur}}</td>
+              <td>{{val.alamat_pengunjung}}</td>
+              <td>{{val.g}}</td>
+              <td>{{val.p}}</td>
+              <td>{{val.a}}</td>
+              <td><i class="fa fa-check" [class]="val.bb < 45 && val.bb > 0 ? '' : 'd-none'" title="{{val.bb}}"></i>
+              </td>
+              <td><i class="fa fa-check" [class]="val.tb < 145 && val.tb > 0 ? '' : 'd-none'"
+                  title="{{val.tb}}"></i></td>
+              <td><i class="fa fa-check" [class]="val.lila < 23 && val.lila > 0 ? '' : 'd-none'"
+                  title="{{val.lila}}"></i></td>
+              <td>{{val.td}}</td>
+              <td>{{val.hb}}</td>
+              <!-- jarak persalinan -->
+              <td>{{ val.jarak_persalinan < 2 ? val.jarak_persalinan : '' }}</td>
+              <td>{{ val.jarak_persalinan > 2 ? val.jarak_persalinan : '' }}</td>
+              <!-- imunisasi -->
+              <td><i class="fa fa-check" [class]="val.imunisasi == 'TT I' ? '' : 'd-none'"
+                  title="{{val.imunisasi}}"></i></td>
+              <td><i class="fa fa-check" [class]="val.imunisasi == 'TT II' ? '' : 'd-none'"
+                  title="{{val.imunisasi}}"></i></td>
+              <!-- fe -->
+              <td>{{val.fe}}</td>
+              <!-- umur kehamilan -->
+              <td>{{ val.umur_kehamilan >= 0 && val.umur_kehamilan <= 12 ? val.umur_kehamilan : '' }}</td>
+              <td>{{ val.umur_kehamilan >= 13 && val.umur_kehamilan <= 24 ? val.umur_kehamilan : '' }}</td>
+              <td>{{ val.umur_kehamilan > 24 ? val.umur_kehamilan : '' }}</td>
+              <!-- ket -->
+              <td>{{val.keterangan}}</td>
+            </tr>
+            <tr *ngIf="bumilList.length <= 0">
+              <td class="text-center" colspan="22"> Tidak ditemukan</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+  </div>
+</div>

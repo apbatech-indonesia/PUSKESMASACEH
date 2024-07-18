@@ -1,0 +1,341 @@
+<!-- 
+<div class="app-page-title">
+  <div class="page-title-wrapper">
+    <div class="page-title-heading">
+      <div class="page-title-icon">
+        <i class="icon {{icon}}"></i>
+      </div>
+      <div>
+        {{heading}}
+        <div class="page-title-subheading">
+          {{subheading}}
+        </div>
+      </div>
+    </div>
+    <div class="page-title-actions">
+  
+    </div>
+  </div>
+</div> -->
+
+
+
+<ul ngbNav #nav="ngbNav" class=" nav-tabs tabs-animated tabs-animated-shadow">
+
+
+      
+    <li ngbNavItem>
+      <a ngbNavLink><span >BHP</span></a>
+      <ng-template ngbNavContent>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card main-card mb-3">
+              <div class="card-header">
+               Template BHP 
+             </div>
+
+             <div class="card-body">
+            
+
+              <div class="position-relative mb-3">
+                <label for="exampleEmail" class="form-label">Nama Template Obat</label>
+                <input [(ngModel)]="namatamplatess"   placeholder="Nama Tamplate" type="text" class="form-control">
+              </div>
+
+
+
+              <div class="table-responsive" style="font-size: 12px;">
+                <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                  <thead>
+                    <tr style="border-bottom:1px solid black;">
+                   
+                      <th>Obat</th>
+                 
+                      <th class="text-center">Aturan Pakai</th>
+                      <th class="text-center">Qty</th>
+                    
+                      <th class="text-center">Keterangan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr  *ngFor="let x of tobatr">
+           
+                      <td   width="40%">
+                    
+                          <p>{{x.nama}}</p>
+                      </td>
+                      <td  class="text-center"  width="20%">
+                        {{x.aturan}}
+                      </td>
+                      <td   class="text-center"  width="10%">
+                        {{x.qty}}
+                      </td>
+                    
+                      <td  class="text-center">
+                        {{x.satuan}}
+                      </td>
+                      <td  class="text-center">
+                        {{x.keterangan}}
+                        <!-- <div class="badge bg-pill bg-danger" 
+                        (click)="deletelistobat(x.kdtamplate)">X</div> -->
+                      </td>
+                    </tr>
+
+                  
+
+                    <tr *ngFor="let x of tobattam">
+           
+                      <td   width="40%" >
+                        <div class="mb-2 me-2 badge badge-dot bg-primary">Primary</div>
+                         {{x.obat}}
+                      </td>
+                      <td class="text-center" (click)="aturannonracik(x.kdtamplated,x.kdtamplate,x.kddokter,x.kdobat,x.aturan,'aturan',x.aturan)"  width="20%">
+                        {{x.aturan}}
+                      </td>
+                      <td  class="text-center"    (click)="aturannonracik(x.kdtamplated,x.kdtamplate,x.kddokter,x.kdobat,x.aturan,'qty',x.qty)" width="10%">
+                        {{x.qty}}
+                      </td>
+                    
+                      <td class="text-center"  (click)="aturannonracik(x.kdtamplated,x.kdtamplate,x.kddokter,x.kdobat,x.aturan,'keterangan',x.keterangan)" >
+                        {{x.keterangan}}
+                        <div class="badge bg-pill bg-danger" 
+                        (click)="deletelistobat(x.kdtamplate)">X</div>
+                      </td>
+                    </tr>
+
+
+
+                 
+                 
+
+  
+                    <tr >
+           
+                      <td   width="40%">
+                    
+
+                        <ng-select *ngIf="showtab" [items]="tobat" bindLabel="obat"  bindValue="kdobat" 
+                        placeholder="Obat" [(ngModel)]="nmobat" (keyup)="cariobat($event)" >
+                        </ng-select>
+
+
+                        <input  *ngIf="!showtab"   [(ngModel)]="namaracik" placeholder="Nama Racik" type="text" class="form-control">
+
+
+
+
+                        
+                      </td>
+                      <td  *ngIf="!showtab" width="20%">
+                        <select  [(ngModel)]="metode" id="exampleSelect" class="form-select">
+                          <option value="Kapsul" >Kapsul</option>
+                          <option value="Puyer" >Puyer</option>
+                          <option value="Salep" >Salep</option>
+                          <option value="Sirup" >Sirup</option>
+                          
+        
+                        </select>
+                      </td>
+                      <td class="text-center"  width="20%">
+                        <input  [(ngModel)]="aturan" placeholder="Aturan" type="text" class="form-control" (keyup)="jmlracik($event)">
+                      </td>
+                      <td  class="text-center"  width="20%">
+                        <input   [(ngModel)]="qtyk" placeholder="Qty" type="number" class="form-control">
+                      </td>
+                    
+                      <td class="text-center">
+                
+                        <textarea  [(ngModel)]="keterangan"   placeholder="Keterangan" class="form-control" autosize></textarea>
+                      </td>
+                    </tr>
+  
+  
+
+                    <tr >
+           
+                      <td   width="40%">
+                    
+                      </td>
+                      <td class="text-center"  width="20%">
+                        <div *ngIf="!showtab" class="badge bg-pill bg-warning" 
+                        (click)="tambahobatr()">Tambah Racik</div>
+                        <div *ngIf="showtab" class="badge bg-pill bg-warning" 
+                        (click)="tambahobat()">Tambah</div>
+                      </td>
+
+                      <td  class="text-center"  width="10%">
+                     
+                      </td>
+                    
+                      <td class="text-center">
+                     
+                      </td>
+                    </tr>
+
+
+
+                    <tr height="100px">
+           
+                      <td   width="40%">
+                    
+                      </td>
+                    
+                      <td  *ngIf="!showtab" class="text-center"  width="20%">
+                      
+                      </td>
+                      <td   class="text-center"  width="20%">
+                      
+                      </td>
+                      <td  class="text-center"  width="10%">
+                     
+                      </td>
+                    
+                      <td class="text-center">
+                       <div  (click)="tambahobatv()" class="badge bg-pill bg-danger"  
+                        >Verifikasi</div>
+ 
+                      </td>
+                      
+                    </tr>
+
+
+                   
+                  </tbody>
+                </table>
+              </div>
+
+
+
+
+              </div>
+              
+            
+            </div>
+          
+            
+          </div>
+
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card main-card mb-3">
+            
+              <div class="card-header">
+                Template Obat 
+                
+              </div>
+ 
+              <div class="card-body">
+                
+
+
+                <div class="table-responsive" style="font-size: 12px;">
+                  <table  class="align-middle mb-0 table table-borderless table-striped table-hover">
+                    <thead>
+                      <tr style="border-bottom:1px solid black;">
+                     
+                        <th>OBAT</th>
+                      <th class="text-center">ATURAN PAKAI</th>
+                      <th class="text-center">QTY</th>
+                    
+                      <th class="text-center">KETERANGAN</th>
+                      <th class="text-center">ACT</th>
+                      </tr>
+                    </thead>
+                   
+        
+        
+                    
+        
+                     <tbody *ngFor="let x of tobattaml ">
+                   
+                    
+                      <tr  >
+             
+                        <td style="font-size: 12px;color:black;">
+                  
+                         <b style="font-size: 12px;">{{x.nama}} | {{x.status}}</b> 
+
+                        </td>
+                        <td style="font-size: 12px;color:black;">
+                  
+                         </td>
+                         <td style="font-size: 12px;color:black;">
+                  
+                      
+                         </td>
+                         <td style="font-size: 12px;color:black;">
+                  
+                        </td>
+                        <td class="text-center">
+                 
+                          <div class="badge bg-pill bg-warning"  (click)="pilihobattam(x.kdtamplated,x.nama)"  >P</div>             
+                          <div class="badge bg-pill bg-danger"  (click)="deletelistobatx(x.kdtamplated,x.nama)" >X</div>       
+                        </td>
+                      </tr>
+
+
+                      <tr  *ngFor="let y of x.detail "  >
+               
+                        <td >
+                          <div *ngIf="y.kdobat == ''" class="mb-2 me-2 badge badge-dot bg-danger">Primary</div> 
+                          <div *ngIf="!y.kdobat == ''" class="mb-2 me-2 badge badge-dot bg-primary">Primary</div> 
+                          
+                          <b style="color: black;" *ngIf="y.kdobat == ''">{{y.obat}}</b>
+                          <span *ngIf="!y.kdobat == ''">{{y.obat}}</span>
+                        </td>
+
+                     
+                        
+                        <td class="text-center" >
+                          {{y.aturan}}
+                        </td>
+                        <td  class="text-center">
+                          {{y.qty}}     
+                          
+                          <span *ngIf="y.kdobat == ''" >{{y.satuan}}</span>
+                          <span *ngIf="!y.kdobat == ''" >{{y.standart}}</span>
+                        </td>
+                        <td class="text-center" >
+                          {{y.keterangan}}
+                        </td>
+                        <td  class="text-center">
+                          {{y.status}}
+                        </td>
+                        <!-- <td style="border: 1px solid black;">
+                          <div class="badge bg-pill bg-danger"  (click)="pilihgol()"  >Hapus</div>             
+                        </td> -->
+                      </tr>
+
+        
+        
+                     
+                    </tbody>
+                  </table>
+                </div>
+
+
+               </div>
+            
+            </div>
+          
+            
+          </div>
+
+        </div>
+
+       
+
+
+        </ng-template>
+      </li>
+
+
+   
+
+
+</ul>
+<div [ngbNavOutlet]="nav"></div>

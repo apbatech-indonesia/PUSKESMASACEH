@@ -1,0 +1,249 @@
+<div class="bg-white">
+    <div  class="row">
+        <div class="col-md-10">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr style="background-color: black;" >
+                           
+                        <td>
+                         <b  style="color: white;">ASESMEN KEPERAWATAN</b>
+      
+                        </td>
+                       
+                       </tr>
+
+                       <tr>
+                        <div class="row">
+                            <div class="position-relative mb-3">
+                                <label for="exampleCity" class="form-label">  <b>Keluhan Utama</b></label>
+                                <input [(ngModel)]="ku"  type="text" placeholder="Keluhan Utama" class="form-control">
+                              </div> 
+
+                              <div class="position-relative mb-3">
+                                <label for="exampleCity" class="form-label">  <b>Riwayat Penyakit</b></label>
+                                <input [(ngModel)]="rps"  type="text"   placeholder="Riwayat Penyakit" class="form-control">
+                              </div> 
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>BB</b></label>
+                                    <input [(ngModel)]="bb"  type="text"  placeholder="BB"  class="form-control">
+                                  </div> 
+                            </div>
+                            <div class="col-md-3">
+                                <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>TB</b></label>
+                                    <input [(ngModel)]="tb"  type="text"  placeholder="Tb"  class="form-control">
+                                  </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>IMT</b></label>
+                                    <input [(ngModel)]="imt"  type="text"  placeholder="IMT"  class="form-control">
+                                  </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>lingkar kepala</b></label>
+                                    <input [(ngModel)]="lingkarkepala"  placeholder="lingkar kepala"   type="text" class="form-control">
+                                  </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>Mobilisasi</b></label>
+                                  
+                                       <select  id="exampleSelect" class="form-select" [(ngModel)]="mobil">
+                       
+                                            <option value="0" >Mandiri</option>
+                                            <option value="1" >Di bantu sebagian</option>
+                                            <option value="2" >Perlu di bantu orang lain</option>
+                                            <option value="3" >perlu di bantu orang lain dan alat</option>
+                                            <option value="4" >tergantung/tidak mampu</option>
+                                          
+                                        </select>
+
+                                  </div>
+
+                                  <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>Toileting</b></label>
+                                  
+                                       <select  id="exampleSelect" class="form-select" [(ngModel)]="toilet">
+                       
+                                            <option value="0" >Mandiri</option>
+                                            <option value="1" >Di bantu sebagian</option>
+                                            <option value="2" >Perlu di bantu orang lain</option>
+                                            <option value="3" >perlu di bantu orang lain dan alat</option>
+                                            <option value="4" >tergantung/tidak mampu</option>
+                                          
+                                        </select>
+
+                                  </div>
+
+
+                                  <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>Makan/Minum</b></label>
+                                  
+                                       <select  id="exampleSelect" class="form-select" [(ngModel)]="makan">
+                       
+                                            <option value="0" >Mandiri</option>
+                                            <option value="1" >Di bantu sebagian</option>
+                                            <option value="2" >Perlu di bantu orang lain</option>
+                                            <option value="3" >perlu di bantu orang lain dan alat</option>
+                                            <option value="4" >tergantung/tidak mampu</option>
+                                          
+                                        </select>
+
+                                  </div>
+                                  <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>Mandi</b></label>
+                                  
+                                       <select  id="exampleSelect" class="form-select" [(ngModel)]="mandi">
+                       
+                                            <option value="0" >Mandiri</option>
+                                            <option value="1" >Di bantu sebagian</option>
+                                            <option value="2" >Perlu di bantu orang lain</option>
+                                            <option value="3" >perlu di bantu orang lain dan alat</option>
+                                            <option value="4" >tergantung/tidak mampu</option>
+                                          
+                                        </select>
+
+                                  </div>
+
+                                  <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>Berpakaian</b></label>
+                                  
+                                       <select  id="exampleSelect" class="form-select" [(ngModel)]="berpakaian">
+                       
+                                            <option value="0" >Mandiri</option>
+                                            <option value="1" >Di bantu sebagian</option>
+                                            <option value="2" >Perlu di bantu orang lain</option>
+                                            <option value="3" >perlu di bantu orang lain dan alat</option>
+                                            <option value="4" >tergantung/tidak mampu</option>
+                                          
+                                        </select>
+
+                                  </div>
+
+                                  <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>Resiko Jatuh</b></label>
+                                    <input [(ngModel)]="hasil"  placeholder="Resiko Jatuh"   type="text" class="form-control">
+                                       
+
+                                  </div>
+
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>Psikologis</b></label>
+                                  
+                                       <select  id="exampleSelect" class="form-select" [(ngModel)]="psikologis">
+                       
+                                            <option value="Senang" >Senang</option>
+                                            <option value="tenang" >tenang</option>
+                                            <option value="sedih" >sedih</option>
+                                            <option value="tegang" >tegang</option>
+                                            <option value="takut" >takut</option>
+                                            <option value="depresi" >depresi</option>
+                                          
+                                        </select>
+
+                                  </div>
+
+
+                                  <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>Sosial Ekonomi</b></label>
+                                  
+                                       <select  id="exampleSelect" class="form-select" [(ngModel)]="sosialekonomi">
+                       
+                                            <option value="Baik" >Baik</option>
+                                            <option value="Cukup" >Cukup</option>
+                                            <option value="Kurang" >Kurang</option>
+                                         
+                                          
+                                        </select>
+
+                                  </div>
+                                  <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>Masalah</b></label>
+                                    <input [(ngModel)]="masalah"  placeholder="Masalah"   type="text" class="form-control">
+                                       
+
+                                  </div>
+
+                                  <div class="position-relative mb-3">
+                                    <label for="exampleCity" class="form-label">  <b>Rencana Tindakan</b></label>
+                                    <input [(ngModel)]="rencana"  placeholder="Rencana Tindakan"   type="text" class="form-control">
+                                       
+
+                                  </div>
+
+
+
+                                  <div class="row">
+                                    <div class="12" style="text-align: center;">
+                                        <b> Perawat Yang Melakukan Pengkajian</b>
+                                        <br>
+                                        <br>
+                                      
+                                        <br>
+                                        <b>{{userperawat}}</b>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+  
+                            </div>
+                            <div class="col-md-4" style="text-align: center;">
+                              <button [ladda]="progress" (click)="simpan()"
+                              class="ladda-button mb-2 me-2 btn btn-primary btn-sm" data-style="zoom-out">
+                              <span class="ladda-label">Simpan Kajian Awal
+                              </span>
+                              <span class="ladda-spinner">
+                              </span></button>
+        
+                            </div>
+  
+                            <div class="col-md-4">
+                             
+                            </div>
+  
+                          </div>
+
+                        </tr>
+                 </tbody>
+
+            </table>
+        </div>
+
+        <div class="col-md-2">
+            <ul class="nav flex-column">
+            <li class="nav-item-header nav-item" style="background-color: black;color:white">Riwayat</li>
+            <li class="nav-item" style="border-bottom:0.5px solid grey ;"   *ngFor="let x of listrwt"  (click)="lihatresume(x.notransaksi)">
+              <a  class="nav-link" style="background-color: white;" >
+                <div style="font-weight: bold;" >
+                  <span>Asesmen Keperawatan</span><br>
+                  <span>{{x.tgl}}</span><br>
+                 
+              </div>
+             
+              </a>
+            </li> 
+            </ul>
+
+            
+        </div>
+
+
+    </div>
+</div>

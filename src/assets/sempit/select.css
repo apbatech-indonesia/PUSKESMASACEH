@@ -1,0 +1,47 @@
+
+.ng-select .ng-select-container {
+    min-height: 30px;
+  }
+  
+  .ng-select.ng-select-single .ng-select-container {
+    height: 30px;
+  }
+
+
+  .inx{
+    border-radius: 3px;
+    border:solid 1px #ccc;
+    width:7em;height:2.5em;
+    color:black;font-weight: bold;
+   
+  }
+
+.inxtot{
+    border-radius: 5px;border:solid 1px #ccc;color:black;font-weight: bold;height:2.5em;
+}
+.inttgl{
+    border-radius: 5px;border:solid 1px #ccc; width: 7em;height:2.5em;
+}
+
+.sp{
+
+ 
+  font-size:14px;
+  color:black;
+  }
+  
+  .sp2{
+  
+  font-weight: bold;
+  font-size:14px;
+  color:black;
+  }
+
+
+  /* .ng-select.ng-select-container.custom {
+    min-height: 20px;
+  }
+  .ng-select.ng-select-single .ng-select-container.custom  {            
+    height: 20px;
+  } */
+  

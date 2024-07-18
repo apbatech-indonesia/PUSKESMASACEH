@@ -1,0 +1,722 @@
+<div class="row">
+    <div class="col-md-10">
+        <div class="card main-card mb-3">
+            <div class="card-header text-light" style="text-align: center; background-color: #107a8a;">
+                {{ heading }} (Usia 0 s/d 28 hari)
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor RM" class="form-label" style="color:black;">Nomor RM</label>
+                            <input [(ngModel)]="no_rm" disabled placeholder="Nomor RM" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor Transaksi" class="form-label" style="color:black;">Nomor Transaksi</label>
+                            <input [(ngModel)]="no_transaksi" disabled placeholder="Nomor Transaksi" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                    <div class="col-md-6" [hidden]="true" >
+                        <div class="position-relative mb-3">
+                            <label for="Validasi Button" class="form-label" style="color:black;">Validasi Button</label>
+                            <input [(ngModel)]="validasiCreateUpdate" disabled placeholder="Validasi Button" type="text" class="form-control rounded-pill">
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center; background-color: #107a8a;">
+                    <Span style="color: white;">
+                        <b>
+                            A. Data Umum
+                        </b>
+                    </Span>
+                </div>
+                <div class="row">
+                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                        <tbody>
+                            <tr>
+                                <td rowspan="2" style="vertical-align: top;">I. </td>
+                                <td width="30%" style="vertical-align: top;">
+                                    Asal Masuk
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="asal_masuk" id="asal_masuk" class="form-select" (change)="pasangNilaiAsalMasuk()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="IGD">IGD</option>
+                                                <option value="RJ">RJ</option>
+                                                <option value="VK">VK</option>
+                                                <option value="RI">RI</option>
+                                                <option value="ICU">ICU</option>
+                                                <option value="IBS">IBS</option>
+                                                <option value="Lainnya">Lainnya</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="asal_masuk_lainnya" placeholder="Lainnya" type="text" class="form-control rounded-pill" [disabled]="disabledAsalMasuk">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Status Rujuk
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="status_rujuk" id="status_rujuk" class="form-select" (change)="pasangNilaiStatusRujuk()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Rujukan">Rujukan</option>
+                                                <option value="Non Rujuk">Non Rujuk</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="status_rujuk_lainnya" placeholder="Dari Rujukan" type="text" class="form-control rounded-pill" [disabled]="disabledStatusRujuk">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+        
+                            <tr>
+                                <td rowspan="1" style="vertical-align: top;">II. </td>
+                                <td width="30%" style="vertical-align: top;">
+                                    Diagnosa Masuk
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="diagnosa_masuk" placeholder="Diagnosa Masuk" type="text" class="form-control rounded-pill">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+        
+                            <tr>
+                                <td rowspan="1" style="vertical-align: top;">III. </td>
+                                <td width="30%" style="vertical-align: top;">
+                                    Sumber Informasi
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="sumber_informasi" id="sumber_informasi" class="form-select" (change)="pasangSumberInformasi()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Orang Tua">Orang Tua</option>
+                                                <option value="Keluarga Wali">Keluarga Wali</option>
+                                                <option value="Perujuk">Perujuk</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="hubungan_sumber_informasi" placeholder="Nama / Hubungan" type="text" class="form-control rounded-pill" [disabled]="disabledSumberInformasi">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                
+                <div style="text-align: center; background-color: #107a8a;">
+                    <Span style="color: white;">
+                        <b>
+                            B. Riwayat Kesehatan
+                        </b>
+                    </Span>
+                </div>
+                
+                <div class="row">
+                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                        <tbody>
+                            <tr>
+                                <td rowspan="3" style="vertical-align: top;">I. </td>
+                                <td colspan="8" width="30%" style="vertical-align: top;">
+                                    Riwayat Kesehatan Terdahulu
+                                </td>
+                            </tr>
+        
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Pernah Dirawat
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="pernah_dirawat" id="pernah_dirawat" class="form-select" (change)="pasangNilaiPernahDirawat()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Tidak">Tidak</option>
+                                                <option value="Ya">Ya, Kapan?</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="kapan_dan_diagnosa" placeholder="Kapan / Diagnosa" type="text" class="form-control rounded-pill" [disabled]="disabledPernahDirawat">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Kelainan Kongenital
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="kelainan_kongenital" id="kelainan_kongenital" class="form-select" (change)="pasangNilaiKongenital()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Tidak">Tidak</option>
+                                                <option value="Ya">Ya, Sebutkan!</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="kelainan_kongenital_lainnya" placeholder="Sebutkan" type="text" class="form-control rounded-pill" [disabled]="disabledKongenital">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="4" style="vertical-align: top;">II. </td>
+                                <td colspan="8" width="30%" style="vertical-align: top;">
+                                    Riwayat Pre Natal
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Lahir, Umur, dan Kehamilan
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input [(ngModel)]="lahir_dan_umur_kehamilan" placeholder="Lahir, Umur, dan Kehamilan(Bulan / Tahun)" type="text" class="form-control rounded-pill">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Komplikasi Kehamilan
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="komplikasi_kehamilan" id="komplikasi_kehamilan" class="form-select" (change)="pasangNilaiKomplikasiKehamilan()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Tidak">Tidak</option>
+                                                <option value="Ya">Ya, Sebutkan!</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="komplikasi_kehamilan_lainnya" placeholder="Sebutkan" type="text" class="form-control rounded-pill" [disabled]="disabledKomplikasiKehamilan">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    ANC
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <span style="color:red;">Trimester I</span>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="trimester_1" placeholder="" type="text" class="form-control rounded-pill">
+                                </td>
+                                <td>
+                                    <span style="color:red;">Kali</span>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="trimester_bidan_1" placeholder="" type="text" class="form-control rounded-pill">
+                                </td>
+                                <td>
+                                    <span style="color:red;">Bidan</span>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="trimester_dokter_1" placeholder="" type="text" class="form-control rounded-pill">
+                                </td>
+                                <td>
+                                    <span style="color:red;">Dokter SpOG</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <span style="color:red;">Trimester II</span>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="trimester_2" placeholder="" type="text" class="form-control rounded-pill">
+                                </td>
+                                <td>
+                                    <span style="color:red;">Kali</span>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="trimester_bidan_2" placeholder="" type="text" class="form-control rounded-pill">
+                                </td>
+                                <td>
+                                    <span style="color:red;">Bidan</span>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="trimester_dokter_2" placeholder="" type="text" class="form-control rounded-pill">
+                                </td>
+                                <td>
+                                    <span style="color:red;">Dokter SpOG</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <span style="color:red;">Trimester III</span>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="trimester_3" placeholder="" type="text" class="form-control rounded-pill">
+                                </td>
+                                <td>
+                                    <span style="color:red;">Kali</span>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="trimester_bidan_3" placeholder="" type="text" class="form-control rounded-pill">
+                                </td>
+                                <td>
+                                    <span style="color:red;">Bidan</span>
+                                </td>
+                                <td>
+                                    <input [(ngModel)]="trimester_dokter_3" placeholder="" type="text" class="form-control rounded-pill">
+                                </td>
+                                <td>
+                                    <span style="color:red;">Dokter SpOG</span>
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td rowspan="15" style="vertical-align: top;">III. </td>
+                                <td width="30%" style="vertical-align: top;">
+                                    Riwayat Natal
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Persalinan
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="persalinan" id="persalinan" class="form-select" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Spontan">Spontan</option>
+                                                <option value="Vacum">Vacum</option>
+                                                <option value="Forcep">Forcep</option>
+                                                <option value="SC">SC</option>
+                                            </select>    
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Ditolong Oleh
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="persalinan_ditolong_oleh" id="persalinan_ditolong_oleh" class="form-select" (change)="pasangNilaiPesalinanDitolongOleh()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Bidan">Bidan</option>
+                                                <option value="Dokter">Dokter</option>
+                                                <option value="Lainnya">Lainnya</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="persalinan_ditolong_oleh_lainnya" placeholder="Lainnya" type="text" class="form-control rounded-pill" [disabled]="disabledPersalinanDitolongOleh">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Riwayat Persalinan
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="riwayat_persalinan" id="riwayat_persalinan" class="form-select" (change)="pasangNilaiRiwayatPersalinan()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Gawat Janin">Gawat Janin</option>
+                                                <option value="PEB">PEB</option>
+                                                <option value="Lainnya">Lainnya</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="riwayat_persalinan_lainnya" placeholder="Lainnya" type="text" class="form-control rounded-pill" [disabled]="disabledRiwayatPersalinan">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    APGAR SCORE
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input [(ngModel)]="apgar_score" placeholder="APGAR SCORE" type="text" class="form-control rounded-pill">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Berat Badan Lahir
+                                </td>
+                                <td>
+                                    <div class="col-md-12">
+                                        <input [(ngModel)]="bb_lahir" placeholder="Berat" type="text" class="form-control rounded-pill" (keyup)="periksaAngkaInput('BB');">
+                                    </div>
+                                </td>
+
+                                <td>
+                                    PB
+                                </td>
+                                <td>
+                                    <div class="col-md-12">
+                                        <input [(ngModel)]="pb" placeholder="PB" type="text" class="form-control rounded-pill" (keyup)="periksaAngkaInput('PB');">
+                                    </div>
+                                </td>
+
+                                <td>
+                                    LK
+                                </td>
+                                <td>
+                                    <div class="col-md-12">
+                                        <input [(ngModel)]="lk" placeholder="LK" type="text" class="form-control rounded-pill" (keyup)="periksaAngkaInput('LK');">
+                                    </div>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    LD
+                                </td>
+                                <td>
+                                    <div class="col-md-12">
+                                        <input [(ngModel)]="ld" placeholder="LD" type="text" class="form-control rounded-pill" (keyup)="periksaAngkaInput('LD');">
+                                    </div>
+                                </td>
+
+                                <td>
+                                    LL
+                                </td>
+                                <td>
+                                    <div class="col-md-12">
+                                        <input [(ngModel)]="ll" placeholder="LL" type="text" class="form-control rounded-pill" (keyup)="periksaAngkaInput('LL');">
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Jumlah Janin
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="jumlah_janin" id="jumlah_janin" class="form-select" (change)="pasangNilaiJumlahJanin()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Tunggal">Tunggal</option>
+                                                <option value="Kembar">Kembar</option>
+                                            </select>    
+                                        </div>
+                                        <!-- <div class="col-md-8">
+                                            <input [(ngModel)]="status_janin" placeholder="Hidup / Mati" type="text" class="form-control rounded-pill" [disabled]="disabledJumlahJanin">
+                                        </div> -->
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="status_janin" id="status_janin" class="form-select" style="border-radius: 25px;" [disabled]="disabledJumlahJanin">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Hidup">Hidup</option>
+                                                <option value="Mati">Mati</option>
+                                            </select>    
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Jenis Kelamin
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="jenis_kelamin" id="jenis_kelamin" class="form-select" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Laki - Laki">Laki - Laki</option>
+                                                <option value="Perempuan">Perempuan</option>
+                                            </select>    
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Tempat Lahir
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="tempat_lahir" id="tempat_lahir" class="form-select" (change)="pasangNilaiTempatLahir()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Puskesmas">Puskesmas</option>
+                                                <option value="BPS">BPS</option>
+                                                <option value="RS">RS</option>
+                                                <option value="Lainnya">Lainnya</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="tempat_lahir_lainnya" placeholder="Lainnya" type="text" class="form-control rounded-pill" [disabled]="disabledTempatLahir">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Trauma Lahir
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="trauma_lahir" id="trauma_lahir" class="form-select" (change)="pasangNilaiTraumaLahir()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Ya">Ya</option>
+                                                <option value="Tidak">Tidak</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="trauma_lahir_lainnya" placeholder="Trauma?" type="text" class="form-control rounded-pill" [disabled]="disabledTraumaLahir">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Keadaan Lahir
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="lahir_dalam_keadaan" id="jenis_kelamin" class="form-select" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Hidup">Hidup</option>
+                                                <option value="Mati">Mati</option>
+                                            </select>    
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Warna Air Ketuban
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="warna_air_ketuban" id="warna_air_ketuban" class="form-select" (change)="pasangNilaiAirKetuban()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Jernih">Jernih</option>
+                                                <option value="Keruh">Keruh</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="warna_air_ketuban_lainnya" placeholder="Penjelasan..." type="text" class="form-control rounded-pill" [disabled]="disabledAirKetuban">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Pelayanan yang didapat
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="10%" style="vertical-align: top;">
+                                    <input type="checkbox" [(ngModel)]="pelayanan1" (change)="pasangCheckboxPelayanan1()"> Vit K
+                                </td>
+                                <td width="10%" style="vertical-align: top;">
+                                    <input type="checkbox" [(ngModel)]="pelayanan2" (change)="pasangCheckboxPelayanan2()"> Inisiasi Menyusui Dini (IMB)
+                                </td>
+                                <td width="10%" style="vertical-align: top;">
+                                    <input type="checkbox" [(ngModel)]="pelayanan3" (change)="pasangCheckboxPelayanan3()"> Saleb Mata
+                                </td>
+                                <td width="10%" style="vertical-align: top;">
+                                    <input type="checkbox" [(ngModel)]="pelayanan4" (change)="pasangCheckboxPelayanan4()"> Mandi > 6 Jam
+                                </td>
+                                <td width="20%" style="vertical-align: top;">
+                                    <input type="checkbox" [(ngModel)]="pelayanan5" (change)="pasangCheckboxPelayanan5()"> Diselimuti dan Diberi Topi
+                                </td>
+                                <td width="20%" style="vertical-align: top;">
+                                    <input type="checkbox" [(ngModel)]="pelayanan6" (change)="pasangCheckboxPelayanan6()"> Perawatan Tali Pusar
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="5" style="vertical-align: top;">IV. </td>
+                                <td width="30%" style="vertical-align: top;">
+                                    Riwayat Post Natal
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    ASI
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="riwayat_asi" id="riwayat_asi" class="form-select" (change)="pasangNilaiRiwayatAsi()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Tidak">Tidak</option>
+                                                <option value="Ya">Ya</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="riwayat_asi_lainnya" placeholder="Sampai Umur?" type="text" class="form-control rounded-pill" [disabled]="disabledRiwayatAsi" (keyup)="periksaAngkaInput('Riwayat ASI Lainnya');">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    PASI
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="riwayat_pasi" id="riwayat_pasi" class="form-select" (change)="pasangNilaiRiwayatPasi()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Tidak">Tidak</option>
+                                                <option value="Ya">Ya</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="riwayat_pasi_lainnya" placeholder="Sebutkan..." type="text" class="form-control rounded-pill" [disabled]="disabledRiwayatPasi" (keyup)="periksaAngkaInput('Riwayat PASI Lainnya');">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Riwayat Alergi
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="riwayat_alergi" id="riwayat_alergi" class="form-select" (change)="pasangNilaiRiwayatAlergi()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Tidak">Tidak</option>
+                                                <option value="Ya">Ya</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="riwayat_alergi_lainnya" placeholder="Sebutkan..." type="text" class="form-control rounded-pill" [disabled]="disabledRiwayatAlergi">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="30%" style="vertical-align: top;">
+                                    Riwayat Imunisasi
+                                </td>
+                                <td colspan="7">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select [(ngModel)]="riwayat_imunisasi" id="riwayat_imunisasi" class="form-select" (change)="pasangNilaiRiwayatImunisasi()" style="border-radius: 25px;">
+                                                <option value="">-PILIH-</option>
+                                                <option value="Lengkap">Lengkap</option>
+                                                <option value="Tidak Lengkap">Tidak Lengkap</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input [(ngModel)]="tidak_lengkap_sebutkan" placeholder="Sebutkan..." type="text" class="form-control rounded-pill" [disabled]="disabledRiwayatImunisasi">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="position-relative mb-3">
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="position-relative mb-3">
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="position-relative mb-3">
+                                <button type="button" class="badge rounded-pill ps-2 pe-2 bg-warning" (click)="simpanAssesmentBayi()" style="width:100%">Simpan</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="row bg-warning" style="text-align: center;">
+            <Span style="color: blue;">
+                <b>
+                    Riwayat
+                </b>
+            </Span>
+        </div>
+        <div class="row" style="background-color: white;height: 100%">
+            <table class="mb-0 table table-borderless table-hover">
+                <tbody>
+                    <tr *ngFor="let row of listNotransaksiPerNoRM">
+                        <td class="text-center text-muted"  style="width: 78px;">
+                            <div class="widget-heading">
+                                <Span style="color: black;">
+                                    <b>
+                                        Tanggal
+                                    </b>
+                                </Span>
+                            </div>
+                            <div class="widget-heading">
+                                <a (click)="ambilAssesmentBaru(row.no_transaksi)" data-title={{row.no_transaksi}} style="cursor: pointer;">
+                                    <span style="color: cornflowerblue;">{{ row.created_at | date: format }}</span>
+                                </a>
+                            </div>
+                            <hr>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,168 @@
+<!-- 
+<div class="app-page-title">
+  <div class="page-title-wrapper">
+    <div class="page-title-heading">
+      <div class="page-title-icon">
+        <i class="icon {{icon}}"></i>
+      </div>
+      <div>
+        {{heading}}
+        <div class="page-title-subheading">
+          {{subheading}}
+        </div>
+      </div>
+    </div>
+    <div class="page-title-actions">
+  
+    </div>
+  </div>
+</div> -->
+
+
+
+<div class="row">
+
+  <!-- <p-tree [value]="files1" [filter]="true"  selectionMode="checkbox" [(selection)]="selectedFile"  (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree> -->
+
+  
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+       Master Gudang
+      </div>
+      <div class="card-body">
+        <form [formGroup]="masterform">
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Nama Gudang*</label>
+            <input  formControlName="gudang" [(ngModel)]="gudang"   placeholder="Gudang" type="text" class="form-control">
+          </div>
+       
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Jenis*</label>
+            <select formControlName="hakakses"  [(ngModel)]="hakakses" id="exampleSelect" class="form-select">
+              <option value="">-PILIH-</option>
+              <option value="0">Cadangan</option>
+              <option  value="1">Utama</option>
+              
+            </select>
+          </div>
+        </form>
+       
+         
+       
+            <div class="row">
+              <div class="col-md-5">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-info" [disabled]="!masterform.valid"  *ngIf="!showedit" (click)="simpan()">Simpan
+                </button>
+              </div>
+              </div>
+              <div class="col-md-5">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-focus"  [disabled]="!masterform.valid"  *ngIf="showedit" (click)="edituser()">Edit
+                </button>
+              </div>
+              </div>
+              <div class="col-md-2">
+                <div class="d-grid gap-2">
+                <button class="mb-2 me-2 btn-pill btn btn-danger" (click)="batal()">Batal
+                </button>
+              </div>
+              </div>
+          </div>
+         
+         
+        <!-- </form> -->
+       
+
+       
+
+      </div>
+      <!-- <button type="button" class="btn btn-info btn-lg"  routerLink="/dashboards/management">SIMPAN</button> -->
+   
+      
+    </div>
+ 
+   
+  </div>
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">
+        Data Gudang
+      </div>
+      <div class="p-2">
+        <div class="row">
+          <label for="staticEmail" class="col-auto col-form-label">Cari Nama:</label>
+          <div class="col-auto">
+            <input type="text" class="form-control ms-2" [(ngModel)]="cariuser" (keyup)="cariuserx($event)" >
+           
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="example-container">
+          
+
+          <div class="main-card mb-3 card">
+            
+            <div class="table-responsive">
+              <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                <thead>
+                  <tr>
+                    <th class="text-center">#</th>
+                    <th>Gudang</th>
+                  
+                  
+                    <th class="text-center">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let a of tmpusers">
+                    <td class="text-center text-muted">#</td>
+                    <td>
+                      <div class="widget-content p-0">
+                        <div class="widget-content-wrapper">
+                         
+                          <div class="widget-content-left flex2">
+                            <div class="widget-heading">{{a.gudang}}</div>
+                            <div class="widget-subheading opacity-7">{{a.cabang}}</div>
+                         
+                            <div class="ms-auto badge rounded-pill bg-danger"
+                            *ngIf="a.utama === '1'"
+                            >Utama</div>
+                            <div class="ms-auto badge rounded-pill bg-info"
+                            *ngIf="a.utama === '0'"
+                            >Cadangan</div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  
+                    
+                    <td class="text-center">
+                      <button class="mb-2 me-2 btn-pill btn btn-outline-primary" (click)="edit(a.kdgudang,a.gudang,a.utama)">Pilih
+                      </button>
+                      <button class="mb-2 me-2 btn-pill btn btn-outline-danger" (click)="delete(a.kdgudang,a.gudang,a.utama)">Delete
+                      </button>
+                    </td>
+                  </tr>
+               
+                </tbody>
+              </table>
+            </div>
+           
+          </div>
+
+
+        </div>
+      </div>
+    
+    </div>
+  
+    
+  </div>
+
+  
+</div>

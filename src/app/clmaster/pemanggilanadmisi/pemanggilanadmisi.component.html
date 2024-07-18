@@ -1,0 +1,65 @@
+<div class="app-inner-layout">
+
+
+
+
+
+  <div class="main-card mb-3 card">
+    <div class="card-header">
+      <div>
+        <h5 class="menu-header-title text-capitalize" style="color:black">List Antrian</h5>
+      </div>
+      <!-- <div class="btn-actions-pane-right">
+        <div class="input-group">
+          <div class="input-group-text">
+            <div class="">
+              <fa-icon [icon]="faSearch" ></fa-icon>
+            </div>
+          </div>
+          <input placeholder="Search..." type="text" class="form-control" (keyup)="cpasien($event)">
+        </div>
+      </div> -->
+    </div>
+
+
+    <div class="table-responsive tableFixHeadx">
+      <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+        <thead>
+          <tr>
+            <th class="text-center">No Antrian</th>
+           
+          
+            <th class="text-center">Panggil</th>
+            <th class="text-center">Selesai</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of tampilpas">
+            <td class="text-center text-muted"  style="width: 78px;">
+              <div class="badge rounded-pill ps-2 pe-2 bg-warning" >{{x.no}}</div>
+            </td>
+         
+         
+        
+           
+            <td class="text-center">
+              <button type="button" class="btn-icon btn-icon-only btn btn-light btn-sm"  (click)="panggil(x.no)">
+                Panggil
+              </button>
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn-icon btn-icon-only btn btn-light btn-sm"  >
+                Selesai
+              </button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+</div>
+
+
+
+  
+</div>

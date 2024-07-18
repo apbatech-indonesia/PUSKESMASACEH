@@ -1,0 +1,1771 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card main-card mb-3">
+            <div class="card-header text-light" style="text-align: center; background-color: #125386;">
+                {{ heading }}
+            </div>
+            <!-- <div class="col-md-3" *ngIf="validasiCreateUpdate=='Update'">
+                <a [routerLink]="'../../AsesmenAwal/' + no_rm + '/' + no_transaksi" routerLinkActive="active" class="vsm-link" style="cursor: pointer;" target="_blank">
+                    <fa-icon [icon]="faPrint"></fa-icon>
+                </a>
+            </div> -->
+
+           
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor RM" class="form-label" style="color:black;">Nomor RM</label>
+                            <input [(ngModel)]="no_rm" disabled placeholder="Nomor RM" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor Transaksi" class="form-label" style="color:black;">Nomor Transaksi</label>
+                            <input [(ngModel)]="no_transaksi" disabled placeholder="Nomor Transaksi" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Username" class="form-label" style="color:black;">Username</label>
+                            <input [(ngModel)]="username" disabled placeholder="Username" type="text" class="form-control">
+                        </div>
+                    </div>
+                
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label class="form-label" style="color:black;">Nama Pasien</label>
+                            <input [(ngModel)]="namaPasien"  type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6" [hidden]="true">
+                        <div class="position-relative mb-3">
+                            <label for="Validasi Button" class="form-label" style="color:black;">Validasi Button</label>
+                            <input [(ngModel)]="validasiCreateUpdate" disabled placeholder="Validasi Button" type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="loading" class="overlay">
+                    <div class="position-absolute top-50 start-50">  
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div> 
+                
+                <div class="mb-3" style="text-align: center; background-color: #125386;">
+                    <Span style="color: white;">
+                        <b>
+                            Partograf
+                        </b>
+                    </Span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Ketuban Pecah Sejak Jam</label>
+                            <div class="col-sm-6">
+                                    <input class="form-control" style="width:40%" [(ngModel)]="waktuPecahKetuban" (ngModelChange)="onTimeChangeKetuban($event)" type="time" name="appt" min="09:00" max="18:00" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Mules Sejak Jam</label>
+                            <div class="col-sm-6">
+                                <div class="position-relative mb-3">
+                                    <input class="form-control" style="width:40%" [(ngModel)]="waktuMules" (ngModelChange)="onTimeChangeMules($event)" type="time" name="appt" min="09:00" max="18:00" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row text-center">
+                            <label class="col-sm-1 col-form-label">G</label>
+                            <div class="col-sm-2 ps-0">
+                                <div class="position-relative mb-3">
+                                    <input class="form-control ps-2" (keyup)="periksaNilaiGPA($event, 'G')" [(ngModel)]="inputG" type="text" placeholder="Gravida">
+                                </div>
+                            </div>
+                            <label class="col-sm-1 col-form-label">P</label>
+                            <div class="col-sm-2 ps-0">
+                                <div class="position-relative mb-3">
+                                    <input class="form-control" (keyup)="periksaNilaiGPA($event, 'P')" [(ngModel)]="inputP" type="text" placeholder="Para">
+                                </div>
+                            </div>
+                            <label class="col-sm-1 col-form-label">A</label>
+                            <div class="col-sm-2 ps-0">
+                                <div class="position-relative mb-3">
+                                    <input class="form-control" (keyup)="periksaNilaiGPA($event, 'A')" [(ngModel)]="inputA" type="text" placeholder="Abortus">
+                                </div>
+                            </div>
+                            <div class="col-sm-9">
+                                <small *ngIf="alertNilaiGPA" class="text-danger">Input G (Gravida), P (Para), dan A (Abortus) tidak boleh huruf</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-sm-4 col-form-label">Masuk Tanggal</label>
+                            <div class="col-sm-6">
+                                <div class="position-relative">
+                                    <!-- <mat-form-field>
+                                      <input matInput [matDatepicker]="dp1" [(ngModel)]="tanggal_masuk" (dateChange)="tambahTanggal('change', $event)">
+                                      <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                                      <mat-datepicker #dp1></mat-datepicker>
+                                    </mat-form-field> -->
+
+                                    <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tanggal_masuk"  type="date" >
+               
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Waktu Masuk</label>
+                            <div class="col-sm-6">
+                                <div class="position-relative mb-3">
+                                    <input class="form-control" style="width:40%" [(ngModel)]="waktuMasuk" (ngModelChange)="onTimeChangeMasuk($event)" type="time" name="appt" min="09:00" max="18:00" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label">Hamil</label>
+                            <div class="col-sm-2">
+                                <div class="position-relative mb-3">
+                                    <input class="form-control" (keyup)="periksaNilaiMinggu($event)" style="width:100%" [(ngModel)]="minggu" type="text">
+                                </div>
+                            </div>
+                            <label class="col-sm-2 col-form-label">Minggu</label>
+                            <div class="col-sm-12 text-center">
+                                <small *ngIf="alertNilaiMinggu" class="text-danger">Input minggu tidak boleh huruf</small>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <button type="button" (click)="simpan_partograf()" class="btn ps-2 pe-2 bg-warning" style="width:100%">Simpan</button>
+                            </div>
+                            <div *ngIf="idPartograf" class="col-md-6">
+                                <a [routerLink]="'/emrform/cetakpartograf'"  routerLinkActive="active" class="btn btn-light ps-2 pe-2" style="cursor: pointer;" target="_blank">
+                                    Cetak Partograf
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <h6>GPA Hamil : Minggu</h6>
+                </div>
+
+                <div class="d-flex justify-content-center" style="padding: 5px;">
+                    <span class="text-white" style="cursor: pointer;"><small>(X/Menit)</small></span>
+                    <svg height="41" width="625" style="background: url({{imageWaktuAtas}}) no-repeat 0 0;border-bottom: 1px solid black">
+                        
+                        <ng-container *ngIf="nilaiJamKe1;">
+                            <text x="17" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe1 }}
+                            </text>
+                        </ng-container>
+                        <ng-container *ngIf="!nilaiJamKe1;">
+                            <text *ngIf="!nilaiJamKe1;" x="17" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,16,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+                        
+                        <ng-container *ngIf="nilaiJamKe2;">
+                            <text x="55" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe2 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe2;">
+                            <text  *ngIf="nilaiJamKe1;" x="55" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,54,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe3;">
+                            <text x="93" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe3 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe3;">
+                            <text *ngIf="nilaiJamKe2;" x="93" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,92,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe4;">
+                            <text x="131" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe4 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe4;">
+                            <text *ngIf="nilaiJamKe3;" x="131" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,130,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe5;">
+                            <text x="169" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe5 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe5;">
+                            <text *ngIf="nilaiJamKe4;" x="169" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,168,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe6;">
+                            <text x="207" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe6 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe6;">
+                            <text *ngIf="nilaiJamKe5;" x="207" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,206,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe7;">
+                            <text x="245" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe7 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe7;">
+                            <text *ngIf="nilaiJamKe6;" x="245" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,244,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe8;">
+                            <text x="283" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe8 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe8;">
+                            <text *ngIf="nilaiJamKe7;" x="283" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,282,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe9;">
+                            <text x="321" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe9 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe9;">
+                            <text *ngIf="nilaiJamKe8;" x="321" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,320,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe10;">
+                            <text x="359" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe10 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe10;">
+                            <text *ngIf="nilaiJamKe9;" x="359" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,358,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe11;">
+                            <text x="397" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe11 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe11;">
+                            <text *ngIf="nilaiJamKe10;" x="397" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,396,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe12;">
+                            <text x="435" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe12 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe12;">
+                            <text *ngIf="nilaiJamKe11;" x="435" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,434,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe13;">
+                            <text x="473" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe13 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe13;">
+                            <text *ngIf="nilaiJamKe12;" x="473" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,472,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe14;">
+                            <text x="511" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe14 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe14;">
+                            <text *ngIf="nilaiJamKe13;" x="511" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,510,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe15;">
+                            <text x="549" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe15 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe15;">
+                            <text *ngIf="nilaiJamKe14;" x="549" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,548,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                        <ng-container *ngIf="nilaiJamKe16;">
+                            <text x="587" y="35" fill="black" style="font-size: 12px">
+                              {{ nilaiJamKe16 }}
+                            </text>
+                          </ng-container>
+                          <ng-container *ngIf="!nilaiJamKe16;">
+                            <text *ngIf="nilaiJamKe15;" x="587" y="35" fill="black" style="font-size: 12px">
+                              <a (click)="openModalWaktu(modalBuatWaktu,586,35)" style="cursor: pointer;" fill="transparent">
+                                00:00
+                              </a>
+                            </text>
+                        </ng-container>
+
+                    </svg>
+                </div>
+
+                <div class="d-flex justify-content-center" style="padding: 5px;">
+                    <span (click)="openModalDenyutJanin(modalDenyutJanin, undefined, 'create')" class="text-info" style="cursor: pointer;"><small>Denyut<br>Jantung<br>Janin<br>(X/Menit)</small></span>
+                    <svg height="242" width="625" style="background: url({{imageDenyut}}) no-repeat 0 0;border-bottom: 1px solid black">
+                        <g *ngFor="let titik of titikDjj">
+                            <circle [attr.cx]="titik.titikX" [attr.cy]="titik.titikY" r="4" fill="black">10</circle>
+                            <text (click)="openModalDenyutJanin(modalDenyutJanin, titik.idGrafik, 'update')" [attr.x]="titik.titikX" [attr.y]="titik.titikY" fill="red" style="font-size: 11px; cursor: pointer;">{{titik.nilaiDjj}}</text>
+                        </g>
+                        <g *ngFor="let line of garisDjj">
+                            <polyline [attr.points]="line.point" style="fill:none;stroke:black;stroke-width:2"></polyline>
+                        </g>
+                                                
+                    </svg>
+                </div>
+                
+                <div class="d-flex justify-content-center" style="padding: 5px;">
+                    <span (click)="openModalKetubanPenyusup(modalKetubanPenyusup, undefined, 'create')" class="text-info" style="cursor: pointer;"><small>Air Ketbn<br>Penyusup</small></span>
+                    <svg height="41" width="625" style="background: url({{imageAirKetuban}}) no-repeat 0 0;border-bottom: 1px solid black">
+                        <g *ngFor="let titik of titikKetubanPenyusup">
+                            <text [attr.x]="titik.titikKetubanX" (click)="openModalKetubanPenyusup(modalKetubanPenyusup, titik.idGrafik, 'update')" [attr.y]="titik.titikKetubanY" fill="black" style="font-size: 13px; cursor: pointer;">{{titik.nilaiKetuban}}</text>
+                            <text [attr.x]="titik.titikPenyusupX" (click)="openModalKetubanPenyusup(modalKetubanPenyusup, titik.idGrafik, 'update')" [attr.y]="titik.titikPenyusupY" fill="black" style="font-size: 13px; cursor: pointer;">{{titik.nilaiPenyusup}}</text>
+                        </g>
+                    </svg>
+                </div>
+                
+                <div class="d-flex justify-content-center" style="padding: 5px;">
+                    <p (click)="openModalServiksKepala(modalServiksKepala, undefined, 'create')" class="text-info" style="cursor: pointer;">
+                        <small>
+                            <span>Pembu<br>kaan<br>Serviks<br>Tanda X</span>
+                            <br>
+                            <br>
+                            <span>Turunya<br>Kepala<br>Tanda O &nbsp;</span>
+                            <br>
+                            <br>
+                            <br>
+                            <span class="text-dark">Waktu</span>
+                        </small>
+                    </p>
+                    <svg height="243" width="625" style="background: url({{imageBukaServik}}) no-repeat 0 0;border-bottom: 1px solid black">
+                        <g *ngFor="let titik of titikPembukaan">
+                            <text (click)="openModalServiksKepala(modalServiksKepala, titik.idGrafik, 'update')" [attr.x]="titik.titikX - 5" [attr.y]="titik.titikY + 5" fill="red" style="font-size: 11px; font-weight: bold; cursor: pointer;">X</text>
+                        </g>
+                        <g *ngFor="let line of garisPembukaan">
+                            <polyline [attr.points]="line.point" style="fill:none;stroke:black;stroke-width:2"></polyline>
+                        </g>
+                        <g *ngFor="let titik of titikTurun">
+                            <text (click)="openModalServiksKepala(modalServiksKepala, titik.idGrafik, 'update')" [attr.x]="titik.titikX - 5" [attr.y]="titik.titikY + 5" fill="blue" style="font-size: 11px; font-weight: bold; cursor: pointer;">O</text>
+                        </g>
+                        <g *ngFor="let line of garisTurun">
+                            <polyline [attr.points]="line.point" style="fill:none;stroke:black;stroke-width:2"></polyline>
+                        </g>
+                        <g *ngFor="let titik of waktuBawah">
+                            <text [attr.x]="titik.titikX + 2" [attr.y]="titik.titikY" fill="black" style="font-size: 12px">
+                                {{ titik.jam }}
+                            </text>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="d-flex justify-content-center" style="padding: 5px;">
+                    <span (click)="openModalKontraksi(modalKontraksi, undefined, 'create')" class="text-info" style="cursor: pointer;"><small>Kontraksi<br>Hitam>40<br>Biru<br>20-40<br>Merah<br><20</small></span>
+                    <svg height="104" width="625" style="background: url({{imageKontraksi}}) no-repeat 0 0;border-bottom: 1px solid black">
+                        <g *ngFor="let titik of titikKontraksi">
+                            <rect (click)="openModalKontraksi(modalKontraksi, titik.idGrafik, 'update')" [attr.x]="titik.titikX" [attr.y]="titik.titikY" width="20" [attr.height]="titik.height + 1" [style.fill]="titik.warna" style="cursor: pointer;"/>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="d-flex justify-content-center" style="padding: 5px;">
+                    <span (click)="openModalOksitosin(modalOksitosin, undefined, 'create')" class="text-info" style="cursor: pointer;"><small>OksitosU/I<br>Tts/menit</small></span>
+                    <svg height="43" width="625" style="background: url({{imageKetuban}}) no-repeat 0 0;border-bottom: 1px solid black">
+                        <g *ngFor="let titik of titikOksitosin">
+                            <text [attr.x]="titik.titikOxtX + 2" [attr.y]="titik.titikOxtY" fill="black" style="font-size: 10px;">{{titik.labelOxt}}</text>
+                            <text  (click)="openModalOksitosin(modalOksitosin, titik.idGrafik, 'update')" [attr.x]="titik.titikTetesX + 2" [attr.y]="titik.titikTetesY" fill="black" style="font-size: 11px; cursor: pointer;">{{titik.nilaiOksitosin}}</text>
+                        </g>
+                    </svg>
+                </div>
+                
+                <div class="d-flex justify-content-center" style="padding: 5px;">
+                    <p (click)="openModalObat(modalObat, undefined, 'create')" class="text-info" style="cursor: pointer;"><small>Obat &<br>Cairan IV</small></p>
+                    <svg height="75" width="625" style="background: url({{imageObatCairan}}) no-repeat 0 0; border-bottom: 1px solid black">
+                        <g *ngFor="let titik of titikObat">
+                          <ng-container *ngFor="let obat of titik.dataObat; let last = last; let i = index">
+                            <text (click)="openModalObat(modalObat, titik.idGrafik, 'update')" [attr.x]="titik.titikX + 2" [attr.y]="titik.titikY + (10 * i)" fill="black" style="font-size: 8px; cursor: pointer;">
+                              {{ obat }}
+                            </text>
+                          </ng-container>
+                        </g>
+                      </svg>
+                      
+                      
+                </div>
+                
+                <div class="d-flex justify-content-center" style="padding: 5px;">
+                    <p class="text-info" style="cursor: pointer;">
+                        <span (click)="openModalNadi(modalNadi, undefined, 'create')" style="cursor: pointer;">
+                            <small>Nadi <br></small>
+                        </span>
+                        <br>
+                        <br>
+                        <br>
+                        <span (click)="openModalTekananDarah(modalTekananDarah, undefined, 'create')">
+                            <small>Tekanan<br>Darah</small>
+                        </span>
+                    </p>
+                    <svg height="243" width="625" style="background: url({{imageTekananDarah}}) no-repeat 0 0;border-bottom: 1px solid black">
+                        <g *ngFor="let titik of titikNadi">
+                            <circle [attr.cx]="titik.titikX" [attr.cy]="titik.titikY" r="4" fill="black">10</circle>
+                            <text (click)="openModalNadi(modalNadi, titik.idGrafik, 'update')" [attr.x]="titik.titikX" [attr.y]="titik.titikY" fill="red" style="font-size: 11px; cursor: pointer;">{{titik.nilaiNadi}}</text>
+                        </g>
+                        <g *ngFor="let line of garisNadi">
+                            <polyline [attr.points]="line.point" style="fill:none;stroke:black;stroke-width:2"></polyline>
+                        </g>
+
+                        <g *ngFor="let titik of titikSystole">
+                            <circle [attr.cx]="titik.titikX" [attr.cy]="titik.titikY" r="4" fill="black">10</circle>
+                            <text (click)="openModalTekananDarah(modalTekananDarah, titik.idGrafik, 'update')" [attr.x]="titik.titikX" [attr.y]="titik.titikY" fill="red" style="font-size: 11px; cursor: pointer;">A {{titik.nilaiSystole}}</text>
+                        </g>
+                        <g *ngFor="let line of garisSystole">
+                            <polyline [attr.points]="line.point" style="fill:none;stroke:black;stroke-width:2"></polyline>
+                        </g>
+
+                        <g *ngFor="let titik of titikDistole">
+                            <circle [attr.cx]="titik.titikX" [attr.cy]="titik.titikY" r="4" fill="black">10</circle>
+                            <text (click)="openModalTekananDarah(modalTekananDarah, titik.idGrafik, 'update')" [attr.x]="titik.titikX" [attr.y]="titik.titikY" fill="blue" style="font-size: 11px; cursor: pointer;">V {{titik.nilaiDistole}}</text>
+                        </g>
+                        <g *ngFor="let line of garisDistole">
+                            <polyline [attr.points]="line.point" style="fill:none;stroke:black;stroke-width:2"></polyline>
+                        </g>
+                        
+                    </svg>
+                </div>
+
+                <div class="d-flex justify-content-center" style="padding: 5px;">
+                    <span (click)="openModalTempC(modalTempC, undefined, 'create')" class="text-info" style="cursor: pointer;"><small>Temp C</small></span>
+                    <svg height="22" width="625" style="background: url({{imageTemperatur}}) no-repeat 0 0;border-bottom: 1px solid black">
+                        <!-- <circle cx="16" cy="0" r="4" fill="red">10</circle> -->
+                        <g *ngFor="let titik of titikTempC">
+                            <text (click)="openModalTempC(modalTempC, titik.idGrafik, 'update')" [attr.x]="titik.titikX + 4" [attr.y]="titik.titikY" fill="black" style="font-size: 11px; cursor: pointer;">{{titik.dataTemp}} C</text>
+                        </g>
+                    </svg>
+                </div>
+                
+                <div class="d-flex justify-content-center" style="padding: 5px;">
+                    <p (click)="openModalUrin(modalUrin, undefined, 'create')" class="text-info" style="cursor: pointer;"><small>Protein<br>Aseton<br>Volume</small></p>
+                    <svg height="62" width="625" style="background: url({{imageUrine}}) no-repeat 0 0;border-bottom: 1px solid black">
+                        <g *ngFor="let titik of titikUrin">
+                            <text (click)="openModalUrin(modalUrin, titik.idGrafik, 'update')" [attr.x]="titik.titikX + 4" [attr.y]="titik.titikProY" fill="black" style="font-size: 11px; cursor: pointer;">{{titik.dataPro}}</text>
+                            <text (click)="openModalUrin(modalUrin, titik.idGrafik, 'update')" [attr.x]="titik.titikX + 4" [attr.y]="titik.titikAseY" fill="black" style="font-size: 11px; cursor: pointer;">{{titik.dataAse}}</text>
+                            <text (click)="openModalUrin(modalUrin, titik.idGrafik, 'update')" [attr.x]="titik.titikX + 4" [attr.y]="titik.titikVolY" fill="black" style="font-size: 11px; cursor: pointer;">{{titik.dataVol}}</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="row mb-2">
+                            <label class="col-sm-6 col-form-label">Makan Terakhir : Jam</label>
+                            <div class="col-sm-6">
+                                <div class="position-relative ">
+                                    <input [(ngModel)]="makan_terakhir" class="form-control" style="width:100%" type="time" name="appt" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-6 col-form-label">Minum Terakhir : Jam</label>
+                            <div class="col-sm-6">
+                                <div class="position-relative ">
+                                    <input [(ngModel)]="minum_terakhir" class="form-control" style="width:100%" type="time" name="appt" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row mb-2">
+                            <label class="col-sm-2 col-form-label">Jenis</label>
+                            <div class="col-sm-10">
+                                <input [(ngModel)]="makan_jenis" type="text" style="width: 100%;" class="form-control" placeholder="Jenis">                        
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-sm-2 col-form-label">Jenis</label>
+                            <div class="col-sm-10">
+                                <input [(ngModel)]="minum_jenis" type="text" style="width: 100%;" class="form-control" placeholder="Jenis">                        
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row mb-2">
+                            <label class="col-sm-2 col-form-label">Porsi</label>
+                            <div class="col-sm-10">
+                                <input [(ngModel)]="makan_porsi" type="text" style="width: 100%;" class="form-control" placeholder="Porsi">                        
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <label class="col-sm-2 col-form-label">Porsi</label>
+                            <div class="col-sm-10">
+                                <input [(ngModel)]="minum_porsi" type="text" style="width: 100%;" class="form-control" placeholder="Porsi">                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end p-0 m-0">
+                    <button (click)="simpan_makanminum()" type="button" class="btn ps-2 pe-2 bg-warning" style="width:20%">Simpan</button>
+                </div>
+
+                <!-- Modal Buat Waktu -->
+                <ng-template #modalBuatWaktu let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title">Buat Waktu</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input class="form-control" style="width:100%" [(ngModel)]="waktuGpa" (ngModelChange)="onTimeChangeWaktu($event)" type="time">
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="simpan_waktu()" class="btn ps-2 pe-2 bg-warning" style="width:30%">Simpan</button>
+                      <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Batal</button>
+                    </div>
+                </ng-template>
+                <!-- Akhir Modal Buat waktu -->
+
+                <!-- Modal Denyut Jantung Janin -->
+                <ng-template #modalDenyutJanin let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title">{{createUpdateDjj}} Denyut Jantung Janin</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label" >Denyut Jantung</label>
+                            <div class="col-sm-8">
+                                <input class="form-control" style="width:100%" (keyup)="periksaNilaiDjj($event)" [(ngModel)]="denyut_jantung" type="text">
+                                <small *ngIf="alertNilaiDjj" class="text-danger">Nilai denyut jantung janin harus diantara 80 sampai 200 dan tidak boleh huruf</small>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Jam</label>
+                            <div class="col-sm-8">
+
+                                <select class="form-select" [(ngModel)]="jam_djj_select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="{{ nowDataDjj.jam_utama }}">{{ nowDataDjj.jam_utama }} Utama</option>
+                                    <option value="{{ nowDataDjj.jam_tambahan }}">{{ nowDataDjj.jam_tambahan }} 30 Menit</option>
+                                </select>                                
+                                  
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="simpan_djj()" class="btn ps-2 pe-2 bg-warning" style="width:30%">{{createUpdateDjj}}</button>
+                        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Batal</button>
+                    </div>
+                </ng-template>
+                <!-- Akhir Modal Denyut Jantung Janin -->
+
+                <!-- Modal Air Ketuban & Penyusupan -->
+                <ng-template #modalKetubanPenyusup let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title">{{createUpdateKetubanPenyusup}} Air Ketuban & Penyusupan</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Air Ketuban</label>
+                            <div class="col-sm-9">
+                                <select [(ngModel)]="air_ketuban_select" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="U">Utuh,Selaput ketuban masih utuh  (U)</option>
+                                    <option value="J">Jernih,Selaput ketuban pecah dan air ketuban (J)</option>
+                                    <option value="M">Mekonium,air ketubah bercampur feses bayi (M)</option>
+                                    <option value="D">Darah,air ketuban bercampur darah (D)</option>
+                                    <option value="K">Kering,tidak didapatinya cairan ketuban (K)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Penyusupan</label>
+                            <div class="col-sm-9">
+                                <select [(ngModel)]="penyusupan_select" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="0">Tulang Kepala Janin Terpisah (0)</option>
+                                    <option value="1">Tulang Kepala Janin Bersentuhan (1)</option>
+                                    <option value="2">Tulang Kepala Janin Tumpang Tindih tetapi masih dapat di pisahkan (2)</option>
+                                    <option value="3">Tulang Kepala Janin Tumpang tindih dan tidak dapat di pisahkan (3)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Jam</label>
+                            <div class="col-sm-9">
+
+                                <select class="form-select" [(ngModel)]="jam_ketuban_penyusup_select">
+                                    <option value="">-PILIH-</option>
+                                        <option value="{{ nowDataKetubanPenyusup.jam_utama }}">{{ nowDataKetubanPenyusup.jam_utama }} Utama</option>
+                                        <option value="{{ nowDataKetubanPenyusup.jam_tambahan }}">{{ nowDataKetubanPenyusup.jam_tambahan }} 30 Menit</option>
+                                </select>                                
+                                  
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="simpan_KetubanPenyusup()" class="btn ps-2 pe-2 bg-warning" style="width:30%">{{createUpdateKetubanPenyusup}}</button>
+                        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Batal</button>
+                    </div>
+                </ng-template>
+                <!-- Akhir Modal Denyut Jantung Janin -->
+
+                <!-- Modal Pembukaan Serviks & Turunnya Kepala -->
+                <ng-template #modalServiksKepala let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title">{{createUpdatePembukaanServiks}} Pembukaan Serviks & Turunnya Kepala</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Besar Pembukaan</label>
+                            <div class="col-sm-4">
+                                <select [(ngModel)]="pembukaan_select" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Besar Penurunan</label>
+                            <div class="col-sm-4">
+                                <select [(ngModel)]="penurunan_select" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Jam</label>
+                            <div class="col-sm-8">
+
+                                <select class="form-select" [(ngModel)]="jam_pembukaan_penurunan_select">
+                                    <option value="">-PILIH-</option>
+                                        <option value="{{ nowDataPembukaanServiks.jam_utama }}">{{ nowDataPembukaanServiks.jam_utama }} Utama</option>
+                                        <option value="{{ nowDataPembukaanServiks.jam_tambahan }}">{{ nowDataPembukaanServiks.jam_tambahan }} 30 Menit</option>
+                                </select>                                
+                                  
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="simpan_pembukaanserviks()" class="btn ps-2 pe-2 bg-warning" style="width:30%">{{createUpdatePembukaanServiks}}</button>
+                        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Batal</button>
+                    </div>
+                </ng-template>
+                <!-- Akhir Modal Pembukaan Serviks & Turunnya Kepala -->
+
+                <!-- Modal Kontraksi -->
+                <ng-template #modalKontraksi let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title">{{createUpdateKontraksi}} Kontraksi Tiap 30 Menit</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label class="col-sm-5 col-form-label">Jumlah Kontraksi</label>
+                            <div class="col-sm-4">
+                                <select [(ngModel)]="jumlah_kontraksi_select" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-5 col-form-label">Lamanya Kontraksi (Detik)</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" (keyup)="periksaNilaiLamaKontraksi($event)" style="width:100%" [(ngModel)]="lama_kontraksi" type="text">
+                                <small *ngIf="alertNilaiLamaKontraksi" class="text-danger">Input Lamanya Kontraksi tidak boleh huruf</small>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-5 col-form-label">Jam</label>
+                            <div class="col-sm-6">
+
+                                <select class="form-select" [(ngModel)]="jam_kontraksi_select">
+                                    <option value="">-PILIH-</option>
+                                        <option value="{{ nowDataKontraksi.jam_utama }}">{{ nowDataKontraksi.jam_utama }} Utama</option>
+                                        <option value="{{ nowDataKontraksi.jam_tambahan }}">{{ nowDataKontraksi.jam_tambahan }} 30 Menit</option>
+                                </select>                                
+                                  
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="simpan_kontraksi()" class="btn ps-2 pe-2 bg-warning" style="width:30%">{{createUpdateKontraksi}}</button>
+                        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Batal</button>
+                    </div>
+                </ng-template>
+                <!-- Akhir Modal Kontraksi -->
+                
+                <!-- Modal Oksitosin -->
+                <ng-template #modalOksitosin let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title">{{createUpdateOksitosin}} Cairan Oksitosin</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label class="col-sm-5 col-form-label">Total Tetes</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" (keyup)="periksaNilaiTetesOksitosin($event)" style="width:100%" [(ngModel)]="tetes_oksitosin" type="text">
+                                <small *ngIf="alertNilaiOksitosin" class="text-danger">Input Total tetes tidak boleh huruf</small>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-5 col-form-label">Jam</label>
+                            <div class="col-sm-6">
+
+                                <select class="form-select" [(ngModel)]="jam_oksitosin_select">
+                                    <option value="">-PILIH-</option>
+                                        <option value="{{ nowDataOksitosin.jam_utama }}">{{ nowDataOksitosin.jam_utama }} Utama</option>
+                                        <option value="{{ nowDataOksitosin.jam_tambahan }}">{{ nowDataOksitosin.jam_tambahan }} 30 Menit</option>
+                                </select>                                
+                                  
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="simpan_oksitosin()" class="btn ps-2 pe-2 bg-warning" style="width:30%">{{createUpdateOksitosin}}</button>
+                        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Batal</button>
+                    </div>
+                </ng-template>
+                <!-- Akhir Modal Oksitosin -->
+                
+                <!-- Modal Obat & Cairan -->
+                <ng-template #modalObat let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title">{{createUpdateObat}} Obat dan Cairan</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Obat</label>
+                            <div class="col-sm-6">
+                                <input class="form-control mb-2" style="width:100%" [(ngModel)]="obat_1" type="text" placeholder="Obat 1">
+                                <input class="form-control mb-2" style="width:100%" [(ngModel)]="obat_2" type="text" placeholder="Obat 2" [disabled]="obat_1 === ''">
+                                <input class="form-control mb-2" style="width:100%" [(ngModel)]="obat_3" type="text" placeholder="Obat 3" [disabled]="obat_2 === ''">
+                                <input class="form-control mb-2" style="width:100%" [(ngModel)]="obat_4" type="text" placeholder="Obat 4" [disabled]="obat_3 === ''">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Cairan</label>
+                            <div class="col-sm-6">
+                                <input class="form-control mb-2" style="width:100%" [(ngModel)]="cairan_1" type="text" placeholder="Cairan 1" [disabled]="obat_1 === ''">
+                                <input class="form-control mb-2" style="width:100%" [(ngModel)]="cairan_2" type="text" placeholder="Cairan 2" [disabled]="cairan_1 === ''">
+                                <input class="form-control mb-2" style="width:100%" [(ngModel)]="cairan_3" type="text" placeholder="Cairan 3" [disabled]="cairan_2 === ''">
+                                <input class="form-control mb-2" style="width:100%" [(ngModel)]="cairan_4" type="text" placeholder="Cairan 4" [disabled]="cairan_3 === ''">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Jam</label>
+                            <div class="col-sm-6">
+
+                                <select class="form-select" [(ngModel)]="jam_obat_cairan_select">
+                                    <option value="">-PILIH-</option>
+                                        <option value="{{ nowDataObat.jam_utama }}">{{ nowDataObat.jam_utama }} Utama</option>
+                                </select>                                
+                                  
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="simpan_obat()" class="btn ps-2 pe-2 bg-warning" style="width:30%">{{createUpdateObat}}</button>
+                        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Batal</button>
+                    </div>
+                </ng-template>
+                <!-- Akhir Modal Obat & Cairan -->
+                
+                <!-- Modal Nadi -->
+                <ng-template #modalNadi let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title">{{createUpdateNadi}} Nadi</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Nadi</label>
+                            <div class="col-sm-6">
+                                <input class="form-control mb-2" style="width:100%" (keyup)="periksaNilaiNadi($event)" [(ngModel)]="nadi_input" type="text" placeholder="Nadi">
+                                <small *ngIf="alertNilaiNadi" class="text-danger">Nilai Nadi harus diantara 60 sampai 180 dan tidak boleh huruf</small>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Jam</label>
+                            <div class="col-sm-6">
+                                <select class="form-select" [(ngModel)]="jam_nadi_select">
+                                    <option value="">-PILIH-</option>
+                                        <option value="{{ nowDataNadi.jam_utama }}">{{ nowDataNadi.jam_utama }} Utama</option>
+                                        <option value="{{ nowDataNadi.jam_tambahan }}">{{ nowDataNadi.jam_tambahan }} 30 Menit</option>
+                                </select>                                
+                                  
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="simpan_nadi()" class="btn ps-2 pe-2 bg-warning" style="width:30%">{{createUpdateNadi}}</button>
+                        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Batal</button>
+                    </div>
+                </ng-template>
+                <!-- Akhir Nadi -->
+                
+                <!-- Modal Tekanan Darah -->
+                <ng-template #modalTekananDarah let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title">{{createUpdateTekananDarah}} Tekanan Darah</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Tekanan Darah (S)</label>
+                            <div class="col-sm-6">
+                                <input class="form-control mb-2" (keyup)="periksaTekananDarah($event, 'sytole')" style="width:100%" [(ngModel)]="tekanan_sistole" type="text" placeholder="Sistole">
+                                <small *ngIf="alertNilaiSytole" class="text-danger">Nilai Tekanan darah Systole harus diantara 60 sampai 180 dan tidak boleh huruf</small>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Tekanan Darah (D)</label>
+                            <div class="col-sm-6">
+                                <input class="form-control mb-2" (keyup)="periksaTekananDarah($event, 'distole')" style="width:100%" [(ngModel)]="tekanan_distole" type="text" placeholder="Distole">
+                                <small *ngIf="alertNilaiDistole" class="text-danger">Nilai Tekanan darah Distole harus diantara 60 sampai 180 dan tidak boleh huruf</small>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Jam</label>
+                            <div class="col-sm-6">
+                                <select class="form-select" [(ngModel)]="jam_tekanan_darah_select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="{{ nowDataTekananDarah.jam_utama }}">{{ nowDataTekananDarah.jam_utama }} Utama</option>
+                                </select>                                
+                                  
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="simpan_tekanan_darah()" class="btn ps-2 pe-2 bg-warning" style="width:30%">{{createUpdateTekananDarah}}</button>
+                        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Batal</button>
+                    </div>
+                </ng-template>
+                <!-- Akhir Tekanan Darah -->
+                
+                <!-- Modal Temp C -->
+                <ng-template #modalTempC let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title">{{createUpdateTempC}} Temp C</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Temp C</label>
+                            <div class="col-sm-6">
+                                <input class="form-control mb-2" (keyup)="periksaNilaiTemp($event)" style="width:100%" [(ngModel)]="temp_c" type="text" placeholder="Temp C">
+                                <small *ngIf="alertNilaiTemp" class="text-danger">Nilai Temp C harus diantara 32 sampai 42 dan tidak boleh huruf</small>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Jam</label>
+                            <div class="col-sm-6">
+                                <select class="form-select" [(ngModel)]="jam_temp_c_select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="{{ nowDataTempC.jam_utama }}">{{ nowDataTempC.jam_utama }} Utama</option>
+                                </select>                                
+                                  
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="simpan_temp_c()" class="btn ps-2 pe-2 bg-warning" style="width:30%">{{createUpdateTempC}}</button>
+                        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Batal</button>
+                    </div>
+                </ng-template>
+                <!-- Akhir Temp C -->
+                
+                <!-- Modal Urin -->
+                <ng-template #modalUrin let-modal>
+                    <div class="modal-header" style="text-align: center;">
+                        <h4 class="modal-title">{{createUpdateUrin}} Urin</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Protein</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="protein_select" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="-"> - </option>
+                                    <option value="+"> + </option>
+                                    <option value="++"> ++ </option>
+                                    <option value="+++"> +++</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Aseton</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="aseton_select" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="-"> - </option>
+                                    <option value="+"> + </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Volume</label>
+                            <div class="col-sm-6">
+                                <input class="form-control mb-2" (keyup)="periksaNilaiVolume($event)" style="width:100%" [(ngModel)]="volume" type="text" placeholder="Volume">
+                                <small *ngIf="alertNilaiVolume" class="text-danger">Nilai Volume tidak boleh huruf</small>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-4 col-form-label">Jam</label>
+                            <div class="col-sm-6">
+                                <select class="form-select" [(ngModel)]="jam_urin_select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="{{ nowDataUrin.jam_utama }}">{{ nowDataUrin.jam_utama }} Utama</option>
+                                </select>                                
+                                  
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" (click)="simpan_urin()" class="btn ps-2 pe-2 bg-warning" style="width:30%">{{createUpdateUrin}}</button>
+                        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Cross click')">Batal</button>
+                    </div>
+                </ng-template>
+                <!-- Akhir Urin -->
+                
+                <!-- catatan persalinan -->
+                <div class="my-3" style="text-align: center; background-color: #125386;">
+                    <Span style="color: white;">
+                        <b>
+                            Catatn Persalinan
+                        </b>
+                    </Span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <label class="col-sm-3 col-form-label">1. Tanggal</label>
+                            <div class="col-sm-6">
+                                <div class="position-relative">
+                                    <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tanggal_persalinan"  type="date" >
+               
+
+                                    <!-- <mat-form-field>
+                                      <input matInput [matDatepicker]="dp2" [(ngModel)]="tanggal_persalinan" (dateChange)="tambahTanggalPersalinan('change', $event)">
+                                      <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+                                      <mat-datepicker #dp2></mat-datepicker>
+                                    </mat-form-field> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">2. Bidan</label>
+                            <div class="col-sm-6">
+                                <input [(ngModel)]="username" disabled placeholder="Username" type="text" class="form-control">
+                                <!-- <input type="text" style="width: 100%;" class="form-control">                         -->
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">3. Tempat Persalinan</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="tempat_persalinan_select" class="form-select" (change)="periksaNilaiTempatPersalinan()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Rumah Ibu">Rumah Ibu</option>
+                                    <option value="Polindes">Polindes</option>
+                                    <option value="Klinik Swasta">Klinik Swasta</option>
+                                    <option value="Puskesmas">Puskesmas</option>
+                                    <option value="Rumah Sakit">Rumah Sakit</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                                <input *ngIf="tempat_persalinan_select=='Lainnya'" type="text" [(ngModel)]="tempat_persalinan_input" style="width: 100%;" class="form-control mt-3" placeholder="Tempat Persalinan Lainnya">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">4. Alamat Tempat Persalinan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="alamat_tempat_persalinan" style="width: 100%;" class="form-control" placeholder="Alamat">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">5. Catatan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="catatan" style="width: 100%;" class="form-control" placeholder="Catatan">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">6. Alasan Merujuk</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="alasan_merujuk" style="width: 100%;" class="form-control" placeholder="Alasan Merujuk">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">7. Tempat Rujukan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="tempat_rujukan" style="width: 100%;" class="form-control" placeholder="Tempat Rujukan">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">8. Pendamping Pada Saat Merujuk</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="pendamping_saat_merujuk" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Bidan">Bidan</option>
+                                    <option value="Teman">Teman</option>
+                                    <option value="Suami">Suami</option>
+                                    <option value="Dukun">Dukun</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">9. Masalah dalam kehamilan/persalinan ini</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="masalah_dalam_kehamilan" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Gawat Darurat">Gawat Darurat</option>
+                                    <option value="Pendarahan">Pendarahan</option>
+                                    <option value="HDK">HDK</option>
+                                    <option value="Infeksi">Infeksi</option>
+                                    <option value="PMTCT">PMTCT</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="border-bottom">
+                            <h5>KALA I</h5>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">10. Partogram melewati garis waspada Y/T</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="partogram_melewati_garis_waspada" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Y">Y</option>
+                                    <option value="T">T</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">11. Masalah lain, Sebutkan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="masalah_lain" style="width: 100%;" class="form-control" placeholder="masalah lain">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">12. Penatalaksanaan masalah tsb</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="penatalaksanaan_masalah" style="width: 100%;" class="form-control" placeholder="Penatalaksanaan masalah">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">13. Hasilnya</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="hasilnya" style="width: 100%;" class="form-control" placeholder="Hasilnya">                        
+                            </div>
+                        </div>
+                        <div class="border-bottom">
+                            <h5>KALA II</h5>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">14. Episiotomi</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="episiotomi" class="form-select" (change)="periksaNilaiEpisiotomi()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya">Ya, Indikasi</option>
+                                    <option value="Tidak">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="episiotomi=='Ya'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Episiotomi ya</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="hasil_episiotomi" style="width: 100%;" class="form-control" placeholder="Hasilnya">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">15. Pendamping pada saat persalinan</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="pendamping_saat_persalinan" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Suami">Suami</option>
+                                    <option value="Keluarga">Keluarga</option>
+                                    <option value="Teman">Teman</option>
+                                    <option value="Dukun">Dukun</option>
+                                    <option value="Tidak ada">Tidak ada</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">16. Gawat Janin</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="gawat_janin" class="form-select" (change)="periksaNilaiGawatJanin()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya">Ya Tindakan yang dilakukan</option>
+                                    <option value="Tidak">Tidak</option>
+                                    <option value="Pemantauan DJJ">Pemantauan DJJ Setiap 5-10 menit selama kala II</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="gawat_janin=='Ya'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Tindakan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="gawat_janini_tindakan" style="width: 100%;" class="form-control" placeholder="Hasilnya">                        
+                            </div>
+                        </div>
+                        <div *ngIf="gawat_janin=='Pemantauan DJJ'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Hasilnya</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="hasil_djj" style="width: 100%;" class="form-control" placeholder="Hasilnya">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">17. Distosia Bahu</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="distosia_bahu" class="form-select" (change)="periksaNilaiDistosiaBahu()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya">Ya Tindakan yang dilakukan</option>
+                                    <option value="Tidak">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="distosia_bahu=='Ya'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Tindakan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="distosia_bahu_tindakan" style="width: 100%;" class="form-control" placeholder="Hasilnya">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">18. Masalah lain Penatalaksanaan masalah tsb dan hasilnya</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="masalah_lain_penatalaksanaan" style="width: 100%;" class="form-control" placeholder="Masalah lain Penatalaksanaan masalah tsb dan hasilnya">                        
+                            </div>
+                        </div>
+                        <div class="border-bottom">
+                            <h5>KALA III</h5>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">19. Inisiasi Menyusui Dini</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="inisiasi_menyusu_dini" class="form-select" (change)="periksaNilaiMenyusuDini()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya">Ya</option>
+                                    <option value="Tidak">Tidak, alasannya</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="inisiasi_menyusu_dini=='Tidak'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Alasan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="alasan" style="width: 100%;" class="form-control" placeholder="Alasan">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">20. Lama kala III/Menit</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="lama_kala" style="width: 100%;" class="form-control" placeholder="Lama kala III/Menit">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">21. Pemberian oksitosin 10 U im</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="pemberian_oksitosin" (change)="periksaPemberianOksitosin()" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya">Ya Waktu..menit sesudah persalinan</option>
+                                    <option value="Tidak">Tidak alasan(   )penjepitan tali pusat(    )menit setelah bayi lahir</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="pemberian_oksitosin != ''" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Alasan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="alasan_tindakan_oksitosin" style="width: 100%;" class="form-control" placeholder="Alasan">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">22. Pemberian oksitosin(2x)</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="pemberian_oksitosin_2" class="form-select" (change)="periksaNilaiPemberianOksitosin2()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya">Ya, alasan</option>
+                                    <option value="Tidak">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="pemberian_oksitosin_2 == 'Ya'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Alasan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="alasan_tidak" style="width: 100%;" class="form-control" placeholder="Alasan">                        
+                            </div>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">23. Penegangan tali pusat terkendali</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="penenangan_tali_pusat" class="form-select" (change)="periksaNilaiPenenanganTaliPusat()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya">Ya</option>
+                                    <option value="Tidak">Tidak, alasan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="penenangan_tali_pusat == 'Tidak'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Alasan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="alasan_tindakan_tali_pusat" style="width: 100%;" class="form-control" placeholder="Alasan">
+                            </div>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">24. Masase fundus uteri</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="masase_fudus_uteri" class="form-select" (change)="periksaNilaiMasaseFudusUteri()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya">Ya</option>
+                                    <option value="Tidak">Tidak, alasan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="masase_fudus_uteri == 'Tidak'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Alasan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="alasan_tindakan_fudus_uteri" style="width: 100%;" class="form-control" placeholder="Tidak Alasan">
+                            </div>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">25. Plasenta lahir lengkap(intact)</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="plasenta_lahir_lengkap" class="form-select" (change)="periksaNilaiPlasentaLahirLengkap()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya">Ya</option>
+                                    <option value="Tidak">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="plasenta_lahir_lengkap == 'Tidak'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Plasenta tidak lengkap</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="plasenta_tidak_lengkap" style="width: 100%;" class="form-control" placeholder="Plasenta tidak">
+                            </div>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">26. Plasenta tidak lahir > 30 Menit</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="plasenta_tidak_lahir" class="form-select" (change)="periksaNilaiPlasentaTidakLahir()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya">Ya, tindakan</option>
+                                    <option value="Tidak">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="plasenta_tidak_lahir == 'Ya'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Tindakan plasenta tidak lahir</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="tindakan_plasenta_tidak_lahir" style="width: 100%;" class="form-control" placeholder="Plasenta Tidak">
+                            </div>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">27. Laserasi</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="laserasi" class="form-select" (change)="periksaNilaiLaserasi()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya">Ya, Dimana</option>
+                                    <option value="Tidak">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="laserasi == 'Ya'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Lokasi Laserasi</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="lokasi_laserasi" style="width: 100%;" class="form-control" placeholder="Lokasi Laserasi">
+                            </div>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">28. Jika leserasi perineum derajat : 1/2/3/4</label>
+                            <div class="col-sm-2">
+                                <select [(ngModel)]="laserasi_perineum" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <select [(ngModel)]="derajat_laserasi_perineum" class="form-select" (change)="periksaNilaiLaserasiPerineum()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Penjahitan">Penjahitan, dengan/tanpa anastesi</option>
+                                    <option value="Tidak dijahit">Tidak dijahit, alasan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="derajat_laserasi_perineum == 'Tidak dijahit'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Tindakan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="tindakan_laserasi_perineum" style="width: 100%;" class="form-control" placeholder="Tindakan">
+                            </div>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">29. Atoni Uteri</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="atoni_uteri" class="form-select" (change)="periksaNilaiAtoniUteri()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya">Ya, tindakan</option>
+                                    <option value="Tidak">Tidak</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="atoni_uteri == 'Ya'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Tindakan Atoni Uteri</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="tindakan_atoni_uteri" style="width: 100%;" class="form-control" placeholder="Tindakan Atoni">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">30. Jumlah darah yang keluar/perdarahaan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="jumlah_darah_keluar" style="width: 100%;" class="form-control" placeholder="Jumlah darah yang keluar/perdarahaan">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">31. Masalah dan Penatalaksanaan masalah tersebut</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="masalah_dan_penatalaksanaan" style="width: 100%;" class="form-control" placeholder="Masalah dan Penatalaksanaan masalah tersebut">
+                            </div>
+                        </div>
+                        <div class="border-bottom">
+                            <h5>KALA IV</h5>
+                        </div>
+                        <div class="row my-3">
+                            <label class="col-sm-3 col-form-label">32. Kondisi Ibu</label>
+                            <div class="col-sm-9">
+                                <div class="row mb-3">
+                                    <label class="col-sm-auto col-form-label">KU</label>
+                                    <div class="col-sm-2 ps-0">
+                                        <input type="text" [(ngModel)]="ku" (keyup)="periksaKondisiIbu($event, 'ku')" style="width: 100%;" class="form-control" placeholder="Keadaan Umum">
+                                    </div>
+                                    <label class="col-sm-auto col-form-label">TD</label>
+                                    <div class="col-sm-2 ps-0">        
+                                        <input type="text" [(ngModel)]="td" (keyup)="periksaKondisiIbu($event, 'td')" style="width: 100%;" class="form-control" placeholder="mmHg">
+                                    </div>
+                                    <label class="col-sm-auto col-form-label">Nadi</label>
+                                    <div class="col-sm-2 ps-0">        
+                                        <input type="text" [(ngModel)]="nadi" (keyup)="periksaKondisiIbu($event, 'nadi')" style="width: 100%;" class="form-control" placeholder="x/Mnt">
+                                    </div>
+                                    <label class="col-sm-auto col-form-label">Napas</label>
+                                    <div class="col-sm-2 ps-0">        
+                                        <input type="text" [(ngModel)]="nafas" (keyup)="periksaKondisiIbu($event, 'nafas')" style="width: 100%;" class="form-control" placeholder="x/Mnt">
+                                    </div>
+                                </div>
+                                <div *ngIf="alertKondisiIbu" class="col-sm-12 text-center">
+                                    <small class="text-danger">Semua input yang berada pada Kondisi Ibu tidak boleh huruf</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">33. Masalah dan Penatalaksanaan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="masalah_dan_penatalaksanaan_kala_v" style="width: 100%;" class="form-control" placeholder="Masalah dan Penatalaksanaan">
+                            </div>
+                        </div>
+                        <div class="border-bottom">
+                            <h5>BAYI BARU LAHIR</h5>
+                        </div>
+                        <div class="row my-3">
+                            <label class="col-sm-3 col-form-label">34. Berat Badan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="berat_badan" (keyup)="periksaBeratBadan($event)" style="width: 100%;" class="form-control" placeholder="Berat Badan">
+                                <small *ngIf="alertBeratBadan" class="text-danger">Input Berat Badan tidak boleh huruf</small>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">35. Panjang Badan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="panjang_badan" (keyup)="periksaPanjangBadan($event)" style="width: 100%;" class="form-control" placeholder="Panjang Badan">
+                                <small *ngIf="alertPanjangBadan" class="text-danger">Input Panjang Badan tidak boleh huruf</small>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">36. Jenis Kelamin</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="jenis_kelamin" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="L">L</option>
+                                    <option value="P">P</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">37. Peneliaan bayi baru lahir</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="peneliaan_bayi_baru_lahir" class="form-select">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Baik">Baik</option>
+                                    <option value="Ada penyulit">Ada penyulit</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">38. Bayi Lahir</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="bayi_lahir_select" class="form-select" (change)="periksaBayiLahir()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Normal">Normal, tindakan</option>
+                                    <option value="Afiksia">Afiksia ringan/pucat/biru/lemas tindakan:</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="bayi_lahir_select == 'Normal'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Normal, tindakan</label>
+                            <div class="col-sm-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="exampleRadios1" id="exampleRadios1"  (change)="onRadioButtonChange('Mengeringkan')" [checked]="selectedIntervensi.includes('Mengeringkan')">
+                                    <label class="form-check-label" for="exampleRadios1">
+                                        Mengeringkan 
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="exampleRadios2" id="exampleRadios2"  (change)="onRadioButtonChange('Menghangatkan')" [checked]="selectedIntervensi.includes('Menghangatkan')">
+                                    <label class="form-check-label" for="exampleRadios2">
+                                        Menghangatkan 
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="exampleRadios3" id="exampleRadios3"  (change)="onRadioButtonChange('Rangsangan taktil')" [checked]="selectedIntervensi.includes('Rangsangan taktil')">
+                                    <label class="form-check-label" for="exampleRadios3">
+                                        Rangsangan taktil 
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="exampleRadios4" id="exampleRadios4"  (change)="onRadioButtonChange('Memastikan IMD atau naluri menyusu segera')" [checked]="selectedIntervensi.includes('Memastikan IMD atau naluri menyusu segera')">
+                                    <label class="form-check-label" for="exampleRadios4">
+                                        Memastikan IMD atau naluri menyusu segera 
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="bayi_lahir_select == 'Afiksia'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Afiksia ringan/pucat/biru/lemas tindakan:</label>
+                            <div class="col-sm-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="exampleRadios5" id="exampleRadios5"  (change)="onRadioButtonChangeAfiksia('Mengeringkan')" [checked]="selectedIntervensiAfiksia.includes('Mengeringkan')">
+                                    <label class="form-check-label" for="exampleRadios5">
+                                        Mengeringkan 
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="exampleRadios6" id="exampleRadios6"  (change)="onRadioButtonChangeAfiksia('Rangsangan taktil')" [checked]="selectedIntervensiAfiksia.includes('Rangsangan taktil')">
+                                    <label class="form-check-label" for="exampleRadios6">
+                                        Rangsangan taktil 
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="exampleRadios7" id="exampleRadios7"  (change)="onRadioButtonChangeAfiksia('Bebaskan jalan nafas')" [checked]="selectedIntervensiAfiksia.includes('Bebaskan jalan nafas')">
+                                    <label class="form-check-label" for="exampleRadios7">
+                                        Bebaskan jalan nafas 
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="exampleRadios8" id="exampleRadios8"  (change)="onRadioButtonChangeAfiksia('Pakaian/selimut bayi dan tempatkan di sisi ibu')" [checked]="selectedIntervensiAfiksia.includes('Pakaian/selimut bayi dan tempatkan di sisi ibu')">
+                                    <label class="form-check-label" for="exampleRadios8">
+                                        Pakaian/selimut bayi dan tempatkan di sisi ibu 
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="exampleRadios9" id="exampleRadios9" (change)="onRadioButtonChangeAfiksia('Menghangatkan')" [checked]="selectedIntervensiAfiksia.includes('Menghangatkan')">
+                                    <label class="form-check-label" for="exampleRadios9">
+                                        Menghangatkan 
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="exampleRadios10" id="exampleRadios10" (change)="onRadioButtonChangeAfiksia('Lain-lain')" [checked]="selectedIntervensiAfiksia.includes('Lain-lain')">
+                                    <label class="form-check-label" for="exampleRadios10">
+                                        Lain-lain 
+                                    </label>
+                                </div>
+                                <div *ngIf="selectedIntervensiAfiksia.includes('Lain-lain')">
+                                    <input type="text" [(ngModel)]="input_afiksia_lainnya" style="width: 100%;" class="form-control" placeholder="Sebutkan">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Cacat bawaan, sebutkan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="sebutkan_cacat_bawaan" style="width: 100%;" class="form-control" placeholder="Sebutkan">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Hipotermi tindakan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="hiportemi_tindakan" style="width: 100%;" class="form-control" placeholder="Hipotermi tindakan">
+                            </div>
+                        </div>
+                        <div class="row mb-3 mt-3">
+                            <label class="col-sm-3 col-form-label">39. Pemberian ASI setelah jam pertama</label>
+                            <div class="col-sm-6">
+                                <select [(ngModel)]="pemberian_asi_setelah_jam_pertama" class="form-select" (change)="periksaNilaiPemberianAsi()">
+                                    <option value="">-PILIH-</option>
+                                    <option value="Ya, Waktu..jam setelah lahir">Ya, Waktu..jam setelah lahir</option>
+                                    <option value="Tindak alasan">Tindak alasan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div *ngIf="pemberian_asi_setelah_jam_pertama == 'Ya, Waktu..jam setelah lahir'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Detail</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="waktu_pemberian_asi" style="width: 100%;" class="form-control" placeholder="Detail">
+                            </div>
+                        </div>
+                        <div *ngIf="pemberian_asi_setelah_jam_pertama == 'Tindak alasan'" class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Detail</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="tindak_alasan" style="width: 100%;" class="form-control" placeholder="Detail">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">40. Masalah lain, sebutkan</label>
+                            <div class="col-sm-6">
+                                <input type="text" [(ngModel)]="masalah_lain_sebutkan" style="width: 100%;" class="form-control" placeholder="Masalah lain, sebutkan">
+                            </div>
+                        </div>
+                        <div class="border-bottom">
+                            <h5>TABEL PEMANTAUAN KALA IV</h5>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Jam Ke</th>
+                                    <th>Waktu</th>
+                                    <th>TD</th>
+                                    <th>Nadi</th>
+                                    <th>Suhu</th>
+                                    <th>Tgi Fundus Uteri</th>
+                                    <th>Kontraksi Uterus</th>
+                                    <th>Kandung Kemih</th>
+                                    <th>Darah yang keluar</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr  *ngFor="let row of tabelKala4Data let i = index">
+                                    <td>{{ row.jam_ke }}</td>
+                                    <td>{{ row.waktu }}</td>
+                                    <td>{{ row.td }}</td>
+                                    <td>{{ row.nadi }}</td>
+                                    <td>{{ row.suhu }}</td>
+                                    <td>{{ row.tgl_fundus_uteri }}</td>
+                                    <td>{{ row.kontraksi_uterus }}</td>
+                                    <td>{{ row.kandung_kemih }}</td>
+                                    <td>{{ row.darah_yang_keluar }}</td>
+                                    <td class="text-danger" (click)="hapusKalaIVFinal(row.id)" style="cursor: pointer;">Hapus</td>
+                                </tr>
+                                <tr  *ngFor="let row of arrKalaIV let i = index">
+                                    <td>{{ row.jam_ke }}</td>
+                                    <td>{{ row.waktu }}</td>
+                                    <td>{{ row.td }}</td>
+                                    <td>{{ row.nadi }}</td>
+                                    <td>{{ row.suhu }}</td>
+                                    <td>{{ row.tgl_fundus_uteri }}</td>
+                                    <td>{{ row.kontraksi_uterus }}</td>
+                                    <td>{{ row.kandung_kemih }}</td>
+                                    <td>{{ row.darah_yang_keluar }}</td>
+                                    <td class="text-danger" (click)="hapusKalaIV(i)" style="cursor: pointer;">Hapus</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row mb-3">
+                            <div class="col-md-12 text-center text-info" style="cursor: pointer;" (click)="openModalTambahKala4(mdlTambahKala4)">
+                                <h6>TAMBAH KALA IV +</h6>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12 d-flex justify-content-center">
+                                <button type="button" class="btn ps-2 pe-2 bg-warning" (click)="simpan_catatan_persalinan()" style="width:100%">Simpan</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<ng-template #mdlTambahKala4 let-c="close" let-d="dismiss">
+    <div class="modal-header" style="text-align: center; background-color: #107a8a;">
+        <div class="d-flex justify-content-center">
+            <h5 class="modal-title text-white">Pemantauan Kala IV</h5>
+        </div>
+      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+      </button>
+    </div>
+    <div class="modal-body">
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Jam Ke</label>
+            <div class="col-sm-9">
+                <input type="text" [(ngModel)]="modalk4_jam_ke"  style="width: 100%;" class="form-control" placeholder="Jam Ke">
+                <small *ngIf="alertNilaiJamIV" class="text-danger">Input Jam Ke tidak boleh huruf</small>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Waktu</label>
+            <div class="col-sm-9">
+                <input type="text" [(ngModel)]="modalk4_waktu" style="width: 100%;" class="form-control" placeholder="Waktu">
+                <small *ngIf="alertNilaiWaktuIV" class="text-danger">Input Waktu tidak boleh huruf</small>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Tekanan Darah</label>
+            <div class="col-sm-9">
+                <input type="text" [(ngModel)]="modalk4_tekanan_darah" style="width: 100%;" class="form-control" placeholder="Tekanan Darah">
+                <small *ngIf="alertNilaiDarahIV" class="text-danger">Input Tekanan Darah tidak boleh huruf</small>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Nadi</label>
+            <div class="col-sm-9">
+                <input type="text" [(ngModel)]="modalk4_nadi"  style="width: 100%;" class="form-control" placeholder="Nadi">
+                <small *ngIf="alertNilaiNadiIV" class="text-danger">Input Nadi tidak boleh huruf</small>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Suhu</label>
+            <div class="col-sm-9">
+                <input type="text" [(ngModel)]="modalk4_suhu"  style="width: 100%;" class="form-control" placeholder="Suhu">
+                <small *ngIf="alertNilaiSuhuIV" class="text-danger">Input Suhu tidak boleh huruf</small>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Tinggi Fundus Uteri</label>
+            <div class="col-sm-9">
+                <input type="text" [(ngModel)]="modalk4_tinggi_fundus_uteri"  style="width: 100%;" class="form-control" placeholder="Tinggi Fundus Uteri">
+                <small *ngIf="alertNilaiUteriIV" class="text-danger">Input Tinggi Fundus Uteri tidak boleh huruf</small>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Kontraksi Uterus</label>
+            <div class="col-sm-9">
+                <input type="text" [(ngModel)]="modalk4_kontraksi_uterus" style="width: 100%;" class="form-control" placeholder="Kontraksi Uterus">
+                <small *ngIf="alertNilaiUterusIV" class="text-danger">Input Kontraksi Uterus tidak boleh huruf</small>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Kandung Kemih</label>
+            <div class="col-sm-9">
+                <input type="text" [(ngModel)]="modalk4_kandung_kemih" style="width: 100%;" class="form-control" placeholder="Kandung Kemih">
+                <small *ngIf="alertNilaiKemihIV" class="text-danger">Input Kandung Kemih tidak boleh huruf</small>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label class="col-sm-3 col-form-label">Darah yang keluar(ml)</label>
+            <div class="col-sm-9">
+                <input type="text" [(ngModel)]="modalk4_darah_keluar"  style="width: 100%;" class="form-control" placeholder="Darah yang keluar">
+                <small *ngIf="alertNilaiKeluarIV" class="text-danger">Input Darah yang keluar tidak boleh huruf</small>
+            </div>
+        </div>
+        
+    </div>
+    <!-- modalbody -->
+    <div class="modal-footer d-flex justify-content-end">
+        <button type="button" class="btn ps-2 pe-2 bg-warning" (click)="tambahKalaIV()" style="width:30%">Simpan</button>
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    </div>
+  </ng-template>
+
+  

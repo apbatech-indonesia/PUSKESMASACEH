@@ -1,0 +1,32 @@
+
+<div class="card main-card mb-3">
+  <div class="card-header">
+    Dynamic Data
+  </div>
+  <div class="card-body">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <button mat-icon-button disabled></button>
+        {{node.item}}
+      </mat-tree-node>
+
+
+      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+        <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
+
+          <i style="font-size:15px ;"  class="pe-7s-note btn-icon-wrapper"> {{treeControl.isExpanded(node) ?'' : ''}} </i>
+
+          <!-- <mat-icon class="mat-icon-rtl-mirror">
+           
+          </mat-icon> -->
+
+
+        </button>
+        {{node.item}}
+        <mat-progress-bar *ngIf="node.isLoading" mode="indeterminate" class="example-tree-progress-bar">
+        </mat-progress-bar>
+      </mat-tree-node>
+    </mat-tree>
+  </div>
+</div>

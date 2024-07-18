@@ -1,0 +1,398 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card main-card mb-3">
+            <div class="card-header text-light" style="text-align: center; background-color: #107a8a;">
+                {{ heading }}
+            </div>
+            <!-- <div class="col-md-3" *ngIf="validasiCreateUpdate=='Update'">
+                <a [routerLink]="'../../AsesmenAwal/' + no_rm + '/' + no_transaksi" routerLinkActive="active" class="vsm-link" style="cursor: pointer;" target="_blank">
+                    <fa-icon [icon]="faPrint"></fa-icon>
+                </a>
+            </div> -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor RM" class="form-label" style="color:black;">Nomor RM</label>
+                            <input [(ngModel)]="no_rm" disabled placeholder="Nomor RM" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="position-relative mb-3">
+                            <label for="Nomor Transaksi" class="form-label" style="color:black;">Nomor Transaksi</label>
+                            <input [(ngModel)]="no_transaksi" disabled placeholder="Nomor Transaksi" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6" [hidden]="true">
+                        <div class="position-relative mb-3">
+                            <label for="Validasi Button" class="form-label" style="color:black;">Validasi Button</label>
+                            <input [(ngModel)]="validasiCreateUpdate" disabled placeholder="Validasi Button" type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="loading" class="overlay">
+                    <div class="position-absolute top-50 start-50">  
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="mb-3" style="text-align: center; background-color: #107a8a;">
+                    <Span style="color: white;">
+                        <b>
+                            RIWAYAT PRENATAL
+                        </b>
+                    </Span>
+                </div>
+                <div  [hidden]="hiddenAlertRiwayatPrenatal">
+                    <p class="text-danger">* {{ pesanAlertRiwayatPrenatal }}</p>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <div class="position-relative">
+                            Lama Kehamilan
+                        </div>
+                    </div>
+                    <div class="col-md-4 d-flex flex-row">
+                        <div class="input-group mb-3">
+                            <input type="text" [(ngModel)]="angka_kehamilan" class="form-control" (keyup)="cekNilaiKehamilan($event, 'angka')" placeholder="Waktu Kehamilan">
+                            <select [(ngModel)]="waktu_kehamilan" id="waktu_kehamilan" class="form-select" (change)="cekNilaiKehamilan($event, 'pilih')">
+                                <option value="">-PILIH-</option>
+                                <option value="Minggu">Minggu</option>
+                                <option value="Bulan">Bulan</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2">
+                        <div class="position-relative">
+                            Komplikasi Saat Kehamilan
+                        </div>
+                    </div>
+                    <div class="col-md-4 d-flex flex-row">
+                        <div class="position-relative">
+                            <select [(ngModel)]="komplikasi" id="komplikasi" class="form-select">
+                                <option value="">-PILIH-</option>
+                                <option value="Ya">Ya</option>
+                                <option value="Tidak">Tidak</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                       Tipe
+                    </div>
+                    <div class="col-md-2">
+                        <select [(ngModel)]="tipe" id="tipe" class="form-select">
+                            <option value="">-PILIH-</option>
+                            <option value="PEB">PEB</option>
+                            <option value="DM">DM</option>
+                            <option value="HT">HT</option>
+                        </select>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="text" [(ngModel)]="keterangan_tipe" [disabled]="tipe === ''" style="width: 80%;" class="form-control" placeholder="Keterangan Tipe">
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                       Riwayat Natal
+                    </div>
+                    <div class="col-md-3">
+                        <select [(ngModel)]="riwayat_natal" id="riwayat_natal" class="form-select" (change)="periksaNilaiRiwayatNatal()">
+                            <option value="">-PILIH-</option>
+                            <option value="Persalinan">Persalinan</option>
+                            <option value="Penyulit Persalinan">Penyulit Persalinan</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" [hidden]="hiddenSelectRiwayatNatal">
+                        <select [(ngModel)]="keterangan_riwayat_natal_select" id="keterangan_riwayat_natal_select" class="form-select">
+                            <option value="">-PILIH-</option>
+                            <option value="PV">PV</option>
+                            <option value="SC">SC</option>
+                            <option value="VE">VE</option>
+                        </select>
+                    </div>
+                    <div class="col-md-5" [hidden]="hiddenInputRiwayatNatal">
+                        <input type="text" [(ngModel)]="keterangan_riwayat_natal_input" style="width: 80%;" class="form-control" placeholder="Keterangan Penyulit Persalinan">                        
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        Riwayat Post Natal
+                    </div>
+                    <div class="col-md-4">
+                        <select [(ngModel)]="riwayat_post_natal" id="riwayat_post_natal" class="form-select" (change)="periksaNilaiRiwayatPostNatal()">
+                            <option value="">-PILIH-</option>
+                            <option value="Prematur">Prematur</option>
+                            <option value="Aterm">Aterm</option>
+                            <option value="Pasca">Pasca</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" [hidden]="hiddenSelectRiwayatPostNatal">
+                        <select [(ngModel)]="keterangan_riwayat_post_natal_select" id="keterangan_riwayat_post_natal_select" class="form-select">
+                            <option value="">-PILIH-</option>
+                            <option value="NICU">NICU</option>
+                            <option value="PICU">PICU</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4" [hidden]="hiddenInputRiwayatPostNatal">
+                        <input type="text" [(ngModel)]="keterangan_riwayat_post_natal_input" style="width: 100%;" class="form-control" placeholder="Riwayat Post Natal Lainnya">                        
+                    </div>
+                </div>
+                
+                <div class="mb-3" style="text-align: center; background-color: #107a8a;">
+                    <Span style="color: white;">
+                        <b>
+                            HOSPITALISASI
+                        </b>
+                    </Span>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-1">a.</div>
+                    <div class="col-md-4">Siapa Orang Terdekat Anak</div>
+                    <div class="col-md-2">
+                        <select [(ngModel)]="orang_terdekat_select" id="orang_terdekat_select" class="form-select" (change)="periksaNilaiOrangTerdekat()">
+                            <option value="">-PILIH-</option>
+                            <option value="Ayah">Ayah</option>
+                            <option value="Ibu">Ibu</option>
+                            <option value="Kakak">Kakak</option>
+                            <option value="Adik">Adik</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4"  [hidden]="hiddenInputOrangTerdekat">
+                        <input type="text" [(ngModel)]="orang_terdekat_input" style="width: 100%;" class="form-control" placeholder="Orang Terdekat Anak Lainnya">                        
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-1">b.</div>
+                    <div class="col-md-4">Siapa Yang Mendapingi Anak Selama Sakit</div>
+                    <div class="col-md-2">
+                        <select [(ngModel)]="pendamping_anak_select" id="pendamping_anak_select" class="form-select" (change)="periksaNilaiPendampingAnak()">
+                            <option value="">-PILIH-</option>
+                            <option value="Ayah">Ayah</option>
+                            <option value="Ibu">Ibu</option>
+                            <option value="Kakak">Kakak</option>
+                            <option value="Adik">Nenek</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4"  [hidden]="hiddenInputPendampingAnak">
+                        <input type="text" [(ngModel)]="pendamping_anak_input" style="width: 100%;" class="form-control" placeholder="Pendaping Anak Lainnya">                        
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-1">c.</div>
+                    <div class="col-md-4">Apakah Anak Terpisah Selama Dirawat</div>
+                    <div class="col-md-2">
+                        <select [(ngModel)]="anak_merasa_terpisah" id="anak_merasa_terpisah" class="form-select">
+                            <option value="">-PILIH-</option>
+                            <option value="Ya">Ya</option>
+                            <option value="Tidak">Tidak</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-1">d.</div>
+                    <div class="col-md-4">Apakah Anak Pernah di Rawat Sebelumnya di RS</div>
+                    <div class="col-md-2">
+                        <select [(ngModel)]="pernah_dirawat_sebelumnya" id="pernah_dirawat_sebelumnya" class="form-select">
+                            <option value="">-PILIH-</option>
+                            <option value="Ya">Ya</option>
+                            <option value="Tidak">Tidak</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-1">e.</div>
+                    <div class="col-md-4">Reaksi Anak Saat Dirawat</div>
+                    <div class="col-md-2">
+                        <select [(ngModel)]="reaksi_anak_select" id="reaksi_anak_select" class="form-select" (change)="periksaNilaiReaksiAnak()">
+                            <option value="">-PILIH-</option>
+                            <option value="Menangis">Menangis</option>
+                            <option value="Menyendiri">Menyendiri</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4"  [hidden]="hiddenInputReaksiAnak">
+                        <input type="text" [(ngModel)]="reaksi_anak_input" style="width: 100%;" class="form-control" placeholder="Reaksi Anak Lainnya">                        
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-1">f.</div>
+                    <div class="col-md-4">Cemas</div>
+                    <div class="col-md-2">
+                        <select [(ngModel)]="cemas" id="cemas" class="form-select">
+                            <option value="">-PILIH-</option>
+                            <option value="Ya">Ya</option>
+                            <option value="Tidak">Tidak</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-1">g.</div>
+                    <div class="col-md-4">Alasan Cemas</div>
+                    <div class="col-md-3">
+                        <select [(ngModel)]="alasan_cemas_select" id="alasan_cemas_select" class="form-select" (change)="periksaNilaiAlasanCemas()">
+                            <option value="">-PILIH-</option>
+                            <option value="Lingkungan Baru">Lingkungan Baru</option>
+                            <option value="Tindakan Medis">Tindakan Medis</option>
+                            <option value="Kurang Informasi">Kurang Informasi</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4"  [hidden]="hiddenInputAlasanCemas">
+                        <input type="text" [(ngModel)]="alasan_cemas_input" style="width: 100%;" class="form-control" placeholder="Alasan Cemas Lainnya">                        
+                    </div>
+                </div>
+
+                <div class="mb-3" style="text-align: center; background-color: #107a8a;">
+                    <Span style="color: white;">
+                        <b>
+                            POLA ASUH ANAK
+                        </b>
+                    </Span>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">Pengasuh</div>
+                    <div class="col-md-2">
+                        <select [(ngModel)]="pengasuh_select" id="pengasuh_select" class="form-select" (change)="periksaNilaiPengasuh()">
+                            <option value="">-PILIH-</option>
+                            <option value="Orang Tua">Orang Tua</option>
+                            <option value="Ayah">Ayah</option>
+                            <option value="Ibu">Ibu</option>
+                            <option value="Saudara">Saudara</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4"  [hidden]="hiddenInputPengasuh">
+                        <input type="text" [(ngModel)]="pengasuh_input" style="width: 100%;" class="form-control" placeholder="Pengasuh Lainnya">                        
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">Pembawaan Umum</div>
+                    <div class="col-md-2">
+                        <select [(ngModel)]="pembawaan_umum_select" id="pembawaan_umum_select" class="form-select" (change)="periksaNilaiPembawaanUmum()">
+                            <option value="">-PILIH-</option>
+                            <option value="Periang">Periang</option>
+                            <option value="Penyendiri">Penyendiri</option>
+                            <option value="Pemalu">Pemalu</option>
+                            <option value="Pemberani">Pemberani</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4"  [hidden]="hiddenInputPembawaanUmum">
+                        <input type="text" [(ngModel)]="pembawaan_umum_input" style="width: 100%;" class="form-control" placeholder="Pembawaan Umum Lainnya">                        
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">Tempramen</div>
+                    <div class="col-md-2">
+                        <select [(ngModel)]="tempramen_select" id="tempramen_select" class="form-select" (change)="periksaNilaiTempramen()">
+                            <option value="">-PILIH-</option>
+                            <option value="Pemarah">Pemarah</option>
+                            <option value="Ramah">Ramah</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4"  [hidden]="hiddenInputTempramen">
+                        <input type="text" [(ngModel)]="tempramen_input" style="width: 100%;" class="form-control" placeholder="Tempramen Lainnya">                        
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">Kebiasaan Perilaku Unik</div>
+                    <div class="col-md-2">
+                        <select [(ngModel)]="kebiasaan_unik_select" id="kebiasaan_unik_select" class="form-select" (change)="periksaKebiasaanUnik()">
+                            <option value="">-PILIH-</option>
+                            <option value="Ada">Ada</option>
+                            <option value="Tidak">Tidak</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4"  [hidden]="hiddenInputKebiasaanUnik">
+                        <input type="text" [(ngModel)]="keterangan_kebiasaan_unik" style="width: 100%;" class="form-control" placeholder="Kebiasaan Perilaku Unik, Tidak">                        
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">Riwayat Imunisasi</div>
+                    <div class="col-md-3">
+                        <select [(ngModel)]="riwayat_imunisasi_select" id="riwayat_imunisasi_select" class="form-select" (change)="periksaRiwayatImunisasi()">
+                            <option value="">-PILIH-</option>
+                            <option value="Lengkap">Lengkap</option>
+                            <option value="Tidak Lengkap">Tidak Lengkap</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6"  [hidden]="hiddenInputRiwayatImunisasi">
+                        <div class="row">
+                            <div class="col-md-3 text-end">
+                                <label class="form-label mt-2">Sebutkan</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" [(ngModel)]="keterangan_riwayat_imunisasi" style="width: 100%;" class="form-control" placeholder="Riwayat Imunisasi Tidak Lengkap">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="position-relative mb-3">
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="position-relative mb-3">
+                            <button type="button" class="badge rounded-pill ps-2 pe-2 bg-warning" (click)="simpan()" style="width:100%">{{ validasiButtonCreateUpdate }}</button>
+                        </div>
+                    </div>
+                    <!-- <div class="position-relative mb-3">
+                        <button type="button" class="badge rounded-pill ps-2 pe-2 bg-warning" (click)="simpanKebidanan()" style="width:100%">Simpan</button>
+                    </div> -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- <div class="col-md-2">
+        <div class="row" style="text-align: center;">
+            <Span style="color: blue;">
+                <b>
+                    Riwayat
+                </b>
+            </Span>
+        </div>
+        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <tbody>
+                <tr *ngFor="let row of listNotransaksiPerNoRM">
+                    <td class="text-center text-muted"  style="width: 78px;">
+                        <div class="widget-heading">
+                            <a (click)="ambilAssesmentBaru(row.no_transaksi)" data-title={{row.no_transaksi}} style="cursor: pointer;">
+                                <span style="color: cornflowerblue;"> {{ row.created_at | date: format }}</span>
+                            </a>
+                        </div>
+                        {{row.no_transaksi}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+</div>

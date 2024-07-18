@@ -1,0 +1,20 @@
+export const environment = {
+  production: false,
+  name: "dev",
+  subDomainName: "",
+  emrUrl: "https://emr.devapbatech.com/backend/public/",
+  baseUrl: "https://puskesmas.devapbatech.com/clenic/",
+  pcareUrl: "",
+  socketUrl: "",
+  satuSehatUrl: "https://sasehat.devapbatech.com/api/",
+  rawatJalanUrl: "",
+  apiPath: "api/",
+  masterPath: "master/",
+  pcareMcuPath: "/pcare/mcu",
+  pcareObatPath: "/pcare/obat",
+  pcareKelompokPath: "/pcare/kelompok",
+  cabangPath: "api/master-data/cabang/",
+  rawatJalanPath: "/asesmen-rawat-jalan",
+  antrianFktpPath: "/antrean-fktp/bpjs/",
+  version: 'v4.0.0'
+};

@@ -1,0 +1,151 @@
+<div class="h-100 bg-animation" style="background-image: url(./assets/images/clenicbgg.jpg);
+background-repeat: no-repeat;
+background-size: cover;">
+
+  <!-- <div class="d-flex h-100 justify-content-center align-items-center">
+    <div class="mx-auto app-login-box col-md-8">
+
+      <div class="modal-dialog w-100 mx-auto">
+        <form [formGroup]="this.formGroup" class="needs-validation" novalidate (validSubmit)="this.lg()">
+
+          <div class="modal-content">
+            <div style="height: 250px;
+          width: 250px; display: block;
+  margin-left: auto;
+  margin-right: auto;zoom:0.7;
+          background: url(./assets/images/clenicv.png)"></div>
+            <div class="modal-body">
+
+              <div style="text-align:center ;">
+
+                <h4>
+
+                  <span> Silahkan login untuk masuk ke akun klinik anda</span>
+                </h4>
+              </div>
+
+              <div id="exampleInputGroup1" role="group" aria-describedby="exampleInputGroup1__BV_description_"
+                class="mb-3">
+                <div>
+                  <label for="exampleEmail" class="form-label">Username</label>
+                  <input type="text" placeholder="Username..." class="form-controllg" formControlName="username">
+
+                </div>
+              </div>
+
+              <div id="exampleInputGroup1" role="group" aria-describedby="exampleInputGroup1__BV_description_"
+                class="mb-3">
+                <div>
+                  <label for="exampleEmail" class="form-label">Password</label>
+                  <input type="password" placeholder="Password..." class="form-controllg" formControlName="password">
+
+                </div>
+              </div>
+              <div id="exampleInputGroup1" role="group" aria-describedby="exampleInputGroup1__BV_description_"
+                class="mb-3">
+                <div>
+                  <label for="exampleEmail" class="form-label">Kode Klinik</label>
+                  <input type="text" placeholder="Kode..." class="form-controllg" [(ngModel)]="kdcabang"
+                    formControlName="kdcabang">
+
+                </div>
+              </div>
+
+
+
+            </div>
+            <div class="text-center d-block p-3 card-footer">
+              <button type="submit" class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg">
+                <span class="me-2 opacity-7">
+                  <i class="icon icon-anim-pulse ion-ios-analytics-outline"></i>
+                </span>
+                <span class="me-1">Masuk Aplikasi</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="text-center text-white opacity-8 mt-3">
+        <h5><small [(ngModel)]="appVersion">{{appVersion}} Copyright © Clenicapp.Com</small></h5>
+      </div>
+    </div>
+  </div> -->
+  <div class="row d-flex col-md-12" style="height: 100%;">
+    <div class="col-md-6" id="content_left">
+      <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+        <div class="row">
+          <div class="row col-md-auto">
+            <img src="../../../assets/images/clenicv.png" alt="Nature" class="responsive">
+          </div>
+          <div class="col-md-10" style="width: 100%;"></div>
+        </div>
+        <div>
+          <div class="flex-container">
+            <div></div>
+            <div style="flex-basis: 70%; text-align: start; padding: 0px;">
+              <div class="column">
+                <h1>Selamat Datang</h1>
+                <h5>
+                  <span style="color: #999ca0;"> Silahkan login untuk masuk ke akun klinik anda</span>
+                </h5>
+              </div>
+            </div>
+            <div></div>
+          </div>
+          <br>
+          <form [formGroup]="loginForm">
+            <div class="flex-container">
+              <div></div>
+              <div style="flex-basis: 70%; margin: 0px; padding: 0px;">
+                <div class="form-group" style="padding: 0px; margin: 0px;">
+                  <span>Username</span>
+                  <input [formControl]="loginForm.controls.username" class="form-field" type="text" placeholder="username anda">
+                </div>
+                <div style="margin: 16px 0;"></div>
+                <div class="form-group" style="padding: 0px; margin: 0px;">
+                  <span>Password</span>
+                  <input [formControl]="loginForm.controls.password" class="form-field" type="password" placeholder="password anda" >
+                </div>
+              
+                <div style="margin: 16px 0;"></div>
+                <div  class="form-group" style="padding: 0px; margin: 0px;">
+                  <span>Kode Cabang</span>
+                  <input [formControl]="loginForm.controls.kdcabang" class="form-field" type="text" placeholder="3 digit angka">
+                </div>
+              </div>
+              <div></div>
+            </div>
+          </form>
+          <div style="margin: 16px 0;"></div>
+          <div class="flex-container">
+            <div></div>
+            <div style="flex-basis: 70%; margin: 0px; padding: 0px;">
+              <button (click)="signUp()" type="submit" class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg"
+                style="background-color: #678EFE;">
+                <span class="me-2 opacity-7">
+                  <i class="icon icon-anim-pulse ion-ios-analytics-outline"></i>
+                </span>
+                <span class="me-1">Masuk Aplikasi</span>
+              </button>
+            </div>
+            <div></div>
+          </div>
+        </div>
+        <div class="flex-container">
+          <div class="text-black opacity-8 mt-3" style="flex-basis: 60%;">
+            <h6><small> Copyright 2024 © Apbatech</small></h6>
+          </div>
+          <div></div>
+          <div class="text-center text-black opacity-8 mt-3">
+            <h6><small>v1.1.1</small></h6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="column col-md-6" id="content_right">
+      <div class="image-container" style="height: 100%;">
+        <img src="../../../assets/images/bg_illust_2.png" alt="Nature" class="illust_responsive">
+      </div>
+    </div>
+  </div>
+</div>

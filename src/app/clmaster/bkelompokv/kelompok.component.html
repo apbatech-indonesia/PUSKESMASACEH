@@ -1,0 +1,595 @@
+<div class="card-body"></div>
+
+<div class="column">
+
+  <div class="col-md-12">
+    <div class="card main-card mb-12">
+      <div class="card-header flex-container">
+        <div>
+          <h4><small>List Kegiatan</small></h4>
+        </div>
+        <div style="flex-basis: 45%;"></div>
+        <div>
+          <button class="btn" onclick="window.dialog.showModal();">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+        <dialog id="dialog">
+          <mat-stepper [linear]="isLinear" #stepper>
+            <ng-template matStepperIcon="edit">
+              <mat-icon>done</mat-icon>
+            </ng-template>
+            <ng-template matStepperIcon="done">
+              <mat-icon>home</mat-icon>
+            </ng-template>
+            <mat-step [stepControl]="chooseClubScreen" state="home">
+              <ng-template matStepLabel>Pilih Kelompok</ng-template>
+              <h3>Pilih Kelompok dan Club ID</h3>
+              <p>
+                <small>
+                  Pilih terlebih dahulu kelompok yang diinginkan
+                </small>
+              </p>
+              <hr>
+              <div style="flex-basis: 50%; margin: 0px; padding: 0px;">
+                <form [formGroup]="selectClubForm">
+                  <div class="form-group" style="flex-basis: 50%;">
+                    <span><small>Kelompok</small></span>
+                    <select class="custom-select" (change)="onChange()" formControlName="currentClub"
+                      style="width: 100%; height: 45px; border-radius: 0 8px 8px 0;">
+                      <option value="" disabled>Pilih Kelompok </option>
+                      <option *ngFor="let kegiatan of listOfKegiatanDD" [ngValue]="kegiatan.code">{{kegiatan.name}}
+                      </option>
+                    </select>
+                    <div *ngIf="selectClubForm.value.currentClub.invalid && selectClubForm.value.currentClub?.touched">
+                      <div *ngIf="selectClubForm.value.currentClub?.errors?.['required']">Wajib dipilih.</div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+              <div style="margin: 12px 0;"></div>
+              <div *ngIf="isClubSelected">
+                <div style="margin: 12px 0;"></div>
+                <div class="flex-container data-header">
+                  <div style="flex-basis: 15%;">
+                    <h6>Klub ID</h6>
+                  </div>
+                  <div style="flex-basis: 15%;">
+                    <h6>Nama Ketua</h6>
+                  </div>
+                  <div style="flex-basis: 15%;">
+                    <h6>Nama Kelompok</h6>
+                  </div>
+                  <div style="flex-basis: 15%;">
+                    <h6>Alamat</h6>
+                  </div>
+                  <div style="flex-basis: 15%;">
+                    <h6>Tanggal Mulai</h6>
+                  </div>
+                </div>
+                <div *ngFor="let kegiatan of listOfClub">
+                  <div class="flex-container" style="align-items: baseline;">
+                    <div class="flex-container item-kegiatan" (click)="selectClubItem(stepper, kegiatan)"
+                      style="flex-basis: 100%;">
+                      <div style="flex-basis: 15%;">
+                        <p><small>{{kegiatan.clubId}}</small></p>
+                      </div>
+                      <div style="flex-basis: 15%;">
+                        <p><small>{{kegiatan.namaKetua}}</small></p>
+                      </div>
+                      <div style="flex-basis: 15%;">
+                        <p><small>{{kegiatan.namaKelompok}}</small></p>
+                      </div>
+                      <div style="flex-basis: 15%;">
+                        <p><small>{{kegiatan.alamat}}</small></p>
+                      </div>
+                      <div style="flex-basis: 15%;">
+                        <p><small>{{kegiatan.tanggalMulai}}</small></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-step>
+            <mat-step [stepControl]="formAddKegiatanScreen">
+              <ng-template matStepLabel>Isi Form</ng-template>
+              <h3>Tambah Kegiatan</h3>
+              <p>
+                <small>
+                  Isi form dibawah dengan data yang benar
+                </small>
+              </p>
+              <hr>
+              <!-- <div *ngIf="isClubSelected"> -->
+              <div class="flex-container">
+                <div style="flex-basis: 100%; margin: 0px; padding: 0px;">
+                  <form [formGroup]="addKegiatanForm">
+                    <div class="column">
+                      <div class="flex-container">
+                        <div class="form-group" style="flex-basis: 100%;">
+                          <span><small>Kegiatan</small></span>
+                          <select class="custom-select" formControlName="selectedClub"
+                            style="width: 100%; height: 45px; border-radius: 0 8px 8px 0;">
+                            <option value="" disabled>Pilih Kegiatan</option>
+                            <option *ngFor="let club of listOfClubDD" [ngValue]="club.code">{{club.name}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div style="margin: 16px 0;" *ngIf=" addKegiatanForm.get('selectedClub').invalid &&
+                     (
+                      addKegiatanForm.get('selectedClub').dirty ||
+                      addKegiatanForm.get('selectedClub').touched
+                     )">
+                        <div style="color: red; text-align: end;"
+                          *ngIf="addKegiatanForm.get('pembicara').hasError('required')">
+                          Kolom ini harus dipilih.
+                        </div>
+                      </div>
+                    </div>
+                    <div style="margin: 12px 0;"></div>
+                    <div class="form-group">
+                      <span><small>Materi</small></span>
+                      <input formControlName="materi" class="form-field" type="text" placeholder="Nama materi">
+                    </div>
+                    <div style="margin: 16px 0;" *ngIf="
+                    addKegiatanForm.get('materi').invalid &&
+                     (
+                      addKegiatanForm.get('materi').dirty ||
+                      addKegiatanForm.get('materi').touched
+                     )">
+                      <div style="color: red; text-align: end;"
+                        *ngIf="addKegiatanForm.get('materi').errors?.['required']">
+                        Kolom ini harus diisi.
+                      </div>
+                    </div>
+                    <div style="margin: 12px 0;"></div>
+                    <div class="form-group">
+                      <span><small>Pembicara</small></span>
+                      <input formControlName="pembicara" class="form-field" type="text" placeholder="Nama pembicara">
+                    </div>
+                    <div style="margin: 16px 0;" *ngIf="
+                    addKegiatanForm.get('pembicara').invalid &&
+                     (
+                      addKegiatanForm.get('pembicara').dirty ||
+                      addKegiatanForm.get('pembicara').touched
+                     )">
+                      <div style="color: red; text-align: end;"
+                        *ngIf="addKegiatanForm.get('pembicara').errors?.['required']">
+                        Kolom ini harus diisi.
+                      </div>
+                    </div>
+                    <div style="margin: 12px 0;"></div>
+                    <div class="form-group col-md-12">
+                      <span><small>Tanggal Pelayanan</small></span>
+                      <input formControlName="tglKegiatan" class="form-field" type="date" [ngModel]="addDate"
+                        value="addDate" placeholder="Pilih tanggal pelayanan">
+                    </div>
+                    <div style="margin: 16px 0;" *ngIf="
+                    addKegiatanForm.get('tglKegiatan').invalid &&
+                     (
+                      addKegiatanForm.get('tglKegiatan').dirty ||
+                      addKegiatanForm.get('tglKegiatan').touched
+                     )">
+                      <div style="color: red; text-align: end;"
+                        *ngIf="addKegiatanForm.get('tglKegiatan').errors?.['required']">
+                        Kolom ini harus diisi.
+                      </div>
+                      <div style="color: red; text-align: end;"
+                        *ngIf="addKegiatanForm.get('tglKegiatan').hasError('pattern')">
+                        Nilai harus berupa angka.
+                      </div>
+                    </div>
+                    <div style="margin: 12px 0;"></div>
+                    <div class="form-group">
+                      <span><small>Lokasi</small></span>
+                      <input formControlName="lokasi" class="form-field" type="text" placeholder="Nama lokasi">
+                    </div>
+                    <div style="margin: 16px 0;" *ngIf="
+                    addKegiatanForm.get('lokasi').invalid &&
+                     (
+                      addKegiatanForm.get('lokasi').dirty ||
+                      addKegiatanForm.get('lokasi').touched
+                     )">
+                      <div style="color: red; text-align: end;"
+                        *ngIf="addKegiatanForm.get('lokasi').errors?.['required']">
+                        Kolom ini harus diisi.
+                      </div>
+                    </div>
+                    <div style="margin: 12px 0;"></div>
+                    <div class="form-group">
+                      <span><small>Biaya</small></span>
+                      <input formControlName="biaya" class="form-field" type="text" placeholder="Tentukan biaya">
+                    </div>
+
+                    <div style="margin: 16px 0;" *ngIf="
+                    addKegiatanForm.get('biaya').invalid &&
+                     (
+                      addKegiatanForm.get('biaya').dirty ||
+                      addKegiatanForm.get('biaya').touched
+                     )">
+                      <div style="color: red; text-align: end;"
+                        *ngIf="addKegiatanForm.get('biaya').errors?.['required']">
+                        Kolom ini harus diisi.
+                      </div>
+                      <div style="color: red; text-align: end;"
+                        *ngIf="addKegiatanForm.get('biaya').hasError('pattern')">
+                        Nilai harus berupa angka.
+                      </div>
+                      <div style="color: red; text-align: end;"
+                        *ngIf="addKegiatanForm.get('biaya').hasError('minlength')">
+                        Minimal 4 digit.
+                      </div>
+                    </div>
+                    <div style="margin: 12px 0;"></div>
+                    <div class="form-group">
+                      <span><small>Keterangan (Opsional)</small></span>
+                      <textarea id="keterangan" formControlName="keterangan" name="keterangan" rows="4" cols="50"
+                        class="form-field" type="text" placeholder="Tambah keterangan (jika ada)"></textarea>
+                    </div>
+                    <div style="margin: 8px 0;"></div>
+                    <div class="flex-container" style="flex-basis: 100%;">
+                      <div style="flex-basis: 100%;">
+                        <button (click)="showSavingDialog()"
+                          class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg"
+                          style="background-color: #678EFE; width: 100%;" [disabled]="addKegiatanForm.invalid">
+                          <span class="me-2 opacity-7">
+                            <i class="icon icon-anim-pulse ion-ios-analytics-outline"></i>
+                          </span>
+                          <span class="me-1">Tambahkan Kegiatan</span>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <!-- </div> -->
+            </mat-step>
+          </mat-stepper>
+          <button onclick="window.dialog.close();" aria-label="close" class="x">❌</button>
+        </dialog>
+
+      </div>
+
+      <div class="card-body">
+        <div style="display: flex; margin: 12px 0; flex-basis: 50%;">
+          <div style="flex-basis: 60%;"></div>
+          <div style="flex-basis: 40%;">
+            <div class="form-group">
+              <input [(ngModel)]="searchKeyword" class="form-field" type="text" placeholder="Cari Kegiatan" name="searchKeyword">
+              <span (click)="onSearchClubID()">
+                  <i class="fa fa-search"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="flex-container data-header">
+            <div style="flex-basis: 15%;">
+              <h6>Edu ID</h6>
+            </div>
+            <div style="flex-basis: 15%;">
+              <h6>Nama Kelompok</h6>
+            </div>
+            <div style="flex-basis: 15%;">
+              <h6>Nama Kegiatan</h6>
+            </div>
+            <div style="flex-basis: 15%;">
+              <h6>Deskripsi Kegiatan</h6>
+            </div>
+            <div style="flex-basis: 15%;">
+              <h6>Biaya</h6>
+            </div>
+            <div style="flex-basis: 15%;">
+              <h6>Aksi</h6>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <ng-container *ngIf="listOfKegiatan.length !== 0; then contentKegiatan else other_content"></ng-container>
+          <ng-template #contentKegiatan>
+            <div *ngFor="let kegiatan of listOfKegiatan">
+              <div class="flex-container" style="align-items: baseline;">
+                <div class="flex-container item-kegiatan" (click)="selectItem(kegiatan.eduID)" style="flex-basis: 85%;">
+                  <div style="flex-basis: 15%;">
+                    <p>{{kegiatan.eduID}}</p>
+                  </div>
+                  <div style="flex-basis: 15%;">
+                    <p>{{kegiatan.namaKelompok}}</p>
+                  </div>
+                  <div style="flex-basis: 15%;">
+                    <p>{{kegiatan.namaKegiatan}}</p>
+                  </div>
+                  <div style="flex-basis: 15%;">
+                    <p>{{kegiatan.deskripsiKegiatan}}</p>
+                  </div>
+                  <div style="flex-basis: 15%;">
+                    <p>{{kegiatan.biaya | currency:'Rp':'symbol':'3.0'}}</p>
+                  </div>
+                </div>
+                <div style="flex-basis: 15%;">
+                  <ul class="wrapper">
+                    <li class="icon youtube" (click)="showConfirmDialog('kegiatan', kegiatan.eduID)">
+                      <span class="tooltip">Hapus</span>
+                      <span>
+                        <i class="fa fa-trash"></i>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box">
+    <div>
+      <dialog id="confirmDialog">
+        <h3>Yakin Ingin Menghapus Item?</h3>
+        <p>
+          <small>
+            Anda akan menghapus item dan item tidak dapat dikembalikan kembali.
+          </small>
+        </p>
+        <hr>
+        <div class="row">
+          <a class="button" id="delete">Ya, hapus</a>
+        </div>
+        <button onclick="window.confirmDialog.close();" aria-label="close" class="x">❌</button>
+      </dialog>
+    </div>
+  </div>
+  <div class="box">
+    <div>
+      <dialog id="confirmSaveDialog">
+        <h3>Yakin Ingin Data Sudah Benar?</h3>
+        <p>
+          <small>
+            Anda akan menyimpan data yang telah anda masukkan sebelumnya dan proses ini tidak dapat dibatalkan.
+          </small>
+        </p>
+        <hr>
+        <div class="row">
+          <a class="button-save" id="save">Ya, simpan</a>
+        </div>
+        <button onclick="window.confirmSaveDialog.close();" aria-label="close" class="x">❌</button>
+      </dialog>
+    </div>
+  </div>
+
+  <div class="box" *ngIf="isProccessFailed">
+    <div>
+      <dialog id="failedDialog">
+        <h3>Proses Gagal</h3>
+        <p>
+          <small>
+            Terjadi kesalahan, mohon coba beberapa saat lagi!
+          </small>
+        </p>
+        <button onclick="window.failedDialog.close();" aria-label="close" class="x">❌</button>
+        <hr>
+        <div class="row" class="button-close">
+          <a id="close">Tutup</a>
+        </div>
+      </dialog>
+    </div>
+  </div>
+
+  <div class="box">
+    <div>
+      <dialog id="successDialog">
+        <h3>Proses Berhasil</h3>
+        <p>
+          <small ([ngModel])="successMsg">
+            <!-- {{successMsg}} -->
+            <!-- Proses hapus data Berhasil -->
+          </small>
+        </p>
+        <button onclick="window.successDialog.close();" aria-label="close" class="x">❌</button>
+        <hr>
+        <div class="row" class="button-close">
+          <a id="close">Tutup</a>
+        </div>
+      </dialog>
+
+    </div>
+  </div>
+  <div style="margin: 16px 0;"></div>
+  <div class="col-md-12" *ngIf="isEduIDSelected !== null">
+    <div class="card main-card mb-12" id="windowPesertaKegiatan">
+      <div class="card-header flex-container">
+        <div>
+          <h4><small>List Peserta Kegiatan</small></h4>
+        </div>
+        <div style="flex-basis: 50%;"></div>
+        <div>
+          <button class="btn" (click)="showDialogKegiatan()">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+
+        <dialog id="dialogKegiatan">
+          <h3>Tambah Peserta Kegiatan</h3>
+          <p>
+            <small>
+              Isi form dibawah dengan data yang benar
+            </small>
+          </p>
+          <hr>
+          <form [formGroup]="addPesertaForm">
+            <div class="flex-container">
+              <div style="flex-basis: 100%; margin: 0px; padding: 0px;">
+                <div class="row">
+                  <div class="form-group">
+                    <span><small>Edu ID</small></span>
+                    <input formControlName="eduID" [(ngModel)]="currentEduID" value="testing" class="form-field"
+                      type="number" placeholder="Edu ID" disabled>
+                  </div>
+                  <div style="margin: 12px 0;"></div>
+                  <div class="form-group">
+                    <span>
+                      <small>Nomor Kartu</small>
+                    </span>
+                    <input formControlName="noKartu" class="form-field" type="text" minlength="13" maxlength="13"
+                      placeholder="Nomor kartu" [(ngModel)]="currentCardNumber">
+                  </div>
+                  <div style="margin: 16px 0;"
+                    *ngIf="addPesertaForm.get('noKartu').invalid && (addPesertaForm.get('noKartu').dirty || addPesertaForm.get('noKartu').touched)">
+                    <div style="color: red; text-align: end;"
+                      *ngIf="addPesertaForm.get('noKartu').errors?.['required']">
+                      Kolom ini harus diisi.
+                    </div>
+                    <div style="color: red; text-align: end;"
+                      *ngIf="addPesertaForm.controls['noKartu'].errors?.['minlength'] || addPesertaForm.controls['noKartu'].errors?.['maxLength']">
+                      Panjang karakter harus 6.
+                    </div>
+                    <div style="color: red; text-align: end;"
+                      *ngIf="addPesertaForm.controls['noKartu'].hasError('pattern')">
+                      Nilai harus berupa angka.
+                    </div>
+                  </div>
+                  <div style="margin: 8px 0;"></div>
+                  <div class="flex-container" style="flex-basis: 100%;">
+                    <div style="flex-basis: 100%;">
+                      <button type="submit" class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg"
+                        [disabled]="!addPesertaForm.get('noKartu').valid" (click)="showSavingDialog('peserta')"
+                        style="background-color: #678EFE;">
+                        <span class="me-2 opacity-7">
+                          <i class="icon icon-anim-pulse ion-ios-analytics-outline"></i>
+                        </span>
+                        <span class="me-1">Tambahkan Peserta</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <button onclick="window.dialogKegiatan.close();" aria-label="close" class="x">❌</button>
+        </dialog>
+
+      </div>
+
+      <div class="card-body">
+        <div>
+          <div style="display: flex; margin: 12px 0; flex-basis: 50%;">
+            <div style="flex-basis: 60%;"></div>
+            <div style="flex-basis: 40%;">
+              <div class="form-group">
+                <input [(ngModel)]="searchPesertaKeyword" class="form-field" type="text" placeholder="Cari Anggota" name="searchKeyword">
+                <span (click)="onSearchPeserta()">
+                    <i class="fa fa-search"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="flex-container data-header">
+            <div style="flex-basis: 10%;">
+              <h6>Nomor Kartu</h6>
+            </div>
+            <div style="flex-basis: 10%;">
+              <h6>Nama Peserta</h6>
+            </div>
+            <div style="flex-basis: 10%;">
+              <h6>Jenis Kelamin</h6>
+            </div>
+            <div style="flex-basis: 10%;">
+              <h6>Kelas</h6>
+            </div>
+            <div style="flex-basis: 10%;">
+              <h6>Jenis Peserta</h6>
+            </div>
+            <div style="flex-basis: 10%;">
+              <h6>Nama Asuransi</h6>
+            </div>
+            <div style="flex-basis: 10%;">
+              <h6>Pst Prol</h6>
+            </div>
+            <div style="flex-basis: 10%;">
+              <h6>Pst Prb</h6>
+            </div>
+            <div style="flex-basis: 10%;">
+              <h6>Aksi</h6>
+            </div>
+          </div>
+        </div>
+        <ng-container *ngIf="listOfPesertaKegiatan.length !== 0; then content else other_content"></ng-container>
+        <ng-template #content>
+          <div style="align-items: baseline;" *ngFor="let peserta of listOfPesertaKegiatan">
+            <div class="flex-container">
+              <div style="flex-basis: 10%;">
+                <p><small>{{peserta.noKartu}}</small></p>
+              </div>
+              <div style="flex-basis: 10%;">
+                <p><small>{{peserta.nama}}</small></p>
+              </div>
+              <div style="flex-basis: 10%;">
+                <p><small>{{peserta.jenisKelamin}}</small></p>
+              </div>
+              <div style="flex-basis: 10%;">
+                <p><small>{{peserta.namaKelas}}</small></p>
+              </div>
+              <div style="flex-basis: 10%;">
+                <p><small>{{peserta.namaJenisPeserta}}</small></p>
+              </div>
+              <div style="flex-basis: 10%;">
+                <p><small>{{peserta.namaAsuransi}}</small></p>
+              </div>
+              <div style="flex-basis: 10%;">
+                <p><small>{{peserta.pstprol}}</small></p>
+              </div>
+              <div style="flex-basis: 10%;">
+                <p><small>{{peserta.pstprb}}</small></p>
+              </div>
+              <div style="flex-basis: 10%;">
+                <ul class="wrapper">
+                  <!-- <li class="icon youtube" (click)="showConfirmDialog('peserta')"> -->
+                  <li class="icon youtube" (click)="onDeletePesertaKegiatan(peserta.eduId,peserta.noKartu)">
+                    <span class="tooltip">Hapus</span>
+                    <span>
+                      <i class="fa fa-trash"></i>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #other_content>
+    <div class="col-md-12" style="justify-content: center;">
+      <p style="margin-top: 1rem;">Data tidak ditemukan atau tidak ada</p>
+    </div>
+  </ng-template>
+
+  <div class="box">
+    <div>
+      <dialog id="calendarDialog">
+        <h3>Pilih Tanggal</h3>
+        <p>
+          <small>
+            Tentukan tanggal kegiatan yang ingin ditampilkan
+          </small>
+        </p>
+        <p-calendar class="max-w-full" [(ngModel)]="date" [inline]="true" [showWeek]="true"
+          dateFormat="M d, yy"></p-calendar>
+        <button (click)="chooseDate()" class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg"
+          style="background-color: #678EFE;">
+          <span class="me-2 opacity-7">
+            <i class="icon icon-anim-pulse ion-ios-analytics-outline"></i>
+          </span>
+          <span class="me-1">Pilih Tanggal</span>
+        </button>
+      </dialog>
+    </div>
+  </div>
+
+  <div style="margin: 16px 0;"></div>
+</div>

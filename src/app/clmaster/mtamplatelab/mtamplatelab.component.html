@@ -1,0 +1,509 @@
+
+
+
+
+<ul ngbNav #nav="ngbNav" class=" nav-tabs tabs-animated tabs-animated-shadow">
+  <li ngbNavItem>
+    <a ngbNavLink><span>Tes Laboratorium</span></a>
+    <ng-template ngbNavContent>
+      <div class="card main-card mb-3">
+        <div class="card-header">
+  
+          <b>Tambah Tes (Pembuatan/Input Tamplate Pemeriksaan Harus Urut )</b><br>
+          <p style="font-size: 10px;color:black">misal : Hematologi = Hemoglobin,
+            Hematokrit,
+            Eritrosit,
+            Leukosit,
+            Trombosit</p>
+          <!-- <p [innerHTML]="body | nl2br"></p> -->
+          
+        </div>
+        <div class="card-body">
+          <!-- <form> -->
+            <div class="row">
+             
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-6">
+                    <form [formGroup]="profileForm" >
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Nama Tes*</label>
+                      <input  formControlName="namates"  [(ngModel)]="namates"   placeholder="Nama Tes" type="text" class="form-control">
+                    </div>
+                    </form>
+                    </div>
+                    <div class="col-md-6">
+                      <form [formGroup]="profileForm" >
+                        <div class="position-relative mb-3">
+                          <label for="exampleEmail" class="form-label">Urutan Tes*</label>
+                          <input  formControlName="nourut"  [(ngModel)]="nourut"   placeholder="Urutan Tes" type="number" class="form-control">
+                        </div>
+                        </form>
+                      </div>
+                    
+                </div>
+            
+            
+                <div class="row">
+                  <div class="col-md-6">
+                    <form [formGroup]="profileForm" >
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Nama Golongan*</label>
+                      <input   formControlName="golongan" [(ngModel)]="golongan"   placeholder="Nama Golongan" type="text" class="form-control" (keyup)="carigolongan($event)">
+                    </div>
+                    </form>
+                    
+                    <table class="table table-striped" *ngIf="showgolongan">
+                   
+                      <tbody>
+                        <tr *ngFor="let x of tgolonganlab" >
+                          <td  style="font-size: 11px;color:black;font-weight: bold;" (click)="pilihgol(x.kdmetode,x.metode)">{{x.metode}}</td>
+                          
+                        
+                        </tr>
+                      
+                      </tbody>
+                    </table>
+
+
+
+                  </div>
+                  <div class="col-md-6">
+                    <form [formGroup]="profileForm" >
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Nama Metode*</label>
+                      <input  formControlName="metode"  [(ngModel)]="metode"   placeholder="Nama Metode" type="text" class="form-control" (keyup)="carimetode($event)">
+                    </div>
+                  </form>
+                    <table class="table table-striped" *ngIf="showmetode">
+                   
+                      <tbody>
+                        <tr *ngFor="let x of tmetodelab" >
+                          <td  style="font-size: 11px;color:black;font-weight: bold;" (click)="pilihmetode(x.kdmetode,x.metode)">{{x.metode}}</td>
+                          
+                        
+                        </tr>
+                      
+                      </tbody>
+                    </table>
+                  </div>
+
+                 
+
+
+                </div>
+      
+              
+                <div class="row">
+                  <div class="col-md-4">
+                    <form [formGroup]="profileForm" >
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Satuan*</label>
+                      <input  formControlName="satuan"  [(ngModel)]="satuan"   placeholder="Satuan" type="text" class="form-control">
+                    </div>
+                    </form>
+                  </div>
+                  <div class="col-md-4">
+                    <form [formGroup]="profileForm" >
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Referensi Laki-Laki*</label>
+                      <input  formControlName="reflaki"  [(ngModel)]="reflaki"   placeholder="Referensi Laki-Laki" type="text" class="form-control">
+                    </div>
+                    </form>
+                  </div>
+                  <div class="col-md-4">
+                    <form [formGroup]="profileForm" >
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Referensi Perempuan*</label>
+                      <input  formControlName="refperempuan"  [(ngModel)]="refperempuan"   placeholder="Referensi Perempuan" type="text" class="form-control">
+                    </div>
+                    </form>
+                  </div>
+                </div>
+                <b>Batas  Laki-Laki</b>
+                <div class="row">
+                  <div class="col-md-6">
+                    <form [formGroup]="profileForm" >
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Minimal*</label>
+                      <input  formControlName="lmin" [(ngModel)]="lmin"   placeholder="Minimal" type="text" class="form-control">
+                    </div>
+                    </form>
+                  </div>
+                 
+                  <div class="col-md-6">
+                    <form [formGroup]="profileForm" >
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Maksimal*</label>
+                      <input  formControlName="lmax" [(ngModel)]="lmax"   placeholder="Maksimal" type="text" class="form-control">
+                    </div>
+                    </form>
+                  </div>
+                </div>
+                <b>Batas  Perempuan</b>
+                <div class="row">
+                  <div class="col-md-6">
+                    <form [formGroup]="profileForm" >
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Minimal*</label>
+                      <input  formControlName="pmin" [(ngModel)]="pmin"   placeholder="Minimal" type="text" class="form-control">
+                    </div>
+                    </form>
+                  </div>
+                 
+                  <div class="col-md-6">
+                    <form [formGroup]="profileForm" >
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Maksimal*</label>
+                      <input formControlName="pmax"  [(ngModel)]="pmax"   placeholder="Maksimal" type="text" class="form-control">
+                    </div>
+                    </form>
+                  </div>
+                </div>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <div class="d-grid gap-2">
+                      <button class="mb-2 me-2 btn-pill btn btn-focus" (click)="bataltes()">Batal
+                      </button>
+                    </div>
+                    </div>
+                    <div class="col-md-5">
+                      <div class="d-grid gap-2">
+                      <button class="mb-2 me-2 btn-pill btn btn-warning"   *ngIf="showedit"    [disabled]="!profileForm.valid"  (click)="editusertes()">Edit
+                      </button>
+                    </div>
+                    </div>
+      
+                    <div class="col-md-5">
+                      <div class="d-grid gap-2">
+                      <button class="mb-2 me-2 btn-pill btn btn-info"   *ngIf="!showedit"  [disabled]="!profileForm.valid"  (click)="simpantes()">Simpan
+                      </button>
+                    </div>
+                    </div>
+                    
+                </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <!-- <span style="font-size: 14px;padding: 10px;">Cari Tarif Detail</span> -->
+                      <label for="exampleSelect" class="form-label">Cari Tes </label>
+                      
+                      <input type="text" class="form-control ms-2" (keyup)="cariteslab($event)" >
+                     
+                    </div>
+                    <div class="col-md-4">
+                      <label for="exampleSelect" class="form-label">Jenis Golongan</label>
+                      <!-- (change)="onChange($event.target.value)">
+                          
+                      (change)="updateSorting($event)" -->
+                      <select  [(ngModel)]="jenistc" id="exampleSelect" class="form-select" (change)="onChange($event.target.value)">
+                        <option value="">-Pilih Jenis-</option>
+                        <option *ngFor="let x of tgolonganlab " value="{{x.kdmetode}}">{{x.metode}}</option>
+                       
+                      </select>
+                    </div>
+                   
+                    </div>
+
+
+                    <div class="table-responsive tableFixHead">
+                     
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                         
+                          <th scope="col">Tes</th>
+                          <th scope="col">Metode</th>
+                          <th scope="col">Golongan</th>
+                          <th scope="col">Ref Laki-Laki</th>
+                          <th scope="col">Ref Perempuan</th>
+                           <th scope="col">Urutan Tes</th>
+                          <th scope="col">ACT</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let x of tlisttes">
+                          <!-- <td  *ngIf="x.status == 0"  style="font-size: 11px;color:red;font-style: italic;">{{x.nama}}</td> -->
+                          <td  style="font-size: 11px;color:black">{{x.nama}}</td>
+                          <td  style="font-size: 11px;color:black">{{x.metode}}</td>
+                          <td  style="font-size: 11px;color:black">{{x.golongan}}</td>
+                          <td  style="font-size: 11px;color:black">{{x.reflaki}}  ({{x.lmin}} - {{x.lmax}})</td>
+                          <td  style="font-size: 11px;color:black">{{x.refperempuan}} ({{x.pmin}} - {{x.pmax}})</td>
+                          <td  style="font-size: 11px;color:black">{{x.nourut}}</td>
+                          <td>
+              
+                            
+              
+                            <div class="badge bg-pill bg-warning" (click)="pilihtes(x.kdlab,x.nama,x.kdgolongan,x.golongan,
+                            x.kdmetode,x.metode,x.satuan,x.reflaki,x.refperempuan,x.lmin,x.lmax,x.pmin,x.pmax,x.nourut)">E</div>
+                         
+           
+                            <div class="badge bg-pill bg-danger" (click)="hapustes(x.kdlab,x.nama,x.kdgolongan,x.golongan,
+                            x.kdmetode,x.metode,x.satuan,x.reflaki,x.refperempuan,x.lmin,x.lmax,x.pmin,x.pmax)" >X</div>
+                           
+                          </td>
+                        </tr>
+                      
+                      </tbody>
+                    </table>
+                  </div>
+
+
+                </div>
+              </div>
+        
+           
+           
+          <!-- </form> -->
+         
+  
+         
+  
+        </div>
+      
+       
+      </div>
+      </ng-template>
+    </li>
+
+    <li ngbNavItem>
+      <a ngbNavLink (click)="klikmetodelab()"><span>Golongan Tes</span></a>
+      <ng-template ngbNavContent>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card main-card mb-3">
+              <div class="card-header">
+        
+                <b>Tambah Golongan</b>
+                <!-- <p [innerHTML]="body | nl2br"></p> -->
+                
+              </div>
+              <div class="card-body">
+                <!-- <form> -->
+                  <form [formGroup]="golonganform" >
+                  <div class="position-relative mb-3">
+                    <label for="exampleEmail" class="form-label">Nama Golongan</label>
+                    <input formControlName="namatamplates"  [(ngModel)]="namatamplates"   placeholder="Nama Golongan" type="text" class="form-control">
+                  </div>
+              </form>
+                 
+        
+                
+               
+                 
+               
+                    <div class="row">
+                      <div class="col-md-2">
+                        <div class="d-grid gap-2">
+                        <button class="mb-2 me-2 btn-pill btn btn-focus" (click)="batals()">Batal
+                        </button>
+                      </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="d-grid gap-2">
+                        <button class="mb-2 me-2 btn-pill btn btn-warning"  *ngIf="showeditg"  [disabled]="!golonganform.valid" (click)="edituserx()">Edit
+                        </button>
+                      </div>
+                      </div>
+        
+                      <div class="col-md-5">
+                        <div class="d-grid gap-2">
+                        <button class="mb-2 me-2 btn-pill btn btn-info"   *ngIf="!showeditg"  [disabled]="!golonganform.valid" (click)="simpanx()">Simpan
+                        </button>
+                      </div>
+                      </div>
+                      
+                  </div>
+                 
+                 
+                <!-- </form> -->
+               
+        
+               
+        
+              </div>
+            
+             
+            </div>
+          
+            
+          </div>
+          <div class="col-md-6">
+         <div class="card main-card mb-3">
+          <div class="row">
+            <div class="col-md-8">
+           
+              <span style="font-size: 14px;padding: 10px;">Cari Golongan</span>
+           
+              <input type="text" class="form-control ms-2" (keyup)="cariuserxxx($event)" >
+             
+            </div>
+           
+            </div>
+            
+             
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                     
+                      <th scope="col">Nama</th>
+                  
+                      <th scope="col">Act</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let x of tgolonganlab">
+                      <td  style="font-size: 11px;color:black;font-weight: bold;">{{x.metode}}</td>
+                      
+                      <td>
+          
+                        
+          
+                        <div class="badge bg-pill bg-warning" 
+                       (click)="pilihsubjek(x.kdmetode,x.metode)">E</div>
+                     
+                        
+                        <div class="badge bg-pill bg-danger" (click)="deletesubjekx(x.kdmetode,x.metode)">X</div>
+                       
+                      </td>
+                    </tr>
+                  
+                  </tbody>
+                </table>
+        
+        
+            </div>
+            </div>
+        </div>
+        </ng-template>
+      </li>
+
+      
+    <li ngbNavItem>
+      <a ngbNavLink (click)="klikmetodelab()"><span >Metode Lab</span></a>
+      <ng-template ngbNavContent>
+     
+
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card main-card mb-3">
+              <div class="card-header">
+        
+                <b>Tambah Metode</b>
+                <!-- <p [innerHTML]="body | nl2br"></p> -->
+                
+              </div>
+              <div class="card-body">
+                <!-- <form> -->
+                  <form [formGroup]="golonganform" >
+                  <div class="position-relative mb-3">
+                    <label for="exampleEmail" class="form-label">Nama Metode</label>
+                    <input formControlName="namatamplates"  [(ngModel)]="namatamplates"   placeholder="Nama Metode" type="text" class="form-control">
+                  </div>
+                  </form>
+              
+                 
+        
+                
+               
+                 
+               
+                    <div class="row">
+                      <div class="col-md-2">
+                        <div class="d-grid gap-2">
+                        <button class="mb-2 me-2 btn-pill btn btn-focus" (click)="batals()">Batal
+                        </button>
+                      </div>
+                      </div>
+                      <div class="col-md-5">
+                        <div class="d-grid gap-2">
+                        <button class="mb-2 me-2 btn-pill btn btn-warning" *ngIf="showeditg"  [disabled]="!golonganform.valid"  (click)="edituser()">Edit
+                        </button>
+                      </div>
+                      </div>
+        
+                      <div class="col-md-5">
+                        <div class="d-grid gap-2">
+                        <button class="mb-2 me-2 btn-pill btn btn-info"  *ngIf="!showeditg"  [disabled]="!golonganform.valid"  (click)="simpan()">Simpan
+                        </button>
+                      </div>
+                      </div>
+                      
+                  </div>
+                 
+                 
+                <!-- </form> -->
+               
+        
+               
+        
+              </div>
+            
+             
+            </div>
+          
+            
+          </div>
+          <div class="col-md-6">
+         <div class="card main-card mb-3">
+          <div class="row">
+            <div class="col-md-8">
+           
+              <span style="font-size: 14px;padding: 10px;">Cari Metode</span>
+           
+              <input type="text" class="form-control ms-2" (keyup)="cariuserxx($event)" >
+             
+            </div>
+           
+            </div>
+            
+             
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                     
+                      <th scope="col">Nama</th>
+                  
+                      <th scope="col">Act</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let x of tmetodelab">
+                      <td  style="font-size: 11px;color:black;font-weight: bold;">{{x.metode}}</td>
+                      
+                      <td>
+          
+                        
+          
+                        <div class="badge bg-pill bg-warning" 
+                       (click)="pilihsubjek(x.kdmetode,x.metode)">E</div>
+                     
+                        
+                        <div class="badge bg-pill bg-danger" (click)="deletesubjek(x.kdmetode,x.metode)">X</div>
+                       
+                      </td>
+                    </tr>
+                  
+                  </tbody>
+                </table>
+        
+        
+            </div>
+            </div>
+        </div>
+       
+
+
+        </ng-template>
+      </li>
+
+
+   
+
+
+</ul>
+<div [ngbNavOutlet]="nav"></div>
