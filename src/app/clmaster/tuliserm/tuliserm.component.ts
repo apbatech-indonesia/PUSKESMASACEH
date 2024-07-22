@@ -1285,7 +1285,7 @@ dataKajianAwal: any
     this.hostName = this.hots.getHostname();
   
 
-    this.URLINVOICE = 'https://tabaro.clenicapp.com/';
+    this.URLINVOICE = 'https://'+this.hostName+'/';
 
 
     
@@ -2418,84 +2418,84 @@ if(this.form1.value.gender === 'Kode'){
 }
 caridiag(a){
 
-console.log(this.form.value.gender)
+// console.log(this.form.value.gender)
+//   if(a.target.value === ''){
+//     this.dignosshow = false;
+
+//   }else{
+
+//     this.authService.caridiagnosaa(a.target.value)
+//     .subscribe(data => {
+
+
+//       if(data.metaData.code == 200){
+//         this.diagnose = data.response.list;
+//         this.dignosshow = true;
+
+//       }else{
+//         this.dignosshow = false;
+                
+
+//       }
+    
+   
+     
+//     })
+
+//   }
+
+
+
+if(this.form.value.gender === 'Kode'){
+
   if(a.target.value === ''){
     this.dignosshow = false;
 
   }else{
+    this.dignosshow = true;
 
-    this.authService.caridiagnosaa(a.target.value)
+    this.authService.caridiagnosa(a.target.value,'3')
     .subscribe(data => {
-
-
-      if(data.metaData.code == 200){
-        this.diagnose = data.response.list;
-        this.dignosshow = true;
-
-      }else{
-        this.dignosshow = false;
-                
-
-      }
+      this.diagnos = data;
     
-   
+     
      
     })
+  }
+}else if(this.form.value.gender === 'Diagnosa'){
 
+  if(a.target.value === ''){
+    this.dignosshow = false;
+
+  }else{
+    this.dignosshow = true;
+
+    this.authService.caridiagnosa(a.target.value,'2')
+    .subscribe(data => {
+      this.diagnos = data;
+    
+     
+     
+    })
   }
 
+}else{
+  if(a.target.value === ''){
+    this.dignosshow = false;
 
+  }else{
+    this.dignosshow = true;
 
-// if(this.form.value.gender === 'Kode'){
-
-//   if(a.target.value === ''){
-//     this.dignosshow = false;
-
-//   }else{
-//     this.dignosshow = true;
-
-//     this.authService.caridiagnosa(a.target.value,'3')
-//     .subscribe(data => {
-//       this.diagnos = data;
+    this.authService.caridiagnosa(a.target.value,'2')
+    .subscribe(data => {
+      this.diagnos = data;
     
      
      
-//     })
-//   }
-// }else if(this.form.value.gender === 'Diagnosa'){
+    })
+  }
 
-//   if(a.target.value === ''){
-//     this.dignosshow = false;
-
-//   }else{
-//     this.dignosshow = true;
-
-//     this.authService.caridiagnosa(a.target.value,'2')
-//     .subscribe(data => {
-//       this.diagnos = data;
-    
-     
-     
-//     })
-//   }
-
-// }else{
-//   if(a.target.value === ''){
-//     this.dignosshow = false;
-
-//   }else{
-//     this.dignosshow = true;
-
-//     this.authService.caridiagnosa(a.target.value,'2')
-//     .subscribe(data => {
-//       this.diagnos = data;
-    
-     
-     
-//     })
-//   }
-
-// }
+}
 
  
     
@@ -2926,11 +2926,7 @@ tindaktarif:any;
           
           if(this.dash === 'BPJS'){
 
-            // if(this.verifikasiangka == 1){
-            //   this.toastr.error("silahkan cek kembali ttv yang terdapat pesan merah")
-            //   return;
-
-            // }
+           
 
             this.diagnosaambilpcareall()
             const swalWithBootstrapButtons = Swal.mixin({
@@ -3129,6 +3125,10 @@ tindaktarif:any;
               }
             });
 
+
+
+            // akhir
+
          
             // let body={
             //   "tanggalperiksa": this.tglpriksa,
@@ -3159,7 +3159,7 @@ tindaktarif:any;
                 
                 // })
         
-            
+                this.simpanambil()
           }else{
            
 

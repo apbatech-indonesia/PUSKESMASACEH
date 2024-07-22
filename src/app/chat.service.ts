@@ -13,7 +13,7 @@ export class ChatService {
     console.log("Socket URL : " + this.socketUrl)
   }
 
-  socket = io('http://sockettabaro.clenic.id/');
+  socket = io('https://socketpkm.clenic.id/');
 
   public sendMessage(message: any) {
     console.log('sendMessage: ', message)

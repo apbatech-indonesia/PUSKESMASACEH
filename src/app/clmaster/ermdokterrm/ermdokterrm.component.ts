@@ -301,7 +301,7 @@ this.tampilpas = data;
        
         }
         // x.noantrian,x.kddokter,x.namdokter,x.kodeantrian,x.notransaksi,x.kdpolibpjs,x.noasuransi,x.tglpriksa
-        panggil(a,kddokter,namdokter,kodeantrian,notransaksi,kdpolibpjs,noasuransi,tglpriksa){
+        panggil(a,kddokter,namdokter,kodeantrian,notransaksi,kdpolibpjs,noasuransi,tglpriksa,pasien,nampoli){
 
           const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
@@ -332,7 +332,9 @@ swalWithBootstrapButtons.fire({
           antrian:a,
           kddokter:kddokter,
           namadokter:namdokter,
-          kdantrian:kodeantrian
+          kdantrian:kodeantrian,
+          pasien:pasien,
+          nampoli:nampoli
         }
   
       ])

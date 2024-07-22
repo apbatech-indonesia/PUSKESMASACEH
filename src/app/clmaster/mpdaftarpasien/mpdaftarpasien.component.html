@@ -31,7 +31,7 @@
       <div class="card-body">
         <!-- <form> -->
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-md-2">
             <form [formGroup]="profileForm">
               <div class="position-relative mb-3">
                 <label for="exampleEmail" class="form-label" style="color:black">Nomor RM</label>
@@ -53,25 +53,31 @@
                 </div>
     
                 </div> -->
-          <div class="col-md-6">
-            <form [formGroup]="profileForm">
-              <div class="position-relative mb-3">
-                <label for="exampleEmail" class="form-label" style="color:black">Nama Pasien</label>
+                <div class="col-md-8">
+                  <form [formGroup]="profileForm" >
+                  <div class="position-relative mb-3">
+                    <!-- <label for="exampleEmail" class="form-label"  style="color:black">Nama Pasien</label>
+                
+                    <div class="badge bg-pill bg-success" (click)="openLarge(content6)"> Tambah Pasien </div>
+                   
+                    <input  formControlName="pasienin" maxlength="250" [(ngModel)]="pasienin"   placeholder="Pasien" type="text" class="form-control">
+                     -->
+  
+                     <label for="exampleEmail" class="form-label"  style="color:black">Nama Pasien</label>
+                     <div class="input-group">
+                        
+                      <input  formControlName="pasienin" maxlength="250" [(ngModel)]="pasienin"   placeholder="Pasien" type="text" class="form-control">
+                         <button class="btn btn-outline-primary" (click)="openLarge(content6)" type="button"><i class="fa fa-search me-1"></i>Cari</button>
+                     </div>
+  
+  
+  
+                  </div>
+                  </form>
+      
+                </div>
 
-                <div class="badge bg-pill bg-success" (click)="openLarge(content6)"> Tambah Pasien </div>
-                <!-- <div class="badge bg-pill bg-warning" (click)="openLarge(content6)"> Verif Mobile </div> -->
-                <!-- <ng-select [items]="tpasien" bindLabel="NAMAPASIEN"  bindValue="KD_PASIEN" placeholder="Supplier" [(ngModel)]="pasien" (keyup)="caripasien($event)" (click)="pilihpasien()"  >
-                  </ng-select> -->
-                <input formControlName="pasienin" maxlength="250" [(ngModel)]="pasienin" placeholder="Pasien"
-                  type="text" class="form-control">
-
-
-              </div>
-            </form>
-
-          </div>
-
-          <div class="col-md-3">
+          <div class="col-md-2">
             <div class="position-relative mb-3">
               <label for="exampleEmail" class="form-label" style="color:black">IDHS</label>
               <input [(ngModel)]="idhs" disabled type="text" class="form-control">
@@ -448,7 +454,7 @@
             <form [formGroup]="profileForm">
               <div class="position-relative mb-3">
                 <label for="exampleSelect" class="form-label" style="color:black">Detail Kelompok</label>
-                <select formControlName="cusid" [(ngModel)]="cusid" class="form-select"  (change)="cekbpjs(content7)">
+                <select formControlName="cusid" [(ngModel)]="cusid" class="form-select"  >
                   <option value="">-PILIH-</option>
 
                   <option *ngFor="let x of tcusid" value="{{x.kdkostumerd}}">{{x.nama}}</option>

@@ -20,7 +20,7 @@ import { WebsocketService } from "../../websocket.service";
 // import { ChatService } from '../../chat.service';
 
 import { io } from "socket.io-client";
-import { GlobalComponent } from 'src/app/clmaster/Globals/global.component';
+
 
 @Component({
   selector: 'app-ermdisplay',
@@ -101,7 +101,9 @@ newMessage = '';
 messageList: string[] = [];
 private socketx: any;
 public data: any;
-private baseUrl = GlobalComponent.urlsocketv;
+vidioid:any;
+
+
   constructor(
     // private chatService: ChatService,
     private WebsocketService: WebsocketService,
@@ -137,11 +139,12 @@ this.kolom2 = datax2.kolom2
 
 const datax3 = JSON.parse(localStorage.getItem("dokterkolom3"));
 
-this.kddokter3 = datax3.kddokter2
-this.namadokter3 = datax3.namadokter2
-this.kolom3 = datax3.kolom2
 
+this.kddokter3 = datax3.kddokter3
+this.namadokter3 = datax3.namadokter3
+this.kolom3 = datax3.kolom3
 
+console.log(this.namadokter3)
 this.authService.klinikper(this.kdklinik)
 .subscribe(
   data => {
@@ -157,34 +160,30 @@ this.authService.klinikper(this.kdklinik)
 )
 
 
-// this.authService.dokterperpoli(this.kdcabang,this.kduser)
-// .subscribe(
-//   data => {
-//   for(let x of data){
-//     this.namadoker = x.namdokter
-//   }
-   
-// },
-//   Error => {
-
-//    console.log(Error)
-//   }
-// )
-
-
 
   
 
-this.socketx = io('http://sockettabaro.clenic.id/');
+this.socketx = io("https://socketpkm.clenic.id/");
 
+console.log(localStorage.getItem("urlsocket"))
+this.vidioid = localStorage.getItem("vidioid");
   }
+
+
+  // playerVars = {
+  //   autoplay: 1,
+  //   loop: 1,
+  //   playlist: localStorage.getItem("vidioid") // Required for loop to work, use the same video ID
+  // };
+
+
   sendMessage() {
     // this.chatService.sendMessage(this.newMessage);
     // this.newMessage = '';
   }
   pasienNotificationl(msg)
   {
- this.tmptotal()
+//  this.tmptotal()
     
 
   }
@@ -198,54 +197,59 @@ this.socketx = io('http://sockettabaro.clenic.id/');
   // }
 
 rec:any;
-pasienv:any;
-nampoliv:any;
+nampasien:any;
+nampoli:any;
 
-  ngOnInit() {
 
-    this.socketx.on('message', data => {
-      this.data = data;
+ngOnInit() {
+
+  this.socketx.on('message', data => {
+    this.data = data;
+
+
+
+   
+    const pesan =  JSON.parse(data);
+  
+       
+    var kddokter
+    var noantrian
+    var namdokter
+    var kdantrian;
+    var nampoli;
+    var namapasien;
+
+
+    for(let x of pesan){
+      // console.log(x.namadokter)
+      kddokter = x.kddokter
+      noantrian = x.antrian
+      namdokter = x.namadokter
+      kdantrian = x.kdantrian
+      nampoli = x.nampoli
+      namapasien = x.pasien
+      
+   
+    }
+    const userData = JSON.parse(localStorage.getItem('userDatacl'));
+
+ 
+if('Antrian' === userData['userData']['hakakses']){
+  this.namadoker = namdokter;
+  this.terbilangx(noantrian)
+  this.Nomor = noantrian;
 
  
 
-     
-      const pesan =  JSON.parse(data);
-    
-         
-      var kddokter
-      var noantrian
-      var namdokter
-      var kdantrian;
-      var pasien;
-      var nampoli;
+   if(kddokter === this.kddokter1){
+    this.noantrian1 = noantrian
+    this.kdnoantrian1 = kdantrian
+    this.kdantrian = kdantrian
+    this.nampasien = namapasien;
+    this.nampoli = nampoli
 
-      for(let x of pesan){
-        // console.log(x.namadokter)
-        kddokter = x.kddokter
-        noantrian = x.antrian
-        namdokter = x.namadokter
-        kdantrian = x.kdantrian
-        pasien = x.pasien
-        nampoli = x.nampoli
-      }
-      const userData = JSON.parse(localStorage.getItem('userDatacl'));
-
-   
-  if('Antrian' === userData['userData']['hakakses']){
-    this.namadoker = namdokter;
-    this.terbilangx(noantrian)
-    this.Nomor = noantrian;
- 
-   
-
-     if(kddokter === this.kddokter1){
-      this.noantrian1 = noantrian
-      this.kdnoantrian1 = kdantrian
-      this.kdantrian = kdantrian
-      this.pasienv = pasien
-      this.nampoliv = nampoli
-      let audiox =new Audio();
-      audiox.src='https://knm.clenicapp.com/clenic/sound/NOMORANTRIAN.wav';
+    let audiox =new Audio();
+    audiox.src='https://knm.clenicapp.com/clenic/sound/NOMORANTRIAN.wav';
 audiox.play();
 var indexl=1
 audiox.onended = function() {
@@ -258,12 +262,13 @@ indexl++;
 
 
 
-     }else if(kddokter === this.kddokter2){
+   }else if(kddokter === this.kddokter2){
 
 this.noantrian2 = noantrian
 this.kdnoantrian2 = kdantrian      
 this.kdantrian = kdantrian
-
+this.nampasien = namapasien;
+this.nampoli = nampoli
 let audiox =new Audio();
 audiox.src='https://knm.clenicapp.com/clenic/sound/NOMORANTRIAN.wav';
 audiox.play();
@@ -277,15 +282,15 @@ indexl++;
 }
 
 
-     }else if(kddokter === this.kddokter3){
+   }else if(kddokter === this.kddokter3){
 
-      this.noantrian3 = noantrian
-      this.kdnoantrian3 = kdantrian      
-      this.kdantrian = kdantrian
+    this.noantrian3 = noantrian
+    this.kdnoantrian3 = kdantrian      
+    this.kdantrian = kdantrian
 
 
-      let audiox =new Audio();
-      audiox.src='https://knm.clenicapp.com/clenic/sound/NOMORANTRIAN.wav';
+    let audiox =new Audio();
+    audiox.src='https://knm.clenicapp.com/clenic/sound/NOMORANTRIAN.wav';
 audiox.play();
 var indexl=1
 audiox.onended = function() {
@@ -295,17 +300,17 @@ audiox.play();
 indexl++;
 }
 }
-               }
+             }
+
+
 
   
-
-    
-  }
- 
+}
 
 
-     
-    });
+
+   
+  });
 
 
 //     this.WebsocketService.messages.subscribe(msg => {
@@ -317,11 +322,11 @@ indexl++;
 //       // console.log(msg['pesan']);
 
 //       console.log(msg)
-      
+    
 //       const pesan = JSON.parse(msg['pesan']);
 
 
-    
+  
 //       var kddokter
 //       var noantrian
 //       var namdokter
@@ -333,17 +338,17 @@ indexl++;
 //         noantrian = x.antrian
 //         namdokter = x.namadokter
 //         kdantrian = x.kdantrian
-     
+   
 //       }
 //       const userData = JSON.parse(localStorage.getItem('userDatacl'));
 
-   
+ 
 //   if('Antrian' === userData['userData']['hakakses']){
 //     this.namadoker = namdokter;
 //     this.terbilangx(noantrian)
 //     this.Nomor = noantrian;
+
  
-   
 
 //      if(kddokter === this.kddokter1){
 //       this.noantrian1 = noantrian
@@ -403,103 +408,103 @@ indexl++;
 // }
 //                }
 
+
+
   
-
-    
 //   }
- 
 
 
-      
-      
-      
+
     
+    
+    
+  
 //     });
 
 
-    // this.chatService.getNewMessage().subscribe((message: string) => {
-    //   this.received.push(message);
-    //   console.log(  this.received)
+  // this.chatService.getNewMessage().subscribe((message: string) => {
+  //   this.received.push(message);
+  //   console.log(  this.received)
 
-   
+ 
 
 
-    // })
+  // })
 
-   
-    
-    this.tmptotal()
-    
+ 
   
-  }
+  // this.tmptotal()
+  
+
+}
 totalpass:number=0;
 totalpassbelum:number=0;
 totalpasssudah:number=0;
 tampilpas:any;
 
-  tmptotal(){
-    this.authService.pasienperdokter(this.kdcabang,this.kduser,'BELUM','','2','')
-    .subscribe(
-      data => {
-this.totalpass = data.length
-this.tampilpas = data;
+//   tmptotal(){
+//     this.authService.pasienperdokter(this.kdcabang,this.kduser,'BELUM','','2','')
+//     .subscribe(
+//       data => {
+// this.totalpass = data.length
+// this.tampilpas = data;
 
   
-    },
-      Error => {
+//     },
+//       Error => {
     
-       console.log(Error)
-      }
-    )
+//        console.log(Error)
+//       }
+//     )
   
   
-    this.authService.pasienperdokter(this.kdcabang,this.kduser,'BELUM','','1','')
-    .subscribe(
-      data => {
-this.totalpassbelum = data.length
+//     this.authService.pasienperdokter(this.kdcabang,this.kduser,'BELUM','','1','')
+//     .subscribe(
+//       data => {
+// this.totalpassbelum = data.length
       
   
-    },
-      Error => {
+//     },
+//       Error => {
     
-       console.log(Error)
-      }
-    )
+//        console.log(Error)
+//       }
+//     )
 
 
 
-    this.authService.pasienperdokter(this.kdcabang,this.kduser,'SUDAH','','1','')
-    .subscribe(
-      data => {
-this.totalpasssudah = data.length
+//     this.authService.pasienperdokter(this.kdcabang,this.kduser,'SUDAH','','1','')
+//     .subscribe(
+//       data => {
+// this.totalpasssudah = data.length
       
   
-    },
-      Error => {
+//     },
+//       Error => {
     
-       console.log(Error)
-      }
-    )
+//        console.log(Error)
+//       }
+//     )
 
   
-  }
+//   }
  
 
-  cpasien(a){
-    this.authService.pasienperdokter(this.kdcabang,this.kduser,'BELUM',a.target.value,'2','')
-    .subscribe(
-      data => {
+//   cpasien(a){
+//     this.authService.pasienperdokter(this.kdcabang,this.kduser,'BELUM',a.target.value,'2','')
+//     .subscribe(
+//       data => {
 
-this.tampilpas = data;
+// this.tampilpas = data;
 
   
-    },
-      Error => {
+//     },
+//       Error => {
     
-       console.log(Error)
-      }
-    )
-  }
+//        console.log(Error)
+//       }
+//     )
+//   }
    
   norm :''
   kdpoli:''
@@ -510,7 +515,7 @@ this.tampilpas = data;
   pasien:''
   tgllahir:''
   noantrian:''
-  nampoli:''
+
   namdokter:''
   namacus:''
   costumer:''
@@ -693,11 +698,10 @@ setTimeout(() => {
       audio.src='https://knm.clenicapp.com/clenic/sound/' + strings[index]+'.wav';
       audio.play();
       index++;
-
-   
+     
   }
 
-
+ 
 
   };
 }, 1800);
@@ -816,7 +820,29 @@ pilihdokter2(a,b,c){
 
 }
 
+ns(a){
 
+  localStorage.setItem('dokterkolom3', JSON.stringify({
+    kddokter3:'NS',
+    namadokter3:'Nursetation',
+    kolom3:'3'
+  }) )
+
+
+  setTimeout(() => {
+    
+    
+    const data = JSON.parse(localStorage.getItem("dokterkolom3"));
+
+    this.kddokter3 = data.kddokter3
+    this.namadokter3 = data.namadokter3
+    this.kolom3 = data.kolom3
+
+
+  }, 200);
+
+  this.showdoktertiga= false;
+}
 pilihdokter3(a,b,c){
   localStorage.setItem('dokterkolom3', JSON.stringify({
     kddokter3:a,

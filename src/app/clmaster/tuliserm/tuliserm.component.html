@@ -328,10 +328,11 @@ padding:20px">
 
 
                         <input [(ngModel)]="tb" placeholder="Tb" type="number" class="form-control" (keyup)="ctb($event)">
-                        <span *ngIf="showtb" style="font-size:9px;color: red;">Refrensi TB di  : 30 sd 250 cm</span>
+                        
                         <div class="input-group-text">
                           <span class="">CM</span>
                         </div>
+                        <!-- <span *ngIf="showtb" style="font-size:9px;color: red;">Refrensi TB di  : 30 sd 250 cm</span> -->
                       </div>
 
                     </div>
@@ -416,12 +417,12 @@ padding:20px">
 
                     <select id="exampleSelect" class="form-select" [(ngModel)]="alergi">
 
-                      <option  *ngFor="let x of ttalergi" value="{{x.kdAlergi}}">{{x.nmAlergi}}</option>
-                      <!-- <option value="01">Seafood</option>
+                      <!-- <option  *ngFor="let x of ttalergi" value="{{x.kdAlergi}}">{{x.nmAlergi}}</option> -->
+                      <option value="01">Seafood</option>
                       <option value="02">Gandum</option>
                       <option value="03">Susu Sapi</option>
                       <option value="04">Kacang-Kacangan</option>
-                      <option value="05">Makanan Lain</option> -->
+                      <option value="05">Makanan Lain</option>
 
 
                     </select>
@@ -433,21 +434,21 @@ padding:20px">
                   <div class="col-md-4">
                     <label for="exampleEmail" class="form-label">ALERGI UDARA</label>
                     <select id="exampleSelect" class="form-select" [(ngModel)]="alergiudara">
-                      <option  *ngFor="let x of talergiudara" value="{{x.kdAlergi}}">{{x.nmAlergi}}</option>
+                      <!-- <option  *ngFor="let x of talergiudara" value="{{x.kdAlergi}}">{{x.nmAlergi}}</option> -->
 
 
-                      <!-- <option value="00">Tidak ada</option>
+                      <option value="00">Tidak ada</option>
                       <option value="01">Udara Panas</option>
                      
                       <option value="02">Udara Dingin</option>
-                      <option value="03">Udara Kotor</option> -->
+                      <option value="03">Udara Kotor</option>
                       </select>
                   </div>
 
                   <div class="col-md-4">
                     <label for="exampleEmail" class="form-label">ALERGI OBAT</label>
                     <select id="exampleSelect" class="form-select" [(ngModel)]="alergiobat">
-                      <!-- <option value="00">Tidak ada</option>
+                      <option value="00">Tidak ada</option>
                       <option value="01">Antibiotik</option>
                      
                       <option value="02">Antiinflamasi</option>
@@ -455,8 +456,8 @@ padding:20px">
                       <option value="04">Aspirin</option>
                       <option value="05">Kortikosteroid</option>
                       <option value="06">Insulin</option>
-                      <option value="07">Obat-obat lain</option> -->
-                      <option  *ngFor="let x of talergiobat" value="{{x.kdAlergi}}">{{x.nmAlergi}}</option>
+                      <option value="07">Obat-obat lain</option>
+                      <!-- <option  *ngFor="let x of talergiobat" value="{{x.kdAlergi}}">{{x.nmAlergi}}</option> -->
 
 
                       </select>
@@ -1187,7 +1188,7 @@ padding:20px">
                                 </tr>
                               </thead>
                               <tbody>
-                                <!-- <tr *ngFor="let x of diagnos" (click)="pilihdiag(x.kddiagnosa,x.diagnosa)"
+                                <tr *ngFor="let x of diagnos" (click)="pilihdiag(x.kddiagnosa,x.diagnosa)"
                                   style="font-size: 12px;color:black">
 
                                   <td>
@@ -1208,9 +1209,9 @@ padding:20px">
                                     </button>
 
                                   </td>
-                                </tr> -->
+                                </tr>
 
-                                <tr *ngFor="let x of diagnose" 
+                                <!-- <tr *ngFor="let x of diagnose" 
                                 style="font-size: 12px;color:black" (click)="pilihdiag(x.kdDiag,x.nmDiag)">
 
                                 <td>
@@ -1226,10 +1227,7 @@ padding:20px">
                                 <td>
                                   <p *ngIf="x.nonSpesialis" style="color: red;font-size: 12px;">Rujuk dengan TACC</p>
 
-                                  <!-- <div class="mb-2 me-2 badge rounded-pill bg-danger"  ></div> -->
-
-                                  <!-- <div class="mb-2 me-2 badge rounded-pill bg-success"  *ngIf="x.nonSpesialis == 'false'" >da</div> -->
-
+                 
 
                                 </td>
                                 <td>
@@ -1237,7 +1235,7 @@ padding:20px">
                                   </button>
 
                                 </td>
-                              </tr>
+                              </tr> -->
                                 
 
                               </tbody>
@@ -1696,12 +1694,12 @@ padding:20px">
                     <div class="position-relative mb-3">
                       <label for="exampleSelect" class="form-label"  style="color:black">Kode Prognosa</label>
                       <select  [(ngModel)]="kdprognosa" id="exampleSelect" class="form-select">
-                        <option *ngFor="let x of tprognosa" value="{{x.kdPrognosa}}"  >{{x.nmPrognosa}}</option>
-                        <!-- <option value="01" >Sanam (Sembuh)</option>
+                        <!-- <option *ngFor="let x of tprognosa" value="{{x.kdPrognosa}}"  >{{x.nmPrognosa}}</option> -->
+                        <option value="01" >Sanam (Sembuh)</option>
                         <option value="02" >Bonam (Baik)</option>
                         <option value="03" >Malam (Buruk/Jelek)</option>
                         <option value="04" >Dubia Ad Sanam</option>
-                        <option value="05" >Dubia Ad Malam</option> -->
+                        <option value="05" >Dubia Ad Malam</option>
                       </select>
                     </div>
 
@@ -1714,13 +1712,14 @@ padding:20px">
                         <label for="exampleSelect" class="form-label"  style="color:black">Status Pulang</label>
                         <select  id="exampleSelect" class="form-select" [(ngModel)]="stspulang"
                          (change)="pilihstatuspulang($event.target.value,contentkonsultasi)">
-                          <option *ngFor="let x of tpulang" value="{{x.kdStatusPulang}}">{{x.nmStatusPulang}}</option>
-                          <!-- <option value="3" >Berobat Jalan</option>
+                          <!-- <option *ngFor="let x of tpulang" value="{{x.kdStatusPulang}}">{{x.nmStatusPulang}}</option> -->
+                          <option value="3" >Berobat Jalan</option>
                           <option value="4" >Rujuk Lanjut</option>
                           <option value="6" >Rujuk Internal</option>
+                          <option value="0" >Sembuh</option>
                         
                           <option value="1" >Meninggal</option>
-                          <option value="5" >Rawat Inap</option> -->
+                          <option value="5" >Rawat Inap</option>
                         </select>
                       </div>
     

@@ -86,7 +86,7 @@ this.kdcabang = this.userDetails.kdcabang;
     this.hostName = this.hots.getHostname();
   
 
-    this.URLINVOICE = 'https://tabaro.clenicapp.com/';
+    this.URLINVOICE = 'https://'+this.hostName+'/';
 
     this.klinik()
    

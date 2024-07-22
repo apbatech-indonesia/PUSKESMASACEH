@@ -4,7 +4,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 let apiurl = localStorage.getItem('baseUrl');
-let apiurx = 'https://tabaro.clenicapp.com/clenic/'
+let apiurx =  localStorage.getItem('baseUrx');;
 @Injectable({
   providedIn: 'root'
 })

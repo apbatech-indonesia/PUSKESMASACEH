@@ -1,23 +1,12 @@
 <div class="app-inner-layout">
  
-  <!-- <div *ngFor="let message of messageList">
-    <li >
-        {{message}}
-    </li>
-  </div>
-  
-  <input
-    [(ngModel)]="newMessage"
-    (keyup)="$event.keyCode == 13 && sendMessage()"
-  />
-  <button (click)="sendMessage()">Send Message</button>
 
 
-  {{received}} -->
-  <div class="main-card mb-3 card"  style="height: 650px;">
+
+  <div class="main-card mb-3 card"  style="height: 700px;">
     <div class="card-header" style="background-color: #19bc9d;text-align: center;">
       <div>
-        <b class="menu-header-title text-capitalize" style="color:black;font-size: 35px;">ANTREAN DIPANGGIL {{subheading}}</b>
+        <b class="menu-header-title text-capitalize" style="color:black;font-size: 35px;">ANTREAN  {{subheading}}</b>
       </div>
    
     </div>
@@ -30,17 +19,16 @@
           <tr>
             <td>
 
-              <div class="main-card mb-3 card" style="height: 500px;width: 700px;border: 5px grey solid;">
+              <div class="main-card mb-3 card" style="height: 400px;width: 700px;border: 5px grey solid;">
                 <div style="text-align: center;">
-                  <b style="font-size: 50px;">{{namadoker}}</b><br>
-                  <b style="font-size: 50px;">{{nampoliv}}</b><br>
+                  <b style="font-size: 25px;">{{namadoker}}</b><br>
+                  <b style="font-size: 25px;">{{nampoli}}</b><br>
                   <b style="font-size: 150px;">{{kdantrian}} {{Nomor}}</b><br>
 
                   <hr style="border: 2px grey solid;">
-
+                  <b style="font-size: 25px;">{{nampasien}}</b>
+             
                  
-                  <b style="font-size: 40px;">{{pasienv}}</b>
-                 <br>
                 </div>
               
                 </div>
@@ -53,7 +41,7 @@
                 <video id="my_video_1" class="video-js vjs-default-skin" width="700px" height="400px" controls preload="none" autoplay loop
                 poster="https://dokar.kendalkab.go.id/upload/berita/1658038600Aplikasi%20JKN.jpg"
                 data-setup='{ "aspectRatio":"700:370", "playbackRates": [1, 1.5, 2] }'>
-                <source src="https://knm.clenicapp.com/clenic/sound/bhinao.mp4" type='video/mp4' />
+                <source src="https://tabaro.clenicapp.com/clenic/sound/bhina.mp4" type='video/mp4' />
                
               </video>
 
@@ -74,35 +62,87 @@
 
 
 
- 
-</div>
-
-
-<table>
+    <table>
   
 
-  <tr>
+      <tr>
+        <td style="border: 1px solid black;">  
+          
+          <div class="card-header" style="background-color:  #19bc9d;text-align: center;">
+          <div>
+            <b class="menu-header-title text-capitalize" style="color:black;font-size: 35px;">
+              <input [(ngModel)]="namadokter1" style="background-color:  #19bc9d;border: 1px  #19bc9d dashed;"
+              (keyup)="caridokter($event)"
+              placeholder="Nama Dokter" > 
+            </b>
+
+        
+
+
+          </div>
+
+
+       
+        </div>
+
+        <table class="table table-striped" *ngIf="showdoktersatu" >
+         
+          <tbody>
+            <tr *ngFor="let x of tdokter" style="font-size: 12px;color:black">
+           
+              <td >
+                
+              {{x.namdokter}}
+              </td>
+       
+        
+              <td >
+                <button class="mb-2 me-2 btn-hover-shine btn-pill btn btn-success" (click)="pilihdokter1(x.kddokter,x.namdokter,'1')" >+
+                </button>
+
+              </td>
+            </tr>
+         
+          </tbody>
+        </table>
+       
+
+
+
+        <div class="card-header" style="height: 150px;border: 1px solid grey;text-align: center;">
+          <div style="text-align: center">
+           <b style="font-size: 70px;color:black;">{{kdnoantrian1}} {{noantrian1}}</b>
+          </div>
+
+
+       
+        </div>
+
+
+    </td>
+
     <td style="border: 1px solid black;">  
-      
+          
       <div class="card-header" style="background-color:  #19bc9d;text-align: center;">
       <div>
         <b class="menu-header-title text-capitalize" style="color:black;font-size: 35px;">
-          <input [(ngModel)]="namadokter1" style="background-color:  #19bc9d;border: 1px  #19bc9d dashed;"
-          (keyup)="caridokter($event)"
+          <input [(ngModel)]="namadokter2" style="background-color:  #19bc9d;border: 1px  #19bc9d dashed;"
+          (keyup)="caridokterx($event)"
           placeholder="Nama Dokter" > 
         </b>
-
-    
 
 
       </div>
 
 
+      
+
+
    
     </div>
 
-    <table class="table table-striped" *ngIf="showdoktersatu" >
-     
+    <table class="table table-striped" *ngIf="showdokterdua" >
+         
       <tbody>
         <tr *ngFor="let x of tdokter" style="font-size: 12px;color:black">
        
@@ -113,7 +153,7 @@
    
     
           <td >
-            <button class="mb-2 me-2 btn-hover-shine btn-pill btn btn-success" (click)="pilihdokter1(x.kddokter,x.namdokter,'1')" >+
+            <button class="mb-2 me-2 btn-hover-shine btn-pill btn btn-success" (click)="pilihdokter2(x.kddokter,x.namdokter,'2')" >+
             </button>
 
           </td>
@@ -127,7 +167,7 @@
 
     <div class="card-header" style="height: 150px;border: 1px solid grey;text-align: center;">
       <div style="text-align: center">
-       <b style="font-size: 70px;color:black;">{{kdnoantrian1}} {{noantrian1}}</b>
+       <b style="font-size: 70px;color:black;">{{kdnoantrian2}} {{noantrian2}}</b>
       </div>
 
 
@@ -137,13 +177,17 @@
 
 </td>
 
+
+
+
+
 <td style="border: 1px solid black;">  
-      
+          
   <div class="card-header" style="background-color:  #19bc9d;text-align: center;">
   <div>
     <b class="menu-header-title text-capitalize" style="color:black;font-size: 35px;">
-      <input [(ngModel)]="namadokter2" style="background-color:  #19bc9d;border: 1px  #19bc9d dashed;"
-      (keyup)="caridokterx($event)"
+      <input [(ngModel)]="namadokter3" style="background-color:  #19bc9d;border: 1px  #19bc9d dashed;"
+      (keyup.enter)="ns($event)"
       placeholder="Nama Dokter" > 
     </b>
 
@@ -157,7 +201,7 @@
 
 </div>
 
-<table class="table table-striped" *ngIf="showdokterdua" >
+<table class="table table-striped" *ngIf="showdoktertiga" >
      
   <tbody>
     <tr *ngFor="let x of tdokter" style="font-size: 12px;color:black">
@@ -169,7 +213,7 @@
 
 
       <td >
-        <button class="mb-2 me-2 btn-hover-shine btn-pill btn btn-success" (click)="pilihdokter2(x.kddokter,x.namdokter,'2')" >+
+        <button class="mb-2 me-2 btn-hover-shine btn-pill btn btn-success" (click)="pilihdokter3(x.kddokter,x.namdokter,'2')" >+
         </button>
 
       </td>
@@ -183,7 +227,7 @@
 
 <div class="card-header" style="height: 150px;border: 1px solid grey;text-align: center;">
   <div style="text-align: center">
-   <b style="font-size: 70px;color:black;">{{kdnoantrian2}} {{noantrian2}}</b>
+   <b style="font-size: 70px;color:black;">{{kdnoantrian3}} {{noantrian3}}</b>
   </div>
 
 
@@ -196,68 +240,12 @@
 
 
 
+      </tr>
 
-<td style="border: 1px solid black;">  
-      
-<div class="card-header" style="background-color:  #19bc9d;text-align: center;">
-<div>
-<b class="menu-header-title text-capitalize" style="color:black;font-size: 35px;">
-  <input [(ngModel)]="namadokter3" style="background-color:  #19bc9d;border: 1px  #19bc9d dashed;"
-  (keyup)="caridoktery($event)"
-  placeholder="Nama Dokter" > 
-</b>
-
-
+      </table>
 </div>
 
 
 
-
-
-
-</div>
-
-<table class="table table-striped" *ngIf="showdoktertiga" >
- 
-<tbody>
-<tr *ngFor="let x of tdokter" style="font-size: 12px;color:black">
-
-  <td >
-    
-  {{x.namdokter}}
-  </td>
-
-
-  <td >
-    <button class="mb-2 me-2 btn-hover-shine btn-pill btn btn-success" (click)="pilihdokter3(x.kddokter,x.namdokter,'2')" >+
-    </button>
-
-  </td>
-</tr>
-
-</tbody>
-</table>
-
-
-
-
-<div class="card-header" style="height: 150px;border: 1px solid grey;text-align: center;">
-<div style="text-align: center">
-<b style="font-size: 70px;color:black;">{{kdnoantrian3}} {{noantrian3}}</b>
-</div>
-
-
-
-</div>
-
-
-</td>
-
-
-
-
-  </tr>
-
-  </table>
   
 </div>
