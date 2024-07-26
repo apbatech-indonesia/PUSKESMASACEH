@@ -1420,7 +1420,7 @@ jasabhp:number=0;
   ttarifbpjs:any;
 
   ctbpjs(a){
-    this.FarmasijualService.listtarif(this.kdtkp)
+    this.authService.listtariff(this.kdtkp)
     .subscribe(
       data => {
       

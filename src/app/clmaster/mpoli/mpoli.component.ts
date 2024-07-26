@@ -83,7 +83,7 @@ tpolibpjs:any;
     // this.tmppuser()
     this.kl()
 
-    this.FarmasijualService.cekpoli()
+    this.authService.cekpoli()
     .subscribe(
       data => {
         this.tpolibpjs = data.response.list;

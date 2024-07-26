@@ -153,7 +153,7 @@ export class MpdaftarpasienComponent implements OnInit {
 
 this.showloadss = true;
 
-    this.FarmasijualService.ceksatusehat(notransaksi)
+    this.authService.ceksatusehat(notransaksi)
     .subscribe(
       data => {
 
@@ -670,7 +670,7 @@ this.showloadss = true;
   tjadwal:any;
 
   pilihjadwal(a){
-    this.FarmasijualService.cekjadwal(this.dokter,this.kliniks)
+    this.authService.cekjadwal(this.dokter,this.kliniks)
     .subscribe(
       data => {
         this.tjadwal = data;
@@ -856,7 +856,7 @@ jadwal:any='';
                                 }}
                         
                                 console.log(bodyAddFktp)
-                                this.FarmasijualService.addantrean(bodyAddFktp)
+                                this.authService.addantrean(bodyAddFktp)
                                 .subscribe(response => {
                                   if(response.metadata.code == 200){
                                 
@@ -1175,18 +1175,18 @@ jadwal:any='';
 
 
 
-        this.authService.panggil(a, this.noref)
-          .subscribe(
-            data => {
+        // this.authService.panggil(a, this.noref)
+        //   .subscribe(
+        //     data => {
 
-              console.log(data)
+        //       console.log(data)
 
-            },
-            Error => {
+        //     },
+        //     Error => {
 
-              console.log(Error)
-            }
-          )
+        //       console.log(Error)
+        //     }
+        //   )
 
 
 
@@ -1301,18 +1301,18 @@ jadwal:any='';
 
 
 
-        this.authService.panggil(a, this.noref)
-          .subscribe(
-            data => {
+        // this.authService.panggil(a, this.noref)
+        //   .subscribe(
+        //     data => {
 
-              console.log(data)
+        //       console.log(data)
 
-            },
-            Error => {
+        //     },
+        //     Error => {
 
-              console.log(Error)
-            }
-          )
+        //       console.log(Error)
+        //     }
+        //   )
 
 
 
@@ -1608,7 +1608,7 @@ jadwal:any='';
                           "nomorkartu": noasuransi,
                           "alasan": value
                         }}
-                        this.FarmasijualService.batal(bodyFktp).subscribe(
+                        this.authService.batal(bodyFktp).subscribe(
                           data => {
 
                             if(data.metadata.code == 200){
@@ -1695,7 +1695,7 @@ jadwal:any='';
                   "nomorkartu": noasuransi,
                   "alasan": value
                 }}
-                this.FarmasijualService.batal(bodyFktp).subscribe(
+                this.authService.batal(bodyFktp).subscribe(
                   data => {
   
                     if(data.metadata.code == 200){
@@ -1753,7 +1753,7 @@ jadwal:any='';
                   "nomorkartu": noasuransi,
                   "alasan": value
                 }}
-                this.FarmasijualService.batal(bodyFktp).subscribe(
+                this.authService.batal(bodyFktp).subscribe(
                   data => {
 
                     if(data.metadata.code == 200){
@@ -1884,7 +1884,7 @@ jadwal:any='';
           //                 "nomorkartu": noasuransi,
           //                 "alasan": value
           //               }}
-          //               this.FarmasijualService.batal(bodyFktp).subscribe(
+          //               this.authService.batal(bodyFktp).subscribe(
           //                 data => {
 
           //                   if(data.metadata.code == 200){
@@ -2172,7 +2172,7 @@ jadwal:any='';
 
     } else {
 
-      this.FarmasijualService.cekjadwal(this.tantrian[0].kddokter,this.tantrian[0].kdpoli)
+      this.authService.cekjadwal(this.tantrian[0].kddokter,this.tantrian[0].kdpoli)
       .subscribe(
         data => {
 
@@ -2223,7 +2223,7 @@ kirimantrean(){
       }}
 
       console.log(bodyAddFktp)
-      this.FarmasijualService.addantrean(bodyAddFktp)
+      this.authService.addantrean(bodyAddFktp)
       .subscribe(response => {
         if(response.metadata.code == 200){
       
@@ -2359,7 +2359,7 @@ setTimeout(() => {
     }}
 
     console.log(bodyAddFktp)
-    this.FarmasijualService.addantrean(bodyAddFktp)
+    this.authService.addantrean(bodyAddFktp)
     .subscribe(response => {
       if(response.metadata.code == 200){
     

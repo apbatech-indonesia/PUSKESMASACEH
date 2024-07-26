@@ -116,7 +116,7 @@ export class MdokterComponent implements OnInit {
       )
 
 
-      this.FarmasijualService.cekdokter()
+      this.authService.cekdokter()
       .subscribe(
         data => {
           this.tdokterbpjs = data.response.list;

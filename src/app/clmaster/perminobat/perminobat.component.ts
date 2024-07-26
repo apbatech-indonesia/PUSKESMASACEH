@@ -1405,7 +1405,7 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
                 this.tmpnonr()
               }, 200);
         
-              this.FarmasijualService.deleteobat(this.nokunjungan,kdObatSK)
+              this.authService.deleteobat(this.nokunjungan,kdObatSK)
               .subscribe(
                 data => {
                 
@@ -2885,7 +2885,7 @@ this.ketshow = kdtamplated
       if (result.value) {
   
 
-        this.FarmasijualService.deleteobat(this.nokunjungan,a)
+        this.authService.deleteobat(this.nokunjungan,a)
                         .subscribe(
                           data => {
                           
@@ -2929,7 +2929,7 @@ this.ketshow = kdtamplated
   }
 klikcekobatbpjs(){
 
-  this.FarmasijualService.cekkunjunganobat(this.nokunjungan)
+  this.authService.cekkunjunganobat(this.nokunjungan)
   .subscribe(
     data => {
  

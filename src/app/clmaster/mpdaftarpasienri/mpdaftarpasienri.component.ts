@@ -902,18 +902,18 @@ sss(){
 
 
 
-          this.authService.panggil(a,this.noref)
-          .subscribe(
-            data => {
+        //   this.authService.panggil(a,this.noref)
+        //   .subscribe(
+        //     data => {
             
-         console.log(data)
+        //  console.log(data)
           
-          },
-            Error => {
+        //   },
+        //     Error => {
           
-             console.log(Error)
-            }
-          )
+        //      console.log(Error)
+        //     }
+        //   )
 
 
 
@@ -1028,18 +1028,18 @@ sss(){
 
 
 
-          this.authService.panggil(a,this.noref)
-          .subscribe(
-            data => {
+        //   this.authService.panggil(a,this.noref)
+        //   .subscribe(
+        //     data => {
             
-         console.log(data)
+        //  console.log(data)
           
-          },
-            Error => {
+        //   },
+        //     Error => {
           
-             console.log(Error)
-            }
-          )
+        //      console.log(Error)
+        //     }
+        //   )
 
 
 

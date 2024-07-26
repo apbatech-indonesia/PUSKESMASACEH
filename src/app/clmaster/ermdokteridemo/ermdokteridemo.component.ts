@@ -533,7 +533,7 @@ swalWithBootstrapButtons.fire({
     //     this.not = notransaksi;
     //     this.showloading = true;
     
-    //     this.FarmasijualService.ceksatusehat(notransaksi)
+    //     this.authService.ceksatusehat(notransaksi)
     //     .subscribe(
     //       data => {
     

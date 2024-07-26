@@ -86,6 +86,7 @@ files1: TreeNode[];
 selectedFile: TreeNode;
 private socketx: any;
 private baseUrl = GlobalComponent.urlsocketv;
+
   constructor(public hots:SampleService,private datepipe: DatePipe,private modalService: NgbModal,public toastr: ToastrService, private authService:ApiserviceService , private fb: FormBuilder) {
   
 
@@ -98,6 +99,7 @@ this.kdcabang = this.userDetails.kdcabang;
 this.username = this.userDetails.username; 
 this.tgldari = this.datepipe.transform(this.myDate, 'yyyy-MM-dd')
 this.tglp = this.datepipe.transform(this.myDate, 'yyyy-MM-dd')
+this.socketx =io("https://socketpkm.clenic.id/");
   }
   profileForm = this.fb.group({
     jbayari: ['',Validators.required]
@@ -108,6 +110,7 @@ thasillab:any;
 resepbaru:any='';
 
   ngOnInit() {
+    this.URLINVOICE = localStorage.getItem('baseUrx');
 
     this.hostName = this.hots.getHostname();
     this.socketx.on('message', data => {
@@ -136,14 +139,15 @@ resepbaru:any='';
       if(kddokter === 'Laborat'){
 
         this.resepbaru ='Ada Resep Baru'
+        this.toastr.success("Permintaan baru")
         let audiox =new Audio();
-        audiox.src='https://darulkamal.clenicapp.com/clenic/sound/resep.wav';
+        audiox.src='https://knm.clenicapp.com/clenic/sound/notify.wav';
         audiox.play();
 
         var indexl=1
 audiox.onended = function() {
 if(indexl < 2){
-audiox.src='https://darulkamal.clenicapp.com/clenic/sound/RESEP.wav';
+audiox.src='https://knm.clenicapp.com/clenic/sound/notify.wav';
 audiox.play();
 indexl++;
 }
@@ -161,7 +165,8 @@ indexl++;
     this.hostName = this.hots.getHostname();
   
 
-    this.URLINVOICE = 'https://'+this.hostName+'/';
+ 
+   
 
     // this.tmptarif()
     
@@ -2073,33 +2078,33 @@ setTimeout(() => {
         // clenic/report/invoiceall.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&username=fredy'; 
 
         cetakinvoice(){
-          var redirectWindow = window.open(this.URLINVOICE+'clenic/report/invoicealllab.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&username='+this.username, '_blank','location=no,toolbar=no,height=570,width=520,scrollbars=yes,status=yes');
+          var redirectWindow = window.open(this.URLINVOICE+'/report/invoicealllab.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&username='+this.username, '_blank','location=no,toolbar=no,height=570,width=520,scrollbars=yes,status=yes');
           redirectWindow.location;
        }
 
        cetakikwitansi(){
-        var redirectWindow = window.open(this.URLINVOICE+'clenic/report/kwitansilab.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&username='+this.username, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
+        var redirectWindow = window.open(this.URLINVOICE+'/report/kwitansilab.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&username='+this.username, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
         redirectWindow.location;
      }
 
      lihathasilfix(){
-      var redirectWindow = window.open(this.URLINVOICE+'clenic/report/hasillab.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang, '_blank','location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes');
+      var redirectWindow = window.open(this.URLINVOICE+'/report/hasillab.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang, '_blank','location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes');
       redirectWindow.location;
    }
 
    cetakhasil(){
-    var redirectWindow = window.open(this.URLINVOICE+'clenic/report/hasillabprint.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang, '_blank','location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes');
+    var redirectWindow = window.open(this.URLINVOICE+'/report/hasillabprint.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang, '_blank','location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes');
     redirectWindow.location;
  }
 
 
 
      klihats(){
-      var redirectWindow = window.open(this.URLINVOICE+'clenic/report/pendapatanrj.php?kdcabang='+this.kdcabang+'&username='+this.username+'&tgldari='+this.tglp+'&tglsampai='+this.tglpp+'&status='+this.kliniks+'&kdpoli='+this.kliniks, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
+      var redirectWindow = window.open(this.URLINVOICE+'/report/pendapatanrj.php?kdcabang='+this.kdcabang+'&username='+this.username+'&tgldari='+this.tglp+'&tglsampai='+this.tglpp+'&status='+this.kliniks+'&kdpoli='+this.kliniks, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
       redirectWindow.location;
      }
      klihatsx(){
-      var redirectWindow = window.open(this.URLINVOICE+'clenic/report/pendapatanrjuser.php?kdcabang='+this.kdcabang+'&username='+this.username+'&tgldari='+this.tglp+'&tglsampai='+this.tglpp+'&status='+this.kliniks+'&kdpoli='+this.kliniks, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
+      var redirectWindow = window.open(this.URLINVOICE+'/report/pendapatanrjuser.php?kdcabang='+this.kdcabang+'&username='+this.username+'&tgldari='+this.tglp+'&tglsampai='+this.tglpp+'&status='+this.kliniks+'&kdpoli='+this.kliniks, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
       redirectWindow.location;
 
     

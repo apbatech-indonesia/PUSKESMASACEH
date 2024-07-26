@@ -152,7 +152,7 @@ thasillab:any;
     this.hostName = this.hots.getHostname();
   
 
-    this.URLINVOICE = 'https://'+this.hostName+'/';
+    this.URLINVOICE =localStorage.getItem('baseUrx');
 
     // this.tmptarif()
     
@@ -2000,33 +2000,33 @@ setTimeout(() => {
         // clenic/report/invoiceall.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&username=fredy'; 
 
         cetakinvoice(){
-          var redirectWindow = window.open(this.URLINVOICE+'clenic/report/invoicealllab.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&username='+this.username, '_blank','location=no,toolbar=no,height=570,width=520,scrollbars=yes,status=yes');
+          var redirectWindow = window.open(this.URLINVOICE+'/report/invoicealllab.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&username='+this.username, '_blank','location=no,toolbar=no,height=570,width=520,scrollbars=yes,status=yes');
           redirectWindow.location;
        }
 
        cetakikwitansi(){
-        var redirectWindow = window.open(this.URLINVOICE+'clenic/report/kwitansilab.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&username='+this.username, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
+        var redirectWindow = window.open(this.URLINVOICE+'/report/kwitansilab.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&username='+this.username, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
         redirectWindow.location;
      }
 
      lihathasilfix(){
-      var redirectWindow = window.open(this.URLINVOICE+'clenic/report/hasilrad.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&kdproduk='+this.kdprod, '_blank','location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes');
+      var redirectWindow = window.open(this.URLINVOICE+'/report/hasilrad.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&kdproduk='+this.kdprod, '_blank','location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes');
       redirectWindow.location;
    }
 
    cetakhasil(){
-    var redirectWindow = window.open(this.URLINVOICE+'clenic/report/hasilradprint.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&kdproduk='+this.kdprod, '_blank','location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes');
+    var redirectWindow = window.open(this.URLINVOICE+'/report/hasilradprint.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&kdproduk='+this.kdprod, '_blank','location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes');
     redirectWindow.location;
  }
 
 
 
      klihats(){
-      var redirectWindow = window.open(this.URLINVOICE+'clenic/report/pendapatanrj.php?kdcabang='+this.kdcabang+'&username='+this.username+'&tgldari='+this.tglp+'&tglsampai='+this.tglpp+'&status='+this.kliniks+'&kdpoli='+this.kliniks, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
+      var redirectWindow = window.open(this.URLINVOICE+'/report/pendapatanrj.php?kdcabang='+this.kdcabang+'&username='+this.username+'&tgldari='+this.tglp+'&tglsampai='+this.tglpp+'&status='+this.kliniks+'&kdpoli='+this.kliniks, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
       redirectWindow.location;
      }
      klihatsx(){
-      var redirectWindow = window.open(this.URLINVOICE+'clenic/report/pendapatanrjuser.php?kdcabang='+this.kdcabang+'&username='+this.username+'&tgldari='+this.tglp+'&tglsampai='+this.tglpp+'&status='+this.kliniks+'&kdpoli='+this.kliniks, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
+      var redirectWindow = window.open(this.URLINVOICE+'/report/pendapatanrjuser.php?kdcabang='+this.kdcabang+'&username='+this.username+'&tgldari='+this.tglp+'&tglsampai='+this.tglpp+'&status='+this.kliniks+'&kdpoli='+this.kliniks, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
       redirectWindow.location;
 
     
@@ -2036,7 +2036,7 @@ setTimeout(() => {
      klihatsxx(){
    
 
-      var redirectWindow = window.open(this.URLINVOICE+'clenic/report/rekaptransfer.php?kdcabang='+this.kdcabang+'&username='+this.username+'&tgldari='+this.tglp+'&tglsampai='+this.tglpp+'&status='+this.kliniks+'&kdpoli='+this.kliniks, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
+      var redirectWindow = window.open(this.URLINVOICE+'/report/rekaptransfer.php?kdcabang='+this.kdcabang+'&username='+this.username+'&tgldari='+this.tglp+'&tglsampai='+this.tglpp+'&status='+this.kliniks+'&kdpoli='+this.kliniks, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
       redirectWindow.location;
 
      }

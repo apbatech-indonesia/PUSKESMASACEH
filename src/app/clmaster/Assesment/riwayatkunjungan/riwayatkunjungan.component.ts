@@ -143,7 +143,7 @@ this.kduser = this.userDetails.kduser;
 
 
     setTimeout(() => {
-      this.FarmasijualService.getriwayatkunjungan(this.noasuransi)
+      this.authService.getriwayatkunjungan(this.noasuransi)
       .subscribe(
         data => {
 

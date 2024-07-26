@@ -2791,7 +2791,7 @@ tindaktarif:any;
       
          
       
-          //     this.FarmasijualService.panggil(body)
+          //     this.authService.panggil(body)
           //     .subscribe(response => {
               
              
@@ -3517,7 +3517,7 @@ console.log(body)
       
 
         setTimeout(() => {
-          this.FarmasijualService.listobatkirimpcare(this.kdcabang,this.notrans)
+          this.authService.listobatkirimpcare(this.kdcabang,this.notrans)
           .subscribe(
             data => {
   
@@ -3543,7 +3543,7 @@ console.log(body)
   console.log(bodyx);
   
   
-  this.FarmasijualService.simpanobatbpjs(bodyx)
+  this.authService.simpanobatbpjs(bodyx)
   .subscribe(response => {
   
   console.log(response)    
@@ -3794,7 +3794,7 @@ console.log(body)
         }, 200);
       
         setTimeout(() => {
-          this.FarmasijualService.listobatkirimpcare(this.kdcabang,this.notrans)
+          this.authService.listobatkirimpcare(this.kdcabang,this.notrans)
           .subscribe(
             data => {
   
@@ -3820,7 +3820,7 @@ console.log(body)
   console.log(bodyx);
   
   
-  this.FarmasijualService.simpanobatbpjs(bodyx)
+  this.authService.simpanobatbpjs(bodyx)
   .subscribe(response => {
   
     if(response.metaData.code == 201){
@@ -4063,7 +4063,7 @@ console.log(body)
         }, 200);
       
         setTimeout(() => {
-          this.FarmasijualService.listobatkirimpcare(this.kdcabang,this.notrans)
+          this.authService.listobatkirimpcare(this.kdcabang,this.notrans)
           .subscribe(
             data => {
   
@@ -4089,7 +4089,7 @@ console.log(body)
   console.log(bodyx);
   
   
-  this.FarmasijualService.simpanobatbpjs(bodyx)
+  this.authService.simpanobatbpjs(bodyx)
   .subscribe(response => {
   
     if(response.metaData.code == 201){
@@ -4322,7 +4322,7 @@ console.log(body)
           }, 200);
         
           setTimeout(() => {
-            this.FarmasijualService.listobatkirimpcare(this.kdcabang,this.notrans)
+            this.authService.listobatkirimpcare(this.kdcabang,this.notrans)
             .subscribe(
               data => {
     
@@ -4348,7 +4348,7 @@ console.log(body)
     console.log(bodyx);
     
     
-    this.FarmasijualService.simpanobatbpjs(bodyx)
+    this.authService.simpanobatbpjs(bodyx)
     .subscribe(response => {
     
       if(response.metaData.code == 201){
@@ -4591,7 +4591,7 @@ console.log(body)
         }, 200);
       
         setTimeout(() => {
-          this.FarmasijualService.listobatkirimpcare(this.kdcabang,this.notrans)
+          this.authService.listobatkirimpcare(this.kdcabang,this.notrans)
           .subscribe(
             data => {
   
@@ -4617,7 +4617,7 @@ console.log(body)
   console.log(bodyx);
   
   
-  this.FarmasijualService.simpanobatbpjs(bodyx)
+  this.authService.simpanobatbpjs(bodyx)
   .subscribe(response => {
   
     if(response.metaData.code == 201){
@@ -4857,7 +4857,7 @@ console.log(body)
           }, 200);
         
           setTimeout(() => {
-            this.FarmasijualService.listobatkirimpcare(this.kdcabang,this.notrans)
+            this.authService.listobatkirimpcare(this.kdcabang,this.notrans)
             .subscribe(
               data => {
     
@@ -4883,7 +4883,7 @@ console.log(body)
     console.log(bodyx);
     
     
-    this.FarmasijualService.simpanobatbpjs(bodyx)
+    this.authService.simpanobatbpjs(bodyx)
     .subscribe(response => {
     
       if(response.metaData.code == 201){
@@ -8131,7 +8131,7 @@ console.log(Error)
                               }
                             }
 
-                            this.FarmasijualService.addtindakan(bodytindakaan)
+                            this.authService.addtindakan(bodytindakaan)
                             .subscribe(response => {
       
       
@@ -8576,7 +8576,7 @@ console.log(Error)
             }).then((result) => {
               if (result.value) {
 
-                this.FarmasijualService.deletetindakan(this.nokunjungan,kdTindakanSK)
+                this.authService.deletetindakan(this.nokunjungan,kdTindakanSK)
                 .subscribe(response => {
   
   

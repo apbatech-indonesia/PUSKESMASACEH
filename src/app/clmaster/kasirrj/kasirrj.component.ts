@@ -288,7 +288,7 @@ nokunjungan:any='';
           this.kdtarif = kdtarif
           this.kelas = kelas;
           this.igdorrj = sts;
-          this.FarmasijualService.ceknokunjungan(notransaksi)
+          this.authService.ceknokunjungan(notransaksi)
           .subscribe(
             data => {
             
@@ -914,7 +914,7 @@ tperawat:any;
                           "hasil": harga
                         }
                       }
-                      this.FarmasijualService.addtindakan(bodytindakaan)
+                      this.authService.addtindakan(bodytindakaan)
                       .subscribe(response => {
 
 
@@ -1111,7 +1111,7 @@ tperawat:any;
 
 
           
-              this.FarmasijualService.deletetindakan(this.nokunjungan,kdTindakanSK)
+              this.authService.deletetindakan(this.nokunjungan,kdTindakanSK)
               .subscribe(response => {
 
 

@@ -12,6 +12,9 @@ export class FarmasijualService {
 
   constructor(public http: HttpClient) { }
 
+
+  
+
   ceknokunjungan(notransasal):Observable<any>{
     return this.http.get(apiurx+'master/ceknokunjungan.php?notransaksi='+notransasal)
   }

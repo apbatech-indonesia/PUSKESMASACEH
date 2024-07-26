@@ -334,7 +334,8 @@ swalWithBootstrapButtons.fire({
           namadokter:namdokter,
           kdantrian:kodeantrian,
           pasien:pasien,
-          nampoli:nampoli
+          nampoli:nampoli,
+          kdcabang:this.kdcabang
         }
   
       ])
@@ -352,7 +353,7 @@ swalWithBootstrapButtons.fire({
 
         var data:any;
 
-        this.FarmasijualService.panggil(body)
+        this.authService.panggil(body)
         .subscribe(response => {
         
        
@@ -389,7 +390,7 @@ swalWithBootstrapButtons.fire({
 
         var data:any;
 
-        this.FarmasijualService.panggil(body)
+        this.authService.panggil(body)
         .subscribe(response => {
         
        

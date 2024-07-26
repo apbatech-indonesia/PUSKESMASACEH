@@ -30,6 +30,7 @@ import { io } from "socket.io-client";
 WebsocketService,
 
   ],
+  
 })
 export class ermdisplayComponent implements OnInit {
   toggleMobileSidebar: any;
@@ -218,7 +219,8 @@ ngOnInit() {
     var kdantrian;
     var nampoli;
     var namapasien;
-
+    var kdcabang;
+    
 
     for(let x of pesan){
       // console.log(x.namadokter)
@@ -228,6 +230,7 @@ ngOnInit() {
       kdantrian = x.kdantrian
       nampoli = x.nampoli
       namapasien = x.pasien
+      kdcabang = x.kdcabang
       
    
     }
@@ -239,15 +242,14 @@ if('Antrian' === userData['userData']['hakakses']){
   this.terbilangx(noantrian)
   this.Nomor = noantrian;
 
- 
-
-   if(kddokter === this.kddokter1){
-    this.noantrian1 = noantrian
-    this.kdnoantrian1 = kdantrian
-    this.kdantrian = kdantrian
+      this.kdantrian = kdantrian
     this.nampasien = namapasien;
     this.nampoli = nampoli
 
+
+  if(this.kdcabang === kdcabang){
+
+    // alert("as")
     let audiox =new Audio();
     audiox.src='https://knm.clenicapp.com/clenic/sound/NOMORANTRIAN.wav';
 audiox.play();
@@ -261,46 +263,69 @@ indexl++;
 }
 
 
+  }
+ 
 
-   }else if(kddokter === this.kddokter2){
+//    if(kddokter === this.kddokter1){
+//     this.noantrian1 = noantrian
+//     this.kdnoantrian1 = kdantrian
+//     this.kdantrian = kdantrian
+//     this.nampasien = namapasien;
+//     this.nampoli = nampoli
 
-this.noantrian2 = noantrian
-this.kdnoantrian2 = kdantrian      
-this.kdantrian = kdantrian
-this.nampasien = namapasien;
-this.nampoli = nampoli
-let audiox =new Audio();
-audiox.src='https://knm.clenicapp.com/clenic/sound/NOMORANTRIAN.wav';
-audiox.play();
-var indexl=1
-audiox.onended = function() {
-if(indexl < 2){
-audiox.src='https://knm.clenicapp.com/clenic/sound/' + kdantrian +'.wav';
-audiox.play();
-indexl++;
-}
-}
-
-
-   }else if(kddokter === this.kddokter3){
-
-    this.noantrian3 = noantrian
-    this.kdnoantrian3 = kdantrian      
-    this.kdantrian = kdantrian
+//     let audiox =new Audio();
+//     audiox.src='https://knm.clenicapp.com/clenic/sound/NOMORANTRIAN.wav';
+// audiox.play();
+// var indexl=1
+// audiox.onended = function() {
+// if(indexl < 2){
+// audiox.src='https://knm.clenicapp.com/clenic/sound/' + kdantrian +'.wav';
+// audiox.play();
+// indexl++;
+// }
+// }
 
 
-    let audiox =new Audio();
-    audiox.src='https://knm.clenicapp.com/clenic/sound/NOMORANTRIAN.wav';
-audiox.play();
-var indexl=1
-audiox.onended = function() {
-if(indexl < 2){
-audiox.src='https://knm.clenicapp.com/clenic/sound/' + kdantrian +'.wav';
-audiox.play();
-indexl++;
-}
-}
-             }
+
+//    }else if(kddokter === this.kddokter2){
+
+// this.noantrian2 = noantrian
+// this.kdnoantrian2 = kdantrian      
+// this.kdantrian = kdantrian
+// this.nampasien = namapasien;
+// this.nampoli = nampoli
+// let audiox =new Audio();
+// audiox.src='https://knm.clenicapp.com/clenic/sound/NOMORANTRIAN.wav';
+// audiox.play();
+// var indexl=1
+// audiox.onended = function() {
+// if(indexl < 2){
+// audiox.src='https://knm.clenicapp.com/clenic/sound/' + kdantrian +'.wav';
+// audiox.play();
+// indexl++;
+// }
+// }
+
+
+//    }else if(kddokter === this.kddokter3){
+
+//     this.noantrian3 = noantrian
+//     this.kdnoantrian3 = kdantrian      
+//     this.kdantrian = kdantrian
+
+
+//     let audiox =new Audio();
+//     audiox.src='https://knm.clenicapp.com/clenic/sound/NOMORANTRIAN.wav';
+// audiox.play();
+// var indexl=1
+// audiox.onended = function() {
+// if(indexl < 2){
+// audiox.src='https://knm.clenicapp.com/clenic/sound/' + kdantrian +'.wav';
+// audiox.play();
+// indexl++;
+// }
+// }
+//              }
 
 
 

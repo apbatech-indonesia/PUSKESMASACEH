@@ -189,7 +189,7 @@ console.log(this.akses)
 
 
 
-this.socketx = io(this.baseUrl);
+this.socketx =io("https://socketpkm.clenic.id/");
   }
 
 
@@ -521,7 +521,35 @@ ontot(a){
 showed:boolean;
 totaled:any;
 resepbaru:any='';
+
+requestPermission() {
+  if ('Notification' in window) {
+    Notification.requestPermission().then(permission => {
+      if (permission === 'granted') {
+        console.log('Notification permission granted.');
+      } else {
+        console.log('Notification permission denied.');
+      }
+    });
+  }
+}
+triggerNotification() {
+  this.showNotification('New Message', {
+    body: 'You have received a new message.',
+    icon: './assets/images/nyeri/0.png'  // Tambahkan path ke icon notifikasi Anda
+  });
+}
+
+showNotification(title: string, options?: NotificationOptions) {
+  if ('Notification' in window) {
+    if (Notification.permission === 'granted') {
+      new Notification(title, options);
+    }
+  }
+}
+
   ngOnInit() {
+    this.requestPermission();
     this.hostName = this.hots.getHostname();
     this.socketx.on('message', data => {
    
@@ -548,15 +576,17 @@ resepbaru:any='';
 
       if(kddokter === 'Farmasi'){
 
+        this.triggerNotification()
+        this.toastr.success("Ada Resep Baru")
         this.resepbaru ='Ada Resep Baru'
         let audiox =new Audio();
-        audiox.src='https://darulkamal.clenicapp.com/clenic/sound/resep.wav';
+        audiox.src='https://knm.clenicapp.com/clenic/sound/RESEP.wav';
         audiox.play();
 
         var indexl=1
 audiox.onended = function() {
 if(indexl < 2){
-audiox.src='https://darulkamal.clenicapp.com/clenic/sound/RESEP.wav';
+audiox.src='https://knm.clenicapp.com/clenic/sound/RESEP.wav';
 audiox.play();
 indexl++;
 }
@@ -2640,7 +2670,7 @@ this.authService.simpanbeliverif(body)
     
     }}
        
-    this.FarmasijualService.simpanobatbpjs(bodyx)
+    this.authService.simpanobatbpjs(bodyx)
     .subscribe(response => {
     
       console.log(response)
@@ -2973,7 +3003,7 @@ pilihpasienx(norm,kddokter,kdkostumerd,notransaksi,
       }
 
 
-      this.FarmasijualService.ceknokunjungan(notransaksi)
+      this.authService.ceknokunjungan(notransaksi)
       .subscribe(
         data => {
         
@@ -3404,6 +3434,7 @@ this.kete = '';
     totalrjsaja:number;
     lstbank:any;
     bayarmodal(content,contex){
+      // this.triggerNotification()
       this.jbayari=''
 
 
