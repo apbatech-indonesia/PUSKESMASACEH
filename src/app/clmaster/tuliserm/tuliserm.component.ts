@@ -1605,6 +1605,49 @@ idpasien:any='';
                     this.idpasien = x.idpasien
                     this.kdtkp = x.kdtkp
 
+
+                    this.authService.tmpbpjs(this.noasuransi,'noka')
+                    .subscribe(
+                      data => {
+                
+                
+                        if (data) {
+                
+                          console.log(data.metaData.code)
+                          if (data.metaData.code == 200) {
+                
+                           
+                            this.kdprovider = data.response.kdProviderPst.kdProvider
+                      
+                
+                
+                          }else if (data.metaData.code == 204) {
+                          
+                
+                
+                            // this.showloading = false;
+                          } else {
+                            // this.toastr.error(data.response.message, 'Eror');
+                            // this.showloading = false;
+                          }
+                
+                          
+                        } else {
+                          this.toastr.error('Gagal Memuat Data BPJS', 'Eror');
+                          this.showloading = false;
+                
+                        }
+                
+                
+                      },
+                      Error => {
+                
+                        console.log(Error)
+                      }
+                    )
+
+
+
                     // if(x.ri === 'No'){
                     //   this.kdtkp = '10';
 
@@ -3276,7 +3319,8 @@ dari = '0';
                 antrian:'0',
                 kddokter:'Farmasi',
                 namadokter:'Farmasi',
-                kdantrian:'A'
+                kdantrian:'A',
+                kdcabang :this.kdcabang
               }
         
             ]);
@@ -5979,7 +6023,8 @@ hapustarifrad(kdpruduk,kdpoli,notransaksi,nomor,kdcppt,nama){
               antrian:'0',
               kddokter:'Laborat',
               namadokter:'Laborat',
-              kdantrian:'L'
+              kdantrian:'L',
+              kdcabang :this.kdcabang
             }
       
           ]);

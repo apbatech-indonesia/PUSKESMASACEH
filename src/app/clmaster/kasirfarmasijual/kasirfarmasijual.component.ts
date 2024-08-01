@@ -564,36 +564,40 @@ showNotification(title: string, options?: NotificationOptions) {
       var noantrian
       var namdokter
       var kdantrian;
-
+      var kdcabang;
+      var kdcabangasli = this.kdcabang
       for(let x of pesan){
         // console.log(x.namadokter)
         kddokter = x.kddokter
         noantrian = x.antrian
         namdokter = x.namadokter
         kdantrian = x.kdantrian
+        kdcabang = x.kdcabang
      
       }
+      if(kdcabangasli === kdcabang){
+        if(kddokter === 'Farmasi'){
 
-      if(kddokter === 'Farmasi'){
-
-        this.triggerNotification()
-        this.toastr.success("Ada Resep Baru")
-        this.resepbaru ='Ada Resep Baru'
-        let audiox =new Audio();
-        audiox.src='https://knm.clenicapp.com/clenic/sound/RESEP.wav';
-        audiox.play();
-
-        var indexl=1
-audiox.onended = function() {
-if(indexl < 2){
-audiox.src='https://knm.clenicapp.com/clenic/sound/RESEP.wav';
-audiox.play();
-indexl++;
-}
-}
+          this.triggerNotification()
+          this.toastr.success("Ada Resep Baru")
+          this.resepbaru ='Ada Resep Baru'
+          let audiox =new Audio();
+          audiox.src='https://knm.clenicapp.com/clenic/sound/RESEP.wav';
+          audiox.play();
+  
+          var indexl=1
+  audiox.onended = function() {
+  if(indexl < 2){
+  audiox.src='https://knm.clenicapp.com/clenic/sound/RESEP.wav';
+  audiox.play();
+  indexl++;
+  }
+  }
+    
+        }
   
       }
-
+   
 
 
 

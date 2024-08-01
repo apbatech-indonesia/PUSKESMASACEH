@@ -126,33 +126,37 @@ resepbaru:any='';
       var noantrian
       var namdokter
       var kdantrian;
-
+      var kdcabang;
+      var kdcabangasli = this.kdcabang
       for(let x of pesan){
         // console.log(x.namadokter)
         kddokter = x.kddokter
         noantrian = x.antrian
         namdokter = x.namadokter
         kdantrian = x.kdantrian
-     
+        kdcabang = x.kdcabang
       }
+      if(kdcabangasli === kdcabang){
+        if(kddokter === 'Laborat'){
 
-      if(kddokter === 'Laborat'){
-
-        this.resepbaru ='Ada Resep Baru'
-        this.toastr.success("Permintaan baru")
-        let audiox =new Audio();
-        audiox.src='https://knm.clenicapp.com/clenic/sound/notify.wav';
-        audiox.play();
-
-        var indexl=1
-audiox.onended = function() {
-if(indexl < 2){
-audiox.src='https://knm.clenicapp.com/clenic/sound/notify.wav';
-audiox.play();
-indexl++;
-}
-}
+          this.resepbaru ='Ada Resep Baru'
+          this.toastr.success("Permintaan baru")
+          let audiox =new Audio();
+          audiox.src='https://knm.clenicapp.com/clenic/sound/notify.wav';
+          audiox.play();
   
+          var indexl=1
+  audiox.onended = function() {
+  if(indexl < 2){
+  audiox.src='https://knm.clenicapp.com/clenic/sound/notify.wav';
+  audiox.play();
+  indexl++;
+  }
+  }
+    
+        }
+  
+
       }
 
 

@@ -220,7 +220,7 @@ ngOnInit() {
     var nampoli;
     var namapasien;
     var kdcabang;
-    
+    var kdcabangasli = this.kdcabang
 
     for(let x of pesan){
       // console.log(x.namadokter)
@@ -238,16 +238,22 @@ ngOnInit() {
 
  
 if('Antrian' === userData['userData']['hakakses']){
-  this.namadoker = namdokter;
-  this.terbilangx(noantrian)
-  this.Nomor = noantrian;
-
-      this.kdantrian = kdantrian
-    this.nampasien = namapasien;
-    this.nampoli = nampoli
 
 
-  if(this.kdcabang === kdcabang){
+
+console.log(kdcabangasli,kdcabang)
+  if(kdcabangasli === kdcabang){
+
+
+    this.namadoker = namdokter;
+    this.terbilangx(noantrian)
+    this.Nomor = noantrian;
+  
+        this.kdantrian = kdantrian
+      this.nampasien = namapasien;
+      this.nampoli = nampoli
+
+      
 
     // alert("as")
     let audiox =new Audio();

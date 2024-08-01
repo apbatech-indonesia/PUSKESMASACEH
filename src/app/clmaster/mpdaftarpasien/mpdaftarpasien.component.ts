@@ -839,35 +839,54 @@ jadwal:any='';
                           if(this.dash === 'BPJS'){
                             setTimeout(() => {
                             
-                              let bodyAddFktp =  { "data": {
-                                "nomorkartu": this.tantrian[0].noasuransi,
-                                "nik": this.tantrian[0].nopengenal,
-                                "nohp": this.tantrian[0].hp,
-                                "kodepoli": this.kdpolibpjs,
-                                "namapoli": this.tantrian[0].nampoli,
-                                "norm": this.tantrian[0].norm,
-                                "tanggalperiksa": this.tantrian[0].tglpriksa,
-                                "kodedokter": this.tantrian[0].kddokterbpjs,
-                                "namadokter": this.tantrian[0].namdokter,
-                                "jampraktek": this.jadwal,
-                                "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
-                                "angkaantrean": this.tantrian[0].noantrian,
-                                "keterangan": "",
-                                }}
+                              // let bodyAddFktp =  { "data": {
+                              //   "nomorkartu": this.tantrian[0].noasuransi,
+                              //   "nik": this.tantrian[0].nopengenal,
+                              //   "nohp": this.tantrian[0].hp,
+                              //   "kodepoli": this.kdpolibpjs,
+                              //   "namapoli": this.tantrian[0].nampoli,
+                              //   "norm": this.tantrian[0].norm,
+                              //   "tanggalperiksa": this.tantrian[0].tglpriksa,
+                              //   "kodedokter": this.tantrian[0].kddokterbpjs,
+                              //   "namadokter": this.tantrian[0].namdokter,
+                              //   "jampraktek": this.jadwal,
+                              //   "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
+                              //   "angkaantrean": this.tantrian[0].noantrian,
+                              //   "keterangan": "",
+                              //   }}
+
+
+                                let bodyAddFktp =  {
+                                  "nomorkartu": this.tantrian[0].noasuransi,
+                                  "nik": this.tantrian[0].nopengenal,
+                                  "nohp": this.tantrian[0].hp,
+                                  "kodepoli": this.kdpolibpjs,
+                                  "namapoli": this.tantrian[0].nampoli,
+                                  "norm": this.tantrian[0].norm,
+                                  "tanggalperiksa": this.tantrian[0].tglpriksa,
+                                  "kodedokter": this.tantrian[0].kddokterbpjs,
+                                  "namadokter": this.tantrian[0].namdokter,
+                                  "jampraktek": this.jadwal,
+                                  "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
+                                  "angkaantrean": this.tantrian[0].noantrian,
+                                  "keterangan": "",
+                                  }
+
+
                         
                                 console.log(bodyAddFktp)
-                                this.authService.addantrean(bodyAddFktp)
+                                this.authService.addBpjsAntrian(bodyAddFktp)
                                 .subscribe(response => {
-                                  if(response.metadata.code == 200){
+                                  if(response.data.code == 200){
                                 
-                                        this.toastr.success(response.metadata.message, 'Sukses', {
+                                        this.toastr.success(response.data.message, 'Sukses', {
                                           timeOut: 2000,
                                         });
                                     
                                     
                                     
                                       }else{
-                                        this.toastr.error(response.metadata.message, 'Error');
+                                        this.toastr.error(response.data.message, '');
                                     
                                       }
   
@@ -2172,6 +2191,11 @@ jadwal:any='';
 
     } else {
 
+
+      this.caribynikandno('noka')
+
+
+
       this.authService.cekjadwal(this.tantrian[0].kddokter,this.tantrian[0].kdpoli)
       .subscribe(
         data => {
@@ -2206,36 +2230,53 @@ kirimantrean(){
 
   setTimeout(() => {
                             
-    let bodyAddFktp =  { "data": {
-      "nomorkartu": this.tantrian[0].noasuransi,
-      "nik": this.tantrian[0].nopengenal,
-      "nohp": this.tantrian[0].hp,
-      "kodepoli": this.kdpolibpjs,
-      "namapoli": this.tantrian[0].nampoli,
-      "norm": this.tantrian[0].norm,
-      "tanggalperiksa": this.tantrian[0].tglpriksa,
-      "kodedokter": this.tantrian[0].kddokterbpjs,
-      "namadokter": this.tantrian[0].namdokter,
-      "jampraktek": this.jadwal,
-      "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
-      "angkaantrean": this.tantrian[0].noantrian,
-      "keterangan": "",
-      }}
+    // let bodyAddFktp =  { "data": {
+    //   "nomorkartu": this.tantrian[0].noasuransi,
+    //   "nik": this.tantrian[0].nopengenal,
+    //   "nohp": this.tantrian[0].hp,
+    //   "kodepoli": this.kdpolibpjs,
+    //   "namapoli": this.tantrian[0].nampoli,
+    //   "norm": this.tantrian[0].norm,
+    //   "tanggalperiksa": this.tantrian[0].tglpriksa,
+    //   "kodedokter": this.tantrian[0].kddokterbpjs,
+    //   "namadokter": this.tantrian[0].namdokter,
+    //   "jampraktek": this.jadwal,
+    //   "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
+    //   "angkaantrean": this.tantrian[0].noantrian,
+    //   "keterangan": "",
+    //   }}
 
-      console.log(bodyAddFktp)
-      this.authService.addantrean(bodyAddFktp)
+
+      let bodyAddFktp =  {
+        "nomorkartu": this.tantrian[0].noasuransi,
+        "nik": this.tantrian[0].nopengenal,
+        "nohp": this.tantrian[0].hp,
+        "kodepoli": this.kdpolibpjs,
+        "namapoli": this.tantrian[0].nampoli,
+        "norm": this.tantrian[0].norm,
+        "tanggalperiksa": this.tantrian[0].tglpriksa,
+        "kodedokter": this.tantrian[0].kddokterbpjs,
+        "namadokter": this.tantrian[0].namdokter,
+        "jampraktek": this.jadwal,
+        "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
+        "angkaantrean": this.tantrian[0].noantrian,
+        "keterangan": "",
+        }
+
+     
+      this.authService.addBpjsAntrian(bodyAddFktp)
       .subscribe(response => {
-        if(response.metadata.code == 200){
+        if(response.data.code == 200){
       
-              this.toastr.success(response.metadata.message, 'Sukses', {
+              this.toastr.success(response.data.message, 'Sukses', {
                 timeOut: 2000,
               });
           
               this.showloadss = false;
           
             }else{
-              this.toastr.error(response.metadata.message, 'Error');
-          
+              this.toastr.error(response.data.message, '-');
+              this.showloadss = false;
             }
 
 
@@ -2342,35 +2383,54 @@ this.showloadss = true;
 
 setTimeout(() => {
                           
-  let bodyAddFktp =  { "data": {
-    "nomorkartu": this.tantrian[0].noasuransi,
-    "nik": this.tantrian[0].nopengenal,
-    "nohp": this.tantrian[0].hp,
-    "kodepoli": this.kdpolibpjs,
-    "namapoli": this.tantrian[0].nampoli,
-    "norm": this.tantrian[0].norm,
-    "tanggalperiksa": this.tantrian[0].tglpriksa,
-    "kodedokter": this.tantrian[0].kddokterbpjs,
-    "namadokter": this.tantrian[0].namdokter,
-    "jampraktek": this.jadwal,
-    "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
-    "angkaantrean": this.tantrian[0].noantrian,
-    "keterangan": "",
-    }}
+  // let bodyAddFktp =  { "data": {
+  //   "nomorkartu": this.tantrian[0].noasuransi,
+  //   "nik": this.tantrian[0].nopengenal,
+  //   "nohp": this.tantrian[0].hp,
+  //   "kodepoli": this.kdpolibpjs,
+  //   "namapoli": this.tantrian[0].nampoli,
+  //   "norm": this.tantrian[0].norm,
+  //   "tanggalperiksa": this.tantrian[0].tglpriksa,
+  //   "kodedokter": this.tantrian[0].kddokterbpjs,
+  //   "namadokter": this.tantrian[0].namdokter,
+  //   "jampraktek": this.jadwal,
+  //   "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
+  //   "angkaantrean": this.tantrian[0].noantrian,
+  //   "keterangan": "",
+  //   }}
+
+
+    let bodyAddFktp = {
+      "nomorkartu": this.tantrian[0].noasuransi,
+      "nik": this.tantrian[0].nopengenal,
+      "nohp": this.tantrian[0].hp,
+      "kodepoli": this.kdpolibpjs,
+      "namapoli": this.tantrian[0].nampoli,
+      "norm": this.tantrian[0].norm,
+      "tanggalperiksa": this.tantrian[0].tglpriksa,
+      "kodedokter": this.tantrian[0].kddokterbpjs,
+      "namadokter": this.tantrian[0].namdokter,
+      "jampraktek": this.jadwal,
+      "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
+      "angkaantrean": this.tantrian[0].noantrian,
+      "keterangan": "",
+      }
+
+
 
     console.log(bodyAddFktp)
-    this.authService.addantrean(bodyAddFktp)
+    this.authService.addBpjsAntrian(bodyAddFktp)
     .subscribe(response => {
-      if(response.metadata.code == 200){
+      if(response.data.code == 200){
     
-            this.toastr.success(response.metadata.message, 'Sukses', {
+            this.toastr.success(response.data.message, 'Sukses', {
               timeOut: 2000,
             });
         
             this.showloadss = false;
         
           }else{
-            this.toastr.error(response.metadata.message, 'Error');
+            this.toastr.error(response.data.message, '-');
         
           }
 
