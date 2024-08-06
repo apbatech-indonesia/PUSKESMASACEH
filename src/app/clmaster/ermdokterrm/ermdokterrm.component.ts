@@ -343,24 +343,24 @@ swalWithBootstrapButtons.fire({
 
   } else if (result.isDenied) {
  
-    let body={"data":{
+    let body={
       "tanggalperiksa": tglpriksa,
         "kodepoli": kdpolibpjs,
         "nomorkartu": noasuransi,
         "status": 2 ,
         "waktu":this.myDate.getTime()
-      }}
+      }
 
         var data:any;
 
-        this.authService.panggil(body)
+        this.authService.PanggilBpjsAntrian(body)
         .subscribe(response => {
         
        
         
-          if(response.metadata.code == 200){
+          if(response.data.code == 200){
                               
-            this.toastr.success(response.metadata.message, 'Sukses', {
+            this.toastr.success(response.data.message, 'Sukses', {
               timeOut: 2000,
             });
 
@@ -368,7 +368,7 @@ swalWithBootstrapButtons.fire({
         
         
           }else{
-            this.toastr.error(response.metadata.message, 'Error');
+            this.toastr.error(response.data.message, 'Error');
         
           }
         
@@ -380,24 +380,24 @@ swalWithBootstrapButtons.fire({
         
   } else if (result.dismiss === Swal.DismissReason.cancel) {
 
-    let body={"data":{
+    let body={
       "tanggalperiksa": tglpriksa,
         "kodepoli": kdpolibpjs,
         "nomorkartu": noasuransi,
         "status": 1 ,
         "waktu":this.myDate.getTime()
-      }}
+      }
 
         var data:any;
 
-        this.authService.panggil(body)
+        this.authService.PanggilBpjsAntrian(body)
         .subscribe(response => {
         
        
         
-          if(response.metadata.code == 200){
+          if(response.data.code == 200){
                               
-            this.toastr.success(response.metadata.message, 'Sukses', {
+            this.toastr.success(response.data.message, 'Sukses', {
               timeOut: 2000,
             });
         

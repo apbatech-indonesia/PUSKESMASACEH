@@ -130,7 +130,7 @@
                    
 
                       <button class="mb-2 me-2 btn-pill btn btn-outline-primary" (click)="maping(content,a.kdpoli,a.nampoli,a.sts,a.idsatusehat,a.kodepos,a.hp,
-                      a.email,a.diskripsipoli,a.longtitude,a.latitude)">Maping Satusehat
+                      a.email,a.diskripsipoli,a.longtitude,a.latitude,a.kdpolibpjs)">Maping Satusehat
                       </button>
 
                       
@@ -212,7 +212,10 @@
       <label for="exampleEmail" class="form-label">Lokasi Latitude</label>
       <input  [(ngModel)]="latitude"   placeholder="Poliklinik" type="number" class="form-control">
     </div>
-
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">Kdpoli BPJS</label>
+      <input  [(ngModel)]="kdpolibpjs"   placeholder="" type="text" class="form-control">
+    </div>
 
     
   </div>

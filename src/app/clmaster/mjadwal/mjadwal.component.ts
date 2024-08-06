@@ -75,7 +75,7 @@ this.tmpjadwal()
 }
 tklinik:any;
 kliniks:string='';
-
+kdantrian:any=''
   tmppuserx(){
     this.authService.poli(this.kdcabang)
     .subscribe(
@@ -224,7 +224,7 @@ this.tlisthutang = data;
 
     let body={
       "poli":this.poli,"kddokter":this.kddokter,"senin":this.senin,"selasa":this.selasa,"rabu":this.rabu,"kamis":this.kamis,"jumat":this.jumat,"sabtu":this.sabtu,"minggu":this.minggu,"kuota":this.kuota,
-      "kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"stssimpan":'1'
+      "kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"stssimpan":'1',"kodeantrian":this.kdantrian
  
     }
 
@@ -330,7 +330,7 @@ this.kduserlogin = kduser
 
   let body={
     "poli":this.poli,"kddokter":this.kddokter,"senin":this.senin,"selasa":this.selasa,"rabu":this.rabu,"kamis":this.kamis,"jumat":this.jumat,"sabtu":this.sabtu,"minggu":this.minggu,"kuota":this.kuota,
-    "kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"stssimpan":'1'
+    "kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"stssimpan":'1',"kodeantrian":this.kdantrian
 
   }
 
@@ -511,7 +511,7 @@ dafatrdokter(){
 kddokterb:any;
 polib:any;
 
-pilihobat(kddokter,kdpoli,senin,selasa,rabu,kamis,jumat,sabtu,minggu,kuota,nampoli,namdokter){
+pilihobat(kddokter,kdpoli,senin,selasa,rabu,kamis,jumat,sabtu,minggu,kuota,nampoli,namdokter,kdantrian){
 
 
 this.poli = kdpoli
@@ -528,6 +528,7 @@ this.jumat=jumat
 this.sabtu=sabtu
 this.minggu=minggu
 this.kuota=kuota
+this.kdantrian = kdantrian
 
 this.showedit = true;
 

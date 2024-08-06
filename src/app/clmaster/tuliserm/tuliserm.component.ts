@@ -3314,16 +3314,16 @@ dari = '0';
                 this.terapiObat = Array.prototype.map.call(data,s=>s.nama).toString();
           if(data.length){
     
-            this.chatService.sendMessage([
-              {
-                antrian:'0',
-                kddokter:'Farmasi',
-                namadokter:'Farmasi',
-                kdantrian:'A',
-                kdcabang :this.kdcabang
-              }
+            // this.chatService.sendMessage([
+            //   {
+            //     antrian:'0',
+            //     kddokter:'Farmasi',
+            //     namadokter:'Farmasi',
+            //     kdantrian:'A',
+            //     kdcabang :this.kdcabang
+            //   }
         
-            ]);
+            // ]);
           
           }
           
@@ -6018,16 +6018,16 @@ hapustarifrad(kdpruduk,kdpoli,notransaksi,nomor,kdcppt,nama){
    
            this.tmplistintruksilab()
 
-           this.chatService.sendMessage([
-            {
-              antrian:'0',
-              kddokter:'Laborat',
-              namadokter:'Laborat',
-              kdantrian:'L',
-              kdcabang :this.kdcabang
-            }
+          //  this.chatService.sendMessage([
+          //   {
+          //     antrian:'0',
+          //     kddokter:'Laborat',
+          //     namadokter:'Laborat',
+          //     kdantrian:'L',
+          //     kdcabang :this.kdcabang
+          //   }
       
-          ]);
+          // ]);
 
     
 

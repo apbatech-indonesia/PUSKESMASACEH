@@ -334,7 +334,7 @@ this.toastr.error('Simpan User Gagal', 'Eror');
  idsatusehat:any='';
 
  maping(content,a,b,c,idsatusehat,kodepos,hp,
-  email,diskripsipoli,longtitude,latitude) {
+  email,diskripsipoli,longtitude,latitude,kdpolibpjs) {
 
   this.kodepoli=a;
   this.nampoli = b;
@@ -346,6 +346,7 @@ this.toastr.error('Simpan User Gagal', 'Eror');
   this.diskripsipoli = diskripsipoli;
   this.longtitude = longtitude;
   this.latitude = latitude;
+  this.kdpolibpjs = kdpolibpjs
   
  
  
@@ -361,6 +362,7 @@ this.toastr.error('Simpan User Gagal', 'Eror');
     
    });
  }
+ kdpolibpjs:any;
 
  simpanlokasi(){
 //   $idlokas = $data->idlokas;
@@ -471,7 +473,8 @@ if(this.idsatusehat.length > 10){
       longtitude :this.longtitude,
       latitude :this.latitude,
       kdcabang:this.kdcabang,
-      kdpoli:this.kodepoli
+      kdpoli:this.kodepoli,
+      kdpolibpjs:this.kdpolibpjs
   
     }
   
@@ -506,7 +509,8 @@ if(this.idsatusehat.length > 10){
       longtitude :this.longtitude,
       latitude :this.latitude,
       kdcabang:this.kdcabang,
-      kdpoli:this.kodepoli
+      kdpoli:this.kodepoli,
+      kdpolibpjs:this.kdpolibpjs
   
     }
   

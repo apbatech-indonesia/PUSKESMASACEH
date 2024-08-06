@@ -85,6 +85,8 @@ const routes: Routes = [
       loadChildren:() => import('./muser/muser.module').then(m => m.MuserModule )
       
     },
+   
+
     {
       path : 'mcabang',
       loadChildren:() => import('./mcabang/mcabang.module').then(m => m.McabangModule )

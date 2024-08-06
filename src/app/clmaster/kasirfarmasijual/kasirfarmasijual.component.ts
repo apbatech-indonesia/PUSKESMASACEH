@@ -534,8 +534,8 @@ requestPermission() {
   }
 }
 triggerNotification() {
-  this.showNotification('New Message', {
-    body: 'You have received a new message.',
+  this.showNotification('Resep Baru', {
+    body: 'Anda Memiliki Resep Baru.',
     icon: './assets/images/nyeri/0.png'  // Tambahkan path ke icon notifikasi Anda
   });
 }

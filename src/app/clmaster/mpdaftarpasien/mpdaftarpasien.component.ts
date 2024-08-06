@@ -864,12 +864,12 @@ jadwal:any='';
                                   "namapoli": this.tantrian[0].nampoli,
                                   "norm": this.tantrian[0].norm,
                                   "tanggalperiksa": this.tantrian[0].tglpriksa,
-                                  "kodedokter": this.tantrian[0].kddokterbpjs,
+                                  "kodedokter": parseInt(this.tantrian[0].kddokterbpjs),
                                   "namadokter": this.tantrian[0].namdokter,
                                   "jampraktek": this.jadwal,
                                   "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
-                                  "angkaantrean": this.tantrian[0].noantrian,
-                                  "keterangan": "",
+                                  "angkaantrean": parseInt(this.tantrian[0].noantrian),
+                                  "keterangan": "daftar",
                                   }
 
 
@@ -1621,25 +1621,25 @@ jadwal:any='';
 
 
 
-                         let bodyFktp = {"data":{
+                         let bodyFktp = {
                           "tanggalperiksa": tglPeriksa,
                           "kodepoli": kdpolibpjs,
                           "nomorkartu": noasuransi,
                           "alasan": value
-                        }}
-                        this.authService.batal(bodyFktp).subscribe(
+                        }
+                        this.authService.cancelBpjsAntrian(bodyFktp).subscribe(
                           data => {
 
-                            if(data.metadata.code == 200){
+                            if(data.data.code == 200){
                               
-                              this.toastr.success(data.metadata.message, 'Sukses', {
+                              this.toastr.success(data.data.message, 'Sukses', {
                                 timeOut: 2000,
                               });
                           
                           
                           
                             }else{
-                              this.toastr.error(data.metadata.message, 'Error');
+                              this.toastr.error(data.data.message, 'Error');
                           
                             }
 
@@ -1708,30 +1708,32 @@ jadwal:any='';
   
   
   
-                                        let bodyFktp = {"data":{
-                  "tanggalperiksa": tglPeriksa,
-                  "kodepoli": kdpolibpjs,
-                  "nomorkartu": noasuransi,
-                  "alasan": value
-                }}
-                this.authService.batal(bodyFktp).subscribe(
-                  data => {
-  
-                    if(data.metadata.code == 200){
-                      
-                      this.toastr.success(data.metadata.message, 'Sukses', {
-                        timeOut: 2000,
-                      });
-                  
-                  
-                  
-                    }else{
-                      this.toastr.error(data.metadata.message, 'Error');
-                  
-                    }
-  
-                  }
-                )
+                      let bodyFktp = {
+                        "tanggalperiksa": tglPeriksa,
+                        "kodepoli": kdpolibpjs,
+                        "nomorkartu": noasuransi,
+                        "alasan": value
+                      }
+                      this.authService.cancelBpjsAntrian(bodyFktp).subscribe(
+                        data => {
+
+                          if(data.data.code == 200){
+                            
+                            this.toastr.success(data.data.message, 'Sukses', {
+                              timeOut: 2000,
+                            });
+                        
+                        
+                        
+                          }else{
+                            this.toastr.error(data.data.message, 'Error');
+                        
+                          }
+
+
+                        }
+                      )
+
   
   
                 
@@ -1766,31 +1768,32 @@ jadwal:any='';
 
                 
 
-                let bodyFktp = {"data":{
+                let bodyFktp = {
                   "tanggalperiksa": tglPeriksa,
                   "kodepoli": kdpolibpjs,
                   "nomorkartu": noasuransi,
                   "alasan": value
-                }}
-                this.authService.batal(bodyFktp).subscribe(
+                }
+                this.authService.cancelBpjsAntrian(bodyFktp).subscribe(
                   data => {
 
-                    if(data.metadata.code == 200){
+                    if(data.data.code == 200){
                       
-                      this.toastr.success(data.metadata.message, 'Sukses', {
+                      this.toastr.success(data.data.message, 'Sukses', {
                         timeOut: 2000,
                       });
                   
                   
                   
                     }else{
-                      this.toastr.error(data.metadata.message, 'Error');
+                      this.toastr.error(data.data.message, 'Error');
                   
                     }
 
 
                   }
                 )
+
 
                 
                 let body = {
@@ -2224,7 +2227,14 @@ jadwal:any='';
   jeniskun: any = true;
 
 kirimantrean(){
-  
+  this.authService.cekjadwal(this.tantrian[0].kddokter,this.tantrian[0].kdpoli)
+  .subscribe(
+    data => {
+
+      this.jadwal = data[0].jadwal
+
+    }
+  )
   
   this.showloadss = true;
 
@@ -2255,12 +2265,12 @@ kirimantrean(){
         "namapoli": this.tantrian[0].nampoli,
         "norm": this.tantrian[0].norm,
         "tanggalperiksa": this.tantrian[0].tglpriksa,
-        "kodedokter": this.tantrian[0].kddokterbpjs,
+        "kodedokter": parseInt(this.tantrian[0].kddokterbpjs),
         "namadokter": this.tantrian[0].namdokter,
         "jampraktek": this.jadwal,
         "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
-        "angkaantrean": this.tantrian[0].noantrian,
-        "keterangan": "",
+        "angkaantrean": parseInt(this.tantrian[0].noantrian),
+        "keterangan": "daftar",
         }
 
      
@@ -2408,12 +2418,12 @@ setTimeout(() => {
       "namapoli": this.tantrian[0].nampoli,
       "norm": this.tantrian[0].norm,
       "tanggalperiksa": this.tantrian[0].tglpriksa,
-      "kodedokter": this.tantrian[0].kddokterbpjs,
+      "kodedokter": parseInt(this.tantrian[0].kddokterbpjs),
       "namadokter": this.tantrian[0].namdokter,
       "jampraktek": this.jadwal,
       "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
-      "angkaantrean": this.tantrian[0].noantrian,
-      "keterangan": "",
+      "angkaantrean": parseInt(this.tantrian[0].noantrian),
+      "keterangan": "daftar",
       }
 
 
@@ -2430,6 +2440,7 @@ setTimeout(() => {
             this.showloadss = false;
         
           }else{
+            this.showloadss = false;
             this.toastr.error(response.data.message, '-');
         
           }

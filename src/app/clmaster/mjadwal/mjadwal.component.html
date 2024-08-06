@@ -208,6 +208,29 @@
           <input   formControlName="kuota"    [(ngModel)]="kuota"   placeholder="Kuota" type="number" class="form-control">
         </div>
         </form>
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label">Kode Antrian</label>
+         
+        
+          <select   [(ngModel)]="kdantrian" id="exampleSelect" class="form-select">
+            <option value="">--KD Antrian--</option>
+            <option  value="A">A | UMUM</option>
+            <option  value="B">B | GIGI</option>
+            <option  value="C">C | KIA</option>
+
+            <option  value="D">D </option>
+            <option  value="E">E</option>
+            <option  value="F">F</option>
+
+            <option  value="G">G</option>
+            <option  value="H">H</option>
+
+            <option  value="I">I</option>
+            <option  value="J">J</option>
+
+          </select>
+
+        </div>
 
        
      
@@ -229,6 +252,7 @@
             <th scope="col" >SABTU</th>
             <th scope="col" >MINGGU</th>
             <th scope="col" >KUOTA</th>
+            <th scope="col" >KD ANTRIAN</th>
             <th scope="col" >ACT</th>
           </tr>
         </thead>
@@ -273,12 +297,17 @@
               <td>
                 {{x.kuota}}
                 </td>
+
+                <td>
+                  {{x.kdantrian}}
+                  </td>
+
                 <td>
                  
 
    
 
-              <div class="badge bg-pill bg-info" (click)="pilihobat(x.kddokter,x.kdpoli,x.senin,x.selasa,x.rabu,x.kamis,x.jumat,x.sabtu,x.minggu,x.kuota,x.nampoli,x.namdokter)">P</div>
+              <div class="badge bg-pill bg-info" (click)="pilihobat(x.kddokter,x.kdpoli,x.senin,x.selasa,x.rabu,x.kamis,x.jumat,x.sabtu,x.minggu,x.kuota,x.nampoli,x.namdokter,x.kdantrian)">P</div>
               <div class="badge bg-pill bg-danger" (click)="hapus(x.kddokter,x.kdpoli,x.senin,x.selasa,x.rabu,x.kamis,x.jumat,x.sabtu,x.minggu,x.kuota,x.nampoli,x.namdokter)">X</div>
                   </td>
           </tr>

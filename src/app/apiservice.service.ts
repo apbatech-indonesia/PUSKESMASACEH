@@ -1428,6 +1428,11 @@ export class ApiserviceService {
   verifdaftar(norm, kdcabang, kdpoli, tglp): Observable<any> {
     return this.http.get(apiurx + 'transaksi/verifdaftar.php?norm=' + norm + '&kdcabang=' + kdcabang + '&kdpoli=' + kdpoli + '&tgl=' + tglp)
   }
+
+  userpcare(): Observable<any> {
+    return this.http.get(apiurx + 'transaksi/userpcare.php')
+  }
+
   listkonsultasirj(sts, kdcabang, notransasal): Observable<any> {
     return this.http.get(apiurx + 'transaksi/listkonsultasirj.php?sts=' + sts + '&kdcabang=' + kdcabang + '&notransasal=' + notransasal)
   }
@@ -1440,6 +1445,11 @@ export class ApiserviceService {
   editobatsk(data: any): Observable<any> {
     return this.http.post(apiurx + 'transaksi/editobatsk.php', data)
   }
+
+  simpanpcare(data: any): Observable<any> {
+    return this.http.post(apiurx + 'transaksi/simpanpcare.php', data)
+  }
+
   simpanpcaredaftar(data: any): Observable<any> {
     return this.http.post(apiurx + 'pcare/addpendaftaranpcare.php', data)
   }

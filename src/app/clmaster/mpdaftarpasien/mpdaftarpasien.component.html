@@ -454,7 +454,10 @@
             <form [formGroup]="profileForm">
               <div class="position-relative mb-3">
                 <label for="exampleSelect" class="form-label" style="color:black">Detail Kelompok</label>
-                <select formControlName="cusid" [(ngModel)]="cusid" class="form-select"  >
+                <select formControlName="cusid" [(ngModel)]="cusid" class="form-select" 
+              
+                
+                >
                   <option value="">-PILIH-</option>
 
                   <option *ngFor="let x of tcusid" value="{{x.kdkostumerd}}">{{x.nama}}</option>

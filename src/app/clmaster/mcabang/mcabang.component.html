@@ -134,7 +134,7 @@
                     <td class="text-center">
                       <button class="mb-2 me-2 btn-pill btn btn-outline-primary" (click)="edit(a.kdcabang,a.nama,a.alamat,a.hp,a.kdklinik)">pilih
                       </button>
-                      <button class="mb-2 me-2 btn-pill btn btn-outline-danger" >SATU SEHAT
+                      <button class="mb-2 me-2 btn-pill btn btn-outline-danger"(click)="maping(content)">USER BPJS
                       </button>
                     </td>
                   </tr>
@@ -156,3 +156,54 @@
 
   
 </div>
+
+
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h6 class="modal-title">Maping Lokasi Poli Satu Sehat</h6>
+    <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+    </button>
+  </div>
+  <div class="modal-body">
+ 
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">cons id</label>
+      <input   [(ngModel)]="consid"   placeholder="" type="text" class="form-control">
+    </div>
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">screetkey</label>
+      <input   [(ngModel)]="screetkey"   placeholder="" type="text" class="form-control">
+    </div>
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">username</label>
+      <input  [(ngModel)]="username"   placeholder="" type="text" class="form-control">
+    </div>
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">password</label>
+      <input  [(ngModel)]="password"   placeholder="" type="text" class="form-control">
+    </div>
+
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">userkey</label>
+      <input  [(ngModel)]="userkey"   placeholder="" type="text" class="form-control">
+    </div>
+
+
+    <div class="position-relative mb-3">
+      <label for="exampleEmail" class="form-label">userkantrean</label>
+      <input  [(ngModel)]="userkantrean"   placeholder="" type="text" class="form-control">
+    </div>
+
+
+    
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="simpanlokasi()">Simpan</button>
+  </div>
+</ng-template>
+

@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import Swal from 'sweetalert2';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-mcabang',
   templateUrl: './mcabang.component.html',
@@ -48,7 +49,7 @@ export class McabangComponent implements OnInit {
   alamat='';
   hp='';
   kdcabang='';
-  constructor(public toastr: ToastrService, private authService:ApiserviceService , private fb: FormBuilder) {
+  constructor(   private modalService: NgbModal,public toastr: ToastrService, private authService:ApiserviceService , private fb: FormBuilder) {
     // this.options = fb.group({
     //   hideRequired: false,
     //   floatLabel: 'auto',
@@ -322,6 +323,70 @@ this.toastr.error('Simpan  Gagal', 'Eror');
 //     });
   
 //  }
+
+maping(content){
+  this.tmpuserpcare()
+  this.modalService.open(content).result.then((result) => {
+ 
+
+    
+
+   
+  }, (reason) => {
+  
+   
+  });
+}
+
+consid:any='';
+screetkey:any='';
+username:any='';
+password:any='';
+userkey:any='';
+userkantrean:any='';
+simpanlokasi(){
+  let body={
+    consid :this.consid,
+    screetkey:this.screetkey,
+    username:this.username,
+    password:this.password,
+    userkey:this.userkey,
+    userkantrean:this.userkantrean,
+    stssimpan:'1'
+  }
+  this.authService.simpanpcare(body)
+  .subscribe(response => {
+
+    this.tmpuserpcare()
+
+    this.toastr.success("sukses")
+  })
+
+  
+}
+
+tmpuserpcare(){
+  this.authService.userpcare()
+  .subscribe(
+    data => {
+    
+      if(data.length){
+        this.consid = data[0].consid
+        this.screetkey = data[0].screetkey
+        this.username = data[0].username
+        this.password = data[0].password
+        this.userkey = data[0].userkey
+        this.userkantrean = data[0].userkantrean
+      }
+    
+
+  },
+    Error => {
+  
+     console.log(Error)
+    }
+  )
+}
 
 
 }

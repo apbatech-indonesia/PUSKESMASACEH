@@ -247,6 +247,9 @@ console.log(kdcabangasli,kdcabang)
 
     this.namadoker = namdokter;
     this.terbilangx(noantrian)
+
+  
+
     this.Nomor = noantrian;
   
         this.kdantrian = kdantrian
@@ -263,11 +266,16 @@ var indexl=1
 audiox.onended = function() {
 if(indexl < 2){
 audiox.src='https://knm.clenicapp.com/clenic/sound/' + kdantrian +'.wav';
+
+
 audiox.play();
 indexl++;
 }
-}
 
+
+}
+// audiox.src='https://knm.clenicapp.com/clenic/sound/B.wav';
+// audiox.play();
 
   }
  
@@ -713,6 +721,7 @@ tampilpas:any;
  
 setTimeout(() => {
   let audio =new Audio();
+  let audiov =new Audio();
 
   var strings = this.ucap.split(" ");
   var index = 1;
@@ -729,19 +738,53 @@ setTimeout(() => {
       audio.src='https://knm.clenicapp.com/clenic/sound/' + strings[index]+'.wav';
       audio.play();
       index++;
-     
+  
+  
   }
 
- 
-
   };
+
+
+
+
 }, 1800);
+
+setTimeout(() => {
+  let audiov =new Audio();
+  var index = 1;
+  var kdantrian = this.kdantrian;
+  var strings = this.ucap.split(" ");
+  audiov.src='https://knm.clenicapp.com/clenic/sound/SILAHKANMENUJUKE.wav';
+  audiov.play();
+  audiov.onended = function() {
+    if(index < 2){
+      audiov.src='https://knm.clenicapp.com/clenic/sound/' + kdantrian +'U.wav';
+    audiov.play();
+    index++;
+    }
+  }
+}, 4000);
 
 
        
      
 }
 
+
+pglpoli(){
+  let audiov =new Audio();
+  var kdantrian = this.kdantrian;
+  audiov.src='https://knm.clenicapp.com/clenic/sound/SILAHKANMENUJUKE.wav';
+  audiov.play();
+  audiov.onended = function() {
+
+    audiov.src='https://knm.clenicapp.com/clenic/sound/' + kdantrian +'U.wav';
+    audiov.play();
+  
+  
+  }
+
+}
 showdoktersatu:boolean;
 showdokterdua:boolean;
 
