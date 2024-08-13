@@ -146,13 +146,32 @@ this.tglss = this.datepipe.transform(this.myDate,'yyyy-MM-ddTHH:mm:ss+07:00')
 
 
   }
+  slug:any;
 
 
   ngOnInit() {
   
     this.tmptotal()
     
-  
+    this.authService.cabangper(this.kdklinik)
+    .subscribe(
+      data => {
+    
+    
+        for (let x of data) {
+         
+          this.slug = x.slug
+    
+        }
+    
+    
+      },
+      Error => {
+    
+        console.log(Error)
+      }
+    )
+    
   }
 totalpass:number=0;
 totalpassbelum:number=0;
@@ -353,7 +372,7 @@ swalWithBootstrapButtons.fire({
 
         var data:any;
 
-        this.authService.PanggilBpjsAntrian(body)
+        this.authService.PanggilBpjsAntrian(body,this.slug)
         .subscribe(response => {
         
        
@@ -384,13 +403,12 @@ swalWithBootstrapButtons.fire({
       "tanggalperiksa": tglpriksa,
         "kodepoli": kdpolibpjs,
         "nomorkartu": noasuransi,
-        "status": 1 ,
-        "waktu":this.myDate.getTime()
+        "status": 1 
       }
 
         var data:any;
 
-        this.authService.PanggilBpjsAntrian(body)
+        this.authService.PanggilBpjsAntrian(body,this.slug)
         .subscribe(response => {
         
        
@@ -404,7 +422,7 @@ swalWithBootstrapButtons.fire({
         
 
             let bodyeditfarmasi={
-              "stssimpan":'2',
+              "stssimpan":'4',
               "notransaksi":notransaksi,
              
             }

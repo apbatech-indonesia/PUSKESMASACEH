@@ -176,27 +176,108 @@
       </form>
         <div class="position-relative mb-3">
           <label for="exampleEmail" class="form-label">Senin</label>
-          <input   [(ngModel)]="senin"   placeholder="Time" type="text" class="form-control">
+          <div class="row">
+            <div class="col-md-6">
+              <input   [(ngModel)]="senin"   placeholder="Time" type="text" class="form-control">
+              <div *ngIf="hariku === 'senin'">
+              <div *ngFor="let x of jjbpjs" class="badge bg-pill bg-primary btn" (click)="pilihjj('senin',x.jampraktek)">{{x.namadokter}} {{x.jampraktek}}</div>
+            </div>
+            </div>
+            <div class="col-md-6">
+              <input type="date" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tglp"
+              (change)="non($event,'senin')"
+              >
+            </div>
+
+          </div>
+        
         </div>
         <div class="position-relative mb-3">
           <label for="exampleEmail" class="form-label">Selasa</label>
-          <input   [(ngModel)]="selasa"   placeholder="Time" type="text" class="form-control">
+          <div class="row">
+            <div class="col-md-6">
+              <input   [(ngModel)]="selasa"   placeholder="Time" type="text" class="form-control">
+
+              <div *ngIf="hariku === 'selasa'"> 
+              <div *ngFor="let x of jjbpjs" class="badge bg-pill bg-primary btn" (click)="pilihjj('selasa',x.jampraktek)">{{x.namadokter}} {{x.jampraktek}}</div>
+            </div>
+              </div>
+              <div class="col-md-6">
+                <input type="date" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tglp"
+                (change)="non($event,'selasa')"
+                >
+              </div>
+            </div>
+     
+         
         </div>
         <div class="position-relative mb-3">
           <label for="exampleEmail" class="form-label">Rabu</label>
-          <input   [(ngModel)]="rabu"   placeholder="Time" type="text" class="form-control">
+          <div class="row">
+            <div class="col-md-6">
+              <input   [(ngModel)]="rabu"   placeholder="Time" type="text" class="form-control">
+
+              <div *ngIf="hariku === 'rabu'"> 
+              <div *ngFor="let x of jjbpjs" class="badge bg-pill bg-primary btn" (click)="pilihjj('rabu',x.jampraktek)">{{x.namadokter}} {{x.jampraktek}}</div>
+            </div>
+              </div>
+              <div class="col-md-6">
+                <input type="date" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tglp"
+                (change)="non($event,'rabu')"
+                >
+              </div>
+            </div>
         </div>
         <div class="position-relative mb-3">
           <label for="exampleEmail" class="form-label">Kamis</label>
-          <input   [(ngModel)]="kamis"   placeholder="Time" type="text" class="form-control">
+          <div class="row">
+            <div class="col-md-6">
+              <input   [(ngModel)]="kamis"   placeholder="Time" type="text" class="form-control">
+
+              <div *ngIf="hariku === 'kamis'"> 
+              <div *ngFor="let x of jjbpjs" class="badge bg-pill bg-primary btn" (click)="pilihjj('kamis',x.jampraktek)">{{x.namadokter}} {{x.jampraktek}}</div>
+            </div>
+              </div>
+              <div class="col-md-6">
+                <input type="date" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tglp"
+                (change)="non($event,'kamis')"
+                >
+              </div>
+            </div>
         </div>
         <div class="position-relative mb-3">
           <label for="exampleEmail" class="form-label">Jumat</label>
-          <input   [(ngModel)]="jumat"   placeholder="Time" type="text" class="form-control">
+          <div class="row">
+            <div class="col-md-6">
+              <input   [(ngModel)]="jumat"   placeholder="Time" type="text" class="form-control">
+
+              <div *ngIf="hariku === 'jumat'"> 
+              <div *ngFor="let x of jjbpjs" class="badge bg-pill bg-primary btn" (click)="pilihjj('jumat',x.jampraktek)">{{x.namadokter}} {{x.jampraktek}}</div>
+            </div>
+              </div>
+              <div class="col-md-6">
+                <input type="date" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tglp"
+                (change)="non($event,'jumat')"
+                >
+              </div>
+            </div>
         </div>
         <div class="position-relative mb-3">
           <label for="exampleEmail" class="form-label">Sabtu</label>
-          <input   [(ngModel)]="sabtu"   placeholder="Time" type="text" class="form-control">
+          <div class="row">
+            <div class="col-md-6">
+              <input   [(ngModel)]="sabtu"   placeholder="Time" type="text" class="form-control">
+
+              <div *ngIf="hariku === 'sabtu'"> 
+              <div *ngFor="let x of jjbpjs" class="badge bg-pill bg-primary btn" (click)="pilihjj('sabtu',x.jampraktek)">{{x.namadokter}} {{x.jampraktek}}</div>
+            </div>
+              </div>
+              <div class="col-md-6">
+                <input type="date" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tglp"
+                (change)="non($event,'sabtu')"
+                >
+              </div>
+            </div>
         </div>
         <div class="position-relative mb-3">
           <label for="exampleEmail" class="form-label">Minggu</label>

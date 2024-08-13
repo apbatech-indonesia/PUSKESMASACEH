@@ -179,7 +179,7 @@ padding:20px">
                 
                 <div class="position-relative mb-3"
                   *ngIf="akses === 'Dokter' || akses === 'RM' || akses === 'Manajemen'">
-                  <label for="exampleEmail" class="form-label"><b>SUBJEK</b></label>
+                  <label for="exampleEmail" class="form-label"><b>SUBJEK | KELUHAN</b></label>
 
                   <i style="font-size:20px ;" (click)="openLargex(content7,'s')"
                     class="font-icon-wrapper pe-7s-copy-file"> </i>
@@ -1088,7 +1088,7 @@ padding:20px">
                     <div class="col-md-6">
                       <div class="position-relative mb-3">
                         <label for="exampleSelect" class="form-label" style="color:black">Jenis Kunjungan</label>
-                        <select [(ngModel)]="jeniskun" id="exampleSelect" class="form-select" required disabled>
+                        <select [(ngModel)]="jeniskun" id="exampleSelect" class="form-select" required >
                           <option value="true"><b>SAKIT</b></option>
                           <option value="false"><b>SEHAT</b></option>
               
@@ -1456,6 +1456,19 @@ padding:20px">
 
                   </div>
 
+                  <!-- <div class="position-relative mb-3">
+                    <label for="exampleEmail" class="form-label"><b>TERAPI  OBAT</b></label>
+
+                 
+
+
+                    <textarea rows="2"  [(ngModel)]="terapiObat" placeholder="Detail..." class="form-control"
+                      autosize></textarea>
+
+                  </div> -->
+
+
+
                   <div class="position-relative mb-3">
                     <!-- <label for="exampleEmail" class="form-label">TERAPI</label> -->
 
@@ -1717,10 +1730,10 @@ padding:20px">
                           <option value="3" >Berobat Jalan</option>
                           <option value="4" >Rujuk Lanjut</option>
                           <option value="6" >Rujuk Internal</option>
-                          <option value="0" >Sembuh</option>
+                          <!-- <option value="0" >Sembuh</option>
                         
                           <option value="1" >Meninggal</option>
-                          <option value="5" >Rawat Inap</option>
+                          <option value="5" >Rawat Inap</option> -->
                         </select>
                       </div>
     

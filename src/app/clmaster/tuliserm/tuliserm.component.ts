@@ -1324,7 +1324,24 @@ dataKajianAwal: any
   this.tmptrans()
   this.tmpkonsul()
   this.tmpku()
-
+  this.authService.cabangper(this.kdklinik)
+  .subscribe(
+    data => {
+  
+  
+      for (let x of data) {
+       
+        this.slug = x.slug
+  
+      }
+  
+  
+    },
+    Error => {
+  
+      console.log(Error)
+    }
+  )
 
   // this.talergibpjs()
  
@@ -1461,6 +1478,7 @@ setTimeout(() => {
 
   }
 
+  slug:any;
 
   talergibpjs(){
     this.authService.alergis('01')
@@ -2345,48 +2363,49 @@ ttindakshow:boolean;
 sendit(a){
   console.log(a)
 
-  setTimeout(() => {
-    let body = {
-      "notrans":this.notransaksi,"diagnosa":this.diagnosa,"kddiagnosa":this.kddiagnosa,"kdpoli":this.kdpoli,"kddokter":this.kddokter,
-      "norm":this.norm,"status":'diagnosa',"stssimpan":'1',"kdcabang":this.kdcabang
-    }
+  this.toastr.error("harus pakai icd tidak boleh free text")
+  // setTimeout(() => {
+  //   let body = {
+  //     "notrans":this.notransaksi,"diagnosa":this.diagnosa,"kddiagnosa":this.kddiagnosa,"kdpoli":this.kdpoli,"kddokter":this.kddokter,
+  //     "norm":this.norm,"status":'diagnosa',"stssimpan":'1',"kdcabang":this.kdcabang
+  //   }
   
   
 
-      console.log(body)
+  //     console.log(body)
   
-    this.authService.simpandiagtindak(body)
-    .subscribe(response => {
+  //   this.authService.simpandiagtindak(body)
+  //   .subscribe(response => {
     
     
     
-      if(response ){
-        this.toastr.success(''+response, 'Sukses', {
-          timeOut: 2000,
-        });
+  //     if(response ){
+  //       this.toastr.success(''+response, 'Sukses', {
+  //         timeOut: 2000,
+  //       });
 
-  setTimeout(() => {
-    this.tampildaigtindakinput()
+  // setTimeout(() => {
+  //   this.tampildaigtindakinput()
  
-  }, 200);
+  // }, 200);
     
-        this.dignosshow = false;
-        this.kddiagnosa ='';
-        this.diagnosa='';
+  //       this.dignosshow = false;
+  //       this.kddiagnosa ='';
+  //       this.diagnosa='';
         
        
-       }else{
-        this.toastr.error('Simpan  Gagal', 'Eror');
+  //      }else{
+  //       this.toastr.error('Simpan  Gagal', 'Eror');
       
-       }
+  //      }
     
     
     
     
     
-    })
+  //   })
   
-  }, 0);
+  // }, 0);
 
 
 
@@ -2962,6 +2981,61 @@ tindaktarif:any;
       simpan(){
 
 
+   
+
+
+        // ------
+        if(this.bb === ''){
+          // this.bb = 0
+          this.toastr.error('bb harus di isi agar terkirim ke pcare', 'Eror');
+          return
+        }
+     
+
+        if(this.td === ''){
+          // this.td = 0
+          this.toastr.error('Sistole harus di isi agar terkirim ke pcare', 'Eror');
+          return
+        }
+        if(this.tdd === ''){
+          // this.tdd = 0
+          this.toastr.error('diastole harus di isi agar terkirim ke pcare', 'Eror');
+          return
+        }
+        if(this.tb === ''){
+          // this.tb = 0
+          this.toastr.error('Tb harus di isi agar terkirim ke pcare', 'Eror');
+          return
+        }
+        if(this.rr === ''){
+          // this.rr = 0
+          this.toastr.error('rr harus di isi agar terkirim ke pcare', 'Eror');
+          return
+        }
+
+        if(this.hr === ''){
+          // this.hr = 0
+          this.toastr.error('hr harus di isi agar terkirim ke pcare', 'Eror');
+          return
+        }
+
+
+      
+
+   
+      
+
+        if(this.suhu === ''){
+          this.toastr.error('Suhu harus di isi', 'Eror');
+       
+          return
+        }
+        if(this.alergi === ''){
+
+          this.toastr.error('alergi makanan harus di isi', 'Eror');
+       
+          return
+        }
 
         // this.kirimpcaredaftar()
 
@@ -2993,6 +3067,8 @@ tindaktarif:any;
 
 
        
+
+
 
                 if(this.akses === 'Perawat'){
 
@@ -3095,17 +3171,48 @@ tindaktarif:any;
                   }, 500);
                 }else{
 
+
+                  if(this.subjek === ''){
+                    this.toastr.error('Keluhan harus di isi agar terkirim ke pcare', 'Eror');
+                 
+                    return
+                  }
+          
+                  if(this.terapinonobat === ''){
+                    this.toastr.error('terapi non obat tidak boleh kosong atau isi - apabila tidak ada', 'Eror');
+                    return
+                  }
+                  // if(this.terapiObat === ''){
+                  //   this.toastr.error('terapi obat tidak boleh kosong atau isi - apabila tidak ada', 'Eror');
+                  //   return
+                  // }
+          
+                  if(this.kdprognosa === ''){
+                    this.toastr.error('kd Prognosa harus di pilih', 'Eror');
+                 
+                    return
+                  }
+
+
+                
                   if(this.skunjungan === '1'){
+
+                    // alert("adasxxxxooo")
 
                     console.log('update')
   
                     if(this.stspulang === '4'){
-               
+                      this.kirimpcarerujukedit()
+                      // alert("asdasd4");
+
+                  
                     if(this.tiperujuk === '01'){
                             this.kirimpcarerujukedit()
+                      // alert("asdasd5");
                             // this.simpanambil()
   
                     }else{
+                      // alert("asdasd6");
                       this.kirimpcarerujukkhususedit()
                       // this.simpanambil()
                     }
@@ -3118,11 +3225,12 @@ tindaktarif:any;
   
                   }else{
                     console.log('kirimbaru')
-                    
+                    // alert("asdasdxxxx");
+                  
                  
                     if(this.stspulang === '4'){
                       console.log('rujuk')
-  
+                      this.kirimpcarerujuk()
                    
                       if(this.tiperujuk === '01'){
                         console.log('rujuksp')
@@ -3371,9 +3479,9 @@ dari = '0';
 
       }
 
-      terapinonobat:string='';
-      terapiObat:string='';
-      bmhp:string='';
+      terapinonobat:string='-';
+      terapiObat:string='-';
+      bmhp:string='-';
       kirimpcare(){
 
 
@@ -5323,7 +5431,7 @@ tterapi:any;
           })
       }
       tahu(){
-        this.toastr.error('SETELAH MENULIS DIAGNOSA FREE TEXT SILAHKAN ENTER PADA KEYBOARD AGAR TERSIMPAN', 'Eror');
+        // this.toastr.error('SETELAH MENULIS DIAGNOSA FREE TEXT SILAHKAN ENTER PADA KEYBOARD AGAR TERSIMPAN', 'Eror');
 
       }
 
@@ -8783,20 +8891,8 @@ this.listpol = data.map(function(e) {
                 if(data.length){
                   for (let x of data )
                   {
-  
-                    // this.kddiagnosabpjs = x.kddiagnosa
-
-                    
-                    if(x.indexno === '1'){
-                      this.kddiagnosabpjs = x.kddiagnosa
-                    }
-                    if(x.indexno === '2'){
-                      this.kddiagnosabpjs2 = x.kddiagnosa
-                    }
-                    if(x.indexno === '3'){
-                      this.kddiagnosabpjs3 = x.kddiagnosa
-                    }
-
+                    this.kddiagnosabpjs = x.kddiagnosa
+                
 
                   
   
@@ -9059,59 +9155,107 @@ this.showthahem = false;
           klistfaskes(content){
 
             
-            if(this.tdiag[0].diag === null && this.alasantacc !='1' ){
+            this.showfaskes = true;
+
+
+            
+            this.authService.getfaskessp(this.sspesialis,this.sarana,this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'))
+            .subscribe(
+              data => {
+               
+                if(data){
+
+
+                  if(data.metaData.code == 401  ){
+                    this.showfaskes = false;
+                    this.toastr.error(data.metaData.message, 'Eror');
+                 
+
+                  }else{
+                    this.showfaskes = false;
+               
+                    this.tfaskesbpjs = data.response.list
+     
+                    
+   
+                     this.modalService.open(content, {
+                       size: 'lg'
+                     });
+                 
+                  }
+             
+              
+          
+                }else{
+          this.showfaskes = false;
+                  
+                 
+                }
+              
+           
+     
+          
+            },
+              Error => {
+            
+               console.log(Error)
+              }
+            )
+
+
+            // if(this.tdiag[0].diag === null && this.alasantacc !='1' ){
 
       
   
 
-              console.log('b');
+            //   console.log('b');
 
-              this.showfaskes = true;
+            //   this.showfaskes = true;
 
 
             
-              this.authService.getfaskessp(this.sspesialis,this.sarana,this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'))
-              .subscribe(
-                data => {
+            //   this.authService.getfaskessp(this.sspesialis,this.sarana,this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'))
+            //   .subscribe(
+            //     data => {
                  
-                  if(data){
+            //       if(data){
   
   
-                    if(data.metaData.code == 401  ){
-                      this.showfaskes = false;
-                      this.toastr.error(data.metaData.message, 'Eror');
+            //         if(data.metaData.code == 401  ){
+            //           this.showfaskes = false;
+            //           this.toastr.error(data.metaData.message, 'Eror');
                    
   
-                    }else{
-                      this.showfaskes = false;
+            //         }else{
+            //           this.showfaskes = false;
                  
-                      this.tfaskesbpjs = data.response.list
+            //           this.tfaskesbpjs = data.response.list
        
                       
      
-                       this.modalService.open(content, {
-                         size: 'lg'
-                       });
+            //            this.modalService.open(content, {
+            //              size: 'lg'
+            //            });
                    
-                    }
+            //         }
                
                 
             
-                  }else{
-            this.showfaskes = false;
+            //       }else{
+            // this.showfaskes = false;
                     
                    
-                  }
+            //       }
                 
              
        
             
-              },
-                Error => {
+            //   },
+            //     Error => {
               
-                 console.log(Error)
-                }
-              )
+            //      console.log(Error)
+            //     }
+            //   )
   
 
 
@@ -9120,94 +9264,94 @@ this.showthahem = false;
 
 
 
-            }else{
+            // }else{
 
 
-              console.log('a');
-              const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                  confirmButton: 'btn btn-danger',
-                  cancelButton: 'btn btn-success'
-                },
-                buttonsStyling: false
-              });
+            //   console.log('a');
+            //   const swalWithBootstrapButtons = Swal.mixin({
+            //     customClass: {
+            //       confirmButton: 'btn btn-danger',
+            //       cancelButton: 'btn btn-success'
+            //     },
+            //     buttonsStyling: false
+            //   });
           
-              swalWithBootstrapButtons.fire({
-                title: 'Warning TACC',
-                text: 'Apakah anda yakin akan rujuk tanpa TACC ',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya,Yakin',
-                cancelButtonText: 'Batal',
-                reverseButtons: true
-              }).then((result) => {
-                if (result.value) {
+            //   swalWithBootstrapButtons.fire({
+            //     title: 'Warning TACC',
+            //     text: 'Apakah anda yakin akan rujuk tanpa TACC ',
+            //     icon: 'warning',
+            //     showCancelButton: true,
+            //     confirmButtonText: 'Ya,Yakin',
+            //     cancelButtonText: 'Batal',
+            //     reverseButtons: true
+            //   }).then((result) => {
+            //     if (result.value) {
   
-                  this.showfaskes = true;
+            //       this.showfaskes = true;
 
 
             
-                  this.authService.getfaskessp(this.sspesialis,this.sarana,this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'))
-                  .subscribe(
-                    data => {
+            //       this.authService.getfaskessp(this.sspesialis,this.sarana,this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'))
+            //       .subscribe(
+            //         data => {
                      
-                      if(data){
+            //           if(data){
       
       
-                        if(data.metaData.code == 401  ){
-                          this.showfaskes = false;
-                          this.toastr.error(data.metaData.message, 'Eror');
+            //             if(data.metaData.code == 401  ){
+            //               this.showfaskes = false;
+            //               this.toastr.error(data.metaData.message, 'Eror');
                        
       
-                        }else{
-                          this.showfaskes = false;
+            //             }else{
+            //               this.showfaskes = false;
                      
-                          this.tfaskesbpjs = data.response.list
+            //               this.tfaskesbpjs = data.response.list
            
                           
          
-                           this.modalService.open(content, {
-                             size: 'lg'
-                           });
+            //                this.modalService.open(content, {
+            //                  size: 'lg'
+            //                });
                        
-                        }
+            //             }
                    
                     
                 
-                      }else{
-                this.showfaskes = false;
+            //           }else{
+            //     this.showfaskes = false;
                         
                        
-                      }
+            //           }
                     
                  
            
                 
-                  },
-                    Error => {
+            //       },
+            //         Error => {
                   
-                     console.log(Error)
-                    }
-                  )
+            //          console.log(Error)
+            //         }
+            //       )
       
       
                
           
-                } else if (
-                  /* Read more about handling dismissals below */
-                  result.dismiss === Swal.DismissReason.cancel
-                ) {
-                  // swalWithBootstrapButtons.fire(
-                  //   'Cancelled',
-                  //   'Your imaginary file is safe :)',
-                  //   'error'
-                  // );
-                }
-              });
+            //     } else if (
+            //       /* Read more about handling dismissals below */
+            //       result.dismiss === Swal.DismissReason.cancel
+            //     ) {
+            //       // swalWithBootstrapButtons.fire(
+            //       //   'Cancelled',
+            //       //   'Your imaginary file is safe :)',
+            //       //   'error'
+            //       // );
+            //     }
+            //   });
 
 
                             
-            }
+            // }
             
           
    

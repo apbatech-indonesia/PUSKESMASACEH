@@ -9,7 +9,14 @@ import { environment } from 'src/environments/environment';
 
 let apiurl = localStorage.getItem('baseUrl');
 let apiurx = localStorage.getItem('baseUrx');
+// let apiurx ='https://tabaro.clenicapp.com/clenicv2/';
+
+
 let apidaftar = localStorage.getItem('baseUrlDaftar');
+
+// let apidaftar = 'https://tabaro.clenicapp.com/clenicv2/master/';
+
+let pcareUrl = localStorage.getItem('pcareUrl');
 let satusehat = 'https://satusehat.clenicapp.com/api/';
 
 @Injectable({
@@ -57,6 +64,24 @@ export class ApiserviceService {
     if (localStorage.getItem('urlRawatJalan') !== null) localStorage.removeItem('urlRawatJalan')
     localStorage.setItem('urlRawatJalan', rawatJalanUrl)
   }
+
+
+
+  // antrean
+  addBpjsAntrian(data: Object,a): Observable<any> {
+    return this.http.post('https://emr.clenicapp.com/api/'+a + environment.antrianFktpPath + "add", data)
+  }
+
+  cancelBpjsAntrian(data: Object,a): Observable<any> {
+    return this.http.post('https://emr.clenicapp.com/api/'+a +environment.antrianFktpPath + "batal", data)
+  }
+  PanggilBpjsAntrian(data: any,a): Observable<any> {
+    return this.http.post('https://emr.clenicapp.com/api/'+a +environment.antrianFktpPath + "panggil", data)
+  }
+
+
+// 
+
 
   getBaseUrlConfig(branchCode: string): Observable<any> {
     let dataProd = this.http.get(environment.emrUrl + environment.cabangPath + branchCode)
@@ -151,16 +176,7 @@ export class ApiserviceService {
     return this.http.delete(environment.pcareUrl + environment.pcareObatPath +"/" + kodeObat +"/kunjungan/" + noKunjungan)
   }
 
-  addBpjsAntrian(data: Object): Observable<any> {
-    return this.http.post(environment.pcareUrl + environment.antrianFktpPath + "add", data)
-  }
 
-  cancelBpjsAntrian(data: Object): Observable<any> {
-    return this.http.post(environment.pcareUrl + environment.antrianFktpPath + "batal", data)
-  }
-  PanggilBpjsAntrian(data: any): Observable<any> {
-    return this.http.post(environment.pcareUrl + environment.antrianFktpPath + "panggil", data)
-  }
 
   postData(credentials, type) {
 
@@ -1335,6 +1351,11 @@ export class ApiserviceService {
     return this.http.get(apiurx + 'pcare/cekpeserta.php?no=' + nokartu + '&status=' + status)
   }
 
+  panggilv2(data: any): Observable<any> {
+    return this.http.post(apiurx+'pcare/panggil.php', data)
+  }
+
+
   icare(data: any): Observable<any> {
     return this.http.post(apiurx+'pcare/icare.php', data)
   }
@@ -1348,6 +1369,9 @@ export class ApiserviceService {
     return this.http.get(apiurx + 'pcare/ceklistdaftarpcare.php?no=' + no + '&tgl=' + tgl)
   }
 
+  cekjadwalv2(no, tgl): Observable<any> {
+    return this.http.get(apiurx + 'pcare/cekjadwal.php?kdpoli=' + no + '&tgl=' + tgl)
+  }
 
   getfaskessp(a, b, c): Observable<any> {
     return this.http.get(apiurx + 'pcare/getfaskessp.php?kdsubsp=' + a + '&kdsarana=' + b + '&tgl=' + c)

@@ -99,7 +99,8 @@ export class anjunganComponent implements OnInit {
 
       // console.log(this.pin)
     }
-    
+    slug:any;
+
   ngOnInit(): void {
 
     this.hostName = this.hots.getHostname();
@@ -114,6 +115,30 @@ export class anjunganComponent implements OnInit {
 this.tmppuser()
 // this.tmpan()
 this.pastdate()
+
+this.authService.cabangper(this.kdklinik)
+.subscribe(
+  data => {
+
+
+    for (let x of data) {
+     
+      this.slug = x.slug
+
+    }
+
+
+  },
+  Error => {
+
+    console.log(Error)
+  }
+)
+
+
+
+
+
 
   }
 
@@ -589,7 +614,7 @@ console.log(this.nomorasuransi,noasuransix)
                                   }
                                   
                                   console.log(bodyAddFktp)
-                                  this.authService.addBpjsAntrian(bodyAddFktp)
+                                  this.authService.addBpjsAntrian(bodyAddFktp,this.slug)
                                   .subscribe(Response => {
                                   if (Response) {
                                   
@@ -850,7 +875,7 @@ let body ={
                                   let bodyAddFktp = {
                                     "nomorkartu":nokartu,
                                     "nik": this.tantrian[0].nopengenal,
-                                    "nohp": this.tantrian[0].hp,
+                                    "nohp": '086786655899',
                                     "kodepoli": this.kdpolibpjs,
                                     "namapoli": this.tantrian[0].nampoli,
                                     "norm": this.tantrian[0].norm,
@@ -864,7 +889,7 @@ let body ={
                                     }
                                   
                                     console.log(bodyAddFktp)
-                                    this.authService.addBpjsAntrian(bodyAddFktp)
+                                    this.authService.addBpjsAntrian(bodyAddFktp,this.slug)
                                     .subscribe(Response => {
                                     if (Response) {
                                     

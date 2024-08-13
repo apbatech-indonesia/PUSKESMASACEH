@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from 'src/app/apiservice.service';
 import Swal from 'sweetalert2';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-
+import { DatePipe, formatDate } from '@angular/common';
 @Component({
   selector: 'app-mjadwal',
   templateUrl: './mjadwal.component.html',
@@ -29,7 +29,11 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
     .example-container .mat-radio-button {
       margin: 0 5px;
     }`
-  ]
+  ],
+  providers: [
+    DatePipe,
+   
+  ],
 })
 export class mjadwalComponent implements OnInit {
 
@@ -53,15 +57,17 @@ export class mjadwalComponent implements OnInit {
 
   form: FormGroup;
 kdcabang:any;
-
-  constructor(private modalService: NgbModal,public toastr: ToastrService, private authService:ApiserviceService , private fb: FormBuilder) {
+tglhit:any;
+tglp: any;
+myDate = new Date();
+  constructor( private datepipe: DatePipe,private modalService: NgbModal,public toastr: ToastrService, private authService:ApiserviceService , private fb: FormBuilder) {
     // this.options = fb.group({
     //   hideRequired: false,
     //   floatLabel: 'auto',
     // });
 
 
-
+    this.tglp = this.datepipe.transform(this.myDate, 'yyyy-MM-dd')
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails=data.userData
     this.nama = this.userDetails.nama
@@ -96,6 +102,8 @@ this.tklinik = data;
     
 
   }
+  kdpolibpjs:any;
+
   pilihklinik(a){
 
 
@@ -115,7 +123,20 @@ this.tklinik = data;
       }
     )
  
+    this.authService.polibyid(this.kdcabang,a)
+    .subscribe(
+      data => {
+      
+        this.kdpolibpjs = data[0].kdpolibpjs
+ 
+ 
+    },
+      Error => {
     
+       console.log(Error)
+      }
+    )
+ 
   }
 
 profileForm = this.fb.group({
@@ -608,6 +629,51 @@ hapus(kddokter,kdpoli,senin,selasa,rabu,kamis,jumat,sabtu,minggu,kuota,nampoli,n
   });
 
 }
+jjbpjs:any;
+hariku:any;
+non(a,b) {
+ 
+this.hariku = b;
 
+
+  this.authService. cekjadwalv2(this.kdpolibpjs,a.target.value)
+  .subscribe(data => {
+
+    
+    this.jjbpjs=data.response
+  
+   
+   
+  })
+  
+
+}
+
+pilihjj(a,b){
+  if(a === 'senin'){
+this.senin = b;
+this.jjbpjs=[]
+
+  }else if(a === 'selasa'){
+    this.selasa = b;
+this.jjbpjs=[]
+
+}else if(a === 'rabu'){
+  this.rabu = b;
+  this.jjbpjs=[]
+}else if(a === 'kamis'){
+  this.kamis = b;
+  this.jjbpjs=[]
+}else if(a === 'jumat'){
+  this.jumat = b;
+  this.jjbpjs=[]
+}else if(a === 'sabtu'){
+
+  this.sabtu = b;
+  this.jjbpjs=[]
+
+
+  }
+}
 
 }

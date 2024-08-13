@@ -649,54 +649,78 @@ Hapus(){
 
 
 if(this.verifsimpan === '1'){
-  let body = {"nama" : this.pasien,"tlahir":this.tempatlahir,"jeniskelamin":this.kelamin,"tanggallahir":this.tgllahir,
-  "alamat":this.alamat,"kodekel":this.keluarahanid,"identitas":this.indetitas,"noidentitas":this.noindetitas,"nohp":this.nohp,"agama":this.agama,"marital":this.marital,
-"pendidikan":this.pendidikan,"perkerjaan":this.perkerjaan,
-"golda":this.golda,"norm":this.norm,"stssimpan":'1',"kdcabang":this.kdcabang,"noasuransi":this.noasuransi,
-"kdklinik":this.kdklinik,"kdpanggil":this.an,"usia":this.usia};
 
-
-
-this.authService.simpanpasbaru(body)
-.subscribe(response => {
-
-
-
-  if(response ){
-    this.toastr.success(''+response, 'Sukses', {
-      timeOut: 2000,
-    });
-
-
-
-    this.authService.pasien(this.kdcabang,'2','')
-    .subscribe(
-      data => {
-      
-this.tpasien = data;
-
-    },
-      Error => {
+  this.authService.pasien(this.kdcabang,'3',this.norm)
+  .subscribe(
+    data => {
     
-       console.log(Error)
+      if(data.length){
+
+
+        this.toastr.error("data norm tersbut  sudah ada"+data[0].pasien)
+        return;
+        
+      }else{
+        let body = {"nama" : this.pasien,"tlahir":this.tempatlahir,"jeniskelamin":this.kelamin,"tanggallahir":this.tgllahir,
+        "alamat":this.alamat,"kodekel":this.keluarahanid,"identitas":this.indetitas,"noidentitas":this.noindetitas,"nohp":this.nohp,"agama":this.agama,"marital":this.marital,
+      "pendidikan":this.pendidikan,"perkerjaan":this.perkerjaan,
+      "golda":this.golda,"norm":this.norm,"stssimpan":'1',"kdcabang":this.kdcabang,"noasuransi":this.noasuransi,
+      "kdklinik":this.kdklinik,"kdpanggil":this.an,"usia":this.usia};
+      
+      
+      
+      this.authService.simpanpasbaru(body)
+      .subscribe(response => {
+      
+      
+      
+        if(response ){
+          this.toastr.success(''+response, 'Sukses', {
+            timeOut: 2000,
+          });
+      
+      
+      
+          this.authService.pasien(this.kdcabang,'2','')
+          .subscribe(
+            data => {
+            
+      this.tpasien = data;
+      
+          },
+            Error => {
+          
+             console.log(Error)
+            }
+          )
+      
+      
+      
+          this.Batal()
+      
+        
+         }else{
+          this.toastr.error('Simpan  Gagal', 'Eror');
+        
+         }
+      
+      
+      
+      
+      
+      })
+        
       }
-    )
 
-
-
-    this.Batal()
-
+  },
+    Error => {
   
-   }else{
-    this.toastr.error('Simpan  Gagal', 'Eror');
-  
-   }
+     console.log(Error)
+    }
+  )
 
 
-
-
-
-})
+ 
 
 }else{
   this.toastr.error('Pakai Tombol edit', 'Eror');
@@ -1008,11 +1032,13 @@ this.verifsimpan = '0';
                       if(data.metaData.code == 200){
                         this.pasien = data.response.nama
                         this.kelamin = data.response.sex
-                        this.tgllahir =  this.datepipe.transform(data.response.tglLahir , 'yyyy-MM-dd')
+                      
                         this.noindetitas =  data.response.noKTP
                         this.nohp =  data.response.noHP
                         this.noasuransi = data.response.noKartu
-                   
+
+                        // this.tgllahir =  this.datepipe.transform(data.response.tglLahir )
+                   this.toastr.success("Untuk tgl lahir silahkan di sesuiakan dengan ktp")
                       
                       }else if(data.metaData.code == 204){
                         this.pasien = ""
@@ -1067,11 +1093,12 @@ this.verifsimpan = '0';
                       if(data.metaData.code == 200){
                         this.pasien = data.response.nama
                         this.kelamin = data.response.sex
-                        this.tgllahir =  this.datepipe.transform(data.response.tglLahir , 'yyyy-MM-dd')
+                     
                         this.noindetitas =  data.response.noKTP
                         this.nohp =  data.response.noHP
-                        
+                        this.toastr.success("Untuk tgl lahir silahkan di sesuiakan dengan ktp")
                    
+                        // this.tgllahir =  this.datepipe.transform(data.response.tglLahir , 'yyyy-MM-dd')
                 
                         
                       }else if(data.metaData.code == 204){
