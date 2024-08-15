@@ -10708,7 +10708,7 @@ tmpku(){
                   }
                   alergiudara:string='00';
                   alergiobat:string='00'
-                  kdprognosa:string='';
+                  kdprognosa:string='01';
                   monitoringshowcontenticare:boolean;
                   icareurl:SafeResourceUrl;
 

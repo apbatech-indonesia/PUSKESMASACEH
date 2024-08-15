@@ -1697,348 +1697,347 @@ padding:20px">
 
                   <!-- <ngb-accordion *ngIf="pcare === '1'" #acc="ngbAccordion" activeIds="ngb-panel-0">
             <ngb-panel *ngIf="dash === 'BPJS'"> -->
-              <ngb-accordion  #acc="ngbAccordion" activeIds="ngb-panel-0">
-                <ngb-panel>
-                  <ng-template ngbPanelTitle>
-                    <span class="card-header--title"> Status Pulang/Rujukan</span>
-                  </ng-template>
-                  <ng-template ngbPanelContent style="border-radius: 25px;">
-                   <div class="row">
+
+
+
+
+              <div class="row">
               
-                    <div class="position-relative mb-3">
-                      <label for="exampleSelect" class="form-label"  style="color:black">Kode Prognosa</label>
-                      <select  [(ngModel)]="kdprognosa" id="exampleSelect" class="form-select">
-                        <!-- <option *ngFor="let x of tprognosa" value="{{x.kdPrognosa}}"  >{{x.nmPrognosa}}</option> -->
-                        <option value="01" >Sanam (Sembuh)</option>
-                        <option value="02" >Bonam (Baik)</option>
-                        <option value="03" >Malam (Buruk/Jelek)</option>
-                        <option value="04" >Dubia Ad Sanam</option>
-                        <option value="05" >Dubia Ad Malam</option>
-                      </select>
-                    </div>
+                <div class="position-relative mb-3">
+                  <label for="exampleSelect" class="form-label"  style="color:black">Kode Prognosa <span style="color: red;">(wajib disi)</span></label>
+                  <select  [(ngModel)]="kdprognosa" id="exampleSelect" class="form-select">
+                    <!-- <option *ngFor="let x of tprognosa" value="{{x.kdPrognosa}}"  >{{x.nmPrognosa}}</option> -->
+                    <option value="01" >Sanam (Sembuh)</option>
+                    <option value="02" >Bonam (Baik)</option>
+                    <option value="03" >Malam (Buruk/Jelek)</option>
+                    <option value="04" >Dubia Ad Sanam</option>
+                    <option value="05" >Dubia Ad Malam</option>
+                  </select>
+                </div>
 
 
-                    <div class="col-md-3">
+                <div class="col-md-3">
+                
+
+
+                  <div class="position-relative mb-3">
+                    <label for="exampleSelect" class="form-label"  style="color:black">Status Pulang <span style="color: red;">(wajib disi)</span></label>
+                    <select  id="exampleSelect" class="form-select" [(ngModel)]="stspulang"
+                     (change)="pilihstatuspulang($event.target.value,contentkonsultasi)">
+                      <!-- <option *ngFor="let x of tpulang" value="{{x.kdStatusPulang}}">{{x.nmStatusPulang}}</option> -->
+                      <option value="3" >Berobat Jalan</option>
+                      <option value="4" >Rujuk Lanjut</option>
+                      <option value="6" >Rujuk Internal</option>
+
+                      <option value="0" >Sembuh - Rawat Inap</option>
                     
-    
-    
-                      <div class="position-relative mb-3">
-                        <label for="exampleSelect" class="form-label"  style="color:black">Status Pulang</label>
-                        <select  id="exampleSelect" class="form-select" [(ngModel)]="stspulang"
-                         (change)="pilihstatuspulang($event.target.value,contentkonsultasi)">
-                          <!-- <option *ngFor="let x of tpulang" value="{{x.kdStatusPulang}}">{{x.nmStatusPulang}}</option> -->
-                          <option value="3" >Berobat Jalan</option>
-                          <option value="4" >Rujuk Lanjut</option>
-                          <option value="6" >Rujuk Internal</option>
-                          <!-- <option value="0" >Sembuh</option>
-                        
-                          <option value="1" >Meninggal</option>
-                          <option value="5" >Rawat Inap</option> -->
-                        </select>
-                      </div>
-    
-                 
-                    </div>
-                    <div class="col-md-3">
-                      <div class="position-relative mb-3">
-                        <label for="exampleSelect" class="form-label"  style="color:black">Kesadaran</label>
-                        <select  id="exampleSelect" class="form-select" [(ngModel)]="kesadaran">
-                         
-                          <option value="01" >Compos mentis</option>
-                          <option value="02" >Somnolence</option>
-                          <option value="03" >Sopor</option>
-                          <option value="04" >Coma</option>
-                          
-        
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-3">
-                      <div class="position-relative mb-3">
-                        <label for="exampleEmail" class="form-label" >Tanggal Pulang </label>
-                      
-                <br>
-                
-               
-                
-                 <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="myDate"  type="date" >
-                      
-              
-                      </div>
-                    </div>
-                    <div class="col-md-3" *ngIf="tombollihatcetakpcare">
-                      <label for="exampleEmail" class="form-label" >Aksi </label>
-                      
-                      <br>
-     
-     <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-primary" (click)="cekkunjungan(contentkunjungan)"><i style="font-size:15px ;"  class="pe-7s-note2 btn-icon-wrapper"> </i></button>
+                      <option value="1" >Meninggal - Rawat Inap</option>
+                      <option value="5" >Rawat Inap</option>
+                    </select>
+                  </div>
+
+             
+                </div>
+                <div class="col-md-3">
+                  <div class="position-relative mb-3">
+                    <label for="exampleSelect" class="form-label"  style="color:black">Kesadaran</label>
+                    <select  id="exampleSelect" class="form-select" [(ngModel)]="kesadaran">
                      
+                      <option value="01" >Compos mentis</option>
+                      <option value="02" >Somnolence</option>
+                      <option value="03" >Sopor</option>
+                      <option value="04" >Coma</option>
+                      
     
-    </div>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="position-relative mb-3">
+                    <label for="exampleEmail" class="form-label" >Tanggal Pulang </label>
+                  
+            <br>
             
-                   </div>
-    
-                 
-    
-                   <div *ngIf="showrujuk" class="row">
-    
-                    <div class="col-md-3">
-                      <div class="position-relative mb-3">
-                        <label for="exampleSelect" class="form-label"   style="color:black">Tipe</label>
-                        <select  id="exampleSelect" [(ngModel)]="tiperujuk"  (change)="pilihtiperujuk($event.target.value)"  class="form-select">
-                          <option value="" >-Pilih-</option>
-                          <option value="01" >Spesialis</option>
-                          <option value="02" >Khusus</option>
-                       
-                          
-        
-                        </select>
-                      </div>
-                      </div>
-    
-    
-    
-                      <div class="col-md-3">
-                        <div class="position-relative mb-3" *ngIf="showrujuknon">
-                          <label for="exampleSelect" class="form-label"  style="color:black">Spesialis</label>
-                          <select  id="exampleSelect" class="form-select" [(ngModel)]="spesialis" (change)="pilihsubsp($event.target.value)" >
-                            <option value="" >-Pilih-</option>
-                            <option  *ngFor="let x of tspesialis " value="{{x.kdSpesialis}}" >{{x.nmSpesialis}}</option>
-                           
-                            
-          
-                          </select>
-                        </div>
-    
-                        <div class="position-relative mb-3" *ngIf="showrujuknonkusus">
-                          <label for="exampleSelect" class="form-label"  style="color:black">Refrensi Khusus</label>
-                          <select  id="exampleSelect" class="form-select" [(ngModel)]="khususap"  (change)="pilihrefkusus($event.target.value)">
-                            <option value="" >-Pilih-</option>
-                            <option  *ngFor="let x of tkhusus " value="{{x.kdKhusus}}" >{{x.nmKhusus}}</option>
-                           
-                            
-                           
-                            
-          
-                          </select>
-                        </div>
-    
-    
-                        <div class="card main-card mb-3" *ngIf="showloadingper">
-                        
-                          <div class="card-body">
-                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="position-relative mb-3" *ngIf="showrujuknon">
-                          <label for="exampleSelect" class="form-label"  style="color:black">Sub Spesialis</label>
-                          <select  id="exampleSelect" class="form-select" [(ngModel)]="sspesialis">
-                            <option value="" >-Pilih-</option>
-                            <option  *ngFor="let x of tspesialissub " value="{{x.kdSubSpesialis}}" >{{x.nmSubSpesialis}}</option>
-                           
-          
-                          </select>
-                        </div>
-    
-                      <div class="position-relative mb-3" *ngIf="showrujuknonkusus">
-                          <label for="exampleEmail" class="form-label" >Rencana Tgl? </label>
-                        
-                  <br>
-                  
-                 
-                  
-                   <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="mydaterujuk"  type="date" >
-                 
-      
-                 
-                        </div>
-    
-                        <div class="card main-card mb-3" *ngIf="showloadingpers">
-                        
-                          <div class="card-body">
-                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                          </div>
-                        </div>
-    
-    
-                      </div>
-                      <div class="col-md-3">
-                        <div class="position-relative mb-3" *ngIf="showrujuknon">
-                          <label for="exampleSelect" class="form-label"  style="color:black">Sarana?</label>
-                          <select  id="exampleSelect" class="form-select"  [(ngModel)]="sarana" (change)="ksarana($event.target.value)" >
-                            <option value="" >-Pilih-</option>
-                            <option value="0" >Tidak</option>
-                            <option value="02" >Iya</option>
-                         
-                            
-          
-                          </select>
-                        </div>
-                            <div *ngIf="showrujuknonkusus">
-                        <label for="exampleEmail" class="form-label" >Cari Faskes Rujukan Khusus </label>
-                      
-                        <br>
-                      <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-primary"  (click)="klistfaskesx(contentfaskes)"><i style="font-size:15px ;"  class="pe-7s-search btn-icon-wrapper"> </i></button>
-                    </div>
-                      <div class="card main-card mb-3" *ngIf="showfaskes">
-                        
-                        <div class="card-body">
-                          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                        </div>
-                      </div>
-    
-    
-                      </div>
-                    
-                      
-                    </div>
-    
-    
-                    <div class="row" *ngIf="showthahem">
-                      <div class="col-md-4">
-                      <div class="position-relative mb-3">
-                        <label for="exampleSelect" class="form-label"  style="color:black">Spesialis</label>
-                        <select  id="exampleSelect" class="form-select" [(ngModel)]="spesialis" (change)="pilihsubsp($event.target.value)" >
-                          <option value="" >-Pilih-</option>
-                          <option  *ngFor="let x of tspesialis " value="{{x.kdSpesialis}}" >{{x.nmSpesialis}}</option>
-                         
-                          
-        
-                        </select>
-                      </div>
-                      </div>
-                      <div class="col-md-4">
-                        <div class="position-relative mb-3" >
-                          <label for="exampleSelect" class="form-label"  style="color:black">Sub Spesialis</label>
-                          <select  id="exampleSelect" class="form-select" [(ngModel)]="sspesialis">
-                            <option value="" >-Pilih-</option>
-                            <option  *ngFor="let x of tspesialissub " value="{{x.kdSubSpesialis}}" >{{x.nmSubSpesialis}}</option>
-                           
-          
-                          </select>
-                        </div>
-    
-                      </div>
-                    </div>
-                   <div *ngIf="showrujuk"  class="row">
-    
-                    <div class="col-md-3">
-                      <div class="position-relative mb-3" *ngIf="showrujuknon">
-                        <label for="exampleSelect" class="form-label"  style="color:black">Nama Sarana</label>
-                        <select  id="exampleSelect" class="form-select"  [(ngModel)]="nsarana">
-                          <option value="" >-Pilih-</option>
-                          <option value="0" >Tidak Tahu</option>
-                          <option  *ngFor="let x of tsarana " value="{{x.kdSarana}}" >{{x.nmSarana}}</option>
-                         
-                          
-        
-                        </select>
-                      </div>
-                      <div class="card main-card mb-3" *ngIf="showloadingperss">
-                      
-                        <div class="card-body">
-                          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                        </div>
-                      </div>
-    
-                    </div>
-    
-    
-                    <div class="col-md-3">
-                      <div class="position-relative mb-3" *ngIf="showrujuknon">
-                        <label for="exampleSelect" class="form-label"  style="color:black">TACC</label>
-    
-    
-                        <select  id="exampleSelect" class="form-select"  [(ngModel)]="kdtacc" (change)="pilihtacc($event.target.value)">
-                          <option value="-1" >Tanpa TACC</option>
-                          <option value="1" >Time (Waktu)</option>
-                          <option value="2" >Age (Umur)</option>
-                          <option value="3" >Complication (Komplikasi)</option>
-                          <option value="4" >Comorbidity (Pemberat)</option>
-                          
-                          
-        
-                        </select>
-                      </div>
-                   
-                    </div>
-                    <div class="col-md-3">
-                      <div class="position-relative mb-3" *ngIf="showrujuknon">
-                        <label for="exampleSelect" class="form-label"  style="color:black">Alasan</label>
-    
-                      <select  id="exampleSelect" class="form-select"  [(ngModel)]="alasantacc">
-                        
-                     
-                        <option  *ngIf="showsatu" value="< 3 Hari" >< 3 Hari</option>
-                        <option *ngIf="showsatu" value=">= 3 - 7 Hari" >>= 3 - 7 Hari</option>
-                        <option  *ngIf="showsatu" value=">= 7 Hari" >>= 7 Hari</option>
-                   
-    
-    
            
-                        <option *ngIf="showdua" value="< 1 Bulan" >< 1 Bulan</option>
-                        <option *ngIf="showdua" value=">= 1 Bulan s/d < 12 Bulan" >>= 1 Bulan s/d < 12 Bulan</option>
-                        <option  *ngIf="showdua" value=">= 1 Tahun s/d < 5 Tahun" >>= 1 Tahun s/d < 5 Tahun</option>
-                        <option *ngIf="showdua" value=">= 5 Tahun s/d < 12 Tahun" >>= 5 Tahun s/d < 12 Tahun</option>
-                        <option *ngIf="showdua" value=">= 12 Tahun s/d < 55 Tahun" >>= 12 Tahun s/d < 55 Tahun</option>
-                        <option *ngIf="showdua"  value=">= 55 Tahun" >>= 55 Tahun</option>
-                        
-               
-                   
-                        <option *ngIf="showtiga"  > {{kddiagb}} - {{namadiagb}}</option>
-                      
-                     
-                        <option *ngIf="showempat" value="< 3 Hari" >< 3 Hari</option>
-                        <option *ngIf="showempat" value=">= 3 - 7 Hari" >>= 3 - 7 Hari</option>
-                        <option *ngIf="showempat" value=">= 7 Hari" >>= 7 Hari</option>
-                         
-                      </select>
-                      </div>
-                    </div>
-    
-    
-    
-                    <div class="col-md-3">
-                      <div class="position-relative mb-3" *ngIf="showrujuknon">
-                        <label for="exampleEmail" class="form-label" >Rencana Tgl? </label>
-                      
-                <br>
-                
-               
-                
-                 <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="mydaterujuk"  type="date" >
-               
-    
-               
-                      </div>
-                    </div>
-    
-                    <div class="col-md-4" style="text-align: le;" *ngIf="showrujuknon"> 
-                      <label for="exampleEmail" class="form-label" >Cari Faskes Rujukan </label>
-                      
-                      <br>
-                    <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-primary"  (click)="klistfaskes(contentfaskes)"><i style="font-size:15px ;"  class="pe-7s-search btn-icon-wrapper"> </i></button>
+            
+             <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="myDate"  type="date" >
+                  
+          
+                  </div>
+                </div>
+                <div class="col-md-3" *ngIf="tombollihatcetakpcare">
+                  <label for="exampleEmail" class="form-label" >Aksi </label>
+                  
+                  <br>
+ 
+ <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-primary" (click)="cekkunjungan(contentkunjungan)"><i style="font-size:15px ;"  class="pe-7s-note2 btn-icon-wrapper"> </i></button>
                  
-                    <div class="card main-card mb-3" *ngIf="showfaskes">
+
+</div>
+        
+               </div>
+
+             
+
+               <div *ngIf="showrujuk" class="row">
+
+                <div class="col-md-3">
+                  <div class="position-relative mb-3">
+                    <label for="exampleSelect" class="form-label"   style="color:black">Tipe</label>
+                    <select  id="exampleSelect" [(ngModel)]="tiperujuk"  (change)="pilihtiperujuk($event.target.value)"  class="form-select">
+                      <option value="" >-Pilih-</option>
+                      <option value="01" >Spesialis</option>
+                      <option value="02" >Khusus</option>
+                   
                       
+    
+                    </select>
+                  </div>
+                  </div>
+
+
+
+                  <div class="col-md-3">
+                    <div class="position-relative mb-3" *ngIf="showrujuknon">
+                      <label for="exampleSelect" class="form-label"  style="color:black">Spesialis</label>
+                      <select  id="exampleSelect" class="form-select" [(ngModel)]="spesialis" (change)="pilihsubsp($event.target.value)" >
+                        <option value="" >-Pilih-</option>
+                        <option  *ngFor="let x of tspesialis " value="{{x.kdSpesialis}}" >{{x.nmSpesialis}}</option>
+                       
+                        
+      
+                      </select>
+                    </div>
+
+                    <div class="position-relative mb-3" *ngIf="showrujuknonkusus">
+                      <label for="exampleSelect" class="form-label"  style="color:black">Refrensi Khusus</label>
+                      <select  id="exampleSelect" class="form-select" [(ngModel)]="khususap"  (change)="pilihrefkusus($event.target.value)">
+                        <option value="" >-Pilih-</option>
+                        <option  *ngFor="let x of tkhusus " value="{{x.kdKhusus}}" >{{x.nmKhusus}}</option>
+                       
+                        
+                       
+                        
+      
+                      </select>
+                    </div>
+
+
+                    <div class="card main-card mb-3" *ngIf="showloadingper">
+                    
                       <div class="card-body">
                         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-3">
+                    <div class="position-relative mb-3" *ngIf="showrujuknon">
+                      <label for="exampleSelect" class="form-label"  style="color:black">Sub Spesialis</label>
+                      <select  id="exampleSelect" class="form-select" [(ngModel)]="sspesialis">
+                        <option value="" >-Pilih-</option>
+                        <option  *ngFor="let x of tspesialissub " value="{{x.kdSubSpesialis}}" >{{x.nmSubSpesialis}}</option>
+                       
+      
+                      </select>
                     </div>
-    
-                    <div *ngIf="showrujuk"  class="row">
-                      <div class="col-md-6">
-                        {{namafaskes}}
+
+                  <div class="position-relative mb-3" *ngIf="showrujuknonkusus">
+                      <label for="exampleEmail" class="form-label" >Rencana Tgl? </label>
+                    
+              <br>
+              
+             
+              
+               <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="mydaterujuk"  type="date" >
+             
+  
+             
+                    </div>
+
+                    <div class="card main-card mb-3" *ngIf="showloadingpers">
+                    
+                      <div class="card-body">
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                       </div>
-                      </div>
-                  </ng-template>
-                </ngb-panel>
+                    </div>
+
+
+                  </div>
+                  <div class="col-md-3">
+                    <div class="position-relative mb-3" *ngIf="showrujuknon">
+                      <label for="exampleSelect" class="form-label"  style="color:black">Sarana?</label>
+                      <select  id="exampleSelect" class="form-select"  [(ngModel)]="sarana" (change)="ksarana($event.target.value)" >
+                        <option value="" >-Pilih-</option>
+                        <option value="0" >Tidak</option>
+                        <option value="02" >Iya</option>
+                     
+                        
+      
+                      </select>
+                    </div>
+                        <div *ngIf="showrujuknonkusus">
+                    <label for="exampleEmail" class="form-label" >Cari Faskes Rujukan Khusus </label>
+                  
+                    <br>
+                  <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-primary"  (click)="klistfaskesx(contentfaskes)"><i style="font-size:15px ;"  class="pe-7s-search btn-icon-wrapper"> </i></button>
+                </div>
+                  <div class="card main-card mb-3" *ngIf="showfaskes">
+                    
+                    <div class="card-body">
+                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </div>
+                  </div>
+
+
+                  </div>
+                
+                  
+                </div>
+
+
+                <div class="row" *ngIf="showthahem">
+                  <div class="col-md-4">
+                  <div class="position-relative mb-3">
+                    <label for="exampleSelect" class="form-label"  style="color:black">Spesialis</label>
+                    <select  id="exampleSelect" class="form-select" [(ngModel)]="spesialis" (change)="pilihsubsp($event.target.value)" >
+                      <option value="" >-Pilih-</option>
+                      <option  *ngFor="let x of tspesialis " value="{{x.kdSpesialis}}" >{{x.nmSpesialis}}</option>
+                     
+                      
     
-               </ngb-accordion>
+                    </select>
+                  </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="position-relative mb-3" >
+                      <label for="exampleSelect" class="form-label"  style="color:black">Sub Spesialis</label>
+                      <select  id="exampleSelect" class="form-select" [(ngModel)]="sspesialis">
+                        <option value="" >-Pilih-</option>
+                        <option  *ngFor="let x of tspesialissub " value="{{x.kdSubSpesialis}}" >{{x.nmSubSpesialis}}</option>
+                       
+      
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+               <div *ngIf="showrujuk"  class="row">
+
+                <div class="col-md-3">
+                  <div class="position-relative mb-3" *ngIf="showrujuknon">
+                    <label for="exampleSelect" class="form-label"  style="color:black">Nama Sarana</label>
+                    <select  id="exampleSelect" class="form-select"  [(ngModel)]="nsarana">
+                      <option value="" >-Pilih-</option>
+                      <option value="0" >Tidak Tahu</option>
+                      <option  *ngFor="let x of tsarana " value="{{x.kdSarana}}" >{{x.nmSarana}}</option>
+                     
+                      
+    
+                    </select>
+                  </div>
+                  <div class="card main-card mb-3" *ngIf="showloadingperss">
+                  
+                    <div class="card-body">
+                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </div>
+                  </div>
+
+                </div>
+
+
+                <div class="col-md-3">
+                  <div class="position-relative mb-3" *ngIf="showrujuknon">
+                    <label for="exampleSelect" class="form-label"  style="color:black">TACC</label>
+
+
+                    <select  id="exampleSelect" class="form-select"  [(ngModel)]="kdtacc" (change)="pilihtacc($event.target.value)">
+                      <option value="-1" >Tanpa TACC</option>
+                      <option value="1" >Time (Waktu)</option>
+                      <option value="2" >Age (Umur)</option>
+                      <option value="3" >Complication (Komplikasi)</option>
+                      <option value="4" >Comorbidity (Pemberat)</option>
+                      
+                      
+    
+                    </select>
+                  </div>
+               
+                </div>
+                <div class="col-md-3">
+                  <div class="position-relative mb-3" *ngIf="showrujuknon">
+                    <label for="exampleSelect" class="form-label"  style="color:black">Alasan</label>
+
+                  <select  id="exampleSelect" class="form-select"  [(ngModel)]="alasantacc">
+                    
+                 
+                    <option  *ngIf="showsatu" value="< 3 Hari" >< 3 Hari</option>
+                    <option *ngIf="showsatu" value=">= 3 - 7 Hari" >>= 3 - 7 Hari</option>
+                    <option  *ngIf="showsatu" value=">= 7 Hari" >>= 7 Hari</option>
+               
+
+
+       
+                    <option *ngIf="showdua" value="< 1 Bulan" >< 1 Bulan</option>
+                    <option *ngIf="showdua" value=">= 1 Bulan s/d < 12 Bulan" >>= 1 Bulan s/d < 12 Bulan</option>
+                    <option  *ngIf="showdua" value=">= 1 Tahun s/d < 5 Tahun" >>= 1 Tahun s/d < 5 Tahun</option>
+                    <option *ngIf="showdua" value=">= 5 Tahun s/d < 12 Tahun" >>= 5 Tahun s/d < 12 Tahun</option>
+                    <option *ngIf="showdua" value=">= 12 Tahun s/d < 55 Tahun" >>= 12 Tahun s/d < 55 Tahun</option>
+                    <option *ngIf="showdua"  value=">= 55 Tahun" >>= 55 Tahun</option>
+                    
+           
+               
+                    <option *ngIf="showtiga"  > {{kddiagb}} - {{namadiagb}}</option>
+                  
+                 
+                    <option *ngIf="showempat" value="< 3 Hari" >< 3 Hari</option>
+                    <option *ngIf="showempat" value=">= 3 - 7 Hari" >>= 3 - 7 Hari</option>
+                    <option *ngIf="showempat" value=">= 7 Hari" >>= 7 Hari</option>
+                     
+                  </select>
+                  </div>
+                </div>
+
+
+
+                <div class="col-md-3">
+                  <div class="position-relative mb-3" *ngIf="showrujuknon">
+                    <label for="exampleEmail" class="form-label" >Rencana Tgl? </label>
+                  
+            <br>
+            
+           
+            
+             <input style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="mydaterujuk"  type="date" >
+           
+
+           
+                  </div>
+                </div>
+
+                <div class="col-md-4" style="text-align: le;" *ngIf="showrujuknon"> 
+                  <label for="exampleEmail" class="form-label" >Cari Faskes Rujukan </label>
+                  
+                  <br>
+                <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-primary"  (click)="klistfaskes(contentfaskes)"><i style="font-size:15px ;"  class="pe-7s-search btn-icon-wrapper"> </i></button>
+             
+                <div class="card main-card mb-3" *ngIf="showfaskes">
+                  
+                  <div class="card-body">
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                  </div>
+                </div>
+              </div>
+                </div>
+
+                <div *ngIf="showrujuk"  class="row">
+                  <div class="col-md-6">
+                    {{namafaskes}}
+                  </div>
+                  </div>
+
+
+
+        
     
                <ngb-accordion  #acc="ngbAccordion" activeIds="ngb-panel-0">
                 <ngb-panel>
