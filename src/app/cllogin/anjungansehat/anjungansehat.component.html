@@ -12,7 +12,7 @@ background-size: cover;">
             
               <b >
                
-                <div>ANJUNGAN SAKIT PENDAFTARAN MANDIRI</div>
+                <div>ANJUNGAN SEHAT PENDAFTARAN MANDIRI </div>
               
               </b>
             </div>
@@ -32,7 +32,7 @@ background-size: cover;">
                         <i class="lnr-cog text-primary"></i>
                       </div>
                       <div class="widget-numbers">BPJS</div>
-                      <div class="widget-subheading">Bagi Pasien Peserta JKN</div>
+                      <div class="widget-subheading">Bagi Pasien Peserta (Kunjungan SEHAT)</div>
                      
                     </div>
                   </div>
@@ -105,36 +105,37 @@ background-size: cover;">
 
 
 
-                   
+                    <!-- <div class="input-group-text">
+                      <span class=""><img src="./assets/images/keyboard1.png"></span>
+                    </div> -->
                   </div>
                   </div>
               </div>
 
            
                  
-              <div class="position-relative mb-3">
+              <!-- <div class="position-relative mb-3">
                 <label for="exampleState" class="form-label" style="font-size: 18px;color:black;font-weight:bold;">DOKTER</label>
                 <div class="col-sm-12">
                   <div class="input-group">
-                    <select style="font-size: 18px;color:black;font-weight:bold;"   class="form-select" [(ngModel)]="kddokter"  (change)="pilihjadwal($event.target.value)" >
-                      <option value="">-PILIH DOKTER-</option>
+                    <select style="font-size: 18px;color:black;font-weight:bold;"   class="form-select" [(ngModel)]="kddokter" >
+                      <option value="">-PILIH POLIKLINIK-</option>
                       <option   *ngFor="let x of tdokter" value="{{x.kddokter}}" >{{x.namdokter}}</option>
                      </select>
-                
+                  
                   </div>
                   </div>
-              </div>
-
+              </div> -->
               <div class="position-relative mb-3">
-                <label for="exampleState" class="form-label" style="font-size: 18px; color: black; font-weight: bold">JADWAL</label>
+                <label for="exampleState" class="form-label" style="font-size: 18px;color:black;font-weight:bold;">TANGGAL</label>
                 <div class="col-sm-12">
                   <div class="input-group">
-                    <select style="font-size: 18px; color: black; font-weight: bold" class="form-select" [(ngModel)]="jadwal">
-                      <option value="">-PILIH JADWAL-</option>
-                      <option *ngFor="let x of tjadwal" value="{{ x.jadwal }}">{{ x.jadwal }}</option>
-                    </select>
+                    <input style="border-radius: 5px;border:solid 1px #ccc; width: 50.5em;height: 33px;" enabled type="date"
+                    [(ngModel)]="tglp">
+  
+                  
                   </div>
-                </div>
+                  </div>
               </div>
 
               <div class="position-relative mb-3">
@@ -197,7 +198,7 @@ background-size: cover;">
                         <td (click)="enter(9)"> <span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success">9</span></td>
                       </tr>
                       <tr>
-                        <td (click)="cekkepsertaan(content9)"><span style="font-size: 20px; width: 60px" class="badge rounded-pill bg-primary btn">Cek</span></td>
+                        <td></td>
                         <td (click)="enter(0)"> <span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success">0</span></td>
                         <td  (click)="hapus()"><span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success"><</span></td>
                       </tr>
@@ -220,90 +221,45 @@ background-size: cover;">
                  
                    </div>
 
-
-                     <div  *ngIf="showantrian">
+                   <!-- -->
+                     <div  *ngIf="showantrian" >
                     
-                  
-                    <table class="table table-striped" *ngFor="let x of tantrian">
+                
+                    <table class="table table-striped">
                       
-                      <thead>
-                        <tr>
-                         
-                          <th scope="col" style="font-size: 18px;color:black;font-weight: bold;">Ruang : </th>
-                          <th scope="col"  style="font-size: 18px;color:black;font-weight: bold;"> {{x.nampoli}}</th>
-                          
-                        </tr>
-              
-                        <tr>
-                         
-                          <th scope="col"  style="font-size: 18px;color:black;font-weight: bold;">Dokter  : </th>
-                          <th scope="col"  style="font-size: 18px;color:black;font-weight: bold;">{{x.namdokter}}</th>
-                          
-                        </tr>
-                       
-                      </thead>
+                    
                       <tbody style="color:black;">
                         <tr >
                        
                           <td style="font-size: 25px;color:black;font-weight: bold;">
                             
-                            {{x.kodeantrian}} 
+                          Nomor : {{noantraian}} 
                           </td>
-                          <td style="font-size: 25px;color:black;font-weight: bold;" >
-                            {{x.noantrian}}
-                          </td>
+                        
                           
                         </tr>
                      
                         <tr >
                        
-                          <td style="color:black;">
-                            
-                           No RM : 
-                          </td>
-                          <td>
-                            {{x.norm}}
-                          </td>
-                          
-                        </tr>
-                        <tr >
-                       
-                          <td style="color:black;">
+                          <td style="font-size: 18px;color:black;font-weight: bold;">
                             
                            Pasien : 
                           </td>
-                          <td>
-                            {{x.pasien}}
+                          <td style="font-size: 18px;color:black;font-weight: bold;">
+                            {{namabpjs}}
                           </td>
                           
                         </tr>
               
-                    
-                        <tr >
-                       
-                          <td >
-                            
-                           Tgl Priksa : 
-                          </td>
-                          <td>
-                            {{x.tglpriksa}}
-                          </td>
-                          
-                        </tr>
+                     
+              
+                  
                      
               
                     
                       </tbody>
                     </table>
-                    <div class="row" *ngFor="let x of tantrian">
-                      <div class="col-md-6">
-                        <button *ngIf="showtombolkirimpcare" class="mb-2 me-2 btn-pill btn btn-success" (click)="kirimpcare()">Kirim Pcare Daftar</button>
-                      </div>
-
-                      <div class="col-md-6">
-                        <button class="mb-2 me-2 btn-pill btn btn-info" *ngIf="showcetak" (click)="cetaknoantrian(x.notransaksi)">Cetak</button>
-                      </div>
-                    </div>
+                  
                   </div>
 
                    

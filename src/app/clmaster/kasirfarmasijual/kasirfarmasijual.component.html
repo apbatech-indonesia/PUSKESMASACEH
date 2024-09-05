@@ -6,7 +6,7 @@
     <div class="card-header-tab card-header">
       <div class="card-header-title font-size-lg text-capitalize fw-normal">
         <i class="header-icon lnr-charts icon-gradient bg-happy-green"> </i>
-        <b style="font-size:18px;color:rgb(75, 75, 75)">PENJUALAN OBAT</b>
+        <b style="font-size:18px;color:rgb(75, 75, 75)">PELAYANAN RESEP</b>
       </div>
       <div class="btn-actions-pane-right text-capitalize">
         
@@ -30,9 +30,9 @@
          <div ngbDropdownMenu class="dropdown-menu-rounded">
           <h6 class="dropdown-header">Cetak Faktur Retur</h6>
           <button class="dropdown-item" (click)="muncultiket()">Etiket</button>
-          <button class="dropdown-item" [disabled]="tombolcetak"  (click)="cetakfaktur()">Cetak Faktur Penjualan</button>
-          <button class="dropdown-item" (click)="openlaporan(content7,'1')">Cetak Penjualan Priodik</button>
-          <button class="dropdown-item" (click)="openlaporan(content7,'2')">Rekap Penjualan Kasir</button>
+          <button class="dropdown-item" [disabled]="tombolcetak"  (click)="cetakfaktur()">Cetak Faktur Pelayanan</button>
+          <button class="dropdown-item" (click)="openlaporan(content7,'1')">Cetak Pelayanan Priodik</button>
+          <button class="dropdown-item" (click)="openlaporan(content7,'2')">Rekap Pelayanan Kasir</button>
           <button class="dropdown-item" (click)="openlaporan(content7,'3')">Rekap Belum Bayar</button>
          
 
@@ -258,8 +258,8 @@
                
                 <th scope="col" style="color: #01244a;background-color: #cecbcb;" >Obat</th>
                 <th scope="col"  style="color: #01244a;background-color: #cecbcb;" >Satuan</th>
-                <th scope="col" style="color: #01244a;background-color: #cecbcb;" >H jual</th>
-                <th scope="col" style="color: #01244a;background-color: #cecbcb;" >Qty Jual</th>
+                <!-- <th scope="col" style="color: #01244a;background-color: #cecbcb;" >H jual</th> -->
+                <th scope="col" style="color: #01244a;background-color: #cecbcb;" >Qty </th>
                 <!-- <th scope="col" style="color: #01244a;background-color: #cecbcb;" >Bruto</th> -->
             
             
@@ -284,9 +284,9 @@
                 <td >
                   {{x.standart}}
                 </td>
-                <td>
+                <!-- <td>
                   {{x.hargarp }}
-                </td>
+                </td> -->
                 <td>
                   
                   <input   style="border-radius: 5px;border:solid 1px #ccc;width:7em;color:black;font-weight: bold;" 
@@ -364,10 +364,10 @@
               </select>
   
             </td>
-            <td>
+            <!-- <td>
   
               <input disabled [(ngModel)]="hna"  class="inx"   placeholder="Hna..." type="text" >
-            </td>
+            </td> -->
             <td>
               <input   [(ngModel)]="qty"  #myinput  class="inx" placeholder="Qty...." type="number"  (keyup.enter)="onqty($event)">
             </td>

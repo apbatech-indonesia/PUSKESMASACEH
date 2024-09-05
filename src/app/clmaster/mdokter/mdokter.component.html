@@ -184,10 +184,11 @@
                       <p *ngIf="a.aktif === '1'">Non Aktif</p>
                     </td>
                     <td class="text-center">
-                      <div class="badge bg-pill bg-info"   (click)="setting(content,a.kddokter,a.namdokter)">Maping</div>
-                      <div class="badge bg-pill bg-danger" (click)="edit(a.kddokter,a.namdokter,a.statusonline,a.aktif,a.kddokterbpjs)">P</div>
-                      <div class="badge bg-pill bg-warning" [routerLink]="['/master/mdokterprofil',a.kddokter,a.namdokter]">Profil</div>
-                      <div class="badge bg-pill bg-info"   (click)="maping(contentid,a.nik,a.kddokter)">SATU SEHAT</div>
+                      <div class="badge bg-pill bg-info btn"   (click)="setting(content,a.kddokter,a.namdokter)">Maping</div>
+                      <div class="badge bg-pill bg-danger btn" (click)="edit(a.kddokter,a.namdokter,a.statusonline,a.aktif,a.kddokterbpjs,a.nik)">P</div>
+                      <div class="badge bg-pill bg-warning btn" *ngIf="a.idhis === ''">Belum Ada IHS</div>
+                      <div class="badge bg-pill bg-success btn" *ngIf="a.idhis != ''">{{a.idhis}}</div>
+                      <div class="badge bg-pill bg-info btn"   (click)="maping(contentid,a.nik,a.kddokter)">SATU SEHAT</div>
                     </td>
                   </tr>
 

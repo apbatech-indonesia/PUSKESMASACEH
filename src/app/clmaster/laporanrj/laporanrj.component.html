@@ -16,6 +16,7 @@
            <div ngbDropdownMenu class="dropdown-menu-rounded">
       
             <button class="dropdown-item" (click)="laprj('Kunjungan Rawat Jalan')">Kunjungan Rawat Jalan</button>
+            <button class="dropdown-item" (click)="laprj('Kunjungan Rawat Jalans')">Kunjungan Rawat Jalan Sehat</button>
             <button class="dropdown-item" (click)="laprj('Batal Priksa Rawat Jalan')">Batal Priksa Rawat Jalan</button>
             <button class="dropdown-item" (click)="laprj('Pendapatan Rawat Jalan')">Pendapatan Rawat Jalan</button>
             <button class="dropdown-item" (click)="laprj('Pendapatan RJ/Konsumen')">Pendapatan Kelompok Pasien</button>
@@ -153,6 +154,14 @@
 <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatbp()">Lihat Pasien Batal Priksa
             </button>
             </div>
+
+            <div *ngIf="judul ==='Kunjungan Rawat Jalans'">
+
+              <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatss()">Lihat Kunjungan Sehat
+                          </button>
+                          </div>
+
+
       </div>
     
     </div>

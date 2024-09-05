@@ -94,7 +94,14 @@
                           <span class="vsm-title">Daftar Rawat Inap</span>
                         </a>
                       </div>
-                      
+                      <div class="vsm-item" >
+                        <a routerLinkActive="active-item" (click)="kanjungans()"  class="vsm-link">
+                          <span class="vsm-title">Anjungan SEHAT</span></a>
+                      </div>
+                      <div class="vsm-item" >
+                        <a routerLinkActive="active-item" (click)="kanjungan()"  class="vsm-link">
+                          <span class="vsm-title">Anjungan SAKIT</span></a>
+                      </div>
                       <div class="vsm-item"  *ngIf="ri == '1'">
                         <a routerLinkActive="active-item" routerLink="/master/kasirri" class="vsm-link"  *ngIf="akses === 'Kasir' || akses === 'Manajemen'  || akses === 'Kasir Koordinator' || akses === 'Kasir RJ'">
                           <span class="vsm-title">Kasir RI</span>
@@ -575,6 +582,11 @@
                         <a routerLinkActive="active-item" (click)="kanjungan()"  class="vsm-link">
                           <span class="vsm-title">Anjungan</span></a>
                       </div>
+                      <div class="vsm-item" >
+                        <a routerLinkActive="active-item" (click)="kanjungans()"  class="vsm-link">
+                          <span class="vsm-title">Anjungan SEHAT</span></a>
+                      </div>
+                      
                       <!-- <div class="vsm-item" *ngIf="akses === 'Manajemen' || akses === 'administrator'  ">
                         <a routerLinkActive="active-item" routerLink="/master/promo" class="vsm-link">
                           <span class="vsm-title">Promo</span></a>

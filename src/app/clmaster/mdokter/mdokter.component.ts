@@ -131,6 +131,9 @@ export class MdokterComponent implements OnInit {
   kddokterbpjs:any='';
 
   simpan() {
+
+    console.log(this.nik, this.kdklinik, this.kdcabang, 
+      this.namadokter, this.online, this.kddokter, '1', this.aktif, this.sn,this.kddokterbpjs)
     this.authService.simpandokter(this.nik, this.kdklinik, this.kdcabang, 
       this.namadokter, this.online, this.kddokter, '1', this.aktif, this.sn,this.kddokterbpjs).then(data => {
       this.dafatrdokter()
@@ -140,6 +143,9 @@ export class MdokterComponent implements OnInit {
         });
         this.kddokter = '';
         this.namadokter = '';
+        this.nik='0';
+        this.kddokterbpjs='';
+
         this.batal()
       } else {
         this.toastr.error('Simpan  Gagal', 'Eror');
@@ -172,11 +178,12 @@ export class MdokterComponent implements OnInit {
       )
   }
 
-  edit(kddokter, namdokter, statusonline, aktif,kddokterbpjs) {
+  edit(kddokter, namdokter, statusonline, aktif,kddokterbpjs,nik) {
     this.kddokter = kddokter;
     this.namadokter = namdokter;
     this.online = statusonline;
     this.aktif = aktif
+    this.nik=nik
     this.kddokterbpjs = kddokterbpjs
     this.showedit = true;
   }
@@ -189,7 +196,8 @@ export class MdokterComponent implements OnInit {
     this.showedit = false;
   }
   edituser() {
-    this.authService.simpandokter(this.nik, this.kdklinik, this.kdcabang, this.namadokter, this.online, this.kddokter, '2', this.aktif, this.sn,this.kddokterbpjs).then(data => {
+    this.authService.simpandokter(this.nik, this.kdklinik, this.kdcabang, this.namadokter,
+       this.online, this.kddokter, '2', this.aktif, this.sn,this.kddokterbpjs).then(data => {
       this.dafatrdokter()
       if (data) {
         this.toastr.success('' + data, 'Sukses', {
@@ -197,7 +205,11 @@ export class MdokterComponent implements OnInit {
         });
         this.kddokter = '';
         this.namadokter = '';
-
+this.kddokter = '';
+        this.namadokter = '';
+        this.nik='0';
+        this.kddokterbpjs='';
+        
         this.batal()
       } else {
         this.toastr.error('Simpan  Gagal', 'Eror');
@@ -370,7 +382,7 @@ export class MdokterComponent implements OnInit {
     online: ['', Validators.required],
     aktif: ['', Validators.required],
     sn: ['', Validators.required],
-
+    nik : ['', Validators.required],
   })
 
   sn: ''

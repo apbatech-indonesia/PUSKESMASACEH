@@ -290,4 +290,11 @@ lihatrj(){
   var redirectWindow = window.open(this.URLINVOICE+'clenic/report/pendapatantfex.php?kdcabang='+this.kdcabang+'&tgldari='+this.tgldari+'&tglsampai='+this.tglsampai, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
   redirectWindow.location;
  }
+
+ lihatss(){
+  var redirectWindow = window.open(this.URLINVOICE+'clenic/report/kunjungansehat.php?kdcabang='+this.kdcabang+'&tgldari='+this.tgldari+'&tglsampai='+this.tglsampai, '_blank','location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes');
+  redirectWindow.location;
+ }
+
+ 
 }

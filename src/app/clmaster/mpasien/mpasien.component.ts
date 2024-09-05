@@ -369,7 +369,23 @@ this.authService.cariuser(this.kdcabang,a.target.value)
   });
 
  }
+ shownorm(content){
+  if(this.norm === ''){
 
+    this.toastr.error("belum memilih pasien")
+    return;
+  }
+  this.normbaru=''
+  this.modalService.open(content).result.then((result) => {
+        
+      
+            
+          
+  }, (reason) => {
+ 
+  
+  });
+ }
  propinsi:'';
  propinsiid:'';
  tkab:any;
@@ -1139,7 +1155,71 @@ this.verifsimpan = '0';
             }
 
 
+            normbaru:any='';
 
+            ganti(){
 
+              if(this.normbaru === ''){
+                this.toastr.error("isikan norm baru")
+                return;
+              }
+              const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                  confirmButton: 'btn btn-success',
+                  cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+              });
+            
+              swalWithBootstrapButtons.fire({
+                title: 'Ganti Norm?',
+                text: 'Yakin Akan Panggil Ganti Norm',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ganti',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+              }).then((result) => {
+                if (result.value) {
+                  let body={
+                    normlama:this.norm,
+                    normbaru :this.normbaru,
+                    stssimpan:'1'
+                  }
+            
+              
+      this.authService.editnorm(body)
+      .subscribe(response => {
+      
+      
+      
+        if(response ){
+          this.toastr.success('', 'Sukses', {
+            timeOut: 2000,
+          });
+      
+          this.norm = this.normbaru
+          this.tmpantri()
+      
+      this.modalService.dismissAll()
+        
+         }else{
+          this.toastr.error('Simpan  Gagal', 'Eror');
+        
+         }
+      
+      
+      
+      
+      
+      })
+                } else if (
+                  /* Read more about handling dismissals below */
+                  result.dismiss === Swal.DismissReason.cancel
+                ) {
+                 
+                }
+              });
+            }
           
 }

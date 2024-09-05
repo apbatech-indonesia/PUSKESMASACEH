@@ -4029,7 +4029,7 @@ this.kete = '';
 
         cetakkajian(){
   
-          var redirectWindow = window.open(this.URLINVOICE+'clenic/report/cetakkajian.php?noresep='+this.noresep+
+          var redirectWindow = window.open(this.URLINVOICE+'clenic/report/cetakkajian.php?noresep='+this.notransaksi+
           '&kdcabang='+this.kdcabang, '_blank','location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes');
           redirectWindow.location;
         }

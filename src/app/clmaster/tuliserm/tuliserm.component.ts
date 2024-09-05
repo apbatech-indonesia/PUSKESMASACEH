@@ -17,7 +17,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { NgSelectModule, NgOption, NgSelectComponent } from '@ng-select/ng-select';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Router } from '@angular/router';
-
+import { shareReplay } from 'rxjs/operators';
 
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { perminobatComponent } from '../perminobat/perminobat.component';
@@ -1401,8 +1401,15 @@ setTimeout(() => {
   this.authService.obatnonracik(this.kdcabang,this.notrans,this.notrans+this.kddokter)
   .subscribe(
     data => {
-      this.terapiObat = Array.prototype.map.call(data,s=>s.nama).toString();
-this.tlistobatn = data;
+
+      if(data.length){
+        this.terapiObat = Array.prototype.map.call(data,s=>s.nama).toString();
+        this.tlistobatn = data;
+      }else{
+
+        this.terapiObat="obat tidak ada"
+      }
+
 
   },
     Error => {
@@ -1427,8 +1434,15 @@ this.tlistobatr = data;
   this.authService.tmpbhp(this.kdcabang,this.notrans,this.notrans+this.kddokter)
   .subscribe(
     data => {
-      this.bmhp = Array.prototype.map.call(data,s=>s.nama).toString();
-this.tlistbhpr = data;
+
+      if(data.length){
+        this.bmhp = Array.prototype.map.call(data,s=>s.nama).toString();
+        this.tlistbhpr = data;
+
+      }else{
+        this.bmhp = 'bmhp tidak'
+      }
+
 
   },
     Error => {
@@ -1574,6 +1588,7 @@ kdkostumer:any;
 jeniskelamin:any;
 idsatusehat:any=''
 idpasien:any='';
+noantrianbpjs:any='';
 
   tampildata(){
          this.authService.datapasien(this.kdcabang,this.notrans)
@@ -1622,6 +1637,7 @@ idpasien:any='';
                     this.idsatusehat = x.idsatusehat
                     this.idpasien = x.idpasien
                     this.kdtkp = x.kdtkp
+                    this.noantrianbpjs = x.noantrianbpjs
 
 
                     this.authService.tmpbpjs(this.noasuransi,'noka')
@@ -1779,44 +1795,52 @@ ksehatxl(){
   
        
         // this.tmpcpptt = data;
-        for (let x of data )
-        {
-          this.subjek = x.subjek
-          this.td= x.td
-          this.bb= x.bb
-          this.nadi=  x.nadi
-          this.suhu= x.suhu
-          this.rr= x.rr
-          this.spo= x.spo
-          this.pf= x.pf
-          this.plan= x.planing
-          this.gmburl = x.url
-          this.alergi = x.alergi
-          this.tdd = x.tdd
-          this.hr = x.hr
-          this.rwtp = [x.rwytp],
-          this.tb = x.tb
-          this.subjekp = x.subjekp
-          this.plankon = x.rencanatindakan
-          this.myDatekon = x.tglkontrol
-          this.skalanyeri = x.skalanyeri
-          this.imt = x.imt
-          this.riwayatdahulu = x.riwayatdahulu;
-          this.riwayatkeluarga = x.riwayatkeluarga;
-          this.stspulang = x.stspulang,
-          this.alergiudara = x.alergiudara,
-          this.alergiobat = x.alergiobat,
-          this.kdprognosa = x.kdprognosa,
-          this.terapinonobat = x.terapinonobat
-     
 
-        }
         if(data.length){
           this.showdatacppt = true;
-          
+          for (let x of data )
+          {
+            this.subjek = x.subjek
+            this.td= x.td
+            this.bb= x.bb
+            this.nadi=  x.nadi
+            this.suhu= x.suhu
+            this.rr= x.rr
+            this.spo= x.spo
+            this.pf= x.pf
+            this.plan= x.planing
+            this.gmburl = x.url
+            this.alergi = x.alergi
+            this.tdd = x.tdd
+            this.hr = x.hr
+            this.rwtp = [x.rwytp],
+            this.tb = x.tb
+            this.subjekp = x.subjekp
+            this.plankon = x.rencanatindakan
+            this.myDatekon = x.tglkontrol
+            this.skalanyeri = x.skalanyeri
+            this.imt = x.imt
+            this.riwayatdahulu = x.riwayatdahulu;
+            this.riwayatkeluarga = x.riwayatkeluarga;
+            this.stspulang = x.stspulang,
+            this.alergiudara = x.alergiudara,
+            this.alergiobat = x.alergiobat,
+            this.kdprognosa = x.kdprognosa,
+            this.terapinonobat = x.terapinonobat
+            this.lingkarperut = x.lp
+       
+  
+          }
         }else{
-
+          this.lingkarperut =0
+          this.stspulang='3'
+          this.alergi ='00'
+          this.kdprognosa='01'
         }
+
+
+    
+       
   
   },
   Error => {
@@ -2982,7 +3006,10 @@ tindaktarif:any;
 
 
    
-
+console.log("obat"+this.terapiObat);
+console.log("nonobat"+this.terapinonobat);
+console.log("bmhp"+this.bmhp);
+console.log("obatst"+this.stspulang)
 
         // ------
         if(this.bb === ''){
@@ -3202,7 +3229,7 @@ tindaktarif:any;
                     console.log('update')
   
                     if(this.stspulang === '4'){
-                      this.kirimpcarerujukedit()
+                      // this.kirimpcarerujukedit()
                       // alert("asdasd4");
 
                   
@@ -3230,7 +3257,7 @@ tindaktarif:any;
                  
                     if(this.stspulang === '4'){
                       console.log('rujuk')
-                      this.kirimpcarerujuk()
+                      // this.kirimpcarerujuk()
                    
                       if(this.tiperujuk === '01'){
                         console.log('rujuksp')
@@ -3383,7 +3410,7 @@ dari = '0';
           "rencanatindakan":this.plankon,"stspulang":this.stspulang,"skalanyeri":this.skalanyeri,
           "imt":this.imt,"riwayatdahulu":this.riwayatdahulu,"riwayatkeluarga":this.riwayatkeluarga,
           "alergiudara":this.alergiudara,"alergiobat":this.alergiobat,"terapiObat":this.terapiObat,
-          "terapinonobat":this.terapinonobat,
+          "terapinonobat":this.terapinonobat,"lingkarperut":this.lingkarperut,
           "kdprognosa":this.kdprognosa,"bmhp":this.bmhp
         
         }
@@ -3419,9 +3446,9 @@ dari = '0';
             .subscribe(
               data => {
               
-                this.terapiObat = Array.prototype.map.call(data,s=>s.nama).toString();
+              
           if(data.length){
-    
+            this.terapiObat = Array.prototype.map.call(data,s=>s.nama).toString();
             // this.chatService.sendMessage([
             //   {
             //     antrian:'0',
@@ -3433,6 +3460,8 @@ dari = '0';
         
             // ]);
           
+          }else{
+            this.terapiObat = 'tidak ada obat'
           }
           
           
@@ -3479,9 +3508,9 @@ dari = '0';
 
       }
 
-      terapinonobat:string='-';
-      terapiObat:string='-';
-      bmhp:string='-';
+      terapinonobat:string='tidak ada';
+      terapiObat:string='tidak ada';
+      bmhp:string='tidak ada';
       kirimpcare(){
 
 
@@ -3610,7 +3639,7 @@ dari = '0';
 console.log(body)
    
                  
-      this.authService.addkunjungan(body)
+      this.authService.addkunjungan(body).pipe(shareReplay(1))
       .subscribe(response => {
       
       
@@ -3663,6 +3692,7 @@ console.log(body)
       
          
         setTimeout(() => {
+          // this.tombollihatcetakpcare=true
           this.tampildata()
         }, 200);
       
@@ -3744,7 +3774,7 @@ console.log(body)
       
        
         }else{
-          this.toastr.error('Simpan Gagal', 'Eror');
+          this.toastr.error(response.metaData.message, 'Eror');
         }
       
       
@@ -3888,7 +3918,7 @@ console.log(body)
 
    console.log(body)
                  
-      this.authService.addkunjungan(body)
+      this.authService.addkunjungan(body).pipe(shareReplay(1))
       .subscribe(response => {
       
       
@@ -3945,81 +3975,88 @@ console.log(body)
           this.tampildata()
         }, 200);
       
-        setTimeout(() => {
-          this.authService.listobatkirimpcare(this.kdcabang,this.notrans)
-          .subscribe(
-            data => {
+  //       setTimeout(() => {
+  //         this.authService.listobatkirimpcare(this.kdcabang,this.notrans)
+  //         .subscribe(
+  //           data => {
   
-              for(let x of data){
+  //             for(let x of data){
              
                       
-                let bodyx =  { "data": {
+  //               let bodyx =  { "data": {
     
-                  "kdObatSK": 0,
-                  "noKunjungan": this.nokunjungan,
-                  "racikan": false,
-                  "kdRacikan": null,
-                  "obatDPHO": true,
-                  "kdObat": x.kdobatbpjs,
-                  "signa1":  x.frekuensi,
-                  "signa2":  x.jmlpakai,
-                  "jmlObat":   x.qty,
-                  "jmlPermintaan": x.frekuensi,
-                  "nmObatNonDPHO": "Obat klinik"
+  //                 "kdObatSK": 0,
+  //                 "noKunjungan": this.nokunjungan,
+  //                 "racikan": false,
+  //                 "kdRacikan": null,
+  //                 "obatDPHO": true,
+  //                 "kdObat": x.kdobatbpjs,
+  //                 "signa1":  x.frekuensi,
+  //                 "signa2":  x.jmlpakai,
+  //                 "jmlObat":   x.qty,
+  //                 "jmlPermintaan": x.frekuensi,
+  //                 "nmObatNonDPHO": "Obat klinik"
                   
-                  }}
+  //                 }}
   
-  console.log(bodyx);
+  // console.log(bodyx);
   
   
-  this.authService.simpanobatbpjs(bodyx)
-  .subscribe(response => {
+  // this.authService.simpanobatbpjs(bodyx)
+  // .subscribe(response => {
   
-    if(response.metaData.code == 201){
+  //   if(response.metaData.code == 201){
   
-      let bodyeditfarmasi={
-        "stssimpan":'1',
-        "notransaksi":this.notransaksi,
-        "kdObatSK":response.response[0].message,
-        "kdRacikan":response.response[1].message,
-        "kdpruduk":x.kdobat
-      }
+  //     let bodyeditfarmasi={
+  //       "stssimpan":'1',
+  //       "notransaksi":this.notransaksi,
+  //       "kdObatSK":response.response[0].message,
+  //       "kdRacikan":response.response[1].message,
+  //       "kdpruduk":x.kdobat
+  //     }
     
-      this.authService.editobatsk(bodyeditfarmasi)
-      .subscribe(response => {
+  //     this.authService.editobatsk(bodyeditfarmasi)
+  //     .subscribe(response => {
     
-        console.log(response)
+  //       console.log(response)
     
-      })
+  //     })
       
-    }else{
+  //   }else{
   
   
-    }
-  
-  
-  
-  })
-  
-  
-              }
+  //   }
   
   
   
-            })
+  // })
+  
+  
+  //             }
+  
+  
+  
+  //           })
         
-        }, 1500);
+  //       }, 1500);
 
-        this.simpanambil()
+        // this.simpanambil()
        
         }else{
-          this.toastr.error('Simpan Gagal', 'Eror');
+          this.toastr.error(response.metaData.message, 'Eror');
         }
       
       
       
       
-      })
+      }, error => {
+        this.toastr.error(error.error.message, 'Gagal');
+      }
+    
+      
+      
+      
+      )
 
 
 
@@ -4279,7 +4316,7 @@ console.log(body)
         }, 1500);
         this.simpanambil()
         }else{
-          this.toastr.error('Simpan Gagal', 'Eror');
+          this.toastr.error(response.metaData.message, 'Eror');
         }
       
       
@@ -4419,7 +4456,7 @@ console.log(body)
         
 
    
-        this.authService.editkunjungan(body)
+        this.authService.editkunjungan(body).pipe(shareReplay(1))
         .subscribe(response => {
         
         
@@ -4538,7 +4575,7 @@ console.log(body)
           }, 1500);
           this.simpanambil()
           }else{
-            this.toastr.error('Simpan Gagal', 'Eror');
+            this.toastr.error(response.metaData.message, 'Eror');
           }
         
         
@@ -4657,10 +4694,10 @@ console.log(body)
             "rujukLanjut": {	
             "tglEstRujuk":this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'),
             "kdppk": this.kodeppk,
-            "subSpesialis": null,
+            "subSpesialis": this.sspesialis,
             "khusus": {
             "kdKhusus": this.khususap,
-            "kdSubSpesialis": null,
+            "kdSubSpesialis": this.sspesialis,
             "catatan": "Salam sejawat berikut kami rujuk lanjut kami untuk pengobatan lebih optimal"
             }
             },
@@ -4807,7 +4844,7 @@ console.log(body)
         }, 1500);
         this.simpanambil()
         }else{
-          this.toastr.error('Simpan Gagal', 'Eror');
+          this.toastr.error(response.metaData.message, 'Eror');
         }
       
       
@@ -4926,10 +4963,10 @@ console.log(body)
             "rujukLanjut": {	
             "tglEstRujuk":this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'),
             "kdppk": this.kodeppk,
-            "subSpesialis": null,
+            "subSpesialis": this.sspesialis,
             "khusus": {
             "kdKhusus": this.khususap,
-            "kdSubSpesialis": null,
+            "kdSubSpesialis": this.sspesialis,
             "catatan": "Salam sejawat berikut kami rujuk lanjut kami untuk pengobatan lebih optimal"
             }
             },
@@ -5073,7 +5110,7 @@ console.log(body)
           }, 1500);
           this.simpanambil()
           }else{
-            this.toastr.error('Simpan Gagal', 'Eror');
+            this.toastr.error(response.metaData.message, 'Eror');
           }
         
         
@@ -8965,7 +9002,7 @@ this.listpol = data.map(function(e) {
 
 
           tiperujuk:string='';
-          stspulang:string='3';
+          stspulang:any='3';
           kesadaran:string='01'
           spesialis:string='';
           sspesialis:string='';
@@ -9931,8 +9968,17 @@ this.showthahem = false;
          timeOut: 2000,
        });
  
-       var redirectWindow = window.open(this.URLINVOICE+'clenic/pcare/cetakrujukan.php?nokunjungan='+this.noRujukan, '_blank','location=no,toolbar=no,height='+screen.height+',width='+screen.width+',scrollbars=yes,status=yes');
-       redirectWindow.location
+
+
+       if(this.kdPPK == null){
+
+        var redirectWindow = window.open(this.URLINVOICE+'clenic/pcare/cetakkunjungan.php?nokunjungan='+this.noRujukan, '_blank','location=no,toolbar=no,height='+screen.height+',width='+screen.width+',scrollbars=yes,status=yes');
+        redirectWindow.location
+       }else{
+
+        var redirectWindow = window.open(this.URLINVOICE+'clenic/pcare/cetakrujukan.php?nokunjungan='+this.noRujukan, '_blank','location=no,toolbar=no,height='+screen.height+',width='+screen.width+',scrollbars=yes,status=yes');
+        redirectWindow.location
+       }
  
       
       }else{
@@ -9948,7 +9994,7 @@ this.showthahem = false;
 
 
                   }
-cetakrwjkunjunganb(a){
+cetakrwjkunjunganb(a,b){
   this.authService.listpcare(a)
   .subscribe(
     data => {
@@ -10027,8 +10073,21 @@ this.toastr.success(''+response, 'Sukses', {
 timeOut: 2000,
 });
 
-var redirectWindow = window.open(this.URLINVOICE+'clenic/pcare/cetakkunjungan.php?nokunjungan='+a, '_blank','location=no,toolbar=no,height='+screen.height+',width='+screen.width+',scrollbars=yes,status=yes');
-redirectWindow.location
+
+
+
+if(b === '4'){
+
+  var redirectWindow = window.open(this.URLINVOICE+'clenic/pcare/cetakrujukan.php?nokunjungan='+a, '_blank','location=no,toolbar=no,height='+screen.height+',width='+screen.width+',scrollbars=yes,status=yes');
+  redirectWindow.location
+
+ }else{
+  var redirectWindow = window.open(this.URLINVOICE+'clenic/pcare/cetakkunjungan.php?nokunjungan='+a, '_blank','location=no,toolbar=no,height='+screen.height+',width='+screen.width+',scrollbars=yes,status=yes');
+  redirectWindow.location
+
+ }
+
+
 
 
 }else{
@@ -10045,8 +10104,10 @@ this.toastr.error('Simpan  Gagal', 'Eror');
   
       }else{
 
-        this.toastr.error(data.metaData.message, 'Eror');
+        this.toastr.error(data.response[0].message, 'Eror');
           
+
+        
       }
 
 
@@ -10056,6 +10117,95 @@ this.toastr.error('Simpan  Gagal', 'Eror');
      console.log(Error)
     }
   )
+
+}
+
+
+hapuskunjungan(a,b){
+
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  });
+
+  swalWithBootstrapButtons.fire({
+    title: 'Batal Rujukan/Kunjungan',
+    text: 'Apakah Anda Yakin Batal Kunjungan',
+ 
+    showCancelButton: true,
+    
+    cancelButtonText: 'Batal',
+    confirmButtonText: 'Hapus',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.value) {
+
+
+
+  this.authService.listpcare(a)
+  .subscribe(
+    data => {
+    
+      if(data.metaData.code == '200'){
+
+        this.authService.deletekunjungan(a)
+        .subscribe(
+          data => { 
+
+            console.log(data)
+
+            if(data.metaData.code == 200){
+
+              this.toastr.success(data.metaData.message, 'Eror');
+              this.getriwayatkunjungan()       
+
+            }else{
+
+
+              this.toastr.error(data.response[0].message, 'Sukses', {
+                timeOut: 2000,
+              });
+
+            }
+
+          },
+          Error => {
+
+            console.log(Error)
+          }
+        )
+        
+  
+      }else{
+
+        this.toastr.error(data.response[0].message, 'Eror');
+          
+
+        
+      }
+
+
+  },
+    Error => {
+  
+     console.log(Error)
+    }
+  )
+
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      // swalWithBootstrapButtons.fire(
+      //   'Cancelled',
+      //   'Your imaginary file is safe :)',
+      //   'error'
+      // );
+    }
+  });
 
 }
 cetakrwrj(a){
@@ -10250,7 +10400,7 @@ hapusrujukan1(){
                       "norm": this.norm,"pasien":this.pasien,"indetitas":this.tandapengenal,"noindetitas":this.nopengenal,
                       "kduser":this.username,
                       "hp":this.hp,"kdpoli":this.politunjang,"kddokter":this.doktunjang,"kelas":'1',
-                         "tgldaftar":this.tglp,"kostumer":this.kdkostumer,"kdkostumer":this.kdkostumerd,
+                         "tgldaftar":this.myDate,"kostumer":this.kdkostumer,"kdkostumer":this.kdkostumerd,
                          "noasuransi":this.noasuransi,"kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"stssimpan":'1',
                          "kdprovider":this.kdprovider
                   
@@ -10750,6 +10900,179 @@ tmpku(){
                 
                    }
 
+                   hapustransaksi(){
+                    const swalWithBootstrapButtons = Swal.mixin({
+                      customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                      },
+                      buttonsStyling: false
+                    });
+                
+                    Swal.fire({
+                      title: 'Batalkan Pendaftaran',
+                      text: 'Alasan mengapa pendaftaran ingin dibatalkan?',
+                      input: 'textarea',
+                      inputPlaceholder: 'Alasan anda',
+                      confirmButtonText: 'Ya, Batal Daftar',
+                      showDenyButton: true,
+                      denyButtonText: 'Tidak',
+                      allowOutsideClick: false,
+                      allowEscapeKey: false,
+                      preConfirm: (value) => {
+                        if (!value) {
+                          Swal.showValidationMessage('Wajib Diisi')
+                        } else {   this.authService.deletependaftaranpcarev(this.noasuransi,this.tglpriksa,this.noantrianbpjs,this.kdpolibpjs)
+                        .subscribe(
+                          data => {
+          
+                   
+          
+                            if(data.metaData.code == 200){
+
+                            }else{
+
+
+                            }
+                            
+                          })
+
+
+
+
+
+
+  this.authService.deletekunjungan(this.nokunjungan)
+                    .subscribe(
+                      data => { 
+
+                        console.log(data)
+
+                        if(data.metaData.code == 200){
+
+
+
+
+                          let body = {
+                            "kdcabang": this.kdcabang, "notransaksi": this.notrans, "norm": this.norm,
+                            "kddokter": this.kddokter, "kdpoli": this.kdpoli, "kduser": this.username, "stssimpan": '1'
+                          }
+            
+                                this.authService.hapustrx(body)
+                            .subscribe(response => {
+            
+                            
+            
+                            }
+                            )
+
+
+                          this.toastr.success(data.response, 'Sukses', {
+                                                  timeOut: 2000,
+                                                });
+
+
+
+                     let bodyFktp = {
+                      "tanggalperiksa": this.tglpriksa,
+                      "kodepoli": this.kdpolibpjs,
+                      "nomorkartu": this.noasuransi,
+                      "alasan": "--"
+                    }
+                    this.authService.cancelBpjsAntrian(bodyFktp,this.slug).subscribe(
+                      data => {
+
+                        if(data.data.code == 200){
+                          
+                          this.toastr.success(data.data.message, 'Sukses', {
+                            timeOut: 2000,
+                          });
+                      
+                      
+                      
+                        }else{
+                          this.toastr.error(data.data.message, 'Error');
+                      
+                        }
+
+
+                      }
+                    )
+
+
+                                            
+
+                        }else{
+
+                          let body = {
+                            "kdcabang": this.kdcabang, "notransaksi": this.notrans, "norm": this.norm,
+                            "kddokter": this.kddokter, "kdpoli": this.kdpoli, "kduser": this.username, "stssimpan": '1'
+                          }
+            
+                                this.authService.hapustrx(body)
+                            .subscribe(response => {
+            
+                              // this.tantrian = []
+            
+                            }
+                            )
+
+
+                          this.toastr.success(data.response, 'Sukses', {
+                                                  timeOut: 2000,
+                                                });
+
+
+
+                     let bodyFktp = {
+                      "tanggalperiksa": this.tglpriksa,
+                      "kodepoli": this.kdpolibpjs,
+                      "nomorkartu": this.noasuransi,
+                      "alasan": "ss"
+                    }
+                    this.authService.cancelBpjsAntrian(bodyFktp,this.slug).subscribe(
+                      data => {
+
+                        if(data.data.code == 200){
+                          
+                          this.toastr.success(data.data.message, 'Sukses', {
+                            timeOut: 2000,
+                          });
+                      
+                      
+                      
+                        }else{
+                          this.toastr.error(data.data.message, 'Error');
+                      
+                        }
+
+
+                      }
+                    )
+
+
+                          // this.toastr.error(data.response[0].message, 'Sukses', {
+                          //   timeOut: 2000,
+                          // });
+
+                        }
+
+                      },
+                      Error => {
+
+                        console.log(Error)
+                      }
+                    )
+            
+                   }
+
+                        
+                      }
+                    })
+                  
+
+
+                  
 
                 }
 
@@ -10773,3 +11096,5 @@ tmpku(){
        
     //   }
     // }
+
+              }

@@ -166,8 +166,9 @@
               </div>
             </td>
         <td>
-          <b *ngIf="x.idsatusehatantrian.length > 2" >Terkirim</b>
-          <b *ngIf="x.idsatusehatantrian.length < 1" style="color:red" >Belum</b>
+     
+          <div  *ngIf="x.idsatusehat.length > 1" class="badge rounded-pill ps-2 pe-2 bg-success" >Terkirim</div>
+          <div *ngIf="x.idsatusehat.length < 1" class="badge rounded-pill ps-2 pe-2 bg-danger" >Belum</div>
         </td>
            
             <td class="text-center">
@@ -191,7 +192,8 @@
               
             </td>
             <td class="text-center">
-              {{x.statusantrian}}
+              <div class="badge rounded-pill ps-2 pe-2 bg-success" *ngIf="x.statusantrian ==='TERKIRIM'">    {{x.statusantrian}}</div>
+              <div class="badge rounded-pill ps-2 pe-2 bg-success" *ngIf="x.statusantrian ==='HADIR'">    {{x.statusantrian}}</div>
               </td>
           </tr>
 

@@ -140,9 +140,12 @@ this.hak()
   redirectWindow.location;
 }
 kanjungan(){
-  // this.router.navigate(['/anjungan']);
-alert("Sementara pendaftaran memakai pendaftraan rawat jalan")
+  this.router.navigate(['/anjungan']);
+// alert("Sementara pendaftaran memakai pendaftraan rawat jalan")
 
+}
+kanjungans(){
+  this.router.navigate(['/anjungans']); 
 }
 displayc(){
   this.router.navigate(['/ermdisplay']);

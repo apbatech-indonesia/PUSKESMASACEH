@@ -35,10 +35,29 @@
      
           <div  class="row">
             <div class="col-md-3">
+              <!-- <div class="position-relative mb-3">
+                <label for="exampleEmail" class="form-label" style="color:black;">Nomor RM</label>
+              
+              </div> -->
+
+
+
               <div class="position-relative mb-3">
                 <label for="exampleEmail" class="form-label" style="color:black;">Nomor RM</label>
-                <input [(ngModel)]="norm"   placeholder="Norm" type="text" class="form-control">
-              </div>
+
+                      <div class="input-group">
+
+
+
+                        <input [(ngModel)]="norm"   placeholder="Norm" type="text" class="form-control">
+                        <div class="input-group-text">
+                          <i class="fa fa-pencil btn" (click)="shownorm(contentnorm)" aria-hidden="true"></i>
+                        </div>
+                      </div>
+
+                    </div>
+
+
   
               </div>
 
@@ -489,7 +508,7 @@
              <p style="font-size: 10px;">{{x.alamat}}</p>
             </td>
             <td>
-               <div class="badge bg-pill bg-danger" (click)="pilihpasien(x.norm,
+               <div class="badge bg-pill bg-danger btn" (click)="pilihpasien(x.norm,
                x.kdkelurahan,
                x.pasien,
                x.tgllahir,
@@ -506,7 +525,7 @@
                x.tempatlahir,
                x.golda, x.aktif,x.pendidikan,x.perkerjaan,x.subdis_name,x.kdpanggil,x.usia)">PILIH</div>
              
-               <div class="badge bg-pill bg-info" (click)="riwayatpas(x.norm,
+               <div class="badge bg-pill bg-info btn" (click)="riwayatpas(x.norm,
                x.kdkelurahan,
                x.pasien,
                x.tgllahir,
@@ -587,7 +606,24 @@
 
     </div>
   </ng-template>
+  <ng-template #contentnorm let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h6 class="modal-title">Edit Nomor Rekam Medik <b> {{norm}}</b></h6>
+      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+      </button>
+    
+    </div>
 
+    <div  class="modal-body">
+   
+      <input [(ngModel)]="normbaru"   placeholder="Norm Baru" type="text" class="form-control">
+     
+    </div>
+    <div class="modal-footer">
+      <button class="mb-2 me-2 btn-pill btn btn-info"  (click)="ganti()">Ganti
+      </button>
+    </div>
+  </ng-template>
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h6 class="modal-title">{{namalurah}}</h6>

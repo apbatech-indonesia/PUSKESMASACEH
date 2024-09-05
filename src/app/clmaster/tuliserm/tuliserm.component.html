@@ -29,13 +29,13 @@ padding:20px">
           <div class="page-title-wrapper">
             <div class="page-title-heading">
               <div class="page-title-icon"><b style="color:black;">{{noantrian}}</b></div>
-              <div>
+              <div >
                 {{norm}} | {{pasien}}
                 <div style="font-size: 14px;">{{umur}} | {{tgllahir}} | <span
                     class="badge rounded-pill bg-light">{{jeniskelamin}}</span> </div>
                 <div style="font-size: 14px;">{{nampoli}} | {{costumer}}</div>
                 <div style="font-size: 14px;">{{namdokter}}</div>
-                <div style="font-size: 14px;">{{alamat}} </div>
+                <div style="font-size: 14px;" >{{alamat}} </div>
 
 
 
@@ -123,6 +123,8 @@ padding:20px">
                     class="font-icon-wrapper pe-7s-print"> </i>
 
                 </b>
+
+               
              
 
               </div>
@@ -1456,7 +1458,7 @@ padding:20px">
 
                   </div>
 
-                  <!-- <div class="position-relative mb-3">
+                  <div class="position-relative mb-3">
                     <label for="exampleEmail" class="form-label"><b>TERAPI  OBAT</b></label>
 
                  
@@ -1465,7 +1467,7 @@ padding:20px">
                     <textarea rows="2"  [(ngModel)]="terapiObat" placeholder="Detail..." class="form-control"
                       autosize></textarea>
 
-                  </div> -->
+                  </div>
 
 
 
@@ -1728,7 +1730,7 @@ padding:20px">
                       <option value="3" >Berobat Jalan</option>
                       <option value="4" >Rujuk Lanjut</option>
                       <option value="6" >Rujuk Internal</option>
-
+                      <option value="" >----------------</option>
                       <option value="0" >Sembuh - Rawat Inap</option>
                     
                       <option value="1" >Meninggal - Rawat Inap</option>
@@ -2113,8 +2115,11 @@ padding:20px">
                     </div>
                   </div>
 
-                  <div class="col-md-4">
-
+                  <div class="col-md-4" style="text-align: right;">
+                    <b (click)="hapustransaksi()">
+                      <i style="font-size:20px ;"
+                      class="font-icon-wrapper pe-7s-trash btn"> </i>
+                    </b>
                   </div>
 
                 </div>
@@ -2368,6 +2373,7 @@ padding:20px">
                   <th scope="col">Diagnosa</th>
                   <th scope="col">Status Pulang</th>
                   <th scope="col">Cetak</th>
+                  <th scope="col">Hapus</th>
                 </tr>
               </thead>
 
@@ -2404,7 +2410,15 @@ padding:20px">
                  <td>
                 
                   <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-primary"
-                  (click)="cetakrwjkunjunganb(x.noKunjungan)" ><i style="font-size:15px ;" class="pe-7s-print btn-icon-wrapper">
+                  (click)="cetakrwjkunjunganb(x.noKunjungan,x.statusPulang.kdStatusPulang)" ><i style="font-size:15px ;" class="pe-7s-print btn-icon-wrapper">
+                  </i></button>
+
+                 </td>
+
+                 <td>
+                
+                  <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-primary"
+                  (click)="hapuskunjungan(x.noKunjungan,x.statusPulang.kdStatusPulang)" ><i style="font-size:15px ;" class="pe-7s-trash btn-icon-wrapper">
                   </i></button>
 
                  </td>
@@ -4430,6 +4444,8 @@ padding:20px">
             <th scope="col">Kode PPK</th>
             <th scope="col">Nama Faskes</th>
             <th scope="col">Jadwal</th>
+            <th scope="col">Kuota</th>
+        
             <th scope="col">Pilih</th>
 
           </tr>
@@ -4451,6 +4467,12 @@ padding:20px">
 
 
             </td>
+            <td style="font-size: 11px;color: black;">
+              <p> {{x.kapasitas}}</p>
+
+
+            </td>
+          
             <td style="font-size: 11px;color: black;">
               <button class="mb-2 me-2 btn-hover-shine btn-pill btn btn-success"
                 (click)="pilihfaskes(x.kdppk,x.nmppk,x.jadwal)">PILIH

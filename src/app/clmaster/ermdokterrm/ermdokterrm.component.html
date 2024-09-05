@@ -125,9 +125,10 @@
            
             <th>Pasien</th>
             <th>Satu Sehat</th>
-            <th class="text-center">Actions</th>
-            <th class="text-center">Status</th>
+            
+            <th class="text-center">Status PCARE</th>
             <th class="text-center">Antrol</th>
+            <th class="text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -166,27 +167,58 @@
               </div>
             </td>
             <td>
-               <b *ngIf="x.idsatusehat.length > 1" >Terkirim</b>
-                    <b *ngIf="x.idsatusehat.length < 1" style="color:red" >Belum</b>
+
+
+
+                    <div  *ngIf="x.idsatusehat.length > 1" class="badge rounded-pill ps-2 pe-2 bg-success" >Terkirim</div>
+              <div *ngIf="x.idsatusehat.length < 1" class="badge rounded-pill ps-2 pe-2 bg-danger" >Belum</div>
+
+
             </td>
         
            
+           
             <td class="text-center">
+              <!-- <div class="badge rounded-pill ps-2 pe-2 bg-danger" *ngIf="x.koreksirmakhir ==='0'">In Progress</div>
+              <div class="badge rounded-pill ps-2 pe-2 bg-success"  *ngIf="x.koreksirmakhir ==='1'">Completed</div>
+               -->
+
+              <div *ngIf="x.dash === 'BPJS'">
+                <!-- <span class="text-success">{{x.spcare}}
+                </span> -->
+                  <div   *ngIf="x.spcare === 'TERDAFTAR DI PCARE'" 
+                  class="badge rounded-pill ps-2 pe-2 bg-primary" >{{x.spcare}}</div>
+
+                  <div    *ngIf="x.spcare === null"
+                  class="badge rounded-pill ps-2 pe-2 bg-primary" >BELUM TERDAFTAR PCARE</div>
+
+                  <div   *ngIf="x.spcare === 'SUDAH KIRIM KUNJUNGAN'"
+                  class="badge rounded-pill ps-2 pe-2 bg-success" >{{x.spcare}}</div>
+
+           
+              </div>
+
+
+            </td>
+            <td class="text-center">
+              <!-- {{x.statusantrian}} -->
+
+
+              <div class="badge rounded-pill ps-2 pe-2 bg-success" *ngIf="x.statusantrian ==='TERKIRIM'">    {{x.statusantrian}}</div>
+              <div class="badge rounded-pill ps-2 pe-2 bg-success" *ngIf="x.statusantrian ==='HADIR'">    {{x.statusantrian}}</div>
+              <!-- <div class="badge rounded-pill ps-2 pe-2 bg-danger"  *ngIf="x.statusantrian ==='null'">-</div> -->
+              
+
+
+              </td>
+              <td class="text-center">
 
          
 
               
-              <button type="button" class="btn-icon btn-icon-only btn btn-light btn-sm" [routerLink]="['/emrform/tuliserm', x.notransaksi,x.kddokter,'all',x.norm]"  >
-                View
-              </button>
-            </td>
-            <td class="text-center">
-              <div class="badge rounded-pill ps-2 pe-2 bg-danger" *ngIf="x.koreksirmakhir ==='0'">In Progress</div>
-              <div class="badge rounded-pill ps-2 pe-2 bg-success"  *ngIf="x.koreksirmakhir ==='1'">Completed</div>
-              
-            </td>
-            <td class="text-center">
-              {{x.statusantrian}}
+                <button type="button" class="btn-icon btn-icon-only btn btn-light btn-sm" [routerLink]="['/emrform/tuliserm', x.notransaksi,x.kddokter,'all',x.norm]"  >
+                 <b> View/Lihat</b>
+                </button>
               </td>
           </tr>
 

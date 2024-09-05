@@ -21,7 +21,7 @@
 
 
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-7">
     <div class="card main-card mb-3">
       <!-- <div class="card-header">
        Master Obat
@@ -421,7 +421,7 @@
  
    
   </div>
-  <div class="col-md-4">
+  <div class="col-md-5">
     <div class="row">
       <div class="col-md-6">
         <label for="exampleSelect" class="form-label">CARI</label>
@@ -453,6 +453,7 @@
           
           <button class="mb-2 me-2 btn-pill btn btn-info" (click)="cetakobat()">Cetak Obat
           </button>
+          Total : {{totalobat}}
         </div>
 
        
@@ -461,8 +462,8 @@
 
 
       </div>
-    
-      <table class="table table-striped">
+      <div class="table-responsive tableFixHead">>
+      <table class="table table-striped  ">
         <thead>
           <tr>
            
@@ -542,6 +543,7 @@
          
         </tbody>
       </table>
+    </div>
     </div>
   
     

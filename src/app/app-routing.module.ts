@@ -17,6 +17,7 @@ import { KosongComponent } from './cllogin/kosong/kosong.component';
 import { LoginGuard } from './auth/login.guard';
 import { anjunganComponent } from './cllogin/anjungan/anjungan.component';
 import { ermdisplayComponent } from './cllogin/ermdisplay/ermdisplay.component';
+import { anjungansehatComponent } from './cllogin/anjungansehat/anjungansehat.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
   
   { path: 'masuk', component: LoginclComponent },
   { path: 'anjungan', component: anjunganComponent },
+  { path: 'anjungans', component: anjungansehatComponent },
   { path: 'ermdisplay', component: ermdisplayComponent },
   
   { path: 'kosong', component: KosongComponent,canActivate:[LoginGuard] },

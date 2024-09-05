@@ -1233,6 +1233,7 @@ simpan(){
 
 tobat:any;
 type='1';
+totalobat:any=0;
 
 cariuserx(a){
   console.log(a.target.value)
@@ -1242,7 +1243,7 @@ cariuserx(a){
     data => {
     
      this.tobat = data;
-     
+     this.totalobat = data.length;
  
   
   },
@@ -1264,7 +1265,7 @@ tmpobat(){
     data => {
     
      this.tobat = data;
-     
+     this.totalobat = data.length;
  
   
   },

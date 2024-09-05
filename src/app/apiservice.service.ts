@@ -415,7 +415,8 @@ export class ApiserviceService {
 
   simpandokter(nik, kdklinik, kdcabang, namadokter, online, kddokter, sts, aktif, sn,kddokterbpjs) {
     let url = apiurx + 'master/simpandokter.php';
-    let param = { kdklinik: kdklinik, kdcabang: kdcabang, stssimpan: sts,kddokterbpjs:kddokterbpjs, dokter: namadokter, online: online, kddokter: kddokter, aktif: aktif, sn: sn };
+    let param = { kdklinik: kdklinik, kdcabang: kdcabang, stssimpan: sts,kddokterbpjs:kddokterbpjs, 
+      dokter: namadokter, online: online, kddokter: kddokter, aktif: aktif, sn: sn ,nik:nik};
     let request = this.http.post(url, param);
     return request.toPromise();
   }
@@ -708,7 +709,9 @@ export class ApiserviceService {
   simpankelompok(data: any): Observable<any> {
     return this.http.post(apiurx + 'master/simpancustomer.php', data)
   }
-
+  editnorm(data: any): Observable<any> {
+    return this.http.post(apiurx + 'master/editnorm.php', data)
+  }
   simpanmtarif(data: any): Observable<any> {
     return this.http.post(apiurx + 'master/simpanmtarif.php', data)
   }
@@ -782,6 +785,9 @@ export class ApiserviceService {
     return this.http.post(apiurx + 'master/simpandaftarri.php', data)
   }
 
+  simpansehat(data: any): Observable<any> {
+    return this.http.post(apiurx + 'transaksi/simpansehat.php', data)
+  }
 
   simpanmasterlab(data: any): Observable<any> {
     return this.http.post(apiurx + 'master/simpanmasterlab.php', data)
@@ -1477,11 +1483,21 @@ export class ApiserviceService {
   simpanpcaredaftar(data: any): Observable<any> {
     return this.http.post(apiurx + 'pcare/addpendaftaranpcare.php', data)
   }
+  adddaftarpcare(data: any): Observable<any> {
+    return this.http.post(apiurx + 'pcare/adddaftarpcare.php', data)
+  }
 
+  adddaftarpcarekunjungansehat(data: any): Observable<any> {
+    return this.http.post(apiurx + 'pcare/adddaftarpcarekunjungansehat.php', data)
+  }
   addkunjungan(data: any): Observable<any> {
+    console.log("abc");
+
     return this.http.post(apiurx + 'pcare/addkunjungan.php', data)
   }
 
+
+  
   editkunjungan(data: any): Observable<any> {
     return this.http.post(apiurx + 'pcare/editkunjungan.php', data)
   }
@@ -1799,7 +1815,16 @@ export class ApiserviceService {
 
     return this.http.get(apiurx + 'pcare/deletependaftaranpcare.php?no=' + a + '&tgl=' + b + '&nourut=' + c + '&kdpoli=' + d)
   }
+  deletependaftaranpcarev(a, b, c, d): Observable<any> {
 
+    //   $no=$_GET['no'];
+    // $tgl=$_GET['tgl'];
+    // $nourut=$_GET['nourut'];
+    // $kdpoli=$_GET['kdpoli'];
+
+
+    return this.http.get(apiurx + 'pcare/deletependaftaranpcarev.php?no=' + a + '&tgl=' + b + '&nourut=' + c + '&kdpoli=' + d)
+  }
   kajianrsesepa(data: any): Observable<any> {
     return this.http.post(apiurx + 'transaksi/kajianrsesepa.php', data)
   }

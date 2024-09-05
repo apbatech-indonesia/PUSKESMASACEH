@@ -796,6 +796,33 @@ jadwal:any='';
 
     if(this.dash === 'BPJS'){
 
+      if(this.noindetitas.length < 16){
+        this.toastr.error("NIK harus 16 digit")
+        return;
+      }
+
+      
+      if(this.noindetitas.length > 16){
+        this.toastr.error("NIK harus 16 digit")
+        return;
+      }
+
+      if(this.noasuransi.length < 13){
+        this.toastr.error("No Kartu harus 13 digit")
+        return;
+      }
+
+      
+      if(this.noasuransi.length > 13){
+        this.toastr.error("No Kartu harus 13 digit")
+        return;
+      }
+      // if(this.noasuransi = ""){
+      //   this.toastr.error("No Kartu harus di isi")
+      //   return;
+      // }
+
+
       this.authService.verifdaftar(this.norm, this.kdcabang, this.kliniks, this.tglp)
       .subscribe(
         data => {

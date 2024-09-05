@@ -143,6 +143,7 @@ import { AngularSignaturePadModule } from '@almothafar/angular-signature-pad';
 import { PersetujuanTindakanMedisComponent } from './clmaster/Assesment/Medis/PersetujuanTindakanMedis.component';
 import { kajianperawatComponent } from './clmaster/Assesment/kajianperawat/kajianperawat.component';
 import { riwayatkunjunganComponent } from './clmaster/Assesment/riwayatkunjungan/riwayatkunjungan.component';
+import { anjungansehatComponent } from './cllogin/anjungansehat/anjungansehat.component';
 @NgModule({
   declarations: [
 
@@ -192,6 +193,7 @@ import { riwayatkunjunganComponent } from './clmaster/Assesment/riwayatkunjungan
      LoginclComponent,
      KosongComponent,
      anjunganComponent,
+     anjungansehatComponent,
      tulisermComponent,
      BukuKontrasepsiComponent,
      CatatanImunisasiComponent,
