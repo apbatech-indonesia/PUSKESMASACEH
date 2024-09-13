@@ -68,7 +68,8 @@
 
                   </div>
                   <div class="widget-content-right">
-                    <!-- <button class="btn-wide btn-outline-2x me-md-2 btn btn-outline-focus btn-sm" (click)="openLargemap(content6)">Cari Faktur</button> -->
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">NO RM :</div>
+                    <input  disabled [(ngModel)]="norm" style="border-radius: 5px;border:solid 1px #ccc" placeholder="Hasil..." type="text" >
                  </div>
 
              
@@ -92,8 +93,10 @@
                   </div>
                
                   <div class="widget-content-right">
+                    <div class="widget-heading" style="font-size:10px;color: #01244a;">ALAMAT</div>
+                    <input [(ngModel)]="alamat"  style="border-radius: 5px;border:solid 1px #ccc;width: 15em" 
+                    placeholder="Alamat..." type="text" >
                    
-                    <!-- <div class="widget-numbers text-primary">$12.6k</div> -->
                   </div>
                 </div>
               </div>
@@ -113,9 +116,14 @@
                       </select>
                       </form>
                   </div>
-                  <!-- <div class="widget-content-right">
-                    <div class="widget-numbers text-primary">$12.6k</div>
-                  </div> -->
+                  <div class="widget-content-right">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">BB/Kg</div>
+                    <input  disabled [(ngModel)]="bb" style="border-radius: 5px;border:solid 1px #ccc;width: 80px;" placeholder="Hasil..." type="text" >
+                  </div>
+                  <div class="widget-content-right">
+                    <div class="widget-heading"  style="font-size:10px;color: #01244a;">UMUR</div>
+                    <input  disabled [(ngModel)]="umur" style="border-radius: 5px;border:solid 1px #ccc;width: 80px;" placeholder="Hasil..." type="text" >
+                  </div>
                 </div>
               </div>
             </div>
@@ -631,7 +639,7 @@
                 <i  style="font-size:20px ;"   class="font-icon-wrapper pe-7s-print" (click)="cetakresepdokter()"> </i>
           </table>
           <b>Alergi :</b>
-          <p *ngFor="let x of talergi">{{x.alergi}}</p>
+          <p *ngFor="let x of talergi">{{x.alergi}} - {{x.alergiobat}}</p>
           </div>
           <br>
             <button class="btn-pill btn-shadow btn btn-primary"  (click)="kresep(content13x)">Kajian Resep</button>
@@ -838,9 +846,13 @@
     <table class="table table-striped">
       <thead>
         <tr>
-         
-          <th scope="col">NAMA</th>
           <th scope="col" >TGL </th>
+          <th scope="col">NORM</th>
+          
+          <th scope="col">NAMA</th>
+          <th scope="col">UMUR/th</th>
+          <th scope="col">AlAMAT</th>
+       
          
           <th scope="col" >POLI</th>
           <th scope="col" >DOKTER</th>
@@ -850,16 +862,28 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let  x of tbeli">
-       
+        <tr *ngFor="let  x of tbeli" style="border-bottom: 1px solid grey;">
+
+          <td  style="font-size: 12px;color: black;">
+           
+            {{x.tgl}}
+          </td>
+
+          <td style="font-size: 12px;color: black;">
+            {{x.norm}}
+
+          </td>
           <td style="font-size: 12px;color: black;">
             {{x.pasien}}
 
           </td>
-         
           <td  style="font-size: 12px;color: black;">
-           
-            {{x.tgl}}
+            {{x.age}}
+     
+          </td>
+          <td  style="font-size: 12px;color: black;">
+            {{x.alamat}}
+     
           </td>
           <td  style="font-size: 12px;color: black;">
             {{x.nampoli}}
@@ -881,7 +905,7 @@
           <td>
           
              <div class="badge bg-pill bg-danger" (click)="pilihpasien(x.nofaktur,x.tgl,x.pasien,x.kdpoli,x.nampoli,x.kdkostumerd,
-             x.nama,x.kddokter,x.namdokter,x.notransaksi,x.sts,x.norm,x.statuslunas,x.bayar,x.ri)" >P</div>
+             x.nama,x.kddokter,x.namdokter,x.notransaksi,x.sts,x.norm,x.statuslunas,x.bayar,x.ri,x.age,x.alamat)" >P</div>
           
           
           </td>

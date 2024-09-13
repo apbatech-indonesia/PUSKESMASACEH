@@ -2082,9 +2082,11 @@ stssimpan:any;
 statuslunas:any;
 stsbayar:any;
 ri:string;
+alamat:any='';
+umur:any='';
 
 pilihpasien(nofaktur,tgl,pasien,kdpoli,nampoli,kdkostumerd,
-  nama,kddokter,namdokter,notransaksi,sts,norm,statuslunas,bayar,ri)
+  nama,kddokter,namdokter,notransaksi,sts,norm,statuslunas,bayar,ri,age,alamat)
   {
 
 
@@ -2111,7 +2113,8 @@ this.qty ='';
 this.disc ='';
 this.discrp = '';
 this.total = 0;
-
+      this.umur = age
+      this.alamat = alamat
     this.notransaksi = notransaksi;
     this.pasien = pasien;
     this.nofaktur = nofaktur;
@@ -2446,6 +2449,8 @@ for (let x of data )
   .subscribe(
     data => {
     this.talergi = data
+      this.bb = data[0].bb
+    
 
 
   },
@@ -2460,7 +2465,7 @@ for (let x of data )
 
 
 }
-
+bb:any='';
 
 nettobmx:number
 tambahadm(a){

@@ -1221,5 +1221,55 @@ this.verifsimpan = '0';
                 }
               });
             }
+
+
+            kycPasien(pasien: any) {
+              let isValid: Boolean = true;
+              const headers = {"kd-cabang":this.kdcabang}
+
+              if (pasien.tandapengenal != 'KTP') {
+                isValid = false
+                this.toastr.error("tipe identitas bukan ktp!", 'Error')
+              }
+
+              if (pasien.nopengenal.length != 16) {
+                isValid = false
+                this.toastr.error("no ktp harus 16 digit!", 'Error')
+              }
+
+              if(isValid == true) {
+                this.authService.getpasien(pasien.nopengenal, headers).subscribe(
+                  (data: any) => {
+                    if (data.entry.length <= 0) {
+                      this.toastr.error("no ktp tidak di temukan di satu sehat!", 'Error')
+                    }
+                    if (!data.entry[0].resource.active) {
+                      this.toastr.error("status no ktp tidak aktif di satu sehat!", 'Error')
+                    }
+                    if (data.entry[0].resource.active) {
+                      const payload = {
+                        data: {
+                          nik: pasien.nopengenal,
+                          name: pasien.pasien
+                        }
+                      }
+                      this.authService.kyc(payload, headers).subscribe(
+                        (data: any) => {
+                          window.open(data.data.url, "_blank");
+                        },
+                        error => {
+                          this.toastr.error(error.message, 'Error');
+                        }
+                      )
+                    }
+                  },
+                  error => {
+                    this.toastr.error("no ktp tidak di temukan di satu sehat!", 'Error')
+                  }
+                )
+              }
+            }
+
+
           
 }

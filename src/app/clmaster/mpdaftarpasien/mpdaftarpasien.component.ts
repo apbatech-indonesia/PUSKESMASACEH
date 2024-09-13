@@ -817,12 +817,26 @@ jadwal:any='';
         this.toastr.error("No Kartu harus 13 digit")
         return;
       }
-      // if(this.noasuransi = ""){
-      //   this.toastr.error("No Kartu harus di isi")
-      //   return;
-      // }
+    
 
+      this.authService.tmpbpjs(this.noasuransi,'noka')
+      .subscribe(
+        data => {
+  
+           
+            if(data){
+  
+              console.log(data.metaData.code)
+              if(data.metaData.code == 200){
+  
+      
+      
+                this.aktif = data.response.aktif
+                this.ketaktif=data.response.ketAktif
+             
+                if(this.aktif == true){
 
+                  console.log("asd")
       this.authService.verifdaftar(this.norm, this.kdcabang, this.kliniks, this.tglp)
       .subscribe(
         data => {
@@ -924,59 +938,63 @@ jadwal:any='';
 
 
 
-                        
 
-                             let bodypanggil={
-                              "tanggalperiksa":this.tantrian[0].tglpriksa,
-                                "kodepoli": this.kdpolibpjs,
-                                "nomorkartu":  this.tantrian[0].noasuransi,
-                                "status": 1 
-                              }
-                        
-                             
-                        
-                                this.authService.PanggilBpjsAntrian(bodypanggil,this.slug)
-                                .subscribe(response => {
-                                
+                            setTimeout(() => {
+                              let bodypanggil={
+                                "tanggalperiksa":this.tantrian[0].tglpriksa,
+                                  "kodepoli": this.kdpolibpjs,
+                                  "nomorkartu":  this.tantrian[0].noasuransi,
+                                  "status": 1 
+                                }
+                          
                                
-                                
-                                  if(response.data.code == 200){
-                                                      
-                            let bodyeditfarmasiterkirimv={
-                              "stssimpan":'4',
-                              "notransaksi":this.pasienc,
-                             
-                            }
                           
-                            this.authService.editobatsk(bodyeditfarmasiterkirimv)
-                            .subscribe(response => {
-                          
-                              console.log(response)
-                          
-                          
-                            })
-                        
-                                    
-
-                                    this.toastr.success(response.data.message, 'Sukses', {
-                                      timeOut: 2000,
-                                    });
-                                
-                                
-                        
+                                  this.authService.PanggilBpjsAntrian(bodypanggil,this.slug)
+                                  .subscribe(response => {
                                   
-                                  }else{
+                                 
+                                  
+                                    if(response.data.code == 200){
+                                                        
+                              let bodyeditfarmasiterkirimv={
+                                "stssimpan":'4',
+                                "notransaksi":this.pasienc,
+                               
+                              }
+                            
+                              this.authService.editobatsk(bodyeditfarmasiterkirimv)
+                              .subscribe(response => {
+                            
+                                console.log(response)
+                            
+                            
+                              })
+                          
+                                      
+  
+                                      this.toastr.success(response.data.message, 'Sukses', {
+                                        timeOut: 2000,
+                                      });
+                                  
+                                  
+                          
                                     
+                                    }else{
+                                      
+                          
+                                      this.toastr.error(response.metadata.message, 'Error');
+                                  
+                                    }
+                                  
+                                  
+                                  
+                                  
+                                  })
+                          
+                            }, 250);
                         
-                                    this.toastr.error(response.metadata.message, 'Error');
-                                
-                                  }
-                                
-                                
-                                
-                                
-                                })
-                        
+
+                      
 
 
 
@@ -1139,29 +1157,44 @@ jadwal:any='';
         }
       )
 
-      
-      // this.authService.tmpbpjs(this.noindetitas, 'nik')
-      // .subscribe(
-      //   data => {
+                }else{
+                  this.toastr.error('STATUS KEPERSETAAN '+this.ketaktif, 'Eror');
 
 
-           
-      //       if (data.metaData.code == 200) {
-      //         this.noasuransi = data.response.noKartu
-
-
-
-
-      //       }else{
-
-      //         console.log("s")
-      //         this.toastr.error(data.response.message, 'Eror');
-      //         return;
-      //       }
+                }
+  
+              
+  
+  
+              }else{
+                this.toastr.error(data.metaData.message, 'Eror');
+  
+              }
+  
+            }else{
+              this.toastr.error('Gagal Memuat Data BPJS', 'Eror');
+  
+  
+            }
+        
           
+      },
+        Error => {
+      
+         console.log(Error)
+        }
+      )
+
+
+
       
 
-      //     })
+      
+
+
+
+      
+   
 
     }else{
       console.log("xs")
@@ -2157,7 +2190,7 @@ jadwal:any='';
   tglakhirberlaku: string;
   jeniskelas: string;
   jenispeserta: string;
-  aktif: string;
+  aktif: any;
   ketaktif: string;
   kdprovider: string = '';
   namaprovider: string;
@@ -2389,6 +2422,54 @@ jadwal:any='';
     } else {
 
 
+
+      if(this.tantrian[0].dari === "OUT"){
+        setTimeout(() => {
+                          
+  
+
+          let bodyAddFktp = {
+            "nomorkartu": this.tantrian[0].noasuransi,
+            "nik": this.tantrian[0].nopengenal,
+            "nohp":'082176678897',
+            "kodepoli": this.kdpolibpjs,
+            "namapoli": this.tantrian[0].nampoli,
+            "norm": this.tantrian[0].norm,
+            "tanggalperiksa": this.tantrian[0].tglpriksa,
+            "kodedokter": parseInt(this.tantrian[0].kddokterbpjs),
+            "namadokter": this.tantrian[0].namdokter,
+            "jampraktek": this.jadwal,
+            "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
+            "angkaantrean": parseInt(this.tantrian[0].noantrian),
+            "keterangan": "daftar",
+            }
+      
+      
+      
+          console.log(bodyAddFktp)
+          this.authService.addBpjsAntrian(bodyAddFktp,this.slug)
+          .subscribe(response => {
+            if(response.data.code == 200){
+          
+                  this.toastr.success(response.data.message, 'Sukses', {
+                    timeOut: 2000,
+                  });
+              
+                  this.showloadss = false;
+              
+                }else{
+                  this.showloadss = false;
+                  this.toastr.error(response.data.message, '-');
+              
+                }
+      
+      
+      })
+      
+      }, 500);
+
+      }
+
       this.caribynikandno('noka')
 
 
@@ -2434,21 +2515,7 @@ kirimantrean(){
 
   setTimeout(() => {
                             
-    // let bodyAddFktp =  { "data": {
-    //   "nomorkartu": this.tantrian[0].noasuransi,
-    //   "nik": this.tantrian[0].nopengenal,
-    //   "nohp": this.tantrian[0].hp,
-    //   "kodepoli": this.kdpolibpjs,
-    //   "namapoli": this.tantrian[0].nampoli,
-    //   "norm": this.tantrian[0].norm,
-    //   "tanggalperiksa": this.tantrian[0].tglpriksa,
-    //   "kodedokter": this.tantrian[0].kddokterbpjs,
-    //   "namadokter": this.tantrian[0].namdokter,
-    //   "jampraktek": this.jadwal,
-    //   "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
-    //   "angkaantrean": this.tantrian[0].noantrian,
-    //   "keterangan": "",
-    //   }}
+  
 
 
       let bodyAddFktp =  {
@@ -2484,24 +2551,6 @@ kirimantrean(){
             }
 
 
-      // if (Response) {
-      
-      //   if(Response.data.code == 200){
-      
-      //     this.toastr.success(Response.data.message, 'Sukses', {
-      //       timeOut: 2000,
-      //     });
-      
-      
-      
-      //   }else{
-      //     this.toastr.error(Response.data.message, 'Error');
-      
-      //   }
-      
-      
-      
-      // }
 })
 
 }, 500);
@@ -2520,7 +2569,7 @@ kirimpcare(){
 
   }else{
 
-
+    this.showloading = true;
     
   let body={
 
@@ -2583,84 +2632,9 @@ this.authService.updatepcare(body)
 
 
   
-this.showloadss = true;
-
-setTimeout(() => {
-                          
-  // let bodyAddFktp =  { "data": {
-  //   "nomorkartu": this.tantrian[0].noasuransi,
-  //   "nik": this.tantrian[0].nopengenal,
-  //   "nohp": this.tantrian[0].hp,
-  //   "kodepoli": this.kdpolibpjs,
-  //   "namapoli": this.tantrian[0].nampoli,
-  //   "norm": this.tantrian[0].norm,
-  //   "tanggalperiksa": this.tantrian[0].tglpriksa,
-  //   "kodedokter": this.tantrian[0].kddokterbpjs,
-  //   "namadokter": this.tantrian[0].namdokter,
-  //   "jampraktek": this.jadwal,
-  //   "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
-  //   "angkaantrean": this.tantrian[0].noantrian,
-  //   "keterangan": "",
-  //   }}
+// this.showloadss = true;
 
 
-    let bodyAddFktp = {
-      "nomorkartu": this.tantrian[0].noasuransi,
-      "nik": this.tantrian[0].nopengenal,
-      "nohp":'082176678897',
-      "kodepoli": this.kdpolibpjs,
-      "namapoli": this.tantrian[0].nampoli,
-      "norm": this.tantrian[0].norm,
-      "tanggalperiksa": this.tantrian[0].tglpriksa,
-      "kodedokter": parseInt(this.tantrian[0].kddokterbpjs),
-      "namadokter": this.tantrian[0].namdokter,
-      "jampraktek": this.jadwal,
-      "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
-      "angkaantrean": parseInt(this.tantrian[0].noantrian),
-      "keterangan": "daftar",
-      }
-
-
-
-    console.log(bodyAddFktp)
-    this.authService.addBpjsAntrian(bodyAddFktp,this.slug)
-    .subscribe(response => {
-      if(response.data.code == 200){
-    
-            this.toastr.success(response.data.message, 'Sukses', {
-              timeOut: 2000,
-            });
-        
-            this.showloadss = false;
-        
-          }else{
-            this.showloadss = false;
-            this.toastr.error(response.data.message, '-');
-        
-          }
-
-
-    // if (Response) {
-    
-    //   if(Response.data.code == 200){
-    
-    //     this.toastr.success(Response.data.message, 'Sukses', {
-    //       timeOut: 2000,
-    //     });
-    
-    
-    
-    //   }else{
-    //     this.toastr.error(Response.data.message, 'Error');
-    
-    //   }
-    
-    
-    
-    // }
-})
-
-}, 500);
 
 
 

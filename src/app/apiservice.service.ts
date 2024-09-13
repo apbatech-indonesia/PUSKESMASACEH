@@ -1438,7 +1438,7 @@ export class ApiserviceService {
   }
 
   diagnosaambilpcare(notrans, kdcabang): Observable<any> {
-    return this.http.get(apiurx + 'transaksi/diagnosaambilpcare.php?notrans=' + notrans + '&kdcabang=' + kdcabang)
+    return this.http.get(apiurx + 'transaksi/diagnosaambilpcarev.php?notrans=' + notrans + '&kdcabang=' + kdcabang)
   }
 
 
@@ -1785,7 +1785,9 @@ export class ApiserviceService {
     return this.http.put(satusehat + 'Encounter/UpdateFinished/' + id, data, { headers: heder })
   }
 
-
+  kyc(payload: any, headers: any) {
+    return this.http.post(satusehat + "KnowYourCustomer/generate-url", payload, { headers: headers })
+  }
   getdokter(a, heder): Observable<any> {
 
     return this.http.get(satusehat + 'Practitioner?identifier=https://fhir.kemkes.go.id/id/nik|' + a, { headers: heder })
