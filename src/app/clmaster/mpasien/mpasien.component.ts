@@ -1094,11 +1094,42 @@ this.verifsimpan = '0';
               )
             }
 
+            zeros: string = '';
+            generateZeros(count: number): void {
+              this.zeros = '0'.repeat(count);
+
+              
+            }
+          
+            cekbpjs(a){
+
+              var noasuransiv ;
+              var jumlahkarakter = 13;
+              var jumlahnol;
+              var hasilkurang:number;
+              if(a.target.value.length < 13){
+
+                // console.log(a.target.value.length)
+
+                // console.log(jumlahkarakter - a.target.value.length)
+                hasilkurang = jumlahkarakter - a.target.value.length
+                this.generateZeros(hasilkurang);
+             
+                noasuransiv = this.zeros+''+a.target.value;
+                this.noasuransi = noasuransiv;
+                
+
+              }else if(a.target.value.length > 13){
+                this.toastr.error("nomor BPJS terlalu panjang maksimal 13 angka")
+            
+
+              }else{
+                noasuransiv = this.noasuransi
 
 
-            cekbpjs(){
+              }
 
-              this.authService.tmpbpjs(this.noasuransi,'noka')
+              this.authService.tmpbpjs(noasuransiv,'noka')
               .subscribe(
                 data => {
 
@@ -1124,7 +1155,7 @@ this.verifsimpan = '0';
                         this.noindetitas =  ""
                         this.nohp = ""
                         this.noasuransi = ""
-                        this.toastr.error(data.metaData.message, 'Eror');
+                        this.toastr.error(data.metaData.message+" cek nokartu dan data tidak ada", 'Eror');
                       
 
                       }else{
