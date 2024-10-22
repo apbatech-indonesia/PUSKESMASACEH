@@ -334,7 +334,7 @@ padding:20px">
                         <div class="input-group-text">
                           <span class="">CM</span>
                         </div>
-                        <!-- <span *ngIf="showtb" style="font-size:9px;color: red;">Refrensi TB di  : 30 sd 250 cm</span> -->
+                        <span *ngIf="showtb" style="font-size:9px;color: red;">Refrensi TB di  : 30 sd 250 cm</span>
                       </div>
 
                     </div>
@@ -1156,7 +1156,7 @@ padding:20px">
                                   </td>
                                   <td>
                                     {{x.diagnosa}}<br>
-                                    <span *ngIf="x.diag">Jika dirujuk dengan TACC</span>
+                                    <span *ngIf="x.diag">Diagnosa Ini tidak boleh dirujuk atau Jika dirujuk dengan TACC</span>
 
                                   </td>
 
@@ -1946,7 +1946,7 @@ padding:20px">
 
                 </div>
 
-
+ 
                 <div class="col-md-3">
                   <div class="position-relative mb-3" *ngIf="showrujuknon">
                     <label for="exampleSelect" class="form-label"  style="color:black">TACC</label>
@@ -1971,7 +1971,7 @@ padding:20px">
 
                   <select  id="exampleSelect" class="form-select"  [(ngModel)]="alasantacc">
                     
-                 
+                    <option  value="" > -- Pilih alasan ---</option>
                     <option  *ngIf="showsatu" value="< 3 Hari" >< 3 Hari</option>
                     <option *ngIf="showsatu" value=">= 3 - 7 Hari" >>= 3 - 7 Hari</option>
                     <option  *ngIf="showsatu" value=">= 7 Hari" >>= 7 Hari</option>

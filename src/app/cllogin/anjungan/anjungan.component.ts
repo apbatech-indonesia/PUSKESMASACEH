@@ -66,6 +66,8 @@ export class anjunganComponent implements OnInit {
   myDate = new Date();
   hostName: string;
   URLINVOICE:string
+  kdprov:any='';
+
   constructor(   private modalService: NgbModal,
     public FarmasijualService :FarmasijualService,
     public hots:SampleService,private datepipe: DatePipe,public toastr: ToastrService,public fb:FormBuilder,private router:Router,private http :HttpClient,
@@ -124,7 +126,8 @@ this.authService.cabangper(this.kdklinik)
 
     for (let x of data) {
      
-      this.slug = x.slug
+      this.slug = x.slug;
+      this.kdprov = x.kdprov
 
     }
 
@@ -135,7 +138,6 @@ this.authService.cabangper(this.kdklinik)
     console.log(Error)
   }
 )
-
 
 
 
@@ -493,7 +495,11 @@ console.log(this.nomorasuransi,noasuransix)
             if(data.metaData.code == 200){
 
               this.showloading = false;
-    
+              if(data.response.kdProviderPst.kdProvider != this.kdprov){
+
+                this.toastr.error("No Kartu tidak sesuai faskes jika ingin daftar silahkan menggunakan menu daftar rawat jalan")
+                return;
+              }
               this.namabpjs = data.response.nama
               this.tglakhirberlaku = data.response.tglAkhirBerlaku
               this.jeniskelas = data.response.jnsKelas.nama

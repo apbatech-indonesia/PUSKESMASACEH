@@ -1,0 +1,5 @@
+<select id="province_id" class="form-control" [(ngModel)]="provinceId" (change)="pilihProvinsi()">
+    <option *ngFor="let item of provinceList" [value]="item.code">
+        {{ item.name }}
+    </option>
+</select>

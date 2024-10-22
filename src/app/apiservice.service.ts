@@ -1224,10 +1224,16 @@ export class ApiserviceService {
   transbeliobat(a, b, c): Observable<any> {
     return this.http.get(apiurx + 'transaksi/transbeliobat.php?kdcabang=' + a + '&nofaktur=' + b + '&nolpb=' + c)
   }
+  // pasienrm(a, b, c, d, e, tgls): Observable<any> {
+  //   // kdcabang=002&sts=0&nama=&stss=1&tgl=
+  //   return this.http.get(apiurx + 'transaksi/pasienrm.php?kdcabang=' + a + '&sts=' + b + '&nama=' + c + '&stss=' + d + '&tgl=' + e + '&tgls=' + tgls)
+  // }
+
   pasienrm(a, b, c, d, e, tgls): Observable<any> {
     // kdcabang=002&sts=0&nama=&stss=1&tgl=
-    return this.http.get(apiurx + 'transaksi/pasienrm.php?kdcabang=' + a + '&sts=' + b + '&nama=' + c + '&stss=' + d + '&tgl=' + e + '&tgls=' + tgls)
+    return this.http.get(apiurx + 'transaksi/pasienrm.php?kdcabang=' + a + '&sts=' + b + '&nama=' + c + '&stss=' + d + '&tgl=' + e + '&tgls=' + tgls )
   }
+
 
   trxfgudang(a, b, c): Observable<any> {
     return this.http.get(apiurx + 'master/trxfgudang.php?kdcabang=' + a + '&nofaktur=' + b + '&notrans=' + c)
@@ -1483,6 +1489,10 @@ export class ApiserviceService {
   simpanpcaredaftar(data: any): Observable<any> {
     return this.http.post(apiurx + 'pcare/addpendaftaranpcare.php', data)
   }
+  simpanpcaredaftarv1(data: any): Observable<any> {
+    return this.http.post(apiurx + 'pcare/adddaftarpcarekunjungansehat.php', data)
+  }
+
   adddaftarpcare(data: any): Observable<any> {
     return this.http.post(apiurx + 'pcare/adddaftarpcare.php', data)
   }
@@ -1788,6 +1798,10 @@ export class ApiserviceService {
   kyc(payload: any, headers: any) {
     return this.http.post(satusehat + "KnowYourCustomer/generate-url", payload, { headers: headers })
   }
+  observation(payload: any, headers: any) {
+    return this.http.post(satusehat + "Observation", payload, { headers: headers })
+  }
+  
   getdokter(a, heder): Observable<any> {
 
     return this.http.get(satusehat + 'Practitioner?identifier=https://fhir.kemkes.go.id/id/nik|' + a, { headers: heder })

@@ -336,6 +336,7 @@ myDatelab :any;
 myDaterad :any;
 myDatekon:any;
 myDatedaf = new Date();
+kddoktersatusehat:string='';
   users = ['Hipertensi','DM','Asma','TBC','PPOK','Stroke','Jantung','Penyakit Ginjal','Penyakit Liver','Keganasan'
     // { name: 'Hipertensi' },
     // { name: 'DM' },
@@ -1638,7 +1639,7 @@ noantrianbpjs:any='';
                     this.idpasien = x.idpasien
                     this.kdtkp = x.kdtkp
                     this.noantrianbpjs = x.noantrianbpjs
-
+                    this.kddoktersatusehat = x.idhis
 
                     this.authService.tmpbpjs(this.noasuransi,'noka')
                     .subscribe(
@@ -2312,6 +2313,7 @@ Error => {
 tdiag:any;
 ttindak:any;
 showmunculdiagjudul:boolean;
+alerttacc:any;
 
 tampildaigtindakinput(){
   this.authService.diagnosatmp(this.kdcabang,this.notrans,'diagnosa')
@@ -2325,6 +2327,16 @@ tampildaigtindakinput(){
         for(let x of data){
          this.iddiagnosa = x.iddiagnosa
          this.idnamadiagnosa = x.diagnosa
+         console.log(x.diag)
+
+         if(x.diag === null){
+          this.alerttacc = '0';
+
+         }else{
+
+this.alerttacc ='1';
+          
+         }
 
         }
 
@@ -3383,6 +3395,35 @@ simpanss(){
     console.log(response)
   }
   )  
+
+
+
+  const date = new Date();
+  if(this.idpasien) {
+    this.authService.observation({
+      data: {
+          patientId: this.idpasien,
+          practitionerId: this.kddoktersatusehat,
+          encounterId: this.idsatusehat,
+          encounterDescription: this.subjekp,
+          effectiveDateTime: date.toISOString(),
+          issuedDate: date.toISOString(),
+          heartRate: this.hr,
+          responsiveness: this.kesadaran,
+          bodyTemperature: this.suhu,
+          respiratoryRate: this.rr,
+          systolic: this.td,
+          diastolic: this.tdd,
+          hemoglobinSaturationOxygen: this.spo,
+          bodyHeight: this.tb,
+          bodyWeight: this.bb,
+          bodyMassIndex: this.imt
+      }
+    }, headers).subscribe(response => {
+      console.log("observation : "+response)
+    })  
+  }
+
 
 }
       simpanambil(){
@@ -6150,6 +6191,12 @@ tterapi:any;
                       if(data.length){
                 
                         this.tdiag = data;
+
+                    
+                        for(let x of data){
+
+                          console.log(x.diag)
+                        }
                         this.showmunculdiagjudul = true;
                 
                 
@@ -9761,6 +9808,7 @@ this.listpol = data.map(function(e) {
 
             if(a === '4'){
               this.showrujuk = true;
+              this.tampildaigtindakinput()
 
             }else if(a === '6'){
               this.showrujuk = false;
@@ -9967,54 +10015,116 @@ this.showthahem = false;
 
           klistfaskes(content){
 
-            
-            this.showfaskes = true;
+
+
+            if(this.alerttacc === '1'){
+              if(this.alasantacc === ""){
+
+                this.toastr.error("diagnosa ini ketika di rujuk harus menggunakan TACC , silahkan pilih tacc dan alasanya terlebih dahulu")
+                return
+              }else{
+                this.showfaskes = true;
 
 
             
-            this.authService.getfaskessp(this.sspesialis,this.sarana,this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'))
-            .subscribe(
-              data => {
-               
-                if(data){
-
-
-                  if(data.metaData.code == 401  ){
-                    this.showfaskes = false;
-                    this.toastr.error(data.metaData.message, 'Eror');
+                this.authService.getfaskessp(this.sspesialis,this.sarana,this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'))
+                .subscribe(
+                  data => {
+                   
+                    if(data){
+    
+    
+                      if(data.metaData.code == 401  ){
+                        this.showfaskes = false;
+                        this.toastr.error(data.metaData.message, 'Eror');
+                     
+    
+                      }else{
+                        this.showfaskes = false;
+                   
+                        this.tfaskesbpjs = data.response.list
+         
+                        
+       
+                         this.modalService.open(content, {
+                           size: 'lg'
+                         });
+                     
+                      }
                  
-
-                  }else{
-                    this.showfaskes = false;
-               
-                    this.tfaskesbpjs = data.response.list
-     
-                    
-   
-                     this.modalService.open(content, {
-                       size: 'lg'
-                     });
-                 
-                  }
-             
-              
-          
-                }else{
-          this.showfaskes = false;
                   
-                 
-                }
               
-           
-     
-          
-            },
-              Error => {
-            
-               console.log(Error)
+                    }else{
+              this.showfaskes = false;
+                      
+                     
+                    }
+                  
+               
+         
+              
+                },
+                  Error => {
+                
+                   console.log(Error)
+                  }
+                )
+    
               }
-            )
+              
 
+            }else{
+              this.showfaskes = true;
+
+
+            
+              this.authService.getfaskessp(this.sspesialis,this.sarana,this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'))
+              .subscribe(
+                data => {
+                 
+                  if(data){
+  
+  
+                    if(data.metaData.code == 401  ){
+                      this.showfaskes = false;
+                      this.toastr.error(data.metaData.message, 'Eror');
+                   
+  
+                    }else{
+                      this.showfaskes = false;
+                 
+                      this.tfaskesbpjs = data.response.list
+       
+                      
+     
+                       this.modalService.open(content, {
+                         size: 'lg'
+                       });
+                   
+                    }
+               
+                
+            
+                  }else{
+            this.showfaskes = false;
+                    
+                   
+                  }
+                
+             
+       
+            
+              },
+                Error => {
+              
+                 console.log(Error)
+                }
+              )
+  
+
+            }
+            
+          
 
             // if(this.tdiag[0].diag === null && this.alasantacc !='1' ){
 

@@ -4,11 +4,15 @@ import { tulisermComponent } from './tuliserm/tuliserm.component';
 import { BukuKontrasepsiComponent } from './Kebidanan/BukuKontrasepsi/BukuKontrasepsi.component';
 import { tulisermriComponent } from './tulisermri/tulisermri.component';
 import { kajianperawatComponent } from './Assesment/kajianperawat/kajianperawat.component';
+import { TulisAncComponent } from '../tulis-anc/tulis-anc.component';
+import { TulisMtbmComponent } from '../tulis-mtbm/tulis-mtbm.component';
 
 const routes: Routes = [
   {path:'tuliserm/:notrans/:kddokter/:dariklik/:norm',component:tulisermComponent},
   {path:'tulisermri/:notrans/:kddokter/:dariklik/:norm',component:tulisermriComponent},
   {path : 'kajianperawat/:notrans/:norm/:kddokter',component:kajianperawatComponent},
+  {path:'tulis-anc/:notrans/:kddokter/:dariklik/:norm',component:TulisAncComponent},
+  {path:'tulis-mtbm/:notrans/:kddokter/:dariklik/:norm',component:TulisMtbmComponent},
   { 
     path: 'Kebidanan/BukuKontrasepsi/:tanggal_mulai/:tanggal_akhir', 
     loadChildren:() => import('./Kebidanan/BukuKontrasepsi/Cetak/Cetak.module').then(m => m.CetakModule )
@@ -198,6 +202,14 @@ const routes: Routes = [
     {
       path : 'ermdokterrm',
       loadChildren:() => import('./ermdokterrm/ermdokterrm.module').then(m => m.ermdokterrmModule )
+    },
+    {
+      path : 'satusehat-anc',
+      loadChildren:() => import('./satusehat-anc/ermdokterrm.module').then(m => m.ermdokterrmModule )
+    },
+    {
+      path : 'satusehat-mtbs',
+      loadChildren:() => import('./satusehat-mtbs/ermdokterrm.module').then(m => m.ermdokterrmModule )
     },
     {
       path : 'kasirfarmasibelir',

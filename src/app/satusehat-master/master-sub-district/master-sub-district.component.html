@@ -1,0 +1,3 @@
+<select id="subDistrict_id" class="form-control" [(ngModel)]="subdistrictId" (change)="pilihsubDistrict()">
+    <option *ngFor="let item of subDistrictList" [value]="item.code">{{ item.name }}</option>
+</select>

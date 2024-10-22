@@ -88,9 +88,9 @@ export class MpasienComponent implements OnInit {
  golda:string='Tidak Tahu';
  kdcabang:any;
  myDate = new Date();
- usia:string='';
+ usia:any='';
  noasuransi:string='';
-
+ tglp: any;
   constructor(public http :HttpClient,private datepipe: DatePipe,private modalService: NgbModal,public toastr: ToastrService, private authService:ApiserviceService , private fb: FormBuilder) {
     // this.options = fb.group({
     //   hideRequired: false,
@@ -106,7 +106,7 @@ export class MpasienComponent implements OnInit {
 this.kdklinik = this.userDetails.kdklinik;
 this.kdcabang = this.userDetails.kdcabang;
 this.tgllahir = this.datepipe.transform(this.myDate, 'yyyy-MM-dd')
-
+this.tglp = this.datepipe.transform(this.myDate, 'yyyy-MM-dd')
 
 
   }
@@ -666,74 +666,128 @@ Hapus(){
 
 if(this.verifsimpan === '1'){
 
-  this.authService.pasien(this.kdcabang,'3',this.norm)
-  .subscribe(
-    data => {
-    
-      if(data.length){
+  if(this.norm === ''){
 
-
-        this.toastr.error("data norm tersbut  sudah ada"+data[0].pasien)
-        return;
-        
-      }else{
-        let body = {"nama" : this.pasien,"tlahir":this.tempatlahir,"jeniskelamin":this.kelamin,"tanggallahir":this.tgllahir,
-        "alamat":this.alamat,"kodekel":this.keluarahanid,"identitas":this.indetitas,"noidentitas":this.noindetitas,"nohp":this.nohp,"agama":this.agama,"marital":this.marital,
-      "pendidikan":this.pendidikan,"perkerjaan":this.perkerjaan,
-      "golda":this.golda,"norm":this.norm,"stssimpan":'1',"kdcabang":this.kdcabang,"noasuransi":this.noasuransi,
-      "kdklinik":this.kdklinik,"kdpanggil":this.an,"usia":this.usia};
+    this.authService.pasien(this.kdcabang,'3',this.norm)
+    .subscribe(
+      data => {
       
-      
-      
-      this.authService.simpanpasbaru(body)
-      .subscribe(response => {
-      
-      
-      
-        if(response ){
-          this.toastr.success(''+response, 'Sukses', {
-            timeOut: 2000,
-          });
-      
-      
-      
-          this.authService.pasien(this.kdcabang,'2','')
-          .subscribe(
-            data => {
-            
-      this.tpasien = data;
-      
-          },
-            Error => {
-          
-             console.log(Error)
-            }
-          )
-      
-      
-      
-          this.Batal()
-      
-        
-         }else{
-          this.toastr.error('Simpan  Gagal', 'Eror');
-        
-         }
-      
-      
-      
-      
-      
-      })
-        
-      }
-
-  },
-    Error => {
+        if(data.length){
   
-     console.log(Error)
-    }
-  )
+  
+          this.toastr.error("data norm tersbut  sudah ada" +data[0].pasien)
+          return;
+          
+        }else{
+          let body = {"nama" : this.pasien,"tlahir":this.tempatlahir,"jeniskelamin":this.kelamin,"tanggallahir":this.tgllahir,
+          "alamat":this.alamat,"kodekel":this.keluarahanid,"identitas":this.indetitas,"noidentitas":this.noindetitas,"nohp":this.nohp,"agama":this.agama,"marital":this.marital,
+        "pendidikan":this.pendidikan,"perkerjaan":this.perkerjaan,
+        "golda":this.golda,"norm":this.norm,"stssimpan":'1',"kdcabang":this.kdcabang,"noasuransi":this.noasuransi,
+        "kdklinik":this.kdklinik,"kdpanggil":this.an,"usia":this.usia};
+        
+        
+        
+        this.authService.simpanpasbaru(body)
+        .subscribe(response => {
+        
+        
+        
+          if(response ){
+            this.toastr.success(''+response, 'Sukses', {
+              timeOut: 2000,
+            });
+        
+        
+        
+            this.authService.pasien(this.kdcabang,'2','')
+            .subscribe(
+              data => {
+              
+        this.tpasien = data;
+        
+            },
+              Error => {
+            
+               console.log(Error)
+              }
+            )
+        
+        
+        
+            this.Batal()
+        
+          
+           }else{
+            this.toastr.error('Simpan  Gagal', 'Eror');
+          
+           }
+        
+        
+        
+        
+        
+        })
+          
+        }
+  
+    },
+      Error => {
+    
+       console.log(Error)
+      }
+    )
+  
+  }else{
+    let body = {"nama" : this.pasien,"tlahir":this.tempatlahir,"jeniskelamin":this.kelamin,"tanggallahir":this.tgllahir,
+    "alamat":this.alamat,"kodekel":this.keluarahanid,"identitas":this.indetitas,"noidentitas":this.noindetitas,"nohp":this.nohp,"agama":this.agama,"marital":this.marital,
+  "pendidikan":this.pendidikan,"perkerjaan":this.perkerjaan,
+  "golda":this.golda,"norm":this.norm,"stssimpan":'1',"kdcabang":this.kdcabang,"noasuransi":this.noasuransi,
+  "kdklinik":this.kdklinik,"kdpanggil":this.an,"usia":this.usia};
+  
+  
+  
+  this.authService.simpanpasbaru(body)
+  .subscribe(response => {
+  
+  
+  
+    if(response ){
+      this.toastr.success(''+response, 'Sukses', {
+        timeOut: 2000,
+      });
+  
+  
+  
+      this.authService.pasien(this.kdcabang,'2','')
+      .subscribe(
+        data => {
+        
+  this.tpasien = data;
+  
+      },
+        Error => {
+      
+         console.log(Error)
+        }
+      )
+  
+  
+  
+      this.Batal()
+  
+    
+     }else{
+      this.toastr.error('Simpan  Gagal', 'Eror');
+    
+     }
+  
+  
+  
+  
+  
+  })
+
+  }
 
 
  
@@ -1026,8 +1080,9 @@ this.verifsimpan = '0';
   this.an = kdpanggil;
 
 
-
-
+  const difference  = this.calculateDifferenceInYearsMonthsDays(this.tgllahir, this.tglp);
+  console.log('Selisih:', difference.years, 'tahun', difference.days, 'hari');
+  this.usia = difference.years+' tahun '+ difference.months +' Bulan '+difference.days+' hari';
 
 
             }
@@ -1301,6 +1356,41 @@ this.verifsimpan = '0';
               }
             }
 
+
+            calculateDifferenceInYearsMonthsDays(startDate: Date, endDate: Date): 
+            { years: number, months: number, days: number } {
+              const start = new Date(startDate);
+              const end = new Date(endDate);
+          
+              let years = end.getFullYear() - start.getFullYear();
+              let months = end.getMonth() - start.getMonth();
+              let days = end.getDate() - start.getDate();
+          
+              if (months < 0) {
+                years--;
+                months += 12;
+              }
+          
+              if (days < 0) {
+                months--;
+                const previousMonth = new Date(end.getFullYear(), end.getMonth(), 0);
+                days += previousMonth.getDate();
+              }
+          
+              return { years, months, days };
+            }
+            usiadeal:any=''
+
+            ktgl(){
+
+     
+
+              const difference  = this.calculateDifferenceInYearsMonthsDays(this.tgllahir, this.tglp);
+              console.log('Selisih:', difference.years, 'tahun', difference.days, 'hari');
+              this.usia = difference.years+' tahun '+ difference.months +' Bulan '+difference.days+' hari';
+              // console.log('Selisih:', difference.years, 'tahun', difference.months, 'bulan', difference.days, 'hari');
+              console.log(this.usiadeal)
+            }
 
           
 }

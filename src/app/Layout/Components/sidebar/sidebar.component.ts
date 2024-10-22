@@ -144,6 +144,9 @@ kanjungan(){
 // alert("Sementara pendaftaran memakai pendaftraan rawat jalan")
 
 }
+update(){
+  alert("dalam proses update")
+}
 kanjungans(){
   this.router.navigate(['/anjungans']); 
 }

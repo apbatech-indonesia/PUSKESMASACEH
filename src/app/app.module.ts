@@ -144,6 +144,14 @@ import { PersetujuanTindakanMedisComponent } from './clmaster/Assesment/Medis/Pe
 import { kajianperawatComponent } from './clmaster/Assesment/kajianperawat/kajianperawat.component';
 import { riwayatkunjunganComponent } from './clmaster/Assesment/riwayatkunjungan/riwayatkunjungan.component';
 import { anjungansehatComponent } from './cllogin/anjungansehat/anjungansehat.component';
+import { TulisAncComponent } from './tulis-anc/tulis-anc.component';
+import { TulisMtbmComponent } from './tulis-mtbm/tulis-mtbm.component';
+import { MasterProvinceComponent } from './satusehat-master/master-province/master-province.component';
+import { MasterCityComponent } from './satusehat-master/master-city/master-city.component';
+import { MasterDistrictComponent } from './satusehat-master/master-district/master-district.component';
+import { MasterSubDistrictComponent } from './satusehat-master/master-sub-district/master-sub-district.component';
+
+
 @NgModule({
   declarations: [
 
@@ -203,7 +211,13 @@ import { anjungansehatComponent } from './cllogin/anjungansehat/anjungansehat.co
      tulisermriComponent,
      PersetujuanTindakanMedisComponent,
      kajianperawatComponent,
-     riwayatkunjunganComponent
+     riwayatkunjunganComponent,
+     TulisAncComponent,
+     TulisMtbmComponent,
+     MasterProvinceComponent,
+     MasterCityComponent,
+     MasterDistrictComponent,
+     MasterSubDistrictComponent
 
   ],
   imports: [

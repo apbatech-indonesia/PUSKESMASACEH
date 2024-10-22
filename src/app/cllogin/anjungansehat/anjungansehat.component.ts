@@ -4,6 +4,7 @@ import { ApiserviceService } from 'src/app/apiservice.service';
 import { FormGroup,FormBuilder,Validators,NgForm,FormControl } from '@angular/forms';
 import { DatePipe,formatDate } from '@angular/common';
 import { SampleService } from 'src/app/services';
+import Swal from 'sweetalert2';
 import {
   GlobalConfig,
   ToastrService,
@@ -108,7 +109,7 @@ export class anjungansehatComponent implements OnInit {
       // console.log(this.pin)
     }
     slug:any;
-
+    kdprov:any='';
   ngOnInit(): void {
 
     this.hostName = this.hots.getHostname();
@@ -131,7 +132,8 @@ this.authService.cabangper(this.kdklinik)
 
     for (let x of data) {
      
-      this.slug = x.slug
+      this.slug = x.slug;
+      this.kdprov = x.kdprov
 
     }
 
@@ -513,9 +515,7 @@ console.log(this.nomorasuransi,noasuransix)
 
             console.log(data.metaData.code)
             if(data.metaData.code == 200){
-
               this.showloading = false;
-    
               this.namabpjs = data.response.nama
               this.tglakhirberlaku = data.response.tglAkhirBerlaku
               this.jeniskelas = data.response.jnsKelas.nama
@@ -535,6 +535,30 @@ console.log(this.nomorasuransi,noasuransix)
               this.noindetitas = data.response.noKTP;
               this.nohp = data.response.noHP;
 
+              if(data.response.kdProviderPst.kdProvider != this.kdprov){
+
+              
+
+                const swalWithBootstrapButtons = Swal.mixin({
+                  customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                  },
+                  buttonsStyling: false
+                });
+                swalWithBootstrapButtons.fire({
+                  title: 'Peserta Tidak Sesuai Faskes',
+                  text: 'Faskes '+data.response.kdProviderPst.nmProvider+' Tidak sesuai faskes apakah yakin akan melanjutkan?',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Ya',
+                  cancelButtonText: 'Batal',
+                  reverseButtons: true
+                }).then((result) => {
+                  if (result.value) {
+                
+                 
+     
            
 
             
@@ -1181,6 +1205,672 @@ console.log(this.nomorasuransi,noasuransix)
 
               }
             
+                  } else if (
+                    /* Read more about handling dismissals below */
+                    
+                    result.dismiss === Swal.DismissReason.cancel
+                  ) {
+
+                    this.toastr.error("No Kartu tidak sesuai faskes")
+                    return;
+
+
+                    // swalWithBootstrapButtons.fire(
+                    //   'Cancelled',
+                    //   'Your imaginary file is safe :)',
+                    //   'error'
+                    // );
+                  }
+                });
+
+
+
+              }else{
+                if(this.ketaktif === 'AKTIF'){
+
+
+                
+                  let body={"data" :{
+                    "kdProviderPeserta": this.kdprovider,
+                    "tglDaftar":this.tglp,
+                    "noKartu": nokartu,
+                    "kdPoli": this.kdpolibpjs,
+                    "keluhan": 'sehat',
+                    "kunjSakit": false,
+                    "sistole": 0,
+                    "diastole": 0,
+                    "beratBadan": 0,
+                    "tinggiBadan": 0,
+                    "respRate": 0,
+                    "lingkarPerut": 0,
+                    "heartRate": 0,
+                    "rujukBalik": 0,
+                    "kdTkp": '10' }}
+  
+  
+  
+                    this.authService.adddaftarpcarekunjungansehat(body).subscribe(response => {
+                      if(response ){
+  
+                        if(response.metaData.code == 201){
+                         
+  
+                          let body={
+                            "nokartu":nokartu,"stssimpan":'1',"nama":this.namabpjs,
+                            "kdpolibpjs":this.kdpolibpjs,"tgl":this.tglp,"nomor": response.response.message
+                          }
+                          
+                             this.authService.simpansehat(body)
+                             .subscribe(response => {
+                             
+                             
+                             
+                             
+                             })
+                          
+  
+  
+                         this.toastr.success("Berhasil Kirim Kunjungan Sehat")
+                          this.showantrian = true;
+                         this.noantraian = response.response.message
+  
+                                  this.nomorasuransi ='';
+                                this.kdpoli='';
+                                this.kddokter='';
+                         
+                                
+  
+  
+  
+  
+                          
+                          
+                          
+                          this.nomorasuransi=''
+  
+                          
+                          this.showloading = false;
+  
+                        }else if(response.metaData.code == 412){
+  
+  
+                          
+                          this.toastr.error('Gagal terkirim kode provider tidak ada', 'Eror');
+                      
+                      
+                          this.showloading = false;
+                        }
+                      }else{
+                        this.toastr.error('Simpan  Gagal', 'Eror');
+                      
+                       }
+  
+                      })
+  
+                  
+  
+  
+  
+  //                 this.authService.pasien(this.kdcabang,statuscaripasien,nomorcaripasien)
+  //                 .subscribe(
+  //                   data => {
+                    
+  
+  //                     if(data.length){
+                      
+  //                       for(let x of data){
+  //                         this.norm = x.norm;
+  //                         this.kdasuransi = x.kdasuransi;
+  //                         this.kdkostumer = x.kdkostumer;
+                          
+  
+  //                       }
+  
+  
+  
+  //                       let body ={
+  //                         "norm": this.norm,"pasien":this.namabpjs,"indetitas":'KTP',"noindetitas":this.noindetitas,"kduser":'ANJUNGAN',
+  //                         "hp":this.nohp,"kdpoli":this.kdpoli,"kddokter":this.kddokter,"kelas":'1',
+  //                            "tgldaftar":this.tglp,"kostumer":this.kdkostumer,"kdkostumer":this.kdasuransi,
+  //                            "noasuransi":nokartu,
+  //                            "kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"stssimpan":'13',
+  //                            "kdprovider":this.kdprovider
+                        
+  //                        }
+                         
+  //                        this.authService.simpandaftarrj(body)
+  //                        .subscribe(response => {
+                         
+                         
+                         
+  //                          if(response ){
+                          
+                            
+  //                           if(response.kode === 201){
+  //                             this.toastr.error(response.keterangan, 'Eror');
+                           
+                        
+  //                           }else{
+                        
+  
+  
+                           
+  //                             this.showantrian= true;
+  
+  //                             this.notransaksi = response.notrans;
+  
+  
+  //                             // setTimeout(() => {
+  //                             //   this.tmpan()
+  //                             // }, 100);
+  
+  //                             this.authService.pasienantrian(this.kdcabang,'2',this.notransaksi,'','')
+  //                             .subscribe(
+  //                               data => {
+                                
+  //                                 this.tantrian = data;
+  
+  
+  //                                 if(data.length){
+  
+  //                                 for(let x of data){
+                          
+  //                                   this.kdpolibpjs = x.kdpolibpjs;
+  //                                 }
+  
+  
+                        
+  //                                 let body={"data" :{
+  //                                   "kdProviderPeserta": this.kdprovider,
+  //                                   "tglDaftar":this.tglp,
+  //                                   "noKartu": nokartu,
+  //                                   "kdPoli": this.kdpolibpjs,
+  //                                   "keluhan": 'sehat',
+  //                                   "kunjSakit": false,
+  //                                   "sistole": 0,
+  //                                   "diastole": 0,
+  //                                   "beratBadan": 0,
+  //                                   "tinggiBadan": 0,
+  //                                   "respRate": 0,
+  //                                   "lingkarPerut": 0,
+  //                                   "heartRate": 0,
+  //                                   "rujukBalik": 0,
+  //                                   "kdTkp": '10' }}
+                                
+                                    
+  //                                   this.authService.simpanpcaredaftar(body).subscribe(response => {
+  //                                                 if(response ){
+                                
+                                
+                                
+  //                               if(response.metaData.code == 201){
+                                
+                                
+  //                               this.toastr.success('Berhasil Kirim PCare', '-', {
+  //                               timeOut: 2000,
+  //                               });
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+  //                               let body={
+  //                               "notransaksi":this.notransaksi,"stssimpan":'1',"noantrian":response.response.message,
+  //                               "kdtkp":'10',"jeniskun":'true'
+  //                               }
+                                
+  //                               this.authService.updatepcare(body)
+  //                               .subscribe(response => {
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+  //                               })
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+  //                               }else if(response.metaData.code == 412){
+                                
+  //                               this.toastr.error('Gagal terkirim kode provider tidak ada', 'Eror');
+                                
+                                
+  //                               this.showloading = false;
+                                
+  //                               }
+                                
+                                
+                                
+                                
+                                
+  //                               }else{
+  //                               this.toastr.error('Simpan  Gagal', 'Eror');
+                                
+  //                               }
+                                
+                                
+                                
+                                
+                                
+  //                               })
+  
+  
+  //                                 // setTimeout(() => {
+  //                                 //   let bodyAddFktp = {
+  //                                 //   "nomorkartu": nokartu,
+  //                                 //   "nik": this.tantrian[0].nopengenal,
+  //                                 //   "nohp": this.tantrian[0].hp,
+  //                                 //   "kodepoli": this.kdpolibpjs,
+  //                                 //   "namapoli": this.tantrian[0].nampoli,
+  //                                 //   "norm": this.tantrian[0].norm,
+  //                                 //   "tanggalperiksa": this.tantrian[0].tglpriksa,
+  //                                 //   "kodedokter": parseInt(this.tantrian[0].kddokterbpjs),
+  //                                 //   "namadokter": this.tantrian[0].namdokter,
+  //                                 //   "jampraktek": this.jadwal,
+  //                                 //   "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
+  //                                 //   "angkaantrean": parseInt(this.tantrian[0].noantrian),
+  //                                 //   "keterangan": "daftar",
+  //                                 //   }
+                                    
+  //                                 //   console.log(bodyAddFktp)
+  //                                 //   this.authService.addBpjsAntrian(bodyAddFktp,this.slug)
+  //                                 //   .subscribe(Response => {
+  //                                 //   if (Response) {
+                                    
+  //                                 //   if(Response.data.code == 200){
+                                    
+  //                                 //   this.toastr.success(Response.data.message, 'Sukses', {
+  //                                 //   timeOut: 2000,
+  //                                 //   });
+  //                                 //   setTimeout(() => {
+  
+  
+                                    
+                                    
+                                      
+  //                                 //   }, 500);
+                                    
+                                    
+  //                                 //   }else{
+  //                                 //   this.toastr.error(Response.data.message, 'Error');
+                                    
+  //                                 //   }
+                                    
+                                    
+                                    
+  //                                 //   }
+  //                                 //   })
+                                    
+                                    
+                                    
+  //                                 //   this.nomorasuransi =''
+  //                                 //   }, 500);
+                                    
+  
+  
+  
+  
+  
+      
+                             
+  //                                 }
+                          
+                                 
+                             
+  //                             },
+  //                               Error => {
+                              
+  //                                console.log(Error)
+  //                               }
+  //                             )
+  
+                              
+  
+                         
+                                      
+       
+  
+  //                          this.toastr.success(response.notrans+response.keterangan, 'Sukses', {
+  //                              timeOut: 2000,
+  //                            });
+                        
+                        
+                        
+  //                           }
+                         
+                         
+                         
+                           
+  //                           }else{
+  //                            this.toastr.error('Simpan  Gagal', 'Eror');
+                           
+  //                           }
+                         
+                         
+                         
+                         
+                         
+  //                        })
+                        
+                        
+  
+  
+                        
+  //                     }else{
+  
+  //                       console.log('tidak ada')
+  
+  
+  //   let body = {"nama" : this.namabpjs,"tlahir":'-',"jeniskelamin":this.jk,"tanggallahir":this.tgllahir,
+  //   "alamat":'X',"kodekel":'X',"identitas":'KTP',"noidentitas":this.noindetitas,"nohp":this.nohp,"agama":'TIDAK TAHU',"marital":'TIDAK TAHU',
+  // "pendidikan":'TIDAK TAHU',"perkerjaan":'TIDAK TAHU',"golda":'Tidak Tahu',"norm":'',"stssimpan":'13',"kdcabang":this.kdcabang,
+  // "kdklinik":this.kdklinik,"noasuransi":nokartu};
+  
+  
+  
+  // this.authService.simpanpasbaru(body)
+  // .subscribe(response => {
+  
+  
+  
+  //   if(response ){
+  //     this.toastr.success('Berhasil', 'Sukses', {
+  //       timeOut: 2000,
+  //     });
+  
+  
+  
+  // this.norm = response.norm;
+  // this.kdasuransi = response.kdasuransi;
+  // this.kdkostumer = response.kdkostumer;
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  // let body ={
+  //   "norm": this.norm,"pasien":this.namabpjs,"indetitas":'KTP',"noindetitas":this.noindetitas,"kduser":'ANJUNGAN',
+  //   "hp":this.nohp,"kdpoli":this.kdpoli,"kddokter":this.kddokter,"kelas":'1',
+  //      "tgldaftar":this.tglp,"kostumer":this.kdkostumer,"kdkostumer":this.kdasuransi,"noasuransi":nokartu,
+  //      "kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"stssimpan":'12',
+  //      "kdprovider":this.kdprovider
+  
+  //  }
+   
+  //  this.authService.simpandaftarrj(body)
+  //  .subscribe(response => {
+   
+   
+   
+  //    if(response ){
+    
+      
+  //     if(response.kode === 201){
+  //       this.toastr.error(response.keterangan, 'Eror');
+     
+  
+  //     }else{
+  
+                             
+  
+  
+  //                             this.showantrian= true;
+  
+  //                             this.notransaksi = response.notrans;
+  
+  
+  
+  //                             this.authService.pasienantrian(this.kdcabang,'2',this.notransaksi,'','')
+  //                             .subscribe(
+  //                               data => {
+                                
+  //                                 this.tantrian = data;
+  
+  //                                 if(data.length){
+  
+                                    
+  //                                   for(let x of data){
+                          
+  //                                     this.kdpolibpjs = x.kdpolibpjs;
+  //                                   }
+  
+  
+                           
+  
+  
+        
+  //                                 }   
+  
+  //                                 let body={"data" :{
+  //                                   "kdProviderPeserta": this.kdprovider,
+  //                                   "tglDaftar":this.tglp,
+  //                                   "noKartu": nokartu,
+  //                                   "kdPoli": this.kdpolibpjs,
+  //                                   "keluhan": 'sehat',
+  //                                   "kunjSakit": false,
+  //                                   "sistole": 0,
+  //                                   "diastole": 0,
+  //                                   "beratBadan": 0,
+  //                                   "tinggiBadan": 0,
+  //                                   "respRate": 0,
+  //                                   "lingkarPerut": 0,
+  //                                   "heartRate": 0,
+  //                                   "rujukBalik": 0,
+  //                                   "kdTkp": '10' }}
+              
+  
+  
+  //                                   this.authService.simpanpcaredaftar(body).subscribe(response => {
+  //                                     if(response ){
+  
+  //                                       if(response.metaData.code == 201){
+  
+  
+  //                                         let body={
+  //                                           "notransaksi":this.notransaksi,"stssimpan":'1',"noantrian":response.response.message
+  //                                         }
+                                          
+  //                                            this.authService.updatepcare(body)
+  //                                            .subscribe(response => {
+                                             
+                                             
+                                             
+                                          
+                                             
+                                             
+                                             
+                                             
+  //                                            })
+                                          
+                                          
+                                          
+  //                                         this.nomorasuransi=''
+  
+                                          
+  //                                         this.showloading = false;
+  
+  //                                       }else if(response.metaData.code == 412){
+  
+  
+                                          
+  //                                         this.toastr.error('Gagal terkirim kode provider tidak ada', 'Eror');
+                                      
+                                      
+  //                                         this.showloading = false;
+  //                                       }
+  //                                     }else{
+  //                                       this.toastr.error('Simpan  Gagal', 'Eror');
+                                      
+  //                                      }
+  
+  //                                     })
+    
+                                  
+                                  
+  //                                 // setTimeout(() => {
+                
+           
+  //                                 //   let bodyAddFktp = {
+  //                                 //     "nomorkartu":nokartu,
+  //                                 //     "nik": this.tantrian[0].nopengenal,
+  //                                 //     "nohp": '086786655899',
+  //                                 //     "kodepoli": this.kdpolibpjs,
+  //                                 //     "namapoli": this.tantrian[0].nampoli,
+  //                                 //     "norm": this.tantrian[0].norm,
+  //                                 //     "tanggalperiksa": this.tantrian[0].tglpriksa,
+  //                                 //     "kodedokter": parseInt(this.tantrian[0].kddokterbpjs),
+  //                                 //     "namadokter": this.tantrian[0].namdokter,
+  //                                 //     "jampraktek": this.jadwal,
+  //                                 //     "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
+  //                                 //     "angkaantrean": parseInt(this.tantrian[0].noantrian),
+  //                                 //     "keterangan": "daftar",
+  //                                 //     }
+                                    
+  //                                 //     console.log(bodyAddFktp)
+  //                                 //     this.authService.addBpjsAntrian(bodyAddFktp,this.slug)
+  //                                 //     .subscribe(Response => {
+  //                                 //     if (Response) {
+                                      
+  //                                 //       if(Response.data.code == 200){
+  
+  
+  
+  
+                                      
+  //                                 //         this.toastr.success(Response.data.message, 'Sukses', {
+  //                                 //           timeOut: 2000,
+  //                                 //         });
+                                      
+      
+  //                                 //         this.toastr.success("Silahakn menuju NS untuk di TTV", 'Sukses', {
+  //                                 //           timeOut: 2000,
+  //                                 //         });
+                                      
+                                          
+                                 
+                                      
+                                      
+  //                                 //       }else{
+  //                                 //         this.toastr.error(Response.data.message, 'Error');
+                                      
+  //                                 //       }
+                                      
+                                      
+                                      
+  //                                 //     }
+  //                                 //     })
+                                    
+                                          
+  //                                 //     this.nomorasuransi ='';
+                                      
+  //                                 //         }, 100);
+                          
+                                 
+                             
+                             
+  //                             },
+  //                               Error => {
+                              
+  //                                console.log(Error)
+  //                               }
+  //                             )
+  
+  
+  
+                   
+                              
+  //    this.toastr.success(response.notrans+response.keterangan, 'Sukses', {
+  //        timeOut: 2000,
+  //      });
+  
+  
+  
+  //     }
+   
+   
+   
+     
+  //     }else{
+  //      this.toastr.error('Simpan  Gagal', 'Eror');
+     
+  //     }
+   
+   
+   
+   
+   
+  //  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  //    }else{
+  //     this.toastr.error('Simpan  Gagal', 'Eror');
+    
+  //    }
+  
+  
+  
+  
+  
+  // })
+  
+  
+  
+  //                     }
+              
+  //                 },
+  //                   Error => {
+                  
+  //                    console.log(Error)
+  //                   }
+  //                 )
+  
+  
+  
+                
+  
+  
+                }else{
+                  this.showaktif = true;
+                  this.toastr.error('STATUS KEPERSETAAN '+this.ketaktif, 'Eror');
+  
+  
+                }
+              }
+
+             
+    
 
 
             }else{

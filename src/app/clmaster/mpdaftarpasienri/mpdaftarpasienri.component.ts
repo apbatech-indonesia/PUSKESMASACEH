@@ -869,7 +869,18 @@ sss(){
       this.authService.simpandaftarrj(bodyx)
       .subscribe(response => {
   
-  
+
+        if(response.length){
+
+          this.pasienc = response;
+          this.pilihpasienc()
+
+          setTimeout(() => {
+            this.kirimpcare()
+          }, 500);
+        
+        }
+
       })
  
   
@@ -1504,71 +1515,140 @@ namaprovider:string;
            }
 
            kdtkp:any;
+           showloading:boolean;
+           sudahpcare:any;
 
            kirimpcare(){
-         
 
+
+            // let currentTAntrian = this.currentTAntrian
+          
+          
+            if(this.kdprovider === '3'){
+              this.toastr.error('Kode Provider Kosong Tidak Bisa Melalui Bridging', 'Eror');
+          
+            }else{
+          
+              this.showloading = true;
+              
             let body={
-                "kdProviderPeserta": this.kdprovider,
-            "tglDaftar": this.tgldaftarbpjs,
+          
+              
+              "data" :{
+            "kdProviderPeserta": this.kdprovider,
+            "tglDaftar":this.datepipe.transform(this.tglp , 'dd-MM-yyy'),
             "noKartu": this.noasuransi,
             "kdPoli": this.kdpolibpjs,
-            "keluhan": null,
+            "keluhan": 'keluhan sakit',
             "kunjSakit": true,
             "sistole": 0,
             "diastole": 0,
             "beratBadan": 0,
             "tinggiBadan": 0,
             "respRate": 0,
+            "lingkarPerut": 0,
             "heartRate": 0,
             "rujukBalik": 0,
-            "kdTkp": this.kdtkp
+            "kdTkp": 20
+          }
+          }
+          
+          
+          
+          this.authService.simpanpcaredaftar(body)
+          .subscribe(response => {
+          
+          
+          
+          if(response ){
+          
+          
+          
+          if(response.metaData.code == 201){
+          this.toastr.success('Berhasil Kirim PCare', '-', {
+          timeOut: 2000,
+          });
+          
+          this.sudahpcare = 'Berhasil Kirim PCare'
+          
+          this.showloading = false;
+          
+          
+          
+          let body={
+          "notransaksi":this.pasienc,"stssimpan":'1',"noantrian":response.response.message,
+          "kdtkp":20,"jeniskun":true
+          }
+          
+          this.authService.updatepcare(body)
+          .subscribe(response => {
+          
+          
+          })
+          
+          
+          
+          
+          
+          
+            
+          // this.showloadss = true;
+          
+          
+          
+          
+          
+          this.modalService.dismissAll()
+          }else if(response.metaData.code == 412){
+          
+          this.toastr.error(response.response.field+response.response.message, 'Eror');
+          
+          
+          this.showloading = false;
+          
+          }else{
+          
+          this.toastr.error(response.metaData.message, 'Eror');
+          
+          
+          this.showloading = false;
+          }
+          
+          
+          
+          
+          
+          }else{
+          this.toastr.error('Simpan  Gagal', 'Eror');
+          
+          this.showloading = false;
+          
+          }
+          
+          
+          
+          
+          
+          })
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
             }
-
-           
-            this.authService.simpanpcaredaftar(body)
- .subscribe(response => {
- 
- 
- 
-   if(response ){
-    
-    // console.log(response.metaData.code )
-
-    if(response.metaData.code === 201){
-    this.toastr.success('Berhasil Kirim PCare', '-', {
-       timeOut: 2000,
-     });
-
-
-
-     this.modalService.dismissAll()
-    }else{
-
-
-
-    }
-    
-    //  this.toastr.success(''+response, '-', {
-    //    timeOut: 2000,
-    //  });
-
- 
- 
- 
- 
-   
-    }else{
-     this.toastr.error('Simpan  Gagal', 'Eror');
-   
-    }
- 
- 
- 
- 
- 
- })
-
-
+          
+          
+          
+          
            }
 }

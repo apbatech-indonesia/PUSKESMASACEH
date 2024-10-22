@@ -53,7 +53,7 @@
                 </div>
     
                 </div> -->
-                <div class="col-md-8">
+                <div class="col-md-5">
                   <form [formGroup]="profileForm" >
                   <div class="position-relative mb-3">
                     <!-- <label for="exampleEmail" class="form-label"  style="color:black">Nama Pasien</label>
@@ -76,13 +76,20 @@
                   </form>
       
                 </div>
-
+                <div class="col-md-3">
+                  <div class="position-relative mb-3">
+                    <label for="exampleEmail" class="form-label" style="color:black">Usia</label>
+                    <input style="font-size: 12px;" [(ngModel)]="usia" disabled type="text" class="form-control">
+                  </div>
+                </div>
           <div class="col-md-2">
             <div class="position-relative mb-3">
               <label for="exampleEmail" class="form-label" style="color:black">IDHS</label>
-              <input [(ngModel)]="idhs" disabled type="text" class="form-control">
+              <input style="font-size: 12px;" [(ngModel)]="idhs" disabled type="text" class="form-control">
             </div>
           </div>
+
+          
 
         </div>
 
@@ -455,7 +462,7 @@
               <div class="position-relative mb-3">
                 <label for="exampleSelect" class="form-label" style="color:black">Detail Kelompok</label>
                 <select formControlName="cusid" [(ngModel)]="cusid" class="form-select" 
-              
+                (change)="cekbpjsk($event.target.value)"
                 
                 >
                   <option value="">-PILIH-</option>
@@ -826,7 +833,81 @@
           </div>
         </ng-template>
       </li>
+
       <li ngbNavItem>
+        <a ngbNavLink (click)="cekpasientgl('')" ><span>Pasien Per Tgl</span></a>
+
+        <ng-template ngbNavContent>
+          <div class="card main-card mb-3" style="height: 650px;
+            overflow-y: scroll;">
+            <div class="card-header">
+            
+
+              <div class="row">
+                
+                <div class="col-md-6">Tgl <br>
+                  <input style="border-radius: 5px;border:solid 
+                  1px #ccc; width: 11.5em;height: 33px;"  type="date"
+                  [(ngModel)]="tglp"  
+                  
+                  (change)="cekpasientgl($event.target.value)"
+
+
+                  >
+                 
+                </div>
+                <div  class="col-md-6"> 
+                  Cari <br>
+                  <input type="text" placeholder="cari pasien" class="form-control ms-2" (keyup)="carinamapasien($event)">
+                </div>
+               
+               
+              </div>
+            </div>
+
+
+
+            <table class="table">
+
+              <thead>
+                <tr>
+
+             
+                  <th scope="col">Pasien</th>
+                  <th scope="col">Poli</th>
+                  <th scope="col">Aksi</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+            <tr *ngFor="let x of tpasientgl">
+
+                  <td style="font-size: 12px;color: black;">
+
+                    {{x.pasien}}
+                  </td>
+                  <td style="font-size: 12px;color: black;">
+                    {{x.nampoli}}
+                  
+                  </td>
+                  <td>
+                    <div class="badge bg-pill bg-danger btn"
+                    (click)="cekbpjsv(content71,x)"  >Kirim Pcare</div>
+
+                  </td>
+                </tr> 
+
+
+
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </li>
+
+
+      <!-- <li ngbNavItem>
         <a ngbNavLink (click)="lihatprov()"><span>Provider</span></a>
 
         <ng-template ngbNavContent>
@@ -848,34 +929,7 @@
                   >
                  
                 </div>
-                <!-- <div class="col-md-6">
-                  <br>
-
-                  <select [(ngModel)]="nourut" style="font-size:12px;" class="form-select"
-                
-                  (change)="pilihnourut($event.target.value)"
-                
-                  >
-                  <option value="15">15</option>
-                  <option value="30">30</option>
-                  <option value="45">45</option>
-                  <option value="70">70</option>
-                  <option value="85">85</option>
-                </select>
-
-
-
-                </div> -->
-
-                <!-- <div class="col-md-6">
-                  By Nourut <br>
-                  <input type="text" placeholder="cari by no urut" 
-                  class="form-control ms-2" 
-                  
-                  (keyup)="lihatbynourut($event)" 
-                >
-
-                </div> -->
+               
                
               </div>
             </div>
@@ -922,12 +976,12 @@
             </table>
           </div>
         </ng-template>
-      </li>
+      </li> -->
     
 
 
 
-      <li ngbNavItem>
+      <!-- <li ngbNavItem>
         <a ngbNavLink ><span>Provider Nourut</span></a>
 
         <ng-template ngbNavContent>
@@ -998,7 +1052,7 @@
 
           </div>
         </ng-template>
-      </li>
+      </li> -->
 
 
 
@@ -1082,7 +1136,7 @@
                 <p>{{x.alamat}}</p>
               </td>
               <td>
-                <div class="badge bg-pill bg-danger" (click)="pilihpasien(x.norm,
+                <div class="badge bg-pill bg-danger btn" (click)="pilihpasien(x.norm,
                x.kdkelurahan,
                x.pasien,
                x.tgllahir,
@@ -1121,8 +1175,69 @@
 
 
 
+    <ng-template #content71 let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">Data Kirim PCARE Back Date</h6>
+        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label" style="font-weight: bold;"> Kd Provider Peserta </label>
+          <input [(ngModel)]="kdprovider" disabled placeholder="Provider" type="text" class="form-control">
+        </div>
 
 
+
+        <div class="position-relative mb-3">
+          <label for="exampleSelect" class="form-label" style="color:black">Kd TKP</label>
+          <select [(ngModel)]="kdtkp" id="exampleSelect" class="form-select" required>
+            <option value="10"><b>RJTP</b></option>
+            <option value="20"><b>RITP</b></option>
+            <option value="50"><b>Promotif</b></option>
+          </select>
+        </div>
+
+        <div class="position-relative mb-3">
+          <label for="exampleSelect" class="form-label" style="color:black">Jenis Kunjungan</label>
+          <select [(ngModel)]="jeniskun" id="exampleSelect" class="form-select" required>
+            <option value="true"><b>SAKIT</b></option>
+            <option value="false"><b>SEHAT</b></option>
+
+          </select>
+        </div>
+
+
+
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label" style="font-weight: bold;">Keluhan </label>
+          <input [(ngModel)]="keluhanbpjs" placeholder="Keluhan" class="form-control">
+        </div>
+
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <div style="text-align: center;" *ngIf="showloading">
+          <div class="loader-wrapper d-flex justify-content-center align-items-center">
+            <div class="loader">
+              <div class="ball-pulse">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+        <button type="button" class="btn btn-primary" (click)="kirimpcarev2()">KIRIM BD</button>
+
+      </div>
+    </ng-template>
 
 
     <ng-template #content7 let-c="close" let-d="dismiss">

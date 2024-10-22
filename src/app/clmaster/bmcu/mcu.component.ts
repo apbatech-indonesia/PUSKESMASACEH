@@ -982,6 +982,8 @@ export class mcuComponent implements OnInit {
 		this.dialogAction = "add"
 		this.isShowedForm = true
 
+		
+
 		Swal.fire({
 			title: 'Mohon Tunggu!',
 			allowEscapeKey: false,
@@ -993,38 +995,38 @@ export class mcuComponent implements OnInit {
 					codeOfMCU: pasien.kodemcu ?? '',
 					codeOfProvider: pasien.kdprov ?? '-',
 					numberOfKunjungan: pasien.nokunjungan ?? '-',
-					dateOfPelayanan: pasien.tglpriksa ?? '-',
-					numberOfSistole: '',
-					numberOfDiastole: '',
-					numberOfHemo: '',
-					numberOfLeu: '',
-					numberOfErit: '',
-					numberOfLaju: '',
-					numberOfHema: '',
-					numberOfTrom: '',
-					numberOfHDL: '',
-					numberOfLDL: '',
-					numberOfChol: '',
-					numberOfTrigli: '',
-					numberOfGDSewaktu: '',
-					numberOfGDPuasa: '',
-					numberOfGDPrandial: '',
-					numberOfGDHba1c: '',
-					numberOfFHSGOT: '',
-					numberOfFHSGPT: '',
-					numberOfFHGamma: '',
-					numberOfFHProtKual: '',
-					numberOfFHAlbumin: '',
-					numberOfFGCrea: '',
-					numberOfFGUreum: '',
-					numberOfFGAsam: '',
-					numberOfFJABI: '',
-					numberOfFJEKG: '',
-					numberOfFJEcho: '',
-					valueOfRadiologiFoto: '',
-					valueOfFunduskopi: '',
-					valueOfPemeriksaLainnya: '',
-					valueOfKeterangan: '',
+					dateOfPelayanan: this.pipe.transform(pasien.tglpriksa, 'dd-MM-yyyy') ?? '-',
+					numberOfSistole: '0',
+					numberOfDiastole: '0',
+					numberOfHemo: '0',
+					numberOfLeu: '0',
+					numberOfErit: '0',
+					numberOfLaju: '0',
+					numberOfHema: '0',
+					numberOfTrom: '0',
+					numberOfHDL: '0',
+					numberOfLDL: '0',
+					numberOfChol: '0',
+					numberOfTrigli: '0',
+					numberOfGDSewaktu: '0',
+					numberOfGDPuasa: '0',
+					numberOfGDPrandial: '0',
+					numberOfGDHba1c: '0',
+					numberOfFHSGOT: '0',
+					numberOfFHSGPT: '0',
+					numberOfFHGamma: '0',
+					numberOfFHProtKual: '0',
+					numberOfFHAlbumin: '0',
+					numberOfFGCrea: '0',
+					numberOfFGUreum: '0',
+					numberOfFGAsam: '0',
+					numberOfFJABI: '0',
+					numberOfFJEKG: '0',
+					numberOfFJEcho: '0',
+					valueOfRadiologiFoto: '0',
+					valueOfFunduskopi: '0',
+					valueOfPemeriksaLainnya:'0',
+					valueOfKeterangan:'0',
 				})
 			}
 		}).then(
@@ -1191,6 +1193,7 @@ export class mcuComponent implements OnInit {
 	}
 
 	doSaveMcu(action: string) {
+		console.log(action)
 		Swal.fire({
 			title: "Apakah anda yakin ingin mengirim data?",
 			showCancelButton: true,
@@ -1211,7 +1214,7 @@ export class mcuComponent implements OnInit {
 					kdMCU: kode.value.codeOfMCU,
 					kdProvider: kode.value.codeOfProvider,
 					noKunjungan: kode.value.numberOfKunjungan,
-					tglPelayanan: kode.value.dateOfPelayanan,
+					tglPelayanan:  kode.value.dateOfPelayanan,
 					tekananDarahSistole: kode.value.numberOfSistole,
 					tekananDarahDiastole: kode.value.numberOfDiastole,
 					darahRutinHemo: kode.value.numberOfHemo,
@@ -1245,7 +1248,11 @@ export class mcuComponent implements OnInit {
 					keterangan: kode.value.valueOfKeterangan
 				}
 
-				if(action == 'edit') {
+console.log(bodyReq)
+
+				if(action === 'edit') {
+
+					console.log("asdasdasd")
 					this.authService.updateBpjsMCU(bodyReq).subscribe(
 						(data: any) => {
 							Swal.close()

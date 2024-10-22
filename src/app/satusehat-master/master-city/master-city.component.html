@@ -1,0 +1,3 @@
+<select id="city_id" class="form-control" [(ngModel)]="cityId" (change)="pilihCity()">
+    <option *ngFor="let item of cityList" [value]="item.code">{{ item.name }}</option>
+</select>

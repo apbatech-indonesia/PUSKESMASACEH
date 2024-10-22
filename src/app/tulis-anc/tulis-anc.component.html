@@ -1,0 +1,915 @@
+<div>
+  <div class="app-inner-layout" style="margin: 0 auto; padding:20px">
+    <div class="app-inner-layout__header-boxed p-0">
+      <div class="app-inner-layout__header page-title-icon-rounded text-white bg-royal mb-4">
+        <div class="app-page-title">
+          <div class="page-title-wrapper">
+            <div class="page-title-heading">
+              <div class="page-title-icon"><b style="color:black;">{{ patientData.noantrian }}</b></div>
+              <div>
+                {{ patientData.norm }} | {{ patientData.pasien }}
+                <div style="font-size: 14px;">{{ patientData.umur }} | {{ patientData.tgllahir }} | <span class="badge rounded-pill bg-light">{{ patientData.jeniskelamin }}</span> </div>
+                <div style="font-size: 14px;">{{ patientData.nampoli }} | {{ patientData.costumer }}</div>
+                <div style="font-size: 14px;">{{ patientData.namdokter }}</div>
+                <div style="font-size: 14px;">{{ patientData.alamat }}</div>
+              </div>
+            </div>
+            <div class="page-title-actions">
+              <button class="btn btn-info btn-icon" routerLink="/master/satusehat-anc">
+                <span class="pe-2 opacity-7">
+                  <fa-icon [icon]="faCog"></fa-icon>
+                </span>
+                Kembali
+              </button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link {{activeTab == 'form-anc' ? 'active' : '' }}" href="javascript:;" (click)="openTab('form-anc')">Form Anc</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{activeTab == 'data-tindakan' ? 'active' : '' }}" href="javascript:;" (click)="openTab('data-tindakan')">Data Tindakan</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{activeTab == 'data-konseling' ? 'active' : '' }}" href="javascript:;" (click)="openTab('data-konseling')">Data Konseling</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{activeTab == 'laboratorium' ? 'active' : '' }}" href="javascript:;" (click)="openTab('laboratorium')">Laboratorium</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{activeTab == 'radiologi' ? 'active' : '' }}" href="javascript:;" (click)="openTab('radiologi')">Radiologi</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{activeTab == 'diagnosa' ? 'active' : '' }}" href="javascript:;" (click)="openTab('diagnosa')">Diagnosa</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{activeTab == 'meninggalkan-faskes' ? 'active' : '' }}" href="javascript:;" (click)="openTab('meninggalkan-faskes')">Meninggalkan Faskes (Pulang)</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {{activeTab == 'tindak-lanjut' ? 'active' : '' }}" href="javascript:;" (click)="openTab('tindak-lanjut')">Tindak Lanjut</a>
+        </li>
+      </ul>
+    </div>
+  
+    <div class="mb-3" *ngIf="activeTab == 'form-anc'">
+      <div class="container">
+        <form [formGroup]="formObstetri">
+          <div class="row">
+            <div class="col-12 my-3">
+              <h3>Status Obstetri</h3>
+            </div>
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="gravida" class="form-label">Gravida</label>
+                <input type="number" class="form-control" id="gravida" formControlName="gravida">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="paritas" class="form-label">Paritas</label>
+                <input type="number" class="form-control" id="paritas" formControlName="paritas">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="abortus" class="form-label">Abortus</label>
+                <input type="number" class="form-control" id="abortus" formControlName="abortus">
+              </div>
+            </div>
+            
+            <div class="col-3">
+              <div class="position-relative mb-3">
+                <label for="tanggal_hpht" class="form-label">Tanggal HPHT</label>
+                <input type="date" class="form-control" id="tanggal_hpht" formControlName="tanggal_hpht">
+              </div>
+            </div>
+            
+            <div class="col-3">
+              <div class="position-relative mb-3">
+                <label for="hpl" class="form-label">Hari Perkiraan Lahir (HPL)</label>
+                <input type="date" class="form-control" id="hpl" formControlName="hari_perkiraan_lahir">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="berat_badan_sebelum_hamil" class="form-label">Berat Badan Sebelum Hamil</label>
+                <input type="number" class="form-control" id="berat_badan_sebelum_hamil" formControlName="berat_badan_sebelum_hamil">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="tinggi_badan" class="form-label">Tinggi Badan</label>
+                <input type="number" class="form-control" id="tinggi_badan" formControlName="tinggi_badan">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="imt_sebelum_hamil" class="form-label">IMT Sebelum Hamil</label>
+                <input type="number" class="form-control" id="imt_sebelum_hamil" formControlName="imt_sebelum_hamil">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="target_kenaikan_berat_badan" class="form-label">Target Kenaikan BB</label>
+                <input type="number" class="form-control" id="target_kenaikan_berat_badan" formControlName="target_kenaikan_berat_badan">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="jarak_kehamilan" class="form-label">Jarak Kehamilan (Saat Ini dan Sebelumnya)</label>
+                <input type="number" class="form-control" id="jarak_kehamilan" formControlName="jarak_kehamilan">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="status_imunisasi_tt" class="form-label">Status Imunisasi TT</label>
+                <input type="text" class="form-control" id="status_imunisasi_tt" formControlName="status_imunisasi_tt">
+              </div>
+            </div>
+          </div>
+        </form>
+  
+        <form [formGroup]="formKunjungan">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <h3>Data Kunjungan Kehamilan</h3>
+            </div>
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="usia_kehamilan" class="form-label">Usia Kehamilan</label>
+                <input type="number" class="form-control" id="usia_kehamilan" formControlName="usia_kehamilan">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="trimester" class="form-label">Trimester</label>
+                <input type="number" class="form-control" id="trimester" formControlName="trimester">
+              </div>
+            </div>
+          </div>
+        </form>
+  
+        <form [formGroup]="formPemeriksaanIbu">
+          <div class="row">
+            <div class="col-12 mb-3">
+              <h3>Pelayanan Kehamilan</h3>
+            </div>
+      
+            <!-- Pemeriksaan Ibu -->
+            <div class="col-12 mb-2">
+              <h4>Pemeriksaan Ibu</h4>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="berat_badan" class="form-label">Berat Badan</label>
+                <input type="number" class="form-control" id="berat_badan" formControlName="berat_badan">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="lingkar_lengan_atas" class="form-label">Lingkar Lengan Atas (LILA)</label>
+                <input type="number" class="form-control" id="lingkar_lengan_atas" formControlName="lingkar_lengan_atas">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="tinggi_fundus" class="form-label">Tinggi Fundus</label>
+                <input type="number" class="form-control" id="tinggi_fundus" formControlName="tinggi_fundus">
+              </div>
+            </div>
+      
+            <div class="col-3">
+              <div class="position-relative mb-3">
+                <label for="tekanan_darah_sistolik" class="form-label">Tekanan Darah Sistolik</label>
+                <input type="number" class="form-control" id="tekanan_darah_sistolik" formControlName="tekanan_darah_sistolik">
+              </div>
+            </div>
+      
+            <div class="col-3">
+              <div class="position-relative mb-3">
+                <label for="tekanan_darah_diastolik" class="form-label">Tekanan Darah Diastolik</label>
+                <input type="number" class="form-control" id="tekanan_darah_diastolik" formControlName="tekanan_darah_diastolik">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="nadi" class="form-label">Nadi</label>
+                <input type="number" class="form-control" id="nadi" formControlName="nadi">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="suhu" class="form-label">Suhu</label>
+                <input type="number" class="form-control" id="suhu" formControlName="suhu">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="pernapasan" class="form-label">Pernapasan</label>
+                <input type="number" class="form-control" id="pernapasan" formControlName="pernapasan">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="golongan_darah" class="form-label">Golongan Darah</label>
+                <input type="text" class="form-control" id="golongan_darah" formControlName="golongan_darah">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="rhesus" class="form-label">Rhesus</label>
+                <input type="text" class="form-control" id="rhesus" formControlName="rhesus">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="pemberian_makanan_tambahan" class="form-label">Pemberian Makanan Tambahan Ibu Hamil</label>
+                <input type="text" class="form-control" id="pemberian_makanan_tambahan" formControlName="pemberian_makanan_tambahan">
+              </div>
+            </div>
+          </div>
+        </form>
+  
+        <form [formGroup]="formPemeriksaanFisik">
+          <div class="row">
+            <!-- Pemeriksaan Fisik -->
+            <div class="col-12 mb-2">
+              <h4>Pemeriksaan Fisik</h4>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="konjungtiva" class="form-label">Konjungtiva</label>
+                <input type="text" class="form-control" id="konjungtiva" formControlName="konjungtiva">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="sklera" class="form-label">Sklera</label>
+                <input type="text" class="form-control" id="sklera" formControlName="sklera">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="leher" class="form-label">Leher</label>
+                <input type="text" class="form-control" id="leher" formControlName="leher">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="gigi_dan_mulut" class="form-label">Gigi dan Mulut</label>
+                <input type="text" class="form-control" id="gigi_dan_mulut" formControlName="gigi_dan_mulut">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="tht" class="form-label">THT</label>
+                <input type="text" class="form-control" id="tht" formControlName="tht">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="dada_jantung" class="form-label">Dada (Jantung)</label>
+                <input type="text" class="form-control" id="dada_jantung" formControlName="dada_jantung">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="dada_paru" class="form-label">Dada (Paru)</label>
+                <input type="text" class="form-control" id="dada_paru" formControlName="dada_paru">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="perut" class="form-label">Perut</label>
+                <input type="text" class="form-control" id="perut" formControlName="perut">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="tungkai" class="form-label">Tungkai</label>
+                <input type="text" class="form-control" id="tungkai" formControlName="tungkai">
+              </div>
+            </div>
+          </div>
+        </form>
+        
+        <form [formGroup]="formPemeriksaanJanin">
+          <div class="row">
+            <!-- Pemeriksaan Janin -->
+            <div class="col-12 mb-2">
+              <h4>Pemeriksaan Janin</h4>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="djj" class="form-label">Denyut Jantung Janin (DJJ)</label>
+                <input type="number" class="form-control" id="djj" formControlName="denyut_jantung_janin">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="pap" class="form-label">Kepala Terhadap (PAP)</label>
+                <input type="text" class="form-control" id="pap" formControlName="kepala_terhadap">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="tbj" class="form-label">Taksiran Berat Janin (TBJ)</label>
+                <input type="number" class="form-control" id="tbj" formControlName="taksiran_berat_janin">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="presentasi" class="form-label">Presentasi</label>
+                <input type="text" class="form-control" id="presentasi" formControlName="presentasi">
+              </div>
+            </div>
+      
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="jumlah_janin" class="form-label">Jumlah Janin</label>
+                <input type="number" class="form-control" id="jumlah_janin" formControlName="jumlah_janin">
+              </div>
+            </div>
+          </div>
+        </form>
+  
+        <form [formGroup]="formPemantauan">
+          <div class="row">
+            <div class="col-12 mb-2">
+              <h4>Pemantauan & Pendampingan</h4>
+            </div>
+            
+            <div class="col-12 mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="terlalu_muda" value="terlalu_muda" formControlName="terlalu_muda_usia_melahirkan">
+                <label class="form-check-label" for="terlalu_muda">
+                  Terlalu muda usia melahirkan di bawah 21 tahun
+                </label>
+              </div>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="terlalu_rapat" value="terlalu_rapat" formControlName="terlalu_rapat_jarak_kehamilan">
+                <label class="form-check-label" for="terlalu_rapat">
+                  Terlalu rapat jarak kelahiran (&lt;2 tahun)
+                </label>
+              </div>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="terlalu_tua" value="terlalu_tua" formControlName="terlalu_tua_usia">
+                <label class="form-check-label" for="terlalu_tua">
+                  Terlalu tua (kehamilan di atas 35 tahun)
+                </label>
+              </div>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="terlalu_sering" value="terlalu_sering" formControlName="terlalu_sering_melahirkan">
+                <label class="form-check-label" for="terlalu_sering">
+                  Terlalu sering melahirkan (anak &gt; 3)
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <form [formGroup]="formRiwayatPenyakitDanResiko">
+          <div class="row">
+            <!-- Riwayat Penyakit -->
+            <div class="col-12 mb-2">
+              <h4>Riwayat Penyakit</h4>
+            </div>
+      
+            <div class="col-12 mb-3">
+              <div class="position-relative mb-3">
+                <label for="riwayat_penyakit" class="form-label">Riwayat Penyakit</label>
+                <textarea class="form-control" id="riwayat_penyakit" formControlName="riwayat_penyakit" style="height: 100px;"></textarea>
+              </div>
+            </div>
+      
+            <div class="col-12 mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="pernah_merokok" value="pernah_merokok" formControlName="pernah_merokok">
+                <label class="form-check-label" for="pernah_merokok">
+                  Apakah pasien pernah/masih merokok?
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="konsumsi_alkohol" value="konsumsi_alkohol" formControlName="konsumsi_alkohol">
+                <label class="form-check-label" for="konsumsi_alkohol">
+                  Apakah pasien mengkonsumsi minuman ber alkohol?
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+  
+        <form [formGroup]="formQuestionnaireLainnya">
+          <div class="row">
+            <div class="col-12 mb-2">
+              <h4>Lainnya</h4>
+            </div>
+            
+            <div class="col-12 mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="disabilitas" value="disabilitas" formControlName="disabilitas">
+                <label class="form-check-label" for="disabilitas">
+                  Apakah disabilitas?
+                </label>
+              </div>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="kelas_ibu_hamil" value="kelas_ibu_hamil" formControlName="kelas_ibu_hamil">
+                <label class="form-check-label" for="kelas_ibu_hamil">
+                  Apakah mengikuti kelas ibu hamil?
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="mb-3" *ngIf="activeTab == 'data-tindakan'">
+      <div class="container">
+        <div class="row">
+          
+          <div class="col-12 my-3">
+            <h3>Tindakan</h3>
+          </div>
+              
+          <div class="col-6 mb-2">
+            <label for="cari_tindakan" class="form-label">Cari tindakan</label>
+
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <select [(ngModel)]="searchTindakanBy" class="form-control">
+                  <option value="1">Nama Tindakan</option>
+                  <option value="3">Kode Tindakan</option>
+                </select>
+              </div>
+              <input type="text" class="form-control" [(ngModel)]="searchTindakanText" (keyup)="cariTindakan()" id="cari_tindakan">
+            </div>
+
+            <select multiple class="form-control" id="exampleFormControlSelect2" *ngIf="tindakanList.length > 0" >
+              <option *ngFor="let item of tindakanList" (click)="pilihTindakan(item)">{{ item.kdtindakan }} : {{ item.tindakan }}</option>
+            </select>
+          </div>
+
+          <form [formGroup]="formTindakan">
+            <div class="row">
+
+              <div class="col-6 mb-2">
+                <label for="diagnostic_code" class="form-label">Kode Tindakan</label>
+                <input type="text" class="form-control" formControlName="diagnostic_code" id="diagnostic_code" disabled>
+              </div>
+              
+              <div class="col-6 mb-2">
+                <label for="diagnostic_name" class="form-label">Tindakan</label>
+                <input type="text" class="form-control" formControlName="diagnostic_name" id="diagnostic_name" disabled>
+              </div>
+
+              <div class="col-6 mb-2">
+                <label for="usg_start_date" class="form-label">Tanggal Mulai USG</label>
+                <input type="date" class="form-control" formControlName="usg_start_date" id="usg_start_date">
+              </div>
+              
+              <div class="col-6 mb-2">
+                <label for="usg_end_date" class="form-label">Tanggal Selesai USG</label>
+                <input type="date" class="form-control" formControlName="usg_end_date" id="usg_end_date">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3" *ngIf="activeTab == 'data-konseling'">
+      <div class="container">
+        <div class="row">
+
+          <form [formGroup]="formKonseling">
+            <div class="row">
+              <div class="col-12 my-3">
+                <h3>Konseling</h3>
+              </div>
+              <div class="col-12 my-3">
+                <div class="position-relative mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="konseling" id="konselingYa" value="true" formControlName="diberikankonseling">
+                    <label class="form-check-label" for="konselingYa">Diberikan Konseling</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="konseling" id="konselingTidak" value="false" formControlName="diberikankonseling">
+                    <label class="form-check-label" for="konselingTidak">Tidak Diberikan Konseling</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 my-3">
+                <div class="position-relative mb-3" *ngIf="formKonseling.value.diberikankonseling == 'true'">
+                  <label for="temaKonseling" class="form-label">Tema Konseling</label>
+                  <input type="text" class="form-control" id="temaKonseling" formControlName="temaKonseling">
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3" *ngIf="activeTab == 'laboratorium'">
+      <div class="container">
+        <form [formGroup]="formHasilLab">
+          <div class="row">
+            <div class="col-12 my-3">
+              <h3>Pemeriksaan BTA</h3>
+            </div>
+            
+            <div class="col-12 my-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="pemeriksaan_sputum_bta" formControlName="pemeriksaan_sputum_bta">
+                <label class="form-check-label" for="pemeriksaan_sputum_bta">
+                  Pemeriksaan Sputum BTA
+                </label>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="formHasilLab.value.pemeriksaan_sputum_bta == true">
+              <div class="col-6">
+                <div class="position-relative mb-3">
+                  <label for="bta" class="form-label">Bakteri Tahan Asam (BTA)</label>
+                  <input type="text" class="form-control" id="bta" formControlName="bta">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 my-3">
+              <h3>Pemeriksaan 10 T</h3>
+            </div>
+            
+            <div class="col-12 my-2">
+              <h4>Test Dasar</h4>
+            </div>
+
+            <div class="col-12 my-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="pemeriksaan_darah" formControlName="pemeriksaan_darah">
+                <label class="form-check-label" for="pemeriksaan_darah">
+                  Pemeriksaan Darah
+                </label>
+              </div>
+            </div>
+            
+            <div class="row" *ngIf="formHasilLab.value.pemeriksaan_darah == true">
+              <div class="col-6">
+                <div class="position-relative mb-3">
+                  <label for="hemoglobin" class="form-label">Hemoglobin</label>
+                  <input type="text" class="form-control" id="hemoglobin" formControlName="hemoglobin">
+                </div>
+              </div>
+              
+              <div class="col-6">
+                <div class="position-relative mb-3">
+                  <label for="hiv" class="form-label">Skrinning PPIA HIV</label>
+                  <input type="text" class="form-control" id="hiv" formControlName="hiv">
+                </div>
+              </div>
+              
+              <div class="col-6">
+                <div class="position-relative mb-3">
+                  <label for="rpr" class="form-label">Skrining PPIA Sifilis (RPR)</label>
+                  <input type="text" class="form-control" id="rpr" formControlName="rpr">
+                </div>
+              </div>
+              
+              <div class="col-6">
+                <div class="position-relative mb-3">
+                  <label for="vdrl" class="form-label">Skrining PPIA Sifilis (VDRL)</label>
+                  <input type="text" class="form-control" id="vdrl" formControlName="vdrl">
+                </div>
+              </div>
+              
+              <div class="col-6">
+                <div class="position-relative mb-3">
+                  <label for="hepatitisb" class="form-label">Skrining PPIA Hepatitis B</label>
+                  <input type="text" class="form-control" id="hepatitisb" formControlName="hepatitisb">
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-12 my-2">
+              <h4>Test Lain</h4>
+            </div>
+
+            <div class="col-12 my-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="pemeriksaan_urin" formControlName="pemeriksaan_urin">
+                <label class="form-check-label" for="pemeriksaan_urin">
+                  Pemeriksaan Urin
+                </label>
+              </div>
+            </div>
+
+            <div class="row" *ngIf="formHasilLab.value.pemeriksaan_urin == true">
+              <div class="col-6">
+                <div class="position-relative mb-3">
+                  <label for="gula_darah" class="form-label">Pemeriksaan Gula Darah Sewaktu</label>
+                  <input type="text" class="form-control" id="gula_darah" formControlName="gula_darah">
+                </div>
+              </div>
+              
+              <div class="col-6">
+                <div class="position-relative mb-3">
+                  <label for="protein_urine" class="form-label">Pemeriksaan Protein Urine</label>
+                  <input type="text" class="form-control" id="protein_urine" formControlName="protein_urine">
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <div class="mb-3" *ngIf="activeTab == 'radiologi'">
+      <div class="container">
+        <form [formGroup]="formHasilRadiologi">
+          <div class="row">
+            <div class="col-12 my-2">
+              <h4>Hasil Pemeriksaan USG</h4>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="gsDiameter" class="form-label">Gestational Sac (GS) Diameter</label>
+                <input type="text" class="form-control" id="gsDiameter" formControlName="gsDiameter">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="crl" class="form-label">Crown Rump Length (CRL)</label>
+                <input type="text" class="form-control" id="crl" formControlName="crl">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="djj" class="form-label">Denyut Jantung Janin (DJJ)</label>
+                <input type="text" class="form-control" id="djj" formControlName="djj">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="usiaKehamilan" class="form-label">Usia Kehamilan (USG)</label>
+                <input type="text" class="form-control" id="usiaKehamilan" formControlName="usiaKehamilan">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="hari_perkiraan_lahir" class="form-label">Hari Perkiraan Lahir (USG)</label>
+                <input type="text" class="form-control" id="hari_perkiraan_lahir" formControlName="hpl">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="letakJanin" class="form-label">Letak Janin</label>
+                <input type="text" class="form-control" id="letakJanin" formControlName="letakJanin">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="bpd" class="form-label">Biparietal Diameter (BPD)</label>
+                <input type="text" class="form-control" id="bpd" formControlName="bpd">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="hc" class="form-label">Head Circumference (HC)</label>
+                <input type="text" class="form-control" id="hc" formControlName="hc">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="ac" class="form-label">Abdominal Circumference (AC)</label>
+                <input type="text" class="form-control" id="ac" formControlName="ac">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="fl" class="form-label">Femur Length (FL)</label>
+                <input type="text" class="form-control" id="fl" formControlName="fl">
+              </div>
+            </div>
+            
+            <div class="col-6">
+              <div class="position-relative mb-3">
+                <label for="beratJanin" class="form-label">Berat Janin (USG)</label>
+                <input type="text" class="form-control" id="beratJanin" formControlName="beratJanin">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="mb-3" *ngIf="activeTab == 'diagnosa'">
+      <div class="container">
+        <div class="row">
+          
+          <div class="col-12 my-3">
+            <h3>Diagnosa</h3>
+          </div>
+              
+          <div class="col-6 mb-2">
+            <label for="cari_tindakan" class="form-label">Cari tindakan</label>
+
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <select [(ngModel)]="searchDiagnosaBy" class="form-control">
+                  <option value="1">Nama Diagnosa</option>
+                  <option value="3">Kode Diagnosa</option>
+                </select>
+              </div>
+              <input type="text" class="form-control" [(ngModel)]="searchDiagnosaText" (keyup)="cariDiagnosa()" id="cari_tindakan">
+            </div>
+
+            <select multiple class="form-control" id="exampleFormControlSelect2" *ngIf="tindakanList.length > 0" >
+              <option *ngFor="let item of tindakanList" (click)="pilihDiagnosa(item)">{{ item.kddiagnosa }} : {{ item.diagnosa }}</option>
+            </select>
+          </div>
+
+          <form [formGroup]="formDiagnosa">
+            <div class="row">
+              <div class="col-6 mb-2">
+                <label for="diagnostic_code" class="form-label">Kode Diagnosa</label>
+                <input type="text" class="form-control" formControlName="diagnostic_code" id="diagnostic_code" disabled>
+              </div>
+              
+              <div class="col-6 mb-2">
+                <label for="diagnostic_name" class="form-label">Diagnosa</label>
+                <input type="text" class="form-control" formControlName="diagnostic_name" id="diagnostic_name" disabled>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3" *ngIf="activeTab == 'meninggalkan-faskes'">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 my-3">
+            <h3>Diagnosa</h3>
+          </div>
+              
+          <div class="col-6 mb-2">
+            <label for="cari_tindakan" class="form-label">Cari Diagnosa</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <select [(ngModel)]="searchDiagnosaBy" class="form-control">
+                  <option value="1">Nama Diagnosa</option>
+                  <option value="3">Kode Diagnosa</option>
+                </select>
+              </div>
+              <input type="text" class="form-control" [(ngModel)]="searchDiagnosaText" (keyup)="cariDiagnosa()" id="cari_tindakan">
+            </div>
+            <select multiple class="form-control" id="exampleFormControlSelect2" *ngIf="tindakanList.length > 0" >
+              <option *ngFor="let item of tindakanList" (click)="pilihDiagnosaFinal(item)">{{ item.kddiagnosa }} : {{ item.diagnosa }}</option>
+            </select>
+          </div>
+        </div>
+
+        <form [formGroup]="formMeninggalkanFaskes">
+          <div class="row">
+            <div class="col-6 mb-2">
+              <label for="diagnostic_code" class="form-label">Kode Diagnosa</label>
+              <input type="text" class="form-control" formControlName="diagnostic_code" id="diagnostic_code" disabled>
+            </div>
+            
+            <div class="col-6 mb-2">
+              <label for="diagnostic_name" class="form-label">Diagnosa</label>
+              <input type="text" class="form-control" formControlName="diagnostic_name" id="diagnostic_name" disabled>
+            </div>
+
+            <div class="col-12 my-3">
+              <h3>Kondisi Saat Keluar Faskes</h3>
+            </div>
+
+            <div class="col-12 my-3">
+              <div class="position-relative mb-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="pasien-meninggal" formControlName="pasien_meninggal">
+                  <label class="form-check-label" for="pasien-meninggal">Pasien Meninggal</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-6" *ngIf="formMeninggalkanFaskes.value.pasien_meninggal == true">
+              <div class="position-relative mb-3">
+                <label for="exampleCity" class="form-label">Waktu Kematian</label>
+                <input type="date" class="form-control" formControlName="waktu_kematian">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="mb-3" *ngIf="activeTab == 'tindak-lanjut'">
+      <div class="container">
+        <form [formGroup]="formTindakLanjut">
+          <div class="row">
+            <div class="col-12 mb-2">
+              <label for="ket_rujukan" class="form-label">Keterangan Rujukan</label>
+              <textarea type="text" class="form-control" formControlName="ket_rujukan" id="ket_rujukan"></textarea>
+            </div>
+            
+            <div class="col-12 mb-2">
+              <label for="ket_kontrol" class="form-label">Keterangan Kontrol</label>
+              <textarea type="text" class="form-control" formControlName="ket_kontrol" id="ket_kontrol"></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 mb-2">
+              <label for="instruksi_rujukan" class="form-label">Instruksi Rujukan</label>
+              <textarea type="text" class="form-control" formControlName="instruksi_rujukan" id="instruksi_rujukan"></textarea>
+            </div>
+            
+            <div class="col-12 mb-2">
+              <label for="instruksi_kontrol" class="form-label">Instruksi Kontrol</label>
+              <textarea type="text" class="form-control" formControlName="instruksi_kontrol" id="instruksi_kontrol"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <div class="container">
+        <div class="row">
+          <div class="col-12" align="right">
+            <button class="btn btn-success mx-1" (click)="simpan()" [disabled]="isDisabledFormAnc">
+              <span class="pe-2 opacity-7">
+                <fa-icon [icon]="faSave"></fa-icon>
+              </span>
+              Simpan
+            </button>
+            <button class="btn btn-danger btn-icon" routerLink="/master/satusehat-anc">
+              <span class="pe-2 opacity-7">
+                <fa-icon [icon]="faCog"></fa-icon>
+              </span>
+              Kembali
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+

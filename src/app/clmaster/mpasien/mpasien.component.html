@@ -118,7 +118,11 @@
              
                 <div class="position-relative mb-3">
                   <label for="exampleEmail" class="form-label" style="color:black;">Tanggal Lahir</label>
-                  <input [(ngModel)]="tgllahir"   placeholder="Pasien" type="date" class="form-control">
+                  <input [(ngModel)]="tgllahir"  
+                   placeholder="Pasien" type="date" 
+                   class="form-control"
+                   (change)="ktgl()"
+                   >
 
                   <!-- <mat-form-field>
                     <input matInput [matDatepicker]="dp1" [(ngModel)]="tgllahir"  >
@@ -135,7 +139,7 @@
                   <div class="position-relative mb-3">
                     <label for="exampleEmail" class="form-label" style="color:black;">Usia</label>
                     <input [(ngModel)]="usia"   placeholder="usia" type="text" class="form-control">
-  
+                    <!-- {{usiadeal}} -->
                  
   
   
