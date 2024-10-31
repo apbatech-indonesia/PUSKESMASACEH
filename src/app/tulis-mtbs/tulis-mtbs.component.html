@@ -15,7 +15,7 @@
                 </div>
               </div>
               <div class="page-title-actions">
-                <button class="btn btn-info btn-icon" routerLink="/master/satusehat-mtbm">
+                <button class="btn btn-info btn-icon" routerLink="/master/satusehat-mtbs">
                   <span class="pe-2 opacity-7">
                     <fa-icon [icon]="faCog"></fa-icon>
                   </span>
@@ -29,11 +29,11 @@
       <div class="mb-3">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link {{activeTab == 'form-ibu-ayah' ? 'active' : '' }}" href="javascript:;" (click)="openTab('form-ibu-ayah')">Data Orang Tua</a>
+            <a class="nav-link {{activeTab == 'form-ibu-ayah' ? 'active' : '' }}" href="javascript:;" (click)="openTab('form-ibu-ayah')">Form Ibu Ayah</a>
           </li>
-          
+
           <li class="nav-item">
-            <a class="nav-link {{activeTab == 'form-observasi-mtbm' ? 'active' : '' }}" href="javascript:;" (click)="openTab('form-observasi-mtbm')">Form Observasi MTBM</a>
+            <a class="nav-link {{activeTab == 'form-observasi-mtbs' ? 'active' : '' }}" href="javascript:;" (click)="openTab('form-observasi-mtbs')">Form Observasi MTBS</a>
           </li>
           
           <li class="nav-item">
@@ -57,6 +57,8 @@
           </li>
         </ul>
       </div>
+
+      
     
       <div class="mb-3" *ngIf="activeTab == 'form-ibu-ayah'">
         <div class="container">
@@ -274,7 +276,7 @@
         </div>
       </div>
 
-      <div class="mb-3" *ngIf="activeTab == 'form-observasi-mtbm'">
+      <div class="mb-3" *ngIf="activeTab == 'form-observasi-mtbs'">
         <div class="container">
           <div class="row">
             <div class="col-12 my-3">
@@ -289,7 +291,7 @@
             </app-master-diagnosa>
           </div>
           
-          <form [formGroup]="formObservation">
+          <form [formGroup]="observationAntropometri">
             <!-- Observasi -->
             <div class="row">
               <div class="col-12 my-3">
@@ -366,284 +368,229 @@
               </div>
             </div>
           </form>
+          
+          <form [formGroup]="formObservationUmum">
+            <div class="row">
+              <div class="col-12 my-3">
+                <h3>Observasi Umum</h3>
+              </div>
+          
+              <app-master-diagnosa
+                [searchDiagnosaText]="formObservationUmum.value.condition_name"
+                (selectedItem)="
+                formObservationUmum.controls['condition_code'].setValue($event.kddiagnosa);
+                formObservationUmum.controls['condition_name'].setValue($event.diagnosa);
+                ">
+              </app-master-diagnosa>
 
-          <form [formGroup]="formObservationInfeksi">
-            <!-- Observasi Infeksi -->
-            <div class="row">
-              <div class="col-12 my-3">
-                <h3>Observasi Infeksi</h3>
-              </div>
+              <!-- Anak tidak bisa minum atau menyusu -->
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="laju_pernapasan" class="form-label">Laju Pernapasan</label>
-                  <input type="text" class="form-control" id="laju_pernapasan" formControlName="laju_pernapasan">
+                  <label for="condition_note1" class="form-label">Condition Note</label>
+                  <input type="text" class="form-control" id="condition_note1" formControlName="condition_note">
                 </div>
               </div>
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="saturasi_tangan_kanan" class="form-label">Saturasi Tangan Kanan</label>
-                  <input type="text" class="form-control" id="saturasi_tangan_kanan" formControlName="saturasi_tangan_kanan">
+                  <label for="durasi1" class="form-label">Durasi</label>
+                  <input type="text" class="form-control" id="durasi1" formControlName="durasi">
                 </div>
               </div>
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="saturasi_kaki_kiri" class="form-label">Saturasi Kaki Kiri</label>
-                  <input type="text" class="form-control" id="saturasi_kaki_kiri" formControlName="saturasi_kaki_kiri">
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="position-relative mb-3">
-                  <label for="perbedaan_saturasi" class="form-label">Perbedaan Saturasi</label>
-                  <input type="text" class="form-control" id="perbedaan_saturasi" formControlName="perbedaan_saturasi">
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="position-relative mb-3">
-                  <label for="tanda_infeksi" class="form-label">Tanda Infeksi</label>
-                  <input type="text" class="form-control" id="tanda_infeksi" formControlName="tanda_infeksi">
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="position-relative mb-3">
-                  <label for="klasifikasi_infeksi" class="form-label">Klasifikasi Infeksi</label>
-                  <input type="text" class="form-control" id="klasifikasi_infeksi" formControlName="klasifikasi_infeksi">
+                  <label for="unit1" class="form-label">Unit</label>
+                  <input type="text" class="form-control" id="unit1" formControlName="unit">
                 </div>
               </div>
             </div>
           </form>
           
-          <form [formGroup]="formObservationIkterus">
-            <!-- Observasi Ikterus -->
+          <form [formGroup]="formObservationBatuk">
             <div class="row">
               <div class="col-12 my-3">
-                <h3>Observasi Ikterus</h3>
+                <h3>Observasi Batuk</h3>
               </div>
+          
+              <app-master-diagnosa
+                [searchDiagnosaText]="formObservationBatuk.value.condition_name"
+                (selectedItem)=" 
+                formObservationBatuk.controls['condition_code'].setValue($event.kddiagnosa);
+                formObservationBatuk.controls['condition_name'].setValue($event.diagnosa);
+                ">
+              </app-master-diagnosa>
+
+              <!-- Anak tidak bisa minum atau menyusu -->
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="kondisi" class="form-label">Kondisi</label>
-                  <input type="text" class="form-control" id="kondisi" formControlName="kondisi">
+                  <label for="condition_note2" class="form-label">Condition Note</label>
+                  <input type="text" class="form-control" id="condition_note2" formControlName="condition_note">
                 </div>
               </div>
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="umur_terkena" class="form-label">Umur Terkena</label>
-                  <input type="text" class="form-control" id="umur_terkena" formControlName="umur_terkena">
+                  <label for="durasi2" class="form-label">Durasi</label>
+                  <input type="text" class="form-control" id="durasi2" formControlName="durasi">
                 </div>
               </div>
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="ikterus" class="form-label">Ikterus</label>
-                  <input type="text" class="form-control" id="ikterus" formControlName="ikterus">
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="position-relative mb-3">
-                  <label for="klasifikasi_ikterus" class="form-label">Klasifikasi Ikterus</label>
-                  <input type="text" class="form-control" id="klasifikasi_ikterus" formControlName="klasifikasi_ikterus">
+                  <label for="unit2" class="form-label">Unit</label>
+                  <input type="text" class="form-control" id="unit2" formControlName="unit">
                 </div>
               </div>
             </div>
           </form>
-          
+
           <form [formGroup]="formObservationDiare">
-            <!-- Observasi Diare -->
             <div class="row">
               <div class="col-12 my-3">
                 <h3>Observasi Diare</h3>
               </div>
+
+              <app-master-diagnosa
+                [searchDiagnosaText]="formObservationDiare.value.condition_name"
+                (selectedItem)=" 
+                formObservationDiare.controls['condition_code'].setValue($event.kddiagnosa);
+                formObservationDiare.controls['condition_name'].setValue($event.diagnosa);
+                ">
+              </app-master-diagnosa>
+          
+              <!-- Anak tidak bisa minum atau menyusu -->
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="kondisi" class="form-label">Kondisi</label>
-                  <input type="text" class="form-control" id="kondisi" formControlName="kondisi">
+                  <label for="condition_note3" class="form-label">Condition Note</label>
+                  <input type="text" class="form-control" id="condition_note3" formControlName="condition_note">
                 </div>
               </div>
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="tanda_diare" class="form-label">Tanda Diare</label>
-                  <input type="text" class="form-control" id="tanda_diare" formControlName="tanda_diare">
+                  <label for="durasi3" class="form-label">Durasi</label>
+                  <input type="text" class="form-control" id="durasi3" formControlName="durasi">
                 </div>
               </div>
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="klasifikasi_diare" class="form-label">Klasifikasi Diare</label>
-                  <input type="text" class="form-control" id="klasifikasi_diare" formControlName="klasifikasi_diare">
+                  <label for="unit3" class="form-label">Unit</label>
+                  <input type="text" class="form-control" id="unit3" formControlName="unit">
                 </div>
               </div>
             </div>
           </form>
-          
-          <form [formGroup]="formObservationHIV">
-            <!-- Observasi HIV -->
+
+          <form [formGroup]="formObservationSukarBernafas">
             <div class="row">
               <div class="col-12 my-3">
-                <h3>Observasi HIV</h3>
-              </div>
-              <div class="col-6">
-                <div class="position-relative mb-3">
-                  <label for="riwayat_hiv_ibu" class="form-label">Riwayat HIV Ibu</label>
-                  <input type="text" class="form-control" id="riwayat_hiv_ibu" formControlName="riwayat_hiv_ibu">
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="position-relative mb-3">
-                  <label for="serologis_hiv_ibu" class="form-label">Serologis HIV Ibu</label>
-                  <input type="text" class="form-control" id="serologis_hiv_ibu" formControlName="serologis_hiv_ibu">
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="position-relative mb-3">
-                  <label for="riwayat_hiv_anak" class="form-label">Riwayat HIV Anak</label>
-                  <input type="text" class="form-control" id="riwayat_hiv_anak" formControlName="riwayat_hiv_anak">
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="position-relative mb-3">
-                  <label for="tes_virologis" class="form-label">Tes Virologis</label>
-                  <input type="text" class="form-control" id="tes_virologis" formControlName="tes_virologis">
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="position-relative mb-3">
-                  <label for="tes_serologis" class="form-label">Tes Serologis</label>
-                  <input type="text" class="form-control" id="tes_serologis" formControlName="tes_serologis">
-                </div>
-              </div>
-              <div class="col-12 my-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="dapat_asi" formControlName="dapat_asi">
-                  <label class="form-check-label" for="dapat_asi">
-                    <strong>Dapat ASI</strong>
-                  </label>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="position-relative mb-3">
-                  <label for="periksa_hiv" class="form-label">Periksa HIV</label>
-                  <input type="text" class="form-control" id="periksa_hiv" formControlName="periksa_hiv">
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="position-relative mb-3">
-                  <label for="pemberian_profilaksis" class="form-label">Pemberian Profilaksis</label>
-                  <input type="text" class="form-control" id="pemberian_profilaksis" formControlName="pemberian_profilaksis">
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="position-relative mb-3">
-                  <label for="klasifikasi_hiv" class="form-label">Klasifikasi HIV</label>
-                  <input type="text" class="form-control" id="klasifikasi_hiv" formControlName="klasifikasi_hiv">
-                </div>
-              </div>
-            </div>
-          </form>
-          
-          <!-- Observasi ASI -->
-          <form [formGroup]="formObservationAsi">
-            <div class="row">
-              <div class="col-12 my-3">
-                <h3>Observasi ASI</h3>
+                <h3>Observasi Sukar Bernafas</h3>
               </div>
               
-              <div class="col-12 my-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="diberi_asi" formControlName="diberi_asi">
-                  <label class="form-check-label" for="diberi_asi">
-                    <strong>Diberi ASI</strong>
-                  </label>
-                </div>
-              </div>
+              <app-master-diagnosa
+                [searchDiagnosaText]="formObservationSukarBernafas.value.condition_name"
+                (selectedItem)=" 
+                formObservationSukarBernafas.controls['condition_code'].setValue($event.kddiagnosa);
+                formObservationSukarBernafas.controls['condition_name'].setValue($event.diagnosa);
+                ">
+              </app-master-diagnosa>
 
+              <!-- Anak tidak bisa minum atau menyusu -->
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="dalam_sehari" class="form-label">Jumlah Pemberian ASI dalam Sehari</label>
-                  <input type="text" class="form-control" id="dalam_sehari" formControlName="dalam_sehari">
-                </div>
-              </div>
-              <div class="col-12 my-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="selain_asi" formControlName="selain_asi">
-                  <label class="form-check-label" for="selain_asi">
-                    <strong>Pemberian Selain ASI</strong>
-                  </label>
+                  <label for="condition_note4" class="form-label">Condition Note</label>
+                  <input type="text" class="form-control" id="condition_note4" formControlName="condition_note">
                 </div>
               </div>
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="bb_menurut_umur" class="form-label">Berat Badan Menurut Umur</label>
-                  <input type="text" class="form-control" id="bb_menurut_umur" formControlName="bb_menurut_umur">
+                  <label for="durasi4" class="form-label">Durasi</label>
+                  <input type="text" class="form-control" id="durasi4" formControlName="durasi">
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="position-relative mb-3">
+                  <label for="unit4" class="form-label">Unit</label>
+                  <input type="text" class="form-control" id="unit4" formControlName="unit">
                 </div>
               </div>
             </div>
           </form>
 
-          <!-- Observasi Minuman Lain -->
-          <form [formGroup]="formObservationMinuman">
+          <form [formGroup]="formObservationDengue">
             <div class="row">
               <div class="col-12 my-3">
-                <h3>Observasi Minuman Lain</h3>
+                <h3>Observasi Dengue</h3>
               </div>
+
+              <app-master-diagnosa
+                [searchDiagnosaText]="formObservationDengue.value.condition_name"
+                (selectedItem)=" 
+                formObservationDengue.controls['condition_code'].setValue($event.kddiagnosa);
+                formObservationDengue.controls['condition_name'].setValue($event.diagnosa);
+                ">
+              </app-master-diagnosa>
+
+              <!-- Anak tidak bisa minum atau menyusu -->
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="merk_susu" class="form-label">Merk Susu</label>
-                  <input type="text" class="form-control" id="merk_susu" formControlName="merk_susu">
+                  <label for="condition_note5" class="form-label">Condition Note</label>
+                  <input type="text" class="form-control" id="condition_note5" formControlName="condition_note">
                 </div>
               </div>
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="dalam_sehari" class="form-label">Jumlah dalam Sehari</label>
-                  <input type="text" class="form-control" id="dalam_sehari" formControlName="dalam_sehari">
+                  <label for="durasi5" class="form-label">Durasi</label>
+                  <input type="text" class="form-control" id="durasi5" formControlName="durasi">
                 </div>
               </div>
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="jumlah_yg_diberikan" class="form-label">Jumlah yang Diberikan</label>
-                  <input type="text" class="form-control" id="jumlah_yg_diberikan" formControlName="jumlah_yg_diberikan">
-                </div>
-              </div>
-              
-              <div class="col-12 my-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="cara_memberikan_sdh_benar" formControlName="cara_memberikan_sdh_benar">
-                  <label class="form-check-label" for="cara_memberikan_sdh_benar">
-                    <strong>Cara Pemberian Sudah Benar</strong>
-                  </label>
+                  <label for="unit5" class="form-label">Unit</label>
+                  <input type="text" class="form-control" id="unit5" formControlName="unit">
                 </div>
               </div>
             </div>
           </form>
 
-          <!-- Pemeriksaan Status Vitamin K -->
-          <form [formGroup]="formPemeriksaanStatusVitK">
+          <form [formGroup]="formObservationMasalahTelinga">
             <div class="row">
               <div class="col-12 my-3">
-                <h3>Pemeriksaan Status Vitamin K</h3>
+                <h3>Observasi Masalah Telinga</h3>
               </div>
+
+              <app-master-diagnosa
+                [searchDiagnosaText]="formObservationMasalahTelinga.value.condition_name"
+                (selectedItem)=" 
+                formObservationMasalahTelinga.controls['condition_code'].setValue($event.kddiagnosa);
+                formObservationMasalahTelinga.controls['condition_name'].setValue($event.diagnosa);
+                ">
+              </app-master-diagnosa>
+          
+              <!-- Anak tidak bisa minum atau menyusu -->
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="procedure_code" class="form-label">Kode Prosedur</label>
-                  <input type="text" class="form-control" id="procedure_code" formControlName="procedure_code">
+                  <label for="condition_note6" class="form-label">Condition Note</label>
+                  <input type="text" class="form-control" id="condition_note6" formControlName="condition_note">
                 </div>
               </div>
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="procedure_name" class="form-label">Nama Prosedur</label>
-                  <input type="text" class="form-control" id="procedure_name" formControlName="procedure_name">
+                  <label for="durasi6" class="form-label">Durasi</label>
+                  <input type="text" class="form-control" id="durasi6" formControlName="durasi">
                 </div>
               </div>
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="observation_code" class="form-label">Kode Observasi</label>
-                  <input type="text" class="form-control" id="observation_code" formControlName="observation_code">
+                  <label for="unit6" class="form-label">Unit</label>
+                  <input type="text" class="form-control" id="unit6" formControlName="unit">
                 </div>
               </div>
               <div class="col-6">
                 <div class="position-relative mb-3">
-                  <label for="observation_name" class="form-label">Nama Observasi</label>
-                  <input type="text" class="form-control" id="observation_name" formControlName="observation_name">
+                  <label for="klasifikasi" class="form-label">Klasifikasi</label>
+                  <input type="text" class="form-control" id="klasifikasi" formControlName="klasifikasi">
                 </div>
               </div>
             </div>
           </form>
+
         </div>
       </div>
       
@@ -653,9 +600,10 @@
             <div class="col-12 my-3">
               <h3>Primary</h3>
             </div>
+            
             <app-master-diagnosa
               [searchDiagnosaText]="formDiagnosa.value.primary_note"
-              (selectedItem)="
+              (selectedItem)=" 
               formDiagnosa.controls['primary_code'].setValue($event.kddiagnosa);
               formDiagnosa.controls['primary_note'].setValue($event.diagnosa);
               ">
@@ -666,9 +614,11 @@
             <div class="col-12 my-3">
               <h3>Secondary</h3>
             </div>
+
+            
             <app-master-diagnosa
               [searchDiagnosaText]="formDiagnosa.value.secondary_note"
-              (selectedItem)="
+              (selectedItem)=" 
               formDiagnosa.controls['secondary_code'].setValue($event.kddiagnosa);
               formDiagnosa.controls['secondary_note'].setValue($event.diagnosa);
               ">
@@ -776,12 +726,7 @@
       
       <div class="mb-3" *ngIf="activeTab == 'form-meninggalkan-faskes'">
         <div class="container">
-          <form [formGroup]="formMeninggalkanFaskes">
-            <div class="row">
-              <div class="col-12 my-3">
-                <h3>Kondisi Saat Keluar Faskes</h3>
-              </div>
-            </div>
+          <div class="row">
             <app-master-diagnosa
               [searchDiagnosaText]="formMeninggalkanFaskes.value.diagnostic_name"
               (selectedItem)="
@@ -789,8 +734,13 @@
               formMeninggalkanFaskes.controls['diagnostic_name'].setValue($event.diagnosa);
               ">
             </app-master-diagnosa>
+          </div>
 
+          <form [formGroup]="formMeninggalkanFaskes">
             <div class="row">
+              <div class="col-12 my-3">
+                <h3>Kondisi Saat Keluar Faskes</h3>
+              </div>
 
               <div class="col-12 my-3">
                 <div class="position-relative mb-3">
@@ -857,13 +807,13 @@
                 <span class="pe-2 opacity-7">
                   <fa-icon [icon]="faSave"></fa-icon>
                 </span>
-                Simpan
+                SIMPAN {{ activeTab.replace('-',' ').toUpperCase() }}
               </button>
               <button class="btn btn-danger btn-icon" routerLink="/master/satusehat-mtbs">
                 <span class="pe-2 opacity-7">
                   <fa-icon [icon]="faCog"></fa-icon>
                 </span>
-                Kembali
+                KEMBALI
               </button>
             </div>
           </div>

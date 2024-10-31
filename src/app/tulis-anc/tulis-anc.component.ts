@@ -17,12 +17,6 @@ export class TulisAncComponent implements OnInit {
   notransaksi: string = this.route.snapshot.paramMap.get('notrans')
   activeTab: string = 'form-anc'
   useCaseId: string
-  searchTindakanText: string
-  searchTindakanBy: string = '1'
-  searchDiagnosaText: string
-  searchDiagnosaBy: string = '1'
-  tindakanList: any = []
-  diagnosaList: any = []
   cabangData: any
   idpasien: any
   faCog = faCog
@@ -234,7 +228,7 @@ export class TulisAncComponent implements OnInit {
   async doSubmitObstetri(){
     var data = {
       data: {
-        rmno: this.patientData.norm,
+        rmno: this.notransaksi,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
         status_obstetri: {
@@ -279,7 +273,7 @@ export class TulisAncComponent implements OnInit {
   async doSubmitTindakan(){
     var data = {
       data: {
-        rmno: this.patientData.norm,
+        rmno: this.notransaksi,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
         tindakan: {
@@ -303,7 +297,7 @@ export class TulisAncComponent implements OnInit {
   async doSubmitKonseling(){
     var data = {
       data: {
-        rmno: this.patientData.norm,
+        rmno: this.notransaksi,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
         konseling: {
@@ -321,10 +315,10 @@ export class TulisAncComponent implements OnInit {
     }
   }
 
-  doSubmitDiagnosa() {
+  async doSubmitDiagnosa() {
     var data = {
       data: {
-        rmno: this.patientData.norm,
+        rmno: this.notransaksi,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
         diagnosis_final: {
@@ -334,7 +328,7 @@ export class TulisAncComponent implements OnInit {
     }
 
     this.showLoading()
-    let response: any = this.ancService.diagnosisFinal(data)
+    let response: any = await this.ancService.diagnosisFinal(data)
     if(response.statusCode == '00') {
       Swal.fire(response.statusMsg.split(': ')[0], response.statusMsg.split(': ')[1], 'success')
     } else {
@@ -342,10 +336,10 @@ export class TulisAncComponent implements OnInit {
     }
   }
 
-  doSubmitMeninggalkanFaskes(){
+  async doSubmitMeninggalkanFaskes(){
     var data = {
       data: {
-        rmno: this.patientData.norm,
+        rmno: this.notransaksi,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
         meninggalkan_faskes: {
@@ -355,7 +349,7 @@ export class TulisAncComponent implements OnInit {
     }
 
     this.showLoading()
-    let response: any = this.ancService.meninggalkanFaskes(data)
+    let response: any = await this.ancService.meninggalkanFaskes(data)
     if(response.statusCode == '00') {
       Swal.fire(response.statusMsg.split(': ')[0], response.statusMsg.split(': ')[1], 'success')
     } else {
@@ -366,7 +360,7 @@ export class TulisAncComponent implements OnInit {
   async doSubmitTindakLanjut() {
     var data = {
       data: {
-        rmno: this.patientData.norm,
+        rmno: this.notransaksi,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
         tindak_lanjut: {
@@ -391,7 +385,7 @@ export class TulisAncComponent implements OnInit {
   async doSubmitLab() {
     var data = {
       data: {
-        rmno: this.patientData.norm,
+        rmno: this.notransaksi,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
         pemeriksaan_penunjang_lab: {
@@ -418,7 +412,7 @@ export class TulisAncComponent implements OnInit {
   async doSubmitRadiologi() {
     var data = {
       data: {
-        rmno: this.patientData.norm,
+        rmno: this.notransaksi,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
         pemeriksaan_penunjang_radiologi: {
@@ -450,7 +444,7 @@ export class TulisAncComponent implements OnInit {
 
     let response: any = await this.ancService.createAnc({
       data: {
-          rmno: this.patientData.norm,
+          rmno: this.notransaksi,
           orgId: this.cabangData.kodeorg,
           patientId: this.idpasien,
           patientName: this.patientData.pasien,
@@ -484,9 +478,9 @@ export class TulisAncComponent implements OnInit {
   async getDataPatient() {
     let response: any = await this.ancService.getDataPatient({
       patientId: this.idpasien,
-      rmno: this.patientData.norm,
+      rmno: this.notransaksi,
       usecase_id: this.useCaseId,
-      type: "MTBM",
+      type: "ANC",
       status: "active"
     })
 
@@ -549,57 +543,4 @@ export class TulisAncComponent implements OnInit {
         })
     })
   }
-
-  cariTindakan() {
-    this.api.caritindakan(this.searchTindakanText, this.searchTindakanBy).subscribe((data) => {
-      this.tindakanList = data
-    })
-  }
-
-  cariDiagnosa() {
-    this.api.caridiagnosa(this.searchDiagnosaText, this.searchDiagnosaBy).subscribe((data) => {
-      this.tindakanList = data
-    })
-  }
-
-  pilihTindakan(data) {
-    this.tindakanList = []
-    this.searchTindakanText = ""
-
-    this.formTindakan.patchValue({
-      diagnostic_code: data.kdtindakan,
-      diagnostic_name: data.tindakan
-    })
-  }
-
-  pilihDiagnosa(data) {
-    this.diagnosaList = []
-    this.searchDiagnosaText = ""
-
-    this.formDiagnosa.patchValue({
-      diagnostic_code: data.kddiagnosa,
-      diagnostic_name: data.diagnosa
-    })
-  }
-
-  pilihDiagnosaFinal(data) {
-    this.diagnosaList = []
-    this.searchDiagnosaText = ""
-
-    this.formMeninggalkanFaskes.patchValue({
-      diagnostic_code: data.kddiagnosa,
-      diagnostic_name: data.diagnosa
-    })
-  }
-
-  // getFormValidationErrors() {
-  //   Object.keys(this.formObstetri.controls).forEach(key => {
-  //     const controlErrors: ValidationErrors = this.formObstetri.get(key).errors
-  //     if (controlErrors != null) {
-  //       Object.keys(controlErrors).forEach(keyError => {
-  //        console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError])
-  //       })
-  //     }
-  //   })
-  // }
 }

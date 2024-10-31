@@ -20,14 +20,16 @@ export class MasterCityComponent implements OnChanges {
   ) { }
 
   async ngOnChanges(changes: SimpleChanges) {
-    let data = {
-      province_codes: this.provinceId
+    if(Object.keys(changes).length == 2 || changes.hasOwnProperty('provinceId')) {
+      let data = {
+        province_codes: this.provinceId
+      }
+      let cityData: any = await this.mtbmService.getCity(data)
+      this.cityList = [
+        { code: '', name: '-- Pilih Kota --' },
+        ...cityData.data
+      ]
     }
-    let cityData: any = await this.mtbmService.getCity(data)
-    this.cityList = [
-      { code: '', name: '-- Pilih Kota --' },
-      ...cityData.data
-    ]
   }
 
   pilihCity() {

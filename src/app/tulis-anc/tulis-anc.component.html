@@ -471,38 +471,17 @@
           <div class="col-12 my-3">
             <h3>Tindakan</h3>
           </div>
-              
-          <div class="col-6 mb-2">
-            <label for="cari_tindakan" class="form-label">Cari tindakan</label>
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <select [(ngModel)]="searchTindakanBy" class="form-control">
-                  <option value="1">Nama Tindakan</option>
-                  <option value="3">Kode Tindakan</option>
-                </select>
-              </div>
-              <input type="text" class="form-control" [(ngModel)]="searchTindakanText" (keyup)="cariTindakan()" id="cari_tindakan">
-            </div>
-
-            <select multiple class="form-control" id="exampleFormControlSelect2" *ngIf="tindakanList.length > 0" >
-              <option *ngFor="let item of tindakanList" (click)="pilihTindakan(item)">{{ item.kdtindakan }} : {{ item.tindakan }}</option>
-            </select>
-          </div>
 
           <form [formGroup]="formTindakan">
+            <app-master-tindakan
+              [searchTindakanText]="formTindakan.value.diagnostic_name"
+              (selectedItem)="
+              formTindakan.controls['diagnostic_code'].setValue($event.kdtindakan);
+              formTindakan.controls['diagnostic_name'].setValue($event.tindakan);
+              ">
+            </app-master-tindakan>
+
             <div class="row">
-
-              <div class="col-6 mb-2">
-                <label for="diagnostic_code" class="form-label">Kode Tindakan</label>
-                <input type="text" class="form-control" formControlName="diagnostic_code" id="diagnostic_code" disabled>
-              </div>
-              
-              <div class="col-6 mb-2">
-                <label for="diagnostic_name" class="form-label">Tindakan</label>
-                <input type="text" class="form-control" formControlName="diagnostic_name" id="diagnostic_name" disabled>
-              </div>
-
               <div class="col-6 mb-2">
                 <label for="usg_start_date" class="form-label">Tanggal Mulai USG</label>
                 <input type="date" class="form-control" formControlName="usg_start_date" id="usg_start_date">
@@ -764,37 +743,13 @@
             <h3>Diagnosa</h3>
           </div>
               
-          <div class="col-6 mb-2">
-            <label for="cari_tindakan" class="form-label">Cari tindakan</label>
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <select [(ngModel)]="searchDiagnosaBy" class="form-control">
-                  <option value="1">Nama Diagnosa</option>
-                  <option value="3">Kode Diagnosa</option>
-                </select>
-              </div>
-              <input type="text" class="form-control" [(ngModel)]="searchDiagnosaText" (keyup)="cariDiagnosa()" id="cari_tindakan">
-            </div>
-
-            <select multiple class="form-control" id="exampleFormControlSelect2" *ngIf="tindakanList.length > 0" >
-              <option *ngFor="let item of tindakanList" (click)="pilihDiagnosa(item)">{{ item.kddiagnosa }} : {{ item.diagnosa }}</option>
-            </select>
-          </div>
-
-          <form [formGroup]="formDiagnosa">
-            <div class="row">
-              <div class="col-6 mb-2">
-                <label for="diagnostic_code" class="form-label">Kode Diagnosa</label>
-                <input type="text" class="form-control" formControlName="diagnostic_code" id="diagnostic_code" disabled>
-              </div>
-              
-              <div class="col-6 mb-2">
-                <label for="diagnostic_name" class="form-label">Diagnosa</label>
-                <input type="text" class="form-control" formControlName="diagnostic_name" id="diagnostic_name" disabled>
-              </div>
-            </div>
-          </form>
+          <app-master-diagnosa
+            [searchDiagnosaText]="formDiagnosa.value.diagnostic_name"
+            (selectedItem)="
+            formDiagnosa.controls['diagnostic_code'].setValue($event.kddiagnosa);
+            formDiagnosa.controls['diagnostic_name'].setValue($event.diagnosa);
+            ">
+          </app-master-diagnosa>
         </div>
       </div>
     </div>
@@ -805,36 +760,18 @@
           <div class="col-12 my-3">
             <h3>Diagnosa</h3>
           </div>
-              
-          <div class="col-6 mb-2">
-            <label for="cari_tindakan" class="form-label">Cari Diagnosa</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <select [(ngModel)]="searchDiagnosaBy" class="form-control">
-                  <option value="1">Nama Diagnosa</option>
-                  <option value="3">Kode Diagnosa</option>
-                </select>
-              </div>
-              <input type="text" class="form-control" [(ngModel)]="searchDiagnosaText" (keyup)="cariDiagnosa()" id="cari_tindakan">
-            </div>
-            <select multiple class="form-control" id="exampleFormControlSelect2" *ngIf="tindakanList.length > 0" >
-              <option *ngFor="let item of tindakanList" (click)="pilihDiagnosaFinal(item)">{{ item.kddiagnosa }} : {{ item.diagnosa }}</option>
-            </select>
-          </div>
+          
+          <app-master-diagnosa
+            [searchDiagnosaText]="formMeninggalkanFaskes.value.diagnostic_name"
+            (selectedItem)="
+            formMeninggalkanFaskes.controls['diagnostic_code'].setValue($event.kddiagnosa);
+            formMeninggalkanFaskes.controls['diagnostic_name'].setValue($event.diagnosa);
+            ">
+          </app-master-diagnosa>
         </div>
 
         <form [formGroup]="formMeninggalkanFaskes">
           <div class="row">
-            <div class="col-6 mb-2">
-              <label for="diagnostic_code" class="form-label">Kode Diagnosa</label>
-              <input type="text" class="form-control" formControlName="diagnostic_code" id="diagnostic_code" disabled>
-            </div>
-            
-            <div class="col-6 mb-2">
-              <label for="diagnostic_name" class="form-label">Diagnosa</label>
-              <input type="text" class="form-control" formControlName="diagnostic_name" id="diagnostic_name" disabled>
-            </div>
-
             <div class="col-12 my-3">
               <h3>Kondisi Saat Keluar Faskes</h3>
             </div>
@@ -897,13 +834,13 @@
               <span class="pe-2 opacity-7">
                 <fa-icon [icon]="faSave"></fa-icon>
               </span>
-              Simpan
+              SIMPAN {{ activeTab.replace('-',' ').toUpperCase() }}
             </button>
             <button class="btn btn-danger btn-icon" routerLink="/master/satusehat-anc">
               <span class="pe-2 opacity-7">
                 <fa-icon [icon]="faCog"></fa-icon>
               </span>
-              Kembali
+              KEMBALI
             </button>
           </div>
         </div>

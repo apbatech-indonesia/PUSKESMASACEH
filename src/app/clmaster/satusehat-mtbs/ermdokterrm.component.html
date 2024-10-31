@@ -74,13 +74,16 @@
               </div>
             </td>
             <td>
-               <b *ngIf="x.idsatusehat.length > 1" >Terkirim</b>
-                    <b *ngIf="x.idsatusehat.length < 1" style="color:red" >Belum</b>
+              <b *ngIf="x.idsatusehat.length > 1" >Terkirim</b>
+              <b *ngIf="x.idsatusehat.length < 1" style="color:red" >Belum</b>
             </td>
            
             <td class="text-center">
-              <button type="button" class="btn-icon btn-icon-only btn btn-light btn-sm" [routerLink]="['/emrform/tulis-mtbm', x.notransaksi,x.kddokter,'all',x.norm]"  >
-                View
+              <button type="button" class="btn-icon btn-icon-only btn btn-info btn-sm m-2" [routerLink]="['/emrform/tulis-mtbs', x.notransaksi,x.kddokter,'all',x.norm]"  >
+                MTBS
+              </button>
+              <button type="button" class="btn-icon btn-icon-only btn btn-success btn-sm m-2" [routerLink]="['/emrform/tulis-mtbm', x.notransaksi,x.kddokter,'all',x.norm]"  >
+                MTBM
               </button>
             </td>
             <td class="text-center">

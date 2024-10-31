@@ -150,7 +150,9 @@ import { MasterProvinceComponent } from './satusehat-master/master-province/mast
 import { MasterCityComponent } from './satusehat-master/master-city/master-city.component';
 import { MasterDistrictComponent } from './satusehat-master/master-district/master-district.component';
 import { MasterSubDistrictComponent } from './satusehat-master/master-sub-district/master-sub-district.component';
-
+import { MasterDiagnosaComponent } from './satusehat-master/master-diagnosa/master-diagnosa.component';
+import { MasterTindakanComponent } from './satusehat-master/master-tindakan/master-tindakan.component';
+import { TulisMtbsComponent } from './tulis-mtbs/tulis-mtbs.component';
 
 @NgModule({
   declarations: [
@@ -214,10 +216,13 @@ import { MasterSubDistrictComponent } from './satusehat-master/master-sub-distri
      riwayatkunjunganComponent,
      TulisAncComponent,
      TulisMtbmComponent,
+     TulisMtbsComponent,
      MasterProvinceComponent,
      MasterCityComponent,
      MasterDistrictComponent,
-     MasterSubDistrictComponent
+     MasterSubDistrictComponent,
+     MasterDiagnosaComponent,
+     MasterTindakanComponent
 
   ],
   imports: [

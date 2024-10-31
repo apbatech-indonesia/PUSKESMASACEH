@@ -19,14 +19,16 @@ export class MasterDistrictComponent implements OnChanges {
   ) { }
 
   async ngOnChanges(changes: SimpleChanges) {
-    let data = {
-      city_codes: this.cityId
+    if(Object.keys(changes).length == 2 || changes.hasOwnProperty('cityId')) {
+      let data = {
+        city_codes: this.cityId
+      }
+      let districtData: any = await this.mtbmService.getDistrict(data)
+      this.districtList = [
+        { code: '', name: '-- Pilih Kecamatan --' },
+        ...districtData.data
+      ]
     }
-    let districtData: any = await this.mtbmService.getDistrict(data)
-    this.districtList = [
-      { code: '', name: '-- Pilih Kecamatan --' },
-      ...districtData.data
-    ]
   }
 
   pilihDistrict() {

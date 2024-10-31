@@ -2016,13 +2016,26 @@ dignosshow:boolean;
 iddiagnosa:any=''
 idnamadiagnosa:any='';
 
-pilihdiag(kddiagnosa,diagnosa){
+pilihdiag(kddiagnosa,diagnosa,tacc){
 
+  // alerttacc
 
+  console.log(tacc)
+
+  if(tacc == true){
+
+    console.log('a')
+    this.alerttacc = '1'
+
+  }else{
+    console.log('ab')
+    this.alerttacc = '2'
+    
+  }
 setTimeout(() => {
   let body = {
     "notrans":this.notransaksi,"diagnosa":diagnosa,"kddiagnosa":kddiagnosa,"kdpoli":this.kdpoli,"kddokter":this.kddokter,
-    "norm":this.norm,"status":'diagnosa',"stssimpan":'1',"kdcabang":this.kdcabang
+    "norm":this.norm,"status":'diagnosa',"stssimpan":'1',"kdcabang":this.kdcabang,"alerttacc":this.alerttacc
   }
 
 
@@ -2042,7 +2055,7 @@ setTimeout(() => {
 setTimeout(() => {
   this.tampildaigtindakinput()
 
-}, 200);
+}, 400);
    
       this.dignosshow = false;
 this.kddiagnosa ='';
@@ -2517,83 +2530,83 @@ if(this.form1.value.gender === 'Kode'){
 caridiag(a){
 
 // console.log(this.form.value.gender)
+  if(a.target.value === ''){
+    this.dignosshow = false;
+
+  }else{
+
+    this.authService.caridiagnosaa(a.target.value)
+    .subscribe(data => {
+
+
+      if(data.metaData.code == 200){
+        this.diagnose = data.response.list;
+        this.dignosshow = true;
+
+      }else{
+        this.dignosshow = false;
+                
+
+      }
+    
+   
+     
+    })
+
+  }
+
+
+
+// if(this.form.value.gender === 'Kode'){
+
 //   if(a.target.value === ''){
 //     this.dignosshow = false;
 
 //   }else{
+//     this.dignosshow = true;
 
-//     this.authService.caridiagnosaa(a.target.value)
+//     this.authService.caridiagnosa(a.target.value,'3')
 //     .subscribe(data => {
-
-
-//       if(data.metaData.code == 200){
-//         this.diagnose = data.response.list;
-//         this.dignosshow = true;
-
-//       }else{
-//         this.dignosshow = false;
-                
-
-//       }
+//       this.diagnos = data;
     
-   
+     
      
 //     })
+//   }
+// }else if(this.form.value.gender === 'Diagnosa'){
 
+//   if(a.target.value === ''){
+//     this.dignosshow = false;
+
+//   }else{
+//     this.dignosshow = true;
+
+//     this.authService.caridiagnosa(a.target.value,'2')
+//     .subscribe(data => {
+//       this.diagnos = data;
+    
+     
+     
+//     })
 //   }
 
+// }else{
+//   if(a.target.value === ''){
+//     this.dignosshow = false;
 
+//   }else{
+//     this.dignosshow = true;
 
-if(this.form.value.gender === 'Kode'){
-
-  if(a.target.value === ''){
-    this.dignosshow = false;
-
-  }else{
-    this.dignosshow = true;
-
-    this.authService.caridiagnosa(a.target.value,'3')
-    .subscribe(data => {
-      this.diagnos = data;
+//     this.authService.caridiagnosa(a.target.value,'2')
+//     .subscribe(data => {
+//       this.diagnos = data;
     
      
      
-    })
-  }
-}else if(this.form.value.gender === 'Diagnosa'){
+//     })
+//   }
 
-  if(a.target.value === ''){
-    this.dignosshow = false;
-
-  }else{
-    this.dignosshow = true;
-
-    this.authService.caridiagnosa(a.target.value,'2')
-    .subscribe(data => {
-      this.diagnos = data;
-    
-     
-     
-    })
-  }
-
-}else{
-  if(a.target.value === ''){
-    this.dignosshow = false;
-
-  }else{
-    this.dignosshow = true;
-
-    this.authService.caridiagnosa(a.target.value,'2')
-    .subscribe(data => {
-      this.diagnos = data;
-    
-     
-     
-    })
-  }
-
-}
+// }
 
  
     

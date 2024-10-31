@@ -1191,7 +1191,7 @@ padding:20px">
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr *ngFor="let x of diagnos" (click)="pilihdiag(x.kddiagnosa,x.diagnosa)"
+                                <!-- <tr *ngFor="let x of diagnos" (click)="pilihdiag(x.kddiagnosa,x.diagnosa)"
                                   style="font-size: 12px;color:black">
 
                                   <td>
@@ -1212,10 +1212,10 @@ padding:20px">
                                     </button>
 
                                   </td>
-                                </tr>
+                                </tr> -->
 
-                                <!-- <tr *ngFor="let x of diagnose" 
-                                style="font-size: 12px;color:black" (click)="pilihdiag(x.kdDiag,x.nmDiag)">
+                                <tr *ngFor="let x of diagnose" 
+                                style="font-size: 12px;color:black" (click)="pilihdiag(x.kdDiag,x.nmDiag,x.nonSpesialis)">
 
                                 <td>
 
@@ -1223,8 +1223,7 @@ padding:20px">
                                 </td>
                                 <td>
                           
-                                  <span style="font-size: 10px;color:black;font-style: italic;">
-                                    {{x.nmDiag}}</span><br>
+                                    {{x.nmDiag}}
 
                                 </td>
                                 <td>
@@ -1238,7 +1237,7 @@ padding:20px">
                                   </button>
 
                                 </td>
-                              </tr> -->
+                              </tr>
                                 
 
                               </tbody>
@@ -2431,7 +2430,7 @@ padding:20px">
           </ng-template>
         </li>
 
-        <li ngbNavItem  *ngIf="akses === 'Dokter'">
+        <li ngbNavItem  >
           <a ngbNavLink (click)="icare()" class="mb-2 me-2 btn btn-secondary" style="background-color: #16aaff;">I Care</a>
           <ng-template ngbNavContent >
             <div class="bg-white">

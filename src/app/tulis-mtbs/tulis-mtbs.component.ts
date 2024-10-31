@@ -1,20 +1,20 @@
 import { HttpHeaders } from '@angular/common/http'
 import { Component, NgModule, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
-import { faCog, faSave } from '@fortawesome/free-solid-svg-icons'
 import Swal from 'sweetalert2'
 import { ApiserviceService } from '../apiservice.service'
 import { ActivatedRoute } from '@angular/router'
-import { MtbmService } from '../services/SatusehatServices/mtbm/mtbm.service'
+import { MtbsService } from '../services/SatusehatServices/mtbs/mtbs.service'
 import { AncService } from '../services/SatusehatServices/anc/anc.service'
+import { faCog, faSave } from '@fortawesome/free-solid-svg-icons'
 
 @Component({
-  selector: 'app-tulis-mtbm',
-  templateUrl: './tulis-mtbm.component.html',
-  styleUrls: ['./tulis-mtbm.component.sass']
+  selector: 'app-tulis-mtbs',
+  templateUrl: './tulis-mtbs.component.html',
+  styleUrls: ['./tulis-mtbs.component.sass']
 })
 
-export class TulisMtbmComponent implements OnInit {
+export class TulisMtbsComponent implements OnInit {
   // property
   userData: any = JSON.parse(localStorage.getItem('userDatacl')).userData
   notransaksi: string = this.route.snapshot.paramMap.get('notrans')
@@ -46,29 +46,35 @@ export class TulisMtbmComponent implements OnInit {
   }
   formIbuAyah: FormGroup
   formKeluhan: FormGroup
-  formObservation: FormGroup
+  observationAntropometri: FormGroup
   formObservationTandaVital: FormGroup
-  formObservationInfeksi: FormGroup
-  formObservationIkterus: FormGroup
+  formObservationUmum: FormGroup
+  formObservationBatuk: FormGroup
   formObservationDiare: FormGroup
-  formObservationHIV: FormGroup
-  formObservationAsi: FormGroup
-  formObservationMinuman: FormGroup
-  formPemeriksaanStatusVitK: FormGroup
+  formObservationSukarBernafas: FormGroup
+  formObservationDengue: FormGroup
+  formObservationMasalahTelinga: FormGroup
   formDiagnosa: FormGroup
   formImunisasi: FormGroup
   formTindakan: FormGroup
   formTindakLanjut: FormGroup
   formMeninggalkanFaskes: FormGroup
   formUpdateKunjungan: FormGroup
+  
 
   constructor(
     private api: ApiserviceService,
-    private mtbmService: MtbmService,
+    private mtbsService: MtbsService,
     private ancService: AncService,
     private route: ActivatedRoute,
     private fb: FormBuilder
   ) { 
+    this.observationAntropometri = this.fb.group({
+      berat_badan: [''],
+      tinggi_badan: [''],
+      lingkar_lengan_atas: [''],
+      lingkar_kepala: ['']
+    })
     this.formIbuAyah = this.fb.group({
       nama_ibu: [''],
       nik_ibu: [''],
@@ -103,13 +109,6 @@ export class TulisMtbmComponent implements OnInit {
       condition_note: ['']
     })
     
-    this.formObservation = this.fb.group({
-      berat_badan: [''],
-      tinggi_badan: [''],
-      lingkar_lengan_atas: [''],
-      lingkar_kepala: ['']
-    })
-    
     this.formObservationTandaVital = this.fb.group({
       sistolik: [''],
       diastolik: [''],
@@ -118,62 +117,56 @@ export class TulisMtbmComponent implements OnInit {
       tingkat_kesadaran: [''],
       pernapasan: ['']
     })
-    
-    this.formObservationInfeksi = this.fb.group({
-      laju_pernapasan: [''],
-      saturasi_tangan_kanan: [''],
-      saturasi_kaki_kiri: [''],
-      perbedaan_saturasi: [''],
-      tanda_infeksi: [''],
-      klasifikasi_infeksi: ['']
-    })
-    
-    this.formObservationIkterus = this.fb.group({
-      kondisi: [''],
-      umur_terkena: [''],
-      ikterus: [''],
-      klasifikasi_ikterus: ['']
-    })
-    
-    this.formObservationDiare = this.fb.group({
-      kondisi: [''],
-      tanda_diare: [''],
-      klasifikasi_diare: ['']
-    })
-    
-    this.formObservationHIV = this.fb.group({
-      riwayat_hiv_ibu: [''],
-      serologis_hiv_ibu: [''],
-      riwayat_hiv_anak: [''],
-      tes_virologis: [''],
-      tes_serologis: [''],
-      dapat_asi: [''],
-      periksa_hiv: [''],
-      pemberian_profilaksis: [''],
-      klasifikasi_hiv: ['']
-    })
-    
-    this.formObservationAsi = this.fb.group({
-      diberi_asi: [''],
-      dalam_sehari: [''],
-      selain_asi: [''],
-      bb_menurut_umur: ['']
-    })
-    
-    this.formObservationMinuman = this.fb.group({
-      merk_susu: [''],
-      dalam_sehari: [''],
-      jumlah_yg_diberikan: [''],
-      cara_memberikan_sdh_benar: ['']
-    })
-    
-    this.formPemeriksaanStatusVitK = this.fb.group({
-      procedure_code: [''],
-      procedure_name: [''],
-      observation_code: [''],
-      observation_name: ['']
+
+    this.formObservationUmum = this.fb.group({
+      condition_code: [''],
+      condition_name: [''],
+      condition_note: [''],
+      durasi: [''],
+      unit: ['']
     })
 
+    this.formObservationBatuk = this.fb.group({
+      condition_code: [''],
+      condition_name: [''],
+      condition_note: [''],
+      durasi: [''],
+      unit: ['']
+    })
+
+    this.formObservationDiare = this.fb.group({
+      condition_code: [''],
+      condition_name: [''],
+      condition_note: [''],
+      durasi: [''],
+      unit: ['']
+    })
+
+    this.formObservationSukarBernafas = this.fb.group({
+      condition_code: [''],
+      condition_name: [''],
+      condition_note: [''],
+      durasi: [''],
+      unit: ['']
+    })
+
+    this.formObservationDengue = this.fb.group({
+      condition_code: [''],
+      condition_name: [''],
+      condition_note: [''],
+      durasi: [''],
+      unit: ['']
+    })
+
+    this.formObservationMasalahTelinga = this.fb.group({
+      condition_code: [''],
+      condition_name: [''],
+      condition_note: [''],
+      durasi: [''],
+      unit: [''],
+      klasifikasi: ['']
+    })
+    
     this.formDiagnosa = this.fb.group({
       primary_code: [''],
       primary_note: [''],
@@ -215,7 +208,7 @@ export class TulisMtbmComponent implements OnInit {
 
   // methods
   ngOnInit() {
-    this.doCreateKunjunganMtbm()
+    this.docreateKunjunganMTBS()
   }
 
   openTab(tab: string) {
@@ -233,10 +226,10 @@ export class TulisMtbmComponent implements OnInit {
 
   simpan() {
     switch (this.activeTab) {
-      case 'form-ibu-ayah': 
+      case 'form-ibu-ayah':
         this.doSubmitRelatedPerson() 
       break
-      case 'form-observasi-mtbm':
+      case 'form-observasi-mtbs':
         this.doSubmitObservasi() 
       break
       case 'form-diagnosa':
@@ -262,35 +255,13 @@ export class TulisMtbmComponent implements OnInit {
     }
   }
 
-  async doSubmitRelatedPerson(){
-    var data = {
-      data: {
-        rmno: this.notransaksi,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        related_person: {
-          ...this.formIbuAyah.value
-        }
-      }
-    }
-
-    this.showLoading()
-    let response: any = await this.mtbmService.createRelatedPersonMTBM(data)
-    let msg = response.statusMsg.split(': ')
-    if(response.statusCode == '00') {
-      Swal.fire(msg[0], msg[1], 'success')
-    } else {
-      Swal.fire(msg[0], msg[1], 'error')
-    }
-  }
-
-  async doCreateKunjunganMtbm() {
+  async docreateKunjunganMTBS() {
     this.showLoading()
     this.patientData = await this.getPasien()
     this.cabangData = await this.getCabang()
     await this.setIdPasien()
 
-    let response: any = await this.mtbmService.createKunjunganMTBM({
+    let response: any = await this.mtbsService.createKunjunganMTBS({
       data: {
           rmno: this.notransaksi,
           orgId: this.cabangData.kodeorg,
@@ -322,7 +293,7 @@ export class TulisMtbmComponent implements OnInit {
         }
       }
     }
-    let response: any = await this.mtbmService.diagnosaMTBM(data)
+    let response: any = await this.mtbsService.diagnosaMTBS(data)
     let msg = response.statusMsg.split(': ')
     if(response.statusCode == '00') {
       Swal.fire(msg[0], msg[1], 'success')
@@ -349,7 +320,7 @@ export class TulisMtbmComponent implements OnInit {
         ]
       }
     }
-    let response: any = await this.mtbmService.imunisasiMTBM(data)
+    let response: any = await this.mtbsService.imunisasiMTBS(data)
     let msg = response.statusMsg.split(': ')
     if(response.statusCode == '00') {
       Swal.fire(msg[0], msg[1], 'success')
@@ -374,7 +345,7 @@ export class TulisMtbmComponent implements OnInit {
         }
       }
     }
-    let response: any = await this.mtbmService.tindakanMTBM(data)
+    let response: any = await this.mtbsService.tindakanMTBS(data)
     let msg = response.statusMsg.split(': ')
     if(response.statusCode == '00') {
       Swal.fire(msg[0], msg[1], 'success')
@@ -399,7 +370,7 @@ export class TulisMtbmComponent implements OnInit {
         }
       }
     }
-    let response: any = await this.mtbmService.tindakLanjutMTBM(data)
+    let response: any = await this.mtbsService.tindakLanjutMTBS(data)
     let msg = response.statusMsg.split(': ')
     if(response.statusCode == '00') {
       Swal.fire(msg[0], msg[1], 'success')
@@ -427,8 +398,30 @@ export class TulisMtbmComponent implements OnInit {
         }
       }
     }
-    let response: any = await this.mtbmService.meninggalkanFaskesMTBM(data)
-    let responseUpdate: any = await this.mtbmService.updateKunjunganMTBM(data)
+    let response: any = await this.mtbsService.meninggalkanFaskesMTBS(data)
+    let responseUpdate: any = await this.mtbsService.updateKunjunganMTBS(data)
+    let msg = response.statusMsg.split(': ')
+    if(response.statusCode == '00') {
+      Swal.fire(msg[0], msg[1], 'success')
+    } else {
+      Swal.fire(msg[0], msg[1], 'error')
+    }
+  }
+
+  async doSubmitRelatedPerson(){
+    var data = {
+      data: {
+        rmno: this.notransaksi,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        related_person: {
+          ...this.formIbuAyah.value
+        }
+      }
+    }
+
+    this.showLoading()
+    let response: any = await this.mtbsService.createRelatedPersonMTBS(data)
     let msg = response.statusMsg.split(': ')
     if(response.statusCode == '00') {
       Swal.fire(msg[0], msg[1], 'success')
@@ -452,41 +445,35 @@ export class TulisMtbmComponent implements OnInit {
           ...this.formKeluhan.value
         },
         observation: {
-          ...this.formObservation.value
+          ...this.observationAntropometri.value
         },
         observation_tanda_vital: {     
           ...this.formObservationTandaVital.value
         },
-        observation_infeksi: {     
-          ...this.formObservationInfeksi.value
+        observation_umum: [{
+          ...this.formObservationUmum.value
+        }],
+        observation_batuk: {
+          ...this.formObservationBatuk.value
         },
-        observation_ikterus: {     
-          ...this.formObservationIkterus.value
+        observation_diare: {
+          ...this.formObservationDiare.value
         },
-        observation_diare: {     
-          ...this.formObservationDiare.value  
+        observation_sukar_bernafas: {
+          ...this.formObservationSukarBernafas.value
         },
-        observation_hiv: {     
-          ...this.formObservationHIV.value
+        observation_dengue: {
+          ...this.formObservationDengue.value
         },
-        observation_asi: {     
-          ...this.formObservationAsi.value
-        },
-        observation_minuman: {
-          ...this.formObservationMinuman.value
-        },
-        pemeriksaan_status_vit_k: {
-          ...this.formPemeriksaanStatusVitK.value
+        observation_masalah_telinga: {
+          ...this.formObservationMasalahTelinga.value
         }
       }
     }
-    this.mtbmService.keluhanUtamaMTBM(data)
-    this.mtbmService.observationOnlyMTBM(data)
-    this.mtbmService.observationTandaVitalMTBM(data)
-    this.mtbmService.observationMTBM(data)
-    this.mtbmService.observationAsiMTBM(data)
-    this.mtbmService.diagnosaAsiMTBM(data)
-    let response: any = await this.mtbmService.observationVitaminKMTBM(data)
+    this.mtbsService.keluhanUtamaMTBS(data)
+    this.mtbsService.observationAntropometri(data)
+    this.mtbsService.observationTandaVitalMTBS(data)
+    let response: any = await this.mtbsService.observationMTBS(data)
     let msg = response.statusMsg.split(': ')
     if(response.statusCode == '00') {
       Swal.fire(msg[0], msg[1], 'success')
@@ -515,11 +502,11 @@ export class TulisMtbmComponent implements OnInit {
   }
 
   async getDataPatient() {
-    let response: any = await this.ancService.getDataPatient({   
+    let response: any = await this.ancService.getDataPatient({
       patientId: this.idpasien,
       rmno: this.notransaksi,
       usecase_id: this.useCaseId,
-      type: "MTBM",
+      type: "MTBS",
       status: "active"
     })
 
@@ -527,15 +514,14 @@ export class TulisMtbmComponent implements OnInit {
     if (patient) {
       this.formIbuAyah.patchValue(patient.related_person)
       this.formKeluhan.patchValue(patient.keluhan)
-      this.formObservation.patchValue(patient.observation)
-      this.formObservationTandaVital.patchValue(patient.observation_tanda_vital)
-      this.formObservationInfeksi.patchValue(patient.observation_infeksi)
-      this.formObservationIkterus.patchValue(patient.observation_ikterus)
+      this.observationAntropometri.patchValue(patient.observation)
+      this.formObservationUmum.patchValue(patient.observation_umum ? patient.observation_umum[0] : '')
+      this.formObservationBatuk.patchValue(patient.observation_batuk)
       this.formObservationDiare.patchValue(patient.observation_diare)
-      this.formObservationHIV.patchValue(patient.observation_hiv)
-      this.formObservationAsi.patchValue(patient.observation_asi)
-      this.formObservationMinuman.patchValue(patient.observation_minuman)
-      this.formPemeriksaanStatusVitK.patchValue(patient.pemeriksaan_status_vit_k)
+      this.formObservationSukarBernafas.patchValue(patient.observation_sukar_bernafas)
+      this.formObservationDengue.patchValue(patient.observation_dengue)
+      this.formObservationMasalahTelinga.patchValue(patient.observation_masalah_telinga)
+      this.formObservationTandaVital.patchValue(patient.observation_tanda_vital)
       this.formDiagnosa.patchValue(patient.diagnosa)
       this.formImunisasi.patchValue(patient.imunisasi ? patient.imunisasi[0] : '')
       this.formTindakan.patchValue(patient.tindakan)

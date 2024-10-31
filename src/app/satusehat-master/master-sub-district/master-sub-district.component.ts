@@ -19,14 +19,16 @@ export class MasterSubDistrictComponent implements OnChanges {
   ) { }
 
   async ngOnChanges(changes: SimpleChanges) {
-    let data = {
-      district_codes: this.districtId
+    if(Object.keys(changes).length == 2 || changes.hasOwnProperty('districtId')) {
+      let data = {
+        district_codes: this.districtId
+      }
+      let subDistrictData: any = await this.mtbmService.getSubDistrict(data)
+      this.subDistrictList = [
+        { code: '', name: '-- Pilih Kelurahan --' },
+        ...subDistrictData.data
+      ]
     }
-    let subDistrictData: any = await this.mtbmService.getSubDistrict(data)
-    this.subDistrictList = [
-      { code: '', name: '-- Pilih Kelurahan --' },
-      ...subDistrictData.data
-    ]
   }
 
   pilihsubDistrict() {
