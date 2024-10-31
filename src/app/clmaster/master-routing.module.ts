@@ -215,7 +215,7 @@ const routes: Routes = [
     },
     {
       path : 'satusehat-mtbm',
-      loadChildren:() => import('./satusehat-mtbs/ermdokterrm.module').then(m => m.ermdokterrmModule )
+      loadChildren:() => import('./satusehat-mtbm/ermdokterrm.module').then(m => m.ermdokterrmModule )
     },
     {
       path : 'kasirfarmasibelir',
