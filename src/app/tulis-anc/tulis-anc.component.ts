@@ -384,10 +384,10 @@ export class TulisAncComponent implements OnInit {
     let response1: any = await this.ancService.tindakLanjutEncounter(data)
     let response2: any = await this.ancService.tindakLanjutCreate(data)
     if (response1.statusCode != '00') {
-      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`tindakLanjutEncounter : ${response1.statusMsg.split(': ')[0]}`, response1.statusMsg.split(': ')[1], 'error')
     }
     else if (response2.statusCode != '00') {
-      Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`tindakLanjutCreate : ${response2.statusMsg.split(': ')[0]}`, response2.statusMsg.split(': ')[1], 'error')
     }
     else if(response1.statusCode == '00') {
       Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
@@ -452,14 +452,15 @@ export class TulisAncComponent implements OnInit {
     let response1: any = await this.ancService.createRadiologi(data)
     let response2: any = await this.ancService.observationRadiologi(data)
     let response3: any = await this.ancService.diagnosisReportRadiologi(data)
+    
     if (response1.statusCode != '00') {
-      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`createRadiologi : ${response1.statusMsg.split(': ')[0]}`, response1.statusMsg.split(': ')[1], 'error')
     }
     else if (response2.statusCode != '00') {
-      Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`observationRadiologi : ${response2.statusMsg.split(': ')[0]}`, response2.statusMsg.split(': ')[1], 'error')
     }
     else if (response3.statusCode != '00') {
-      Swal.fire(response3.statusMsg.split(': ')[0], response3.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`diagnosisReportRadiologi : ${response3.statusMsg.split(': ')[0]}`, response3.statusMsg.split(': ')[1], 'error')
     }
     else if(
       response1.statusCode == '00' &&

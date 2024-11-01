@@ -431,12 +431,12 @@ export class TulisMtbmComponent implements OnInit {
     let response2: any = await this.mtbmService.updateKunjunganMTBM(data)
 
     if (response1.statusCode != '00') {
-      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`meninggalkanFaskesMTBM : ${response1.statusMsg.split(': ')[0]}`, response1.statusMsg.split(': ')[1], 'error')
     }
     else if (response2.statusCode != '00') {
-      Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
-    } 
-    else if(
+      Swal.fire(`updateKunjunganMTBM : ${response2.statusMsg.split(': ')[0]}`, response2.statusMsg.split(': ')[1], 'error')
+    }
+    else if (
       response1.statusCode == '00' &&
       response2.statusCode == '00'
     ) {
@@ -499,25 +499,25 @@ export class TulisMtbmComponent implements OnInit {
     let response7: any = await this.mtbmService.observationVitaminKMTBM(data)
 
     if (response1.statusCode != '00') {
-      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`keluhanUtamaMTBM : ${response1.statusMsg.split(': ')[0]}`, response1.statusMsg.split(': ')[1], 'error')
     }
     else if (response2.statusCode != '00') {
-      Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`observationAntropometriMTBM : ${response2.statusMsg.split(': ')[0]}`, response2.statusMsg.split(': ')[1], 'error')
     }
     else if (response3.statusCode != '00') {
-      Swal.fire(response3.statusMsg.split(': ')[0], response3.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`observationAsiMTBM : ${response3.statusMsg.split(': ')[0]}`, response3.statusMsg.split(': ')[1], 'error')
     }
     else if (response4.statusCode != '00') {
-      Swal.fire(response4.statusMsg.split(': ')[0], response4.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`observationAirMinumMTBM : ${response4.statusMsg.split(': ')[0]}`, response4.statusMsg.split(': ')[1], 'error')
     }
     else if (response5.statusCode != '00') {
-      Swal.fire(response5.statusMsg.split(': ')[0], response5.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`observationTandaVitalMTBM : ${response5.statusMsg.split(': ')[0]}`, response5.statusMsg.split(': ')[1], 'error')
     }
     else if (response6.statusCode != '00') {
-      Swal.fire(response6.statusMsg.split(': ')[0], response6.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`observationMTBM : ${response6.statusMsg.split(': ')[0]}`, response6.statusMsg.split(': ')[1], 'error')
     }
     else if (response7.statusCode != '00') {
-      Swal.fire(response7.statusMsg.split(': ')[0], response7.statusMsg.split(': ')[1], 'error')
+      Swal.fire(`observationVitaminKMTBM : ${response7.statusMsg.split(': ')[0]}`, response7.statusMsg.split(': ')[1], 'error')
     }
     else if(
       response1.statusCode == '00' &&
