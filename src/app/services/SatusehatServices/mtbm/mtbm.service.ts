@@ -37,9 +37,9 @@ export class MtbmService {
     })
   }
 
-  observationOnlyMTBM(data: any) {
+  observationAntropometriMTBM(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbm/observation', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'mtbm/observationAntropometri', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
@@ -69,9 +69,9 @@ export class MtbmService {
     })
   }
 
-  diagnosaAsiMTBM(data: any) {
+  observationAirMinumMTBM(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbm/diagnosaAsi', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'mtbm/observationAirMinum', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })

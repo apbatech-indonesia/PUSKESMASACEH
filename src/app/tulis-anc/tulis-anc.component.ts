@@ -259,15 +259,25 @@ export class TulisAncComponent implements OnInit {
     }
 
     this.showLoading()
-    this.ancService.updateStatusObstetri(data)
-    this.ancService.updateKunjunganKehamilan(data)
-    let response: any = await this.ancService.updatePelayananKehamilan(data)
-    let msg = response.statusMsg.split(': ')
-    if(response.statusCode == '00') {
-      Swal.fire(msg[0], msg[1], 'success')
-    } else {
-      Swal.fire(msg[0], msg[1], 'error')
-    }
+    let response1: any = await this.ancService.updateStatusObstetri(data)
+    let response2: any = await this.ancService.updateKunjunganKehamilan(data)
+    let response3: any = await this.ancService.updatePelayananKehamilan(data)
+    if (response1.statusCode != '00') {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
+    } 
+    else if(response2.statusCode != '00') {
+      Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
+    } 
+    else if(response3.statusCode != '00') {
+      Swal.fire(response3.statusMsg.split(': ')[0], response3.statusMsg.split(': ')[1], 'error')
+    } 
+    else if(
+      response1.statusCode == '00' &&
+      response2.statusCode == '00' &&
+      response3.statusCode == '00'
+    ) {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
+    } 
   }
 
   async doSubmitTindakan(){
@@ -371,14 +381,19 @@ export class TulisAncComponent implements OnInit {
 
     this.showLoading()
 
-    await this.ancService.tindakLanjutEncounter(data)
-    let response: any = await this.ancService.tindakLanjutCreate(data)
-    let msg = response.statusMsg.split(': ')
-
-    if(response.statusCode == '00') {
-      Swal.fire(msg[0], msg[1], 'success')
-    } else {
-      Swal.fire(msg[0], msg[1], 'error')
+    let response1: any = await this.ancService.tindakLanjutEncounter(data)
+    let response2: any = await this.ancService.tindakLanjutCreate(data)
+    if (response1.statusCode != '00') {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response2.statusCode != '00') {
+      Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
+    }
+    else if(response1.statusCode == '00') {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
+    } 
+    else {
+      this.stopLoading()
     }
   }
 
@@ -396,16 +411,27 @@ export class TulisAncComponent implements OnInit {
 
     this.showLoading()
 
-    await this.ancService.createLaboratorium(data)
-    await this.ancService.observationLaboratorium(data)
-
-    let response: any = await this.ancService.diagLaboratorium(data)
-    let msg = response.statusMsg.split(': ')
-
-    if(response.statusCode == '00') {
-      Swal.fire(msg[0], msg[1], 'success')
-    } else {
-      Swal.fire(msg[0], msg[1], 'error')
+    let response1: any = await this.ancService.createLaboratorium(data)
+    let response2: any = await this.ancService.observationLaboratorium(data)
+    let response3: any = await this.ancService.diagLaboratorium(data)
+    if (response1.statusCode != '00') {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response2.statusCode != '00') {
+      Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response3.statusCode != '00') {
+      Swal.fire(response3.statusMsg.split(': ')[0], response3.statusMsg.split(': ')[1], 'error')
+    }
+    else if(
+      response1.statusCode == '00' &&
+      response2.statusCode == '00' &&
+      response3.statusCode == '00'
+    ) {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
+    }
+    else {
+      this.stopLoading()
     }
   }
 
@@ -423,16 +449,27 @@ export class TulisAncComponent implements OnInit {
 
     this.showLoading()
 
-    await this.ancService.createRadiologi(data)
-    await this.ancService.observationRadiologi(data)
-
-    let response: any = await this.ancService.diagnosisReportRadiologi(data)
-    let msg = response.statusMsg.split(': ')
-
-    if(response.statusCode == '00') {
-      Swal.fire(msg[0], msg[1], 'success')
-    } else {
-      Swal.fire(msg[0], msg[1], 'error')
+    let response1: any = await this.ancService.createRadiologi(data)
+    let response2: any = await this.ancService.observationRadiologi(data)
+    let response3: any = await this.ancService.diagnosisReportRadiologi(data)
+    if (response1.statusCode != '00') {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response2.statusCode != '00') {
+      Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response3.statusCode != '00') {
+      Swal.fire(response3.statusMsg.split(': ')[0], response3.statusMsg.split(': ')[1], 'error')
+    }
+    else if(
+      response1.statusCode == '00' &&
+      response2.statusCode == '00' &&
+      response3.statusCode == '00'
+    ) {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
+    }
+    else {
+      this.stopLoading()
     }
   }
 

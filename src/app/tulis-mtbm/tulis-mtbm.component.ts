@@ -427,13 +427,22 @@ export class TulisMtbmComponent implements OnInit {
         }
       }
     }
-    let response: any = await this.mtbmService.meninggalkanFaskesMTBM(data)
-    let responseUpdate: any = await this.mtbmService.updateKunjunganMTBM(data)
-    let msg = response.statusMsg.split(': ')
-    if(response.statusCode == '00') {
-      Swal.fire(msg[0], msg[1], 'success')
+    let response1: any = await this.mtbmService.meninggalkanFaskesMTBM(data)
+    let response2: any = await this.mtbmService.updateKunjunganMTBM(data)
+
+    if (response1.statusCode != '00') {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response2.statusCode != '00') {
+      Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
+    } 
+    else if(
+      response1.statusCode == '00' &&
+      response2.statusCode == '00'
+    ) {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
     } else {
-      Swal.fire(msg[0], msg[1], 'error')
+      this.stopLoading()
     }
   }
 
@@ -480,19 +489,50 @@ export class TulisMtbmComponent implements OnInit {
         }
       }
     }
-    this.mtbmService.keluhanUtamaMTBM(data)
-    this.mtbmService.observationOnlyMTBM(data)
-    this.mtbmService.observationTandaVitalMTBM(data)
-    this.mtbmService.observationMTBM(data)
-    this.mtbmService.observationAsiMTBM(data)
-    this.mtbmService.diagnosaAsiMTBM(data)
-    let response: any = await this.mtbmService.observationVitaminKMTBM(data)
-    let msg = response.statusMsg.split(': ')
-    if(response.statusCode == '00') {
-      Swal.fire(msg[0], msg[1], 'success')
-    } else {
-      Swal.fire(msg[0], msg[1], 'error')
+
+    let response1: any = await this.mtbmService.keluhanUtamaMTBM(data)
+    let response2: any = await this.mtbmService.observationAntropometriMTBM(data)
+    let response3: any = await this.mtbmService.observationAsiMTBM(data)
+    let response4: any = await this.mtbmService.observationAirMinumMTBM(data)
+    let response5: any = await this.mtbmService.observationTandaVitalMTBM(data)
+    let response6: any = await this.mtbmService.observationMTBM(data)
+    let response7: any = await this.mtbmService.observationVitaminKMTBM(data)
+
+    if (response1.statusCode != '00') {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
     }
+    else if (response2.statusCode != '00') {
+      Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response3.statusCode != '00') {
+      Swal.fire(response3.statusMsg.split(': ')[0], response3.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response4.statusCode != '00') {
+      Swal.fire(response4.statusMsg.split(': ')[0], response4.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response5.statusCode != '00') {
+      Swal.fire(response5.statusMsg.split(': ')[0], response5.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response6.statusCode != '00') {
+      Swal.fire(response6.statusMsg.split(': ')[0], response6.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response7.statusCode != '00') {
+      Swal.fire(response7.statusMsg.split(': ')[0], response7.statusMsg.split(': ')[1], 'error')
+    }
+    else if(
+      response1.statusCode == '00' &&
+      response2.statusCode == '00' &&
+      response3.statusCode == '00' &&
+      response4.statusCode == '00' &&
+      response5.statusCode == '00' &&
+      response6.statusCode == '00' &&
+      response7.statusCode == '00'
+    ) {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
+    } else {
+      this.stopLoading()
+    }
+
     this.getDataPatient()
   }
   

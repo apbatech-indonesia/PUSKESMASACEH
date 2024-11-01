@@ -398,13 +398,21 @@ export class TulisMtbsComponent implements OnInit {
         }
       }
     }
-    let response: any = await this.mtbsService.meninggalkanFaskesMTBS(data)
-    let responseUpdate: any = await this.mtbsService.updateKunjunganMTBS(data)
-    let msg = response.statusMsg.split(': ')
-    if(response.statusCode == '00') {
-      Swal.fire(msg[0], msg[1], 'success')
+    let response1: any = await this.mtbsService.meninggalkanFaskesMTBS(data)
+    let response2: any = await this.mtbsService.updateKunjunganMTBS(data)
+    if (response1.statusCode != '00') {
+      Swal.fire(response1.statusCode[0], response1.statusCode[1], 'error')
+    } 
+    else if (response2.statusCode != '00') {
+      Swal.fire(response2.statusCode[0], response2.statusCode[1], 'error')
+    }
+    else if (
+      response1.statusCode == '00' &&
+      response2.statusCode == '00'
+    ) {
+      Swal.fire(response1.statusCode[0], response1.statusCode[1], 'success')
     } else {
-      Swal.fire(msg[0], msg[1], 'error')
+      this.stopLoading()
     }
   }
 
@@ -470,15 +478,32 @@ export class TulisMtbsComponent implements OnInit {
         }
       }
     }
-    this.mtbsService.keluhanUtamaMTBS(data)
-    this.mtbsService.observationAntropometri(data)
-    this.mtbsService.observationTandaVitalMTBS(data)
-    let response: any = await this.mtbsService.observationMTBS(data)
-    let msg = response.statusMsg.split(': ')
-    if(response.statusCode == '00') {
-      Swal.fire(msg[0], msg[1], 'success')
-    } else {
-      Swal.fire(msg[0], msg[1], 'error')
+    let response1: any = await this.mtbsService.keluhanUtamaMTBS(data)
+    let response2: any = await this.mtbsService.observationAntropometri(data)
+    let response3: any = await this.mtbsService.observationTandaVitalMTBS(data)
+    let response4: any = await this.mtbsService.observationMTBS(data)
+    if (response1.statusCode == '00') {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response2.statusCode == '00') {
+      Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response3.statusCode == '00') {
+      Swal.fire(response3.statusMsg.split(': ')[0], response3.statusMsg.split(': ')[1], 'error')
+    }
+    else if (response4.statusCode == '00') {
+      Swal.fire(response4.statusMsg.split(': ')[0], response4.statusMsg.split(': ')[1], 'error')
+    }
+    else if (
+      response1.statusCode == '00' &&
+      response2.statusCode == '00' &&
+      response3.statusCode == '00' &&
+      response4.statusCode == '00'
+    ) {
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
+    }
+    else {
+      this.stopLoading()
     }
     this.getDataPatient()
   }
