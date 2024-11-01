@@ -29,7 +29,7 @@
       <div class="mb-3">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link {{activeTab == 'form-orangtua' ? 'active' : '' }}" href="javascript:;" (click)="openTab('form-orangtua')">Data Orangtua</a>
+            <a class="nav-link {{activeTab == 'form-ibu-ayah' ? 'active' : '' }}" href="javascript:;" (click)="openTab('form-ibu-ayah')">Form Ibu Ayah</a>
           </li>
           
           <li class="nav-item">
@@ -58,7 +58,7 @@
         </ul>
       </div>
     
-      <div class="mb-3" *ngIf="activeTab == 'form-orangtua'">
+      <div class="mb-3" *ngIf="activeTab == 'form-ibu-ayah'">
         <div class="container">
           <form [formGroup]="formIbuAyah">
             <!-- Data Ibu -->

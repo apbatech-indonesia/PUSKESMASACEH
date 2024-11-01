@@ -18,7 +18,7 @@ export class TulisMtbsComponent implements OnInit {
   // property
   userData: any = JSON.parse(localStorage.getItem('userDatacl')).userData
   notransaksi: string = this.route.snapshot.paramMap.get('notrans')
-  activeTab: string = 'form-orangtua'
+  activeTab: string = 'form-ibu-ayah'
   useCaseId: string
   cabangData: any
   idpasien: any
@@ -226,7 +226,7 @@ export class TulisMtbsComponent implements OnInit {
 
   simpan() {
     switch (this.activeTab) {
-      case 'form-orangtua':
+      case 'form-ibu-ayah':
         this.doSubmitRelatedPerson() 
       break
       case 'form-observasi-mtbs':
@@ -485,7 +485,7 @@ export class TulisMtbsComponent implements OnInit {
     let response2: any = await this.mtbsService.observationAntropometri(data)
     let response3: any = await this.mtbsService.observationTandaVitalMTBS(data)
     let response4: any = await this.mtbsService.observationMTBS(data)
-    
+
     if (response1.statusCode != '00') {
       Swal.fire(`keluhanUtamaMTBS : ${response1.statusMsg.split(': ')[0]}`, response1.statusMsg.split(': ')[1], 'error')
     }

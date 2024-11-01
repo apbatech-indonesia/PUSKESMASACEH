@@ -18,7 +18,7 @@ export class TulisMtbmComponent implements OnInit {
   // property
   userData: any = JSON.parse(localStorage.getItem('userDatacl')).userData
   notransaksi: string = this.route.snapshot.paramMap.get('notrans')
-  activeTab: string = 'form-orangtua'
+  activeTab: string = 'form-ibu-ayah'
   useCaseId: string
   cabangData: any
   idpasien: any
@@ -233,7 +233,7 @@ export class TulisMtbmComponent implements OnInit {
 
   simpan() {
     switch (this.activeTab) {
-      case 'form-orangtua': 
+      case 'form-ibu-ayah': 
         this.doSubmitRelatedPerson() 
       break
       case 'form-observasi-mtbm':
