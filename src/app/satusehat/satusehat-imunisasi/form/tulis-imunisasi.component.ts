@@ -44,21 +44,9 @@ export class TulisImunisasiComponent implements OnInit {
     namdokter: '-',
     alamat: '-'
   }
-  formIbuAyah: FormGroup
-  formKeluhan: FormGroup
   observationAntropometri: FormGroup
-  formObservationTandaVital: FormGroup
-  formObservationUmum: FormGroup
-  formObservationBatuk: FormGroup
-  formObservationDiare: FormGroup
-  formObservationSukarBernafas: FormGroup
-  formObservationDengue: FormGroup
-  formObservationMasalahTelinga: FormGroup
   formDiagnosa: FormGroup
-  formImunisasi: FormGroup
   formTindakan: FormGroup
-  formTindakLanjut: FormGroup
-  formMeninggalkanFaskes: FormGroup
   formUpdateKunjungan: FormGroup
   
 
@@ -75,98 +63,7 @@ export class TulisImunisasiComponent implements OnInit {
       lingkar_lengan_atas: [''],
       lingkar_kepala: ['']
     })
-    this.formIbuAyah = this.fb.group({
-      nama_ibu: [''],
-      nik_ibu: [''],
-      tl_ibu: [''],
-      hp_ibu: [''],
-      kota_ibu: [''],
-      alamat_jalan_ibu: [''],
-      postal_code_ibu : [''],
-      province_id_ibu: [''],
-      city_id_ibu: [''],
-      district_id_ibu: [''],
-      village_id_ibu: [''],
-      rt_ibu: [''],
-      rw_ibu: [''],
-      nama_ayah: [''],
-      nik_ayah : [''],
-      tl_ayah: [''],
-      hp_ayah: [''],
-      kota_ayah: [''],
-      alamat_jalan_ayah: [''],
-      postal_code_ayah : [''],
-      province_id_ayah: [''],
-      city_id_ayah: [''],
-      district_id_ayah: [''],
-      village_id_ayah: [''],
-      rt_ayah: [''],
-      rw_ayah: ['']
-    })
 
-    this.formKeluhan = this.fb.group({
-      condition_code: [''],
-      condition_note: ['']
-    })
-    
-    this.formObservationTandaVital = this.fb.group({
-      sistolik: [''],
-      diastolik: [''],
-      suhu_tubuh: [''],
-      denyut_jantung: [''],
-      tingkat_kesadaran: [''],
-      pernapasan: ['']
-    })
-
-    this.formObservationUmum = this.fb.group({
-      condition_code: [''],
-      condition_name: [''],
-      condition_note: [''],
-      durasi: [''],
-      unit: ['']
-    })
-
-    this.formObservationBatuk = this.fb.group({
-      condition_code: [''],
-      condition_name: [''],
-      condition_note: [''],
-      durasi: [''],
-      unit: ['']
-    })
-
-    this.formObservationDiare = this.fb.group({
-      condition_code: [''],
-      condition_name: [''],
-      condition_note: [''],
-      durasi: [''],
-      unit: ['']
-    })
-
-    this.formObservationSukarBernafas = this.fb.group({
-      condition_code: [''],
-      condition_name: [''],
-      condition_note: [''],
-      durasi: [''],
-      unit: ['']
-    })
-
-    this.formObservationDengue = this.fb.group({
-      condition_code: [''],
-      condition_name: [''],
-      condition_note: [''],
-      durasi: [''],
-      unit: ['']
-    })
-
-    this.formObservationMasalahTelinga = this.fb.group({
-      condition_code: [''],
-      condition_name: [''],
-      condition_note: [''],
-      durasi: [''],
-      unit: [''],
-      klasifikasi: ['']
-    })
-    
     this.formDiagnosa = this.fb.group({
       primary_code: [''],
       primary_note: [''],
@@ -174,28 +71,10 @@ export class TulisImunisasiComponent implements OnInit {
       secondary_note: ['']
     })
 
-    this.formImunisasi = this.fb.group({
-      vaccine_code: [''],
-      vaccine_note: [''],
-      reason_code: [''],
-      reason_note: ['']
-    })
-
     this.formTindakan = this.fb.group({
       xray_note: [''],
       terapetik_note: [''],
       counselling_note: ['']
-    })
-
-    this.formTindakLanjut = this.fb.group({
-      instruksi: ['']
-    })
-
-    this.formMeninggalkanFaskes = this.fb.group({
-      diagnostic_code: [''],
-      diagnostic_name: [''],
-      pasien_meninggal: [''],
-      waktu_meninggal: ['']
     })
 
     this.formUpdateKunjungan = this.fb.group({
@@ -323,58 +202,19 @@ export class TulisImunisasiComponent implements OnInit {
         rmno: this.notransaksi,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
-        keluhan: {     
-          ...this.formKeluhan.value
-        },
         observation: {
           ...this.observationAntropometri.value
-        },
-        observation_tanda_vital: {     
-          ...this.formObservationTandaVital.value
-        },
-        observation_umum: [{
-          ...this.formObservationUmum.value
-        }],
-        observation_batuk: {
-          ...this.formObservationBatuk.value
-        },
-        observation_diare: {
-          ...this.formObservationDiare.value
-        },
-        observation_sukar_bernafas: {
-          ...this.formObservationSukarBernafas.value
-        },
-        observation_dengue: {
-          ...this.formObservationDengue.value
-        },
-        observation_masalah_telinga: {
-          ...this.formObservationMasalahTelinga.value
         }
       }
     }
 
-    let response1: any = await this.imunisasiService.keluhanUtamaImunisasi(data)
-    let response2: any = await this.imunisasiService.observationAntropometri(data)
-    let response3: any = await this.imunisasiService.observationTandaVitalImunisasi(data)
-    let response4: any = await this.imunisasiService.observationImunisasi(data)
-
+    let response1: any = await this.imunisasiService.observationImunisasi(data)
     if (response1.statusCode != '00') {
       Swal.fire(`keluhanUtamaMTBS : ${response1.statusMsg.split(': ')[0]}`, response1.statusMsg.split(': ')[1], 'error')
     }
-    else if (response2.statusCode != '00') {
-      Swal.fire(`observationAntropometri : ${response2.statusMsg.split(': ')[0]}`, response2.statusMsg.split(': ')[1], 'error')
-    }
-    else if (response3.statusCode != '00') {
-      Swal.fire(`observationTandaVitalMTBS : ${response3.statusMsg.split(': ')[0]}`, response3.statusMsg.split(': ')[1], 'error')
-    }
-    else if (response4.statusCode != '00') {
-      Swal.fire(`observationMTBS : ${response4.statusMsg.split(': ')[0]}`, response4.statusMsg.split(': ')[1], 'error')
-    }
+    
     else if (
-      response1.statusCode == '00' &&
-      response2.statusCode == '00' &&
-      response3.statusCode == '00' &&
-      response4.statusCode == '00'
+      response1.statusCode == '00'
     ) {
       Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
     }
@@ -413,24 +253,9 @@ export class TulisImunisasiComponent implements OnInit {
 
     let patient = response.data
     if (patient) {
-      this.formIbuAyah.patchValue(patient.related_person)
-      this.formKeluhan.patchValue(patient.keluhan)
       this.observationAntropometri.patchValue(patient.observation)
-      this.formObservationUmum.patchValue(patient.observation_umum ? patient.observation_umum[0] : '')
-      this.formObservationBatuk.patchValue(patient.observation_batuk)
-      this.formObservationDiare.patchValue(patient.observation_diare)
-      this.formObservationSukarBernafas.patchValue(patient.observation_sukar_bernafas)
-      this.formObservationDengue.patchValue(patient.observation_dengue)
-      this.formObservationMasalahTelinga.patchValue(patient.observation_masalah_telinga)
-      this.formObservationTandaVital.patchValue(patient.observation_tanda_vital)
       this.formDiagnosa.patchValue(patient.diagnosa)
-      this.formImunisasi.patchValue(patient.imunisasi ? patient.imunisasi[0] : '')
       this.formTindakan.patchValue(patient.tindakan)
-      this.formTindakLanjut.patchValue(patient.tindak_lanjut)
-      this.formMeninggalkanFaskes.patchValue({
-        ...patient.meninggalkan_faskes,
-        waktu_meninggal: patient.meninggalkan_faskes && patient.meninggalkan_faskes.waktu_meninggal ? patient.meninggalkan_faskes.waktu_meninggal.split('T')[0] : ''
-      })
       this.formUpdateKunjungan.patchValue(patient.update_data)
     }
     this.stopLoading()

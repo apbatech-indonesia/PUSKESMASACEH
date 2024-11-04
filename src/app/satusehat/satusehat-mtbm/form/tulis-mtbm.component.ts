@@ -215,7 +215,7 @@ export class TulisMtbmComponent implements OnInit {
 
   // methods
   ngOnInit() {
-    this.doCreateKunjunganMtbm()
+    this.doCreateKunjunganMTBM()
   }
 
   openTab(tab: string) {
@@ -284,7 +284,7 @@ export class TulisMtbmComponent implements OnInit {
     }
   }
 
-  async doCreateKunjunganMtbm() {
+  async doCreateKunjunganMTBM() {
     this.showLoading()
     this.patientData = await this.getPasien()
     this.cabangData = await this.getCabang()
