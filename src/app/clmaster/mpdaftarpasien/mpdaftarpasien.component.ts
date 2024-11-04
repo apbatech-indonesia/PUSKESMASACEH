@@ -2566,6 +2566,8 @@ jadwal:any='';
   namaprovider: string;
   carinobpjs: string = 'noka'
   showloading: boolean;
+  pstProl:string;
+  pstPrb:string;
 
   cekbpjsv(content,x){
   
@@ -2605,7 +2607,8 @@ jadwal:any='';
                 this.ketaktif = data.response.ketAktif
                 this.kdprovider = data.response.kdProviderPst.kdProvider
                 this.namaprovider = data.response.kdProviderPst.nmProvider
-
+                this.pstProl = data.response.pstProl
+                this.pstPrb= data.response.pstPrb
 
               }else if (data.metaData.code == 204) {
                 this.toastr.error('Kartu Tidak di temukan', 'Eror');
@@ -2619,6 +2622,8 @@ jadwal:any='';
                 this.ketaktif = ""
                 this.kdprovider = ""
                 this.namaprovider = ""
+                this.pstProl = ""
+                this.pstPrb= ""
 
 
                 this.showloading = false;

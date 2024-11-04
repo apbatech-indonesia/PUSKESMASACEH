@@ -1590,6 +1590,9 @@ jeniskelamin:any;
 idsatusehat:any=''
 idpasien:any='';
 noantrianbpjs:any='';
+pstProl:any='';
+pstPrb:any='';
+
 
   tampildata(){
          this.authService.datapasien(this.kdcabang,this.notrans)
@@ -1653,7 +1656,8 @@ noantrianbpjs:any='';
                 
                            
                             this.kdprovider = data.response.kdProviderPst.kdProvider
-                      
+                            this.pstProl = data.response.pstProl
+                            this.pstPrb= data.response.pstPrb
                 
                 
                           }else if (data.metaData.code == 204) {
@@ -3503,16 +3507,16 @@ dari = '0';
               
           if(data.length){
             this.terapiObat = Array.prototype.map.call(data,s=>s.nama).toString();
-            // this.chatService.sendMessage([
-            //   {
-            //     antrian:'0',
-            //     kddokter:'Farmasi',
-            //     namadokter:'Farmasi',
-            //     kdantrian:'A',
-            //     kdcabang :this.kdcabang
-            //   }
+            this.chatService.sendMessage([
+              {
+                antrian:'0',
+                kddokter:'Farmasi',
+                namadokter:'Farmasi',
+                kdantrian:'A',
+                kdcabang :this.kdcabang
+              }
         
-            // ]);
+            ]);
           
           }else{
             this.terapiObat = 'tidak ada obat'
