@@ -132,36 +132,4 @@ export class MtbmService {
       })
     })
   }
-
-  getProvince(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'master/province', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
-
-  getCity(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'master/cities', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
-
-  getDistrict(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'master/district', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
-
-  getSubDistrict(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'master/subDistrict', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
 }

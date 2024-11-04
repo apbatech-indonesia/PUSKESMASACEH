@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ApiserviceService } from 'src/app/apiservice.service';
 
 @Component({

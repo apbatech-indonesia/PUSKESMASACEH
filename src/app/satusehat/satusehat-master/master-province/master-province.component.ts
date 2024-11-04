@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MtbmService } from '../../satusehat-mtbm/services/mtbm.service';
+import { MasterService } from '../services/master.service';
 
 @Component({
   selector: 'app-master-province',
@@ -14,11 +14,11 @@ export class MasterProvinceComponent implements OnInit {
   provinceList: any = []
 
   constructor(
-    private mtbmService: MtbmService
+    private masterService: MasterService
   ) { }
 
   async ngOnInit() {
-    let provinceData: any = await this.mtbmService.getProvince('')
+    let provinceData: any = await this.masterService.getProvince('')
     this.provinceList = [
       { code: '', name: '-- Pilih Provinsi --' },
       ...provinceData.data

@@ -208,7 +208,7 @@ export class TulisImunisasiComponent implements OnInit {
 
   // methods
   ngOnInit() {
-    this.docreateKunjunganMTBS()
+    this.docreateKunjunganImunisasi()
   }
 
   openTab(tab: string) {
@@ -240,13 +240,13 @@ export class TulisImunisasiComponent implements OnInit {
     }
   }
 
-  async docreateKunjunganMTBS() {
+  async docreateKunjunganImunisasi() {
     this.showLoading()
     this.patientData = await this.getPasien()
     this.cabangData = await this.getCabang()
     await this.setIdPasien()
 
-    let response: any = await this.imunisasiService.createKunjunganMTBS({
+    let response: any = await this.imunisasiService.createKunjunganImunisasi({
       data: {
           rmno: this.notransaksi,
           orgId: this.cabangData.kodeorg,
@@ -278,7 +278,7 @@ export class TulisImunisasiComponent implements OnInit {
         }
       }
     }
-    let response: any = await this.imunisasiService.diagnosaMTBS(data)
+    let response: any = await this.imunisasiService.diagnosaImunisasi(data)
     let msg = response.statusMsg.split(': ')
     if(response.statusCode == '00') {
       Swal.fire(msg[0], msg[1], 'success')
@@ -303,7 +303,7 @@ export class TulisImunisasiComponent implements OnInit {
         }
       }
     }
-    let response: any = await this.imunisasiService.tindakanMTBS(data)
+    let response: any = await this.imunisasiService.tindakanImunisasi(data)
     let msg = response.statusMsg.split(': ')
     if(response.statusCode == '00') {
       Swal.fire(msg[0], msg[1], 'success')
@@ -353,10 +353,10 @@ export class TulisImunisasiComponent implements OnInit {
       }
     }
 
-    let response1: any = await this.imunisasiService.keluhanUtamaMTBS(data)
+    let response1: any = await this.imunisasiService.keluhanUtamaImunisasi(data)
     let response2: any = await this.imunisasiService.observationAntropometri(data)
-    let response3: any = await this.imunisasiService.observationTandaVitalMTBS(data)
-    let response4: any = await this.imunisasiService.observationMTBS(data)
+    let response3: any = await this.imunisasiService.observationTandaVitalImunisasi(data)
+    let response4: any = await this.imunisasiService.observationImunisasi(data)
 
     if (response1.statusCode != '00') {
       Swal.fire(`keluhanUtamaMTBS : ${response1.statusMsg.split(': ')[0]}`, response1.statusMsg.split(': ')[1], 'error')

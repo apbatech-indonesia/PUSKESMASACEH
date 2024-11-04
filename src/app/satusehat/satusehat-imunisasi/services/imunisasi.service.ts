@@ -13,25 +13,25 @@ export class ImunisasiService {
 
   constructor(public http: HttpClient) { }
 
-  createKunjunganMTBS(data: any) {
+  createKunjunganImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/createKunjungan', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/createKunjungan', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  createRelatedPersonMTBS(data: any) {
+  createRelatedPersonImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/createRelatedPerson', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/createRelatedPerson', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  keluhanUtamaMTBS(data: any) {
+  keluhanUtamaImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/keluhanUtama', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/keluhanUtama', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
@@ -39,129 +39,98 @@ export class ImunisasiService {
 
   observationAntropometri(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/observationAntropometri', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/observationAntropometri', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  observationTandaVitalMTBS(data: any) {
+  observationTandaVitalImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/observationTandaVital', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/observationTandaVital', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  observationMTBS(data: any) {
+  observationImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/observationMTBS', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/observationimunisasi', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  observationAsiMTBS(data: any) {
+  observationAsiImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/observationAsi', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/observationAsi', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  diagnosaAsiMTBS(data: any) {
+  diagnosaAsiImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/diagnosaAsi', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/diagnosaAsi', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  observationVitaminKMTBS(data: any) {
+  observationVitaminKImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/observationVitaminK', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/observationVitaminK', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  diagnosaMTBS(data: any) {
+  diagnosaImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/diagnosa', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/diagnosa', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  imunisasiMTBS(data: any) {
+  imunisasiImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/imunisasi', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/imunisasi', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  tindakanMTBS(data: any) {
+  tindakanImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/tindakan', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/tindakan', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  tindakLanjutMTBS(data: any) {
+  tindakLanjutImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/tindakLanjut', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/tindakLanjut', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  meninggalkanFaskesMTBS(data: any) {
+  meninggalkanFaskesImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/meninggalkanFaskes', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/meninggalkanFaskes', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  updateKunjunganMTBS(data: any) {
+  updateKunjunganImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'mtbs/updateKunjungan', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/updateKunjungan', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  getProvince(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'master/province', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
-
-  getCity(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'master/cities', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
-
-  getDistrict(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'master/district', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
-
-  getSubDistrict(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'master/subDistrict', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
 }

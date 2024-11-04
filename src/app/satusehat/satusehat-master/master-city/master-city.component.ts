@@ -1,6 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { MtbmService } from '../../satusehat-mtbm/services/mtbm.service';
+import { MasterService } from '../services/master.service';
 
 @Component({
   selector: 'app-master-city',
@@ -16,7 +16,7 @@ export class MasterCityComponent implements OnChanges {
   cityList: any = []
 
   constructor(
-    private mtbmService: MtbmService
+    private masterService: MasterService
   ) { }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -24,7 +24,7 @@ export class MasterCityComponent implements OnChanges {
       let data = {
         province_codes: this.provinceId
       }
-      let cityData: any = await this.mtbmService.getCity(data)
+      let cityData: any = await this.masterService.getCity(data)
       this.cityList = [
         { code: '', name: '-- Pilih Kota --' },
         ...cityData.data

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { MtbmService } from '../../satusehat-mtbm/services/mtbm.service';
+import { MasterService } from '../services/master.service';
 
 @Component({
   selector: 'app-master-sub-district',
@@ -15,7 +15,7 @@ export class MasterSubDistrictComponent implements OnChanges {
   subDistrictList: any = []
 
   constructor(
-    private mtbmService: MtbmService
+    private masterService: MasterService
   ) { }
 
   async ngOnChanges(changes: SimpleChanges) {
@@ -23,7 +23,7 @@ export class MasterSubDistrictComponent implements OnChanges {
       let data = {
         district_codes: this.districtId
       }
-      let subDistrictData: any = await this.mtbmService.getSubDistrict(data)
+      let subDistrictData: any = await this.masterService.getSubDistrict(data)
       this.subDistrictList = [
         { code: '', name: '-- Pilih Kelurahan --' },
         ...subDistrictData.data
