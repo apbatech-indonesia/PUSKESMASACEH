@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-6 mt-3">
+    <div class="col-12 mt-3">
         <label for="cari_vaccine" class="form-label">Cari Vaccine</label>
         <div class="input-group">
             <div class="input-group-prepend">
@@ -11,7 +11,9 @@
             <div class="input-group mb-3">
                 <input type="text" class="form-control" [(ngModel)]="searchVaccineText" (keyup)="cariVaccine()" id="cari_vaccine" placeholder="{{ searchVaccineText }}">
                 <div class="input-group-append">
-                    <a href="javascript:;" class="btn btn-danger" (click)="deletedItem.emit()">x</a>
+                    <a href="javascript:;" class="btn btn-danger px-3" (click)="deletedItem.emit()">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
                 </div>
             </div>
         </div>

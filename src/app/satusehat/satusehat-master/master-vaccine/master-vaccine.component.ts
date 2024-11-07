@@ -27,7 +27,7 @@ export class MasterVaccineComponent implements OnInit {
       key_name: `${this.searchVaccineBy}|is_active`,
       key_operator: "like|=",
       key_value: `${this.searchVaccineText}|1`,
-      show_parent: "no" , 
+      show_parent: "yes" , 
       show_child: "yes" , 
       max_row: 5,
       order_by: "terminology_name",

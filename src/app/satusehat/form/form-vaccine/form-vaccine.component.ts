@@ -29,6 +29,7 @@ export class FormVaccineComponent implements OnInit {
   addVaccine()
    {
     const vaccineForm = this.fb.group({
+        source: [''],
         vaccine_code: [''],
         vaccine_display: [''],
     });
@@ -44,6 +45,7 @@ export class FormVaccineComponent implements OnInit {
   }
   
   onChange(vaccineForm: any, data: any) {
+    vaccineForm.controls['source'].setValue(data.source.source_url);
     vaccineForm.controls['vaccine_code'].setValue(data.terminology_code);
     vaccineForm.controls['vaccine_display'].setValue(data.terminology_name);
     this.vaccineList.emit(this.form.controls["vaccine"].value);
