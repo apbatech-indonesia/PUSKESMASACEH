@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TulisMtbsComponent } from '../../satusehat-mtbs/form/tulis-mtbs.component';
 
+import { FormVaccineComponent } from './form-vaccine.component';
 
-describe('TulisMtbsComponent', () => {
-  let component: TulisMtbsComponent;
-  let fixture: ComponentFixture<TulisMtbsComponent>;
+describe('FormVaccineComponent', () => {
+  let component: FormVaccineComponent;
+  let fixture: ComponentFixture<FormVaccineComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TulisMtbsComponent ]
+      declarations: [ FormVaccineComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TulisMtbsComponent);
+    fixture = TestBed.createComponent(FormVaccineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

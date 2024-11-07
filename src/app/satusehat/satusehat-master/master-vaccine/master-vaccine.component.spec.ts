@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TulisMtbsComponent } from '../../satusehat-mtbs/form/tulis-mtbs.component';
+import { MasterVaccineComponent } from './master-vaccine.component';
 
 
-describe('TulisMtbsComponent', () => {
-  let component: TulisMtbsComponent;
-  let fixture: ComponentFixture<TulisMtbsComponent>;
+describe('MasterVaccineComponent', () => {
+  let component: MasterVaccineComponent;
+  let fixture: ComponentFixture<MasterVaccineComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TulisMtbsComponent ]
+      declarations: [ MasterVaccineComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TulisMtbsComponent);
+    fixture = TestBed.createComponent(MasterVaccineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

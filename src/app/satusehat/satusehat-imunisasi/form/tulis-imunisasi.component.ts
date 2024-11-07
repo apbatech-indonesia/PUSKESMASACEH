@@ -44,9 +44,10 @@ export class TulisImunisasiComponent implements OnInit {
     namdokter: '-',
     alamat: '-'
   }
-  observationAntropometri: FormGroup
+  formObservation: FormGroup
   formDiagnosa: FormGroup
   formTindakan: FormGroup
+  formPelaporanImunisasi: FormGroup
   formUpdateKunjungan: FormGroup
   
 
@@ -57,36 +58,82 @@ export class TulisImunisasiComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder
   ) { 
-    this.observationAntropometri = this.fb.group({
-      berat_badan: [''],
-      tinggi_badan: [''],
-      lingkar_lengan_atas: [''],
-      lingkar_kepala: ['']
+    this.formObservation = this.fb.group({
+      status_pregnant_code: ['LA15173-0'],
+      status_pregnant_display: ['not pregnant'],
+      status_sekolah_code: ['OV000320'],
+      status_sekolah_display: ['tidak sekolah'],
+      unit: ['']
     })
 
     this.formDiagnosa = this.fb.group({
-      primary_code: [''],
-      primary_note: [''],
-      secondary_code: [''],
-      secondary_note: ['']
+      diagnosa_code: [''],
+      diagnosa_display: ['']
     })
 
     this.formTindakan = this.fb.group({
-      xray_note: [''],
-      terapetik_note: [''],
-      counselling_note: ['']
+      procedure_code: [''],
+      procedure_display: [''],
     })
 
+    this.formPelaporanImunisasi = this.fb.group({
+      imunisasi_tidak_disetujui: [false],
+      imunisasi_alasan_tidak_disetujui: [''],
+      imunisasi_by_nakes: [''],
+      imunisasi_kipi_by_nakes: [''],
+      imunisasi_kipi_by_pasien: [''],
+      imunisasi_by_kader: ['']
+    })
+
+
     this.formUpdateKunjungan = this.fb.group({
+      status: ['finished'],
       start_period: [''],
       end_period: [''],
-      disposition_code: [''],
-      hospitalization_text: ['']
+      diagnosis_display: ['']
     })
   }
 
   // methods
   ngOnInit() {
+    // this.formPelaporanImunisasi.patchValue({
+    //   imunisasi_by_nakes: [
+    //     {
+    //       vaccine_code: "33.51",
+    //       vaccine_display: "test 1"
+    //     },
+    //     {
+    //       vaccine_code: "33.52",
+    //       vaccine_display: "test 2"
+    //     },
+    //     {
+    //       vaccine_code: "33.53",
+    //       vaccine_display: "test 3"
+    //     },
+    //     {
+    //       vaccine_code: "33.54",
+    //       vaccine_display: "test 4"
+    //     },
+    //   ],
+    //   imunisasi_kipi_by_nakes: [
+    //     {
+    //       vaccine_code: "33.50",
+    //       vaccine_display: "Lung transplantation, not otherwise specified 33.51"
+    //     }
+    //   ],
+    //   imunisasi_kipi_by_pasien: [
+    //     {
+    //       vaccine_code: "33.50",
+    //       vaccine_display: "Lung transplantation, not otherwise specified 33.51"
+    //     }
+    //   ],
+    //   imunisasi_by_kader: [
+    //     {
+    //       vaccine_code: "33.50",
+    //       vaccine_display: "Lung transplantation, not otherwise specified 33.51"
+    //     }
+    //   ],
+    // })
     this.docreateKunjunganImunisasi()
   }
 
@@ -110,7 +157,11 @@ export class TulisImunisasiComponent implements OnInit {
       break
 
       case 'form-diagnosa':
-        this.doSubmitDiagnosa() 
+        this.doSubmitDiagnosa()
+      break
+
+      case 'form-pelaporan-imunisasi':
+        this.doSubmitPelaporanImunisasi() 
       break
 
       case 'form-tindakan':
@@ -191,7 +242,7 @@ export class TulisImunisasiComponent implements OnInit {
     }
   }
 
-  async doSubmitObservasi() {
+  async doSubmitPelaporanImunisasi() {
     this.showLoading()
     this.patientData = await this.getPasien()
     this.cabangData = await this.getCabang()
@@ -202,28 +253,85 @@ export class TulisImunisasiComponent implements OnInit {
         rmno: this.notransaksi,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
+        reportImunisasi: {
+          ...this.formPelaporanImunisasi.value
+        }
+      }
+    }
+    let response: any = await this.imunisasiService.reportImunisasiImunisasi(data)
+    let msg = response.statusMsg.split(': ')
+    if(response.statusCode == '00') {
+      Swal.fire(msg[0], msg[1], 'success')
+    } else {
+      Swal.fire(msg[0], msg[1], 'error')
+    }
+  }
+  
+  async doSubmitObservasi(){
+    let data = {
+      data: {
+        rmno: this.notransaksi,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
         observation: {
-          ...this.observationAntropometri.value
+          ...this.formObservation.value
+        },
+        diagnosa: {
+          ...this.formDiagnosa.value
+        },
+        tindakan: {
+          ...this.formTindakan.value
+        },
+        reportImunisasi: {
+          ...this.formPelaporanImunisasi.value
+        },
+        update_data: {
+          ...this.formUpdateKunjungan.value
         }
       }
     }
 
+    this.showLoading()
     let response1: any = await this.imunisasiService.observationImunisasi(data)
+    let response2: any = await this.imunisasiService.diagnosaImunisasi(data)
+    let response3: any = await this.imunisasiService.tindakanImunisasi(data)
+    let response4: any = await this.imunisasiService.reportImunisasiImunisasi(data)
+    let response5: any = await this.imunisasiService.updateKunjunganImunisasi(data)
+    
     if (response1.statusCode != '00') {
-      Swal.fire(`keluhanUtamaMTBS : ${response1.statusMsg.split(': ')[0]}`, response1.statusMsg.split(': ')[1], 'error')
+      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
+    }
+    else if(
+      response2.statusCode != '00'
+    ) {
+      Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
+    }
+    else if(
+      response3.statusCode != '00'
+    ) {
+      Swal.fire(response3.statusMsg.split(': ')[0], response3.statusMsg.split(': ')[1], 'error')
+    }
+    else if(
+      response4.statusCode != '00'
+    ) {
+      Swal.fire(response4.statusMsg.split(': ')[0], response4.statusMsg.split(': ')[1], 'error')
+    }
+    else if(
+      response5.statusCode != '00'
+    ) {
+      Swal.fire(response5.statusMsg.split(': ')[0], response5.statusMsg.split(': ')[1], 'error')
     }
     
-    else if (
-      response1.statusCode == '00'
+    else if(
+      response1.statusCode == '00' && 
+      response2.statusCode == '00' && 
+      response3.statusCode == '00' && 
+      response4.statusCode == '00' && 
+      response5.statusCode == '00'
     ) {
       Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
-    }
-    else {
-      this.stopLoading()
-    }
-    this.getDataPatient()
+    } 
   }
-  
 
   async setIdPasien() {
     if (!this.patientData.idpasien) {
@@ -247,15 +355,16 @@ export class TulisImunisasiComponent implements OnInit {
       patientId: this.idpasien,
       rmno: this.notransaksi,
       usecase_id: this.useCaseId,
-      type: "MTBS",
+      type: "IMUNISASI",
       status: "active"
     })
 
     let patient = response.data
     if (patient) {
-      this.observationAntropometri.patchValue(patient.observation)
+      this.formObservation.patchValue(patient.observation)
       this.formDiagnosa.patchValue(patient.diagnosa)
       this.formTindakan.patchValue(patient.tindakan)
+      this.formPelaporanImunisasi.patchValue(patient.report_imunisasi)
       this.formUpdateKunjungan.patchValue(patient.update_data)
     }
     this.stopLoading()

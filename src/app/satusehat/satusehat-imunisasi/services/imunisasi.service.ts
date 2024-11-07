@@ -23,7 +23,7 @@ export class ImunisasiService {
 
   observationImunisasi(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'imunisasi/createObservation', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'imunisasi/observation', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
@@ -56,6 +56,14 @@ export class ImunisasiService {
   updateKunjunganImunisasi(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'imunisasi/updateKunjungan', data, { headers: this.headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
+  getMasterImunisasi(data: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehatUrl + 'terminologi/search', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
