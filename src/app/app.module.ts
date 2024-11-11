@@ -144,16 +144,18 @@ import { PersetujuanTindakanMedisComponent } from './clmaster/Assesment/Medis/Pe
 import { kajianperawatComponent } from './clmaster/Assesment/kajianperawat/kajianperawat.component';
 import { riwayatkunjunganComponent } from './clmaster/Assesment/riwayatkunjungan/riwayatkunjungan.component';
 import { anjungansehatComponent } from './cllogin/anjungansehat/anjungansehat.component';
-import { TulisAncComponent } from './tulis-anc/tulis-anc.component';
-import { TulisMtbmComponent } from './tulis-mtbm/tulis-mtbm.component';
-import { MasterProvinceComponent } from './satusehat-master/master-province/master-province.component';
-import { MasterCityComponent } from './satusehat-master/master-city/master-city.component';
-import { MasterDistrictComponent } from './satusehat-master/master-district/master-district.component';
-import { MasterSubDistrictComponent } from './satusehat-master/master-sub-district/master-sub-district.component';
-import { MasterDiagnosaComponent } from './satusehat-master/master-diagnosa/master-diagnosa.component';
-import { MasterTindakanComponent } from './satusehat-master/master-tindakan/master-tindakan.component';
-import { TulisMtbsComponent } from './tulis-mtbs/tulis-mtbs.component';
-
+import { TulisAncComponent } from './satusehat/satusehat-anc/form/tulis-anc.component';
+import { TulisMtbmComponent } from './satusehat/satusehat-mtbm/form/tulis-mtbm.component';
+import { TulisMtbsComponent } from './satusehat/satusehat-mtbs/form/tulis-mtbs.component';
+import { TulisImunisasiComponent } from './satusehat/satusehat-imunisasi/form/tulis-imunisasi.component';
+import { MasterProvinceComponent } from './satusehat/satusehat-master/master-province/master-province.component';
+import { MasterCityComponent } from './satusehat/satusehat-master/master-city/master-city.component';
+import { MasterDistrictComponent } from './satusehat/satusehat-master/master-district/master-district.component';
+import { MasterSubDistrictComponent } from './satusehat/satusehat-master/master-sub-district/master-sub-district.component';
+import { MasterDiagnosaComponent } from './satusehat/satusehat-master/master-diagnosa/master-diagnosa.component';
+import { MasterTindakanComponent } from './satusehat/satusehat-master/master-tindakan/master-tindakan.component';
+import { FormVaccineComponent } from './satusehat/form/form-vaccine/form-vaccine.component';
+import { MasterVaccineComponent } from './satusehat/satusehat-master/master-vaccine/master-vaccine.component';
 @NgModule({
   declarations: [
 
@@ -217,13 +219,15 @@ import { TulisMtbsComponent } from './tulis-mtbs/tulis-mtbs.component';
      TulisAncComponent,
      TulisMtbmComponent,
      TulisMtbsComponent,
+     TulisImunisasiComponent,
      MasterProvinceComponent,
      MasterCityComponent,
      MasterDistrictComponent,
      MasterSubDistrictComponent,
      MasterDiagnosaComponent,
-     MasterTindakanComponent
-
+     MasterTindakanComponent,
+     MasterVaccineComponent,
+     FormVaccineComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

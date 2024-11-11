@@ -1,0 +1,21 @@
+<h4 *ngIf="title">
+    {{title}}
+    <span
+        *ngIf="vaccine.length < max" 
+        class="btn btn-success px-1 py-0" (click)="addVaccine()">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Tambah Vaccine
+    </span>
+</h4>
+
+<div class="add-vaccine-form" [formGroup]="form" class="form-group">
+    <ng-container formArrayName="vaccine">
+        <ng-container *ngFor="let vaccineForm of vaccine.controls; let i = index">
+            <app-master-vaccine
+                [searchVaccineText]="vaccineForm.value.vaccine_display"
+                (selectedItem)="onChange(vaccineForm, $event);"
+                (deletedItem)="deleteVaccine(i);">
+            </app-master-vaccine>
+        </ng-container>
+    </ng-container>
+</div>

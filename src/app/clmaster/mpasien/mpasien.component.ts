@@ -939,11 +939,9 @@ this.namalurah = 'Propinsi'
     this.pasien='';
 
     this.tempatlahir='';
-    this.an='';
     this.kelamin='';
     this.alamat='';
     this.alamats='';
-    this.indetitas='';
     this.noindetitas='';
     this.nohp='';
     this.agama='TIDAK TAHU';

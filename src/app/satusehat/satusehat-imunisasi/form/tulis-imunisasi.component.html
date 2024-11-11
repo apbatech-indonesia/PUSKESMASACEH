@@ -1,0 +1,317 @@
+<div>
+    <div class="app-inner-layout" style="margin: 0 auto; padding:20px">
+      <div class="app-inner-layout__header-boxed p-0">
+        <div class="app-inner-layout__header page-title-icon-rounded text-white bg-royal mb-4">
+          <div class="app-page-title">
+            <div class="page-title-wrapper">
+              <div class="page-title-heading">
+                <div class="page-title-icon"><b style="color:black;">{{ patientData.noantrian }}</b></div>
+                <div>
+                  {{ patientData.norm }} | {{ patientData.pasien }}
+                  <div style="font-size: 14px;">{{ patientData.umur }} | {{ patientData.tgllahir }} | <span class="badge rounded-pill bg-light">{{ patientData.jeniskelamin }}</span> </div>
+                  <div style="font-size: 14px;">{{ patientData.nampoli }} | {{ patientData.costumer }}</div>
+                  <div style="font-size: 14px;">{{ patientData.namdokter }}</div>
+                  <div style="font-size: 14px;">{{ patientData.alamat }}</div>
+                </div>
+              </div>
+              <div class="page-title-actions">
+                <button class="btn btn-info btn-icon" routerLink="/master/satusehat-imunisasi">
+                  <span class="pe-2 opacity-7">
+                    <fa-icon [icon]="faCog"></fa-icon>
+                  </span>
+                  Kembali
+                </button>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link {{ activeTab == 'form-observasi-imunisasi' ? 'active' : '' }}" href="javascript:;" (click)="openTab('form-observasi-imunisasi')">Form Observasi</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="mb-3" *ngIf="activeTab == 'form-observasi-imunisasi'">
+        <div class="container">
+          <form [formGroup]="formObservation">
+            <!-- Observasi -->
+            <div class="row">
+              <div class="col-12 my-3">
+                <h3>Observasi</h3>
+              </div>
+              <div class="col-12">
+                <div class="position-relative mb-3">
+                  <label for="berat_badan" class="form-label">Status Pregnant Code</label>
+                  <input type="text" class="form-control" id="status_pregnant_code" formControlName="status_pregnant_code" disabled>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="position-relative mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
+                    <label class="form-check-label" for="hamil">Hamil</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
+                    <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="position-relative mb-3">
+                  <label for="status_pregnant_display" class="form-label">Status Sekolah Code</label>
+                  <input type="text" class="form-control" id="status_sekolah_code" formControlName="status_sekolah_code" disabled>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="position-relative mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" id="sekolah" value="sekolah" formControlName="status_sekolah_display">
+                    <label class="form-check-label" for="sekolah">Sekolah</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" id="tidaksekolah" value="tidak sekolah" formControlName="status_sekolah_display">
+                    <label class="form-check-label" for="tidaksekolah">Tidak Sekolah</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-12 my-3">
+              <h3>Diagnosis Kunjungan</h3>
+            </div>
+            <form [formGroup]="formDiagnosa">
+              <app-master-diagnosa
+                [searchDiagnosaText]="formDiagnosa.value.diagnosa_display"
+                (selectedItem)=" 
+                formDiagnosa.controls['diagnosa_code'].setValue($event.kddiagnosa);
+                formDiagnosa.controls['diagnosa_display'].setValue($event.diagnosa);
+                ">
+              </app-master-diagnosa>
+            </form>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-12 my-3">
+              <h3>Tindakan</h3>
+            </div>
+          </div>
+          
+          <form [formGroup]="formTindakan">
+            <app-master-tindakan
+              [searchTindakanText]="formTindakan.value.procedure_display"
+              (selectedItem)="
+              formTindakan.controls['procedure_code'].setValue($event.kdtindakan);
+              formTindakan.controls['procedure_display'].setValue($event.tindakan);
+              ">
+            </app-master-tindakan>
+          </form>
+        </div>
+
+        <div class="container">
+          <form [formGroup]="formPelaporanImunisasi">
+            <!-- Section 02 - Imunisasi Tidak Disetujui oleh Pasien/Keluarga Pasien -->
+            <div class="row">
+              <div class="col-12 my-3">
+                <h3>Imunisasi Tidak Disetujui oleh Pasien/Keluarga Pasien</h3>
+              </div>
+              <div class="col-12">
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" id="hamil" formControlName="imunisasi_tidak_disetujui">
+                  <label class="form-check-label" for="hamil">Imunisasi Tidak Disetujui</label>
+                </div>
+              </div>
+              <div class="col-6" *ngIf="formPelaporanImunisasi.value.imunisasi_tidak_disetujui">
+                <div class="position-relative">
+                  <label for="imunisasi_alasan_tidak_disetujui" class="form-label">Alasan Tidak Disetujui</label>
+                  <input type="text" class="form-control" id="imunisasi_alasan_tidak_disetujui" formControlName="imunisasi_alasan_tidak_disetujui">
+                </div>
+              </div>
+            </div>
+
+            <!-- Section 01 - Imunisasi Dilakukan oleh Nakes -->
+            <div class="row" *ngIf="!formPelaporanImunisasi.value.imunisasi_tidak_disetujui">
+              <div class="col-12 my-3">
+                <app-form-vaccine
+                  [title]="'Imunisasi Dilakukan oleh Nakes'"
+                  (vaccineList)="formPelaporanImunisasi.controls['imunisasi_by_nakes'].setValue($event)">
+                </app-form-vaccine>
+              </div>
+            </div>
+      
+            <!-- Section 03 - Imunisasi Disertai dengan KIPI -->
+            <div class="row" *ngIf="!formPelaporanImunisasi.value.imunisasi_tidak_disetujui">
+              <div class="col-12 my-3">
+                <h3>Imunisasi Disertai dengan KIPI</h3>
+              </div>
+              
+              <!-- KIPI oleh Nakes -->
+              <div class="col-12 mb-3">
+                <app-form-vaccine
+                  [title]="'KIPI oleh Nakes'"
+                  [list]="formPelaporanImunisasi.value.imunisasi_kipi_by_nakes"
+                  (vaccineList)="formPelaporanImunisasi.controls['imunisasi_kipi_by_nakes'].setValue($event)">
+                </app-form-vaccine>
+              </div>
+      
+              <!-- KIPI oleh Pasien -->
+              <div class="col-12 mb-3">
+                <app-form-vaccine
+                  [title]="'KIPI oleh Pasien'"
+                  [list]="formPelaporanImunisasi.value.imunisasi_kipi_by_pasien"
+                  (vaccineList)="formPelaporanImunisasi.controls['imunisasi_kipi_by_pasien'].setValue($event)">
+                </app-form-vaccine>
+              </div>
+            </div>
+      
+            <!-- Section 04 - Imunisasi Dilaporkan oleh Kader -->
+            <div class="row" *ngIf="!formPelaporanImunisasi.value.imunisasi_tidak_disetujui">
+              <div class="col-12 my-3">
+                <app-form-vaccine
+                  [title]="'Imunisasi Dilaporkan oleh Kader'"
+                  [list]="formPelaporanImunisasi.value.imunisasi_by_kader"
+                  (vaccineList)="formPelaporanImunisasi.controls['imunisasi_by_kader'].setValue($event)">
+                </app-form-vaccine>
+              </div>
+            </div>
+          </form>
+        </div>
+        
+        <div class="container">
+          <form [formGroup]="formUpdateKunjungan">
+            <div class="row">
+              <div class="col-12 my-3">
+                <h3>Informasi Kunjungan</h3>
+              </div>
+
+              <div class="col-6">
+                <div class="position-relative mb-3">
+                  <label for="start_period" class="form-label">Start Period</label>
+                  <input type="date" class="form-control" id="start_period" formControlName="start_period">
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="position-relative mb-3">
+                  <label for="end_period" class="form-label">End Period</label>
+                  <input type="date" class="form-control" id="end_period" formControlName="end_period">
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="position-relative mb-3">
+                  <label for="end_period" class="form-label">Catatan</label>
+                  <input type="text" class="form-control" id="end_period" formControlName="diagnosis_display">
+                </div>
+              </div>
+
+            </div>
+          </form>
+
+        </div>
+      </div>
+      
+      <div class="mb-3">
+        <div class="container">
+          <div class="row">
+            <div class="col-12" align="right">
+              <button class="btn btn-success mx-1" (click)="simpan()" [disabled]="isDisabledFormAnc">
+                <span class="pe-2 opacity-7">
+                  <fa-icon [icon]="faSave"></fa-icon>
+                </span>
+                SIMPAN {{ activeTab.replace('-',' ').toUpperCase() }}
+              </button>
+              <button class="btn btn-danger btn-icon" routerLink="/master/satusehat-imunisasi">
+                <span class="pe-2 opacity-7">
+                  <fa-icon [icon]="faCog"></fa-icon>
+                </span>
+                KEMBALI
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+</div>
+  
+
+<style scoped>
+  /* Styling untuk card-header */
+.card-header {
+    background-color: #343a40; /* Warna gelap */
+    color: white; /* Warna teks putih */
+    font-weight: bold;
+}
+
+/* Styling untuk tombol */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #a71d2a;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Styling untuk form control */
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}
+
+/* Spacing untuk elemen dalam form */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Styling tambahan untuk input radio */
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Styling untuk card body */
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Margin tambahan untuk elemen di dalam card */
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+/* Styling container */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+</style>
+  
