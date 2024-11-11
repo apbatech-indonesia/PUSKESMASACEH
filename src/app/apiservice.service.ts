@@ -2959,6 +2959,14 @@ export class ApiserviceService {
     })
   }
   
+  composition(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "Composition", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+  
   carePlan(data: any, headers: any) {
     return new Promise((resolve) => {
       this.http.post(satusehat + "CarePlan", data, { headers: headers }).subscribe((data) => {
