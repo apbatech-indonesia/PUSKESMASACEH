@@ -12,7 +12,7 @@
     <ng-container formArrayName="vaccine">
         <ng-container *ngFor="let vaccineForm of vaccine.controls; let i = index">
             <app-master-vaccine
-                [searchVaccineText]="vaccineForm.value.vaccine_display"
+                [searchVaccineText]="vaccineForm.value.display"
                 (selectedItem)="onChange(vaccineForm, $event);"
                 (deletedItem)="deleteVaccine(i);">
             </app-master-vaccine>

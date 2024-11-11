@@ -99,38 +99,38 @@ export class TulisImunisasiComponent implements OnInit {
     // this.formPelaporanImunisasi.patchValue({
     //   imunisasi_by_nakes: [
     //     {
-    //       vaccine_code: "33.51",
-    //       vaccine_display: "test 1"
+    //       code: "33.51",
+    //       display: "test 1"
     //     },
     //     {
-    //       vaccine_code: "33.52",
-    //       vaccine_display: "test 2"
+    //       code: "33.52",
+    //       display: "test 2"
     //     },
     //     {
-    //       vaccine_code: "33.53",
-    //       vaccine_display: "test 3"
+    //       code: "33.53",
+    //       display: "test 3"
     //     },
     //     {
-    //       vaccine_code: "33.54",
-    //       vaccine_display: "test 4"
+    //       code: "33.54",
+    //       display: "test 4"
     //     },
     //   ],
     //   imunisasi_kipi_by_nakes: [
     //     {
-    //       vaccine_code: "33.50",
-    //       vaccine_display: "Lung transplantation, not otherwise specified 33.51"
+    //       code: "33.50",
+    //       display: "Lung transplantation, not otherwise specified 33.51"
     //     }
     //   ],
     //   imunisasi_kipi_by_pasien: [
     //     {
-    //       vaccine_code: "33.50",
-    //       vaccine_display: "Lung transplantation, not otherwise specified 33.51"
+    //       code: "33.50",
+    //       display: "Lung transplantation, not otherwise specified 33.51"
     //     }
     //   ],
     //   imunisasi_by_kader: [
     //     {
-    //       vaccine_code: "33.50",
-    //       vaccine_display: "Lung transplantation, not otherwise specified 33.51"
+    //       code: "33.50",
+    //       display: "Lung transplantation, not otherwise specified 33.51"
     //     }
     //   ],
     // })
