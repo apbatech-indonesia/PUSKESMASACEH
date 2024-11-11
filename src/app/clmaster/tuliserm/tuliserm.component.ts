@@ -10076,7 +10076,7 @@ this.showthahem = false;
 
 
             
-                this.authService.getfaskessp(this.sspesialis,this.sarana,this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'))
+                this.authService.getfaskessp(this.sspesialis,this.nsarana,this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'))
                 .subscribe(
                   data => {
                    
@@ -10127,7 +10127,7 @@ this.showthahem = false;
 
 
             
-              this.authService.getfaskessp(this.sspesialis,this.sarana,this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'))
+              this.authService.getfaskessp(this.sspesialis,this.nsarana,this.pipe.transform(this.mydaterujuk, 'dd-MM-yyyy'))
               .subscribe(
                 data => {
                  

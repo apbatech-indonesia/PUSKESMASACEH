@@ -1,7 +1,11 @@
-<div class="h-100 bg-animation" style="background-image: url(./assets/images/clenicbgg.jpg);
-background-repeat: no-repeat;
-background-size: cover;">
-
+<div
+  class="h-100 bg-animation"
+  style="
+    background-image: url(./assets/images/clenicbgg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+  "
+>
   <!-- <div class="d-flex h-100 justify-content-center align-items-center">
     <div class="mx-auto app-login-box col-md-8">
 
@@ -70,58 +74,90 @@ background-size: cover;">
       </div>
     </div>
   </div> -->
-  <div class="row d-flex col-md-12" style="height: 100%;">
+  <div class="row d-flex col-md-12" style="height: 100%">
     <div class="col-md-6" id="content_left">
-      <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
+      <div
+        style="
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        "
+      >
         <div class="row">
           <div class="row col-md-auto">
-            <img src="https://clenicapp.com/clenicv.png" alt="Nature" class="responsive">
+            <img
+              src="https://clenicapp.com/clenicv.png"
+              alt="Nature"
+              class="responsive"
+            />
           </div>
-          <div class="col-md-10" style="width: 100%;"></div>
+          <div class="col-md-10" style="width: 100%"></div>
         </div>
         <div>
           <div class="flex-container">
             <div></div>
-            <div style="flex-basis: 70%; text-align: start; padding: 0px;">
+            <div style="flex-basis: 70%; text-align: start; padding: 0px">
               <div class="column">
                 <h1>Selamat Datang</h1>
                 <h5>
-                  <span style="color: #999ca0;"> Silahkan login untuk masuk ke akun klinik anda</span>
+                  <span style="color: #999ca0">
+                    Silahkan login untuk masuk ke akun klinik anda</span
+                  >
                 </h5>
               </div>
             </div>
             <div></div>
           </div>
-          <br>
+          <br />
           <form [formGroup]="loginForm">
             <div class="flex-container">
               <div></div>
-              <div style="flex-basis: 70%; margin: 0px; padding: 0px;">
-                <div class="form-group" style="padding: 0px; margin: 0px;">
+              <div style="flex-basis: 70%; margin: 0px; padding: 0px">
+                <div class="form-group" style="padding: 0px; margin: 0px">
                   <span>Username</span>
-                  <input [formControl]="loginForm.controls.username" class="form-field" type="text" placeholder="username anda">
+                  <input
+                    [formControl]="loginForm.controls.username"
+                    class="form-field"
+                    type="text"
+                    placeholder="username anda"
+                  />
                 </div>
-                <div style="margin: 16px 0;"></div>
-                <div class="form-group" style="padding: 0px; margin: 0px;">
+                <div style="margin: 16px 0"></div>
+                <div class="form-group" style="padding: 0px; margin: 0px">
                   <span>Password</span>
-                  <input [formControl]="loginForm.controls.password" class="form-field" type="password" placeholder="password anda" >
+                  <input
+                    [formControl]="loginForm.controls.password"
+                    class="form-field"
+                    type="password"
+                    placeholder="password anda"
+                  />
                 </div>
-              
-                <div style="margin: 16px 0;"></div>
-                <div  class="form-group" style="padding: 0px; margin: 0px;">
+
+                <div style="margin: 16px 0"></div>
+                <div class="form-group" style="padding: 0px; margin: 0px">
                   <span>Kode Cabang</span>
-                  <input [formControl]="loginForm.controls.kdcabang" class="form-field" type="text" placeholder="3 digit angka">
+                  <input
+                    [formControl]="loginForm.controls.kdcabang"
+                    class="form-field"
+                    type="text"
+                    placeholder="3 digit angka"
+                  />
                 </div>
               </div>
               <div></div>
             </div>
           </form>
-          <div style="margin: 16px 0;"></div>
+          <div style="margin: 16px 0"></div>
           <div class="flex-container">
             <div></div>
-            <div style="flex-basis: 70%; margin: 0px; padding: 0px;">
-              <button (click)="signUp()" type="submit" class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg"
-                style="background-color: #678EFE;">
+            <div style="flex-basis: 70%; margin: 0px; padding: 0px">
+              <button
+                (click)="signUp()"
+                type="submit"
+                class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg"
+                style="background-color: #678efe"
+              >
                 <span class="me-2 opacity-7">
                   <i class="icon icon-anim-pulse ion-ios-analytics-outline"></i>
                 </span>
@@ -132,19 +168,23 @@ background-size: cover;">
           </div>
         </div>
         <div class="flex-container">
-          <div class="text-black opacity-8 mt-3" style="flex-basis: 60%;">
+          <div class="text-black opacity-8 mt-3" style="flex-basis: 60%">
             <h6><small> Copyright 2024 © Apbatech</small></h6>
           </div>
           <div></div>
           <div class="text-center text-black opacity-8 mt-3">
-            <h4><small>v1.1.39</small></h4>
+            <h4><small>v1.1.41</small></h4>
           </div>
         </div>
       </div>
     </div>
     <div class="column col-md-6" id="content_right">
-      <div class="image-container" style="height: 100%;">
-        <img src="https://clenicapp.com/bpm_helthcre.jpg" alt="Nature" class="illust_responsive">
+      <div class="image-container" style="height: 100%">
+        <img
+          src="https://clenicapp.com/bpm_helthcre.jpg"
+          alt="Nature"
+          class="illust_responsive"
+        />
       </div>
     </div>
   </div>
