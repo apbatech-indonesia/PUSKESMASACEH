@@ -517,6 +517,8 @@ export class MpdaftarpasienComponent implements OnInit {
   dokter: string = "";
   tdokter: any;
   kdpolibpjsku: any;
+  tlistjadwal: any;
+
   pilihklinik(a) {
     this.authService.polibyid(this.kdcabang, a).subscribe(
       (data) => {
@@ -529,6 +531,7 @@ export class MpdaftarpasienComponent implements OnInit {
             .subscribe(
               (data) => {
                 console.log(data);
+                this.tlistjadwal = data;
               },
               (Error) => {
                 console.log(Error);
@@ -591,9 +594,34 @@ export class MpdaftarpasienComponent implements OnInit {
 
   pilihjadwal(a) {
     this.authService.cekjadwal(this.dokter, this.kliniks).subscribe((data) => {
-      this.tjadwal = data;
+      if (data.length) {
+        this.tjadwal = data;
+      } else {
+        this.tjadwal = data;
+        // this.toastr.error(
+        //   "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz"
+        // );
+        // return;
+      }
     });
+
+    this.authService
+      .cekjadwalv222(this.dokter, this.kliniks)
+      .subscribe((data) => {
+        // this.tjadwal = data;
+
+        if (data.length) {
+          this.jadwaltidak = "1";
+          this.listjadwal = data;
+        } else {
+          this.jadwaltidak = "0";
+        }
+      });
   }
+
+  jadwaltidak: any;
+  listjadwal: any;
+
   //  tglp: Date = new Date();
 
   norm: "";
@@ -683,13 +711,23 @@ export class MpdaftarpasienComponent implements OnInit {
     console.log(body);
   }
 
-  simpan() {
+  simpan(content71) {
     if (this.jadwal === "") {
       this.toastr.error("belum memilih jadwal, silahkan memilih jadwal");
       return;
     }
 
     if (this.dash === "BPJS") {
+      if (this.jadwaltidak === "0") {
+        this.toastr.error(
+          "Jadwal Dokter / Poliklinik yang di pilih tidak terdapat jadwal hafis hari ini , silahkan ganti dokter atau tambahkan jadwal dokter terlebih dahulu di hafis"
+        );
+
+        this.modalService.open(content71, {});
+
+        return;
+      }
+
       if (this.noindetitas.length < 16) {
         this.toastr.error("NIK harus 16 digit");
         return;

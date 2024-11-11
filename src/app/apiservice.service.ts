@@ -3157,4 +3157,9 @@ export class ApiserviceService {
       apiurx + "transaksi/cekjadwal.php?kddokter=" + a + "&kodepoliasli=" + b
     );
   }
+  cekjadwalv222(a, b): Observable<any> {
+    return this.http.get(
+      apiurx + "transaksi/cekjadwalv2.php?kddokter=" + a + "&kodepoliasli=" + b
+    );
+  }
 }

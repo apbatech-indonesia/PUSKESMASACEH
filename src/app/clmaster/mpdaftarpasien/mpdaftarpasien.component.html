@@ -458,7 +458,11 @@
                   <option value="">-PILIH-</option>
 
                   <option *ngFor="let x of tdokter" value="{{ x.kddokter }}">
-                    {{ x.namdokter }}
+                    <b> {{ x.namdokter }} </b>
+
+                    <!-- <span *ngIf="x.jadwal === null" style="color: red">
+                      - Jadwal Hafis Tidak Ada
+                    </span> -->
                   </option>
                 </select>
               </div>
@@ -605,7 +609,7 @@
               <button
                 class="mb-2 me-2 btn-pill btn btn-info"
                 [disabled]="!profileForm.valid"
-                (click)="simpan()"
+                (click)="simpan(content71u)"
               >
                 Daftar
               </button>
@@ -1162,6 +1166,39 @@
   </div>
 
   <div class="card-body">
+    <ng-template #content71u let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h6 class="modal-title">Data Jadwal Di HAFIS yang tersedia</h6>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="d('Cross click')"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Dokter/Perawat</th>
+              <th scope="col">Jadwal</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let x of tlistjadwal">
+              <td style="font-size: 12px; color: black">
+                {{ x.namadokter }}
+              </td>
+              <td style="font-size: 12px; color: black">
+                {{ x.jadwal }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+
     <ng-template #content6 let-c="close" let-d="dismiss">
       <div class="modal-header">
         <h6 class="modal-title">List Pasien</h6>
