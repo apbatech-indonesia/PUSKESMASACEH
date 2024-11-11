@@ -284,6 +284,7 @@ listBahasaSelected: string[] = [];
 
 
 
+satusehatheaders:any;
 kduser:any;
   norm :string
   kdpoli:string
@@ -351,10 +352,6 @@ kddoktersatusehat:string='';
 
   ];
 
-
-
- 
-  
   rwtp:any='';
 
   selectedUserIds: number[];
@@ -394,6 +391,12 @@ this.form1 = fb.group({
 this.form2 = fb.group({
   gender: ['', Validators.required]
 });
+
+
+this.satusehatheaders = new HttpHeaders({
+  'kd-cabang': this.kdcabang
+});
+
 this.hak()
 
   }
@@ -2182,17 +2185,33 @@ pilihtindak(kddiagnosa,diagnosa){
           timeOut: 2000,
         });
   
-  setTimeout(() => {
-    this.tampildaigtindakinput()
-  }, 200);
+        setTimeout(() => {
+          this.tampildaigtindakinput()
+        }, 200);
     
   
         this.tindaksshow = false;
         this.tindaksshowicd = false;
-  this.kdtindakan ='';
-  this.tindakan='';
-  this.tindakanicd = ''
-        
+        this.kdtindakan ='';
+        this.tindakan='';
+        this.tindakanicd = ''
+
+        const date = new Date();
+        this.authService.procedure({
+          data: {
+            patientId: this.idpasien,
+            practitionerId: this.kddoktersatusehat,
+            encounterId: this.idsatusehat,
+            patientName: this.pasien,
+            encounterDescription: `kunjungan pasien ${this.pasien}`,
+            performedStartDate: date.toISOString(),
+            performedEndDate: date.toISOString(),
+            practitionerName: this.namdokter,
+            icd9Code: kddiagnosa,
+            icd9Display: diagnosa,
+            note: `kunjungan pasien ${this.pasien}`
+          }
+        }, this.satusehatheaders)
        
        }else{
         this.toastr.error('Simpan  Gagal', 'Eror');
@@ -3404,7 +3423,20 @@ simpanss(){
   }
   
   }
-  
+
+  let dates = new Date()
+  this.authService.carePlan({
+    data: {
+        title: `rencana tindak lanjut pasien ${this.pasien}`,
+        description: `rencana tindak lanjut pasien ${this.pasien}`,
+        patientName: this.pasien,
+        encounterId: this.idsatusehat,
+        patientId: this.idpasien,
+        practitionerId: this.kddoktersatusehat,
+        practitionerName: this.namdokter,
+        date: dates.toISOString()
+    }
+  }, this.satusehatheaders)
   
   this.authService.simpaakhirss(body,headers,this.idsatusehat)
   .subscribe(response => {

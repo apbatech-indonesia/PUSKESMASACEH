@@ -1802,6 +1802,22 @@ export class ApiserviceService {
     return this.http.post(satusehat + "Observation", payload, { headers: headers })
   }
   
+  procedure(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "Procedure", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+  
+  carePlan(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "CarePlan", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
   getdokter(a, heder): Observable<any> {
 
     return this.http.get(satusehat + 'Practitioner?identifier=https://fhir.kemkes.go.id/id/nik|' + a, { headers: heder })
