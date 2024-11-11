@@ -282,8 +282,9 @@ listStatusMentalSelected: string[] = [];
 listResponEmosiSelected: string[] = [];
 listBahasaSelected: string[] = [];
 
+catatandiet: string = ''
 
-
+satusehatheaders:any;
 kduser:any;
   norm :string
   kdpoli:string
@@ -351,10 +352,6 @@ kddoktersatusehat:string='';
 
   ];
 
-
-
- 
-  
   rwtp:any='';
 
   selectedUserIds: number[];
@@ -394,6 +391,12 @@ this.form1 = fb.group({
 this.form2 = fb.group({
   gender: ['', Validators.required]
 });
+
+
+this.satusehatheaders = new HttpHeaders({
+  'kd-cabang': this.kdcabang
+});
+
 this.hak()
 
   }
@@ -1333,6 +1336,7 @@ dataKajianAwal: any
       for (let x of data) {
        
         this.slug = x.slug
+        this.kdorg = x.kodeorg
   
       }
   
@@ -1494,6 +1498,7 @@ setTimeout(() => {
   }
 
   slug:any;
+  kdorg:any;
 
   talergibpjs(){
     this.authService.alergis('01')
@@ -1830,6 +1835,7 @@ ksehatxl(){
             this.stspulang = x.stspulang,
             this.alergiudara = x.alergiudara,
             this.alergiobat = x.alergiobat,
+            this.catatandiet = x.catatandiet,
             this.kdprognosa = x.kdprognosa,
             this.terapinonobat = x.terapinonobat
             this.lingkarperut = x.lp
@@ -2182,18 +2188,35 @@ pilihtindak(kddiagnosa,diagnosa){
           timeOut: 2000,
         });
   
-  setTimeout(() => {
-    this.tampildaigtindakinput()
-  }, 200);
+        setTimeout(() => {
+          this.tampildaigtindakinput()
+        }, 200);
     
   
         this.tindaksshow = false;
         this.tindaksshowicd = false;
-  this.kdtindakan ='';
-  this.tindakan='';
-  this.tindakanicd = ''
-        
-       
+        this.kdtindakan ='';
+        this.tindakan='';
+        this.tindakanicd = ''
+
+        if (this.idsatusehat) {
+          const date = new Date();
+          this.authService.procedure({
+            data: {
+              patientId: this.idpasien,
+              practitionerId: this.kddoktersatusehat,
+              encounterId: this.idsatusehat,
+              patientName: this.pasien,
+              encounterDescription: `kunjungan pasien ${this.pasien}`,
+              performedStartDate: date.toISOString(),
+              performedEndDate: date.toISOString(),
+              practitionerName: this.namdokter,
+              icd9Code: kddiagnosa,
+              icd9Display: diagnosa,
+              note: `kunjungan pasien ${this.pasien}`
+            }
+          }, this.satusehatheaders)
+        }
        }else{
         this.toastr.error('Simpan  Gagal', 'Eror');
       
@@ -3404,7 +3427,43 @@ simpanss(){
   }
   
   }
-  
+
+  if (this.idsatusehat) {
+    let dates = new Date()
+
+    // rencana tindak lanjut
+    this.authService.carePlan({
+      data: {
+          title: `rencana tindak lanjut pasien ${this.pasien}`,
+          description: `rencana tindak lanjut pasien ${this.pasien}`,
+          patientName: this.pasien,
+          encounterId: this.idsatusehat,
+          patientId: this.idpasien,
+          practitionerId: this.kddoktersatusehat,
+          practitionerName: this.namdokter,
+          date: new Date(this.myDatekon).toISOString()
+      }
+    }, this.satusehatheaders)
+
+    // resume diet
+    this.authService.composition({
+      data: {
+          orgId: this.kdorg,
+          patientId: this.idpasien,
+          patientName: this.pasien,
+          encounterId: this.idsatusehat,
+          encounterDescription: this.subjek,
+          practitionerId: this.kddoktersatusehat,
+          practitionerName: this.namdokter,
+          date: dates.toISOString(),
+          tittle: `diet untuk pasien ${this.pasien}`,
+          tambahan: `diet untuk pasien ${this.pasien}`,
+          system: "http://loinc.org",
+          code: "42344-2",
+          display: this.catatandiet || "Discharge diet (narrative)"
+      }
+    }, this.satusehatheaders)
+  }
   
   this.authService.simpaakhirss(body,headers,this.idsatusehat)
   .subscribe(response => {
@@ -3469,8 +3528,7 @@ dari = '0';
           "imt":this.imt,"riwayatdahulu":this.riwayatdahulu,"riwayatkeluarga":this.riwayatkeluarga,
           "alergiudara":this.alergiudara,"alergiobat":this.alergiobat,"terapiObat":this.terapiObat,
           "terapinonobat":this.terapinonobat,"lingkarperut":this.lingkarperut,
-          "kdprognosa":this.kdprognosa,"bmhp":this.bmhp
-        
+          "kdprognosa":this.kdprognosa,"bmhp":this.bmhp,"catatandiet": this.catatandiet
         }
 
 
