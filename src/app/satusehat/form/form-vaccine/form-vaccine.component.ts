@@ -29,9 +29,9 @@ export class FormVaccineComponent implements OnInit {
   addVaccine()
    {
     const vaccineForm = this.fb.group({
-        source: [''],
-        vaccine_code: [''],
-        vaccine_display: [''],
+        system: [''],
+        code: [''],
+        display: [''],
     });
   
     if (this.vaccine.length < this.max) {
@@ -45,9 +45,9 @@ export class FormVaccineComponent implements OnInit {
   }
   
   onChange(vaccineForm: any, data: any) {
-    vaccineForm.controls['source'].setValue(data.source.source_url);
-    vaccineForm.controls['vaccine_code'].setValue(data.terminology_code);
-    vaccineForm.controls['vaccine_display'].setValue(data.terminology_name);
+    vaccineForm.controls['system'].setValue(data.source.source_url);
+    vaccineForm.controls['code'].setValue(data.terminology_code);
+    vaccineForm.controls['display'].setValue(data.terminology_name);
     this.vaccineList.emit(this.form.controls["vaccine"].value);
   }
 
@@ -55,8 +55,8 @@ export class FormVaccineComponent implements OnInit {
     if (this.list.length != 0) {
       this.list.forEach(item => {
         const vaccineForm = this.fb.group({
-          vaccine_code: [item.vaccine_code],
-          vaccine_display: [item.vaccine_display],
+          code: [item.code],
+          display: [item.display],
         })
         this.vaccine.push(vaccineForm)
       })
