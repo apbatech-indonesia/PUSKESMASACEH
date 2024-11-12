@@ -718,14 +718,17 @@ export class MpdaftarpasienComponent implements OnInit {
     }
 
     if (this.dash === "BPJS") {
-      if (this.jadwaltidak === "0") {
-        this.toastr.error(
-          "Jadwal Dokter / Poliklinik yang di pilih tidak terdapat jadwal hafis hari ini , silahkan ganti dokter atau tambahkan jadwal dokter terlebih dahulu di hafis"
-        );
+      console.log(this.kdpolibpjsku);
+      if (this.kdpolibpjsku != "998") {
+        if (this.jadwaltidak === "0") {
+          this.toastr.error(
+            "Jadwal Dokter / Poliklinik yang di pilih tidak terdapat jadwal hafis hari ini , silahkan ganti dokter atau tambahkan jadwal dokter terlebih dahulu di hafis"
+          );
 
-        this.modalService.open(content71, {});
+          this.modalService.open(content71, {});
 
-        return;
+          return;
+        }
       }
 
       if (this.noindetitas.length < 16) {
