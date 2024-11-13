@@ -215,8 +215,9 @@
 
 
                   <ng-select *ngIf="!showtomboledit"   #select   [items]="tobat" bindLabel="obatx"  bindValue="kdobat" 
-                placeholder="Obat" [(ngModel)]="nmobat" (keyup)="cariobat($event)"  (keyup.enter)="onobat($event)"  (click)="onobat($event)">
+                placeholder="Obat" [(ngModel)]="nmobat" (keyup)="cariobat($event)"  (keyup.enter)="onobat($event)"  (click)="onobat($event)" (change)="pilihObat($event)">
                 </ng-select>
+                <h1>{{nmobatx}}</h1>
                
                 <b *ngIf="showtomboledit"  >{{namaobat}}</b>
 

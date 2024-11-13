@@ -2946,4 +2946,8 @@ klikcekobatbpjs(){
   )
 }
 
+  pilihObat(data: any) {
+    console.log(data.obatx)
+  }
+
 }

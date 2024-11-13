@@ -300,7 +300,7 @@ kduser:any;
   namacus:''
   costumer:''
   alamat:string = ''
-  alergi:string='00';
+  alergi:string='00::Tidak ada';
 
   kdtarif:''
   notrans:string;
@@ -1276,7 +1276,6 @@ dariklik:any;
 
 dataKajianAwal: any
   ngOnInit() {
-
     this.onResetForm()
     this.onPenurunanBBChange()
 
@@ -1328,6 +1327,7 @@ dataKajianAwal: any
   this.tmptrans()
   this.tmpkonsul()
   this.tmpku()
+  
   this.authService.cabangper(this.kdklinik)
   .subscribe(
     data => {
@@ -1845,7 +1845,7 @@ ksehatxl(){
         }else{
           this.lingkarperut =0
           this.stspulang='3'
-          this.alergi ='00'
+          this.alergi ='00::Tidak ada'
           this.kdprognosa='01'
         }
 
@@ -3110,7 +3110,6 @@ console.log("obatst"+this.stspulang)
           return
         }
         if(this.alergi === ''){
-
           this.toastr.error('alergi makanan harus di isi', 'Eror');
        
           return
@@ -3429,78 +3428,137 @@ simpanss(){
   }
 
   if (this.idsatusehat) {
-    let dates = new Date()
+    this.authService.simpaakhirss(body,headers,this.idsatusehat)
+      .subscribe(response => { console.log(response) })  
 
-    // rencana tindak lanjut
-    this.authService.carePlan({
-      data: {
-          title: `rencana tindak lanjut pasien ${this.pasien}`,
-          description: `rencana tindak lanjut pasien ${this.pasien}`,
-          patientName: this.pasien,
-          encounterId: this.idsatusehat,
-          patientId: this.idpasien,
-          practitionerId: this.kddoktersatusehat,
-          practitionerName: this.namdokter,
-          date: new Date(this.myDatekon).toISOString()
-      }
-    }, this.satusehatheaders)
-
-    // resume diet
-    this.authService.composition({
-      data: {
-          orgId: this.kdorg,
-          patientId: this.idpasien,
-          patientName: this.pasien,
-          encounterId: this.idsatusehat,
-          encounterDescription: this.subjek,
-          practitionerId: this.kddoktersatusehat,
-          practitionerName: this.namdokter,
-          date: dates.toISOString(),
-          tittle: `diet untuk pasien ${this.pasien}`,
-          tambahan: `diet untuk pasien ${this.pasien}`,
-          system: "http://loinc.org",
-          code: "42344-2",
-          display: this.catatandiet || "Discharge diet (narrative)"
-      }
-    }, this.satusehatheaders)
+      this.simpanSatusehat()
   }
-  
-  this.authService.simpaakhirss(body,headers,this.idsatusehat)
-  .subscribe(response => {
+}
 
-    console.log(response)
-  }
-  )  
-
-
-
+async simpanSatusehat(){
   const date = new Date();
-  if(this.idpasien) {
-    this.authService.observation({
-      data: {
-          patientId: this.idpasien,
-          practitionerId: this.kddoktersatusehat,
-          encounterId: this.idsatusehat,
-          encounterDescription: this.subjekp,
-          effectiveDateTime: date.toISOString(),
-          issuedDate: date.toISOString(),
-          heartRate: this.hr,
-          responsiveness: this.kesadaran,
-          bodyTemperature: this.suhu,
-          respiratoryRate: this.rr,
-          systolic: this.td,
-          diastolic: this.tdd,
-          hemoglobinSaturationOxygen: this.spo,
-          bodyHeight: this.tb,
-          bodyWeight: this.bb,
-          bodyMassIndex: this.imt
-      }
-    }, headers).subscribe(response => {
-      console.log("observation : "+response)
-    })  
-  }
 
+  // observation
+  let observationResponse: any = await this.authService.observation({
+    data: {
+        patientId: this.idpasien,
+        practitionerId: this.kddoktersatusehat,
+        encounterId: this.idsatusehat,
+        encounterDescription: this.subjekp,
+        effectiveDateTime: date.toISOString(),
+        issuedDate: date.toISOString(),
+        heartRate: this.hr,
+        responsiveness: this.kesadaran,
+        bodyTemperature: this.suhu,
+        respiratoryRate: this.rr,
+        systolic: this.td,
+        diastolic: this.tdd,
+        hemoglobinSaturationOxygen: this.spo,
+        bodyHeight: this.tb,
+        bodyWeight: this.bb,
+        bodyMassIndex: this.imt
+    }
+  }, this.satusehatheaders)
 
+  // rencana tindak lanjut
+  this.authService.carePlan({
+    data: {
+        title: `rencana tindak lanjut pasien ${this.pasien}`,
+        description: `rencana tindak lanjut pasien ${this.pasien}`,
+        patientName: this.pasien,
+        encounterId: this.idsatusehat,
+        patientId: this.idpasien,
+        practitionerId: this.kddoktersatusehat,
+        practitionerName: this.namdokter,
+        date: new Date(this.myDatekon).toISOString()
+    }
+  }, this.satusehatheaders)
+
+  // resume diet
+  this.authService.composition({
+    data: {
+        orgId: this.kdorg,
+        patientId: this.idpasien,
+        patientName: this.pasien,
+        encounterId: this.idsatusehat,
+        encounterDescription: this.subjek,
+        practitionerId: this.kddoktersatusehat,
+        practitionerName: this.namdokter,
+        date: date.toISOString(),
+        tittle: `diet untuk pasien ${this.pasien}`,
+        tambahan: `diet untuk pasien ${this.pasien}`,
+        system: "http://loinc.org",
+        code: "42344-2",
+        display: this.catatandiet || "Discharge diet (narrative)"
+    }
+  }, this.satusehatheaders)
+
+  // alergi
+  this.authService.allergyIntolerance({
+    data: {
+        orgId: this.kdorg,
+        patientId: this.idpasien,
+        patientName: this.pasien,
+        encounterId: this.idsatusehat,
+        encounterDescription: this.subjek,
+        practitionerId: this.kddoktersatusehat,
+        practitionerName: this.namdokter,
+        recordedDate: date.toISOString(),
+        description: `alergi makanan : ${this.alergi.split('::')[1] || ''}`
+    }
+  }, this.satusehatheaders)
+  this.authService.allergyIntolerance({
+    data: {
+        orgId: this.kdorg,
+        patientId: this.idpasien,
+        patientName: this.pasien,
+        encounterId: this.idsatusehat,
+        encounterDescription: this.subjek,
+        practitionerId: this.kddoktersatusehat,
+        practitionerName: this.namdokter,
+        recordedDate: date.toISOString(),
+        description: `alergi udara : ${this.alergiudara.split('::')[1] || ''}`
+    }
+  }, this.satusehatheaders)
+  this.authService.allergyIntolerance({
+    data: {
+        orgId: this.kdorg,
+        patientId: this.idpasien,
+        patientName: this.pasien,
+        encounterId: this.idsatusehat,
+        encounterDescription: this.subjek,
+        practitionerId: this.kddoktersatusehat,
+        practitionerName: this.namdokter,
+        recordedDate: date.toISOString(),
+        description: `alergi obat : ${this.alergiobat.split('::')[1] || ''}`
+    }
+  }, this.satusehatheaders)
+
+  // clinical impression
+  this.authService.clinicalImpression({
+    data: {
+        orgId: this.kdorg,
+        patientId: this.idpasien,
+        patientName: this.pasien,
+        encounterId: this.idsatusehat,
+        encounterDescription: this.subjek,
+        practitionerId: this.kddoktersatusehat,
+        practitionerName: this.namdokter,
+        recordedDate: date.toISOString(),
+        description: `alergi obat : ${this.alergiobat.split('::')[1] || ''}`,
+        effectiveDate: date.toISOString(),
+        date: date.toISOString(),
+        conditionId: "877b68e2-186c-499e-b788-d27cc244fe88",
+        diagnosticReportId: "a1bc4cf0-7f41-4f38-b278-de98b2640ecf",
+        observationId: observationResponse.id,
+        summary: this.subjek
+    }
+  }, this.satusehatheaders)
+}
+getSelectedOptionText(event: Event, model: any) {
+  let selectElementText = event.target['options'][event.target['options'].selectedIndex].text
+  eval(`this.${model} = '${selectElementText}'`)
+  eval(`console.log(this.${model})`)
 }
       simpanambil(){
                 this.progress = 0; // starts spinner
@@ -11817,8 +11875,8 @@ tmpku(){
                      this.showempat=true;
                    }
                   }
-                  alergiudara:string='00';
-                  alergiobat:string='00'
+                  alergiudara:string='00::Tidak ada';
+                  alergiobat:string='00::Tidak ada'
                   kdprognosa:string='01';
                   monitoringshowcontenticare:boolean;
                   icareurl:SafeResourceUrl;

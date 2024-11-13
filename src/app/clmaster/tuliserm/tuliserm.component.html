@@ -420,49 +420,38 @@ padding:20px">
                     <label for="exampleEmail" class="form-label">ALERGI MAKAN</label>
                     <!-- <input [(ngModel)]="alergi" type="text" class="form-control"> -->
 
-                    <select id="exampleSelect" class="form-select" [(ngModel)]="alergi">
-
-                      <!-- <option  *ngFor="let x of ttalergi" value="{{x.kdAlergi}}">{{x.nmAlergi}}</option> -->
-                      <option value="00">Tidak ada</option>
-                      <option value="01">Seafood</option>
-                      <option value="02">Gandum</option>
-                      <option value="03">Susu Sapi</option>
-                      <option value="04">Kacang-Kacangan</option>
-                      <option value="05">Makanan Lain</option>
-
-
+                    <select id="exampleSelect" class="form-select" [(ngModel)]="alergi" (change)="getSelectedOptionText($event, 'alergiText')">
+                      <option value="00::Tidak ada">Tidak ada</option>
+                      <option value="01::Seafood">Seafood</option>
+                      <option value="02::Gandum">Gandum</option>
+                      <option value="03::Susu Sapi">Susu Sapi</option>
+                      <option value="04::Kacang-Kacangan">Kacang-Kacangan</option>
+                      <option value="05::Makanan Lain">Makanan Lain</option>
                     </select>
-                    
-
-
                   </div>
 
                   <div class="col-md-3">
                     <label for="exampleEmail" class="form-label">ALERGI UDARA</label>
                     <select id="exampleSelect" class="form-select" [(ngModel)]="alergiudara">
                       <!-- <option  *ngFor="let x of talergiudara" value="{{x.kdAlergi}}">{{x.nmAlergi}}</option> -->
-
-
-                      <option value="00">Tidak ada</option>
-                      <option value="01">Udara Panas</option>
-                     
-                      <option value="02">Udara Dingin</option>
-                      <option value="03">Udara Kotor</option>
+                      <option value="00::Tidak ada">Tidak ada</option>
+                      <option value="01::Udara Panas">Udara Panas</option>
+                      <option value="02::Udara Dingin">Udara Dingin</option>
+                      <option value="03::Udara Kotor">Udara Kotor</option>
                       </select>
                   </div>
 
                   <div class="col-md-3">
                     <label for="exampleEmail" class="form-label">ALERGI OBAT</label>
                     <select id="exampleSelect" class="form-select" [(ngModel)]="alergiobat">
-                      <option value="00">Tidak ada</option>
-                      <option value="01">Antibiotik</option>
-                     
-                      <option value="02">Antiinflamasi</option>
-                      <option value="03">Non Steriod</option>
-                      <option value="04">Aspirin</option>
-                      <option value="05">Kortikosteroid</option>
-                      <option value="06">Insulin</option>
-                      <option value="07">Obat-obat lain</option>
+                      <option value="00::Tidak ada">Tidak ada</option>
+                      <option value="01::Antibiotik">Antibiotik</option>
+                      <option value="02::Antiinflamasi">Antiinflamasi</option>
+                      <option value="03::Non Steriod">Non Steriod</option>
+                      <option value="04::Aspirin">Aspirin</option>
+                      <option value="05::Kortikosteroid">Kortikosteroid</option>
+                      <option value="06::Insulin">Insulin</option>
+                      <option value="07::Obat-obat lain">Obat-obat lain</option>
                       <!-- <option  *ngFor="let x of talergiobat" value="{{x.kdAlergi}}">{{x.nmAlergi}}</option> -->
 
 

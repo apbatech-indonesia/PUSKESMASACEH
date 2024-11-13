@@ -2946,9 +2946,11 @@ export class ApiserviceService {
     );
   }
   observation(payload: any, headers: any) {
-    return this.http.post(satusehat + "Observation", payload, {
-      headers: headers,
-    });
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "Observation", payload, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
   }
   
   procedure(data: any, headers: any) {
@@ -2970,6 +2972,22 @@ export class ApiserviceService {
   carePlan(data: any, headers: any) {
     return new Promise((resolve) => {
       this.http.post(satusehat + "CarePlan", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
+  allergyIntolerance(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "AllergyIntolerance", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
+  clinicalImpression(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "ClinicalImpression", data, { headers: headers }).subscribe((data) => {
         resolve(data)
       })
     })
