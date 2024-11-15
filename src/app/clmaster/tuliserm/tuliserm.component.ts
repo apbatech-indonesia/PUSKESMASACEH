@@ -3052,7 +3052,7 @@ export class tulisermComponent implements OnInit {
           practitionerId: this.kddoktersatusehat,
           practitionerName: this.namdokter,
           recordedDate: date.toISOString(),
-          description: `alergi makanan : ${this.alergi.split("::")[1] || ""}`,
+          description: `alergi makanan : ${this.alergi}`,
         },
       },
       this.satusehatheaders
@@ -3068,9 +3068,7 @@ export class tulisermComponent implements OnInit {
           practitionerId: this.kddoktersatusehat,
           practitionerName: this.namdokter,
           recordedDate: date.toISOString(),
-          description: `alergi udara : ${
-            this.alergiudara.split("::")[1] || ""
-          }`,
+          description: `alergi udara : ${this.alergiudara}`,
         },
       },
       this.satusehatheaders
@@ -3086,7 +3084,7 @@ export class tulisermComponent implements OnInit {
           practitionerId: this.kddoktersatusehat,
           practitionerName: this.namdokter,
           recordedDate: date.toISOString(),
-          description: `alergi obat : ${this.alergiobat.split("::")[1] || ""}`,
+          description: `alergi obat : ${this.alergiobat}`,
         },
       },
       this.satusehatheaders
@@ -3104,7 +3102,7 @@ export class tulisermComponent implements OnInit {
           practitionerId: this.kddoktersatusehat,
           practitionerName: this.namdokter,
           recordedDate: date.toISOString(),
-          description: `alergi obat : ${this.alergiobat.split("::")[1] || ""}`,
+          description: `alergi obat : ${this.alergiobat}`,
           effectiveDate: date.toISOString(),
           date: date.toISOString(),
           conditionId: "877b68e2-186c-499e-b788-d27cc244fe88",
