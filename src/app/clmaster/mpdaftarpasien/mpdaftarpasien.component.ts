@@ -719,7 +719,7 @@ export class MpdaftarpasienComponent implements OnInit {
 
     if (this.dash === "BPJS") {
       console.log(this.kdpolibpjsku);
-      if (this.kdpolibpjsku != "998") {
+      if (this.kdpolibpjsku != "998" && this.kdpolibpjsku != "005") {
         if (this.jadwaltidak === "0") {
           this.toastr.error(
             "Jadwal Dokter / Poliklinik yang di pilih tidak terdapat jadwal hafis hari ini , silahkan ganti dokter atau tambahkan jadwal dokter terlebih dahulu di hafis"
