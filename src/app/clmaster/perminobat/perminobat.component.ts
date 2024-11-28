@@ -18,6 +18,7 @@ import { NgSelectModule,NgSelectComponent, NgOption } from '@ng-select/ng-select
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { DatePipe } from '@angular/common'
 import { FarmasijualService } from '../kasirfarmasijual/farmasijual.service';
+import { HttpHeaders } from '@angular/common/http';
 
 
 @Component({
@@ -37,6 +38,7 @@ import { FarmasijualService } from '../kasirfarmasijual/farmasijual.service';
 })
 export class perminobatComponent implements OnInit {
   toggleMobileSidebar: any;
+  satusehatheaders: any;
   faStar = faStar;
   faPlus = faPlus;
   faAngleDown = faAngleDown;
@@ -161,9 +163,7 @@ kddokter:string;
     public FarmasijualService:FarmasijualService,
     private datepipe: DatePipe,private modalService: NgbModal,public toastr: ToastrService, private authService:ApiserviceService , private fb: FormBuilder) {
   
-
     const data = JSON.parse(localStorage.getItem("userDatacl"));
-   
 
     this.userDetails=data.userData
     this.nama = this.userDetails.nama
@@ -181,6 +181,9 @@ const datano = JSON.parse(localStorage.getItem("noclenic"));
 this.userDetailss = datano
 this.notrans = this.userDetailss.notrans
 this.kddokter = this.userDetailss.kddokter
+this.satusehatheaders = new HttpHeaders({
+  "kd-cabang": this.kdcabang,
+});
 // console.log(this.userDetailss.notrans,this.userDetailss.kddokter)
 this.tampildata()
 
@@ -212,6 +215,11 @@ umur:string;
 cpptdari:any;
 nokunjungan:any;
 
+idpasien: any
+idsatusehat: any
+idhis: any
+locationid: any
+
 tampildata(){
   this.authService.datapasien(this.kdcabang,this.notrans)
 .subscribe(
@@ -239,6 +247,11 @@ data => {
                 this.kelas = x.kelas;
                 this.umur = x.umur;
                 this.nokunjungan = x.nokunjungan
+
+                this.idpasien = x.idpasien
+                this.idsatusehat = x.idsatusehat
+                this.idhis = x.idhis
+                this.locationid = x.locationid
    
     }
 
@@ -462,8 +475,10 @@ aturan:string=' ';
 qtyk:number;
 jmlhari:number
 keterangan:string='';
+kdobatsatusehat:string='';
+namaobatsatusehat:string='';
 tobat:any;
-
+namaob
 frek:any;
 jmlpakai:any;
 tobata:any;
@@ -1555,7 +1570,8 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
               "kduser":this.username,"kdcabang":this.kdcabang,
               "kdcppt":this.notrans+this.kddokter,
               "stssimpan":'4',"kdkostumerd":this.kdkostumerd,
-              "frek":this.frek,"jmlpakai":this.jmlpakai,"signa":this.signa,"jmlhari":this.jmlhari,"no":this.no,"cpptdari":this.cpptdari
+              "frek":this.frek,"jmlpakai":this.jmlpakai,"signa":this.signa,"jmlhari":this.jmlhari,"no":this.no,"cpptdari":this.cpptdari,
+              "kdobatsatusehat":this.kdobatsatusehat,"namaobatsatusehat":this.namaobatsatusehat
                 }
               
               
@@ -1571,11 +1587,9 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
                       timeOut: 2000,
                     });
 
-
-
-                    this.bataledit()                 
+                    this.simpanobatsatusehat()            
                     setTimeout(() => {
-
+                      this.bataledit()     
                       this.tmpnonr()
                     }, 200);
                    }else{
@@ -1588,7 +1602,6 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
                 
                 
                 })
-
           }
   
        
@@ -1611,7 +1624,8 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
               "kduser":this.username,"kdcabang":this.kdcabang,
               "kdcppt":this.notrans+this.kddokter,
               "stssimpan":'1',"kdkostumerd":this.kdkostumerd,
-              "frek":this.frek,"jmlpakai":this.jmlpakai,"signa":this.signa,"jmlhari":this.jmlhari,"cpptdari":this.cpptdari
+              "frek":this.frek,"jmlpakai":this.jmlpakai,"signa":this.signa,"jmlhari":this.jmlhari,"cpptdari":this.cpptdari,
+              "kdobatsatusehat":this.kdobatsatusehat,"namaobatsatusehat":this.namaobatsatusehat
                 }
               
               
@@ -1673,8 +1687,9 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
               "kduser":this.username,"kdcabang":this.kdcabang,
               "kdcppt":this.notrans+this.kddokter,
               "stssimpan":'1',"kdkostumerd":this.kdkostumerd,
-              "frek":this.frek,"jmlpakai":this.jmlpakai,"signa":this.signa,"jmlhari":this.jmlhari,"cpptdari":this.cpptdari
-                }
+              "frek":this.frek,"jmlpakai":this.jmlpakai,"signa":this.signa,"jmlhari":this.jmlhari,"cpptdari":this.cpptdari,
+              "kdobatsatusehat":this.kdobatsatusehat,"namaobatsatusehat":this.namaobatsatusehat
+              }
               
               
                 console.log(body)
@@ -1685,6 +1700,8 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
                 
                 
                   if(response ){
+
+
                     this.toastr.success(''+response, 'Sukses', {
                       timeOut: 2000,
                     });
@@ -1699,11 +1716,16 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
                     this.jmlhari=0
                     this.qtyk=0
                     this.keterangan=''
+                    this.kdobatsatusehat=''
+                    this.namaobatsatusehat=''
+                    this.keterangan=''
                     this.Stok=0
                    
                     setTimeout(() => {
                       this.tmpnonr()
                     }, 200);
+
+                    this.simpanobatsatusehat()
                    }else{
                     this.toastr.error('Simpan  Gagal', 'Eror');
                   
@@ -1714,7 +1736,6 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
                 
                 
                 })
-
           }
   
        
@@ -1723,6 +1744,51 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
     
     
     }
+
+    async simpanobatsatusehat() {
+      let cabang: any = await this.getCabang(this.userDetails.kdklinik)
+
+      let medication: any = await this.authService.medication({
+        data: {
+          orgId: cabang.kodeorg,
+          kodeObat: this.kdobatsatusehat,
+          listObat: `${this.namaobatsatusehat} ${Math.random().toString(16).slice(2)} `
+        }
+      }, this.satusehatheaders)
+
+      let medicationRequest: any = await this.authService.medicationRequest({
+        data: {
+          orgId: cabang.kodeorg,
+          medicationId: medication.id,
+          encounterId: this.idsatusehat,
+          patientId: this.idpasien,
+          patientName: this.pasien,
+          practitionerId: this.idhis,
+          practitionerName: this.namdokter,
+          authoredOnDate: this.myDate.toISOString(),
+          validityStartDate: this.myDate.toISOString(),
+          validityEndDate: this.myDate.toISOString()
+        }
+      }, this.satusehatheaders)
+
+      await this.authService.medicationDispense({
+        data: {
+            orgId: cabang.kodeorg,
+            medicationId: medication.id,
+            medicationRequestId: medicationRequest.id,
+            patientId: this.idpasien,
+            patientName: this.pasien,
+            encounterId: this.idsatusehat,
+            encounterDescription: "{{$randomLoremWords}}",
+            practitionerId: this.idhis,
+            practitionerDescription: this.namdokter,
+            locationId: this.locationid,
+            preparedDate: this.myDate.toISOString(),
+            handedOverDate: this.myDate.toISOString()
+        }
+      }, this.satusehatheaders)
+    }
+
     tfrekuensi:any;
     kdcp:any;
     kdbs:any;
@@ -1738,7 +1804,8 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
       this.jmlhari=0
       this.qtyk=0
       this.keterangan=''
-
+      this.kdobatsatusehat=''
+      this.namaobatsatusehat=''
   this.authService.obatermbyid(this.kdcabang,this.nmobat)
   .subscribe(
     data => {
@@ -1751,7 +1818,8 @@ if(data.length){
   {
  this.kdcp = x.kdcp;
  this.kdbs = x.kdbs;
-
+ this.kdobatsatusehat = x.kdobatsatusehat;
+ this.namaobatsatusehat = x.namaobatsatusehat;
 
  if(x.stok <= 0){
 
@@ -2275,14 +2343,14 @@ keteranganm:string='';
 
     tambahobatr(){
       let body={
-    "nmobat":this.nmobatx,"aturan":'-',"qtyk":this.qtykx,"keterangan":this.keteranganx,
-    "noracik":this.ketshow,
-    "notrans":this.notrans,"norm":this.norm,"kddokter":this.kddokter,
-    "kdpoli":this.kdpoli,"kdobat":this.nmobatx,"statuso":'Racik',"dari":'Obat',
-    "kduser":this.username,"kdcabang":this.kdcabang,
-    "kdcppt":this.notrans+this.kddokter,"stssimpan":'2',"kdkostumerd":this.kdkostumerd,"cpptdari":this.cpptdari
+        "nmobat":this.nmobatx,"aturan":'-',"qtyk":this.qtykx,"keterangan":this.keteranganx,
+        "noracik":this.ketshow,
+        "notrans":this.notrans,"norm":this.norm,"kddokter":this.kddokter,
+        "kdpoli":this.kdpoli,"kdobat":this.nmobatx,"statuso":'Racik',"dari":'Obat',
+        "kduser":this.username,"kdcabang":this.kdcabang,
+        "kdcppt":this.notrans+this.kddokter,"stssimpan":'2',"kdkostumerd":this.kdkostumerd,"cpptdari":this.cpptdari,
+        "kdobatsatusehat":this.kdobatsatusehat,"namaobatsatusehat":this.namaobatsatusehat
       }
-    
     
       console.log(body)
     
@@ -2356,7 +2424,8 @@ keteranganm:string='';
     "kdcabang":this.kdcabang,"kdcppt":this.notrans+this.kddokter,"stssimpan":'3',
     "kdkostumerd":this.kdkostumerd,
     "frekracik":this.frekracik,"jmlpakairacik":this.jmlpakairacik,
-    "aturanracik":this.aturanracik,"jmlhariracik":this.jmlhariracik,"cpptdari":this.cpptdari
+    "aturanracik":this.aturanracik,"jmlhariracik":this.jmlhariracik,"cpptdari":this.cpptdari,
+    "kdobatsatusehat":this.kdobatsatusehat,"namaobatsatusehat":this.namaobatsatusehat
       }
     
     
@@ -2521,7 +2590,8 @@ for (let x of data )
 {
 this.kdcp = x.kdcp;
 this.kdbs = x.kdbs;
-
+this.kdobatsatusehat = x.kdobatsatusehat;
+this.namaobatsatusehat = x.namaobatsatusehat;
 
 if(x.stok <= 0){
 
@@ -2617,6 +2687,8 @@ this.showtomboledit =false;
       this.jmlhari=0
       this.qtyk=0
       this.keterangan=''
+      this.kdobatsatusehat=''
+      this.namaobatsatusehat=''
       this.Stok=0
       this.showfrekuensi = false;
       this.showjmlpakai = false;
@@ -2950,4 +3022,14 @@ klikcekobatbpjs(){
     console.log(data.obatx)
   }
 
+  getCabang(kdklinik: any) {
+    return new Promise((resolve) => {
+      this.authService.cabangper(kdklinik)
+        .subscribe((data) => {
+          data.forEach(e => {
+            resolve(e)
+          })
+        })
+    })
+  }
 }

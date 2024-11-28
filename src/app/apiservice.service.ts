@@ -2976,6 +2976,38 @@ export class ApiserviceService {
       })
     })
   }
+  
+  medication(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "Medication", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+  
+  medicationRequest(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "MedicationRequest", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+  
+  medicationDispense(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "MedicationDispense", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+  
+  medicationStatement(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "MedicationStatement", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
 
   allergyIntolerance(data: any, headers: any) {
     return new Promise((resolve) => {

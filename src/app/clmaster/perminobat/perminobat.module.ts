@@ -28,6 +28,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { MasterKfaModule } from 'src/app/satusehat/satusehat-master/master-kfa/master-kfa.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -58,6 +59,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     MatChipsModule,
     MatIconModule,
     PageTitleModule,
+    MasterKfaModule
   ],
   declarations: [perminobatComponent]
 })

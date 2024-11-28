@@ -53,7 +53,7 @@
             <tr style="border-bottom:1px solid black;">
            
               <th>OBAT</th>
-            <th class="text-center">ATURAN PAKAI</th>
+            <th class="text-center">ATURAN PAKAIa</th>
             <th class="text-center">QTY</th>
           
             <th class="text-center">KETERANGAN</th>
@@ -219,9 +219,9 @@
                 </ng-select>
                 <h1>{{nmobatx}}</h1>
                
-                <b *ngIf="showtomboledit"  >{{namaobat}}</b>
-
-                 
+                <b *ngIf="showtomboledit">{{namaobat}}</b>
+                  <br><b>Obat Satusehat : {{namaobatsatusehat ?? '-'}}</b><br>
+                  <br><b>Kode Obat Satusehat : {{kdobatsatusehat ?? '-'}}</b><br>
                 </td>
 
                 <td  style="border: 1px dashed rgb(63, 63, 63);">
@@ -287,9 +287,6 @@
 
               </tr>
               <tr >
-               
-           
-              
                 <td  style="border: 1px dashed rgb(63, 63, 63);">
                   <b>Jml Hari</b><br>
                   <input style="width: 100%;" [(ngModel)]="jmlhari" #jmlharii (keyup)="tulisjmlhari($event)"  (keyup.enter)="pilihharix($event)" class="form-control" placeholder="Jml Hari...." type="number" >

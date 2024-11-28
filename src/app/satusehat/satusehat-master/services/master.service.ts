@@ -44,4 +44,13 @@ export class MasterService {
       })
     })
   }
+
+  getKfa(data: any) {
+    data = new URLSearchParams(data);
+    return new Promise((resolve) => {
+      this.http.get(satusehatUrl + `master/getKfa?${data.toString()}`, { headers: this.headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
 }
