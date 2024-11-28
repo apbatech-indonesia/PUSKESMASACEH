@@ -15,7 +15,7 @@ let apidaftar = localStorage.getItem("baseUrlDaftar");
 // let apidaftar = 'https://tabaro.clenicapp.com/clenicv2/master/';
 
 let pcareUrl = localStorage.getItem("pcareUrl");
-let satusehat = "https://satusehat.clenicapp.com/api/";
+let satusehat = "https://besatusehat.clenicapp.com/api/";
 
 @Injectable({
   providedIn: "root",
