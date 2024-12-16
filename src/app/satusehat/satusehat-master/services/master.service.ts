@@ -53,4 +53,8 @@ export class MasterService {
       })
     })
   }
+
+  getKfaByCode(id: any) {
+    return this.http.get(satusehatUrl + `master/getKfa/${id}`, { headers: this.headers }).toPromise()
+  }
 }

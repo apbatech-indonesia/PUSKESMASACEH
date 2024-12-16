@@ -83,11 +83,9 @@
 
               <div class="col-12">
                 <app-master-kfa
+                  [id]="kdobatsatusehat"
                   [title]="'Maping Obat Satusehat*'"
-                  [searchKfaText]="namaobatsatusehat"
-                  (selectedItem)="
-                    kdobatsatusehat = $event.code;
-                    namaobatsatusehat = $event.name;">
+                  (selectedItem)="kdobatsatusehat = $event.code;">
                 </app-master-kfa>
               </div>
         </div>
@@ -514,7 +512,7 @@
               x.	nama,
               x.	sup,
               x.	jenis,
-              x.	golongan,x.kdcp,x.kdbs,x.zataktifasli,x.kdobatsatusehat,x.namaobatsatusehat)">P</div>
+              x.	golongan,x.kdcp,x.kdbs,x.zataktifasli,x.kdobatsatusehat)">P</div>
               <div style="font-size: 10px;color:black" class="badge bg-pill bg-warning" (click)="lihatstok(content1,x.kdobat)">Stok</div>
               <div class="badge bg-pill bg-danger" (click)="hapus(x.kdobat,
               x.	obat,

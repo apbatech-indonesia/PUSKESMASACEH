@@ -102,6 +102,29 @@ export class ApiserviceService {
     );
   }
 
+  getReportingAntrol(
+    cabang: any,
+    search: any,
+    page: any,
+    isSuccess: any,
+    urlType: any,
+    dateFrom: any,
+    dateTo: any
+  ) {
+    return this.http
+      .get(
+        `https://emr.clenicapp.com/api/${cabang}/reporting-antrean?search=${search}&page=${page}&isSuccess=${isSuccess}&urlType=${urlType}&dateFrom=${dateFrom}&dateTo=${dateTo}`
+      ).toPromise();
+  }
+
+  getDetailPasien(
+    cabang: any,
+    bpjsnumber: number
+  ) {
+    return this.http.get(
+      `https://emr.clenicapp.com/api/${cabang}/reporting-antrean/pasien/${bpjsnumber}`
+    ).toPromise();
+  }
   //
 
   getBaseUrlConfig(branchCode: string): Observable<any> {

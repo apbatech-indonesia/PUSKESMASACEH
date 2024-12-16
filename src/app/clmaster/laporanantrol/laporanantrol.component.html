@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="col-md-6 col-xl-4">
+    <div class="card mb-3 widget-content bg-arielle-smile">
+      <div class="widget-content-wrapper text-white">
+        <div class="widget-content-left">
+          <div class="widget-heading">Jumlah Semua Hit</div>
+          <div class="widget-subheading">Success + Gagal</div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-white">
+            <span>{{totalall}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-xl-4">
+    <div class="card mb-3 widget-content bg-happy-green">
+      <div class="widget-content-wrapper text-white">
+        <div class="widget-content-left">
+          <div class="widget-heading">Jumlah Hit</div>
+          <div class="widget-subheading">{{ percentagesuccess+'%' }} Success</div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-white">
+            <span>{{totalsucess}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-xl-4">
+    <div class="card mb-3 widget-content bg-warm-flame">
+      <div class="widget-content-wrapper text-white">
+        <div class="widget-content-left">
+          <div class="widget-heading">Jumlah Hit</div>
+          <div class="widget-subheading">{{ percentagefailed+'%' }} Gagal</div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-white">
+            <span>{{totalgagal}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-12 row">
+    <div class="col-4">
+      <span>cari no kartu : </span><br>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="cari no kartu" aria-label="cari no kartu" aria-describedby="basic-addon1" [(ngModel)]="search" (change)="fetchData()" (keyup.enter)="fetchData()">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">
+            <fa-icon [icon]="faSearch" ></fa-icon>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-2">
+      <span>dari tanggal : </span><br>
+      <div class="input-group mb-3">
+        <input type="date" class="form-control" [(ngModel)]="dateFrom" (change)="fetchData(); page = 1;">
+      </div>
+    </div>
+
+    <div class="col-2">
+      <span>sampai tanggal : </span><br>
+      <div class="input-group mb-3">
+        <input type="date" class="form-control" [(ngModel)]="dateTo" (change)="fetchData(); page = 1;">
+      </div>
+    </div>
+
+    <div class="col-2">
+      <span>response status : </span><br>
+      <div class="input-group mb-3">
+        <select class="form-control" id="inputGroupSelect01" [(ngModel)]="isSuccess" (change)="fetchData()">
+          <option value="">-- pilih status --</option>
+          <option value="true">berhasil</option>
+          <option value="false">gagal</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col-2">
+      <span>url type : </span><br>
+      <div class="input-group mb-3">
+        <select class="form-control" id="inputGroupSelect01" [(ngModel)]="urlType" (change)="fetchData()">
+          <option value="">-- pilih url --</option>
+          <option value="add">add</option>
+          <option value="panggil">panggil</option>
+        </select>
+      </div>
+    </div>
+  </div>  
+  <div class="col-md-12">
+    <div class="card main-card mb-3 p-3 card-tabbed-header">
+      <div class="cointainer">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nomor Kartu BPJS</th>
+              <th scope="col">NIK</th>
+              <th scope="col">Response</th>
+              <th scope="col">Url</th>
+              <th scope="col">Tanggal</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="list.length > 0">
+            <tr *ngFor="let item of list; let i = index;">
+              <th scope="row">{{ (i + 1) + (page - 1) * 100 }}</th>
+              <td (click)="detailPasien(tojson(item.req).nomorkartu, i)">
+                {{ tojson(item.req).nomorkartu }}
+                <br>
+                <span *ngIf="isShowPasien == i">{{pasienName}}</span>
+              </td>
+              <td>{{ tojson(item.req).nik ?? '-' }}</td>
+              <td>{{ tojson(item.res).message ?? '-' }}</td>
+              <td>{{ item.url.replaceAll("https://apijkn.bpjs-kesehatan.go.id/antreanfktp/antrean/", "") }}</td>
+              <td>{{ item.created_at }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <mat-paginator 
+        [length]="totalall"
+        [pageSize]="100"
+        aria-label="Select page"
+        (page)="changePage($event)">
+      </mat-paginator>
+    </div>
+  </div>
+</div>

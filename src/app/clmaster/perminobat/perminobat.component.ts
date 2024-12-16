@@ -477,6 +477,8 @@ jmlhari:number
 keterangan:string='';
 kdobatsatusehat:string='';
 namaobatsatusehat:string='';
+standart:string='';
+satuan:string='';
 tobat:any;
 namaob
 frek:any;
@@ -1587,8 +1589,8 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
                       timeOut: 2000,
                     });
 
-                    this.simpanobatsatusehat()            
-                    setTimeout(() => {
+                    setTimeout(async () => {
+                      if(this.kdobatsatusehat) await this.simpanobatsatusehat();
                       this.bataledit()     
                       this.tmpnonr()
                     }, 200);
@@ -1696,36 +1698,28 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
               
                 this.authService.simpanrxobaterm(body)
                 .subscribe(response => {
-                
-                
-                
-                  if(response ){
-
-
+                  if (response) {
                     this.toastr.success(''+response, 'Sukses', {
                       timeOut: 2000,
                     });
-                    this.nmobat='';
-              
-                    this.select.handleClearClick()
-          
-                
-                    this.frek ='';
-                    this.jmlpakai ='';
-                    this.signa = '';
-                    this.jmlhari=0
-                    this.qtyk=0
-                    this.keterangan=''
-                    this.kdobatsatusehat=''
-                    this.namaobatsatusehat=''
-                    this.keterangan=''
-                    this.Stok=0
-                   
-                    setTimeout(() => {
+
+                    setTimeout(async () => {
+                      if(this.kdobatsatusehat) await this.simpanobatsatusehat();
+                      this.nmobat='';
+                      this.select.handleClearClick()
+                      this.frek ='';
+                      this.jmlpakai ='';
+                      this.signa = '';
+                      this.jmlhari=0
+                      this.qtyk=0
+                      this.keterangan=''
+                      this.kdobatsatusehat=''
+                      this.namaobatsatusehat=''
+                      this.keterangan=''
+                      this.Stok=0
+
                       this.tmpnonr()
                     }, 200);
-
-                    this.simpanobatsatusehat()
                    }else{
                     this.toastr.error('Simpan  Gagal', 'Eror');
                   
@@ -1753,7 +1747,7 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
           orgId: cabang.kodeorg,
           medicationUUID: `${this.generateUUID()}`,
           kodeObat: this.kdobatsatusehat,
-          listObat: `${this.namaobatsatusehat}`
+          listObat: this.namaobatsatusehat
         }
       }, this.satusehatheaders)
 
@@ -1761,11 +1755,18 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
         data: {
           orgId: cabang.kodeorg,
           medicationId: medication.id,
+          MedicationRequestUUID: `${this.generateUUID()}`,
           encounterId: this.idsatusehat,
           patientId: this.idpasien,
           patientName: this.pasien,
           practitionerId: this.idhis,
           practitionerName: this.namdokter,
+          listObat: this.namaobatsatusehat,
+          patientInstruction: `${this.frek} x ${this.jmlpakai} ${this.satuan} per hari ${this.signa}, ${this.keterangan}`,
+          frequency: this.frek,
+          quantity: this.qtyk,
+          duration: this.jmlhari,
+          standart: this.standart,
           authoredOnDate: this.myDate.toISOString(),
           validityStartDate: this.myDate.toISOString(),
           validityEndDate: this.myDate.toISOString()
@@ -1775,17 +1776,24 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
       await this.authService.medicationDispense({
         data: {
             orgId: cabang.kodeorg,
+            MedicationDispenseUUID: `${this.generateUUID()}`,
             medicationId: medication.id,
             medicationRequestId: medicationRequest.id,
             patientId: this.idpasien,
             patientName: this.pasien,
             encounterId: this.idsatusehat,
-            encounterDescription: "{{$randomLoremWords}}",
+            encounterDescription: this.keterangan ?? '',
             practitionerId: this.idhis,
             practitionerDescription: this.namdokter,
             locationId: this.locationid,
             preparedDate: this.myDate.toISOString(),
-            handedOverDate: this.myDate.toISOString()
+            handedOverDate: this.myDate.toISOString(),
+            listObat: this.namaobatsatusehat,
+            patientInstruction: `${this.frek} x ${this.jmlpakai} ${this.satuan} per hari ${this.signa}, ${this.keterangan}`,
+            frequency: this.frek,
+            duration: this.jmlhari,
+            quantity: this.qtyk,
+            standart: this.standart
         }
       }, this.satusehatheaders)
     }
@@ -1820,14 +1828,11 @@ if(data.length){
  this.kdcp = x.kdcp;
  this.kdbs = x.kdbs;
  this.kdobatsatusehat = x.kdobatsatusehat;
- this.namaobatsatusehat = x.namaobatsatusehat;
 
  if(x.stok <= 0){
 
   this.toastr.error('Maaf Stok Obat Tidak Tersedia', 'Eror');
   this.select.handleClearClick()
-
-      
 
  }else{
 
@@ -2352,8 +2357,6 @@ keteranganm:string='';
         "kdcppt":this.notrans+this.kddokter,"stssimpan":'2',"kdkostumerd":this.kdkostumerd,"cpptdari":this.cpptdari,
         "kdobatsatusehat":this.kdobatsatusehat,"namaobatsatusehat":this.namaobatsatusehat
       }
-    
-      console.log(body)
     
       this.authService.simpanrxobaterm(body)
       .subscribe(response => {

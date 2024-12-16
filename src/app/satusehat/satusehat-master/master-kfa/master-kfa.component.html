@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="col-12 my-3">
-        <label for="exampleEmail" class="form-label" *ngIf="title">
+    <div class="col-12">
+        <label for="exampleEmail" *ngIf="title">
             <b>{{title}}</b>
         </label>
         <div class="input-group">
@@ -11,10 +11,11 @@
                 [(ngModel)]="searchKfaText"
                 (ngModelChange)="cariKfa()"
                 (keyup.enter)="cariKfa()"
+                disabled="{{isDisabled}}"
                 placeholder="{{ searchKfaText }}">
         </div>
         <select multiple class="form-control" id="exampleFormControlSelect2" *ngIf="kfaList.length > 0" width="100%">
-            <option *ngFor="let item of kfaList" (click)="pilihKfa(item)">{{ item.code }} : {{ item.name }}</option>
+            <option *ngFor="let item of kfaList" (click)="pilihKfa(item)"><span *ngIf="isShowCode">{{ item.code }} :</span> {{ item.name }}</option>
         </select>
     </div>
 </div>

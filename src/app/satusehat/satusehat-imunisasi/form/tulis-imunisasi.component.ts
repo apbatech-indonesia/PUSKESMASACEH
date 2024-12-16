@@ -1,12 +1,13 @@
 import { HttpHeaders } from '@angular/common/http'
-import { Component, NgModule, OnInit } from '@angular/core'
-import { FormBuilder, FormGroup } from '@angular/forms'
+import { Component, OnInit } from '@angular/core'
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import Swal from 'sweetalert2'
 import { ApiserviceService } from '../../../apiservice.service'
 import { ActivatedRoute } from '@angular/router'
 import { AncService } from '../../satusehat-anc/services/anc.service'
-import { faCog, faSave } from '@fortawesome/free-solid-svg-icons'
+import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons'
 import { ImunisasiService } from '../services/imunisasi.service'
+import { stringify } from 'querystring'
 
 @Component({
   selector: 'app-tulis-imunisasi',
@@ -22,15 +23,16 @@ export class TulisImunisasiComponent implements OnInit {
   useCaseId: string
   cabangData: any
   idpasien: any
-
   provinceList: any = []
 
-  faCog = faCog
+  faArrowLeft = faArrowLeft
   faSave = faSave
   isDisabledFormAnc: boolean = true
   headers = new HttpHeaders({
     'kd-cabang': this.userData.kdcabang
   })
+
+  reportImunisasi: any
 
   patientData: any = {
     noantrian: '-',
@@ -50,7 +52,6 @@ export class TulisImunisasiComponent implements OnInit {
   formPelaporanImunisasi: FormGroup
   formUpdateKunjungan: FormGroup
   
-
   constructor(
     private api: ApiserviceService,
     private imunisasiService: ImunisasiService,
@@ -77,14 +78,13 @@ export class TulisImunisasiComponent implements OnInit {
     })
 
     this.formPelaporanImunisasi = this.fb.group({
-      imunisasi_tidak_disetujui: [false],
+      imunisasi_tidak_disetujui: ['false'],
       imunisasi_alasan_tidak_disetujui: [''],
       imunisasi_by_nakes: [''],
       imunisasi_kipi_by_nakes: [''],
       imunisasi_kipi_by_pasien: [''],
       imunisasi_by_kader: ['']
     })
-
 
     this.formUpdateKunjungan = this.fb.group({
       status: ['finished'],
@@ -96,44 +96,6 @@ export class TulisImunisasiComponent implements OnInit {
 
   // methods
   ngOnInit() {
-    // this.formPelaporanImunisasi.patchValue({
-    //   imunisasi_by_nakes: [
-    //     {
-    //       code: "33.51",
-    //       display: "test 1"
-    //     },
-    //     {
-    //       code: "33.52",
-    //       display: "test 2"
-    //     },
-    //     {
-    //       code: "33.53",
-    //       display: "test 3"
-    //     },
-    //     {
-    //       code: "33.54",
-    //       display: "test 4"
-    //     },
-    //   ],
-    //   imunisasi_kipi_by_nakes: [
-    //     {
-    //       code: "33.50",
-    //       display: "Lung transplantation, not otherwise specified 33.51"
-    //     }
-    //   ],
-    //   imunisasi_kipi_by_pasien: [
-    //     {
-    //       code: "33.50",
-    //       display: "Lung transplantation, not otherwise specified 33.51"
-    //     }
-    //   ],
-    //   imunisasi_by_kader: [
-    //     {
-    //       code: "33.50",
-    //       display: "Lung transplantation, not otherwise specified 33.51"
-    //     }
-    //   ],
-    // })
     this.docreateKunjunganImunisasi()
   }
 
@@ -144,10 +106,11 @@ export class TulisImunisasiComponent implements OnInit {
   showLoading() {
     Swal.fire('Mohon tunggu!')
     Swal.showLoading()
+    this.stopLoading(5000)
   }
 
-  stopLoading() {
-    setTimeout(() => { Swal.close() }, 1000)
+  stopLoading(timing: number = 1000) {
+    setTimeout(() => { Swal.close() }, timing)
   }
 
   simpan() {
@@ -286,7 +249,9 @@ export class TulisImunisasiComponent implements OnInit {
           ...this.formPelaporanImunisasi.value
         },
         update_data: {
-          ...this.formUpdateKunjungan.value
+          ...this.formUpdateKunjungan.value,
+          start_period: new Date(this.formUpdateKunjungan.value.start_period).toISOString(),
+          end_period: new Date(this.formUpdateKunjungan.value.end_period).toISOString()
         }
       }
     }
@@ -364,12 +329,20 @@ export class TulisImunisasiComponent implements OnInit {
       this.formObservation.patchValue(patient.observation)
       this.formDiagnosa.patchValue(patient.diagnosa)
       this.formTindakan.patchValue(patient.tindakan)
-      this.formPelaporanImunisasi.patchValue(patient.report_imunisasi)
-      this.formUpdateKunjungan.patchValue(patient.update_data)
+      this.formPelaporanImunisasi.patchValue(patient.reportImunisasi)
+      this.formUpdateKunjungan.patchValue({
+        ...patient.update_data,
+        start_period: patient?.update_data?.start_period ? patient.update_data.start_period.split('T')[0] : '',
+        end_period: patient?.update_data?.end_period ? patient.update_data.end_period.split('T')[0] : ''
+      })
+      this.reportImunisasi = patient.reportImunisasi
     }
     this.stopLoading()
   }
 
+  stringify(data: any) {
+    return JSON.stringify(data)
+  }
   getPasien() {
     return new Promise((resolve) => {
       this.api.datapasien(this.userData.kdcabang, this.notransaksi)
@@ -402,6 +375,20 @@ export class TulisImunisasiComponent implements OnInit {
             resolve(e)
           })
         })
+    })
+  }
+
+  onSelectedVaccine(form: any, data: any) {
+    let reason: any = [{
+      system: 'http://terminology.kemkes.go.id/CodeSystem/immunization-reason',
+      code: 'IM-Dasar',
+      display: 'Imunisasi Program Rutin Dasar'
+    }]
+
+    form.setValue({
+      vacine: data,
+      dosis: 1,
+      reason: reason
     })
   }
 }

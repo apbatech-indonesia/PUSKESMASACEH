@@ -263,11 +263,14 @@ const routes: Routes = [
     {
       path : 'laporanfarmasi',
       loadChildren:() => import('./laporanfarmasi/laporanfarmasi.module').then(m => m.laporanfarmasiModule )
-    }
-    ,
+    },
     {
       path : 'laporanrm',
       loadChildren:() => import('./laporanrm/laporanrm.module').then(m => m.laporanrmModule )
+    },
+    {
+      path : 'laporanantrol',
+      loadChildren:() => import('./laporanantrol/laporanantrol.module').then(m => m.laporanantrolModule )
     },
     {
       path:'bayarpiutangrj',

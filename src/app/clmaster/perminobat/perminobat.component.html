@@ -220,8 +220,21 @@
                 <h1>{{nmobatx}}</h1>
                
                 <b *ngIf="showtomboledit">{{namaobat}}</b>
-                  <br><b>Kode Obat Satusehat : {{kdobatsatusehat ?? '-'}}</b><br>
-                  <br><b>Obat Satusehat : {{namaobatsatusehat ?? '-'}}</b><br>
+                </td>
+
+                <td>
+                  <app-master-kfa
+                    [id]="kdobatsatusehat"
+                    [title]="'Obat Satusehat'"
+                    [searchKfaText]="namaobatsatusehat"
+                    [isShowCode]="false"
+                    [isDisabled]="true"
+                    (selectedItem)="
+                      kdobatsatusehat = $event.code;
+                      namaobatsatusehat = $event.name;
+                      standart = $event.net_weight_uom_name;
+                      satuan = $event.satuan;"
+                  ></app-master-kfa>
                 </td>
 
                 <td  style="border: 1px dashed rgb(63, 63, 63);">
@@ -266,6 +279,8 @@
 
 
                 </td>
+              </tr>
+              <tr >
                 <td  style="border: 1px dashed rgb(63, 63, 63);">
                   <b>Aturan</b><br>
                   <input style="width: 100%;"  style="width: 250px;" class="form-control"  #aturani [(ngModel)]="signa"  (keyup)="tulissigna($event)" (keyup.enter)="tulissignax($event)"   placeholder="Aturan..." type="text"  >
@@ -279,14 +294,7 @@
                       </button>
   
                     </div>
-
-
-               
                 </td>
-
-
-              </tr>
-              <tr >
                 <td  style="border: 1px dashed rgb(63, 63, 63);">
                   <b>Jml Hari</b><br>
                   <input style="width: 100%;" [(ngModel)]="jmlhari" #jmlharii (keyup)="tulisjmlhari($event)"  (keyup.enter)="pilihharix($event)" class="form-control" placeholder="Jml Hari...." type="number" >

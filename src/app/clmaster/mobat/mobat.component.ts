@@ -1195,7 +1195,7 @@ simpan(){
   "golonganobat":this.golonganobat,"jenisobat":this.jenisobat,"zakaktif":this.zakaktif,"standart":this.standart,
   "standartd":this.standartd,"sedang":this.sedang,
   "sedangd":this.sedangd,"kemasan":this.kemasan,"kemasand":this.kemasand,"kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"stssimpan":'1',"kdobat":this.kdobat,"caraberi":this.cberi,
-  "bentuks":this.bens,"zataktif":this.zakaktif,"kdobatbpjs":this.obatbpjs,"kdobatsatusehat":this.kdobatsatusehat,"namaobatsatusehat":this.namaobatsatusehat
+  "bentuks":this.bens,"zataktif":this.zakaktif,"kdobatbpjs":this.obatbpjs,"kdobatsatusehat":this.kdobatsatusehat
   }
 
   this.authService.simpanobat(body)
@@ -1322,7 +1322,7 @@ edituser(){
   "standartd":this.standartd,"sedang":this.sedang,
   "sedangd":this.sedangd,"kemasan":this.kemasan,"kemasand":this.kemasand,"kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"stssimpan":'2',"kdobat":this.kdobat,
   "caraberi":this.cberi,
-  "bentuks":this.bens,"zataktif":this.zakaktif,"kdobatbpjs":this.obatbpjs,"kdobatsatusehat":this.kdobatsatusehat,"namaobatsatusehat":this.namaobatsatusehat
+  "bentuks":this.bens,"zataktif":this.zakaktif,"kdobatbpjs":this.obatbpjs,"kdobatsatusehat":this.kdobatsatusehat
   }
 
   this.authService.simpanobat(body)
@@ -1383,7 +1383,7 @@ pilihobat(kdobat,
   nama,
   sup,
   jenis,
-  golongan,kdcp,kdbs,zat,kdobatsatusehat,namaobatsatusehat){
+  golongan,kdcp,kdbs,zat,kdobatsatusehat){
 
 
 
@@ -1419,7 +1419,6 @@ pilihobat(kdobat,
     this.cberi = kdcp;
     this.bens = kdbs;
     this.kdobatsatusehat = kdobatsatusehat;
-    this.namaobatsatusehat = namaobatsatusehat;
 this.showedit = true;
 }
 
@@ -1449,6 +1448,7 @@ batal(){
  this.sedangd= '',
   this.kemasan= '',
  this.kemasand = '',
+ this.kdobatsatusehat = '',
 
  this.pabrikand= '',
   this.supplierd= '',
@@ -1519,7 +1519,6 @@ cetakobat(){
 showobatbpjs:boolean;
 obatbpjs:boolean;
 kdobatsatusehat:any;
-namaobatsatusehat:any;
 listobat:any;
 // getobatbpjs(a):Observable<any>{
 //   return this.http.get(apiurx+'pcare/getobatbpjs.php?nama='+a)
