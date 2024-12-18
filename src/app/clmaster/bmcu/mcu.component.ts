@@ -1066,7 +1066,7 @@ export class mcuComponent implements OnInit {
 									numberOfKunjungan: item.noKunjungan,
 									dateOfPelayanan: item.tglPelayanan,
 									numberOfSistole: item.tekananDarahSistole,
-									numberOfDiastole: item.tekananDarahSistole,
+									numberOfDiastole: item.tekananDarahDiastole,
 									numberOfHemo: item.darahRutinHemo,
 									numberOfLeu: item.darahRutinLeu,
 									numberOfErit: item.darahRutinErit,
@@ -1135,7 +1135,7 @@ export class mcuComponent implements OnInit {
 								this.viewDataForm.patchValue({
 									codeOfMCU: item.kdMCU,
 									codeOfProvider: item.kdProvider,
-									numberOfKunjungan: item.tglPelayanan,
+									numberOfKunjungan: item.noKunjungan,
 									dateOfKunjungan: item.tglPelayanan,
 									numberOfSistole: item.tekananDarahSistole,
 									numberOfDiastole: item.tekananDarahDiastole,

@@ -7,7 +7,6 @@ import { ActivatedRoute } from '@angular/router'
 import { AncService } from '../../satusehat-anc/services/anc.service'
 import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons'
 import { ImunisasiService } from '../services/imunisasi.service'
-import { stringify } from 'querystring'
 
 @Component({
   selector: 'app-tulis-imunisasi',
@@ -24,6 +23,7 @@ export class TulisImunisasiComponent implements OnInit {
   cabangData: any
   idpasien: any
   provinceList: any = []
+  dateNow = new Date().toISOString()
 
   faArrowLeft = faArrowLeft
   faSave = faSave
@@ -63,8 +63,7 @@ export class TulisImunisasiComponent implements OnInit {
       status_pregnant_code: ['LA15173-0'],
       status_pregnant_display: ['not pregnant'],
       status_sekolah_code: ['OV000320'],
-      status_sekolah_display: ['tidak sekolah'],
-      unit: ['']
+      status_sekolah_display: ['tidak sekolah']
     })
 
     this.formDiagnosa = this.fb.group({
@@ -117,18 +116,6 @@ export class TulisImunisasiComponent implements OnInit {
     switch (this.activeTab) {
       case 'form-observasi-imunisasi':
         this.doSubmitObservasi() 
-      break
-
-      case 'form-diagnosa':
-        this.doSubmitDiagnosa()
-      break
-
-      case 'form-pelaporan-imunisasi':
-        this.doSubmitPelaporanImunisasi() 
-      break
-
-      case 'form-tindakan':
-        this.doSubmitTindakan() 
       break
     }
   }
@@ -236,22 +223,108 @@ export class TulisImunisasiComponent implements OnInit {
         rmno: this.notransaksi,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
-        observation: {
-          ...this.formObservation.value
-        },
-        diagnosa: {
-          ...this.formDiagnosa.value
-        },
-        tindakan: {
-          ...this.formTindakan.value
-        },
+        observations: [
+          {
+            pregnancy_observation: {
+              category: {
+                system: "http://terminology.hl7.org/CodeSystem/observation-category",
+                code: "survey",
+                display: "Survey"
+              },
+              question_answers: [
+                {
+                  question:  {
+                    system: "http://loinc.org",
+                    code: "82810-3",
+                    display: "Pregnancy status"
+                  },
+                  answer: {
+                    system: "http://loinc.org",
+                    code: this.formObservation.value.status_pregnant_code,
+                    display: this.formObservation.value.status_pregnant_display
+                  }
+                }
+              ]
+            }
+          },
+          {
+            education_observation: {
+              category: {
+                system: "http://terminology.hl7.org/CodeSystem/observation-category",
+                code: "social-history",
+                display: "Social History"
+              },
+              question_answers: [
+                {
+                  question: {
+                    system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
+                    code: "OC000135",
+                    display: "Status sekolah"
+                  },
+                  answer: {
+                      system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
+                      code: this.formObservation.value.status_sekolah_code,
+                      display: this.formObservation.value.status_sekolah_display
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        conditions: [
+          {
+            encounter_diagnosis_condition: {
+              clinical_status: {
+                system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
+                code: "active",
+                display: "Active"
+              },
+              category: {
+                system: "http://terminology.hl7.org/CodeSystem/condition-category",
+                code: "encounter-diagnosis",
+                display: "Encounter Diagnosis"
+              },
+              condition_item: {
+                system: "http://hl7.org/fhir/sid/icd-10",
+                code: this.formDiagnosa.value.diagnosa_code,
+                display: this.formDiagnosa.value.diagnosa_display
+              },
+              onset_date_time: this.dateNow,
+              recorded_date: this.dateNow
+            }
+          }
+        ],
+        procedures: [
+          {
+            vaccination_procedure: {
+              coding: [
+                {
+                  system: "http://hl7.org/fhir/sid/icd-9-cm",
+                  code: this.formTindakan.value.procedure_code,
+                  display: this.formTindakan.value.procedure_display
+                }
+              ]
+            },
+            status: {
+              system: "http://terminology.hl7.org/CodeSystem/procedure-status",
+              code: "completed",
+              display: "Completed"
+            },
+            category: {
+              system: "http://snomed.info/sct",
+              code: "107733003",
+              display: "Introduction Procedure"
+            },
+            performed_date_time: this.dateNow
+          }
+        ],
         reportImunisasi: {
           ...this.formPelaporanImunisasi.value
         },
         update_data: {
           ...this.formUpdateKunjungan.value,
-          start_period: new Date(this.formUpdateKunjungan.value.start_period).toISOString(),
-          end_period: new Date(this.formUpdateKunjungan.value.end_period).toISOString()
+          start_period: this.formUpdateKunjungan.value.start_period ? new Date(this.formUpdateKunjungan.value.start_period).toISOString() : '',
+          end_period: this.formUpdateKunjungan.value.end_period ? new Date(this.formUpdateKunjungan.value.end_period).toISOString() : ''
         }
       }
     }
@@ -325,10 +398,22 @@ export class TulisImunisasiComponent implements OnInit {
     })
 
     let patient = response.data
+    // console.log(patient?.procedures[0]?.vaccination_procedure?.coding[0]?.code)
     if (patient) {
-      this.formObservation.patchValue(patient.observation)
-      this.formDiagnosa.patchValue(patient.diagnosa)
-      this.formTindakan.patchValue(patient.tindakan)
+      this.formObservation.patchValue({
+        status_pregnant_code: patient?.observations[0]?.pregnancy_observation?.question_answers[0]?.answer.code,
+        status_pregnant_display: patient?.observations[0]?.pregnancy_observation?.question_answers[0]?.answer.display,
+        status_sekolah_code: patient?.observations[1]?.education_observation?.question_answers[0]?.answer.code,
+        status_sekolah_display: patient?.observations[1]?.education_observation?.question_answers[0]?.answer.display,
+      })
+      this.formDiagnosa.patchValue({
+        diagnosa_code: patient?.conditions[0]?.encounter_diagnosis_condition?.condition_item.code,
+        diagnosa_display: patient?.conditions[0]?.encounter_diagnosis_condition?.condition_item.display
+      })
+      this.formTindakan.patchValue({
+        procedure_code: patient?.procedures[0]?.vaccination_procedure?.coding[0]?.code,
+        procedure_display: patient?.procedures[0]?.vaccination_procedure?.coding[0]?.display
+      })
       this.formPelaporanImunisasi.patchValue(patient.reportImunisasi)
       this.formUpdateKunjungan.patchValue({
         ...patient.update_data,
@@ -384,7 +469,7 @@ export class TulisImunisasiComponent implements OnInit {
       code: 'IM-Dasar',
       display: 'Imunisasi Program Rutin Dasar'
     }]
-
+    
     form.setValue({
       vacine: data,
       dosis: 1,
