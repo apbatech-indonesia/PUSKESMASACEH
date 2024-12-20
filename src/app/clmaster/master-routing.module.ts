@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { tulisermComponent } from './tuliserm/tuliserm.component';
-import { BukuKontrasepsiComponent } from './Kebidanan/BukuKontrasepsi/BukuKontrasepsi.component';
 import { tulisermriComponent } from './tulisermri/tulisermri.component';
 import { kajianperawatComponent } from './Assesment/kajianperawat/kajianperawat.component';
 import { satusehatAncModule } from '../satusehat/satusehat-anc/satusehat-anc.module';

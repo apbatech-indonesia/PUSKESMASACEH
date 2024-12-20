@@ -154,8 +154,8 @@ import { MasterDistrictComponent } from './satusehat/satusehat-master/master-dis
 import { MasterSubDistrictComponent } from './satusehat/satusehat-master/master-sub-district/master-sub-district.component';
 import { MasterDiagnosaComponent } from './satusehat/satusehat-master/master-diagnosa/master-diagnosa.component';
 import { MasterTindakanComponent } from './satusehat/satusehat-master/master-tindakan/master-tindakan.component';
-import { FormVaccineComponent } from './satusehat/form/form-vaccine/form-vaccine.component';
 import { MasterVaccineComponent } from './satusehat/satusehat-master/master-vaccine/master-vaccine.component';
+import { FormVaccineComponent } from './satusehat/satusehat-imunisasi/form/form-vaccine/form-vaccine.component';
 @NgModule({
   declarations: [
 

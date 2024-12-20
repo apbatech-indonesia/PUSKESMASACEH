@@ -77,8 +77,7 @@ export class TulisImunisasiComponent implements OnInit {
     })
 
     this.formPelaporanImunisasi = this.fb.group({
-      imunisasi_tidak_disetujui: ['false'],
-      imunisasi_alasan_tidak_disetujui: [''],
+      imunisasi_tidak_disetujui: [''],
       imunisasi_by_nakes: [''],
       imunisasi_kipi_by_nakes: [''],
       imunisasi_kipi_by_pasien: [''],
@@ -142,199 +141,153 @@ export class TulisImunisasiComponent implements OnInit {
     this.getDataPatient()
   }
 
-  async doSubmitDiagnosa() {
-    this.showLoading()
-    this.patientData = await this.getPasien()
-    this.cabangData = await this.getCabang()
-    await this.setIdPasien()
-
-    let data = {
-      data: {
-        rmno: this.notransaksi,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        diagnosa: {
-          ...this.formDiagnosa.value
-        }
-      }
-    }
-    let response: any = await this.imunisasiService.diagnosaImunisasi(data)
-    let msg = response.statusMsg.split(': ')
-    if(response.statusCode == '00') {
-      Swal.fire(msg[0], msg[1], 'success')
-    } else {
-      Swal.fire(msg[0], msg[1], 'error')
-    }
-  }
-
-  async doSubmitTindakan() {
-    this.showLoading()
-    this.patientData = await this.getPasien()
-    this.cabangData = await this.getCabang()
-    await this.setIdPasien()
-
-    let data = {
-      data: {
-        rmno: this.notransaksi,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        tindakan: {
-          ...this.formTindakan.value
-        }
-      }
-    }
-    let response: any = await this.imunisasiService.tindakanImunisasi(data)
-    let msg = response.statusMsg.split(': ')
-    if(response.statusCode == '00') {
-      Swal.fire(msg[0], msg[1], 'success')
-    } else {
-      Swal.fire(msg[0], msg[1], 'error')
-    }
-  }
-
-  async doSubmitPelaporanImunisasi() {
-    this.showLoading()
-    this.patientData = await this.getPasien()
-    this.cabangData = await this.getCabang()
-    await this.setIdPasien()
-
-    let data = {
-      data: {
-        rmno: this.notransaksi,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        reportImunisasi: {
-          ...this.formPelaporanImunisasi.value
-        }
-      }
-    }
-    let response: any = await this.imunisasiService.reportImunisasiImunisasi(data)
-    let msg = response.statusMsg.split(': ')
-    if(response.statusCode == '00') {
-      Swal.fire(msg[0], msg[1], 'success')
-    } else {
-      Swal.fire(msg[0], msg[1], 'error')
-    }
-  }
-  
   async doSubmitObservasi(){
-    let data = {
-      data: {
-        rmno: this.notransaksi,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        observations: [
-          {
-            pregnancy_observation: {
-              category: {
-                system: "http://terminology.hl7.org/CodeSystem/observation-category",
-                code: "survey",
-                display: "Survey"
-              },
-              question_answers: [
-                {
-                  question:  {
-                    system: "http://loinc.org",
-                    code: "82810-3",
-                    display: "Pregnancy status"
-                  },
-                  answer: {
-                    system: "http://loinc.org",
-                    code: this.formObservation.value.status_pregnant_code,
-                    display: this.formObservation.value.status_pregnant_display
-                  }
-                }
-              ]
-            }
-          },
-          {
-            education_observation: {
-              category: {
-                system: "http://terminology.hl7.org/CodeSystem/observation-category",
-                code: "social-history",
-                display: "Social History"
-              },
-              question_answers: [
-                {
-                  question: {
-                    system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
-                    code: "OC000135",
-                    display: "Status sekolah"
-                  },
-                  answer: {
-                      system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
-                      code: this.formObservation.value.status_sekolah_code,
-                      display: this.formObservation.value.status_sekolah_display
-                  }
-                }
-              ]
-            }
-          }
-        ],
-        conditions: [
-          {
-            encounter_diagnosis_condition: {
-              clinical_status: {
-                system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
-                code: "active",
-                display: "Active"
-              },
-              category: {
-                system: "http://terminology.hl7.org/CodeSystem/condition-category",
-                code: "encounter-diagnosis",
-                display: "Encounter Diagnosis"
-              },
-              condition_item: {
-                system: "http://hl7.org/fhir/sid/icd-10",
-                code: this.formDiagnosa.value.diagnosa_code,
-                display: this.formDiagnosa.value.diagnosa_display
-              },
-              onset_date_time: this.dateNow,
-              recorded_date: this.dateNow
-            }
-          }
-        ],
-        procedures: [
-          {
-            vaccination_procedure: {
-              coding: [
-                {
-                  system: "http://hl7.org/fhir/sid/icd-9-cm",
-                  code: this.formTindakan.value.procedure_code,
-                  display: this.formTindakan.value.procedure_display
-                }
-              ]
+    var data = {
+      rmno: this.notransaksi,
+      useCaseId: this.useCaseId,
+      satusehatId: this.patientData.idsatusehat
+    }
+
+    let observations = {
+      observations : [
+        {
+          pregnancy_observation: {
+            category: {
+              system: "http://terminology.hl7.org/CodeSystem/observation-category",
+              code: "survey",
+              display: "Survey"
             },
-            status: {
-              system: "http://terminology.hl7.org/CodeSystem/procedure-status",
-              code: "completed",
-              display: "Completed"
+            question_answers: [
+              {
+                question:  {
+                  system: "http://loinc.org",
+                  code: "82810-3",
+                  display: "Pregnancy status"
+                },
+                answer: {
+                  system: "http://loinc.org",
+                  code: this.formObservation.value.status_pregnant_code,
+                  display: this.formObservation.value.status_pregnant_display
+                }
+              }
+            ]
+          }
+        },
+        {
+          education_observation: {
+            category: {
+              system: "http://terminology.hl7.org/CodeSystem/observation-category",
+              code: "social-history",
+              display: "Social History"
+            },
+            question_answers: [
+              {
+                question: {
+                  system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
+                  code: "OC000135",
+                  display: "Status sekolah"
+                },
+                answer: {
+                  system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
+                  code: this.formObservation.value.status_sekolah_code,
+                  display: this.formObservation.value.status_sekolah_display
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+    
+    let conditions = {
+      conditions: [
+        {
+          encounter_diagnosis_condition: {
+            clinical_status: {
+              system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
+              code: "active",
+              display: "Active"
             },
             category: {
-              system: "http://snomed.info/sct",
-              code: "107733003",
-              display: "Introduction Procedure"
+              system: "http://terminology.hl7.org/CodeSystem/condition-category",
+              code: "encounter-diagnosis",
+              display: "Encounter Diagnosis"
             },
-            performed_date_time: this.dateNow
+            condition_item: {
+              system: "http://hl7.org/fhir/sid/icd-10",
+              code: this.formDiagnosa.value.diagnosa_code,
+              display: this.formDiagnosa.value.diagnosa_display
+            },
+            onset_date_time: this.dateNow,
+            recorded_date: this.dateNow
           }
-        ],
-        reportImunisasi: {
-          ...this.formPelaporanImunisasi.value
-        },
-        update_data: {
-          ...this.formUpdateKunjungan.value,
-          start_period: this.formUpdateKunjungan.value.start_period ? new Date(this.formUpdateKunjungan.value.start_period).toISOString() : '',
-          end_period: this.formUpdateKunjungan.value.end_period ? new Date(this.formUpdateKunjungan.value.end_period).toISOString() : ''
         }
+      ]
+    }
+
+    let procedures = {
+      procedures: [
+        {
+          vaccination_procedure: {
+            coding: [
+              {
+                system: "http://hl7.org/fhir/sid/icd-9-cm",
+                code: this.formTindakan.value.procedure_code,
+                display: this.formTindakan.value.procedure_display
+              }
+            ]
+          },
+          status: {
+            system: "http://terminology.hl7.org/CodeSystem/procedure-status",
+            code: "completed",
+            display: "Completed"
+          },
+          category: {
+            system: "http://snomed.info/sct",
+            code: "107733003",
+            display: "Introduction Procedure"
+          },
+          performed_date_time: this.dateNow
+        }
+      ]
+    }
+    
+    let reportImunisasi = {
+      reportImunisasi: this.formPelaporanImunisasi.value
+    }
+
+    let periode = {
+      start: this.formUpdateKunjungan.value.start_period ? new Date(this.formUpdateKunjungan.value.start_period).toISOString() : '',
+      end: this.formUpdateKunjungan.value.start_period ? new Date(this.formUpdateKunjungan.value.start_period).toISOString() : ''
+    }
+
+    let update_data = {
+      update_data: {
+        status: "finished",
+        period: periode,
+        statusHistory: [
+            {
+                status: "arrived",
+                periode: periode
+            },
+            {
+                status: "in-progress",
+                periode: periode
+            },
+            {
+                status: "finished",
+                periode: periode
+            }
+        ]
       }
     }
 
     this.showLoading()
-    let response1: any = await this.imunisasiService.observationImunisasi(data)
-    let response2: any = await this.imunisasiService.diagnosaImunisasi(data)
-    let response3: any = await this.imunisasiService.tindakanImunisasi(data)
-    let response4: any = await this.imunisasiService.reportImunisasiImunisasi(data)
-    let response5: any = await this.imunisasiService.updateKunjunganImunisasi(data)
+    let response1: any = await this.imunisasiService.observationImunisasi({ data: { ...data, ...observations } })
+    let response2: any = await this.imunisasiService.diagnosaImunisasi({ data: { ...data, ...conditions } })
+    let response3: any = await this.imunisasiService.tindakanImunisasi({ data: { ...data, ...procedures } })
+    let response4: any = await this.imunisasiService.reportImunisasiImunisasi({ data: { ...data, ...reportImunisasi } })
+    let response5: any = await this.imunisasiService.updateKunjunganImunisasi({ data: { ...data, ...update_data } })
     
     if (response1.statusCode != '00') {
       Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
@@ -398,29 +351,50 @@ export class TulisImunisasiComponent implements OnInit {
     })
 
     let patient = response.data
-    // console.log(patient?.procedures[0]?.vaccination_procedure?.coding[0]?.code)
     if (patient) {
-      this.formObservation.patchValue({
-        status_pregnant_code: patient?.observations[0]?.pregnancy_observation?.question_answers[0]?.answer.code,
-        status_pregnant_display: patient?.observations[0]?.pregnancy_observation?.question_answers[0]?.answer.display,
-        status_sekolah_code: patient?.observations[1]?.education_observation?.question_answers[0]?.answer.code,
-        status_sekolah_display: patient?.observations[1]?.education_observation?.question_answers[0]?.answer.display,
-      })
-      this.formDiagnosa.patchValue({
-        diagnosa_code: patient?.conditions[0]?.encounter_diagnosis_condition?.condition_item.code,
-        diagnosa_display: patient?.conditions[0]?.encounter_diagnosis_condition?.condition_item.display
-      })
-      this.formTindakan.patchValue({
-        procedure_code: patient?.procedures[0]?.vaccination_procedure?.coding[0]?.code,
-        procedure_display: patient?.procedures[0]?.vaccination_procedure?.coding[0]?.display
-      })
-      this.formPelaporanImunisasi.patchValue(patient.reportImunisasi)
-      this.formUpdateKunjungan.patchValue({
-        ...patient.update_data,
-        start_period: patient?.update_data?.start_period ? patient.update_data.start_period.split('T')[0] : '',
-        end_period: patient?.update_data?.end_period ? patient.update_data.end_period.split('T')[0] : ''
-      })
-      this.reportImunisasi = patient.reportImunisasi
+      if (patient?.observations) {
+        this.formObservation.patchValue({
+          status_pregnant_code: patient?.observations[0]?.pregnancy_observation?.question_answers[0]?.answer.code,
+          status_pregnant_display: patient?.observations[0]?.pregnancy_observation?.question_answers[0]?.answer.display,
+          status_sekolah_code: patient?.observations[1]?.education_observation?.question_answers[0]?.answer.code,
+          status_sekolah_display: patient?.observations[1]?.education_observation?.question_answers[0]?.answer.display,
+        })
+      }
+
+      if (patient?.conditions) {
+        this.formDiagnosa.patchValue({
+          diagnosa_code: patient?.conditions[0]?.encounter_diagnosis_condition?.condition_item.code,
+          diagnosa_display: patient?.conditions[0]?.encounter_diagnosis_condition?.condition_item.display
+        })
+      }
+
+      if (patient?.procedures) {
+        this.formTindakan.patchValue({
+          procedure_code: patient?.procedures[0]?.vaccination_procedure?.coding[0]?.code,
+          procedure_display: patient?.procedures[0]?.vaccination_procedure?.coding[0]?.display
+        })
+      }
+
+      if (patient?.reportImunisasi) {
+        this.formPelaporanImunisasi.patchValue(patient.reportImunisasi)
+        this.reportImunisasi = patient.reportImunisasi
+      } else {
+        this.reportImunisasi = {
+          imunisasi_tidak_disetujui: null,
+          imunisasi_by_nakes: null,
+          imunisasi_kipi_by_nakes: null,
+          imunisasi_kipi_by_pasien: null,
+          imunisasi_by_kader: null
+        }
+      }
+
+      if (patient?.update_data) {
+        this.formUpdateKunjungan.patchValue({
+          diagnosis_display: patient?.update_data?.diagnosis?.display,
+          start_period: patient?.update_data?.period?.start ? patient.update_data.period.start.split('T')[0] : '',
+          end_period: patient?.update_data?.period?.end ? patient.update_data.period.end.split('T')[0] : ''
+        })
+      }
     }
     this.stopLoading()
   }
@@ -428,6 +402,7 @@ export class TulisImunisasiComponent implements OnInit {
   stringify(data: any) {
     return JSON.stringify(data)
   }
+
   getPasien() {
     return new Promise((resolve) => {
       this.api.datapasien(this.userData.kdcabang, this.notransaksi)
@@ -463,7 +438,7 @@ export class TulisImunisasiComponent implements OnInit {
     })
   }
 
-  onSelectedVaccine(form: any, data: any) {
+  onSelectedVaccine(form: any, data: any, status = 'completed') {
     let reason: any = [{
       system: 'http://terminology.kemkes.go.id/CodeSystem/immunization-reason',
       code: 'IM-Dasar',
@@ -471,9 +446,25 @@ export class TulisImunisasiComponent implements OnInit {
     }]
     
     form.setValue({
+      status: status,
       vacine: data,
-      dosis: 1,
-      reason: reason
+      reason: reason,
+      dosis: 1
     })
+  }
+
+  removeNullValues(obj: Object) {
+    if (typeof obj !== 'object' || obj === null) return obj; // Jika bukan object, kembalikan nilai asli
+
+    // Iterasi pada setiap properti
+    for (const key in obj) {
+        if (obj[key] === null) {
+            delete obj[key]; // Hapus properti jika nilainya null
+        } else if (typeof obj[key] === 'object') {
+            obj[key] = this.removeNullValues(obj[key]); // Rekursif untuk objek bersarang
+        }
+    }
+
+    return obj;
   }
 }

@@ -176,33 +176,14 @@
             <div class="mb-3 col-12">
               <div class="card">
                 <div class="card-header navy">
-                  Form Persetujuan Imunisasi
+                  Form Imunisasi
                 </div>
                 <div class="card-body">
                   <!-- header body -->
                   <form [formGroup]="formPelaporanImunisasi">
-                    <!-- Section 02 - Imunisasi Tidak Disetujui oleh Pasien/Keluarga Pasien -->
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="form-check form-check-inline mb-3">
-                          <input class="form-check-input" type="radio" id="disetujui" value="false" formControlName="imunisasi_tidak_disetujui">
-                          <label class="form-check-label" for="disetujui">Imunisasi Disetujui</label>
-                        </div>
-                        <div class="form-check form-check-inline mb-3">
-                          <input class="form-check-input" type="radio" id="tidakdisetujui" value="true" formControlName="imunisasi_tidak_disetujui">
-                          <label class="form-check-label" for="tidakdisetujui">Imunisasi Tidak Disetujui</label>
-                        </div>
-                      </div>
-                      <div class="col-12" *ngIf="formPelaporanImunisasi.value.imunisasi_tidak_disetujui == 'true'">
-                        <div class="position-relative">
-                          <label for="imunisasi_alasan_tidak_disetujui" class="form-label">Alasan Tidak Disetujui</label>
-                          <textarea class="form-control" id="imunisasi_alasan_tidak_disetujui" formControlName="imunisasi_alasan_tidak_disetujui"></textarea>
-                        </div>
-                      </div>
-                    </div>
         
                     <!-- Section 01 - Imunisasi Dilakukan oleh Nakes -->
-                    <div class="row" *ngIf="formPelaporanImunisasi.value.imunisasi_tidak_disetujui == 'false'">
+                    <div class="row">
                       <div class="col-xl-6 col-md-12 my-3">
                         <app-form-vaccine
                           [title]="'Imunisasi Dilakukan oleh Nakes'"
@@ -223,7 +204,7 @@
                   <!-- header body -->
   
                   <!-- header body -->
-                  <div class="card mb-3 col-12" *ngIf="formPelaporanImunisasi.value.imunisasi_tidak_disetujui == 'false'">
+                  <div class="card mb-3 col-12">
                     <div class="card-header navy">
                       Imunisasi Disertai dengan KIPI
                     </div>
@@ -253,6 +234,34 @@
                         </div>
                       </div>
                       <!-- header body -->
+                       
+                    </div>
+                  </div>
+                  <!-- header body -->
+
+                  <!-- header body -->
+                  <div class="card mb-3 col-12">
+                    <div class="card-header navy">
+                      Imunisasi Tidak Disetujui
+                    </div>
+                    <div class="card-body">
+                      <!-- header body -->
+                      <div class="row">
+                        <div class="col-12 my-3">
+                          <h3>Imunisasi Tidak Disetujui</h3>
+                        </div>
+                        
+                        <!-- KIPI oleh Nakes -->
+                        <div class="col-xl-6 col-md-12 my-3">
+                          <app-form-vaccine
+                            [title]="'Imunisasi Tidak Disetujui'"
+                            [list]="reportImunisasi.imunisasi_tidak_disetujui"
+                            (onSelected)="onSelectedVaccine(formPelaporanImunisasi.controls['imunisasi_tidak_disetujui'], $event, 'not done')">
+                          </app-form-vaccine>
+                        </div>
+                      </div>
+                      <!-- header body -->
+                       
                     </div>
                   </div>
                   <!-- header body -->
