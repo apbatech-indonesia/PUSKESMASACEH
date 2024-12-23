@@ -503,8 +503,11 @@
                         <a routerLinkActive="active-item"  class="vsm-link" routerLink="/master/laporanrm"  *ngIf="akses === 'Kasir Koordinator' || akses === 'Manajemen' || akses === 'Kasir RJ'  ">
                           <span class="vsm-title">Laporan Rekam Medik</span></a>
                       </div>
+                      <div class="vsm-item"  *ngIf="emr == '1'">
+                        <a routerLinkActive="active-item"  class="vsm-link" routerLink="/master/laporanantrol"  *ngIf="akses === 'Kasir Koordinator' || akses === 'Manajemen' || akses === 'Kasir RJ'  ">
+                          <span class="vsm-title">Laporan Antrean Online</span></a>
+                      </div>
                 
-
 
                       <div class="vsm-item" *ngIf="akses === 'Manajemen'">
                         <a routerLinkActive="active-item"  class="vsm-link" routerLink="/master/laporanlr" ngIf="akses === 'Kasir Koordinator' || akses === 'Manajemen' || akses === 'Kasir RJ'  ">

@@ -15,7 +15,7 @@ let apidaftar = localStorage.getItem("baseUrlDaftar");
 // let apidaftar = 'https://tabaro.clenicapp.com/clenicv2/master/';
 
 let pcareUrl = localStorage.getItem("pcareUrl");
-let satusehat = "https://satusehat.clenicapp.com/api/";
+let satusehat = "https://besatusehat.clenicapp.com/api/";
 
 @Injectable({
   providedIn: "root",
@@ -102,6 +102,29 @@ export class ApiserviceService {
     );
   }
 
+  getReportingAntrol(
+    cabang: any,
+    search: any,
+    page: any,
+    isSuccess: any,
+    urlType: any,
+    dateFrom: any,
+    dateTo: any
+  ) {
+    return this.http
+      .get(
+        `https://emr.clenicapp.com/api/${cabang}/reporting-antrean?search=${search}&page=${page}&isSuccess=${isSuccess}&urlType=${urlType}&dateFrom=${dateFrom}&dateTo=${dateTo}`
+      ).toPromise();
+  }
+
+  getDetailPasien(
+    cabang: any,
+    bpjsnumber: number
+  ) {
+    return this.http.get(
+      `https://emr.clenicapp.com/api/${cabang}/reporting-antrean/pasien/${bpjsnumber}`
+    ).toPromise();
+  }
   //
 
   getBaseUrlConfig(branchCode: string): Observable<any> {
@@ -2983,6 +3006,38 @@ export class ApiserviceService {
           resolve(data);
         });
     });
+  }
+  
+  medication(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "Medication", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+  
+  medicationRequest(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "MedicationRequest", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+  
+  medicationDispense(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "MedicationDispense", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+  
+  medicationStatement(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "MedicationStatement", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
   }
 
   allergyIntolerance(data: any, headers: any) {

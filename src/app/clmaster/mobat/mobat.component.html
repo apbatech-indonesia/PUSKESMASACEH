@@ -33,7 +33,7 @@
             <form [formGroup]="masterform" >
               <div class="position-relative mb-3">
                 <label for="exampleEmail" class="form-label"><b>NAMA OBAT*</b></label>
-                <input formControlName="obat"  [(ngModel)]="obat"    style="text-transform:uppercase" placeholder="Obat" type="text" class="form-control" >
+                <input formControlName="obat"  [(ngModel)]="obat" style="text-transform:uppercase" placeholder="Obat" type="text" class="form-control" >
               </div>
             </form>
             </div>
@@ -41,9 +41,7 @@
               <div class="position-relative mb-3">
                 <label for="exampleEmail" class="form-label"><b>Maping Obat BPJS*</b></label>
                 <input  [(ngModel)]="obatbpjs"    style="text-transform:uppercase" placeholder="Cari Obat Bpjs" type="text" class="form-control"
-                (keyup)="cariobat($event)"
-                
-                >
+                (keyup)="cariobat($event)">
               </div>
               <div >
               
@@ -83,6 +81,13 @@
             
               </div>
 
+              <div class="col-12">
+                <app-master-kfa
+                  [id]="kdobatsatusehat"
+                  [title]="'Maping Obat Satusehat*'"
+                  (selectedItem)="kdobatsatusehat = $event.code;">
+                </app-master-kfa>
+              </div>
         </div>
      
           <div class="row">
@@ -462,7 +467,7 @@
 
 
       </div>
-      <div class="table-responsive tableFixHead">>
+      <div class="table-responsive tableFixHead">
       <table class="table table-striped  ">
         <thead>
           <tr>
@@ -507,7 +512,7 @@
               x.	nama,
               x.	sup,
               x.	jenis,
-              x.	golongan,x.kdcp,x.kdbs,x.zataktifasli)">P</div>
+              x.	golongan,x.kdcp,x.kdbs,x.zataktifasli,x.kdobatsatusehat)">P</div>
               <div style="font-size: 10px;color:black" class="badge bg-pill bg-warning" (click)="lihatstok(content1,x.kdobat)">Stok</div>
               <div class="badge bg-pill bg-danger" (click)="hapus(x.kdobat,
               x.	obat,
