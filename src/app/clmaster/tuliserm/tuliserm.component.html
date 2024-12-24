@@ -3475,6 +3475,21 @@ Normal: teraba jelas
                               type="text"
                               [(ngModel)]="x.hasil"
                             />
+
+                            <br>
+
+                            <div *ngIf="x.spesimenSatuSehat == 'Y'">
+                              <br>
+                              <strong>Spesimen Satusehat</strong>
+                              <app-master-specimen
+                                [id]="x.specimen"
+                                [isDisabled]="true"
+                                (selectedItem)="
+                                  x.specimen = $event.code;
+                                  x.specimenDetail = $event;
+                                "
+                              ></app-master-specimen>
+                            </div>
                           </td>
                           <td>
                             {{ x.satuan }}
@@ -3589,6 +3604,14 @@ Normal: teraba jelas
                               </div>
                               <div class="divider mb-0"></div>
                             </div>
+                          </td>
+                        </tr>
+                      </tbody>
+
+                      <tbody *ngIf="thasillab.length">
+                        <tr>
+                          <td colspan="10" align="center">
+                            <button class="btn btn-primary" (click)="kirimSpesimenSatuSehat()">Kirim Satusehat</button>
                           </td>
                         </tr>
                       </tbody>

@@ -190,19 +190,19 @@
                   </td>
                   <td  >
                     <div class="badge bg-pill bg-danger" (click)="pilihpasien(
-                      x.norm,x.kdpoli
-                          ,x.tglpriksa
-                          ,x.kddokter
-                          ,x.kdkostumerd
-                          ,x.notransaksi
-                          ,x.pasien
-                          ,x.tgllahir
-        
-                          ,x.nampoli
-                          ,x.namdokter
-                          ,x.nama
-                          ,x.costumer
-                          ,x.alamat,x.kdtarif,x.kelas,x.dokterkirim,x.nofaktur,x.jeniskelamin,x.statusverif,x.kddokterpengirim)">VERIFIKASI</div>
+                      x.norm,
+                      x.kdpoli,
+                      x.tglpriksa,
+                      x.kddokter,
+                      x.kdkostumerd,
+                      x.notransaksi,
+                      x.pasien,
+                      x.tgllahir,
+                      x.nampoli,
+                      x.namdokter,
+                      x.nama,
+                      x.costumer,
+                      x.alamat,x.kdtarif,x.kelas,x.dokterkirim,x.nofaktur,x.jeniskelamin,x.statusverif,x.kddokterpengirim)">VERIFIKASI</div>
                    
                               </td>
                 
@@ -630,28 +630,19 @@
                          
                           <th scope="col">Pemeriksaan</th>
                           <th scope="col" >Hasil</th>
-                         
                           <th scope="col" >Satuan</th>
                           <th scope="col" >Keterangan</th>
                           <th scope="col" >Nilai Normal</th>
                           <th scope="col" >Golongan</th>
                           <th scope="col" >Warna</th>
-                         
-                        
                         </tr>
                       </thead>
           
                       <tbody style="font-size:11px;color:black" *ngFor="let y of thasillab; let i= index">
                         
                         <tr >
-                          <td  >
-                          
-                          
-          
-                           
+                          <td  >        
                            <b> {{y.golongan}}</b>
-          
-          
                           </td>
                           <td >
                             
@@ -680,25 +671,29 @@
 
 
                       <tr *ngFor="let x of y.detail; let i= index">
-                          <td  >
-                          
-                          
-
+                          <td>
                               {{x.nama}}
-                           
-          
-          
                           </td>
-                          <td >
-                            
-                            <input style="border-radius: 5px;border:solid 1px #ccc" placeholder="Hasil..." type="text" [(ngModel)]="x.hasil" >
+                          <td>
+                            <input style="border-radius: 5px;border:solid 1px #ccc" placeholder="Hasil..." type="text" [(ngModel)]="x.hasil" class="form-control">
+                            <div *ngIf="x.spesimenSatuSehat == 'Y'">
+                              <br>
+                              <strong>Spesimen Satusehat</strong>
+                              <app-master-specimen
+                                [id]="x.specimen"
+                                (selectedItem)="
+                                  x.specimen = $event.code;
+                                  x.specimenDetail = $event;
+                                "
+                              ></app-master-specimen>
+                            </div>
                           </td>
                           <td >
                             {{x.satuan}}
                           </td>
                           <td >
                            
-                            <input style="border-radius: 5px;border:solid 1px #ccc" placeholder="keterangan..." type="text" [(ngModel)]="x.keterangan" >
+                            <input style="border-radius: 5px;border:solid 1px #ccc" placeholder="keterangan..." type="text" [(ngModel)]="x.keterangan" class="form-control">
                           </td>
                           <td>
                             {{x.refrensi}} 
@@ -717,10 +712,7 @@
             
                             </select>
                           </td>
-                         
-                        </tr> 
-                       
-                       
+                        </tr>
                       </tbody>
                     </table>
                   </div>
@@ -936,7 +928,7 @@
                   ,x.namdokter
                   ,x.nama
                   ,x.costumer
-                  ,x.alamat,x.kdtarif,x.kelas,x.dokterkirim,x.nofaktur,x.jeniskelamin,x.statusverif,x.kddokterpengirim,x.kdcppt)">P</div>
+                  ,x.alamat,x.kdtarif,x.kelas,x.dokterkirim,x.nofaktur,x.jeniskelamin,x.statusverif,x.kddokterpengirim,x.kdcppt,x)">P</div>
           
           
           </td>

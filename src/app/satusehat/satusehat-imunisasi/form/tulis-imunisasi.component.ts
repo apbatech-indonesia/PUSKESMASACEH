@@ -265,6 +265,15 @@ export class TulisImunisasiComponent implements OnInit {
       update_data: {
         status: "finished",
         period: periode,
+        diagnosis: {
+            id: '',
+            display: this.formUpdateKunjungan.value.diagnosis_display,
+            role: {
+                system: "http://terminology.hl7.org/CodeSystem/diagnosis-role",
+                code: "DD",
+                display: "Discharge diagnosis"
+            }
+        },
         statusHistory: [
             {
                 status: "arrived",
@@ -287,6 +296,8 @@ export class TulisImunisasiComponent implements OnInit {
     let response2: any = await this.imunisasiService.diagnosaImunisasi({ data: { ...data, ...conditions } })
     let response3: any = await this.imunisasiService.tindakanImunisasi({ data: { ...data, ...procedures } })
     let response4: any = await this.imunisasiService.reportImunisasiImunisasi({ data: { ...data, ...reportImunisasi } })
+    
+    update_data.update_data.diagnosis.id = response2.id
     let response5: any = await this.imunisasiService.updateKunjunganImunisasi({ data: { ...data, ...update_data } })
     
     if (response1.statusCode != '00') {

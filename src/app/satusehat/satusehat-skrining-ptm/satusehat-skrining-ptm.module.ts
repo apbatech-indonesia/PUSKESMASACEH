@@ -16,8 +16,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 // import { PageTitleModule } from '../../../../Layout/Components/page-title/page-title.module';
 import { PageTitleModule } from 'src/app/Layout/Components/page-title/page-title.module';
-import {  kasirlabComponent } from './kasirlab.component';
-import { kasirlabRoutingModule } from './kasirlab-routing.module';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -27,10 +25,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import {TreeModule} from 'primeng/tree'
-import {ButtonModule} from 'primeng/button';
-import { MasterSpecimenModule } from 'src/app/satusehat/satusehat-master/master-specimen/master-specimen.module';
-
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { satusehatSkriningPtmRoutingModule } from './satusehat-skrining-ptm-routing.module';
+import { satusehatSkriningPtmComponent } from './satusehat-skrining-ptm.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -41,9 +38,10 @@ import { MasterSpecimenModule } from 'src/app/satusehat/satusehat-master/master-
     MatDatepickerModule,
     CurrencyMaskModule,
     NgbModule,
+    AngularEditorModule,
     FontAwesomeModule,
     TextareaAutosizeModule,
-    kasirlabRoutingModule,
+    satusehatSkriningPtmRoutingModule,
     FormsModule, ReactiveFormsModule,
     MatCheckboxModule,
     MatCheckboxModule,
@@ -60,10 +58,7 @@ import { MasterSpecimenModule } from 'src/app/satusehat/satusehat-master/master-
     MatChipsModule,
     MatIconModule,
     PageTitleModule,
-    TreeModule,
-    ButtonModule,
-    MasterSpecimenModule
   ],
-  declarations: [kasirlabComponent]
+  declarations: [satusehatSkriningPtmComponent]
 })
-export class kasirlabModule { }
+export class satusehatSkriningPtmModule { }

@@ -199,8 +199,8 @@
                         </a>
                       </div>
                       <div class="vsm-item">
-                        <a  routerLinkActive="active-item" class="vsm-link" (click)="update()">
-                          <span class="vsm-title">Skrining PTM<b style="font-size: 8px;color:green">Proses</b></span>
+                        <a routerLink="/master/satusehat-skrining-ptm" routerLinkActive="active-item" class="vsm-link">
+                          <span class="vsm-title">Skrining PTM <b style="font-size: 8px;color:red">New</b></span>
                         </a>
                       </div>
                       <div class="vsm-item">
@@ -510,7 +510,7 @@
                 
 
                       <div class="vsm-item" *ngIf="akses === 'Manajemen'">
-                        <a routerLinkActive="active-item"  class="vsm-link" routerLink="/master/laporanlr" ngIf="akses === 'Kasir Koordinator' || akses === 'Manajemen' || akses === 'Kasir RJ'  ">
+                        <a routerLinkActive="active-item"  class="vsm-link" routerLink="/master/laporanlr" *ngIf="akses === 'Kasir Koordinator' || akses === 'Manajemen' || akses === 'Kasir RJ'  ">
                           <span class="vsm-title">Laporan Laba Rugi</span></a>
                       </div>
                      

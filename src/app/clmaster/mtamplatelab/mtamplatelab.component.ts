@@ -58,6 +58,7 @@ export class MtamplatelabComponent implements OnInit {
   cariuser:any;
   crtindak:any;
   namatamplates:''
+  spesimenSatuSehat:any='N'
   details:''
   
 
@@ -85,7 +86,6 @@ body = 'This is example. \none\ntwo';
 this.kdklinik = this.userDetails.kdklinik;
    this.kduser = this.userDetails.kduser;
    this.kdcabang = this.userDetails.kdcabang;
-    
   }
 
 tlisttes:any;
@@ -529,7 +529,7 @@ this.namatamplates = '';
   
             let body={"kdlab":kdlab,"kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"nama":nama,"kdgolongan":kdgolongan,"golongan":golongan,
             "kdmetode":kdmetode,"metode":metode,"satuan":satuan,"reflaki":reflaki,"refperempuan":refperempuan,"lmin":lmin,
-            "lmax":lmax,"pmin":pmin,"pmax":pmax,"stssimpan":'3'}
+            "lmax":lmax,"pmin":pmin,"pmax":pmax,"spesimenSatuSehat":this.spesimenSatuSehat,"stssimpan":'3'}
             
             
             
@@ -672,11 +672,7 @@ profileForm = this.fb.group({
   pmin: ['',Validators.required],
   pmax: ['',Validators.required],
   nourut: ['',Validators.required],
-
-
-
-
-
+  spesimenSatuSehat: ['',Validators.required],
 });
 
 showedit:boolean;
@@ -713,7 +709,7 @@ simpantes(){
 
   let body={"kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"nama":this.namates,"kdgolongan":this.kdgolongan,"golongan":this.golongan,
 "kdmetode":this.kdmetodex,"metode":this.metode,"satuan":this.satuan,"reflaki":this.reflaki,"refperempuan":this.refperempuan,"lmin":this.lmin,
-"lmax":this.lmax,"pmin":this.pmin,"pmax":this.pmax,"nourut":this.nourut,"stssimpan":'1'}
+"lmax":this.lmax,"pmin":this.pmin,"pmax":this.pmax,"nourut":this.nourut,"spesimenSatuSehat":this.spesimenSatuSehat,"stssimpan":'1'}
 
 
 
@@ -749,7 +745,7 @@ editusertes(){
 
   let body={"kdlab":this.kdlab,"kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"nama":this.namates,"kdgolongan":this.kdgolongan,"golongan":this.golongan,
 "kdmetode":this.kdmetodex,"metode":this.metode,"satuan":this.satuan,"reflaki":this.reflaki,"refperempuan":this.refperempuan,"lmin":this.lmin,
-"lmax":this.lmax,"pmin":this.pmin,"pmax":this.pmax,"nourut":this.nourut,"stssimpan":'2'}
+"lmax":this.lmax,"pmin":this.pmin,"pmax":this.pmax,"nourut":this.nourut,"spesimenSatuSehat":this.spesimenSatuSehat,"stssimpan":'2'}
 
 
 
@@ -804,7 +800,7 @@ kdlab:any;
 
 jenistc:string='';
 pilihtes(kdlab,nama,kdgolongan,golongan,
-  kdmetode,metode,satuan,reflaki,refperempuan,lmin,lmax,pmin,pmax,no){
+  kdmetode,metode,satuan,reflaki,refperempuan,lmin,lmax,pmin,pmax,no,spesimenSatuSehat){
 
     this.namates = nama
 this.satuan = satuan
@@ -820,6 +816,7 @@ this.pmin=pmin
 this.pmax=pmax
 this.kdlab = kdlab
 this.nourut = no
+this.spesimenSatuSehat = spesimenSatuSehat
 this.showedit= true;
 
   }

@@ -1796,6 +1796,22 @@ aturanracikm(kdtamplated,namaracik,metode,aturan,qty,
             standart: this.standart
         }
       }, this.satusehatheaders)
+
+      await this.authService.medicationStatement({
+        data: {
+            medicationId: medication.id,
+            medicationName: this.namaobatsatusehat,
+            patientId: this.idpasien,
+            patientName: this.pasien,
+            dosisDescription: `${this.frek} x ${this.jmlpakai} ${this.satuan} per hari ${this.signa}, ${this.keterangan}`,
+            frequency: this.frek,
+            period: this.jmlhari,
+            periodMax: this.jmlhari,
+            priodUnit: "h",
+            date: this.myDate.toISOString(),
+            encounterId: this.idsatusehat
+        }
+      }, this.satusehatheaders)
     }
 
     tfrekuensi:any;

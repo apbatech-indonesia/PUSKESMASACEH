@@ -20,6 +20,7 @@ import { SampleService } from 'src/app/services';
 import { TreeNode } from 'primeng/api';
 import { io } from "socket.io-client";
 import { GlobalComponent } from 'src/app/clmaster/Globals/global.component';
+import { HttpHeaders } from '@angular/common/http';
 
 
 
@@ -51,6 +52,7 @@ export class kasirlabComponent implements OnInit {
   heading = 'Master Customer';
   subheading :any;
   icon = 'pe-7s-diamond icon-gradient bg-warm-flame';
+  satusehatheaders: any;
 
   options: FormGroup;
   public userDetails: any;
@@ -99,6 +101,11 @@ this.kdcabang = this.userDetails.kdcabang;
 this.username = this.userDetails.username; 
 this.tgldari = this.datepipe.transform(this.myDate, 'yyyy-MM-dd')
 this.tglp = this.datepipe.transform(this.myDate, 'yyyy-MM-dd')
+
+this.satusehatheaders = new HttpHeaders({
+  "kd-cabang": this.kdcabang
+})
+
 this.socketx =io("https://socketpkm.clenic.id/");
   }
   profileForm = this.fb.group({
@@ -543,6 +550,7 @@ tgllahir:''
 noantrian:''
 nampoli:''
 namdokter:''
+kddoktersatusehat:''
 namacus:''
 costumer:''
 alamat:''
@@ -571,7 +579,8 @@ kdcppt:any;
         ,namdokter
         ,nama
         ,costumer
-        ,alamat,kdtarif,kelas,dokterkirim,nofaktur,jeniskelamin,statusverif,kddokterpengirim,kdcppt){
+        ,alamat,kdtarif,kelas,dokterkirim,nofaktur,jeniskelamin,statusverif,kddokterpengirim,kdcppt,x){
+          console.log(x)
           this.showdata = true;
           this.norm =norm
           this.kdpoli = kdpoli
@@ -584,6 +593,7 @@ kdcppt:any;
           this.dokterkirim = dokterkirim
           this.nampoli = nampoli
           this.namdokter = namdokter
+          this.kddoktersatusehat = x.kddoktersatusehat
           this.namacus = nama
           this.costumer = costumer
           this.alamat = alamat
@@ -2437,15 +2447,10 @@ this.showloading= true
  
 
 for (let x of data.detail){
-
   let body = {
     "notrans":this.notransaksi,"norm":this.norm,"kdgolongan":x.kdgolongan,"kdlab":x.kdlab,"kdproduk":x.kdproduk,"hasil":x.hasil,"username":this.username,
-    "keterangan":x.keterangan,"kdcabang":this.kdcabang,"status":'1',"stssimpan":'1',"warna":x.warna}
+    "keterangan":x.keterangan,"kdcabang":this.kdcabang,"status":'1',"stssimpan":'1',"warna":x.warna,'specimen':x.specimen}
   
-  
-    console.log(body)
-  
-   
     this.authService.simpanhasilalb(body)
     .subscribe(response => {
     

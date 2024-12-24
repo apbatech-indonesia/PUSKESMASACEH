@@ -148,6 +148,7 @@ import { TulisAncComponent } from './satusehat/satusehat-anc/form/tulis-anc.comp
 import { TulisMtbmComponent } from './satusehat/satusehat-mtbm/form/tulis-mtbm.component';
 import { TulisMtbsComponent } from './satusehat/satusehat-mtbs/form/tulis-mtbs.component';
 import { TulisImunisasiComponent } from './satusehat/satusehat-imunisasi/form/tulis-imunisasi.component';
+import { TulisSkriningPtmComponent } from './satusehat/satusehat-skrining-ptm/form/tulis-skrining-ptm.component';
 import { MasterProvinceComponent } from './satusehat/satusehat-master/master-province/master-province.component';
 import { MasterCityComponent } from './satusehat/satusehat-master/master-city/master-city.component';
 import { MasterDistrictComponent } from './satusehat/satusehat-master/master-district/master-district.component';
@@ -156,6 +157,7 @@ import { MasterDiagnosaComponent } from './satusehat/satusehat-master/master-dia
 import { MasterTindakanComponent } from './satusehat/satusehat-master/master-tindakan/master-tindakan.component';
 import { MasterVaccineComponent } from './satusehat/satusehat-master/master-vaccine/master-vaccine.component';
 import { FormVaccineComponent } from './satusehat/satusehat-imunisasi/form/form-vaccine/form-vaccine.component';
+import { MasterSpecimenModule } from './satusehat/satusehat-master/master-specimen/master-specimen.module';
 @NgModule({
   declarations: [
 
@@ -220,6 +222,7 @@ import { FormVaccineComponent } from './satusehat/satusehat-imunisasi/form/form-
      TulisMtbmComponent,
      TulisMtbsComponent,
      TulisImunisasiComponent,
+     TulisSkriningPtmComponent,
      MasterProvinceComponent,
      MasterCityComponent,
      MasterDistrictComponent,
@@ -294,7 +297,8 @@ import { FormVaccineComponent } from './satusehat/satusehat-imunisasi/form/form-
     MatCheckboxModule,
     AccordionModule,
     MatDatepickerModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MasterSpecimenModule
   ],
   providers: [
     {

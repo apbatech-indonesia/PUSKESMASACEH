@@ -1,0 +1,21 @@
+<div class="row">
+    <div class="col-12">
+        <label for="exampleEmail" *ngIf="title">
+            <b>{{title}}</b>
+        </label>
+        <div class="input-group">
+            <input
+                id="cari_Specimen"
+                type="text"
+                class="form-control"
+                [(ngModel)]="searchSpecimenText"
+                (ngModelChange)="cariSpecimen()"
+                (keyup.enter)="cariSpecimen()"
+                disabled="{{isDisabled}}"
+                placeholder="{{ searchSpecimenText }}">
+        </div>
+        <select multiple class="form-control" id="exampleFormControlSelect2" *ngIf="specimenList.length > 0" width="100%">
+            <option *ngFor="let item of specimenList" (click)="pilihSpecimen(item)"><span *ngIf="isShowCode">{{ item.code }} :</span> {{ item.display }}</option>
+        </select>
+    </div>
+</div>

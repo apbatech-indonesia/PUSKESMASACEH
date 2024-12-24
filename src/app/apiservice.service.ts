@@ -3040,6 +3040,30 @@ export class ApiserviceService {
     })
   }
 
+  serviceRequest(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "ServiceRequest", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
+  specimen(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "Specimen", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
+  diagnosticReport(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "DiagnosticReport", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
   clinicalImpression(data: any, headers: any) {
     return new Promise((resolve) => {
       this.http.post(satusehat + "ClinicalImpression", data, { headers: headers }).subscribe((data) => {

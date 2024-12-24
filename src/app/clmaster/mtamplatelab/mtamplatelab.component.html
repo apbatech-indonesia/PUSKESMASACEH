@@ -160,6 +160,21 @@
                     </form>
                   </div>
                 </div>
+                
+                <b>Spesimen Satu Sehat</b>
+                <div class="row">
+                  <div class="col-md-6">
+                    <form [formGroup]="profileForm" >
+                    <div class="position-relative mb-3">
+                      <label for="exampleEmail" class="form-label">Spesimen Satu Sehat*</label>
+                      <select formControlName="spesimenSatuSehat" [(ngModel)]="spesimenSatuSehat" class="form-control">
+                        <option [value]="'Y'">Ya</option>
+                        <option [value]="'N'">Tidak</option>
+                      </select>
+                    </div>
+                    </form>
+                  </div>
+                </div>
                   <div class="row">
                     <div class="col-md-2">
                       <div class="d-grid gap-2">
@@ -236,7 +251,7 @@
                             
               
                             <div class="badge bg-pill bg-warning" (click)="pilihtes(x.kdlab,x.nama,x.kdgolongan,x.golongan,
-                            x.kdmetode,x.metode,x.satuan,x.reflaki,x.refperempuan,x.lmin,x.lmax,x.pmin,x.pmax,x.nourut)">E</div>
+                            x.kdmetode,x.metode,x.satuan,x.reflaki,x.refperempuan,x.lmin,x.lmax,x.pmin,x.pmax,x.nourut,x.spesimenSatuSehat)">E</div>
                          
            
                             <div class="badge bg-pill bg-danger" (click)="hapustes(x.kdlab,x.nama,x.kdgolongan,x.golongan,

@@ -60,6 +60,7 @@ import { AppComponent } from "../../app.component";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { ChatService } from "../../chat.service";
 import { FarmasijualService } from "../kasirfarmasijual/farmasijual.service";
+import { ItemsList } from "@ng-select/ng-select/lib/items-list";
 
 @Component({
   selector: "app-tuliserm",
@@ -381,6 +382,7 @@ export class tulisermComponent implements OnInit {
   myDatekon: any;
   myDatedaf = new Date();
   kddoktersatusehat: string = "";
+  locationid: string = "";
   users = [
     "Hipertensi",
     "DM",
@@ -1594,6 +1596,7 @@ export class tulisermComponent implements OnInit {
           this.kdtkp = x.kdtkp;
           this.noantrianbpjs = x.noantrianbpjs;
           this.kddoktersatusehat = x.idhis;
+          this.locationid = x.locationid;
 
           this.authService.tmpbpjs(this.noasuransi, "noka").subscribe(
             (data) => {
@@ -1806,7 +1809,7 @@ export class tulisermComponent implements OnInit {
       );
     }
   }
-  thasillab: any;
+  thasillab: any = [];
 
   lihatlab(notrans, kdcabang, status, nmfile) {
     this.showuploadd = false;
@@ -1838,6 +1841,136 @@ export class tulisermComponent implements OnInit {
       );
       this.monitoringshowcontent = true;
     }
+  }
+
+  async kirimSpesimenSatuSehat() {
+    const date = new Date();
+
+    // observation
+    let observationResponse: any = await this.authService.observation(
+      {
+        data: {
+          patientId: this.idpasien,
+          practitionerId: this.kddoktersatusehat,
+          encounterId: this.idsatusehat,
+          encounterDescription: this.subjekp,
+          effectiveDateTime: date.toISOString(),
+          issuedDate: date.toISOString(),
+          heartRate: this.hr,
+          responsiveness: this.kesadaran,
+          bodyTemperature: this.suhu,
+          respiratoryRate: this.rr,
+          systolic: this.td,
+          diastolic: this.tdd,
+          hemoglobinSaturationOxygen: this.spo,
+          bodyHeight: this.tb,
+          bodyWeight: this.bb,
+          bodyMassIndex: this.imt,
+        },
+      },
+      this.satusehatheaders
+    );
+
+    // Service Request
+    let serviceRequest: any = await this.authService.serviceRequest(
+      {
+        data: {
+          orgId: this.kdorg,
+          keteranganTindakLanjut: `hasil lab pasien ${this.pasien}`,
+          patientId: this.idpasien,
+          patientName: this.pasien,
+          encounterId: this.idsatusehat,
+          encounterDescription: `hasil lab pasien ${this.pasien}`,
+          occurrenceDateTime: date.toISOString(),
+          authoredOnDate: date.toISOString(),
+          requesterPractitionerId: this.kddoktersatusehat,
+          requesterPractitionerName: this.namdokter,
+          performerPractitionerId: this.kddoktersatusehat,
+          performerPractitionerName: this.namdokter,
+          diagnosaKode: "C76.2",
+          diagnosaDisplay: "Abdomen",
+          alasanTindakLanjut: `hasil lab pasien ${this.pasien}`,
+          locationId: this.locationid,
+          locationName: "pkm",
+          instruksi: `hasil lab pasien ${this.pasien}`
+        },
+      },
+      this.satusehatheaders
+    );
+
+    this.thasillab.forEach(async (hasillab) => {
+      let listOfSpesimen = hasillab.detail.filter(item => item?.spesimenSatuSehat?.includes("Y"))
+      let listOfSpesimenDetail = listOfSpesimen.map(data => { return data.specimenDetail });
+
+      if (listOfSpesimenDetail.length > 0) {
+        // Specimen
+        let specimen: any = await this.authService.specimen(
+          {
+            data: {
+              id: this.generateUUID(),
+              orgId: this.kdorg,
+              serviceRequestId: serviceRequest.id,
+              title: `spesimen pasien ${this.pasien}`,
+              description: `spesimen pasien ${this.pasien}`,
+              patientId: this.idpasien,
+              patientName: this.pasien,
+              encounterId: this.idsatusehat,
+              practitionerId: this.kddoktersatusehat,
+              practitionerName: this.namdokter,
+              typeCoding: listOfSpesimenDetail,
+              collectedDate: date.toISOString(),
+              receivedDate: date.toISOString(),
+              extensionDate: date.toISOString(),
+            },
+          },
+          this.satusehatheaders
+        );
+
+        // Diagnostic Report
+        let diagnosticReport: any = await this.authService.diagnosticReport(
+          {
+            data: {
+              orgId: this.kdorg,
+              serviceRequestId: serviceRequest.id,
+              patientId: this.idpasien,
+              patientName: this.pasien,
+              encounterId: this.idsatusehat,
+              encounterDescription: this.subjek,
+              effectiveDate: date.toISOString(),
+              issuedDate: date.toISOString(),
+              practitionerId: this.kddoktersatusehat,
+              observationId: observationResponse.id,
+              specimenId: specimen.id
+            },
+          },
+          this.satusehatheaders
+        );
+
+        // clinical impression
+        this.authService.clinicalImpression(
+          {
+            data: {
+              orgId: this.kdorg,
+              patientId: this.idpasien,
+              patientName: this.pasien,
+              encounterId: this.idsatusehat,
+              encounterDescription: this.subjek,
+              practitionerId: this.kddoktersatusehat,
+              practitionerName: this.namdokter,
+              recordedDate: date.toISOString(),
+              description: `hasil lab pasien : ${this.pasien}`,
+              effectiveDate: date.toISOString(),
+              date: date.toISOString(),
+              conditionId: "877b68e2-186c-499e-b788-d27cc244fe88",
+              diagnosticReportId: diagnosticReport.id,
+              observationId: observationResponse.id,
+              summary: this.subjek,
+            },
+          },
+          this.satusehatheaders
+        );
+      }
+    });
   }
 
   lihatresume(notrans, norm, kdcabang) {
@@ -3005,6 +3138,7 @@ export class tulisermComponent implements OnInit {
     this.authService.carePlan(
       {
         data: {
+          careplanUUID: `${this.generateUUID()}`,
           title: `rencana tindak lanjut pasien ${this.pasien}`,
           description: `rencana tindak lanjut pasien ${this.pasien}`,
           patientName: this.pasien,
@@ -3012,7 +3146,7 @@ export class tulisermComponent implements OnInit {
           patientId: this.idpasien,
           practitionerId: this.kddoktersatusehat,
           practitionerName: this.namdokter,
-          date: new Date(this.myDatekon).toISOString(),
+          date: new Date(this.myDatekon).toISOString()
         },
       },
       this.satusehatheaders
@@ -3090,6 +3224,74 @@ export class tulisermComponent implements OnInit {
       this.satusehatheaders
     );
 
+    // Service Request
+    let serviceRequest: any = await this.authService.serviceRequest(
+      {
+        data: {
+          orgId: this.kdorg,
+          keteranganTindakLanjut: `rencana tindak lanjut pasien ${this.pasien}`,
+          patientId: this.idpasien,
+          patientName: this.pasien,
+          encounterId: this.idsatusehat,
+          encounterDescription: `rencana tindak lanjut pasien ${this.pasien}`,
+          occurrenceDateTime: date.toISOString(),
+          authoredOnDate: date.toISOString(),
+          requesterPractitionerId: this.kddoktersatusehat,
+          requesterPractitionerName: this.namdokter,
+          performerPractitionerId: this.kddoktersatusehat,
+          performerPractitionerName: this.namdokter,
+          diagnosaKode: "C76.2",
+          diagnosaDisplay: "Abdomen",
+          alasanTindakLanjut: `rencana tindak lanjut pasien ${this.pasien}`,
+          locationId: this.locationid,
+          locationName: "pkm",
+          instruksi: `rencana tindak lanjut pasien ${this.pasien}`
+        },
+      },
+      this.satusehatheaders
+    );
+
+    // Specimen
+    let specimen: any = await this.authService.specimen(
+      {
+        data: {
+          orgId: this.kdorg,
+          serviceRequestId: serviceRequest.id,
+          title: `spesimen pasien ${this.pasien}`,
+          description: `spesimen pasien ${this.pasien}`,
+          patientId: this.idpasien,
+          patientName: this.pasien,
+          encounterId: this.idsatusehat,
+          practitionerId: this.kddoktersatusehat,
+          practitionerName: this.namdokter,
+          collectedDate: date.toISOString(),
+          receivedDate: date.toISOString(),
+          extensionDate: date.toISOString(),
+        },
+      },
+      this.satusehatheaders
+    );
+
+    // Diagnostic Report
+    let diagnosticReport: any = await this.authService.diagnosticReport(
+      {
+        data: {
+          orgId: this.kdorg,
+          serviceRequestId: serviceRequest.id,
+          patientId: this.idpasien,
+          patientName: this.pasien,
+          encounterId: this.idsatusehat,
+          encounterDescription: this.subjek,
+          effectiveDate: date.toISOString(),
+          issuedDate: date.toISOString(),
+          practitionerId: this.kddoktersatusehat,
+          observationId: observationResponse.id,
+          specimenId: specimen.id
+        },
+      },
+      this.satusehatheaders
+    );
+
     // clinical impression
     this.authService.clinicalImpression(
       {
@@ -3106,7 +3308,7 @@ export class tulisermComponent implements OnInit {
           effectiveDate: date.toISOString(),
           date: date.toISOString(),
           conditionId: "877b68e2-186c-499e-b788-d27cc244fe88",
-          diagnosticReportId: "a1bc4cf0-7f41-4f38-b278-de98b2640ecf",
+          diagnosticReportId: diagnosticReport.id,
           observationId: observationResponse.id,
           summary: this.subjek,
         },
@@ -9834,6 +10036,22 @@ export class tulisermComponent implements OnInit {
           );
         }
       },
+    });
+  }
+
+  generateUUID() { // Public Domain/MIT
+    var d = new Date().getTime();//Timestamp
+    var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16;//random number between 0 and 16
+        if(d > 0){//Use timestamp until depleted
+            r = (d + r)%16 | 0;
+            d = Math.floor(d/16);
+        } else {//Use microseconds since page-load if supported
+            r = (d2 + r)%16 | 0;
+            d2 = Math.floor(d2/16);
+        }
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
   }
 
