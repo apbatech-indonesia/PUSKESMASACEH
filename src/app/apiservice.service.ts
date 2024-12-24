@@ -2970,34 +2970,42 @@ export class ApiserviceService {
   }
   observation(payload: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "Observation", payload, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "Observation", payload, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
-  
+
   procedure(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "Procedure", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "Procedure", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
-  
+
   composition(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "Composition", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "Composition", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
-  
+
   carePlan(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "CarePlan", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "CarePlan", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
   
   medication(data: any, headers: any) {
@@ -3034,10 +3042,12 @@ export class ApiserviceService {
 
   allergyIntolerance(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "AllergyIntolerance", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "AllergyIntolerance", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   serviceRequest(data: any, headers: any) {
@@ -3066,10 +3076,12 @@ export class ApiserviceService {
 
   clinicalImpression(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "ClinicalImpression", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "ClinicalImpression", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   getdokter(a, heder): Observable<any> {
@@ -3273,14 +3285,26 @@ export class ApiserviceService {
       apiurx + "transaksi/ceksatusehat.php?notransaksi=" + a
     );
   }
-  cekjadwal(a, b): Observable<any> {
+  cekjadwal(a, b, c): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/cekjadwal.php?kddokter=" + a + "&kodepoliasli=" + b
+      apiurx +
+        "transaksi/cekjadwal.php?kddokter=" +
+        a +
+        "&kodepoliasli=" +
+        b +
+        "&tgl=" +
+        c
     );
   }
-  cekjadwalv222(a, b): Observable<any> {
+  cekjadwalv222(a, b, c): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/cekjadwalv2.php?kddokter=" + a + "&kodepoliasli=" + b
+      apiurx +
+        "transaksi/cekjadwalv2.php?kddokter=" +
+        a +
+        "&kodepoliasli=" +
+        b +
+        "&tgl=" +
+        c
     );
   }
 }

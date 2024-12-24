@@ -415,104 +415,6 @@
 
 </div> -->
 
-        <div class="row">
-          <div class="col-md-4">
-            <form [formGroup]="profileForm">
-              <div class="position-relative mb-3">
-                <label
-                  for="exampleSelect"
-                  class="form-label"
-                  style="color: black"
-                  >Poliklinik</label
-                >
-                <select
-                  formControlName="kliniksx"
-                  [(ngModel)]="kliniks"
-                  class="form-select"
-                  (change)="pilihklinik($event.target.value)"
-                >
-                  <option value="">-PILIH-</option>
-                  <option *ngFor="let x of tklinik" value="{{ x.kdpoli }}">
-                    {{ x.nampoli }}
-                  </option>
-                </select>
-              </div>
-            </form>
-          </div>
-          <!-- (change)="pilihdokter($event.target.value)" -->
-          <div class="col-md-4">
-            <form [formGroup]="profileForm">
-              <div class="position-relative mb-3">
-                <label
-                  for="exampleSelect"
-                  class="form-label"
-                  style="color: black"
-                  >Dokter</label
-                >
-                <select
-                  formControlName="dokter"
-                  [(ngModel)]="dokter"
-                  class="form-select"
-                  (change)="pilihjadwal($event.target.value)"
-                >
-                  <option value="">-PILIH-</option>
-
-                  <option *ngFor="let x of tdokter" value="{{ x.kddokter }}">
-                    <b> {{ x.namdokter }} </b>
-
-                    <!-- <span *ngIf="x.jadwal === null" style="color: red">
-                      - Jadwal Hafis Tidak Ada
-                    </span> -->
-                  </option>
-                </select>
-              </div>
-            </form>
-          </div>
-          <div class="col-md-4">
-            <div class="position-relative mb-3">
-              <label for="exampleSelect" class="form-label" style="color: black"
-                >Jadwal</label
-              >
-              <select [(ngModel)]="jadwal" class="form-select">
-                <option value="">-PILIH-</option>
-
-                <option *ngFor="let x of tjadwal" value="{{ x.jadwal }}">
-                  {{ x.jadwal }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="position-relative mb-3">
-              <div class="position-relative mb-3">
-                <label
-                  for="exampleEmail"
-                  class="form-label"
-                  style="font-weight: bold"
-                  >TANGGAL DAFTAR
-                </label>
-                <!-- <input [(ngModel)]="tgllahir"   placeholder="Pasien" type="date" class="form-control"> -->
-                <br />
-
-                <input
-                  style="
-                    border-radius: 5px;
-                    border: solid 1px #ccc;
-                    width: 11.5em;
-                    height: 33px;
-                  "
-                  enabled
-                  type="date"
-                  [(ngModel)]="tglp"
-                  (keyup)="non($event)"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
         <b>KELOMPOK PASIEN</b>
         <hr />
         <div class="row">
@@ -589,6 +491,119 @@
                 />
               </div>
             </form>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="position-relative mb-3">
+              <div class="position-relative mb-3">
+                <label
+                  for="exampleEmail"
+                  class="form-label"
+                  style="font-weight: bold"
+                  >TANGGAL DAFTAR
+                </label>
+                <!-- <input [(ngModel)]="tgllahir"   placeholder="Pasien" type="date" class="form-control"> -->
+                <br />
+
+                <input
+                  style="
+                    border-radius: 5px;
+                    border: solid 1px #ccc;
+                    width: 11.5em;
+                    height: 33px;
+                  "
+                  enabled
+                  type="date"
+                  [(ngModel)]="tglp"
+                  (keyup)="non($event)"
+                  (change)="nonx()"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <form [formGroup]="profileForm">
+              <div class="position-relative mb-3">
+                <label
+                  for="exampleSelect"
+                  class="form-label"
+                  style="color: black"
+                  >Poliklinik</label
+                >
+                <select
+                  formControlName="kliniksx"
+                  [(ngModel)]="kliniks"
+                  class="form-select"
+                  (change)="pilihklinik($event.target.value)"
+                >
+                  <option value="">-PILIH-</option>
+                  <option *ngFor="let x of tklinik" value="{{ x.kdpoli }}">
+                    {{ x.nampoli }}
+                  </option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <!-- (change)="pilihdokter($event.target.value)" -->
+          <div class="col-md-4">
+            <form [formGroup]="profileForm">
+              <div class="position-relative mb-3">
+                <label
+                  for="exampleSelect"
+                  class="form-label"
+                  style="color: black"
+                  >Dokter</label
+                >
+                <select
+                  formControlName="dokter"
+                  [(ngModel)]="dokter"
+                  class="form-select"
+                  (change)="pilihjadwal($event.target.value)"
+                >
+                  <option value="">-PILIH-</option>
+
+                  <option *ngFor="let x of tdokter" value="{{ x.kddokter }}">
+                    <b> {{ x.namdokter }} </b>
+
+                    <!-- <span *ngIf="x.jadwal === null" style="color: red">
+                      - Jadwal Hafis Tidak Ada
+                    </span> -->
+                  </option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-4">
+            <div style="text-align: center" *ngIf="showloading">
+              <div
+                class="loader-wrapper d-flex justify-content-center align-items-center"
+              >
+                <div class="loader">
+                  <div class="ball-pulse">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="position-relative mb-3">
+              <label for="exampleSelect" class="form-label" style="color: black"
+                >Jadwal</label
+              >
+              <select [(ngModel)]="jadwal" class="form-select">
+                <option value="">-PILIH-</option>
+
+                <option *ngFor="let x of tjadwal" value="{{ x.jadwal }}">
+                  {{ x.jadwal }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
 

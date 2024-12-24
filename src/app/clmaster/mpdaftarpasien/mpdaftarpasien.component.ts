@@ -292,6 +292,12 @@ export class MpdaftarpasienComponent implements OnInit {
 
     this.toastr.error("Tidak di ijinkan menulis tanggal manual");
   }
+
+  nonx() {
+    this.kliniks = "";
+    this.dokter = "";
+    this.tdokter = [];
+  }
   hak() {
     this.authService.hakakses(this.kdcabang).subscribe(
       (data) => {
@@ -520,38 +526,77 @@ export class MpdaftarpasienComponent implements OnInit {
   tlistjadwal: any;
 
   pilihklinik(a) {
-    this.authService.polibyid(this.kdcabang, a).subscribe(
-      (data) => {
-        console.log(data);
+    if (this.dash === "BPJS") {
+      this.authService.polibyid(this.kdcabang, a).subscribe(
+        (data) => {
+          console.log(data);
 
-        if (data.length) {
-          this.kdpolibpjsku = data[0].kdpolibpjs;
-          this.authService
-            .cekjadwalv22(this.kdpolibpjsku, this.tglp, a)
-            .subscribe(
-              (data) => {
-                console.log(data);
-                this.tlistjadwal = data;
-              },
-              (Error) => {
-                console.log(Error);
-              }
-            );
+          if (data.length) {
+            this.kdpolibpjsku = data[0].kdpolibpjs;
+            this.showloading = true;
+
+            this.authService
+              .cekjadwalv22(this.kdpolibpjsku, this.tglp, a)
+              .subscribe(
+                (data) => {
+                  if (data == 200) {
+                    console.log(data);
+                    this.tlistjadwal = data;
+                    this.showloading = false;
+                  } else {
+                    this.showloading = false;
+                    this.jadwal = "";
+                    this.tdokter = [];
+                    this.tjadwal = [];
+
+                    this.toastr.error(
+                      "jadwal tidak ada di tanggal " + this.tglp
+                    );
+                    return;
+                  }
+                },
+                (Error) => {
+                  console.log(Error);
+                }
+              );
+          }
+        },
+        (Error) => {
+          console.log(Error);
         }
-      },
-      (Error) => {
-        console.log(Error);
-      }
-    );
+      );
 
-    this.authService.dokterperpolix(this.kdcabang, a).subscribe(
-      (data) => {
-        this.tdokter = data;
-      },
-      (Error) => {
-        console.log(Error);
-      }
-    );
+      this.authService.dokterperpolix(this.kdcabang, a).subscribe(
+        (data) => {
+          this.tdokter = data;
+        },
+        (Error) => {
+          console.log(Error);
+        }
+      );
+    } else {
+      this.authService.polibyid(this.kdcabang, a).subscribe(
+        (data) => {
+          console.log(data);
+
+          if (data.length) {
+            this.kdpolibpjsku = data[0].kdpolibpjs;
+          }
+        },
+        (Error) => {
+          console.log(Error);
+        }
+      );
+
+      this.authService.dokterperpolix(this.kdcabang, a).subscribe(
+        (data) => {
+          this.tdokter = data;
+        },
+        (Error) => {
+          console.log(Error);
+        }
+      );
+    }
   }
 
   tkloter: any;
@@ -591,22 +636,10 @@ export class MpdaftarpasienComponent implements OnInit {
   }
 
   tjadwal: any;
-
+  showloading: boolean;
   pilihjadwal(a) {
-    this.authService.cekjadwal(this.dokter, this.kliniks).subscribe((data) => {
-      if (data.length) {
-        this.tjadwal = data;
-      } else {
-        this.tjadwal = data;
-        // this.toastr.error(
-        //   "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz"
-        // );
-        // return;
-      }
-    });
-
     this.authService
-      .cekjadwalv222(this.dokter, this.kliniks)
+      .cekjadwalv222(this.dokter, this.kliniks, this.tglp)
       .subscribe((data) => {
         // this.tjadwal = data;
 
@@ -615,6 +648,27 @@ export class MpdaftarpasienComponent implements OnInit {
           this.listjadwal = data;
         } else {
           this.jadwaltidak = "0";
+        }
+      });
+
+    this.showloading = true;
+    this.authService
+      .cekjadwal(this.dokter, this.kliniks, this.tglp)
+      .subscribe((data) => {
+        if (data.length) {
+          this.showloading = false;
+
+          this.tjadwal = data;
+        } else {
+          this.showloading = false;
+          this.toastr.error(
+            "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz"
+          );
+          this.tjadwal = [];
+          // this.toastr.error(
+          //   "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz"
+          // );
+          // return;
         }
       });
   }
@@ -849,7 +903,6 @@ export class MpdaftarpasienComponent implements OnInit {
                                         )
                                         .subscribe(
                                           (data) => {
-                                            this.tantrian = data;
                                             for (let x of data) {
                                               this.noasuransi = x.noasuransi;
                                               // this.tgldaftarbpjs = x.tglpriksa
@@ -865,30 +918,25 @@ export class MpdaftarpasienComponent implements OnInit {
                                               setTimeout(() => {
                                                 let bodyAddFktp = {
                                                   nomorkartu:
-                                                    this.tantrian[0].noasuransi,
-                                                  nik: this.tantrian[0]
-                                                    .nopengenal,
+                                                    data[0].noasuransi,
+                                                  nik: data[0].nopengenal,
                                                   nohp: "082176678897",
                                                   kodepoli: this.kdpolibpjs,
-                                                  namapoli:
-                                                    this.tantrian[0].nampoli,
-                                                  norm: this.tantrian[0].norm,
+                                                  namapoli: data[0].nampoli,
+                                                  norm: data[0].norm,
                                                   tanggalperiksa:
-                                                    this.tantrian[0].tglpriksa,
+                                                    data[0].tglpriksa,
                                                   kodedokter: parseInt(
-                                                    this.tantrian[0]
-                                                      .kddokterbpjs
+                                                    data[0].kddokterbpjs
                                                   ),
-                                                  namadokter:
-                                                    this.tantrian[0].namdokter,
+                                                  namadokter: data[0].namdokter,
                                                   jampraktek: this.jadwal,
                                                   nomorantrean:
-                                                    this.tantrian[0]
-                                                      .kodeantrian +
+                                                    data[0].kodeantrian +
                                                     "-" +
-                                                    this.tantrian[0].noantrian,
+                                                    data[0].noantrian,
                                                   angkaantrean: parseInt(
-                                                    this.tantrian[0].noantrian
+                                                    data[0].noantrian
                                                   ),
                                                   keterangan: "daftar",
                                                 };
@@ -903,6 +951,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                     if (
                                                       response.data.code == 200
                                                     ) {
+                                                      this.tantrian = data;
                                                       this.toastr.success(
                                                         response.data.message,
                                                         "Sukses",
@@ -911,24 +960,26 @@ export class MpdaftarpasienComponent implements OnInit {
                                                         }
                                                       );
 
-                                                      let bodyeditfarmasiterkirim =
-                                                        {
-                                                          stssimpan: "3",
-                                                          notransaksi:
-                                                            this.pasienc,
-                                                        };
+                                                      setTimeout(() => {
+                                                        let bodyeditfarmasiterkirim =
+                                                          {
+                                                            stssimpan: "3",
+                                                            notransaksi:
+                                                              this.pasienc,
+                                                          };
 
-                                                      this.authService
-                                                        .editobatsk(
-                                                          bodyeditfarmasiterkirim
-                                                        )
-                                                        .subscribe(
-                                                          (response) => {
-                                                            console.log(
-                                                              response
-                                                            );
-                                                          }
-                                                        );
+                                                        this.authService
+                                                          .editobatsk(
+                                                            bodyeditfarmasiterkirim
+                                                          )
+                                                          .subscribe(
+                                                            (response) => {
+                                                              console.log(
+                                                                response
+                                                              );
+                                                            }
+                                                          );
+                                                      }, 250);
 
                                                       // setTimeout(() => {
                                                       //   let bodypanggil={
@@ -1154,7 +1205,6 @@ export class MpdaftarpasienComponent implements OnInit {
                                   )
                                   .subscribe(
                                     (data) => {
-                                      this.tantrian = data;
                                       for (let x of data) {
                                         this.noasuransi = x.noasuransi;
                                         // this.tgldaftarbpjs = x.tglpriksa
@@ -1168,27 +1218,24 @@ export class MpdaftarpasienComponent implements OnInit {
                                       if (this.dash === "BPJS") {
                                         setTimeout(() => {
                                           let bodyAddFktp = {
-                                            nomorkartu:
-                                              this.tantrian[0].noasuransi,
-                                            nik: this.tantrian[0].nopengenal,
+                                            nomorkartu: data[0].noasuransi,
+                                            nik: data[0].nopengenal,
                                             nohp: "082176678897",
                                             kodepoli: this.kdpolibpjs,
-                                            namapoli: this.tantrian[0].nampoli,
-                                            norm: this.tantrian[0].norm,
-                                            tanggalperiksa:
-                                              this.tantrian[0].tglpriksa,
+                                            namapoli: data[0].nampoli,
+                                            norm: data[0].norm,
+                                            tanggalperiksa: data[0].tglpriksa,
                                             kodedokter: parseInt(
-                                              this.tantrian[0].kddokterbpjs
+                                              data[0].kddokterbpjs
                                             ),
-                                            namadokter:
-                                              this.tantrian[0].namdokter,
+                                            namadokter: data[0].namdokter,
                                             jampraktek: this.jadwal,
                                             nomorantrean:
-                                              this.tantrian[0].kodeantrian +
+                                              data[0].kodeantrian +
                                               "-" +
-                                              this.tantrian[0].noantrian,
+                                              data[0].noantrian,
                                             angkaantrean: parseInt(
-                                              this.tantrian[0].noantrian
+                                              data[0].noantrian
                                             ),
                                             keterangan: "daftar",
                                           };
@@ -1208,19 +1255,23 @@ export class MpdaftarpasienComponent implements OnInit {
                                                     timeOut: 2000,
                                                   }
                                                 );
+                                                this.tantrian = data;
 
-                                                let bodyeditfarmasiterkirim = {
-                                                  stssimpan: "3",
-                                                  notransaksi: this.pasienc,
-                                                };
+                                                setTimeout(() => {
+                                                  let bodyeditfarmasiterkirim =
+                                                    {
+                                                      stssimpan: "3",
+                                                      notransaksi: this.pasienc,
+                                                    };
 
-                                                this.authService
-                                                  .editobatsk(
-                                                    bodyeditfarmasiterkirim
-                                                  )
-                                                  .subscribe((response) => {
-                                                    console.log(response);
-                                                  });
+                                                  this.authService
+                                                    .editobatsk(
+                                                      bodyeditfarmasiterkirim
+                                                    )
+                                                    .subscribe((response) => {
+                                                      console.log(response);
+                                                    });
+                                                }, 250);
 
                                                 // setTimeout(() => {
                                                 //   let bodypanggil={
@@ -1474,6 +1525,7 @@ export class MpdaftarpasienComponent implements OnInit {
     }
   }
 
+  statuskirim: any = "";
   noref = "";
 
   simpanantrian(a, b) {
@@ -1777,6 +1829,10 @@ export class MpdaftarpasienComponent implements OnInit {
       difference.days +
       " hari";
     this.modalService.dismissAll();
+    this.jadwal = "";
+    this.tjadwal = [];
+    this.kliniks = "";
+    this.dokter = "";
   }
   usia: any = "";
   cetaknoantrian() {
@@ -2166,7 +2222,7 @@ export class MpdaftarpasienComponent implements OnInit {
   kdprovider: string = "";
   namaprovider: string;
   carinobpjs: string = "noka";
-  showloading: boolean;
+
   pstProl: string;
   pstPrb: string;
 
@@ -2223,9 +2279,11 @@ export class MpdaftarpasienComponent implements OnInit {
         }
       );
 
-      this.authService.cekjadwal(x.kddokter, x.kdpoli).subscribe((data) => {
-        this.jadwal = data[0].jadwal;
-      });
+      this.authService
+        .cekjadwal(x.kddokter, x.kdpoli, this.tglp)
+        .subscribe((data) => {
+          this.jadwal = data[0].jadwal;
+        });
 
       let bodyAddFktp = {
         nomorkartu: x.noasuransi,
@@ -2550,11 +2608,13 @@ export class MpdaftarpasienComponent implements OnInit {
                   notransaksi: this.pasienc,
                 };
 
-                this.authService
-                  .editobatsk(bodyeditfarmasiterkirimv)
-                  .subscribe((response) => {
-                    console.log(response);
-                  });
+                setTimeout(() => {
+                  this.authService
+                    .editobatsk(bodyeditfarmasiterkirimv)
+                    .subscribe((response) => {
+                      console.log(response);
+                    });
+                }, 250);
 
                 this.toastr.success(response.data.message, "Sukses", {
                   timeOut: 2000,
@@ -2569,7 +2629,11 @@ export class MpdaftarpasienComponent implements OnInit {
       this.caribynikandno("noka");
 
       this.authService
-        .cekjadwal(this.tantrian[0].kddokter, this.tantrian[0].kdpoli)
+        .cekjadwal(
+          this.tantrian[0].kddokter,
+          this.tantrian[0].kdpoli,
+          this.tantrian[0].tglpriksa
+        )
         .subscribe((data) => {
           this.jadwal = data[0].jadwal;
         });
@@ -2586,7 +2650,11 @@ export class MpdaftarpasienComponent implements OnInit {
 
   kirimantrean() {
     this.authService
-      .cekjadwal(this.tantrian[0].kddokter, this.tantrian[0].kdpoli)
+      .cekjadwal(
+        this.tantrian[0].kddokter,
+        this.tantrian[0].kdpoli,
+        this.tantrian[0].tglpriksa
+      )
       .subscribe((data) => {
         this.jadwal = data[0].jadwal;
       });
