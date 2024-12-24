@@ -228,12 +228,13 @@
                     [title]="'Obat Satusehat'"
                     [searchKfaText]="namaobatsatusehat"
                     [isShowCode]="false"
-                    [isDisabled]="true"
+                    [isDisabled]="false"
                     (selectedItem)="
                       kdobatsatusehat = $event.code;
                       namaobatsatusehat = $event.name;
                       standart = $event.net_weight_uom_name;
-                      satuan = $event.satuan;"
+                      satuan = $event.satuan;
+                      simpanMappingObat(nmobat, kdobatsatusehat);"
                   ></app-master-kfa>
                 </td>
 

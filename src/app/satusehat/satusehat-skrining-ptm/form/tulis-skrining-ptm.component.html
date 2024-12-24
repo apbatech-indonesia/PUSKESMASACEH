@@ -69,15 +69,15 @@
 
       <div class="card mb-3">
         <div class="card-header navy">
-          Form Imunisasi
+          Skrining PTM
         </div>
         <div class="card-body">
           <div class="row">
             <!-- header body -->
-            <div class="mb-3 col-12">
+            <div class="mb-3 col-6">
               <div class="card">
                 <div class="card-header navy">
-                  Form Observasi
+                  Riwayat
                 </div>
                 <div class="card-body">
                   <!-- header body -->
@@ -102,18 +102,336 @@
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-6">
+              <div class="card">
+                <div class="card-header navy">
+                  Faktor Resiko
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formObservation">
+                    <!-- Observasi -->
+                    <div class="row">
+                      <div class="col-12 my-3">
+                        <h3>Observasi</h3>
+                      </div>
                       <div class="col-6">
                         <div class="position-relative mb-3">
-                          <label for="status_pregnant_display" class="form-label">Status Sekolah</label>
+                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
                         </div>
                         <div class="position-relative mb-3">
                           <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="sekolah" value="sekolah" formControlName="status_sekolah_display">
-                            <label class="form-check-label" for="sekolah">Sekolah</label>
+                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
+                            <label class="form-check-label" for="hamil">Hamil</label>
                           </div>
                           <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="tidaksekolah" value="tidak sekolah" formControlName="status_sekolah_display">
-                            <label class="form-check-label" for="tidaksekolah">Tidak Sekolah</label>
+                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
+                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-6">
+              <div class="card">
+                <div class="card-header navy">
+                  Deteksi Dini Obesitas
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formObservation">
+                    <!-- Observasi -->
+                    <div class="row">
+                      <div class="col-12 my-3">
+                        <h3>Deteksi Dini Obesitas</h3>
+                      </div>
+                      <div class="col-6">
+                        <div class="position-relative mb-3">
+                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                        </div>
+                        <div class="position-relative mb-3">
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
+                            <label class="form-check-label" for="hamil">Hamil</label>
+                          </div>
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
+                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-6">
+              <div class="card">
+                <div class="card-header navy">
+                  Deteksi Dini Hipertensi
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formObservation">
+                    <!-- Observasi -->
+                    <div class="row">
+                      <div class="col-12 my-3">
+                        <h3>Deteksi Dini Hipertensi</h3>
+                      </div>
+                      <div class="col-6">
+                        <div class="position-relative mb-3">
+                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                        </div>
+                        <div class="position-relative mb-3">
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
+                            <label class="form-check-label" for="hamil">Hamil</label>
+                          </div>
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
+                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-6">
+              <div class="card">
+                <div class="card-header navy">
+                  Deteksi Dini Mata
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formObservation">
+                    <!-- Observasi -->
+                    <div class="row">
+                      <div class="col-12 my-3">
+                        <h3>Deteksi Dini Mata</h3>
+                      </div>
+                      <div class="col-6">
+                        <div class="position-relative mb-3">
+                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                        </div>
+                        <div class="position-relative mb-3">
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
+                            <label class="form-check-label" for="hamil">Hamil</label>
+                          </div>
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
+                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-6">
+              <div class="card">
+                <div class="card-header navy">
+                  Diagnosa
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formObservation">
+                    <!-- Observasi -->
+                    <div class="row">
+                      <div class="col-12 my-3">
+                        <h3>Diagnosa</h3>
+                      </div>
+                      <div class="col-6">
+                        <div class="position-relative mb-3">
+                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                        </div>
+                        <div class="position-relative mb-3">
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
+                            <label class="form-check-label" for="hamil">Hamil</label>
+                          </div>
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
+                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-6">
+              <div class="card">
+                <div class="card-header navy">
+                  Tindakan
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formObservation">
+                    <!-- Observasi -->
+                    <div class="row">
+                      <div class="col-12 my-3">
+                        <h3>Tindakan</h3>
+                      </div>
+                      <div class="col-6">
+                        <div class="position-relative mb-3">
+                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                        </div>
+                        <div class="position-relative mb-3">
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
+                            <label class="form-check-label" for="hamil">Hamil</label>
+                          </div>
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
+                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-6">
+              <div class="card">
+                <div class="card-header navy">
+                  Tindak Lanjut
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formObservation">
+                    <!-- Observasi -->
+                    <div class="row">
+                      <div class="col-12 my-3">
+                        <h3>Tindak Lanjut</h3>
+                      </div>
+                      <div class="col-6">
+                        <div class="position-relative mb-3">
+                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                        </div>
+                        <div class="position-relative mb-3">
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
+                            <label class="form-check-label" for="hamil">Hamil</label>
+                          </div>
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
+                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-6">
+              <div class="card">
+                <div class="card-header navy">
+                  Kondisi Meninggalkan Faskes
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formObservation">
+                    <!-- Observasi -->
+                    <div class="row">
+                      <div class="col-12 my-3">
+                        <h3>Kondisi Meninggalkan Faskes</h3>
+                      </div>
+                      <div class="col-6">
+                        <div class="position-relative mb-3">
+                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                        </div>
+                        <div class="position-relative mb-3">
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
+                            <label class="form-check-label" for="hamil">Hamil</label>
+                          </div>
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
+                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-6">
+              <div class="card">
+                <div class="card-header navy">
+                  Update Data Kunjungan
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formObservation">
+                    <!-- Observasi -->
+                    <div class="row">
+                      <div class="col-12 my-3">
+                        <h3>Update Data Kunjungan</h3>
+                      </div>
+                      <div class="col-6">
+                        <div class="position-relative mb-3">
+                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                        </div>
+                        <div class="position-relative mb-3">
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
+                            <label class="form-check-label" for="hamil">Hamil</label>
+                          </div>
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
+                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
                           </div>
                         </div>
                       </div>

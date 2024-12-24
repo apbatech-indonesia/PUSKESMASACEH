@@ -3068,4 +3068,10 @@ klikcekobatbpjs(){
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
   }
+
+  async simpanMappingObat(kdobat, kdobatsatusehat) {
+    let cabang: any = await this.getCabang(this.userDetails.kdklinik)
+        cabang = cabang.slug.toUpperCase();
+    await this.authService.simpanMappingObat(cabang, kdobat, kdobatsatusehat).toPromise()
+  }
 }

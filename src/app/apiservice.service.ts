@@ -127,6 +127,16 @@ export class ApiserviceService {
   }
   //
 
+  simpanMappingObat(
+    cabang: any,
+    kdobat: number,
+    kdobatsatusehat: number
+  ) {
+    return this.http.post(`https://emr.clenicapp.com/api/${cabang}/manajemen-obat/maping/${kdobat}`, {
+      kdobatsatusehat: kdobatsatusehat
+    })
+  }
+
   getBaseUrlConfig(branchCode: string): Observable<any> {
     let dataProd = this.http.get(
       environment.emrUrl + environment.cabangPath + branchCode
