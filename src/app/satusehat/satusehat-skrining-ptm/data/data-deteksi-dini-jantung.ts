@@ -3,31 +3,24 @@ import { Injectable } from "@angular/core"
 @Injectable({
   providedIn: 'root'
 })
-export class DataDeteksiDiniKanker {
+export class DataDeteksiDiniJantung {
   getdata() {
     return {
       observations: [
         {
-          name: "kongenital_right_ear",
+          name: "EKG",
           category: {
             system: "http://terminology.hl7.org/CodeSystem/observation-category",
-            code: "exam",
-            display: "Exam"
+            code: "procedure",
+            display: "Procedure"
           },
           data: [
             {
               code: {
-                system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
-                code: "OC000150",
-                display: "Suspek tuli kongenital "
+                system: "http://loinc.org",
+                code: "34534-8",
+                display: "12 lead EKG panel"
               },
-
-              bodySite: {
-                system: "http://snomed.info/sct",
-                code: "25577004",
-                display: "Right ear structure"
-              },
-              resultBoolean: false,
               result: {
                 value: 71,
                 unit: "kg",

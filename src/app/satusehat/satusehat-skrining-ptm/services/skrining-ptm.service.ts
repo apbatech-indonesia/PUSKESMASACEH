@@ -69,9 +69,9 @@ export class SkriningPTMService {
     })
   }
   
-  tindakan(data: any) {
+  procedure(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'skrining/tindakan', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'skrining/proceduresCreate', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })

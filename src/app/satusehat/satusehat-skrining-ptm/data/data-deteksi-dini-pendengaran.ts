@@ -3,14 +3,8 @@ import { Injectable } from "@angular/core"
 @Injectable({
   providedIn: 'root'
 })
-export class DataDeteksiDiniMata {
+export class DataDeteksiDiniPendengaran {
   // questioner 
-  visusKiri: any
-  visusKanan: any
-  numeratorMataKanan: any
-  denominatorMataKanan: any
-  numeratorMataKiri: any
-  denominatorMataKiri: any
   dateNow: any = new Date().toISOString()
 
   getdata() {

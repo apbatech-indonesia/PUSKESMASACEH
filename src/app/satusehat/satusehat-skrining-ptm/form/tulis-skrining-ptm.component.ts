@@ -98,7 +98,8 @@ export class TulisSkriningPtmComponent implements OnInit {
     this.doSubmitDeteksiDiniHipertensi()
     this.doSubmitDeteksiDiniMata()
     this.doSubmitDiagnosa()
-    this.doSubmitTindakan()
+    this.doSubmitProcedure()
+
     // this.doSubmitTindakLanjut()
     // this.doSubmitKondisiKeluarFaskes()
     // this.doSubmitUpdateDataKunjungan()
@@ -176,7 +177,7 @@ export class TulisSkriningPtmComponent implements OnInit {
     console.log(await this.skriningPTMService.diagnosa(payload))
   }
   
-  async doSubmitTindakan() {
+  async doSubmitProcedure() {
     let payload = {
       data: {
         ...this.data,
@@ -184,7 +185,7 @@ export class TulisSkriningPtmComponent implements OnInit {
       }
     }
 
-    console.log(await this.skriningPTMService.tindakan(payload))
+    console.log(await this.skriningPTMService.procedure(payload))
   }
   
   async doSubmitTindakLanjut() {

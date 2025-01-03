@@ -3,12 +3,20 @@ import { Injectable } from "@angular/core"
 @Injectable({
   providedIn: 'root'
 })
-export class DataDeteksiDiniKanker {
+export class DataDeteksiDiniAsamUrat {
+  // questioner 
+  visusKiri: any
+  visusKanan: any
+  numeratorMataKanan: any
+  denominatorMataKanan: any
+  numeratorMataKiri: any
+  denominatorMataKiri: any
+
   getdata() {
     return {
       observations: [
         {
-          name: "kongenital_right_ear",
+          name: "kanker_vagina",
           category: {
             system: "http://terminology.hl7.org/CodeSystem/observation-category",
             code: "exam",
@@ -17,27 +25,18 @@ export class DataDeteksiDiniKanker {
           data: [
             {
               code: {
-                system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
-                code: "OC000150",
-                display: "Suspek tuli kongenital "
+                system: "http://snomed.info/sct",
+                code: "451024007",
+                display: "Inspection of vagina using vaginal speculum"
               },
 
-              bodySite: {
-                system: "http://snomed.info/sct",
-                code: "25577004",
-                display: "Right ear structure"
-              },
+              bodySite: {},
               resultBoolean: false,
-              result: {
-                value: 71,
-                unit: "kg",
-                system: "http://unitsofmeasure.org",
-                code: "kg"
-              },
+              result: {},
               valueCodeableConcept: {
                 system: "http://snomed.info/sct",
-                code: "164854000",
-                display: "Electrocardiogram normal"
+                code: "395100000",
+                display: "No evidence of cancer found"
               }
             }
           ],
