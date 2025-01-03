@@ -2445,23 +2445,18 @@ this.showloading= true
     return data.detail;
 
 
- });
+  });
 
- let listOfSpecimen = this.checkedItems.flat().map(specimen => {
-  let spesimen = specimen?.detail?.filter(item => {
-    return item && item.specimenDetail !== null && item.hasil !== ''
-  }).map((data) => {
-    return data.specimenDetail
-  })
+  let listOfSpecimen = this.checkedItems.flatMap(group =>
+  group.detail
+    .filter(item => item.hasil !== '')
+    .map(item => item.specimenDetail)
+    .filter(detail => detail.code !== null && detail.display !== null)
+  );
 
-  return spesimen
- }).flat();
+  this.kirimSpesimenSatuSehat(listOfSpecimen)
 
- this.kirimSpesimenSatuSehat(listOfSpecimen)
-
- this.checkedItems.filter(data =>{
- 
- 
+  this.checkedItems.filter(data =>{
 
 for (let x of data.detail){
   let body = {
@@ -2544,7 +2539,6 @@ async kirimSpesimenSatuSehat(listOfSpecimen: any = []) {
 
   let dataPasien = await this.authService.datapasien(this.kdcabang, this.nofaktur).toPromise()
   dataPasien.forEach(data => {
-    console.log(data.locationid)
     this.idpasien = data.idpasien
     this.kddoktersatusehat = data.idhis
     this.idsatusehat = data.idsatusehat
