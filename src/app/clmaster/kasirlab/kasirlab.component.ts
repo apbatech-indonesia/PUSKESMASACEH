@@ -545,12 +545,17 @@ tglpriksa:''
 kddokter:''
 kdkostumerd:''
 notransaksi:''
+idsatusehat:''
+idpasien:''
 pasien:''
 tgllahir:''
 noantrian:''
 nampoli:''
 namdokter:''
 kddoktersatusehat:''
+locationId:''
+kodeorg:''
+cabangName:''
 namacus:''
 costumer:''
 alamat:''
@@ -589,6 +594,8 @@ kdcppt:any;
           this.kdkostumerd = kdkostumerd
           this.notransaksi = notransaksi
           this.pasien = pasien
+          this.idsatusehat = x.idsatusehat
+          this.idpasien = x.idpasien
           this.tgllahir = tgllahir
           this.dokterkirim = dokterkirim
           this.nampoli = nampoli
@@ -2440,8 +2447,18 @@ this.showloading= true
 
  });
 
+ let listOfSpecimen = this.checkedItems.flat().map(specimen => {
+  let spesimen = specimen?.detail?.filter(item => {
+    return item && item.specimenDetail !== null && item.hasil !== ''
+  }).map((data) => {
+    return data.specimenDetail
+  })
 
-  
+  return spesimen
+ }).flat();
+
+ this.kirimSpesimenSatuSehat(listOfSpecimen)
+
  this.checkedItems.filter(data =>{
  
  
@@ -2504,6 +2521,149 @@ this.tlisttes = data;
    console.log(Error)
   }
 )
+}
+
+generateUUID() { // Public Domain/MIT
+  var d = new Date().getTime();//Timestamp
+  var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16;//random number between 0 and 16
+      if(d > 0){//Use timestamp until depleted
+          r = (d + r)%16 | 0;
+          d = Math.floor(d/16);
+      } else {//Use microseconds since page-load if supported
+          r = (d2 + r)%16 | 0;
+          d2 = Math.floor(d2/16);
+      }
+      return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+  });
+}
+
+async kirimSpesimenSatuSehat(listOfSpecimen: any = []) {
+  const date = new Date();
+
+  let dataPasien = await this.authService.datapasien(this.kdcabang, this.nofaktur).toPromise()
+  dataPasien.forEach(data => {
+    console.log(data.locationid)
+    this.idpasien = data.idpasien
+    this.kddoktersatusehat = data.idhis
+    this.idsatusehat = data.idsatusehat
+    this.locationId = data.locationid
+  });
+
+  // observation
+  let observationResponse: any = await this.authService.observation(
+    {
+      data: {
+        patientId: this.idpasien,
+        practitionerId: this.kddoktersatusehat,
+        encounterId: this.idsatusehat,
+        encounterDescription: `spesimen pasien ${this.pasien}`,
+        effectiveDateTime: date.toISOString(),
+        issuedDate: date.toISOString()
+      },
+    },
+    this.satusehatheaders
+  );
+
+  // // Service Request
+  let cabang: any = await this.authService.cabangper(this.kdklinik).toPromise()
+  cabang.forEach(cabang => { 
+    this.kodeorg = cabang.kodeorg
+    this.cabangName = cabang.nama
+  });
+
+  let serviceRequest: any = await this.authService.serviceRequest(
+    {
+      data: {
+        orgId: this.kodeorg,
+        keteranganTindakLanjut: `hasil lab pasien ${this.pasien}`,
+        patientId: this.idpasien,
+        patientName: this.pasien,
+        encounterId: this.idsatusehat,
+        encounterDescription: `hasil lab pasien ${this.pasien}`,
+        occurrenceDateTime: date.toISOString(),
+        authoredOnDate: date.toISOString(),
+        requesterPractitionerId: this.kddoktersatusehat,
+        requesterPractitionerName: this.namdokter,
+        performerPractitionerId: this.kddoktersatusehat,
+        performerPractitionerName: this.namdokter,
+        diagnosaKode: "C76.2",
+        diagnosaDisplay: "Abdomen",
+        alasanTindakLanjut: `hasil lab pasien ${this.pasien}`,
+        locationId: this.locationId,
+        locationName: this.cabangName,
+        instruksi: `hasil lab pasien ${this.pasien}`
+      },
+    },
+    this.satusehatheaders
+  );
+
+  let specimen: any = await this.authService.specimen(
+    {
+      data: {
+        id: this.generateUUID(),
+        orgId: this.kodeorg,
+        serviceRequestId: serviceRequest.id,
+        title: `spesimen pasien ${this.pasien}`,
+        description: `spesimen pasien ${this.pasien}`,
+        patientId: this.idpasien,
+        patientName: this.pasien,
+        encounterId: this.idsatusehat,
+        practitionerId: this.kddoktersatusehat,
+        practitionerName: this.namdokter,
+        typeCoding: listOfSpecimen,
+        collectedDate: date.toISOString(),
+        receivedDate: date.toISOString(),
+        extensionDate: date.toISOString(),
+      },
+    },
+    this.satusehatheaders
+  );
+
+  // Diagnostic Report
+  let diagnosticReport: any = await this.authService.diagnosticReport(
+    {
+      data: {
+        orgId: this.kodeorg,
+        serviceRequestId: serviceRequest.id,
+        patientId: this.idpasien,
+        patientName: this.pasien,
+        encounterId: this.idsatusehat,
+        encounterDescription: `spesimen pasien ${this.pasien}`,
+        effectiveDate: date.toISOString(),
+        issuedDate: date.toISOString(),
+        practitionerId: this.kddoktersatusehat,
+        observationId: observationResponse.id,
+        specimenId: specimen.id
+      },
+    },
+    this.satusehatheaders
+  );
+
+  // clinical impression
+  this.authService.clinicalImpression(
+    {
+      data: {
+        orgId: this.kodeorg,
+        patientId: this.idpasien,
+        patientName: this.pasien,
+        encounterId: this.idsatusehat,
+        encounterDescription: `spesimen pasien ${this.pasien}`,
+        practitionerId: this.kddoktersatusehat,
+        practitionerName: this.namdokter,
+        recordedDate: date.toISOString(),
+        description: `hasil lab pasien : ${this.pasien}`,
+        effectiveDate: date.toISOString(),
+        date: date.toISOString(),
+        conditionId: "877b68e2-186c-499e-b788-d27cc244fe88",
+        diagnosticReportId: diagnosticReport.id,
+        observationId: observationResponse.id,
+        summary: `spesimen pasien ${this.pasien}`,
+      },
+    },
+    this.satusehatheaders
+  );
 }
 
 pilihteshapus(kdlab,kdproduk)

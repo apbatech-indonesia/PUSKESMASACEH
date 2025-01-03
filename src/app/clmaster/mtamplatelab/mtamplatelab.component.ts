@@ -58,7 +58,7 @@ export class MtamplatelabComponent implements OnInit {
   cariuser:any;
   crtindak:any;
   namatamplates:''
-  spesimenSatuSehat:any='N'
+  spesimenSatuSehat:any=''
   details:''
   
 

@@ -9,6 +9,8 @@ import { ApiserviceService } from 'src/app/apiservice.service';
 export class MasterDiagnosaComponent implements OnInit {
   @Output() selectedItem = new EventEmitter()
   @Input() searchDiagnosaText: string
+  @Input() title: string = 'Cari Diagnosa'
+  @Input() isShowCode: boolean = true
 
   searchDiagnosaBy: any = 1
   diagnosaList: any = []

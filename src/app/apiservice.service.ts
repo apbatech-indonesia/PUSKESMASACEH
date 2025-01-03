@@ -3084,6 +3084,14 @@ export class ApiserviceService {
     })
   }
 
+  questionnaireResponse(data: any, headers: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehat + "QuestionnaireResponse", data, { headers: headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
   clinicalImpression(data: any, headers: any) {
     return new Promise((resolve) => {
       this.http

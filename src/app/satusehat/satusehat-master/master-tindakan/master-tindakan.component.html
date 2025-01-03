@@ -11,7 +11,7 @@
             <input type="text" class="form-control" [(ngModel)]="searchTindakanText" (keyup)="cariTindakan()" id="cari_tindakan" placeholder="{{ searchTindakanText }}">
         </div>
         <select multiple class="form-control" id="exampleFormControlSelect2" *ngIf="tindakanList.length > 0" >
-            <option *ngFor="let item of tindakanList" (click)="pilihTindakan(item)">{{ item.kdtindakan }} : {{ item.tindakan }}</option>
+            <option *ngFor="let item of tindakanList" (click)="pilihTindakan(item)"><span *ngIf="isShowCode">{{ item.kdtindakan }} :</span> {{ item.tindakan }}</option>
         </select>
     </div>
 </div>

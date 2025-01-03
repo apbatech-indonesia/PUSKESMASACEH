@@ -297,8 +297,7 @@ import { MasterSpecimenModule } from './satusehat/satusehat-master/master-specim
     MatCheckboxModule,
     AccordionModule,
     MatDatepickerModule,
-    MatFormFieldModule,
-    MasterSpecimenModule
+    MatFormFieldModule
   ],
   providers: [
     {

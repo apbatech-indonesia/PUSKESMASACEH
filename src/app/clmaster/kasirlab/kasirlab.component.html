@@ -676,15 +676,12 @@
                           </td>
                           <td>
                             <input style="border-radius: 5px;border:solid 1px #ccc" placeholder="Hasil..." type="text" [(ngModel)]="x.hasil" class="form-control">
-                            <div *ngIf="x.spesimenSatuSehat == 'Y'">
+                            <div hidden>
                               <br>
                               <strong>Spesimen Satusehat</strong>
                               <app-master-specimen
-                                [id]="x.specimen"
-                                (selectedItem)="
-                                  x.specimen = $event.code;
-                                  x.specimenDetail = $event;
-                                "
+                                [id]="x.spesimenSatuSehat"
+                                (selectedItem)="x.specimenDetail = $event;"
                               ></app-master-specimen>
                             </div>
                           </td>

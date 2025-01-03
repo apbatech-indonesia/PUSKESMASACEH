@@ -1,12 +1,21 @@
 import { HttpHeaders } from '@angular/common/http'
 import { Component, OnInit } from '@angular/core'
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms'
 import Swal from 'sweetalert2'
 import { ApiserviceService } from '../../../apiservice.service'
 import { ActivatedRoute } from '@angular/router'
 import { AncService } from '../../satusehat-anc/services/anc.service'
 import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons'
-import { ImunisasiService } from '../services/imunisasi.service'
+import { SkriningPTMService } from '../services/skrining-ptm.service'
+import { DataFaktorResiko } from '../data/data-faktor-resiko'
+import { DataRiwayat } from '../data/data-riwayat'
+import { DataDeteksiDiniObesitas } from '../data/data-deteksi-dini-obesitas'
+import { DataDeteksiDiniHipertensi } from '../data/data-deteksi-dini-hipertensi'
+import { DataDeteksiDiniMata } from '../data/data-deteksi-dini-mata'
+import { DataDiagnosaPtm } from '../data/data-diagnosa-ptm'
+import { DataTindakanPtm } from '../data/data-tindakan-ptm'
+import { DataTindakLanjutPtm } from '../data/data-tindak-lanjut'
+import { DataKondisiKeluarFaskes } from '../data/data-kondisi-keluar-faskes'
+import { DataUpdateKunjungan } from '../data/data-update-kunjungan'
 
 @Component({
   selector: 'app-tulis-skrining-ptm',
@@ -30,6 +39,8 @@ export class TulisSkriningPtmComponent implements OnInit {
     'kd-cabang': this.userData.kdcabang
   })
 
+  data: any
+
   patientData: any = {
     noantrian: '-',
     norm: '-',
@@ -42,26 +53,31 @@ export class TulisSkriningPtmComponent implements OnInit {
     namdokter: '-',
     alamat: '-'
   }
-  formObservation: FormGroup
   
   constructor(
     private api: ApiserviceService,
-    private imunisasiService: ImunisasiService,
+    private skriningPTMService: SkriningPTMService,
     private ancService: AncService,
     private route: ActivatedRoute,
-    private fb: FormBuilder
-  ) { 
-    this.formObservation = this.fb.group({
-      status_pregnant_code: ['LA15173-0'],
-      status_pregnant_display: ['not pregnant'],
-      status_sekolah_code: ['OV000320'],
-      status_sekolah_display: ['tidak sekolah']
-    })
-  }
+    public riwayat: DataRiwayat,
+    public faktorResiko: DataFaktorResiko,
+    public deteksiDiniObesitas: DataDeteksiDiniObesitas,
+    public deteksiDiniHipertensi: DataDeteksiDiniHipertensi,
+    public deteksiDiniMata: DataDeteksiDiniMata,
+    public diagnosaPtm: DataDiagnosaPtm,
+    public tindakanPtm: DataTindakanPtm,
+    public tindakLanjutPtm: DataTindakLanjutPtm,
+    public kondisiKeluarFaskes: DataKondisiKeluarFaskes,
+    public updateKunjungan: DataUpdateKunjungan,
+  ) { }
 
   // methods
   ngOnInit() {
-    this.docreateKunjunganImunisasi()
+    this.docreateKunjunganSkriningPTM()
+  }
+
+  test(data: any) {
+    console.log(data.getdata())
   }
 
   showLoading() {
@@ -75,16 +91,142 @@ export class TulisSkriningPtmComponent implements OnInit {
   }
 
   simpan() {
-    this.doSubmitObservasi() 
+    this.showLoading()
+    this.doSubmitRiwayat()
+    this.doSubmitFaktorResiko()
+    this.doSubmitDeteksiDiniObesitas()
+    this.doSubmitDeteksiDiniHipertensi()
+    this.doSubmitDeteksiDiniMata()
+    this.doSubmitDiagnosa()
+    this.doSubmitTindakan()
+    // this.doSubmitTindakLanjut()
+    // this.doSubmitKondisiKeluarFaskes()
+    // this.doSubmitUpdateDataKunjungan()
   }
 
-  async docreateKunjunganImunisasi() {
+  async doSubmitRiwayat() {
+    this.data = {
+      rmno: this.notransaksi,
+      useCaseId: this.useCaseId,
+      satusehatId: this.patientData.idsatusehat
+    }
+
+    let payload = {
+      data: {
+        ...this.data,
+        ...this.riwayat.getdata()
+      }
+    }
+    
+    console.log(await this.skriningPTMService.updateRiwayat(payload))
+  }
+
+  async doSubmitFaktorResiko() {
+    let payload = {
+      data: {
+        ...this.data,
+        ...this.faktorResiko.getdata()
+      }
+    }
+
+    console.log(await this.skriningPTMService.faktorResiko(payload))
+  }
+
+  async doSubmitDeteksiDiniObesitas() {
+    let payload = {
+      data: {
+        ...this.data,
+        ...this.deteksiDiniObesitas.getdata()
+      }
+    }
+
+    console.log(await this.skriningPTMService.deteksiDiniObesitas(payload))
+  }
+
+  async doSubmitDeteksiDiniHipertensi() {
+    let payload = {
+      data: {
+        ...this.data,
+        ...this.deteksiDiniHipertensi.getdata()
+      }
+    }
+
+    console.log(await this.skriningPTMService.deteksiDiniHipertensi(payload))
+  }
+  
+  async doSubmitDeteksiDiniMata() {
+    let payload = {
+      data: {
+        ...this.data,
+        ...this.deteksiDiniMata.getdata()
+      }
+    }
+
+    console.log(await this.skriningPTMService.deteksiDiniMata(payload))
+  }
+  
+  async doSubmitDiagnosa() {
+    let payload = {
+      data: {
+        ...this.data,
+        ...this.diagnosaPtm.getdata()
+      }
+    }
+
+    console.log(await this.skriningPTMService.diagnosa(payload))
+  }
+  
+  async doSubmitTindakan() {
+    let payload = {
+      data: {
+        ...this.data,
+        ...this.tindakanPtm.getdata()
+      }
+    }
+
+    console.log(await this.skriningPTMService.tindakan(payload))
+  }
+  
+  async doSubmitTindakLanjut() {
+    let payload = {
+      data: {
+        ...this.data,
+        ...this.tindakLanjutPtm.getdata()
+      }
+    }
+
+    console.log(await this.skriningPTMService.tindakLanjut(payload))
+  }
+  
+  async doSubmitKondisiKeluarFaskes() {
+    let payload = {
+      data: {
+        ...this.data,
+        ...this.kondisiKeluarFaskes.getdata()
+      }
+    }
+
+    console.log(await this.skriningPTMService.kondisiKeluar(payload))
+  }
+  
+  async doSubmitUpdateDataKunjungan() {
+    let payload = {
+      data: {
+        ...this.data,
+        ...this.updateKunjungan.getdata()
+      }
+    }
+
+    console.log(await this.skriningPTMService.updateKunjungan(payload))
+  }
+
+  async docreateKunjunganSkriningPTM() {
     this.showLoading()
     this.patientData = await this.getPasien()
     this.cabangData = await this.getCabang()
     await this.setIdPasien()
 
-    let response: any = await this.imunisasiService.createKunjunganImunisasi({
+    let response: any = await this.skriningPTMService.createKunjunganSkriningPtm({
       data: {
         rmno: this.notransaksi,
         orgId: this.cabangData.kodeorg,
@@ -98,78 +240,6 @@ export class TulisSkriningPtmComponent implements OnInit {
     })
     this.useCaseId = response.data.use_case_id
     this.getDataPatient()
-  }
-
-  async doSubmitObservasi(){
-    var data = {
-      rmno: this.notransaksi,
-      useCaseId: this.useCaseId,
-      satusehatId: this.patientData.idsatusehat
-    }
-
-    let observations = {
-      observations : [
-        {
-          pregnancy_observation: {
-            category: {
-              system: "http://terminology.hl7.org/CodeSystem/observation-category",
-              code: "survey",
-              display: "Survey"
-            },
-            question_answers: [
-              {
-                question:  {
-                  system: "http://loinc.org",
-                  code: "82810-3",
-                  display: "Pregnancy status"
-                },
-                answer: {
-                  system: "http://loinc.org",
-                  code: this.formObservation.value.status_pregnant_code,
-                  display: this.formObservation.value.status_pregnant_display
-                }
-              }
-            ]
-          }
-        },
-        {
-          education_observation: {
-            category: {
-              system: "http://terminology.hl7.org/CodeSystem/observation-category",
-              code: "social-history",
-              display: "Social History"
-            },
-            question_answers: [
-              {
-                question: {
-                  system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
-                  code: "OC000135",
-                  display: "Status sekolah"
-                },
-                answer: {
-                  system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
-                  code: this.formObservation.value.status_sekolah_code,
-                  display: this.formObservation.value.status_sekolah_display
-                }
-              }
-            ]
-          }
-        }
-      ]
-    }
-
-    this.showLoading()
-    let response1: any = await this.imunisasiService.observationImunisasi({ data: { ...data, ...observations } })
-    
-    if (response1.statusCode != '00') {
-      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
-    }
-    
-    else if(
-      response1.statusCode == '00'
-    ) {
-      Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
-    }
   }
 
   async setIdPasien() {
@@ -194,22 +264,66 @@ export class TulisSkriningPtmComponent implements OnInit {
       patientId: this.idpasien,
       rmno: this.notransaksi,
       usecase_id: this.useCaseId,
-      type: "IMUNISASI",
+      type: "SKRINING",
       status: "active"
     })
 
-    let patient = response.data
-    if (patient) {
-      if (patient?.observations) {
-        this.formObservation.patchValue({
-          status_pregnant_code: patient?.observations[0]?.pregnancy_observation?.question_answers[0]?.answer.code,
-          status_pregnant_display: patient?.observations[0]?.pregnancy_observation?.question_answers[0]?.answer.display,
-          status_sekolah_code: patient?.observations[1]?.education_observation?.question_answers[0]?.answer.code,
-          status_sekolah_display: patient?.observations[1]?.education_observation?.question_answers[0]?.answer.display,
-        })
-      }
-    }
+    this.setData(response.data)
+
     this.stopLoading()
+  }
+
+  setData(patient: any) {
+    const riwayat = patient.conditions.reduce((acc, current) => {
+      const key = Object.keys(current)[0];
+      acc[key] = current[key].condition_item;
+      return acc;
+    }, {});
+
+    this.riwayat.ptmCode = riwayat.ptm_sekarang.code
+    this.riwayat.ptmDisplay = riwayat.ptm_sekarang.display
+    this.riwayat.ptmDuluCode = riwayat.ptm_dulu.code
+    this.riwayat.ptmDuluDisplay = riwayat.ptm_dulu.display
+    this.riwayat.ptmKeluargaCode = riwayat.ptm_keluarga.code
+    this.riwayat.ptmKeluargaDisplay = riwayat.ptm_keluarga.display
+
+    let questioner = patient.QuestionnaireResponse[0].ptm_question.item[0].item.map((item) => {
+      let answer = item.answer[0];
+      if (answer.valueBoolean !== undefined) {
+        answer = answer.valueBoolean;
+      } else if (answer.valueInteger !== undefined) {
+        answer = answer.valueInteger;
+      } else if (answer.valueQuantity && answer.valueQuantity.value !== undefined) {
+        answer = answer.valueQuantity.value;
+      } else if (answer.valueCoding && answer.valueCoding.display !== undefined) {
+        answer = answer.valueCoding.display;
+      } else if (answer.valueReference && answer.valueReference.reference !== undefined) {
+        answer = answer.valueReference.reference;
+      }
+    
+      return {
+        linkId: item.linkId,
+        text: item.text,
+        answer
+      };
+    });
+    
+    this.faktorResiko.kodeMeroko = '8392000'
+    this.faktorResiko.displayMeroko = 'Non-smoker'
+    this.faktorResiko.meroko = questioner[0].answer
+    this.faktorResiko.jumlahRoko = questioner[1].answer
+    this.faktorResiko.lamaMeroko = questioner[2].answer
+    this.faktorResiko.terpaparAsapRoko = questioner[4].answer
+    this.faktorResiko.gulaMakanan = questioner[5].answer
+    this.faktorResiko.garamMakanan = questioner[6].answer
+    this.faktorResiko.minyakMakanan = questioner[7].answer
+    this.faktorResiko.sayurBuahMakanan = questioner[8].answer
+    this.faktorResiko.aktivitasFisik = questioner[9].answer
+    this.faktorResiko.konsumsiAlkohol = questioner[10].answer
+  }
+
+  findBylinkId(data: any, displayValue: any) {
+    return data.find(item => item.linkId === displayValue).answer;
   }
 
   getPasien() {

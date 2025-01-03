@@ -9,6 +9,7 @@ import { ApiserviceService } from 'src/app/apiservice.service';
 export class MasterTindakanComponent implements OnInit {
   @Output() selectedItem = new EventEmitter()
   @Input() searchTindakanText: string
+  @Input() isShowCode: boolean = true
 
   searchTindakanBy: any = 1
   tindakanList: any = []

@@ -362,6 +362,7 @@ export class tulisermComponent implements OnInit {
   pf: string;
   plan: string;
   plankon: string;
+  kondisiKeluarga: string;
 
   hostName: string;
   URLINVOICE: string;
@@ -1843,136 +1844,6 @@ export class tulisermComponent implements OnInit {
     }
   }
 
-  async kirimSpesimenSatuSehat() {
-    const date = new Date();
-
-    // observation
-    let observationResponse: any = await this.authService.observation(
-      {
-        data: {
-          patientId: this.idpasien,
-          practitionerId: this.kddoktersatusehat,
-          encounterId: this.idsatusehat,
-          encounterDescription: this.subjekp,
-          effectiveDateTime: date.toISOString(),
-          issuedDate: date.toISOString(),
-          heartRate: this.hr,
-          responsiveness: this.kesadaran,
-          bodyTemperature: this.suhu,
-          respiratoryRate: this.rr,
-          systolic: this.td,
-          diastolic: this.tdd,
-          hemoglobinSaturationOxygen: this.spo,
-          bodyHeight: this.tb,
-          bodyWeight: this.bb,
-          bodyMassIndex: this.imt,
-        },
-      },
-      this.satusehatheaders
-    );
-
-    // Service Request
-    let serviceRequest: any = await this.authService.serviceRequest(
-      {
-        data: {
-          orgId: this.kdorg,
-          keteranganTindakLanjut: `hasil lab pasien ${this.pasien}`,
-          patientId: this.idpasien,
-          patientName: this.pasien,
-          encounterId: this.idsatusehat,
-          encounterDescription: `hasil lab pasien ${this.pasien}`,
-          occurrenceDateTime: date.toISOString(),
-          authoredOnDate: date.toISOString(),
-          requesterPractitionerId: this.kddoktersatusehat,
-          requesterPractitionerName: this.namdokter,
-          performerPractitionerId: this.kddoktersatusehat,
-          performerPractitionerName: this.namdokter,
-          diagnosaKode: "C76.2",
-          diagnosaDisplay: "Abdomen",
-          alasanTindakLanjut: `hasil lab pasien ${this.pasien}`,
-          locationId: this.locationid,
-          locationName: "pkm",
-          instruksi: `hasil lab pasien ${this.pasien}`
-        },
-      },
-      this.satusehatheaders
-    );
-
-    this.thasillab.forEach(async (hasillab) => {
-      let listOfSpesimen = hasillab.detail.filter(item => item?.spesimenSatuSehat?.includes("Y"))
-      let listOfSpesimenDetail = listOfSpesimen.map(data => { return data.specimenDetail });
-
-      if (listOfSpesimenDetail.length > 0) {
-        // Specimen
-        let specimen: any = await this.authService.specimen(
-          {
-            data: {
-              id: this.generateUUID(),
-              orgId: this.kdorg,
-              serviceRequestId: serviceRequest.id,
-              title: `spesimen pasien ${this.pasien}`,
-              description: `spesimen pasien ${this.pasien}`,
-              patientId: this.idpasien,
-              patientName: this.pasien,
-              encounterId: this.idsatusehat,
-              practitionerId: this.kddoktersatusehat,
-              practitionerName: this.namdokter,
-              typeCoding: listOfSpesimenDetail,
-              collectedDate: date.toISOString(),
-              receivedDate: date.toISOString(),
-              extensionDate: date.toISOString(),
-            },
-          },
-          this.satusehatheaders
-        );
-
-        // Diagnostic Report
-        let diagnosticReport: any = await this.authService.diagnosticReport(
-          {
-            data: {
-              orgId: this.kdorg,
-              serviceRequestId: serviceRequest.id,
-              patientId: this.idpasien,
-              patientName: this.pasien,
-              encounterId: this.idsatusehat,
-              encounterDescription: this.subjek,
-              effectiveDate: date.toISOString(),
-              issuedDate: date.toISOString(),
-              practitionerId: this.kddoktersatusehat,
-              observationId: observationResponse.id,
-              specimenId: specimen.id
-            },
-          },
-          this.satusehatheaders
-        );
-
-        // clinical impression
-        this.authService.clinicalImpression(
-          {
-            data: {
-              orgId: this.kdorg,
-              patientId: this.idpasien,
-              patientName: this.pasien,
-              encounterId: this.idsatusehat,
-              encounterDescription: this.subjek,
-              practitionerId: this.kddoktersatusehat,
-              practitionerName: this.namdokter,
-              recordedDate: date.toISOString(),
-              description: `hasil lab pasien : ${this.pasien}`,
-              effectiveDate: date.toISOString(),
-              date: date.toISOString(),
-              conditionId: "877b68e2-186c-499e-b788-d27cc244fe88",
-              diagnosticReportId: diagnosticReport.id,
-              observationId: observationResponse.id,
-              summary: this.subjek,
-            },
-          },
-          this.satusehatheaders
-        );
-      }
-    });
-  }
-
   lihatresume(notrans, norm, kdcabang) {
     this.monitoringshowcontentrj = true;
 
@@ -3251,27 +3122,6 @@ export class tulisermComponent implements OnInit {
       this.satusehatheaders
     );
 
-    // Specimen
-    let specimen: any = await this.authService.specimen(
-      {
-        data: {
-          orgId: this.kdorg,
-          serviceRequestId: serviceRequest.id,
-          title: `spesimen pasien ${this.pasien}`,
-          description: `spesimen pasien ${this.pasien}`,
-          patientId: this.idpasien,
-          patientName: this.pasien,
-          encounterId: this.idsatusehat,
-          practitionerId: this.kddoktersatusehat,
-          practitionerName: this.namdokter,
-          collectedDate: date.toISOString(),
-          receivedDate: date.toISOString(),
-          extensionDate: date.toISOString(),
-        },
-      },
-      this.satusehatheaders
-    );
-
     // Diagnostic Report
     let diagnosticReport: any = await this.authService.diagnosticReport(
       {
@@ -3285,8 +3135,22 @@ export class tulisermComponent implements OnInit {
           effectiveDate: date.toISOString(),
           issuedDate: date.toISOString(),
           practitionerId: this.kddoktersatusehat,
-          observationId: observationResponse.id,
-          specimenId: specimen.id
+          observationId: observationResponse.id
+        },
+      },
+      this.satusehatheaders
+    );
+
+    // Questionnaire Response
+    await this.authService.questionnaireResponse(
+      {
+        data: {
+          patientId: this.idpasien,
+          patientName: this.pasien,
+          encounterId: this.idsatusehat,
+          practitionerId: this.kddoktersatusehat,
+          dateNow: date.toISOString(),
+          statusKeluarga: this.kondisiKeluarga
         },
       },
       this.satusehatheaders

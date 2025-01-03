@@ -74,36 +74,29 @@
         <div class="card-body">
           <div class="row">
             <!-- header body -->
-            <div class="mb-3 col-6">
+            <div class="mb-3 col-12 col-md-4">
               <div class="card">
                 <div class="card-header navy">
-                  Riwayat
+                  PTM Sekarang
                 </div>
                 <div class="card-body">
                   <!-- header body -->
-                  <form [formGroup]="formObservation">
-                    <!-- Observasi -->
                     <div class="row">
-                      <div class="col-12 my-3">
-                        <h3>Observasi</h3>
+                      <div class="col-12">
+                        <h3>PTM Sekarang</h3>
                       </div>
-                      <div class="col-6">
+                      <div class="col-12">
                         <div class="position-relative mb-3">
-                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
-                        </div>
-                        <div class="position-relative mb-3">
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
-                            <label class="form-check-label" for="hamil">Hamil</label>
-                          </div>
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
-                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
-                          </div>
+                          <app-master-diagnosa
+                            [searchDiagnosaText]="riwayat.ptmDisplay"
+                            (selectedItem)="
+                            riwayat.ptmCode = $event.kddiagnosa;
+                            riwayat.ptmDisplay = $event.diagnosa;
+                            ">
+                        </app-master-diagnosa>
                         </div>
                       </div>
                     </div>
-                  </form>
                   <!-- header body -->
                 </div>
               </div>
@@ -111,36 +104,148 @@
             <!-- header body -->
 
             <!-- header body -->
-            <div class="mb-3 col-6">
+            <div class="mb-3 col-12 col-md-4">
+              <div class="card">
+                <div class="card-header navy">
+                  PTM Dulu
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                    <div class="row">
+                      <div class="col-12">
+                        <h3>PTM Dulu</h3>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <app-master-diagnosa
+                            [searchDiagnosaText]="riwayat.ptmDuluDisplay"
+                            (selectedItem)="
+                            riwayat.ptmDuluCode = $event.kddiagnosa;
+                            riwayat.ptmDuluDisplay = $event.diagnosa;
+                            ">
+                          </app-master-diagnosa>
+                        </div>
+                      </div>
+                    </div>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-12 col-md-4">
+              <div class="card">
+                <div class="card-header navy">
+                  PTM Keluarga
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                    <div class="row">
+                      <div class="col-12">
+                        <h3>PTM Keluarga</h3>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <app-master-diagnosa
+                            [searchDiagnosaText]="riwayat.ptmKeluargaDisplay"
+                            (selectedItem)="
+                            riwayat.ptmKeluargaCode = $event.kddiagnosa;
+                            riwayat.ptmKeluargaDisplay = $event.diagnosa;
+                            ">
+                          </app-master-diagnosa>
+                        </div>
+                      </div>
+                    </div>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-12">
               <div class="card">
                 <div class="card-header navy">
                   Faktor Resiko
                 </div>
                 <div class="card-body">
                   <!-- header body -->
-                  <form [formGroup]="formObservation">
-                    <!-- Observasi -->
                     <div class="row">
                       <div class="col-12 my-3">
-                        <h3>Observasi</h3>
+                        <h3>Layanan bagi usia dewasa (18 - 59 thn): Skrining PTM</h3>
                       </div>
-                      <div class="col-6">
+                      <div class="col-12">
                         <div class="position-relative mb-3">
-                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                          <label for="pernah_merokok" class="form-label">Apakah peserta pernah merokok?</label>
                         </div>
                         <div class="position-relative mb-3">
                           <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
-                            <label class="form-check-label" for="hamil">Hamil</label>
+                            <input class="form-check-input" type="radio" id="pernahMerokokYa" [value]="true" [(ngModel)]="faktorResiko.meroko">
+                            <label class="form-check-label" for="pernahMerokokYa">Ya</label>
                           </div>
                           <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
-                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
+                            <input class="form-check-input" type="radio" id="pernahMerokokTidak" [value]="false" [(ngModel)]="faktorResiko.meroko">
+                            <label class="form-check-label" for="pernahMerokokTidak">Tidak</label>
                           </div>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="jumlah_batang_rokok" class="form-label">Berapa rata-rata jumlah batang rokok per hari</label>
+                          <input type="number" id="jumlah_batang_rokok" class="form-control" [(ngModel)]="faktorResiko.jumlahRoko">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="lama_merokok" class="form-label">Lama merokok dalam tahun</label>
+                          <input type="number" id="lama_merokok" class="form-control" [(ngModel)]="faktorResiko.lamaMeroko">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="terpapar_asap_rokok" class="form-label">Apakah peserta terpapar asap rokok orang lain dalam waktu 1 bulan terakhir?</label>
+                          <input type="text" id="terpapar_asap_rokok" class="form-control" [(ngModel)]="faktorResiko.terpaparAsapRoko">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="gula_makanan" class="form-label">Apakah peserta menambahkan gula pada makanan/minuman peserta > 4 sendok makan dalam sehari?</label>
+                          <input type="text" id="gula_makanan" class="form-control" [(ngModel)]="faktorResiko.gulaMakanan">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="garam_makanan" class="form-label">Apakah peserta menggunakan garam pada makanan peserta > 1 sendok teh dalam sehari?</label>
+                          <input type="text" id="garam_makanan" class="form-control" [(ngModel)]="faktorResiko.garamMakanan">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="minyak_makanan" class="form-label">Apakah peserta konsumsi makanan yang diolah dengan minyak > 5 sendok makan dalam sehari?</label>
+                          <input type="text" id="minyak_makanan" class="form-control" [(ngModel)]="faktorResiko.minyakMakanan">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="sayur_buah_makanan" class="form-label">Apakah peserta makan sayur dan atau buah kurang dari 5 porsi sehari?</label>
+                          <input type="text" id="sayur_buah_makanan" class="form-control" [(ngModel)]="faktorResiko.sayurBuahMakanan">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="aktivitas_fisik" class="form-label">Apakah peserta melakukan aktivitas fisik kurang dari minimal 30 menit/ hari atau minimal 150 menit/minggu?</label>
+                          <input type="text" id="aktivitas_fisik" class="form-control" [(ngModel)]="faktorResiko.aktivitasFisik">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="konsumsi_alkohol" class="form-label">Apakah peserta konsumsi alkohol dalam waktu 1 bulan terakhir?</label>
+                          <input type="text" id="konsumsi_alkohol" class="form-control" [(ngModel)]="faktorResiko.konsumsiAlkohol">
                         </div>
                       </div>
                     </div>
-                  </form>
+                    
                   <!-- header body -->
                 </div>
               </div>
@@ -148,36 +253,42 @@
             <!-- header body -->
 
             <!-- header body -->
-            <div class="mb-3 col-6">
+            <div class="mb-3 col-4">
               <div class="card">
                 <div class="card-header navy">
                   Deteksi Dini Obesitas
                 </div>
                 <div class="card-body">
                   <!-- header body -->
-                  <form [formGroup]="formObservation">
-                    <!-- Observasi -->
                     <div class="row">
                       <div class="col-12 my-3">
                         <h3>Deteksi Dini Obesitas</h3>
                       </div>
-                      <div class="col-6">
+                      <div class="col-12">
                         <div class="position-relative mb-3">
-                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                          <label for="berat_badan" class="form-label">Berat Badan</label>
+                          <input type="number" id="berat_badan" class="form-control" [(ngModel)]="deteksiDiniObesitas.beratBadan" placeholder="Masukkan berat badan (kg)">
                         </div>
+                      </div>
+                      <div class="col-12">
                         <div class="position-relative mb-3">
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
-                            <label class="form-check-label" for="hamil">Hamil</label>
-                          </div>
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
-                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
-                          </div>
+                          <label for="tinggi_badan" class="form-label">Tinggi Badan</label>
+                          <input type="number" id="tinggi_badan" class="form-control" [(ngModel)]="deteksiDiniObesitas.tinggiBadan" placeholder="Masukkan tinggi badan (cm)">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="index_masa_tubuh" class="form-label">Indeks Massa Tubuh (BMI)</label>
+                          <input type="number" id="index_masa_tubuh" class="form-control" [(ngModel)]="deteksiDiniObesitas.indexMasaTubuh" placeholder="Hasil BMI (kg/m²)">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="lingkar_pinggang" class="form-label">Lingkar Pinggang</label>
+                          <input type="number" id="lingkar_pinggang" class="form-control" [(ngModel)]="deteksiDiniObesitas.lingkarPinggang" placeholder="Masukkan lingkar pinggang (cm)">
                         </div>
                       </div>
                     </div>
-                  </form>
                   <!-- header body -->
                 </div>
               </div>
@@ -185,78 +296,93 @@
             <!-- header body -->
 
             <!-- header body -->
-            <div class="mb-3 col-6">
-              <div class="card">
-                <div class="card-header navy">
-                  Deteksi Dini Hipertensi
-                </div>
-                <div class="card-body">
-                  <!-- header body -->
-                  <form [formGroup]="formObservation">
-                    <!-- Observasi -->
-                    <div class="row">
-                      <div class="col-12 my-3">
-                        <h3>Deteksi Dini Hipertensi</h3>
-                      </div>
-                      <div class="col-6">
-                        <div class="position-relative mb-3">
-                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
-                        </div>
-                        <div class="position-relative mb-3">
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
-                            <label class="form-check-label" for="hamil">Hamil</label>
-                          </div>
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
-                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                  <!-- header body -->
-                </div>
-              </div>
-            </div>
-            <!-- header body -->
-
-            <!-- header body -->
-            <div class="mb-3 col-6">
+            <div class="mb-3 col-4">
               <div class="card">
                 <div class="card-header navy">
                   Deteksi Dini Mata
                 </div>
                 <div class="card-body">
                   <!-- header body -->
-                  <form [formGroup]="formObservation">
                     <!-- Observasi -->
                     <div class="row">
                       <div class="col-12 my-3">
                         <h3>Deteksi Dini Mata</h3>
                       </div>
-                      <div class="col-6">
+                      <div class="col-12 col-lg-6">
                         <div class="position-relative mb-3">
-                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                          <label for="numerator_mata_kiri" class="form-label">Visus Mata Kiri</label>
+                          <input type="number" id="numerator_mata_kiri" class="form-control" [(ngModel)]="deteksiDiniMata.visusKanan" placeholder="Masukkan visus mata kiri">
                         </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
                         <div class="position-relative mb-3">
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
-                            <label class="form-check-label" for="hamil">Hamil</label>
-                          </div>
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
-                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
-                          </div>
+                          <label for="numerator_mata_kanan" class="form-label">Visus Mata Kanan</label>
+                          <input type="number" id="numerator_mata_kanan" class="form-control" [(ngModel)]="deteksiDiniMata.visusKanan" placeholder="Masukkan visus mata kanan">
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <div class="position-relative mb-3">
+                          <label for="numerator_mata_kiri" class="form-label">Numerator Mata Kiri</label>
+                          <input type="number" id="numerator_mata_kiri" class="form-control" [(ngModel)]="deteksiDiniMata.numeratorMataKiri" placeholder="Masukkan numerator mata kiri">
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <div class="position-relative mb-3">
+                          <label for="numerator_mata_kanan" class="form-label">Numerator Mata Kanan</label>
+                          <input type="number" id="numerator_mata_kanan" class="form-control" [(ngModel)]="deteksiDiniMata.numeratorMataKanan" placeholder="Masukkan numerator mata kanan">
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <div class="position-relative mb-3">
+                          <label for="denominator_mata_kiri" class="form-label">Denominator Mata Kiri</label>
+                          <input type="number" id="denominator_mata_kiri" class="form-control" [(ngModel)]="deteksiDiniMata.denominatorMataKiri" placeholder="Masukkan denominator mata kiri">
+                        </div>
+                      </div>
+                      <div class="col-12 col-lg-6">
+                        <div class="position-relative mb-3">
+                          <label for="denominator_mata_kanan" class="form-label">Denominator Mata Kanan</label>
+                          <input type="number" id="denominator_mata_kanan" class="form-control" [(ngModel)]="deteksiDiniMata.denominatorMataKanan" placeholder="Masukkan denominator mata kanan">
                         </div>
                       </div>
                     </div>
-                  </form>
                   <!-- header body -->
                 </div>
               </div>
             </div>
             <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-4">
+              <div class="card">
+                <div class="card-header navy">
+                  Deteksi Dini Hipertensi
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                    <!-- Observasi -->
+                    <div class="row">
+                      <div class="col-12 my-3">
+                        <h3>Deteksi Dini Hipertensi</h3>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="sistole" class="form-label">Sistole</label>
+                          <input type="number" id="sistole" class="form-control" [(ngModel)]="deteksiDiniHipertensi.sistole" placeholder="Masukkan tekanan sistole (mmHg)">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="diastole" class="form-label">Diastole</label>
+                          <input type="number" id="diastole" class="form-control" [(ngModel)]="deteksiDiniHipertensi.diastole" placeholder="Masukkan tekanan diastole (mmHg)">
+                        </div>
+                      </div>
+                    </div>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
 
             <!-- header body -->
             <div class="mb-3 col-6">
@@ -266,29 +392,81 @@
                 </div>
                 <div class="card-body">
                   <!-- header body -->
-                  <form [formGroup]="formObservation">
                     <!-- Observasi -->
                     <div class="row">
                       <div class="col-12 my-3">
                         <h3>Diagnosa</h3>
                       </div>
-                      <div class="col-6">
+                      <div class="col-12">
                         <div class="position-relative mb-3">
-                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                          <app-master-diagnosa
+                            [title]="'Diagnosa Hipertensi'"
+                            [isShowCode]="false"
+                            [searchDiagnosaText]="diagnosaPtm.diagnosaHipertensiDisplay"
+                            (selectedItem)="
+                            diagnosaPtm.diagnosaHipertensiCode = $event.kddiagnosa;
+                            diagnosaPtm.diagnosaHipertensiDisplay = $event.diagnosa;
+                            ">
+                          </app-master-diagnosa>
                         </div>
+                      </div>
+
+                      <div class="col-12">
                         <div class="position-relative mb-3">
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
-                            <label class="form-check-label" for="hamil">Hamil</label>
-                          </div>
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
-                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
-                          </div>
+                          <app-master-diagnosa
+                            [title]="'Diagnosa Presbyopia'"
+                            [isShowCode]="false"
+                            [searchDiagnosaText]="diagnosaPtm.diagnosaPresbyopiaDisplay"
+                            (selectedItem)="
+                            diagnosaPtm.diagnosaPresbyopiaCode = $event.kddiagnosa;
+                            diagnosaPtm.diagnosaPresbyopiaDisplay = $event.diagnosa;
+                            ">
+                          </app-master-diagnosa>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <app-master-diagnosa
+                            [title]="'Diagnosa Cervix'"
+                            [isShowCode]="false"
+                            [searchDiagnosaText]="diagnosaPtm.diagnosaCervixDisplay"
+                            (selectedItem)="
+                            diagnosaPtm.diagnosaCervixCode = $event.kddiagnosa;
+                            diagnosaPtm.diagnosaCervixDisplay = $event.diagnosa;
+                            ">
+                          </app-master-diagnosa>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <app-master-diagnosa
+                            [title]="'Diagnosa Diabetes'"
+                            [isShowCode]="false"
+                            [searchDiagnosaText]="diagnosaPtm.diagnosaDiabetesDisplay"
+                            (selectedItem)="
+                            diagnosaPtm.diagnosaDiabetesCode = $event.kddiagnosa;
+                            diagnosaPtm.diagnosaDiabetesDisplay = $event.diagnosa;
+                            ">
+                          </app-master-diagnosa>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <app-master-diagnosa
+                            [title]="'Diagnosa Resiko Jantung'"
+                            [isShowCode]="false"
+                            [searchDiagnosaText]="diagnosaPtm.diagnosaJantungDisplay"
+                            (selectedItem)="
+                            diagnosaPtm.diagnosaJantungCode = $event.kddiagnosa;
+                            diagnosaPtm.diagnosaJantungDisplay = $event.diagnosa;
+                            ">
+                          </app-master-diagnosa>
                         </div>
                       </div>
                     </div>
-                  </form>
                   <!-- header body -->
                 </div>
               </div>
@@ -303,140 +481,24 @@
                 </div>
                 <div class="card-body">
                   <!-- header body -->
-                  <form [formGroup]="formObservation">
-                    <!-- Observasi -->
                     <div class="row">
                       <div class="col-12 my-3">
                         <h3>Tindakan</h3>
                       </div>
-                      <div class="col-6">
+                      <div class="col-12">
                         <div class="position-relative mb-3">
-                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
-                        </div>
-                        <div class="position-relative mb-3">
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
-                            <label class="form-check-label" for="hamil">Hamil</label>
-                          </div>
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
-                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
-                          </div>
+                          <app-master-tindakan
+                            [title]="'Diagnosa Resiko Jantung'"
+                            [isShowCode]="false"
+                            [searchTindakanText]="tindakanPtm.procedureDisplay"
+                            (selectedItem)="
+                            tindakanPtm.procedureCode = $event.kddiagnosa;
+                            tindakanPtm.procedureDisplay = $event.diagnosa;
+                            ">
+                          </app-master-tindakan>
                         </div>
                       </div>
                     </div>
-                  </form>
-                  <!-- header body -->
-                </div>
-              </div>
-            </div>
-            <!-- header body -->
-
-            <!-- header body -->
-            <div class="mb-3 col-6">
-              <div class="card">
-                <div class="card-header navy">
-                  Tindak Lanjut
-                </div>
-                <div class="card-body">
-                  <!-- header body -->
-                  <form [formGroup]="formObservation">
-                    <!-- Observasi -->
-                    <div class="row">
-                      <div class="col-12 my-3">
-                        <h3>Tindak Lanjut</h3>
-                      </div>
-                      <div class="col-6">
-                        <div class="position-relative mb-3">
-                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
-                        </div>
-                        <div class="position-relative mb-3">
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
-                            <label class="form-check-label" for="hamil">Hamil</label>
-                          </div>
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
-                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                  <!-- header body -->
-                </div>
-              </div>
-            </div>
-            <!-- header body -->
-
-            <!-- header body -->
-            <div class="mb-3 col-6">
-              <div class="card">
-                <div class="card-header navy">
-                  Kondisi Meninggalkan Faskes
-                </div>
-                <div class="card-body">
-                  <!-- header body -->
-                  <form [formGroup]="formObservation">
-                    <!-- Observasi -->
-                    <div class="row">
-                      <div class="col-12 my-3">
-                        <h3>Kondisi Meninggalkan Faskes</h3>
-                      </div>
-                      <div class="col-6">
-                        <div class="position-relative mb-3">
-                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
-                        </div>
-                        <div class="position-relative mb-3">
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
-                            <label class="form-check-label" for="hamil">Hamil</label>
-                          </div>
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
-                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                  <!-- header body -->
-                </div>
-              </div>
-            </div>
-            <!-- header body -->
-
-            <!-- header body -->
-            <div class="mb-3 col-6">
-              <div class="card">
-                <div class="card-header navy">
-                  Update Data Kunjungan
-                </div>
-                <div class="card-body">
-                  <!-- header body -->
-                  <form [formGroup]="formObservation">
-                    <!-- Observasi -->
-                    <div class="row">
-                      <div class="col-12 my-3">
-                        <h3>Update Data Kunjungan</h3>
-                      </div>
-                      <div class="col-6">
-                        <div class="position-relative mb-3">
-                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
-                        </div>
-                        <div class="position-relative mb-3">
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
-                            <label class="form-check-label" for="hamil">Hamil</label>
-                          </div>
-                          <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
-                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
                   <!-- header body -->
                 </div>
               </div>

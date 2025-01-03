@@ -2219,26 +2219,40 @@ Normal: teraba jelas
             <ngb-panel *ngIf="dash === 'BPJS'"> -->
 
                   <div class="row">
-                    <div class="position-relative mb-3">
-                      <label
-                        for="exampleSelect"
-                        class="form-label"
-                        style="color: black"
-                        >Kode Prognosa
-                        <span style="color: red">(wajib disi)</span></label
-                      >
-                      <select
-                        [(ngModel)]="kdprognosa"
-                        id="exampleSelect"
-                        class="form-select"
-                      >
-                        <!-- <option *ngFor="let x of tprognosa" value="{{x.kdPrognosa}}"  >{{x.nmPrognosa}}</option> -->
-                        <option value="01">Sanam (Sembuh)</option>
-                        <option value="02">Bonam (Baik)</option>
-                        <option value="03">Malam (Buruk/Jelek)</option>
-                        <option value="04">Dubia Ad Sanam</option>
-                        <option value="05">Dubia Ad Malam</option>
-                      </select>
+                    <div class="col-md-6">
+                      <div class="position-relative mb-3">
+                        <label
+                          for="exampleSelect"
+                          class="form-label"
+                          style="color: black"
+                          >Kode Prognosa
+                          <span style="color: red">(wajib disi)</span></label
+                        >
+                        <select
+                          [(ngModel)]="kdprognosa"
+                          id="exampleSelect"
+                          class="form-select"
+                        >
+                          <!-- <option *ngFor="let x of tprognosa" value="{{x.kdPrognosa}}"  >{{x.nmPrognosa}}</option> -->
+                          <option value="01">Sanam (Sembuh)</option>
+                          <option value="02">Bonam (Baik)</option>
+                          <option value="03">Malam (Buruk/Jelek)</option>
+                          <option value="04">Dubia Ad Sanam</option>
+                          <option value="05">Dubia Ad Malam</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="position-relative mb-3">
+                        <label
+                          for="exampleSelect"
+                          class="form-label"
+                          style="color: black">
+                          Kuisioner Status Keluarga
+                        </label>
+                        <input type="text" class="form-control" [(ngModel)]="kondisiKeluarga">
+                      </div>
                     </div>
 
                     <div class="col-md-3">
@@ -3475,21 +3489,6 @@ Normal: teraba jelas
                               type="text"
                               [(ngModel)]="x.hasil"
                             />
-
-                            <br>
-
-                            <div *ngIf="x.spesimenSatuSehat == 'Y'">
-                              <br>
-                              <strong>Spesimen Satusehat</strong>
-                              <app-master-specimen
-                                [id]="x.specimen"
-                                [isDisabled]="true"
-                                (selectedItem)="
-                                  x.specimen = $event.code;
-                                  x.specimenDetail = $event;
-                                "
-                              ></app-master-specimen>
-                            </div>
                           </td>
                           <td>
                             {{ x.satuan }}
@@ -3604,14 +3603,6 @@ Normal: teraba jelas
                               </div>
                               <div class="divider mb-0"></div>
                             </div>
-                          </td>
-                        </tr>
-                      </tbody>
-
-                      <tbody *ngIf="thasillab.length">
-                        <tr>
-                          <td colspan="10" align="center">
-                            <button class="btn btn-primary" (click)="kirimSpesimenSatuSehat()">Kirim Satusehat</button>
                           </td>
                         </tr>
                       </tbody>

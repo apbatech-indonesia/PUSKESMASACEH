@@ -1,13 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-
-import { ImunisasiService } from './imunisasi.service';
+import { SkriningPTMService } from './skrining-ptm.service';
 
 describe('ImunisasiService', () => {
-  let service: ImunisasiService;
+  let service: SkriningPTMService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ImunisasiService);
+    service = TestBed.inject(SkriningPTMService);
   });
 
   it('should be created', () => {

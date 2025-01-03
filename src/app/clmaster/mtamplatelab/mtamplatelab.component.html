@@ -161,16 +161,20 @@
                   </div>
                 </div>
                 
-                <b>Spesimen Satu Sehat</b>
+                <b>Satu Sehat</b>
                 <div class="row">
                   <div class="col-md-6">
                     <form [formGroup]="profileForm" >
                     <div class="position-relative mb-3">
-                      <label for="exampleEmail" class="form-label">Spesimen Satu Sehat*</label>
-                      <select formControlName="spesimenSatuSehat" [(ngModel)]="spesimenSatuSehat" class="form-control">
-                        <option [value]="'Y'">Ya</option>
-                        <option [value]="'N'">Tidak</option>
-                      </select>
+                      <label for="exampleEmail" class="form-label">Spesimen*</label>
+                      <app-master-specimen
+                        [id]="spesimenSatuSehat"
+                        [isShowCode]="false"
+                        (selectedItem)="
+                          spesimenSatuSehat = $event.code;
+                          profileForm.patchValue({spesimenSatuSehat: $event.code});
+                        "
+                      ></app-master-specimen>
                     </div>
                     </form>
                   </div>
