@@ -210,7 +210,22 @@ export class laporanrmComponent implements OnInit {
     );
     redirectWindow.location;
   }
-
+  lihatrekapo() {
+    var redirectWindow = window.open(
+      this.URLINVOICE +
+        "clenic/report/obatterbanyak.php?tgldari=" +
+        this.tgldari +
+        "&kdcabang=" +
+        this.kdcabang +
+        "&tglsampai=" +
+        this.tglsampai +
+        "&status=" +
+        this.kdklinik,
+      "_blank",
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+    );
+    redirectWindow.location;
+  }
   lihatrekap() {
     var redirectWindow = window.open(
       this.URLINVOICE +

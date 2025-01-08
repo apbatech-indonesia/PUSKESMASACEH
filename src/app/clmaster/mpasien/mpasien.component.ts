@@ -145,12 +145,19 @@ export class MpasienComponent implements OnInit {
     perkerjaan: ["", Validators.required],
     golda: ["", Validators.required],
   });
-
+  tgolonganlab: any;
   ngOnInit() {
     this.klinik();
     // this.tmppuser()
     this.tmpantri();
-
+    this.authService.golongan(this.kdcabang, "", "3").subscribe(
+      (data) => {
+        this.tgolonganlab = data;
+      },
+      (Error) => {
+        console.log(Error);
+      }
+    );
     // let body = {"id" : 'ax'};
 
     //     this.http.post<any>('https://clenicapp.com/phpjwt/crud-file/get-single-products.php',body).subscribe(data => {
