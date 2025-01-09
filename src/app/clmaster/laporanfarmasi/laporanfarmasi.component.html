@@ -88,32 +88,32 @@
             type="button"
             ngbDropdownToggle
           >
-            Laporan Penjualan
+            Laporan Pemakaian Obat
           </button>
           <div ngbDropdownMenu class="dropdown-menu-rounded">
             <button
               class="dropdown-item"
-              (click)="pilih('Penjualan By Pasien')"
+              (click)="pilih('Pemakaian Obat By Pasien')"
             >
-              Penjualan By Pasien
+              Pemakaian Obat By Pasien
             </button>
-            <button class="dropdown-item" (click)="pilih('Penjualan By Obat')">
-              Penjualan By Obat
+            <button class="dropdown-item" (click)="pilih('Pemakaian Obat By Obat')">
+              Pemakaian Obat By Obat
             </button>
             <button
               class="dropdown-item"
-              (click)="pilih('Penjualan By Dokter')"
+              (click)="pilih('Pemakaian Obat By Dokter')"
             >
-              Penjualan By Dokter
+              Pemakaian Obat By Dokter
             </button>
             <button class="dropdown-item" (click)="pilih('Laba Rugi Farmasi')">
               Laba Rugi Farmasi
             </button>
             <button
               class="dropdown-item"
-              (click)="pilih('Penjualan Terbanyak')"
+              (click)="pilih('Pemakaian Obat Terbanyak')"
             >
-              Penjualan Terbanyak
+              Pemakaian Obat Terbanyak
             </button>
           </div>
         </div>
@@ -135,9 +135,9 @@
             </button>
             <button
               class="dropdown-item"
-              (click)="pilih('Laporan Retur Penjualan')"
+              (click)="pilih('Laporan Retur Pemakaian Obat')"
             >
-              Laporan Retur Penjualan
+              Laporan Retur Pemakaian Obat
             </button>
           </div>
         </div>
@@ -161,12 +161,12 @@
             judul === 'Pembelian By Barang Detail' ||
             judul === 'Pembelian Hutang/Jatuh Tempo' ||
             judul === 'Laporan Retur Pembelian' ||
-            judul === 'Laporan Retur Penjualan' ||
-            judul === 'Penjualan By Pasien' ||
-            judul === 'Penjualan By Obat' ||
-            judul === 'Penjualan By Dokter' ||
+            judul === 'Laporan Retur Pemakaian Obat' ||
+            judul === 'Pemakaian Obat By Pasien' ||
+            judul === 'Pemakaian Obat By Obat' ||
+            judul === 'Pemakaian Obat By Dokter' ||
             judul === 'Laba Rugi Farmasi' ||
-            judul === 'Penjualan Terbanyak'
+            judul === 'Pemakaian Obat Terbanyak'
           "
         >
           <div class="position-relative mb-3">
@@ -200,13 +200,13 @@
         <div
           class="position-relative mb-3"
           *ngIf="
-            judul !== 'Laporan Retur Penjualan' &&
+            judul !== 'Laporan Retur Pemakaian Obat' &&
             judul !== 'Laporan Retur Pembelian' &&
-            judul !== 'Penjualan By Pasien' &&
-            judul !== 'Penjualan By Obat' &&
-            judul !== 'Penjualan By Dokter' &&
+            judul !== 'Pemakaian Obat By Pasien' &&
+            judul !== 'Pemakaian Obat By Obat' &&
+            judul !== 'Pemakaian Obat By Dokter' &&
             judul !== 'Laba Rugi Farmasi' &&
-            judul !== 'Penjualan Terbanyak'
+            judul !== 'Pemakaian Obat Terbanyak'
           "
         >
           <label for="exampleSelect" class="form-label" style="color: black"
@@ -267,7 +267,7 @@
         <form>
           <div
             class="position-relative form-check"
-            *ngIf="judul === 'Penjualan By Pasien'"
+            *ngIf="judul === 'Pemakaian Obat By Pasien'"
           >
             <label class="form-label form-check-label">
               <input
@@ -430,7 +430,7 @@
           </button>
         </div>
 
-        <div *ngIf="judul === 'Laporan Retur Penjualan'">
+        <div *ngIf="judul === 'Laporan Retur Pemakaian Obat'">
           <button
             class="mb-2 me-2 btn-pill btn btn-info"
             (click)="returpenjualan()"
@@ -445,45 +445,45 @@
           </button>
         </div>
 
-        <div *ngIf="judul === 'Penjualan By Pasien'">
+        <div *ngIf="judul === 'Pemakaian Obat By Pasien'">
           <button class="mb-2 me-2 btn-pill btn btn-info" (click)="penjualan()">
-            Laporan Penjualan
+            Laporan Pemakaian Obat
           </button>
           <button
             class="mb-2 me-2 btn-pill btn btn-info"
             (click)="penjualanex()"
           >
-            Export Excel Laporan Penjualan
+            Export Excel Laporan Pemakaian Obat
           </button>
         </div>
 
-        <div *ngIf="judul === 'Penjualan By Obat'">
+        <div *ngIf="judul === 'Pemakaian Obat By Obat'">
           <button
             class="mb-2 me-2 btn-pill btn btn-info"
             (click)="penjualanobat()"
           >
-            Laporan Penjualan By Obat
+            Laporan Pemakaian Obat By Obat
           </button>
           <button
             class="mb-2 me-2 btn-pill btn btn-info"
             (click)="penjualanobatex()"
           >
-            Export Excel Laporan Penjualan By Obat
+            Export Excel Laporan Pemakaian Obat By Obat
           </button>
         </div>
 
-        <div *ngIf="judul === 'Penjualan By Dokter'">
+        <div *ngIf="judul === 'Pemakaian Obat By Dokter'">
           <button
             class="mb-2 me-2 btn-pill btn btn-info"
             (click)="penjualandokter()"
           >
-            Laporan Penjualan By Dokter
+            Laporan Pemakaian Obat By Dokter
           </button>
           <button
             class="mb-2 me-2 btn-pill btn btn-info"
             (click)="penjualandokterex()"
           >
-            Export Excel Laporan Penjualan By Dokter
+            Export Excel Laporan Pemakaian Obat By Dokter
           </button>
         </div>
 
@@ -502,12 +502,12 @@
           </button>
         </div>
 
-        <div *ngIf="judul === 'Penjualan Terbanyak'">
+        <div *ngIf="judul === 'Pemakaian Obat Terbanyak'">
           <button
             class="mb-2 me-2 btn-pill btn btn-info"
             (click)="lihatrekapo()"
           >
-            Penjualan Terbanyak
+            Pemakaian Obat Terbanyak
           </button>
         </div>
       </div>
