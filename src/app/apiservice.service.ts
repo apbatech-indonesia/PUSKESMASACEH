@@ -114,27 +114,26 @@ export class ApiserviceService {
     return this.http
       .get(
         `https://emr.clenicapp.com/api/${cabang}/reporting-antrean?search=${search}&page=${page}&isSuccess=${isSuccess}&urlType=${urlType}&dateFrom=${dateFrom}&dateTo=${dateTo}`
-      ).toPromise();
+      )
+      .toPromise();
   }
 
-  getDetailPasien(
-    cabang: any,
-    bpjsnumber: number
-  ) {
-    return this.http.get(
-      `https://emr.clenicapp.com/api/${cabang}/reporting-antrean/pasien/${bpjsnumber}`
-    ).toPromise();
+  getDetailPasien(cabang: any, bpjsnumber: number) {
+    return this.http
+      .get(
+        `https://emr.clenicapp.com/api/${cabang}/reporting-antrean/pasien/${bpjsnumber}`
+      )
+      .toPromise();
   }
   //
 
-  simpanMappingObat(
-    cabang: any,
-    kdobat: number,
-    kdobatsatusehat: number
-  ) {
-    return this.http.post(`https://emr.clenicapp.com/api/${cabang}/manajemen-obat/maping/${kdobat}`, {
-      kdobatsatusehat: kdobatsatusehat
-    })
+  simpanMappingObat(cabang: any, kdobat: number, kdobatsatusehat: number) {
+    return this.http.post(
+      `https://emr.clenicapp.com/api/${cabang}/manajemen-obat/maping/${kdobat}`,
+      {
+        kdobatsatusehat: kdobatsatusehat,
+      }
+    );
   }
 
   getBaseUrlConfig(branchCode: string): Observable<any> {
@@ -516,6 +515,18 @@ export class ApiserviceService {
   dokterperpolix(a, kdpoli): Observable<any> {
     return this.http.get(
       apiurx + "master/dokterperpolix.php?kdcabang=" + a + "&kdpoli=" + kdpoli
+    );
+  }
+
+  dokterpolixv2(a, kdpoli, tgl): Observable<any> {
+    return this.http.get(
+      apiurx +
+        "master/dokterpolixv2.php?kdcabang=" +
+        a +
+        "&kdpoli=" +
+        kdpoli +
+        "&tgl=" +
+        tgl
     );
   }
 
@@ -3017,37 +3028,45 @@ export class ApiserviceService {
         });
     });
   }
-  
+
   medication(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "Medication", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "Medication", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
-  
+
   medicationRequest(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "MedicationRequest", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "MedicationRequest", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
-  
+
   medicationDispense(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "MedicationDispense", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "MedicationDispense", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
-  
+
   medicationStatement(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "MedicationStatement", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "MedicationStatement", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   allergyIntolerance(data: any, headers: any) {
@@ -3062,34 +3081,42 @@ export class ApiserviceService {
 
   serviceRequest(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "ServiceRequest", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "ServiceRequest", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   specimen(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "Specimen", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "Specimen", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   diagnosticReport(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "DiagnosticReport", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "DiagnosticReport", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   questionnaireResponse(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "QuestionnaireResponse", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "QuestionnaireResponse", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   clinicalImpression(data: any, headers: any) {

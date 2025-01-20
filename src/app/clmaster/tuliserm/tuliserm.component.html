@@ -2248,10 +2248,15 @@ Normal: teraba jelas
                         <label
                           for="exampleSelect"
                           class="form-label"
-                          style="color: black">
+                          style="color: black"
+                        >
                           Kuisioner Status Keluarga
                         </label>
-                        <input type="text" class="form-control" [(ngModel)]="kondisiKeluarga">
+                        <input
+                          type="text"
+                          class="form-control"
+                          [(ngModel)]="kondisiKeluarga"
+                        />
                       </div>
                     </div>
 
@@ -5640,6 +5645,7 @@ Normal: teraba jelas
             [(ngModel)]="doktunjang"
             id="exampleSelect"
             class="form-select"
+            (change)="pilihdokterr($event.target.value)"
           >
             <option value="">--Dokter--</option>
             <option *ngFor="let x of tdoktunjang" value="{{ x.kddokter }}">
