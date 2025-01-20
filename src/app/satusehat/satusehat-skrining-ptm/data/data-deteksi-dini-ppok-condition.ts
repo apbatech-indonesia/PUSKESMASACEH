@@ -4,6 +4,9 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiPpokCondition {
+  condition: Condition
+  dateNow: any = new Date().toISOString()
+
   getdata() {
     return {
       conditions: [
@@ -19,16 +22,21 @@ export class DataDeteksiPpokCondition {
             code: "active",
             display: "Active"
           },
-          recordedDate: "2024-04-24T04:02:45+00:00",
+          recordedDate: this.dateNow,
           data: [
             {
               system: "http://snomed.info/sct",
-              code: "28743005",
-              display: "Productive cough"
+              code: this.condition.code,
+              display: this.condition.display
             }
           ]
         }
       ]
     }
   }
+}
+
+export class Condition {
+  code: any
+  display: any
 }

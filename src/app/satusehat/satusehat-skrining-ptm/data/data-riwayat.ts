@@ -4,82 +4,84 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataRiwayat {
-  // questioner 
-  ptmCode: any
-  ptmDisplay: any
-  ptmDuluCode: any
-  ptmDuluDisplay: any
-  ptmKeluargaCode: any
-  ptmKeluargaDisplay: any
+  ptmSekarang: Riwayat
+  ptmDulu: Riwayat
+  ptmKeluarga: Riwayat
   dateNow: any = new Date().toISOString()
 
   getdata() {
     return {
       conditions: [
         {
-          ptm_sekarang: {
-            clinical_status: {                        
-              system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
-              code: "active",
-              display: "Active"                        
-            },
-            category:  {
-              system: "http://terminology.hl7.org/CodeSystem/condition-category",
-              code: "problem-list-item",
-              display: "Problem List Item"
-            },
-            condition_item:  {
-              system: "http://snomed.info/sct",
-              code: this.ptmCode,
-              display: this.ptmDisplay
-            },
-            onset_date_time: this.dateNow,
-            recorded_date: this.dateNow
-          }
+          name: "ptm_sekarang",
+          clinicalStatus: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
+            code: "active",
+            display: "Active"
+          },
+          category: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-category",
+            code: "problem-list-item",
+            display: "Problem List Item"
+          },
+          data: [{
+            system: "http://snomed.info/sct",
+            code: this.ptmSekarang.code,
+            display: this.ptmSekarang.display,
+          }],
+          onset_date_time: this.dateNow,
+          recordedDate: this.dateNow
         },
         {
-          ptm_dulu: {
-            clinical_status: {                        
-              system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
-              code: "inactive",
-              display: "Inactive"                  
-            },
-            category:  {
-              system: "http://terminology.hl7.org/CodeSystem/condition-category",
-              code: "problem-list-item",
-              display: "Problem List Item"
-            },
-            condition_item:  {
+          name: "ptm_dulu",
+          clinicalStatus: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
+            code: "inactive",
+            display: "Inactive"
+          },
+          category: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-category",
+            code: "problem-list-item",
+            display: "Problem List Item"
+          },
+          data: [
+            {
               system: "http://snomed.info/sct",
-              code: this.ptmDuluCode,
-              display: this.ptmDuluDisplay
-            },
-            onset_date_time: this.dateNow,
-            recorded_date: this.dateNow
-          }
+              code: this.ptmDulu.code,
+              display: this.ptmDulu.display
+            }
+          ],
+          onset_date_time: this.dateNow,
+          recordedDate: this.dateNow
         },
         {
-          ptm_keluarga: {
-            clinical_status: {                        
-                system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
-                code: "active",
-                display: "Active"                  
-            },
-            category:  {
-                system: "http://terminology.hl7.org/CodeSystem/condition-category",
-                code: "problem-list-item",
-                display: "Problem List Item"
-            },
-            condition_item:  {
-                system: "http://snomed.info/sct",
-                code: this.ptmKeluargaCode,
-                display: this.ptmKeluargaDisplay
-            },
-            onset_date_time: this.dateNow,
-            recordedDate: this.dateNow
-          }
+          name: "ptm_keluarga",
+          clinicalStatus: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
+            code: "active",
+            display: "Active"
+          },
+          category: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-category",
+            code: "problem-list-item",
+            display: "Problem List Item"
+          },
+          data: [
+            {
+              system: "http://snomed.info/sct",
+              code: this.ptmKeluarga.code,
+              display: this.ptmKeluarga.display
+            }
+          ],
+          onset_date_time: this.dateNow,
+          recordedDate: this.dateNow
         }
       ]
     }
   }
+}
+
+class Riwayat {
+  code: any = ''
+  display: any = ''
 }

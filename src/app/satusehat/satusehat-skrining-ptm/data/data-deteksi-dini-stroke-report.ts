@@ -4,6 +4,8 @@ import { Injectable } from "@angular/core"
     providedIn: 'root'
 })
 export class DataDeteksiStrokeReport {
+    dateNow = new Date().toISOString()
+
     getdata() {
         return {
             diagnosticReports: [
@@ -29,7 +31,7 @@ export class DataDeteksiStrokeReport {
                             }
                         }
                     ],
-                    effectiveDateTime: "2024-04-24T04:02:45+00:00"
+                    effectiveDateTime: this.dateNow
                 },
                 {
                     name: "gdp_report",
@@ -54,7 +56,7 @@ export class DataDeteksiStrokeReport {
                             }
                         }
                     ],
-                    effectiveDateTime: "2024-04-24T04:02:45+00:00"
+                    effectiveDateTime: this.dateNow
                 },
                 {
                     name: "g2pp_report",
@@ -79,7 +81,7 @@ export class DataDeteksiStrokeReport {
                             }
                         }
                     ],
-                    effectiveDateTime: "2024-04-24T04:02:45+00:00"
+                    effectiveDateTime: this.dateNow
                 },
                 {
                     name: "hemoglobin_report",
@@ -105,7 +107,7 @@ export class DataDeteksiStrokeReport {
                             }
                         }
                     ],
-                    effectiveDateTime: "2024-04-24T04:02:45+00:00"
+                    effectiveDateTime: this.dateNow
                 }
             ]
         }

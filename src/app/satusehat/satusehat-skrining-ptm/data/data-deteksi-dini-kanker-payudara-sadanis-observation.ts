@@ -3,37 +3,35 @@ import { Injectable } from "@angular/core"
 @Injectable({
   providedIn: 'root'
 })
-export class DataDeteksiDiniJantung {
-  result: any
-  dateNow: any = new Date().toISOString()
-
+export class DataDeteksiDiniKankerPayudaraSadanisObservation {
+  dateNow = new Date().toISOString()
+  
   getdata() {
     return {
       observations: [
+
         {
-          name: "EKG",
+          name: "IVA_observation",
           category: {
             system: "http://terminology.hl7.org/CodeSystem/observation-category",
-            code: "procedure",
-            display: "Procedure"
+            code: "exam",
+            display: "Exam"
           },
           data: [
             {
               code: {
-                system: "http://loinc.org",
-                code: "34534-8",
-                display: "12 lead EKG panel"
+                system: "http://snomed.info/sct",
+                code: "13607009",
+                display: "Manual examination of breast"
               },
-              result: {
-                value: 71,
-                unit: "kg",
-                system: "http://unitsofmeasure.org",
-                code: "kg"
-              },
+
+              bodySite: {},
+              resultBoolean: false,
+              result: {},
               valueCodeableConcept: {
                 system: "http://snomed.info/sct",
-                code: "164854000",
-                display: this.result
+                code: "290084006",
+                display: "Breast normal"
               }
             }
           ],

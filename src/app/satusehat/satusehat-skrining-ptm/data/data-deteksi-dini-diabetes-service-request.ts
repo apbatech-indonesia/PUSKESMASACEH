@@ -4,6 +4,9 @@ import { Injectable } from "@angular/core"
     providedIn: 'root'
 })
 export class DataDeteksiDiniDiabetesServiceRequest {
+    patientInstruction: any
+    dateNow: any = new Date().toISOString()
+
     getdata() {
         return {
             serviceRequests: [
@@ -20,21 +23,22 @@ export class DataDeteksiDiniDiabetesServiceRequest {
                             ]
                         }
                     ],
-                    patientInstruction: "",
+                    patientInstruction: this.patientInstruction,
                     encounter: {
                         reference: "Encounter/{{Encounter_id}}",
-                        display: "Permintaan Pemeriksaan Panel Skrining Gula Darah 24 April 2024 pukul 09:30 WIB"
+                        display: `Permintaan Pemeriksaan Panel Skrining Gula Darah ${this.dateNow}`
                     },
                     status: "active",
                     intent: "original-order",
                     priority: "routine",
-                    occurrenceDateTime: "2024-04-24T04:04:10+00:00",
-                    authoredOn: "2024-04-24T04:04:10+00:00",
+                    occurrenceDateTime: this.dateNow,
+                    authoredOn: this.dateNow,
                     data: [
                         {
                             system: "http://loinc.org",
                             code: "2345-7",
                             display: "Glucose [Mass/volume] in Serum or Plasma"
+
                         },
                         {
                             text: "Panel Skrining Gula Darah PTM"
@@ -53,6 +57,5 @@ export class DataDeteksiDiniDiabetesServiceRequest {
                 }
             ]
         }
-
     }
 }

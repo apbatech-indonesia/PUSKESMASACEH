@@ -40,8 +40,8 @@ export class DataDeteksiDiniAsamUrat {
               }
             }
           ],
-          effectiveDateTime: "2024-04-24T00:23:30+00:00",
-          issued: "2024-04-24T00:23:30+00:00"
+          effectiveDateTime: this.dateNow,
+          issued: this.dateNow
         }
       ]
     }

@@ -3,14 +3,14 @@ import { Injectable } from "@angular/core"
 @Injectable({
   providedIn: 'root'
 })
-export class DataDeteksiStrokeObservation {
+export class DataDeteksiDiniKankerServicHpvObservation {
   dateNow = new Date().toISOString()
-
+  
   getdata() {
     return {
       observations: [
         {
-          name: "ptm_cholesterol",
+          name: "virus_DNA[Presence]_observation",
           category: {
             system: "http://terminology.hl7.org/CodeSystem/observation-category",
             code: "laboratory",
@@ -20,26 +20,21 @@ export class DataDeteksiStrokeObservation {
             {
               code: {
                 system: "http://loinc.org",
-                code: "2093-3",
-                display: "Cholesterol [Mass/volume] in Serum or Plasma"
+                code: "44550-2",
+                display: "Human papilloma virus DNA [Presence] in Cervix by Probe"
+
               },
               bodySite: {},
               resultBoolean: false,
-              result: {
-                value: 177.771,
-                unit: "mg/dL",
-                system: "http://unitsofmeasure.org",
-                code: "mg/dL"
-              },
-              valueCodeableConcept: {}
+              result: {},
+              valueCodeableConcept: {
+                system: "http://snomed.info/sct",
+                code: "787724008",
+                display: "Human papillomavirus deoxyribonucleic acid not detected"
+
+              }
             }
           ],
-          interpretation:
-          {
-            system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
-            code: "N",
-            display: "Normal"
-          },
           effectiveDateTime: this.dateNow,
           issued: this.dateNow
         }

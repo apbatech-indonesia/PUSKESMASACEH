@@ -4,13 +4,7 @@ import { Injectable } from "@angular/core"
     providedIn: 'root'
 })
 export class DataDeteksiDiniDiabetesReport {
-    // questioner 
-    visusKiri: any
-    visusKanan: any
-    numeratorMataKanan: any
-    denominatorMataKanan: any
-    numeratorMataKiri: any
-    denominatorMataKiri: any
+    dateNow: any = new Date().toISOString()
 
     getdata() {
         return {
@@ -37,7 +31,7 @@ export class DataDeteksiDiniDiabetesReport {
                             }
                         }
                     ],
-                    effectiveDateTime: "2024-04-24T04:02:45+00:00"
+                    effectiveDateTime: this.dateNow
                 },
                 {
                     name: "gdp_report",
@@ -61,7 +55,7 @@ export class DataDeteksiDiniDiabetesReport {
                             }
                         }
                     ],
-                    effectiveDateTime: "2024-04-24T04:02:45+00:00"
+                    effectiveDateTime: this.dateNow
                 },
                 {
                     name: "g2pp_report",
@@ -86,7 +80,7 @@ export class DataDeteksiDiniDiabetesReport {
                             }
                         }
                     ],
-                    effectiveDateTime: "2024-04-24T04:02:45+00:00"
+                    effectiveDateTime: this.dateNow
                 },
                 {
                     name: "hemoglobin_report",
@@ -110,7 +104,7 @@ export class DataDeteksiDiniDiabetesReport {
                             }
                         }
                     ],
-                    effectiveDateTime: "2024-04-24T04:02:45+00:00"
+                    effectiveDateTime: this.dateNow
                 }
             ]
         }

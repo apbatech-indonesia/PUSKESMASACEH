@@ -3,24 +3,21 @@ import { Injectable } from "@angular/core"
 @Injectable({
   providedIn: 'root'
 })
-export class DataTindakLanjutPtm {
-  patientInstruction: any
-  conditionCode: any
-  conditionDisplay: any
-  dateNow: any = new Date().toISOString()
+export class DataDeteksiDiniKankerServicIvaPositifPatientRreferral {
+  dateNow = new Date().toISOString()
 
   getdata() {
     return {
       serviceRequests: [
         {
-          name: "control_routine",
+          name: "patient_referral",
           category: [
             {
               coding: [
                 {
                   system: "http://snomed.info/sct",
-                  code: "306098008",
-                  display: "Self-referral"
+                  code: "3457005",
+                  display: "Patient referral"
                 }
               ]
             },
@@ -34,7 +31,11 @@ export class DataTindakLanjutPtm {
               ]
             }
           ],
-          patientInstruction: this.patientInstruction,
+          patientInstruction: "",
+          encounter: {
+            reference: "Encounter/{{Encounter_id}}",
+            display: ""
+          },
           status: "active",
           intent: "original-order",
           priority: "routine",
@@ -43,21 +44,17 @@ export class DataTindakLanjutPtm {
           data: [
             {
               system: "http://snomed.info/sct",
-              code: "185389009",
-              display: "Follow-up visit"
+              code: "3457005",
+              display: "Patient referral"
             },
             {
-              text: this.patientInstruction
+              text: "Rujukan diduga Kanker Cervix menggunakan ambulance"
             }
           ],
           reason: [
+            {},
             {
-              system: "http://hl7.org/fhir/sid/icd-10",
-              code: this.conditionCode,
-              display: this.conditionDisplay
-            },
-            {
-              text: this.patientInstruction
+              text: " IVA Positif, perlu ada pemeriksaan tindaklanjut"
             }
           ]
         }

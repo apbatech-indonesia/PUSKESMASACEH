@@ -4,13 +4,7 @@ import { Injectable } from "@angular/core"
     providedIn: 'root'
 })
 export class DataDeteksiDiniDiabetesObservation {
-    // questioner 
-    visusKiri: any
-    visusKanan: any
-    numeratorMataKanan: any
-    denominatorMataKanan: any
-    numeratorMataKiri: any
-    denominatorMataKiri: any
+    dateNow: any = new Date().toISOString()
 
     getdata() {
         return {
@@ -41,8 +35,8 @@ export class DataDeteksiDiniDiabetesObservation {
                             }
                         }
                     ],
-                    effectiveDateTime: "2024-04-24T00:23:30+00:00",
-                    issued: "2024-04-24T00:23:30+00:00"
+                    effectiveDateTime: this.dateNow,
+                    issued: this.dateNow
                 },
                 {
                     name: "fasting_glucose",
@@ -70,8 +64,8 @@ export class DataDeteksiDiniDiabetesObservation {
                             }
                         }
                     ],
-                    effectiveDateTime: "2024-04-24T00:23:30+00:00",
-                    issued: "2024-04-24T00:23:30+00:00"
+                    effectiveDateTime: this.dateNow,
+                    issued: this.dateNow
                 },
 
                 {
@@ -101,8 +95,8 @@ export class DataDeteksiDiniDiabetesObservation {
                             }
                         }
                     ],
-                    effectiveDateTime: "2024-04-24T00:23:30+00:00",
-                    issued: "2024-04-24T00:23:30+00:00"
+                    effectiveDateTime: this.dateNow,
+                    issued: this.dateNow
                 },
 
                 {
@@ -132,8 +126,8 @@ export class DataDeteksiDiniDiabetesObservation {
                             }
                         }
                     ],
-                    effectiveDateTime: "2024-04-24T00:23:30+00:00",
-                    issued: "2024-04-24T00:23:30+00:00"
+                    effectiveDateTime: this.dateNow,
+                    issued: this.dateNow
                 }
             ]
         }

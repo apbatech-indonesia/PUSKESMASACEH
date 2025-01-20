@@ -3,15 +3,16 @@ import { Injectable } from "@angular/core"
 @Injectable({
   providedIn: 'root'
 })
-export class DataDeteksiPpokProcedure {
-  procedure: Procedure
-  dateNow: any = new Date().toISOString()
-
+export class DataDeteksiDiniKankerServicProcedure {
+  code: any
+  display: any
+  dateNow = new Date().toISOString()
+  
   getdata() {
     return {
       procedures: [
         {
-          name: "ptm_spirometry_procedure",
+          name: "Inspection_of_vagina",
           category: {
             system: "http://snomed.info/sct",
             code: "103693007",
@@ -21,17 +22,12 @@ export class DataDeteksiPpokProcedure {
           data: [
             {
               system: "http://snomed.info/sct",
-              code: this.procedure.code,
-              display: this.procedure.display
+              code: this.code,
+              display: this.display
             }
           ]
         }
       ]
     }
   }
-}
-
-export class Procedure {
-  code: any
-  display: any
 }

@@ -3,36 +3,35 @@ import { Injectable } from "@angular/core"
 @Injectable({
   providedIn: 'root'
 })
-export class DataDeteksiDiniJantung {
+export class DataDeteksiDiniKankerServicIvaObservation {
   result: any
-  dateNow: any = new Date().toISOString()
+  dateNow = new Date().toISOString()
 
   getdata() {
     return {
       observations: [
+
         {
-          name: "EKG",
+          name: "IVA_observation",
           category: {
             system: "http://terminology.hl7.org/CodeSystem/observation-category",
-            code: "procedure",
-            display: "Procedure"
+            code: "exam",
+            display: "Exam"
           },
           data: [
             {
               code: {
-                system: "http://loinc.org",
-                code: "34534-8",
-                display: "12 lead EKG panel"
+                system: "http://terminology.kemkes.go.id/CodeSystem/examination",
+                code: "X099241",
+                display: "Tes IVA"
               },
-              result: {
-                value: 71,
-                unit: "kg",
-                system: "http://unitsofmeasure.org",
-                code: "kg"
-              },
+
+              bodySite: {},
+              resultBoolean: false,
+              result: {},
               valueCodeableConcept: {
                 system: "http://snomed.info/sct",
-                code: "164854000",
+                code: "300557001",
                 display: this.result
               }
             }

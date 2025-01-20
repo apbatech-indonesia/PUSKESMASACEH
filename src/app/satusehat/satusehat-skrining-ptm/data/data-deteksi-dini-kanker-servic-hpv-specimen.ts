@@ -3,29 +3,31 @@ import { Injectable } from "@angular/core"
 @Injectable({
   providedIn: 'root'
 })
-export class DataDeteksiDiniDiabetesSpecimen {
-  status: any = ''
-  dateNow: any = new Date().toISOString()
-
+export class DataDeteksiDiniKankerServicHpvSpecimen {
+  dateNow = new Date().toISOString()
+  
   getdata() {
     return {
       specimens: [
         {
-          name: "blood_specimen_diabetes",
-          status: this.status,
+          name: "cervical_swab__specimen",
+          status: "available",
           type: {
             system: "http://snomed.info/sct",
-            code: "119297000",
-            display: "Blood specimen"
+            code: "258524009",
+            display: "Cervical swab"
+
           },
           collection: {
             method: {
               system: "http://snomed.info/sct",
-              code: "82078001",
-              display: "Collection of blood specimen for laboratory"
+              code: "129323009",
+              display: "Scraping - action"
             },
             collectedDateTime: this.dateNow
-          }
+
+          },
+          recordedDate: this.dateNow
         }
       ]
     }

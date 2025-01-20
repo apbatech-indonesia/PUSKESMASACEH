@@ -4,6 +4,9 @@ import { Injectable } from "@angular/core"
     providedIn: 'root'
 })
 export class DataDeteksiStrokeServiceRequest {
+    patientInstruction: any
+    dateNow: any = new Date().toISOString()
+
     getdata() {
         return {
             serviceRequests: [
@@ -20,7 +23,7 @@ export class DataDeteksiStrokeServiceRequest {
                             ]
                         }
                     ],
-                    patientInstruction: "",
+                    patientInstruction: this.patientInstruction,
                     encounter: {
                         reference: "Encounter/{{Encounter_id}}",
                         display: "Permintaan Pemeriksaan Panel Skrining Kolesterol Total 24 April 2024 pukul 09:30 WIB"
@@ -28,19 +31,16 @@ export class DataDeteksiStrokeServiceRequest {
                     status: "active",
                     intent: "original-order",
                     priority: "routine",
-                    occurrenceDateTime: "2024-04-24T04:04:10+00:00",
-                    authoredOn: "2024-04-24T04:04:10+00:00",
+                    occurrenceDateTime: this.dateNow,
+                    authoredOn: this.dateNow,
                     data: [
                         {
                             system: "http://loinc.org",
                             code: "2093-3",
                             display: "Cholesterol [Mass/volume] in Serum or Plasma"
-
                         },
                         {
                             text: "Panel Skrining Kolesterol Total PTM"
-
-
                         }
                     ],
                     reason: [
@@ -48,16 +48,13 @@ export class DataDeteksiStrokeServiceRequest {
                             system: "http://hl7.org/fhir/sid/icd-10",
                             code: "Z13.6",
                             display: "Special screening examination for cardiovascular disorders"
-
                         },
                         {
                             text: "Deteksi Dini Stroke"
-
                         }
                     ]
                 }
             ]
         }
-
     }
 }

@@ -3,14 +3,14 @@ import { Injectable } from "@angular/core"
 @Injectable({
   providedIn: 'root'
 })
-export class DataDeteksiStrokeObservation {
+export class DataDeteksiDiniKankerKolorektalPemeriksaanDarahObservations {
   dateNow = new Date().toISOString()
 
   getdata() {
     return {
       observations: [
         {
-          name: "ptm_cholesterol",
+          name: "Hemoglobin_gastrointestinal_observation",
           category: {
             system: "http://terminology.hl7.org/CodeSystem/observation-category",
             code: "laboratory",
@@ -20,28 +20,24 @@ export class DataDeteksiStrokeObservation {
             {
               code: {
                 system: "http://loinc.org",
-                code: "2093-3",
-                display: "Cholesterol [Mass/volume] in Serum or Plasma"
+                code: "14563-1",
+                display: "Hemoglobin.gastrointestinal [Presence] in Stool --1st specimen"
               },
               bodySite: {},
               resultBoolean: false,
-              result: {
-                value: 177.771,
-                unit: "mg/dL",
-                system: "http://unitsofmeasure.org",
-                code: "mg/dL"
-              },
-              valueCodeableConcept: {}
+              result: {},
+              valueCodeableConcept: {
+                system: "http://snomed.info/sct",
+                code: "167667006",
+                display: "Occult blood not detected in feces"
+              }
             }
           ],
-          interpretation:
-          {
-            system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
-            code: "N",
-            display: "Normal"
-          },
           effectiveDateTime: this.dateNow,
-          issued: this.dateNow
+          issued: this.dateNow,
+          specimen: {
+            reference: "Specimen/{{Specimen_DarSam}}"
+          }
         }
       ]
     }

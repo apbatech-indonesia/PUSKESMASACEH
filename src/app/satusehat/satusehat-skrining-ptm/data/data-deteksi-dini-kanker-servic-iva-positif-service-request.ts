@@ -3,38 +3,30 @@ import { Injectable } from "@angular/core"
 @Injectable({
   providedIn: 'root'
 })
-export class DataTindakLanjutPtm {
-  patientInstruction: any
-  conditionCode: any
-  conditionDisplay: any
-  dateNow: any = new Date().toISOString()
+export class DataDeteksiDiniKankerServicIvaPositifServiceRequest {
+  dateNow = new Date().toISOString()
 
   getdata() {
     return {
       serviceRequests: [
         {
-          name: "control_routine",
+          name: "Human_papilloma_virus_DNA_servRequest",
           category: [
             {
               coding: [
                 {
                   system: "http://snomed.info/sct",
-                  code: "306098008",
-                  display: "Self-referral"
-                }
-              ]
-            },
-            {
-              coding: [
-                {
-                  system: "http://snomed.info/sct",
-                  code: "11429006",
-                  display: "Consultation"
+                  code: "277132007",
+                  display: "Therapeutic Procedure"
                 }
               ]
             }
           ],
-          patientInstruction: this.patientInstruction,
+          patientInstruction: "",
+          encounter: {
+            reference: "Encounter/{{Encounter_id}}",
+            display: ""
+          },
           status: "active",
           intent: "original-order",
           priority: "routine",
@@ -43,21 +35,21 @@ export class DataTindakLanjutPtm {
           data: [
             {
               system: "http://snomed.info/sct",
-              code: "185389009",
-              display: "Follow-up visit"
+              code: "26782000",
+              display: "Cryotherapy"
             },
             {
-              text: this.patientInstruction
+              text: "Panel Skrining Kolesterol Total PTM"
             }
           ],
           reason: [
             {
               system: "http://hl7.org/fhir/sid/icd-10",
-              code: this.conditionCode,
-              display: this.conditionDisplay
+              code: "Z13.9",
+              display: "Special screening examination, unspecified"
             },
             {
-              text: this.patientInstruction
+              text: ""
             }
           ]
         }
