@@ -89,19 +89,6 @@ export class TulisSkriningPtmComponent implements OnInit {
     alamat: '-'
   }
 
-  public testQuestion: any = [
-    {
-      id: 1,
-      question: "apakah?",
-      answer: "false"
-    },
-    {
-      id: 2,
-      question: "bagaimana?",
-      answer: "false"
-    }
-  ]
-
   constructor(
     private api: ApiserviceService,
     private skriningPTMService: SkriningPTMService,
