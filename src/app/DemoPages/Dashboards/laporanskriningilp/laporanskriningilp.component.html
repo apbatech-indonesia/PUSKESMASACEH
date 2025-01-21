@@ -1,0 +1,108 @@
+<div class="row">
+  <div class="col-md-6 col-xl-4">
+    <div class="card mb-3 widget-content bg-arielle-smile">
+      <div class="widget-content-wrapper text-white">
+        <div class="widget-content-left">
+          <div class="widget-heading">Klaster 2</div>
+          <div class="widget-subheading">Total Skrining</div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-white">
+            <span>{{totalklaster2}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-xl-4">
+    <div class="card mb-3 widget-content bg-happy-green">
+      <div class="widget-content-wrapper text-white">
+        <div class="widget-content-left">
+          <div class="widget-heading">Klaster 3</div>
+          <div class="widget-subheading">Total Skrining</div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-white">
+            <span>{{totalklaster3}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-xl-4">
+    <div class="card mb-3 widget-content bg-warm-flame">
+      <div class="widget-content-wrapper text-white">
+        <div class="widget-content-left">
+          <div class="widget-heading">Klaster 4</div>
+          <div class="widget-subheading">Total Skrining</div>
+        </div>
+        <div class="widget-content-right">
+          <div class="widget-numbers text-white">
+            <span>{{totalklaster4}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
+  <div class="col-md-12 row">
+    <div class="col-4">
+      <span>Cari no kartu : </span><br>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="cari no kartu" aria-label="cari no kartu"
+          aria-describedby="basic-addon1">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1">
+            <fa-icon [icon]="faSearch"></fa-icon>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+    <div class="card main-card mb-3 p-3 card-tabbed-header">
+      <apx-chart [series]="[10,20,70]" [labels]="['Klaster 2','Klaster 3','Klaster 4']"
+        [chart]="{ height: '350', type: 'pie' }">
+      </apx-chart>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <div class="card main-card mb-3 p-3 card-tabbed-header">
+      <apx-chart [series]="[
+              {
+                name: 'BPJS',
+                data: [23, 67, 12, 89, 45, 34, 78, 56, 90, 12, 34]
+              },
+              {
+                name: 'UMUM',
+                data: [54, 78, 34, 12, 56, 89, 45, 90, 23, 67, 11]
+              },
+              {
+                name: 'ASURANSI',
+                data: [90, 45, 78, 34, 56, 12, 67, 89, 23, 11, 54]
+              }
+            ]" [chart]="{
+              height: '390',
+              type: 'bar'
+            }" [stroke]="{
+              show: true,
+              width: 2,
+              colors: ['transparent']
+            }" [plotOptions]="{
+              bar: {
+                horizontal: false,
+                endingShape: 'rounded',
+                columnWidth: '55%'
+              }
+            }" [dataLabels]="{ enabled: false }"
+        [labels]="['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003', '08/01/2003', '09/01/2003', '10/01/2003', '11/01/2003']"
+        [xaxis]="{ categories: { text: 'tanggal' } }" [yaxis]="{ title: { text: 'Jumlah' } }" [fill]="{ opacity: 1 }">
+      </apx-chart>
+    </div>
+  </div>
+</div>
