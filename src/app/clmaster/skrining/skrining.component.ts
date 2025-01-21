@@ -115,30 +115,17 @@ export class skriningComponent implements OnInit {
   }
 
   async ambilDataCluster() {
-    Swal.fire({
-      title: 'Mohon Tunggu!',
-      allowEscapeKey: false,
-      allowOutsideClick: false,
-      didOpen: async () => {
-        try {
-          Swal.showLoading();
-          let response: any = await this.serviceUrl.getCluster();
-          this.arrCluster = response.data;
-          Swal.close();
-        } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'Gagal memuat data. Silakan coba lagi.',
-          });
-        }
-      }
-    }).then(
-      () => {},
-      (dismiss) => {
-        
-      }
-    );
+    try {
+      let response: any = await this.serviceUrl.getCluster();
+      this.arrCluster = response.data;
+      Swal.close();
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Gagal memuat data. Silakan coba lagi.',
+      });
+    }
   }
 
   async getClusterById(idCluster){
@@ -159,7 +146,6 @@ export class skriningComponent implements OnInit {
       timer: 1500,
       didOpen: async () => {
         try {
-          Swal.showLoading();
           let response: any = await this.serviceUrl.getSkrinigById(body);
           this.arrSkrining = response.data;
         } catch (error) {
