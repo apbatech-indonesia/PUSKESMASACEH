@@ -158,6 +158,7 @@ import { MasterTindakanComponent } from './satusehat/satusehat-master/master-tin
 import { MasterVaccineComponent } from './satusehat/satusehat-master/master-vaccine/master-vaccine.component';
 import { FormVaccineComponent } from './satusehat/satusehat-imunisasi/form/form-vaccine/form-vaccine.component';
 import { MasterSpecimenModule } from './satusehat/satusehat-master/master-specimen/master-specimen.module';
+import { skriningComponent } from "./clmaster/skrining/skrining.component";
 @NgModule({
   declarations: [
 
@@ -231,6 +232,8 @@ import { MasterSpecimenModule } from './satusehat/satusehat-master/master-specim
      MasterTindakanComponent,
      MasterVaccineComponent,
      FormVaccineComponent,
+
+     skriningComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
