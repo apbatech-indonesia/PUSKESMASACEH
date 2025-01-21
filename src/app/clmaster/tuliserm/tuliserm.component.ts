@@ -3441,6 +3441,7 @@ export class tulisermComponent implements OnInit {
               kdpoli: this.kdpoli,
               kddokter: this.kddokter,
               jeniskunjungan: this.stspulang,
+              username: this.username,
             };
 
             this.authService.updatepcare(body).subscribe((response) => {
@@ -3658,6 +3659,7 @@ export class tulisermComponent implements OnInit {
                 kdpoli: this.kdpoli,
                 kddokter: this.kddokter,
                 jeniskunjungan: this.stspulang,
+                username: this.username,
               };
 
               this.authService.updatepcare(body).subscribe((response) => {
@@ -3882,6 +3884,7 @@ export class tulisermComponent implements OnInit {
           kdpoli: this.kdpoli,
           kddokter: this.kddokter,
           jeniskunjungan: this.stspulang,
+          username: this.username,
         };
 
         this.authService.updatepcare(body).subscribe((response) => {
@@ -4083,6 +4086,7 @@ export class tulisermComponent implements OnInit {
             kdpoli: this.kdpoli,
             kddokter: this.kddokter,
             jeniskunjungan: this.stspulang,
+            username: this.username,
           };
 
           this.authService.updatepcare(body).subscribe((response) => {
@@ -4291,6 +4295,7 @@ export class tulisermComponent implements OnInit {
               kdpoli: this.kdpoli,
               kddokter: this.kddokter,
               jeniskunjungan: this.stspulang,
+              username: this.username,
             };
 
             this.authService.updatepcare(body).subscribe((response) => {
@@ -4424,6 +4429,7 @@ export class tulisermComponent implements OnInit {
               kdpoli: this.kdpoli,
               kddokter: this.kddokter,
               jeniskunjungan: this.stspulang,
+              username: this.username,
             };
 
             this.authService.updatepcare(body).subscribe((response) => {
@@ -4559,6 +4565,7 @@ export class tulisermComponent implements OnInit {
               kdpoli: this.kdpoli,
               kddokter: this.kddokter,
               jeniskunjungan: this.stspulang,
+              username: this.username,
             };
 
             this.authService.updatepcare(body).subscribe((response) => {
@@ -4774,6 +4781,7 @@ export class tulisermComponent implements OnInit {
             kdpoli: this.kdpoli,
             kddokter: this.kddokter,
             jeniskunjungan: this.stspulang,
+            username: this.username,
           };
 
           this.authService.updatepcare(body).subscribe((response) => {
@@ -4910,6 +4918,7 @@ export class tulisermComponent implements OnInit {
             kdpoli: this.kdpoli,
             kddokter: this.kddokter,
             jeniskunjungan: this.stspulang,
+            username: this.username,
           };
 
           this.authService.updatepcare(body).subscribe((response) => {
@@ -5042,6 +5051,7 @@ export class tulisermComponent implements OnInit {
             kdpoli: this.kdpoli,
             kddokter: this.kddokter,
             jeniskunjungan: this.stspulang,
+            username: this.username,
           };
 
           this.authService.updatepcare(body).subscribe((response) => {
@@ -9282,6 +9292,7 @@ export class tulisermComponent implements OnInit {
                   kdpoli: this.kdpoli,
                   nokaPst: this.noasuransi,
                   noRujukan: this.noRujukan,
+                  username: this.username,
                 };
 
                 this.authService.updatepcare(body).subscribe((response) => {
@@ -10006,6 +10017,21 @@ export class tulisermComponent implements OnInit {
         return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
       }
     );
+  }
+
+  cetakriwayat() {
+    var redirectWindow = window.open(
+      this.URLINVOICE +
+        "clenic/report/cetakriwayatedit.php?notrans=" +
+        this.notrans +
+        "&kdcabang=" +
+        this.kdcabang +
+        "&norm=" +
+        this.norm,
+      "_blank",
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+    );
+    redirectWindow.location;
   }
 
   // https://stackblitz.com/edit/angular-t5dfp7?file=app%2Fservice-component.ts unutk modal beda page dan send parameter
