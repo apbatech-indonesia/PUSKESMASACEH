@@ -387,8 +387,8 @@
           <div class="col-12 col-lg-6">
             <div class="position-relative mb-3">
               <label for="numerator_mata_kanan" class="form-label">Visus Mata Kanan</label>
-              <input type="text" id="numerator_mata_kanan" class="form-control"
-                [(ngModel)]="deteksiDiniMata.visusKanan" placeholder="Masukkan visus mata kanan">
+              <input type="text" id="numerator_mata_kanan" class="form-control" [(ngModel)]="deteksiDiniMata.visusKanan"
+                placeholder="Masukkan visus mata kanan">
             </div>
           </div>
           <div class="col-12 col-lg-6">
@@ -558,8 +558,8 @@
                 <div class="row">
                   <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
-                      <app-master-tindakan [isShowCode]="false" [searchTindakanText]="deteksiDiniKankerServicProcedure?.display"
-                        (selectedItem)="
+                      <app-master-tindakan [isShowCode]="false"
+                        [searchTindakanText]="deteksiDiniKankerServicProcedure?.display" (selectedItem)="
                         deteksiDiniKankerServicProcedure.code = $event.kdtindakan;
                         deteksiDiniKankerServicProcedure.display = $event.tindakan;
                         ">
@@ -586,8 +586,8 @@
                 <div class="row">
                   <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
-                      <app-master-tindakan [isShowCode]="false" [searchTindakanText]="deteksiDiniKankerServicIvaProcedure?.display"
-                        (selectedItem)="
+                      <app-master-tindakan [isShowCode]="false"
+                        [searchTindakanText]="deteksiDiniKankerServicIvaProcedure?.display" (selectedItem)="
                         deteksiDiniKankerServicIvaProcedure.code = $event.kdtindakan;
                         deteksiDiniKankerServicIvaProcedure.display = $event.tindakan;
                         ">
@@ -612,9 +612,15 @@
               <div class="card-header navy">Deteksi Kanker HPV</div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
                       <label class="form-label">ServiceRequest</label>
+                      <app-master-diagnosa [searchDiagnosaText]="deteksiDiniKankerServicHpvServiceRequest?.display"
+                        (selectedItem)="
+                        deteksiDiniKankerServicHpvServiceRequest.code = $event.kddiagnosa;
+                        deteksiDiniKankerServicHpvServiceRequest.display = $event.diagnosa;
+                        ">
+                      </app-master-diagnosa>
                     </div>
                   </div>
                   <div class="col-12 col-lg-6">
@@ -895,8 +901,7 @@
           <div class="col-12 col-lg-12">
             <div class="position-relative mb-3">
               <label class="form-label">Observations Ekg</label>
-              <input type="text" id="terpapar_asap_rokok" class="form-control"
-                [(ngModel)]="deteksiDiniJantung.result">
+              <input type="text" id="terpapar_asap_rokok" class="form-control" [(ngModel)]="deteksiDiniJantung.result">
             </div>
           </div>
         </div>

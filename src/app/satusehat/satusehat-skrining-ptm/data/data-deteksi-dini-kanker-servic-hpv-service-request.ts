@@ -4,6 +4,8 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerServicHpvServiceRequest {
+  code: any
+  display: any
   dateNow = new Date().toISOString()
 
   getdata() {
@@ -25,7 +27,7 @@ export class DataDeteksiDiniKankerServicHpvServiceRequest {
           patientInstruction: "",
           encounter: {
             reference: "Encounter/{{Encounter_id}}",
-            display: "Permintaan Pemeriksaan Panel Skrining Kanker Cervix 24 April 2024 pukul 09:30 WIB"
+            display: `Permintaan Pemeriksaan Panel Skrining Kanker Cervix ${this.dateNow}`
           },
           status: "active",
           intent: "original-order",
@@ -39,14 +41,14 @@ export class DataDeteksiDiniKankerServicHpvServiceRequest {
               display: "Human papilloma virus DNA [Presence] in Cervix by Probe"
             },
             {
-              text: "Panel Skrining Kolesterol Total PTM"
+              text: `Permintaan Pemeriksaan Panel Skrining Kanker Cervix ${this.dateNow}`
             }
           ],
           reason: [
             {
               system: "http://hl7.org/fhir/sid/icd-10",
-              code: " Z12.4",
-              display: "Special screening examination for neoplasm of cervix"
+              code: this.code,
+              display: this.display,
             },
             {
               text: "Deteksi Dini Kanker Serviks"

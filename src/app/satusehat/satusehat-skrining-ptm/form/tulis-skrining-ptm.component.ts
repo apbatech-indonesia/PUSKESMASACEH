@@ -410,34 +410,36 @@ export class TulisSkriningPtmComponent implements OnInit {
     }
 
     // hpv
-    // let payloadHpvServiceRequest = {
-    //   data: {
-    //     ...this.data,
-    //     ...this.deteksiDiniKankerServicHpvServiceRequest.getdata()
-    //   }
-    // }
-    // let payloadHpvSpecimen = {
-    //   data: {
-    //     ...this.data,
-    //     ...this.deteksiDiniKankerServicHpvSpecimen.getdata()
-    //   }
-    // }
-    // let payloadHpvObservation = {
-    //   data: {
-    //     ...this.data,
-    //     ...this.deteksiDiniKankerServicHpvObservation.getdata()
-    //   }
-    // }
-    // let payloadHpvDiagnosticReport = {
-    //   data: {
-    //     ...this.data,
-    //     ...this.deteksiDiniKankerServicHpvDiagnosticReport.getdata()
-    //   }
-    // }
-    // console.log(await this.skriningPTMService.serviceRequestsCreate(payloadHpvServiceRequest))
-    // console.log(await this.skriningPTMService.specimensCreate(payloadHpvSpecimen))
-    // console.log(await this.skriningPTMService.observationsCreate(payloadHpvObservation))
-    // console.log(await this.skriningPTMService.diagnosticReportsCreate(payloadHpvDiagnosticReport))
+    if (this.deteksiDiniKankerServicHpvServiceRequest.code) {
+      let payloadHpvServiceRequest = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerServicHpvServiceRequest.getdata()
+        }
+      }
+      let payloadHpvSpecimen = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerServicHpvSpecimen.getdata()
+        }
+      }
+      let payloadHpvObservation = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerServicHpvObservation.getdata()
+        }
+      }
+      let payloadHpvDiagnosticReport = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerServicHpvDiagnosticReport.getdata()
+        }
+      }
+      console.log(await this.skriningPTMService.serviceRequestsCreate(payloadHpvServiceRequest))
+      console.log(await this.skriningPTMService.specimensCreate(payloadHpvSpecimen))
+      console.log(await this.skriningPTMService.observationsCreate(payloadHpvObservation))
+      console.log(await this.skriningPTMService.diagnosticReportsCreate(payloadHpvDiagnosticReport))
+    }
   }
 
   async doSubmitDeteksiDiniDiabetes() {

@@ -1,25 +1,16 @@
-<div
-  [class]="'app-sidebar sidebar-shadow ' + (config$ | async).sidebarTheme"
-  (mouseover)="sidebarHoverMouseIn()"
-  (mouseout)="sidebarHoverMouseOut()"
->
+<div [class]="'app-sidebar sidebar-shadow ' + (config$ | async).sidebarTheme" (mouseover)="sidebarHoverMouseIn()"
+  (mouseout)="sidebarHoverMouseOut()">
   <div class="app-header__logo">
-    <div
-      style="
+    <div style="
         height: 30px;
         width: 135px;
         background: url(./assets/images/logo-inverse.svg);
-      "
-    ></div>
+      "></div>
 
     <!-- <div style="font-size: large;font-weight: bold;">SIM KLINIK</div> -->
     <div class="header__pane ms-auto">
-      <button
-        type="button"
-        class="hamburger close-sidebar-btn hamburger--elastic"
-        [ngClass]="{ 'is-active': globals.toggleSidebar }"
-        (click)="toggleSidebar()"
-      >
+      <button type="button" class="hamburger close-sidebar-btn hamburger--elastic"
+        [ngClass]="{ 'is-active': globals.toggleSidebar }" (click)="toggleSidebar()">
         <span class="hamburger-box">
           <span class="hamburger-inner"></span>
         </span>
@@ -28,42 +19,28 @@
   </div>
   <div class="app-sidebar-content">
     <div class="app-sidebar-scroll">
-      <perfect-scrollbar
-        [autoPropagation]="true"
-        class="scroll-container"
-        [config]="config"
-        [scrollIndicators]="true"
-        style="max-width: 600px; max-height: 690px"
-      >
+      <perfect-scrollbar [autoPropagation]="true" class="scroll-container" [config]="config" [scrollIndicators]="true"
+        style="max-width: 600px; max-height: 690px">
         <div class="v-sidebar-menu vsm-default">
           <div class="vsm-list">
-            <ngb-accordion
-              [destroyOnHide]="false"
-              [closeOthers]="true"
-              #acc="ngbAccordion"
-              activeIds="{{ extraParameter }}"
-            >
-              <ngb-panel
-                *ngIf="
+            <ngb-accordion [destroyOnHide]="false" [closeOthers]="true" #acc="ngbAccordion"
+              activeIds="{{ extraParameter }}">
+              <ngb-panel *ngIf="
                   akses === 'Kasir RJ' ||
                   akses === 'Manajemen' ||
                   akses === 'Kasir Koordinator' ||
                   akses === 'Admisi'
-                "
-              >
+                ">
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header">Dashboards</div>
                 </ng-template>
               </ngb-panel>
-              <ngb-panel
-                id="dashboards"
-                *ngIf="
+              <ngb-panel id="dashboards" *ngIf="
                   akses === 'Kasir RJ' ||
                   akses === 'Manajemen' ||
                   akses === 'Kasir Koordinator' ||
                   akses === 'Admisi'
-                "
-              >
+                ">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-rocket"></i>
@@ -74,21 +51,24 @@
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
                     <div class="vsm-list">
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Kasir RJ' ||
                           akses === 'Manajemen' ||
                           akses === 'Kasir Koordinator' ||
                           akses === 'Admisi'
-                        "
-                      >
-                        <a
-                          routerLink="/dashboards/management"
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a routerLink="/dashboards/management" routerLinkActive="active-item" class="vsm-link">
                           <span class="vsm-title">Dashboard Management</span>
+                        </a>
+                      </div>
+                      <div class="vsm-item" *ngIf="
+                        akses === 'Kasir RJ' ||
+                        akses === 'Manajemen' ||
+                        akses === 'Kasir Koordinator' ||
+                        akses === 'Admisi'
+                      ">
+                        <a routerLink="/dashboards/skrining-ilp" routerLinkActive="active-item" class="vsm-link">
+                          <span class="vsm-title">Dashboard Skrining ILP</span>
                         </a>
                       </div>
                     </div>
@@ -96,27 +76,22 @@
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel
-                *ngIf="
+              <ngb-panel *ngIf="
                   akses === 'Kasir' ||
                   akses === 'Manajemen' ||
                   akses === 'Kasir Koordinator' ||
                   akses === 'Kasir RJ'
-                "
-              >
+                ">
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header">Transaksi</div>
                 </ng-template>
               </ngb-panel>
-              <ngb-panel
-                id="elements"
-                *ngIf="
+              <ngb-panel id="elements" *ngIf="
                   akses === 'Kasir' ||
                   akses === 'Manajemen' ||
                   akses === 'Kasir Koordinator' ||
                   akses === 'Kasir RJ'
-                "
-              >
+                ">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-diamond"></i>
@@ -127,121 +102,75 @@
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
                     <div class="vsm-list">
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Kasir RJ' ||
                           akses === 'Manajemen' ||
                           akses === 'Kasir Koordinator' ||
                           akses === 'Admisi'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mpasien"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mpasien" class="vsm-link">
                           <span class="vsm-title">Pasien Baru</span>
                         </a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Kasir RJ' ||
                           akses === 'Manajemen' ||
                           akses === 'Kasir Koordinator' ||
                           akses === 'Admisi'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mpdaftarpasien"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mpdaftarpasien" class="vsm-link">
                           <span class="vsm-title">Daftar RJ</span>
                         </a>
                       </div>
                       <div class="vsm-item" *ngIf="rj === '1'">
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/kasirrj"
-                          class="vsm-link"
-                          *ngIf="
+                        <a routerLinkActive="active-item" routerLink="/master/kasirrj" class="vsm-link" *ngIf="
                             akses === 'Kasir' ||
                             akses === 'Manajemen' ||
                             akses === 'Kasir Koordinator' ||
                             akses === 'Kasir RJ'
-                          "
-                        >
+                          ">
                           <span class="vsm-title">Kasir RJ</span>
                         </a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Kasir RJ' ||
                           akses === 'Manajemen' ||
                           akses === 'Kasir Koordinator' ||
                           akses === 'Admisi'
-                        "
-                      >
-                        <a
-                          *ngIf="ri == '1'"
-                          routerLinkActive="active-item"
-                          routerLink="/master/mpdaftarpasienri"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a *ngIf="ri == '1'" routerLinkActive="active-item" routerLink="/master/mpdaftarpasienri"
+                          class="vsm-link">
                           <span class="vsm-title">Daftar Rawat Inap</span>
                         </a>
                       </div>
                       <div class="vsm-item">
-                        <a
-                          routerLinkActive="active-item"
-                          (click)="kanjungans()"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Anjungan SEHAT</span></a
-                        >
+                        <a routerLinkActive="active-item" (click)="kanjungans()" class="vsm-link">
+                          <span class="vsm-title">Anjungan SEHAT</span></a>
                       </div>
                       <div class="vsm-item">
-                        <a
-                          routerLinkActive="active-item"
-                          (click)="kanjungan()"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Anjungan SAKIT</span></a
-                        >
+                        <a routerLinkActive="active-item" (click)="kanjungan()" class="vsm-link">
+                          <span class="vsm-title">Anjungan SAKIT</span></a>
                       </div>
                       <div class="vsm-item" *ngIf="ri == '1'">
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/kasirri"
-                          class="vsm-link"
-                          *ngIf="
+                        <a routerLinkActive="active-item" routerLink="/master/kasirri" class="vsm-link" *ngIf="
                             akses === 'Kasir' ||
                             akses === 'Manajemen' ||
                             akses === 'Kasir Koordinator' ||
                             akses === 'Kasir RJ'
-                          "
-                        >
+                          ">
                           <span class="vsm-title">Kasir RI</span>
                         </a>
                       </div>
 
                       <div class="vsm-item" *ngIf="ri == '1'">
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/rkasirri"
-                          class="vsm-link"
-                          *ngIf="
+                        <a routerLinkActive="active-item" routerLink="/master/rkasirri" class="vsm-link" *ngIf="
                             akses === 'Kasir' ||
                             akses === 'Manajemen' ||
                             akses === 'Kasir Koordinator' ||
                             akses === 'Kasir RJ'
-                          "
-                        >
+                          ">
                           <span class="vsm-title">Riwayat RI</span>
                         </a>
                       </div>
@@ -250,14 +179,12 @@
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel
-                *ngIf="
+              <ngb-panel *ngIf="
                   akses === 'Kasir' ||
                   akses === 'Manajemen' ||
                   akses === 'Kasir Koordinator' ||
                   akses === 'Kasir RJ'
-                "
-              >
+                ">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-diamond"></i>
@@ -268,38 +195,24 @@
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
                     <div class="vsm-list">
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Kasir RJ' ||
                           akses === 'Manajemen' ||
                           akses === 'Kasir Koordinator' ||
                           akses === 'Admisi'
-                        "
-                      >
-                        <a
-                          routerLink="/master/bkelompok"
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a routerLink="/master/bkelompok" routerLinkActive="active-item" class="vsm-link">
                           <span class="vsm-title">Kelompok</span>
                         </a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Kasir RJ' ||
                           akses === 'Manajemen' ||
                           akses === 'Kasir Koordinator' ||
                           akses === 'Admisi'
-                        "
-                      >
-                        <a
-                          routerLink="/master/bmcu"
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a routerLink="/master/bmcu" routerLinkActive="active-item" class="vsm-link">
                           <span class="vsm-title">MCU</span>
                         </a>
                       </div>
@@ -319,152 +232,81 @@
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel
-                *ngIf="
+              <ngb-panel *ngIf="
                   akses === 'Kasir' ||
                   akses === 'Manajemen' ||
                   akses === 'Kasir Koordinator' ||
                   akses === 'Kasir RJ'
-                "
-              >
+                ">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-diamond"></i>
-                    <span class="vsm-title"
-                      >Satu Sehat ILP
-                      <b style="font-size: 8px; color: red">New</b></span
-                    >
+                    <span class="vsm-title">Satu Sehat ILP
+                      <b style="font-size: 8px; color: red">New</b></span>
                     <i class="vsm-arrow"></i>
                   </button>
                 </ng-template>
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
-                    <div
-                      class="vsm-list"
-                      *ngIf="
+                    <div class="vsm-list" *ngIf="
                         akses === 'Kasir RJ' ||
                         akses === 'Manajemen' ||
                         akses === 'Kasir Koordinator' ||
                         akses === 'Admisi' ||
                         akses === 'Dokter' ||
                         akses === 'Perawat'
-                      "
-                    >
+                      ">
                       <div class="vsm-item">
-                        <a
-                          routerLink="/master/satusehat-anc"
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title"
-                            >Antenatal Care (ANC)
-                            <b style="font-size: 8px; color: red">New</b></span
-                          >
+                        <a routerLink="/master/satusehat-anc" routerLinkActive="active-item" class="vsm-link">
+                          <span class="vsm-title">Antenatal Care (ANC)
+                            <b style="font-size: 8px; color: red">New</b></span>
                         </a>
                       </div>
                       <div class="vsm-item">
-                        <a
-                          routerLink="/master/satusehat-mtbs"
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title"
-                            >MTBS
-                            <b style="font-size: 8px; color: red">New</b></span
-                          >
+                        <a routerLink="/master/satusehat-mtbs" routerLinkActive="active-item" class="vsm-link">
+                          <span class="vsm-title">MTBS
+                            <b style="font-size: 8px; color: red">New</b></span>
                         </a>
                       </div>
 
                       <div class="vsm-item">
-                        <a
-                          routerLink="/master/satusehat-mtbm"
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title"
-                            >MTBM
-                            <b style="font-size: 8px; color: red">New</b></span
-                          >
+                        <a routerLink="/master/satusehat-mtbm" routerLinkActive="active-item" class="vsm-link">
+                          <span class="vsm-title">MTBM
+                            <b style="font-size: 8px; color: red">New</b></span>
                         </a>
                       </div>
 
                       <div class="vsm-item">
-                        <a
-                          routerLink="/master/satusehat-imunisasi"
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title"
-                            >Imunisasi
-                            <b style="font-size: 8px; color: red">New</b></span
-                          >
+                        <a routerLink="/master/satusehat-imunisasi" routerLinkActive="active-item" class="vsm-link">
+                          <span class="vsm-title">Imunisasi
+                            <b style="font-size: 8px; color: red">New</b></span>
                         </a>
                       </div>
                       <div class="vsm-item">
-                        <a
-                          routerLink="/master/satusehat-skrining-ptm"
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title"
-                            >Skrining PTM
-                            <b style="font-size: 8px; color: red">New</b></span
-                          >
+                        <a routerLink="/master/satusehat-skrining-ptm" routerLinkActive="active-item" class="vsm-link">
+                          <span class="vsm-title">Skrining PTM
+                            <b style="font-size: 8px; color: red">New</b></span>
                         </a>
                       </div>
                       <div class="vsm-item">
-                        <a
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                          (click)="update()"
-                        >
-                          <span class="vsm-title"
-                            >PKPR<b style="font-size: 8px; color: green"
-                              >Proses</b
-                            ></span
-                          >
+                        <a routerLinkActive="active-item" class="vsm-link" (click)="update()">
+                          <span class="vsm-title">PKPR<b style="font-size: 8px; color: green">Proses</b></span>
                         </a>
                       </div>
                       <div class="vsm-item">
-                        <a
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                          (click)="update()"
-                        >
-                          <span class="vsm-title"
-                            >SHK dan TB<b style="font-size: 8px; color: green"
-                              >Proses</b
-                            ></span
-                          >
+                        <a routerLinkActive="active-item" class="vsm-link" (click)="update()">
+                          <span class="vsm-title">SHK dan TB<b style="font-size: 8px; color: green">Proses</b></span>
                         </a>
                       </div>
                       <div class="vsm-item">
-                        <a
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                          (click)="update()"
-                        >
-                          <span class="vsm-title"
-                            >TB dan Jatung<b
-                              style="font-size: 8px; color: green"
-                              >proses</b
-                            ></span
-                          >
+                        <a routerLinkActive="active-item" class="vsm-link" (click)="update()">
+                          <span class="vsm-title">TB dan Jatung<b style="font-size: 8px; color: green">proses</b></span>
                         </a>
                       </div>
 
                       <div class="vsm-item">
-                        <a
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                          (click)="update()"
-                        >
-                          <span class="vsm-title"
-                            >Dashboard ILP<b
-                              style="font-size: 8px; color: green"
-                              >proses</b
-                            ></span
-                          >
+                        <a routerLinkActive="active-item" class="vsm-link" (click)="update()">
+                          <span class="vsm-title">Dashboard ILP<b style="font-size: 8px; color: green">proses</b></span>
                         </a>
                       </div>
                     </div>
@@ -472,16 +314,13 @@
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel
-                id="components"
-                *ngIf="
+              <ngb-panel id="components" *ngIf="
                   akses === 'Kasir' ||
                   akses === 'farmasi' ||
                   akses === 'Manajemen' ||
                   akses === 'Kasir Koordinator' ||
                   akses === 'Kasir RJ'
-                "
-              >
+                ">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link" *ngIf="far === '1'">
                     <i class="vsm-icon pe-7s-car"></i>
@@ -492,138 +331,71 @@
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown" *ngIf="far === '1'">
                     <div class="vsm-list">
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Kasir' ||
                           akses === 'farmasi' ||
                           akses === 'Manajemen' ||
                           akses === 'Kasir Koordinator' ||
                           akses === 'Kasir RJ'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/kasirfarmasijual"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/kasirfarmasijual" class="vsm-link">
                           <span class="vsm-title">Pelayanan Resep</span>
                         </a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'farmasi' ||
                           akses === 'Manajemen' ||
                           akses === 'Kasir Koordinator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/kasirfarmasibeli"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/kasirfarmasibeli" class="vsm-link">
                           <span class="vsm-title">Penerimaan</span>
                         </a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="akses === 'farmasi' || akses === 'Manajemen'"
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/returfarmasijual"
-                          class="vsm-link"
-                        >
+                      <div class="vsm-item" *ngIf="akses === 'farmasi' || akses === 'Manajemen'">
+                        <a routerLinkActive="active-item" routerLink="/master/returfarmasijual" class="vsm-link">
                           <span class="vsm-title">Retur Resep</span>
                         </a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="akses === 'farmasi' || akses === 'Manajemen'"
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/kasirfarmasibelir"
-                          class="vsm-link"
-                        >
+                      <div class="vsm-item" *ngIf="akses === 'farmasi' || akses === 'Manajemen'">
+                        <a routerLinkActive="active-item" routerLink="/master/kasirfarmasibelir" class="vsm-link">
                           <span class="vsm-title">Retur Penerimaan</span>
                         </a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="akses === 'farmasi' || akses === 'Manajemen'"
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mutasifarmasi"
-                          class="vsm-link"
-                        >
+                      <div class="vsm-item" *ngIf="akses === 'farmasi' || akses === 'Manajemen'">
+                        <a routerLinkActive="active-item" routerLink="/master/mutasifarmasi" class="vsm-link">
                           <span class="vsm-title">Mutasi Antar Gudang</span>
                         </a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="akses === 'farmasi' || akses === 'Manajemen'"
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mutasifarmasiin"
-                          class="vsm-link"
-                        >
+                      <div class="vsm-item" *ngIf="akses === 'farmasi' || akses === 'Manajemen'">
+                        <a routerLinkActive="active-item" routerLink="/master/mutasifarmasiin" class="vsm-link">
                           <span class="vsm-title">Mutasi Masuk</span>
                         </a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="akses === 'farmasi' || akses === 'Manajemen'"
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mutasifarmasiout"
-                          class="vsm-link"
-                        >
+                      <div class="vsm-item" *ngIf="akses === 'farmasi' || akses === 'Manajemen'">
+                        <a routerLinkActive="active-item" routerLink="/master/mutasifarmasiout" class="vsm-link">
                           <span class="vsm-title">Mutasi Keluar</span>
                         </a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="akses === 'farmasi' || akses === 'Manajemen'"
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/adjustobat"
-                          class="vsm-link"
-                        >
+                      <div class="vsm-item" *ngIf="akses === 'farmasi' || akses === 'Manajemen'">
+                        <a routerLinkActive="active-item" routerLink="/master/adjustobat" class="vsm-link">
                           <span class="vsm-title">Adjust Stok</span>
                         </a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="akses === 'farmasi' || akses === 'Manajemen'"
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mobat"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Obat</span></a
-                        >
+                      <div class="vsm-item" *ngIf="akses === 'farmasi' || akses === 'Manajemen'">
+                        <a routerLinkActive="active-item" routerLink="/master/mobat" class="vsm-link">
+                          <span class="vsm-title">Obat</span></a>
                       </div>
                     </div>
                   </div>
                 </ng-template>
               </ngb-panel>
-              <ngb-panel
-                id="form-elements"
-                *ngIf="
+              <ngb-panel id="form-elements" *ngIf="
                   akses === 'Kasir' ||
                   akses === 'Manajemen' ||
                   akses === 'Radiologi' ||
                   akses === 'Kasir Koordinator' ||
                   akses === 'Kasir RJ'
-                "
-              >
+                ">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link" *ngIf="rad === '1'">
                     <i class="vsm-icon pe-7s-helm"></i>
@@ -633,22 +405,15 @@
                 </ng-template>
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
-                    <div
-                      class="vsm-list"
-                      *ngIf="
+                    <div class="vsm-list" *ngIf="
                         akses === 'Kasir' ||
                         akses === 'Manajemen' ||
                         akses === 'Radiologi' ||
                         akses === 'Kasir Koordinator' ||
                         akses === 'Kasir RJ'
-                      "
-                    >
+                      ">
                       <div class="vsm-item">
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/kasirrad"
-                          class="vsm-link"
-                        >
+                        <a routerLinkActive="active-item" routerLink="/master/kasirrad" class="vsm-link">
                           <span class="vsm-title">Pos Radiologi</span>
                         </a>
                       </div>
@@ -656,16 +421,13 @@
                   </div>
                 </ng-template>
               </ngb-panel>
-              <ngb-panel
-                id="form-widgets"
-                *ngIf="
+              <ngb-panel id="form-widgets" *ngIf="
                   akses === 'Kasir' ||
                   akses === 'Manajemen' ||
                   akses === 'Laborat' ||
                   akses === 'Kasir Koordinator' ||
                   akses === 'Kasir RJ'
-                "
-              >
+                ">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link" *ngIf="lab === '1'">
                     <i class="vsm-icon pe-7s-shield"></i>
@@ -675,27 +437,20 @@
                 </ng-template>
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
-                    <div
-                      class="vsm-list"
-                      *ngIf="
+                    <div class="vsm-list" *ngIf="
                         akses === 'Kasir' ||
                         akses === 'Manajemen' ||
                         akses === 'Laborat' ||
                         akses === 'Kasir Koordinator' ||
                         akses === 'Kasir RJ'
-                      "
-                    >
+                      ">
                       <!-- <div class="vsm-item">
                         <a routerLinkActive="active-item" routerLink="/dashboards/managementlab" class="vsm-link">
                           <span class="vsm-title">Dashboard  Laboratorium</span>
                         </a>
                       </div> -->
                       <div class="vsm-item">
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/kasirlab"
-                          class="vsm-link"
-                        >
+                        <a routerLinkActive="active-item" routerLink="/master/kasirlab" class="vsm-link">
                           <span class="vsm-title">Pos Laboratorium</span>
                         </a>
                       </div>
@@ -722,56 +477,35 @@
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown" *ngIf="emr === '1'">
                     <div class="vsm-list">
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Dokter' ||
                           akses === 'Manajemen' ||
                           akses === 'RM' ||
                           akses === 'Perawat'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/ermdokter"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/ermdokter" class="vsm-link">
                           <span class="vsm-title">Pasien RJ</span>
                         </a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Dokter' ||
                           akses === 'Manajemen' ||
                           akses === 'RM' ||
                           akses === 'Perawat'
-                        "
-                      >
-                        <a
-                          *ngIf="ri == '1'"
-                          routerLinkActive="active-item"
-                          routerLink="/master/ermdokteridemo"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a *ngIf="ri == '1'" routerLinkActive="active-item" routerLink="/master/ermdokteridemo"
+                          class="vsm-link">
                           <span class="vsm-title">Pasien RI</span>
                         </a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Dokter' ||
                           akses === 'Manajemen' ||
                           akses === 'RM' ||
                           akses === 'Perawat'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/ermdokterrm"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/ermdokterrm" class="vsm-link">
                           <span class="vsm-title">Pasien Semua RJ</span>
                         </a>
                       </div>
@@ -782,12 +516,9 @@
 
               <ngb-panel>
                 <ng-template ngbPanelHeader>
-                  <div
-                    class="vsm-header"
-                    *ngIf="
+                  <div class="vsm-header" *ngIf="
                       akses === 'Manajemen' || akses === 'Kasir Koordinator'
-                    "
-                  >
+                    ">
                     Akuntansi Hutang Piutang
                   </div>
                 </ng-template>
@@ -795,13 +526,9 @@
 
               <ngb-panel id="form-controlss">
                 <ng-template ngbPanelHeader>
-                  <button
-                    ngbPanelToggle
-                    class="vsm-link"
-                    *ngIf="
+                  <button ngbPanelToggle class="vsm-link" *ngIf="
                       akses === 'Manajemen' || akses === 'Kasir Koordinator'
-                    "
-                  >
+                    ">
                     <i class="vsm-icon pe-7s-ribbon"></i>
                     <span class="vsm-title">Outstanding</span>
                     <i class="vsm-arrow"></i>
@@ -810,31 +537,17 @@
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
                     <div class="vsm-list">
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'Kasir Koordinator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/bayarpiutangrj"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/bayarpiutangrj" class="vsm-link">
                           <span class="vsm-title">Piutang Rawat Jalan</span>
                         </a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'Kasir Koordinator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/bayarhutangfarmasi"
-                          class="vsm-link"
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/bayarhutangfarmasi" class="vsm-link">
                           <span class="vsm-title">Hutang Farmasi</span>
                         </a>
                       </div>
@@ -845,12 +558,9 @@
 
               <ngb-panel>
                 <ng-template ngbPanelHeader>
-                  <div
-                    class="vsm-header"
-                    *ngIf="
+                  <div class="vsm-header" *ngIf="
                       akses === 'Manajemen' || akses === 'Kasir Koordinator'
-                    "
-                  >
+                    ">
                     Mini GL
                   </div>
                 </ng-template>
@@ -858,13 +568,9 @@
 
               <ngb-panel id="form-controlssx">
                 <ng-template ngbPanelHeader>
-                  <button
-                    class="vsm-link"
-                    *ngIf="
+                  <button class="vsm-link" *ngIf="
                       akses === 'Manajemen' || akses === 'Kasir Koordinator'
-                    "
-                    routerLink="/master/glmini"
-                  >
+                    " routerLink="/master/glmini">
                     <i class="vsm-icon pe-7s-ribbon"></i>
                     <span class="vsm-title">Mini General Ledger</span>
                     <!-- <i class="vsm-arrow"></i> -->
@@ -884,8 +590,7 @@
                 </ng-template> -->
               </ngb-panel>
 
-              <ngb-panel
-                *ngIf="
+              <ngb-panel *ngIf="
                   akses === 'Kasir Koordinator' ||
                   akses === 'Manajemen' ||
                   akses === 'Kasir RJ' ||
@@ -893,23 +598,19 @@
                   akses === 'farmasi' ||
                   akses === 'Laborat' ||
                   akses === 'Radilogi'
-                "
-              >
+                ">
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header">Laporan</div>
                 </ng-template>
               </ngb-panel>
-              <ngb-panel
-                id="widgets"
-                *ngIf="
+              <ngb-panel id="widgets" *ngIf="
                   akses === 'Kasir Koordinator' ||
                   akses === 'Manajemen' ||
                   akses === 'Kasir RJ' ||
                   akses === 'farmasi' ||
                   akses === 'Laborat' ||
                   akses === 'Radilogi'
-                "
-              >
+                ">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-graph2"></i>
@@ -918,135 +619,82 @@
                   </button>
                 </ng-template>
                 <ng-template ngbPanelContent>
-                  <div
-                    class="vsm-dropdown"
-                    *ngIf="
+                  <div class="vsm-dropdown" *ngIf="
                       akses === 'Kasir Koordinator' ||
                       akses === 'Manajemen' ||
                       akses === 'Kasir RJ' ||
                       akses === 'farmasi' ||
                       akses === 'Laborat'
-                    "
-                  >
+                    ">
                     <div class="vsm-list">
                       <div class="vsm-item" *ngIf="rj == '1'">
-                        <a
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                          routerLink="/master/laporanrj"
-                          *ngIf="
+                        <a routerLinkActive="active-item" class="vsm-link" routerLink="/master/laporanrj" *ngIf="
                             akses === 'Kasir Koordinator' ||
                             akses === 'Manajemen' ||
                             akses === 'Kasir RJ'
-                          "
-                        >
-                          <span class="vsm-title">Laporan Rawat Jalan</span></a
-                        >
+                          ">
+                          <span class="vsm-title">Laporan Rawat Jalan</span></a>
                       </div>
                       <div class="vsm-item" *ngIf="ri == '1'">
-                        <a
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                          routerLink="/master/laporanri"
-                          *ngIf="
+                        <a routerLinkActive="active-item" class="vsm-link" routerLink="/master/laporanri" *ngIf="
                             akses === 'Kasir Koordinator' ||
                             akses === 'Manajemen' ||
                             akses === 'Kasir RJ'
-                          "
-                        >
-                          <span class="vsm-title">Laporan Rawat Inap</span></a
-                        >
+                          ">
+                          <span class="vsm-title">Laporan Rawat Inap</span></a>
                       </div>
                       <div class="vsm-item" *ngIf="rad == '1'">
-                        <a
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                          class="vsm-link"
-                          routerLink="/master/laporanrad"
-                          *ngIf="
+                        <a routerLinkActive="active-item" class="vsm-link" class="vsm-link"
+                          routerLink="/master/laporanrad" *ngIf="
                             akses === 'Kasir Koordinator' ||
                             akses === 'Manajemen' ||
                             akses === 'Kasir RJ' ||
                             akses === 'Radilogi'
-                          "
-                        >
-                          <span class="vsm-title">Laporan Radiolgi</span></a
-                        >
+                          ">
+                          <span class="vsm-title">Laporan Radiolgi</span></a>
                       </div>
                       <div class="vsm-item" *ngIf="lab == '1'">
-                        <a
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                          routerLink="/master/laporanlab"
-                          *ngIf="
+                        <a routerLinkActive="active-item" class="vsm-link" routerLink="/master/laporanlab" *ngIf="
                             akses === 'Kasir Koordinator' ||
                             akses === 'Manajemen' ||
                             akses === 'Kasir RJ' ||
                             akses === 'Laborat'
-                          "
-                        >
-                          <span class="vsm-title">Laporan Laborat</span></a
-                        >
+                          ">
+                          <span class="vsm-title">Laporan Laborat</span></a>
                       </div>
                       <div class="vsm-item" *ngIf="far == '1'">
-                        <a
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                          routerLink="/master/laporanfarmasi"
-                          *ngIf="
+                        <a routerLinkActive="active-item" class="vsm-link" routerLink="/master/laporanfarmasi" *ngIf="
                             akses === 'Kasir Koordinator' ||
                             akses === 'Manajemen' ||
                             akses === 'Kasir RJ' ||
                             akses === 'farmasi'
-                          "
-                        >
-                          <span class="vsm-title">Laporan Farmasi</span></a
-                        >
+                          ">
+                          <span class="vsm-title">Laporan Farmasi</span></a>
                       </div>
                       <div class="vsm-item" *ngIf="emr == '1'">
-                        <a
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                          routerLink="/master/laporanrm"
-                          *ngIf="
+                        <a routerLinkActive="active-item" class="vsm-link" routerLink="/master/laporanrm" *ngIf="
                             akses === 'Kasir Koordinator' ||
                             akses === 'Manajemen' ||
                             akses === 'Kasir RJ'
-                          "
-                        >
-                          <span class="vsm-title">Laporan Rekam Medik</span></a
-                        >
+                          ">
+                          <span class="vsm-title">Laporan Rekam Medik</span></a>
                       </div>
                       <div class="vsm-item" *ngIf="emr == '1'">
-                        <a
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                          routerLink="/master/laporanantrol"
-                          *ngIf="
+                        <a routerLinkActive="active-item" class="vsm-link" routerLink="/master/laporanantrol" *ngIf="
                             akses === 'Kasir Koordinator' ||
                             akses === 'Manajemen' ||
                             akses === 'Kasir RJ'
-                          "
-                        >
-                          <span class="vsm-title"
-                            >Laporan Antrean Online</span
-                          ></a
-                        >
+                          ">
+                          <span class="vsm-title">Laporan Antrean Online</span></a>
                       </div>
 
                       <div class="vsm-item" *ngIf="akses === 'Manajemen'">
-                        <a
-                          routerLinkActive="active-item"
-                          class="vsm-link"
-                          routerLink="/master/laporanlr"
-                          *ngIf="
+                        <a routerLinkActive="active-item" class="vsm-link" routerLink="/master/laporanlr" *ngIf="
                             akses === 'Kasir Koordinator' ||
                             akses === 'Manajemen' ||
                             akses === 'Kasir RJ'
-                          "
-                        >
-                          <span class="vsm-title">Laporan Laba Rugi</span></a
-                        >
+                          ">
+                          <span class="vsm-title">Laporan Laba Rugi</span></a>
                       </div>
                     </div>
                   </div>
@@ -1076,329 +724,162 @@
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
                     <div class="vsm-list">
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/muser"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Master User</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/muser" class="vsm-link">
+                          <span class="vsm-title">Master User</span></a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mcabang"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Cabang</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mcabang" class="vsm-link">
+                          <span class="vsm-title">Cabang</span></a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' ||
                           akses === 'farmasi' ||
                           akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mgudang"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Gudang</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mgudang" class="vsm-link">
+                          <span class="vsm-title">Gudang</span></a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' ||
                           akses === 'farmasi' ||
                           akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mobat"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Obat</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mobat" class="vsm-link">
+                          <span class="vsm-title">Obat</span></a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mdiagnosa"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Diagnosa & Tindakan</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mdiagnosa" class="vsm-link">
+                          <span class="vsm-title">Diagnosa & Tindakan</span></a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mpoli"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Poliklinik</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mpoli" class="vsm-link">
+                          <span class="vsm-title">Poliklinik</span></a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mcoa"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">COA</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mcoa" class="vsm-link">
+                          <span class="vsm-title">COA</span></a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mrekening"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Perkerjaan</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mrekening" class="vsm-link">
+                          <span class="vsm-title">Perkerjaan</span></a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' ||
                           akses === 'Dokter' ||
                           akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/Mtamplate"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Template EMR </span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/Mtamplate" class="vsm-link">
+                          <span class="vsm-title">Template EMR </span></a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' ||
                           akses === 'Dokter' ||
                           akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mtamplatebhp"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Template BHP </span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mtamplatebhp" class="vsm-link">
+                          <span class="vsm-title">Template BHP </span></a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mdokter"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Dokter</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mdokter" class="vsm-link">
+                          <span class="vsm-title">Dokter</span></a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' ||
                           akses === 'Kasir' ||
                           akses === 'Kasir Koordinator' ||
                           akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mjadwal"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Jadwal Dokter</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mjadwal" class="vsm-link">
+                          <span class="vsm-title">Jadwal Dokter</span></a>
                       </div>
                       <!-- <div class="vsm-item">
                         <a routerLinkActive="active-item" class="vsm-link">
                           <span class="vsm-title">Login</span></a>
                       </div> -->
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' ||
                           akses === 'administrator' ||
                           akses === 'Laborat'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mtarif"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Tarif</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mtarif" class="vsm-link">
+                          <span class="vsm-title">Tarif</span></a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mcustumer"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Kelompok Pasien</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mcustumer" class="vsm-link">
+                          <span class="vsm-title">Kelompok Pasien</span></a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Laborat' ||
                           akses === 'Manajemen' ||
                           akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mlab"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Master Laboratorium</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mlab" class="vsm-link">
+                          <span class="vsm-title">Master Laboratorium</span></a>
                       </div>
 
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/mkamar"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Kamar</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/mkamar" class="vsm-link">
+                          <span class="vsm-title">Kamar</span></a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/oktindakan"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Tindakan OP/VK</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/oktindakan" class="vsm-link">
+                          <span class="vsm-title">Tindakan OP/VK</span></a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/spesialisasi"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Spesialisasi</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/spesialisasi" class="vsm-link">
+                          <span class="vsm-title">Spesialisasi</span></a>
                       </div>
-                      <div
-                        class="vsm-item"
-                        *ngIf="
+                      <div class="vsm-item" *ngIf="
                           akses === 'Manajemen' || akses === 'administrator'
-                        "
-                      >
-                        <a
-                          routerLinkActive="active-item"
-                          routerLink="/master/assperawat"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Ass Perawat</span></a
-                        >
+                        ">
+                        <a routerLinkActive="active-item" routerLink="/master/assperawat" class="vsm-link">
+                          <span class="vsm-title">Ass Perawat</span></a>
                       </div>
                       <div class="vsm-item">
-                        <a
-                          routerLinkActive="active-item"
-                          (click)="displayc()"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Display Antrian</span></a
-                        >
+                        <a routerLinkActive="active-item" (click)="displayc()" class="vsm-link">
+                          <span class="vsm-title">Display Antrian</span></a>
                       </div>
                       <div class="vsm-item">
-                        <a
-                          routerLinkActive="active-item"
-                          (click)="kanjungan()"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Anjungan</span></a
-                        >
+                        <a routerLinkActive="active-item" (click)="kanjungan()" class="vsm-link">
+                          <span class="vsm-title">Anjungan</span></a>
                       </div>
                       <div class="vsm-item">
-                        <a
-                          routerLinkActive="active-item"
-                          (click)="kanjungans()"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Anjungan SEHAT</span></a
-                        >
+                        <a routerLinkActive="active-item" (click)="kanjungans()" class="vsm-link">
+                          <span class="vsm-title">Anjungan SEHAT</span></a>
                       </div>
 
                       <!-- <div class="vsm-item" *ngIf="akses === 'Manajemen' || akses === 'administrator'  ">
