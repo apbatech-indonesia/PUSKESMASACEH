@@ -22,8 +22,10 @@ export class skriningService {
   }
   
   getSkrinigById(data:any) {
+    let urlMock = 'https://16f3fc19dc1c4661884e009029ca3207.api.mockbin.io/'
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'screening/search', data, { headers: this.headers }).subscribe((data) => {
+      // this.http.post(urlMock, data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })

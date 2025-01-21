@@ -64,7 +64,7 @@ import { DatePipe } from '@angular/common';
   ],
 })
 export class skriningComponent implements OnInit {
-
+  test = ''
   heading = 'Skrining';
   subheading: any;
   options: FormGroup;
@@ -86,6 +86,9 @@ export class skriningComponent implements OnInit {
   arrCluster: any = [];
   clusterId: number;
   arrSkrining: any = [];
+  questions: any = [];
+  titleModal: string;
+  subTitleModal: string;
 
 
   constructor(
@@ -118,7 +121,6 @@ export class skriningComponent implements OnInit {
     try {
       let response: any = await this.serviceUrl.getCluster();
       this.arrCluster = response.data;
-      Swal.close();
     } catch (error) {
       Swal.fire({
         icon: 'error',
@@ -139,37 +141,44 @@ export class skriningComponent implements OnInit {
       "order_by": "id",
       "order_type": "Asc"
     }
-    Swal.fire({
-      title: 'Mohon Tunggu!',
-      allowEscapeKey: false,
-      allowOutsideClick: false,
-      timer: 1500,
-      didOpen: async () => {
-        try {
-          let response: any = await this.serviceUrl.getSkrinigById(body);
-          this.arrSkrining = response.data;
-        } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'Gagal memuat data. Silakan coba lagi.',
-          });
-        }
-      }
-    }).then(
-      () => { },
-      (dismiss) => {
-
-      }
-    )
+    try {
+      let response: any = await this.serviceUrl.getSkrinigById(body);
+      this.arrSkrining = response.data;
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Gagal memuat data. Silakan coba lagi.',
+      });
+    }
   }
 
-  openModal(content) {
+  openModal(content, data) {
+    this.titleModal = `${data.clusters[0].group} ${data.clusters[0].name}`
+    this.subTitleModal = `${data.name}`
+    this.questions = data.questionnaires.map(item => {
+      try {
+          let nilaiDef = ['Input','reference','Singgle','Select'].includes(item.type) ? '' : JSON.parse(item.default_options)
+          return { ...item, default_options: nilaiDef };
+      } catch (error) {
+          console.error(`Error parsing default_options for id ${item.id}:`, error);
+          return item;
+      }
+    });
     this.modalService.open(content, {size: 'lg', ariaLabelledBy: 'modal'}).result.then((result) => {
       this.closeResultModal = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResultModal = `Dismissed ${this.getDismissReasonModal(reason)}`;
     });
+  }
+
+  change() {
+    console.log(this.questions)
+  }
+
+  simpan(){
+    console.log('this.questions simpan')
+    console.log(this.questions)
   }
   
   private getDismissReasonModal(reason: any): string {
@@ -181,7 +190,4 @@ export class skriningComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
-
-
-
 }
