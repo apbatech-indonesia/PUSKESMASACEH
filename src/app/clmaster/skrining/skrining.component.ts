@@ -1,5 +1,5 @@
 
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ApiserviceService } from 'src/app/apiservice.service';
@@ -48,9 +48,107 @@ import { DatePipe } from '@angular/common';
     .example-container .mat-radio-button {
       margin: 0 5px;
     }
+
+    .card-header-custom {
+      height: 44px;
+      background-color: #1D2D44;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: normal;
+      letter-spacing: 0px;
+    }
+
+    .fw-semi-custom {
+      font-weight: 600;
+    }
+
+    .text-primary-custom {
+      color: #2329BE;
+    }
+
+    .edit-skrining-button-custom {
+      background-color: #2329BE;
+      width: auto;
+      height: 36px;
+      color: white;
+      padding: 4px 10px 4px 10px;
+      border-style: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    
+    .create-skrining-button-custom {
+      background-color: #009688;
+      width: auto;
+      height: 36px;
+      color: white;
+      padding: 4px 10px 4px 10px;
+      border-style: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .w-btn-custom {
+      width: 121px !important;    
+    }
+
+    .h-btn-custom {
+      height: 36px !important;
+    }
+
+    .search-button-custom {
+      background-color: #4AB4DE;
+      width: auto;
+      height: 36px;
+      color: white;
+      padding: 6px 14px 6px 14px;
+      border-style: none;
+      border-radius: 6px;
+    }
+
+    .save-button-custom {
+      background-color: #29A259;
+      width: auto;
+      height: 36px;
+      color: white;
+      padding: 4px 10px 4px 10px;
+      border-style: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .save-button-custom:disabled {
+      background-color: #979797;
+      width: auto;
+      height: 36px;
+      color: white;
+      padding: 4px 10px 4px 10px;
+      border-style: none;
+      border-radius: 6px;
+    }
+
+    .cancel-button-custom {
+      background-color: #CD1818;
+      width: auto;
+      height: 36px;
+      color: white;
+      padding: 4px 10px 4px 10px;
+      border-style: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
     ::ng-deep .accordion .bg-test {
-      background-color:rgb(222 238 249);
+      background-color: white;
       height: 2.5rem;
+      border: solid 1px #DAD5D5;
+    }  
+    ::ng-deep .accordion .collapse {
+      border: solid 1px #DAD5D5;
+    }  
+    ::ng-deep .accordion .collapse .card-body{
+      padding: 0px;
     }  
     `
   ], providers: [
@@ -64,6 +162,11 @@ import { DatePipe } from '@angular/common';
   ],
 })
 export class skriningComponent implements OnInit {
+  @Input() norm: string;
+  @Input() idpasien: string;
+  
+  userData: any = JSON.parse(localStorage.getItem('userDatacl')).userData
+  notransaksi: string = this.route.snapshot.paramMap.get('notrans')
 
   heading = 'Skrining';
   subheading: any;
@@ -86,6 +189,24 @@ export class skriningComponent implements OnInit {
   arrCluster: any = [];
   clusterId: number;
   arrSkrining: any = [];
+  questions: any = [];
+  titleModal: string;
+  subTitleModal: string;
+
+  patientData: any = {
+    noantrian: '-',
+    norm: '-',
+    pasien: '-',
+    umur: '-',
+    tgllahir: '-',
+    jeniskelamin: '-',
+    nampoli: '-',
+    costumer: '-',
+    namdokter: '-',
+    alamat: '-'
+  }
+  cabangData: any;
+  useCaseId: any;
 
 
   constructor(
@@ -100,6 +221,7 @@ export class skriningComponent implements OnInit {
   ) {
     NgbAccordionConfig.closeOthers = true;
     NgbAccordionConfig.type = 'test';
+    NgbAccordionConfig.animation = true;
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.no_transaksi = localStorage.getItem('noTransaksi');
     this.no_rm = localStorage.getItem('noRM');
@@ -112,11 +234,89 @@ export class skriningComponent implements OnInit {
 
   ngOnInit() {
     this.ambilDataCluster();
+    // this.initPage()
+  }
+
+  showLoading() {
+    Swal.fire('Mohon tunggu!')
+    Swal.showLoading()
+    this.stopLoading(5000)
+  }
+
+  stopLoading(timing: number = 1000) {
+    setTimeout(() => { Swal.close() }, timing)
+  }
+
+  getPasien() {
+    return new Promise((resolve) => {
+      this.authService.datapasien(this.userData.kdcabang, this.notransaksi)
+        .subscribe((data) => {
+          data.forEach(e => {
+            resolve(e)
+          })
+        })
+    })
+  }
+
+  getCabang() {
+    return new Promise((resolve) => {
+      this.authService.cabangper(this.userData.kdklinik)
+        .subscribe((data) => {
+          data.forEach(e => {
+            resolve(e)
+          })
+        })
+    })
+  }
+
+  async initPage() {
+    this.showLoading()
+    this.patientData = await this.getPasien()
+    this.cabangData = await this.getCabang()
+
+    const data = {
+      rmno: this.norm,
+      orgId: this.cabangData.kodeorg,
+      branchId: this.cabangData.kdcabang,
+      villageId: "",
+      patientId: this.idpasien,
+      clusterId: "",
+      patientName: this.patientData.pasien,
+      locationId: this.patientData.locationid,
+      locationName: this.patientData.locationid,
+      visitDate: new Date().toISOString(),
+      screening_ids: []
+    }
+    console.log('data init')
+    console.log(data)
+    // let response: any = await this.serviceUrl.register({
+    //   data: {
+    //     rmno: this.notransaksi,
+    //     orgId: this.cabangData.kodeorg,
+    //     branchId: "",
+    //     villageId: "",
+    //     patientId: this.idpasien,
+    //     clusterId: "",
+    //     patientName: this.patientData.pasien,
+    //     locationId: this.patientData.locationid,
+    //     locationName: this.patientData.locationid,
+    //     visitDate:"",
+    //     screening_ids: []
+    //   }
+    // })
+    // this.useCaseId = response.data.use_case_id
+    // this.ambilDataCluster()
   }
 
   async ambilDataCluster() {
     try {
-      let response: any = await this.serviceUrl.getCluster();
+      let response: any = await this.serviceUrl.getCluster({
+        // rmno: "02-047-02",     
+        // patientId: "P01078707999"
+        // rmno: this.norm,     
+        // patientId: ''
+        // patientId: this.idpasien
+      });
       this.arrCluster = response.data;
     } catch (error) {
       Swal.fire({
@@ -128,6 +328,7 @@ export class skriningComponent implements OnInit {
   }
 
   async getClusterById(idCluster){
+    this.arrSkrining = [];
     this.clusterId = idCluster;
     const body = {
       "show_child" : "yes",
@@ -138,37 +339,58 @@ export class skriningComponent implements OnInit {
       "order_by": "id",
       "order_type": "Asc"
     }
-    Swal.fire({
-      title: 'Mohon Tunggu!',
-      allowEscapeKey: false,
-      allowOutsideClick: false,
-      timer: 1500,
-      didOpen: async () => {
-        try {
-          let response: any = await this.serviceUrl.getSkrinigById(body);
-          this.arrSkrining = response.data;
-        } catch (error) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'Gagal memuat data. Silakan coba lagi.',
-          });
-        }
-      }
-    }).then(
-      () => { },
-      (dismiss) => {
-
-      }
-    )
+    try {
+      let response: any = await this.serviceUrl.getSkrinigById(body);
+      this.arrSkrining = response.data;
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Gagal memuat data. Silakan coba lagi.',
+      });
+    }
   }
 
-  openModal(content) {
-    this.modalService.open(content, {size: 'lg', ariaLabelledBy: 'modal'}).result.then((result) => {
+  openModal(content, data, cluster, subCluster, number) {
+    this.titleModal = `${cluster} - ${subCluster}`
+    this.subTitleModal = `${number}. ${data.name}`
+    this.questions = data.questionnaires
+    this.modalService.open(content, {size: 'xl', ariaLabelledBy: 'modal'}).result.then((result) => {
       this.closeResultModal = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResultModal = `Dismissed ${this.getDismissReasonModal(reason)}`;
     });
+  }
+
+  change() {
+    console.log(this.questions)
+  }
+
+  onCheckedCQuestions(value, index){
+    this.questions.forEach((item, idx) => {
+      if (idx === index) {
+        let arrAnswer = []
+        if(!item.answer){
+          arrAnswer.push(value)
+        }else if(item.answer.lenght === 0){
+          arrAnswer.push(value)
+        }else{
+          arrAnswer = item.answer
+          const indexItem = item.answer.indexOf(value);
+          if (indexItem !== -1) {
+            arrAnswer.splice(indexItem, 1);
+          } else {
+            arrAnswer.push(value)
+          }
+        }
+        item.answer = arrAnswer
+      }
+    });
+  }
+
+  simpan(){
+    console.log('this.questions simpan')
+    console.log(this.questions)
   }
   
   private getDismissReasonModal(reason: any): string {
@@ -180,7 +402,4 @@ export class skriningComponent implements OnInit {
       return  `with: ${reason}`;
     }
   }
-
-
-
 }
