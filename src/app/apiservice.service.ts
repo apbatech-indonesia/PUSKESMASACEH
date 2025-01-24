@@ -535,6 +535,12 @@ export class ApiserviceService {
       apiurx + "master/caridokter.php?kdcabang=" + a + "&dokter=" + b
     );
   }
+
+  dokterbyid(a, b): Observable<any> {
+    return this.http.get(
+      apiurx + "master/dokterbyid.php?kdcabang=" + a + "&dokter=" + b
+    );
+  }
   carirekening(a, b): Observable<any> {
     return this.http.get(
       apiurx + "master/carirekening.php?kdcabang=" + a + "&akun=" + b
@@ -3351,5 +3357,21 @@ export class ApiserviceService {
         "&tgl=" +
         c
     );
+  }
+  ceknoantrian(a, b, c, d): Observable<any> {
+    return this.http.get(
+      apiurx +
+        "master/ceknoantrian.php?dokter=" +
+        a +
+        "&kdpoli=" +
+        b +
+        "&tgl=" +
+        c +
+        "&kdcabang=" +
+        d
+    );
+  }
+  editpoli(): Observable<any> {
+    return this.http.get(apiurx + "pcare/editpoli.php");
   }
 }

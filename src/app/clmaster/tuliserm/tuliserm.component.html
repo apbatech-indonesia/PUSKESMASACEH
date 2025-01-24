@@ -123,12 +123,14 @@
 
       <ul ngbNav #nav1="ngbNav" class="nav-tabs">
         <li ngbNavItem (click)="showcppt()">
-          <a
-            ngbNavLink
-            class="mb-2 me-2 btn btn-secondary"
-            style="background-color: #16aaff"
-            >CPPT</a
+          <a ngbNavLink
+            ><button
+              class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
+            >
+              CPPT
+            </button></a
           >
+
           <ng-template ngbNavContent>
             <div class="card main-card mb-3">
               <div class="card-header">
@@ -145,8 +147,7 @@
                     *ngIf="showdatacppt"
                     (click)="cetakriwayat()"
                     style="font-size: 20px"
-                    class="font-icon-wrapper pe-7s-news-paper
-                    "
+                    class="font-icon-wrapper pe-7s-news-paper"
                   >
                   </i>
                 </b>
@@ -2865,27 +2866,28 @@ Normal: teraba jelas
         </li>
 
         <li ngbNavItem>
-          <a
-            ngbNavLink
-            class="mb-2 me-2 btn btn-secondary"
-            style="background-color: #16aaff"
-          >
-            Skrining</a
+          <a ngbNavLink
+            ><button
+              class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
+            >
+              SKRENING
+            </button></a
           >
           <ng-template ngbNavContent>
+            <b>Skrening & ILP - Lounching 6-8 Februari 2025</b>
             <app-skrining> </app-skrining>
           </ng-template>
         </li>
-        
+
         <li ngbNavItem>
-          <a
-            ngbNavLink
-            (click)="klikrwo()"
-            class="mb-2 me-2 btn btn-secondary"
-            style="background-color: #16aaff"
+          <a ngbNavLink (click)="klikrwo()"
+            ><button
+              class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
+            >
+              TINDAKAN
+            </button></a
           >
-            Tindakan</a
-          >
+
           <ng-template ngbNavContent>
             <table class="table table-striped" *ngIf="ttindakxshow">
               <thead>
@@ -2965,14 +2967,14 @@ Normal: teraba jelas
         </li>
 
         <li ngbNavItem>
-          <a
-            ngbNavLink
-            (click)="hasilmcu()"
-            class="mb-2 me-2 btn btn-secondary"
-            style="background-color: #16aaff"
+          <a ngbNavLink (click)="hasilmcu()"
+            ><button
+              class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
+            >
+              MCU
+            </button></a
           >
-            MCU</a
-          >
+
           <ng-template ngbNavContent>
             <!-- <mcuComponent></mcuComponent> -->
             <div class="table-responsive">
@@ -3110,14 +3112,14 @@ Normal: teraba jelas
         </li>
 
         <li ngbNavItem>
-          <a
-            ngbNavLink
-            (click)="getriwayatkunjungan()"
-            class="mb-2 me-2 btn btn-secondary"
-            style="background-color: #16aaff"
+          <a ngbNavLink (click)="getriwayatkunjungan()"
+            ><button
+              class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
+            >
+              RIWAYAT KUNJUNGAN
+            </button></a
           >
-            Riwayat Kunjungan</a
-          >
+
           <ng-template ngbNavContent>
             <div class="card main-card mb-3" *ngIf="showloadingper">
               <div class="card-body">
@@ -3212,13 +3214,14 @@ Normal: teraba jelas
         </li>
 
         <li ngbNavItem>
-          <a
-            ngbNavLink
-            (click)="icare()"
-            class="mb-2 me-2 btn btn-secondary"
-            style="background-color: #16aaff"
-            >I Care</a
+          <a ngbNavLink (click)="icare()"
+            ><button
+              class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
+            >
+              I CARE
+            </button></a
           >
+
           <ng-template ngbNavContent>
             <div class="bg-white">
               <iframe
@@ -3232,17 +3235,15 @@ Normal: teraba jelas
         </li>
 
         <li ngbNavItem>
-          <a
-            ngbNavLink
-            (click)="klikrwo()"
-            class="mb-2 me-2 btn btn-secondary"
-            style="background-color: #16aaff"
+          <a ngbNavLink (click)="klikrwo()"
+            ><button
+              class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
+            >
+              R.OBAT
+              <span class="badge rounded-pill bg-danger">{{ jumlahobat }}</span>
+            </button></a
           >
-            Riwayat Obat
-            <span class="badge rounded-pill bg-danger">{{
-              jumlahobat
-            }}</span></a
-          >
+
           <ng-template ngbNavContent>
             <div
               class="app-inner-layout__wrapper"
@@ -3320,15 +3321,14 @@ Normal: teraba jelas
         </li>
 
         <li ngbNavItem>
-          <a
-            ngbNavLink
-            (click)="klikrw()"
-            class="mb-2 me-2 btn btn-secondary"
-            style="background-color: #16aaff"
+          <a ngbNavLink (click)="klikrw()"
+            ><button
+              class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
+            >
+              R.RESUME
+            </button></a
           >
-            Riwayat Resume
-            <span class="badge rounded-pill bg-danger">{{ jumlahrwt }}</span></a
-          >
+
           <ng-template ngbNavContent>
             <div
               class="app-inner-layout__wrapper"
@@ -3388,13 +3388,14 @@ Normal: teraba jelas
           </ng-template>
         </li>
         <li ngbNavItem>
-          <a
-            ngbNavLink
-            (click)="klab()"
-            class="mb-2 me-2 btn btn-secondary"
-            style="background-color: #16aaff"
-            >Riwayat Laborat</a
+          <a ngbNavLink (click)="klab()"
+            ><button
+              class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
+            >
+              R.LABORAT
+            </button></a
           >
+
           <ng-template ngbNavContent>
             <div
               class="app-inner-layout__wrapper"
@@ -3691,7 +3692,7 @@ Normal: teraba jelas
             </div>
           </ng-template>
         </li>
-        <li ngbNavItem>
+        <!-- <li ngbNavItem>
           <a
             ngbNavLink
             (click)="krad()"
@@ -3832,7 +3833,7 @@ Normal: teraba jelas
               </div>
             </div>
           </ng-template>
-        </li>
+        </li> -->
 
         <!-- KAJIAN AWAL -->
 
@@ -3937,13 +3938,14 @@ Normal: teraba jelas
         </ng-template>
         </li> -->
         <li ngbNavItem>
-          <a
-            ngbNavLink
-            class="mb-2 me-2 btn btn-secondary"
-            style="background-color: #16aaff"
-            (click)="riwayatrj()"
-            >Riwayat Rujukan</a
+          <a ngbNavLink
+            ><button
+              class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
+            >
+              R.RUJUKAN
+            </button></a
           >
+
           <ng-template ngbNavContent>
             <div class="table-responsive tableFixHead">
               <table class="table">
@@ -3993,12 +3995,14 @@ Normal: teraba jelas
         </li>
 
         <li ngbNavItem>
-          <a
-            ngbNavLink
-            class="mb-2 me-2 btn btn-secondary"
-            style="background-color: #16aaff"
-            >Form EMR
-          </a>
+          <a ngbNavLink
+            ><button
+              class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
+            >
+              Form EMR
+            </button></a
+          >
+
           <ng-template ngbNavContent>
             <div
               class="app-inner-layout__wrapper"
@@ -4122,12 +4126,14 @@ Normal: teraba jelas
         </li>
 
         <li ngbNavItem>
-          <a
-            ngbNavLink
-            class="mb-2 me-2 btn btn-secondary"
-            style="background-color: #16aaff"
-            >Kumpulan Form
-          </a>
+          <a ngbNavLink
+            ><button
+              class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
+            >
+              Kumpulan Form
+            </button></a
+          >
+
           <ng-template ngbNavContent>
             <div
               class="app-inner-layout__wrapper"
