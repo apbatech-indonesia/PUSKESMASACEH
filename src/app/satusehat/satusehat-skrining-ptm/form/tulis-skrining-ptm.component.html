@@ -569,8 +569,10 @@
                   <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
                       <label class="form-label">Observations : Inspection of vagina using vaginal speculum</label>
-                      <input type="text" id="terpapar_asap_rokok" class="form-control"
-                        [(ngModel)]="deteksiDiniKankerServicObservation.result">
+                      <select class="form-control" [(ngModel)]="deteksiDiniKankerServicObservation.result">
+                        <option [value]="'Detected'">Detected</option>
+                        <option [value]="'Not Detected'">Not Detected</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -597,8 +599,10 @@
                   <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
                       <label class="form-label">Observations : Aceto-white reaction</label>
-                      <input type="text" id="terpapar_asap_rokok" class="form-control"
-                        [(ngModel)]="deteksiDiniKankerServicIvaObservation.result">
+                      <select class="form-control" [(ngModel)]="deteksiDiniKankerServicIvaObservation.result">
+                        <option [value]="'Detected'">Detected</option>
+                        <option [value]="'Not Detected'">Not Detected</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -614,7 +618,6 @@
                 <div class="row">
                   <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
-                      <label class="form-label">ServiceRequest</label>
                       <app-master-diagnosa [searchDiagnosaText]="deteksiDiniKankerServicHpvServiceRequest?.display"
                         (selectedItem)="
                         deteksiDiniKankerServicHpvServiceRequest.code = $event.kddiagnosa;
@@ -623,9 +626,34 @@
                       </app-master-diagnosa>
                     </div>
                   </div>
-                  <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
-                      <label class="form-label">Specimen</label>
+                      <label for="numerator_mata_kiri" class="form-label">Cervical Swab Specimen</label>
+                      <select class="form-control" [(ngModel)]="deteksiDiniKankerServicHpvSpecimen.status">
+                        <option [value]="'available'">available</option>
+                        <option [value]="'unavailable'">unavailable</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <label class="form-label" for="hpv_observation">Observations : Human papilloma virus DNA
+                        [Presence] in Cervix by Probe</label>
+                      <select class="form-control" [(ngModel)]="deteksiDiniKankerServicHpvObservation.result">
+                        <option [value]="'Detected'">Detected</option>
+                        <option [value]="'Not Detected'">Not Detected</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <label class="form-label" for="hpv_observation">Diagnostic Report : Human papilloma virus DNA
+                        [Presence] in Cervix by Probe</label>
+                      <select class="form-control" [(ngModel)]="deteksiDiniKankerServicHpvDiagnosticReport.code"
+                        (change)="deteksiDiniKankerServicHpvDiagnosticReport.display = deteksiDiniKankerServicHpvDiagnosticReport.code == 'N' ? 'Normal' : 'Abnormal'">
+                        <option [value]="'N'">Normal</option>
+                        <option [value]="'A'">Abnormal</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -639,50 +667,24 @@
               <div class="card-header navy">IVA Positif</div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
-                      <label class="form-label">ServiceRequest</label>
+                      <app-master-diagnosa
+                        [searchDiagnosaText]="deteksiDiniKankerServicIvaPositifServiceRequest?.display" (selectedItem)="
+                        deteksiDiniKankerServicIvaPositifIntervensiDitolak.code = $event.kddiagnosa;
+                        deteksiDiniKankerServicIvaPositifIntervensiDitolak.display = $event.diagnosa;
+                        deteksiDiniKankerServicIvaPositifServiceRequest.code = $event.kddiagnosa;
+                        deteksiDiniKankerServicIvaPositifServiceRequest.display = $event.diagnosa;
+                        ">
+                      </app-master-diagnosa>
                     </div>
                   </div>
-                  <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
-                      <label class="form-label">Intervensi ditolak - Procedures</label>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-6">
-                    <div class="position-relative mb-3">
-                      <label class="form-label">Patient referral - ServiceRequests</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- PTM - Kanker Payudara -->
-          <div class="col-6">
-            <div class="card mb-3">
-              <div class="card-header navy">Kanker Payudara</div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-12 col-lg-6">
-                    <div class="position-relative mb-3">
-                      <label class="form-label">Sadanis - Observations</label>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-6">
-                    <div class="position-relative mb-3">
-                      <label class="form-label">USG - ServiceRequest</label>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-6">
-                    <div class="position-relative mb-3">
-                      <label class="form-label">Hasil USG - Observations</label>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-6">
-                    <div class="position-relative mb-3">
-                      <label class="form-label">Hasil USG - DiagnosticReport</label>
+                      <label for="numerator_mata_kiri" class="form-label">Instruksi Rujukan</label>
+                      <textarea [(ngModel)]="deteksiDiniKankerServicIvaPositifPatientReferral.patientInstruction"
+                        (change)="deteksiDiniKankerServicIvaPositifServiceRequest.patientInstruction = deteksiDiniKankerServicIvaPositifPatientReferral.patientInstruction"
+                        class="form-control"></textarea>
                     </div>
                   </div>
                 </div>
@@ -691,14 +693,164 @@
           </div>
 
           <!-- PTM - Kanker Jantung -->
-          <div class="col-6">
+          <div class="col-12">
             <div class="card mb-3">
               <div class="card-header navy">Kanker Jantung</div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-12 col-lg-6">
+                  <!-- Pertanyaan 1 -->
+                  <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
-                      <label class="form-label">QuestionnareResponse</label>
+                      <label class="form-label" for="pernah_menderita_kanker">Apakah pernah didiagnosis/menderita
+                        kanker</label>
+                      <select class="form-control" id="pernah_menderita_kanker"
+                        [(ngModel)]="deteksiDiniKankerJantungQuestionnareResponse.pernah_menderita_kanker">
+                        <option [value]="'Ya'">Ya</option>
+                        <option [value]="'Tidak'">Tidak</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Pertanyaan 2 -->
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <label class="form-label" for="keluarga_menderita_kanker">Apakah ada keluarga (ayah/ibu/saudara
+                        kandung) didiagnosis/menderita kanker sebelumnya</label>
+                      <select class="form-control" id="keluarga_menderita_kanker"
+                        [(ngModel)]="deteksiDiniKankerJantungQuestionnareResponse.keluarga_menderita_kanker">
+                        <option [value]="'Ya'">Ya</option>
+                        <option [value]="'Tidak'">Tidak</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Pertanyaan 3 -->
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <label class="form-label" for="riwayat_merokok">Riwayat merokok/paparan asap rokok</label>
+                      <select class="form-control" id="riwayat_merokok"
+                        [(ngModel)]="deteksiDiniKankerJantungQuestionnareResponse.riwayat_merokok">
+                        <option [value]="'Sering'">Sering</option>
+                        <option [value]="'Kadang-kadang'">Kadang-kadang</option>
+                        <option [value]="'Tidak Pernah'">Tidak Pernah</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Pertanyaan 4 -->
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <label class="form-label" for="riwayat_tempat_kerja">Riwayat tempat kerja mengandung zat
+                        karsinogenik (Pertambangan/pabrik/bengkel/garmen/bangunan/laboratorium/sopir/galangan kapal,
+                        dll)</label>
+                      <select class="form-control" id="riwayat_tempat_kerja"
+                        [(ngModel)]="deteksiDiniKankerJantungQuestionnareResponse.riwayat_tempat_kerja">
+                        <option [value]="'Ya'">Ya</option>
+                        <option [value]="'Tidak'">Tidak</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Pertanyaan 5 -->
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <label class="form-label" for="lingkungan_berpotensi_tinggi">Lingkungan tempat tinggal berpotensi
+                        tinggi (lingkungan dekat pabrik/pertambangan/buangan sampah, dll)</label>
+                      <select class="form-control" id="lingkungan_berpotensi_tinggi"
+                        [(ngModel)]="deteksiDiniKankerJantungQuestionnareResponse.lingkungan_berpotensi_tinggi">
+                        <option [value]="'Ya'">Ya</option>
+                        <option [value]="'Tidak'">Tidak</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Pertanyaan 6 -->
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <label class="form-label" for="lingkungan_rumah_tidak_sehat">Lingkungan dalam rumah yang tidak
+                        sehat (ventilasi buruk/atap dari asbes/lantai tanah, dapur tungku, dll)</label>
+                      <select class="form-control" id="lingkungan_rumah_tidak_sehat"
+                        [(ngModel)]="deteksiDiniKankerJantungQuestionnareResponse.lingkungan_rumah_tidak_sehat">
+                        <option [value]="'Ya'">Ya</option>
+                        <option [value]="'Tidak'">Tidak</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Pertanyaan 7 -->
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <label class="form-label" for="penyakit_paru_kronik">Pernah didiagnosis penyakit paru
+                        kronik</label>
+                      <select class="form-control" id="penyakit_paru_kronik"
+                        [(ngModel)]="deteksiDiniKankerJantungQuestionnareResponse.penyakit_paru_kronik">
+                        <option [value]="'Ya'">Ya</option>
+                        <option [value]="'Tidak'">Tidak</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Hasil Kuesioner -->
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <label class="form-label" for="hasil_kuesioner">Hasil Kuesioner</label>
+                      <select class="form-control" id="hasil_kuesioner"
+                        [(ngModel)]="deteksiDiniKankerJantungQuestionnareResponse.hasil_kuesioner">
+                        <option [value]="'High risk'">Resiko Tinggi</option>
+                        <option [value]="'Medium risk'">Resiko Sedang</option>
+                        <option [value]="'Low risk'">Resiko Rendah</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!-- PTM - Kanker Payudara -->
+          <div class="col-6">
+            <div class="card mb-3">
+              <div class="card-header navy">Kanker Payudara</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <app-master-diagnosa [searchDiagnosaText]="deteksiDiniKankerPayudaraUsgServiceRequest?.display"
+                        (selectedItem)="
+                        deteksiDiniKankerPayudaraUsgServiceRequest.code = $event.kddiagnosa;
+                        deteksiDiniKankerPayudaraUsgServiceRequest.display = $event.diagnosa;
+                        ">
+                      </app-master-diagnosa>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <label class="form-label">Observations : Hasil USG</label>
+                      <select class="form-control" [(ngModel)]="deteksiDiniKankerPayudaraHasilUsgObservation.display">
+                        <option [value]="'Breast normal'">Kondisi Normal</option>
+                        <option [value]="'Breast abnormal'">Kondisi Tidak Normal</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <label class="form-label">Hasil USG - DiagnosticReport</label>
+                      <select class="form-control"
+                        [(ngModel)]="deteksiDiniKankerPayudaraHasilUsgDiagnosticReport.display">
+                        <option [value]="'Breast normal'">Kondisi Normal</option>
+                        <option [value]="'Breast abnormal'">Kondisi Tidak Normal</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-12 col-lg-12">
+                    <div class="position-relative mb-3">
+                      <label class="form-label">Observations : Sadanis</label>
+                      <select class="form-control" [(ngModel)]="deteksiDiniKankerPayudaraSadanisObservation.display">
+                        <option [value]="'Breast normal'">Kondisi Normal</option>
+                        <option [value]="'Breast abnormal'">Kondisi Tidak Normal</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -712,29 +864,88 @@
               <div class="card-header navy">Kanker Kolorektal</div>
               <div class="card-body">
                 <div class="row">
-                  <div class="col-12 col-lg-6">
-                    <div class="position-relative mb-3">
-                      <label class="form-label">QuestionnareResponse</label>
+                  <div class="container">
+                    <div class="row">
+                      <!-- Pertanyaan 1 -->
+                      <div class="col-12 col-lg-12">
+                        <div class="position-relative mb-3">
+                          <label class="form-label" for="riwayat_keluarga_kanker_kolorektal">Riwayat keluarga kanker
+                            kolorektal generasi pertama (Ayah atau Ibu kandung, kakak atau adik kandung)</label>
+                          <select class="form-control" id="riwayat_keluarga_kanker_kolorektal"
+                            [(ngModel)]="deteksiDiniKankerKolorektalQuestionnareResponse.riwayat_keluarga_kanker_kolorektal">
+                            <option [value]="'Ya'">Ya</option>
+                            <option [value]="'Tidak'">Tidak</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <!-- Pertanyaan 2 -->
+                      <div class="col-12 col-lg-12">
+                        <div class="position-relative mb-3">
+                          <label class="form-label" for="pernah_merokok">Apakah peserta pernah merokok?</label>
+                          <select class="form-control" id="pernah_merokok"
+                            [(ngModel)]="deteksiDiniKankerKolorektalQuestionnareResponse.pernah_merokok">
+                            <option [value]="'Ya'">Ya</option>
+                            <option [value]="'Tidak'">Tidak</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <!-- Hasil Skoring -->
+                      <div class="col-12 col-lg-12">
+                        <div class="position-relative mb-3">
+                          <label class="form-label" for="hasil_skoring">Hasil Skoring</label>
+                          <select class="form-control" id="hasil_skoring"
+                            [(ngModel)]="deteksiDiniKankerKolorektalQuestionnareResponse.hasil_skoring">
+                            <option [value]="'High risk'">Resiko Tinggi</option>
+                            <option [value]="'Medium risk'">Resiko Sedang</option>
+                            <option [value]="'Low risk'">Resiko Rendah</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div class="col-12 col-lg-6">
+
+                  <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
-                      <label class="form-label">Pemeriksaan Darah - ServiceRequest</label>
+                      <app-master-diagnosa
+                        [searchDiagnosaText]="deteksiDiniKankerKolorektalPemeriksaanDarahServiceRequest?.display"
+                        (selectedItem)="
+                        deteksiDiniKankerKolorektalPemeriksaanDarahServiceRequest.code = $event.kddiagnosa;
+                        deteksiDiniKankerKolorektalPemeriksaanDarahServiceRequest.display = $event.diagnosa;
+                        ">
+                      </app-master-diagnosa>
                     </div>
                   </div>
-                  <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
-                      <label class="form-label">Pemeriksaan Darah - Specimens</label>
+                      <label for="numerator_mata_kiri" class="form-label">Specimen : Pemeriksaan Darah</label>
+                      <select class="form-control"
+                        [(ngModel)]="deteksiDiniKankerKolorektalPemeriksaanDarahSpecimen.status">
+                        <option [value]="'available'">available</option>
+                        <option [value]="'unavailable'">unavailable</option>
+                      </select>
                     </div>
                   </div>
-                  <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
-                      <label class="form-label">Pemeriksaan Darah - Observations</label>
+                      <label class="form-label" for="hpv_observation">Observations : Pemeriksaan Darah</label>
+                      <select class="form-control"
+                        [(ngModel)]="deteksiDiniKankerKolorektalPemeriksaanDarahObservations.display">
+                        <option [value]="'Detected'">Detected</option>
+                        <option [value]="'Not Detected'">Not Detected</option>
+                      </select>
                     </div>
                   </div>
-                  <div class="col-12 col-lg-6">
+                  <div class="col-12 col-lg-12">
                     <div class="position-relative mb-3">
-                      <label class="form-label">Pemeriksaan USG - DiagnosticReport</label>
+                      <label class="form-label" for="hpv_observation">Diagnostic Report : Hemoglobin.gastrointestinal
+                        [Presence] in Stool --1st specimen</label>
+                      <select class="form-control"
+                        [(ngModel)]="deteksiDiniKankerKolorektalPemeriksaanDarahDiagnosticReport.display">
+                        <option [value]="'Normal'">Normal</option>
+                        <option [value]="'Abnormal'">Abnormal</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -900,8 +1111,12 @@
         <div class="row">
           <div class="col-12 col-lg-12">
             <div class="position-relative mb-3">
-              <label class="form-label">Observations Ekg</label>
-              <input type="text" id="terpapar_asap_rokok" class="form-control" [(ngModel)]="deteksiDiniJantung.result">
+              <label class="form-label">Observations : Hasil Pemeriksaan Ekg</label>
+              <select class="form-control" id="pernah_menderita_kanker"
+                [(ngModel)]="deteksiDiniJantung.result">
+                <option [value]="'Normal'">Normal</option>
+                <option [value]="'Abnormal'">Abnormal</option>
+              </select>
             </div>
           </div>
         </div>

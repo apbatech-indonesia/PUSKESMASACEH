@@ -118,7 +118,6 @@ export class skriningComponent implements OnInit {
     try {
       let response: any = await this.serviceUrl.getCluster();
       this.arrCluster = response.data;
-      Swal.close();
     } catch (error) {
       Swal.fire({
         icon: 'error',

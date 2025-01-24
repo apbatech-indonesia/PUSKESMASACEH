@@ -4,13 +4,15 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerServicIvaPositifIntervensiDitolak {
+  code: any
+  display: any
   dateNow = new Date().toISOString()
 
   getdata() {
     return {
       procedures: [
         {
-          name: "acid_reaction_procedure",
+          name: "iva_positif_acid_reaction_procedure",
           status: "not-done",
           category: {
             system: "http://snomed.info/sct",
@@ -28,8 +30,8 @@ export class DataDeteksiDiniKankerServicIvaPositifIntervensiDitolak {
           reason: [
             {
               system: "http://hl7.org/fhir/sid/icd-10",
-              code: "C53.9",
-              display: "Malignant neoplasm: Cervix uteri, unspecified"
+              code: this.code,
+              display: this.display
             }
           ]
 

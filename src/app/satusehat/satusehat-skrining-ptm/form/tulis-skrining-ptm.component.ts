@@ -440,6 +440,73 @@ export class TulisSkriningPtmComponent implements OnInit {
       console.log(await this.skriningPTMService.observationsCreate(payloadHpvObservation))
       console.log(await this.skriningPTMService.diagnosticReportsCreate(payloadHpvDiagnosticReport))
     }
+
+    // iva positif
+    if (
+      this.deteksiDiniKankerServicIvaPositifServiceRequest.code &&
+      this.deteksiDiniKankerServicIvaPositifIntervensiDitolak.code &&
+      this.deteksiDiniKankerServicIvaPositifPatientReferral.patientInstruction
+    ) {
+      let payloadServicIvaPositifServiceRequest = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerServicIvaPositifServiceRequest.getdata()
+        }
+      }
+      let payloadServicIvaPositifProcedure = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerServicIvaPositifIntervensiDitolak.getdata()
+        }
+      }
+      let payloadDeteksiDiniKankerServicIvaPositifPatientReferral = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerServicIvaPositifPatientReferral.getdata()
+        }
+      }
+      console.log(await this.skriningPTMService.serviceRequestsCreate(payloadServicIvaPositifServiceRequest))
+      console.log(await this.skriningPTMService.serviceRequestsCreate(payloadDeteksiDiniKankerServicIvaPositifPatientReferral))
+      console.log(await this.skriningPTMService.proceduresCreate(payloadServicIvaPositifProcedure))
+    }
+
+    // kanker payudara
+    if (
+      this.deteksiDiniKankerPayudaraSadanisObservation.display
+    ) {
+      let payloadDeteksiDiniKankerPayudaraSadanisObservation = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerPayudaraSadanisObservation.getdata()
+        }
+      }
+      
+      let payloadDeteksiDiniKankerPayudaraHasilUsgObservation = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerPayudaraHasilUsgObservation.getdata()
+        }
+      }
+
+      let payloadDeteksiDiniKankerPayudaraUsgServiceRequest = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerPayudaraUsgServiceRequest.getdata()
+        }
+      }
+
+      let payloadDeteksiDiniKankerPayudaraHasilUsgDiagnosticReport = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerPayudaraHasilUsgDiagnosticReport.getdata()
+        }
+      }
+      
+      console.log(await this.skriningPTMService.observationsCreate(payloadDeteksiDiniKankerPayudaraSadanisObservation))
+      console.log(await this.skriningPTMService.serviceRequestsCreate(payloadDeteksiDiniKankerPayudaraUsgServiceRequest))
+      console.log(await this.skriningPTMService.observationsCreate(payloadDeteksiDiniKankerPayudaraHasilUsgObservation))
+      console.log(await this.skriningPTMService.diagnosticReportsCreate(payloadDeteksiDiniKankerPayudaraHasilUsgDiagnosticReport))
+    }
   }
 
   async doSubmitDeteksiDiniDiabetes() {

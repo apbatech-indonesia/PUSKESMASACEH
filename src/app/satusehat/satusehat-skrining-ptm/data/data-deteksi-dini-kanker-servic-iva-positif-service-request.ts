@@ -4,13 +4,16 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerServicIvaPositifServiceRequest {
+  code: any = 'Z13.9'
+  display: any = 'Special screening examination, unspecified'
+  patientInstruction: any
   dateNow = new Date().toISOString()
 
   getdata() {
     return {
       serviceRequests: [
         {
-          name: "Human_papilloma_virus_DNA_servRequest",
+          name: "iva_positif_service_request",
           category: [
             {
               coding: [
@@ -22,10 +25,10 @@ export class DataDeteksiDiniKankerServicIvaPositifServiceRequest {
               ]
             }
           ],
-          patientInstruction: "",
+          patientInstruction: this.patientInstruction,
           encounter: {
             reference: "Encounter/{{Encounter_id}}",
-            display: ""
+            display: this.patientInstruction
           },
           status: "active",
           intent: "original-order",
@@ -45,11 +48,11 @@ export class DataDeteksiDiniKankerServicIvaPositifServiceRequest {
           reason: [
             {
               system: "http://hl7.org/fhir/sid/icd-10",
-              code: "Z13.9",
-              display: "Special screening examination, unspecified"
+              code: this.code,
+              display: this.display
             },
             {
-              text: ""
+              text: this.patientInstruction
             }
           ]
         }

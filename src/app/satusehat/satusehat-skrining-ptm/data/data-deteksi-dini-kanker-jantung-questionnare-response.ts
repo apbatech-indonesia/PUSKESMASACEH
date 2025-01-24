@@ -4,6 +4,14 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerJantungQuestionnareResponse {
+  pernah_menderita_kanker: any
+  keluarga_menderita_kanker: any
+  riwayat_merokok: any
+  riwayat_tempat_kerja_karsinogenik: any
+  lingkungan_tinggal_berpotensi: any
+  lingkungan_rumah_tidak_sehat: any
+  penyakit_paru_kronik: any
+  hasil_kuesioner: any
   dateNow = new Date().toISOString()
 
   getdata() {
@@ -26,7 +34,7 @@ export class DataDeteksiDiniKankerJantungQuestionnareResponse {
                       valueCoding: {
                         system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                         code: "QRI000032",
-                        display: "Memiliki diagnosis kanker >5 tahun yang lalu"
+                        display: this.pernah_menderita_kanker
                       }
                     }
                   ]
@@ -39,7 +47,7 @@ export class DataDeteksiDiniKankerJantungQuestionnareResponse {
                       valueCoding: {
                         system: "http://snomed.info/sct",
                         code: "429011007",
-                        display: "Family history of malignant neoplasm of lung"
+                        display: this.keluarga_menderita_kanker
                       }
                     }
                   ]
@@ -52,7 +60,7 @@ export class DataDeteksiDiniKankerJantungQuestionnareResponse {
                       valueCoding: {
                         system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                         code: "QRI000022",
-                        display: "Perokok aktif (dalam 1 tahun ini masih merokok)"
+                        display: this.riwayat_merokok
                       }
                     }
                   ]
@@ -65,7 +73,7 @@ export class DataDeteksiDiniKankerJantungQuestionnareResponse {
                       valueCoding: {
                         system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                         code: "QRI000017",
-                        display: "Memiliki tempat kerja mengandung zat karsinogenik"
+                        display: this.riwayat_tempat_kerja_karsinogenik
                       }
                     }
                   ]
@@ -78,7 +86,7 @@ export class DataDeteksiDiniKankerJantungQuestionnareResponse {
                       valueCoding: {
                         system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                         code: "QRI000024",
-                        display: "Memiliki tempat tinggal berpotensi tinggi"
+                        display: this.lingkungan_tinggal_berpotensi
                       }
                     }
                   ]
@@ -91,7 +99,7 @@ export class DataDeteksiDiniKankerJantungQuestionnareResponse {
                       valueCoding: {
                         system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                         code: "QRI000027",
-                        display: "Memiliki lingkungan dalam rumah yang tidak sehat"
+                        display: this.lingkungan_rumah_tidak_sehat
                       }
                     }
                   ]
@@ -104,7 +112,7 @@ export class DataDeteksiDiniKankerJantungQuestionnareResponse {
                       valueCoding: {
                         system: "http://snomed.info/sct",
                         code: "160258000",
-                        display: "No history of respiratory system disease"
+                        display: this.penyakit_paru_kronik
                       }
                     }
                   ]
@@ -117,7 +125,7 @@ export class DataDeteksiDiniKankerJantungQuestionnareResponse {
                       valueCoding: {
                         system: "http://snomed.info/sct",
                         code: "723505004",
-                        display: "Low risk"
+                        display: this.hasil_kuesioner
                       }
                     }
                   ]

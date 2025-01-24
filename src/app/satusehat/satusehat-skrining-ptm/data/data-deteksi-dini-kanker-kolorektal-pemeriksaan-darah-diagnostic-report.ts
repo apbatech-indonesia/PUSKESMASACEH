@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerKolorektalPemeriksaanDarahDiagnosticReport {
+  display: any
   dateNow = new Date().toISOString()
 
   getdata() {
@@ -26,7 +27,6 @@ export class DataDeteksiDiniKankerKolorektalPemeriksaanDarahDiagnosticReport {
             }
           ],
           effectiveDateTime: this.dateNow,
-
           specimen: [
             {
               reference: "Specimen/{{Specimen_DarSam}}"
@@ -48,7 +48,7 @@ export class DataDeteksiDiniKankerKolorektalPemeriksaanDarahDiagnosticReport {
                 {
                   system: "http://snomed.info/sct",
                   code: "167667006",
-                  display: "Occult blood not detected in feces"
+                  display: this.display
                 }
               ]
             }
