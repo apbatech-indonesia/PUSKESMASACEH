@@ -3346,7 +3346,7 @@ export class MpdaftarpasienComponent implements OnInit {
       let body = {
         data: {
           kdProviderPeserta: this.kdprovider,
-          tglDaftar: this.minbpjs,
+          tglDaftar: this.datepipe.transform(this.tglp, "dd-MM-yyyy"),
           noKartu: this.noasuransi,
           kdPoli: this.kdpolibpjs,
           keluhan: this.keluhanbpjs,
@@ -3363,7 +3363,7 @@ export class MpdaftarpasienComponent implements OnInit {
         },
       };
 
-      this.authService.simpanpcaredaftar(body).subscribe((response) => {
+      this.authService.simpanpcaredaftarv1(body).subscribe((response) => {
         if (response) {
           if (response.metaData.code == 201) {
             this.toastr.success("Berhasil Kirim PCare", "-", {
