@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerServicHpvObservation {
+  result: any
   dateNow = new Date().toISOString()
   
   getdata() {
@@ -30,7 +31,7 @@ export class DataDeteksiDiniKankerServicHpvObservation {
               valueCodeableConcept: {
                 system: "http://snomed.info/sct",
                 code: "787724008",
-                display: "Human papillomavirus deoxyribonucleic acid not detected"
+                display: this.result
 
               }
             }

@@ -4,8 +4,8 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerServicHpvServiceRequest {
-  code: any
-  display: any
+  code: any = 'Z12.4'
+  display: any = 'Special screening examination for neoplasm of cervix'
   dateNow = new Date().toISOString()
 
   getdata() {

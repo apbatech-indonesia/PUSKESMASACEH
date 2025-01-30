@@ -2874,8 +2874,11 @@ Normal: teraba jelas
             </button></a
           >
           <ng-template ngbNavContent>
-            <b>Skrening & ILP - Lounching 6-8 Februari 2025</b>
-            <app-skrining> </app-skrining>
+            <app-skrining
+              [norm]="norm"
+              [idpasien]="idpasien"
+            >
+            </app-skrining>
           </ng-template>
         </li>
 

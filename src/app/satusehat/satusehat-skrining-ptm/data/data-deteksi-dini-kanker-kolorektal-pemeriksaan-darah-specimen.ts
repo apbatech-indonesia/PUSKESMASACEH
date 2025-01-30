@@ -4,20 +4,18 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerKolorektalPemeriksaanDarahSpecimen {
+  status: any
   dateNow = new Date().toISOString()
   getdata() {
     return {
       specimens: [
         {
           name: "cervical_swab__specimen",
-          status: "available",
-
+          status: this.status,
           type: {
-
             system: "http://snomed.info/sct",
             code: "119339001",
             display: "Stool specimen"
-
           },
           collection: {
             method: {
@@ -26,7 +24,6 @@ export class DataDeteksiDiniKankerKolorektalPemeriksaanDarahSpecimen {
               display: "Collection of stool specimen"
             },
             collectedDateTime: this.dateNow
-
           },
           receivedTime: this.dateNow,
           request: [

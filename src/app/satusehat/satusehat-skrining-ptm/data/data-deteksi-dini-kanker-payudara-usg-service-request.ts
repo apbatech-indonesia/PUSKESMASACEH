@@ -4,6 +4,8 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerPayudaraUsgServiceRequest {
+  code = "Z12.3"
+  display = "Special screening examination for neoplasm of breast"
   dateNow = new Date().toISOString()
   
   getdata() {
@@ -39,7 +41,7 @@ export class DataDeteksiDiniKankerPayudaraUsgServiceRequest {
               display: "US Breast"
             },
             {
-              text: "Panel Skrining Kolesterol Total PTM"
+              text: "Deteksi Dini Kanker Payudara"
             }
           ],
           reason: [
@@ -84,7 +86,7 @@ export class DataDeteksiDiniKankerPayudaraUsgServiceRequest {
               display: "US Breast"
             },
             {
-              text: "Panel Skrining Kolesterol Total PTM"
+              text: "Deteksi Dini Kanker Payudara"
             }
           ],
           orderDetail: [

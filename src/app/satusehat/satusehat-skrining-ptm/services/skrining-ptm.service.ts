@@ -20,7 +20,7 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
   updateRiwayat(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/conditionsCreate', data, { headers: this.headers }).subscribe((data) => {
@@ -28,7 +28,7 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
   faktorResiko(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/faktorResiko', data, { headers: this.headers }).subscribe((data) => {
@@ -36,7 +36,7 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
   deteksiDiniObesitas(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/deteksiDini/obesitas', data, { headers: this.headers }).subscribe((data) => {
@@ -44,7 +44,7 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
   observationsCreate(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/observationsCreate', data, { headers: this.headers }).subscribe((data) => {
@@ -52,7 +52,7 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
   conditionsCreate(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/conditionsCreate', data, { headers: this.headers }).subscribe((data) => {
@@ -60,7 +60,7 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
   proceduresCreate(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/proceduresCreate', data, { headers: this.headers }).subscribe((data) => {
@@ -68,7 +68,7 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
   serviceRequestsCreate(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/serviceRequestsCreate', data, { headers: this.headers }).subscribe((data) => {
@@ -76,7 +76,7 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
   specimensCreate(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/specimensCreate', data, { headers: this.headers }).subscribe((data) => {
@@ -84,7 +84,7 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
   diagnosticReportsCreate(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/diagnosticReportsCreate', data, { headers: this.headers }).subscribe((data) => {
@@ -92,7 +92,15 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
+  questionnaireResponsesCreate(data: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehatUrl + 'skrining/questionnaireResponsesCreate', data, { headers: this.headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
   tindakLanjut(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/serviceRequestsCreate', data, { headers: this.headers }).subscribe((data) => {
@@ -108,5 +116,5 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
 }

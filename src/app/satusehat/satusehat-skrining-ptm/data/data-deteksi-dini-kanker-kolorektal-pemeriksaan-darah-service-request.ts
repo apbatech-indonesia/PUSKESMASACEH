@@ -4,6 +4,8 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerKolorektalPemeriksaanDarahServiceRequest {
+  code: any = "Z13.9"
+  display: any = "Special screening examination, unspecified"
   dateNow = new Date().toISOString()
 
   getdata() {
@@ -45,8 +47,8 @@ export class DataDeteksiDiniKankerKolorektalPemeriksaanDarahServiceRequest {
           reason: [
             {
               system: "http://hl7.org/fhir/sid/icd-10",
-              code: "Z13.9",
-              display: "Special screening examination, unspecified"
+              code: this.code,
+              display: this.display
             },
             {
               text: "Deteksi Dini Kanker Kolorektal"

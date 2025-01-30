@@ -1,47 +1,37 @@
 <div class="row">
   <div class="col-md-6 col-xl-4">
-    <div class="card mb-3 widget-content bg-arielle-smile">
-      <div class="widget-content-wrapper text-white">
+    <div class="card mb-3 widget-content">
+      <div class="widget-content-wrapper">
         <div class="widget-content-left">
-          <div class="widget-heading">Klaster 2</div>
-          <div class="widget-subheading">Total Skrining</div>
+          <div class="widget-heading text-primary-custom fw-semi-custom">Jumlah Pasien Terdaftar</div>
+          <div class="widget-subheading fw-semi-custom">{{jumlahPasienTerdaftar}}</div>
         </div>
-        <div class="widget-content-right">
+        <!-- <div class="widget-content-right">
           <div class="widget-numbers text-white">
             <span>{{totalklaster2}}</span>
           </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-xl-4">
+    <div class="card mb-3 widget-content">
+      <div class="widget-content-wrapper">
+        <div class="widget-content-left">
+          <div class="widget-heading text-success-custom fw-semi-custom">Jumlah Pasien Terskrining</div>
+          <div class="widget-subheading fw-semi-custom">{{jumlahPasienTerskrining}}</div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="col-md-6 col-xl-4">
-    <div class="card mb-3 widget-content bg-happy-green">
-      <div class="widget-content-wrapper text-white">
+    <div class="card mb-3 widget-content">
+      <div class="widget-content-wrapper">
         <div class="widget-content-left">
-          <div class="widget-heading">Klaster 3</div>
-          <div class="widget-subheading">Total Skrining</div>
-        </div>
-        <div class="widget-content-right">
-          <div class="widget-numbers text-white">
-            <span>{{totalklaster3}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-6 col-xl-4">
-    <div class="card mb-3 widget-content bg-warm-flame">
-      <div class="widget-content-wrapper text-white">
-        <div class="widget-content-left">
-          <div class="widget-heading">Klaster 4</div>
-          <div class="widget-subheading">Total Skrining</div>
-        </div>
-        <div class="widget-content-right">
-          <div class="widget-numbers text-white">
-            <span>{{totalklaster4}}</span>
-          </div>
+          <div class="widget-heading text-danger-custom fw-semi-custom">Jumlah Pasien Belum Skrining</div>
+          <div class="widget-subheading fw-semi-custom">{{jumlahPasienBelumSkrining}}</div>
         </div>
       </div>
     </div>
@@ -49,75 +39,350 @@
 
 </div>
 
-<div class="row">
-  <div class="col-md-12 row">
-    <div class="col-4">
-      <span>Cari no kartu : </span><br>
-      <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="cari no kartu" aria-label="cari no kartu"
-          aria-describedby="basic-addon1">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="basic-addon1">
-            <fa-icon [icon]="faSearch"></fa-icon>
-          </span>
+<div class="row mb-2">
+  <div class="col-6">
+    <div class="card pb-1">
+      <div class="card-header card-header-custom text-capitalize justify-content-center px-0">
+        Jumlah Total Pasien Skrining
+      </div>
+      <div class="card-body">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-auto fw-semi-custom">
+            Tahun {{filterYearTotalSkrining}}
+          </div>
+          <div class="col-auto">
+            <select class="form-select" [(ngModel)]="filterYearTotalSkrining" (change)="getTotalPasienSkrining()">
+              <option *ngFor="let year of listOfYears" [value]="year">{{year}}</option>
+            </select>
+          </div>
+        </div>
+        <apx-chart [series]="[
+            {
+              name: 'Total Pasien',
+              data: grapikTahunanTotalSkrining
+            }
+          ]" [chart]="{
+            height: 250,
+            type: 'line',
+            zoom: {
+              enabled: false
+            }
+          }" [dataLabels]="{
+            enabled: false
+          }" [stroke]="{
+            curve: 'straight',
+            width: 2 
+          }" [title]="{
+            text: '',
+            align: 'left'
+          }" [grid]="{
+            row: {
+              colors: ['#f3f3f3', 'transparent'],
+              opacity: 0.5
+            }
+          }" [xaxis]="{
+            categories: listOfMonths
+          }">
+        </apx-chart>
+      </div>
+    </div>
+  </div>
+  <div class="col-6">
+    <div class="card">
+      <div class="card-header card-header-custom text-capitalize justify-content-center px-0">
+        Jumlah Pasien Berdasarkan Klaster
+      </div>
+      <div class="card-body">
+        <div class="row justify-content-between align-items-center mb-3">
+          <div class="col-5 fw-semi-custom ps-2">
+            {{filterSubDistrictKlaster}}, {{filterMonthKlaster}} {{filterYearKlaster}}
+          </div>
+          <div class="col-7">
+            <div class="row">
+              <div class="col-5 px-0">
+                <select class="form-select" [(ngModel)]="filterSubDistrictKlaster">
+                  <option *ngFor="let city of listOfDistricts" [value]="city">{{city}}</option>
+                </select>
+              </div>
+              <div class="col-3 pe-0 ps-2">
+                <select class="form-select" [(ngModel)]="filterMonthKlaster">
+                  <option *ngFor="let month of listOfMonths" [value]="month">{{month}}</option>
+                </select>
+              </div>
+              <div class="col-4 pe-2 ps-2">
+                <select class="form-select" [(ngModel)]="filterYearKlaster">
+                  <option *ngFor="let year of listOfYears" [value]="year">{{year}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <apx-chart [series]="[40,40,20]" [labels]="listOfClasters"
+          [chart]="{ height: '250', type: 'pie' }" [colors]="['#E7A422', '#29A259', '#FF5959']">
+        </apx-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mb-2">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header card-header-custom text-capitalize justify-content-center px-0">
+        Jumlah Pasien Berdasarkan Kategori Skrining
+      </div>
+      <div class="card-body">
+        <div class="row justify-content-between align-items-center mb-3">
+          <div class="col-5 fw-semi-custom">
+            {{filterClasterKategoriSkrining}}, {{filterMonthKategoriSkrining}} {{filterYearKategoriSkrining}}
+          </div>
+          <div class="col-7">
+            <div class="row">
+              <div class="col-6 px-0">
+                <select class="form-select" [(ngModel)]="filterSubDistrictKategoriSkrining">
+                  <option *ngFor="let city of listOfDistricts" [value]="city">{{city}}</option>
+                </select>
+              </div>
+              <div class="col-2 pe-0 ps-2">
+                <select class="form-select" [(ngModel)]="filterClasterKategoriSkrining">
+                  <option *ngFor="let claster of listOfClasters" [value]="claster">{{claster}}</option>
+                </select>
+              </div>
+              <div class="col-2 pe-0 ps-2">
+                <select class="form-select" [(ngModel)]="filterMonthKategoriSkrining">
+                  <option *ngFor="let month of listOfMonths" [value]="month">{{month}}</option>
+                </select>
+              </div>
+              <div class="col-2 pe-2 ps-2">
+                <select class="form-select" [(ngModel)]="filterYearKategoriSkrining">
+                  <option *ngFor="let year of listOfYears" [value]="year">{{year}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 mb-2 fw-semi-custom">
+            Ibu Hamil, Bersalin, Nifas
+          </div>
+          <div class="col-12">
+            <div class="widget-progress-wrapper">
+              <div class="progress-bar-sm progress-bar-animated-alt progress">
+                <div class="progress-bar bg-pb-blue-custom" role="progressbar" aria-valuenow="95" aria-valuemin="0"
+                  aria-valuemax="100" style="width: 65%;"></div>
+              </div>
+              <div class="progress-sub-label mt-1">
+                <span class="pe-3">Jumlah Skrining</span>
+                <span>20</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 mb-2 fw-semi-custom">
+            Balita & Anak Praekolah
+          </div>
+          <div class="col-12">
+            <div class="widget-progress-wrapper">
+              <div class="progress-bar-sm progress-bar-animated-alt progress">
+                <div class="progress-bar bg-pb-orange-custom" role="progressbar" aria-valuenow="30" aria-valuemin="0"
+                  aria-valuemax="100" style="width: 30%;"></div>
+              </div>
+              <div class="progress-sub-label mt-1">
+                <span class="pe-3">Jumlah Skrining</span>
+                <span>5</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="col-md-5">
-    <div class="card main-card mb-3 p-3 card-tabbed-header">
-      <apx-chart [series]="[10,20,70]" [labels]="['Klaster 2','Klaster 3','Klaster 4']"
-        [chart]="{ height: '350', type: 'pie' }">
-      </apx-chart>
+</div>
+
+<div class="row mb-2">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header card-header-custom text-capitalize justify-content-center px-0">
+        Jumlah Pasien Kategori Skrining Berdasarkan Daerah
+      </div>
+      <div class="card-body">
+        <div class="row justify-content-between align-items-center mb-3">
+          <div class="col-8 fw-semi-custom">
+            {{filterClasterKategoriSkriningDaerah}}, Periode {{filterMonthKategoriSkriningDaerah}} {{filterYearKategoriSkriningDaerah}}
+          </div>
+          <div class="col-4">
+            <div class="row">
+              <div class="col-6 px-0">
+                <select class="form-select" [(ngModel)]="filterClasterKategoriSkriningDaerah">
+                  <option *ngFor="let claster of listOfClasters" [value]="claster">{{claster}}</option>
+                </select>
+              </div>
+              <div class="col-3 pe-0 ps-2">
+                <select class="form-select" [(ngModel)]="filterMonthKategoriSkriningDaerah">
+                  <option *ngFor="let month of listOfMonths" [value]="month">{{month}}</option>
+                </select>
+              </div>
+              <div class="col-3 pe-2 ps-2">
+                <select class="form-select" [(ngModel)]="filterYearKategoriSkriningDaerah">
+                  <option *ngFor="let year of listOfYears" [value]="year">{{year}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <apx-chart [series]="[
+            {
+              name: 'Bar',
+              data: grapikBerdasarkanDaerah
+            }
+          ]" [chart]="{
+            height: '390',
+            type: 'bar'
+          }" [stroke]="{
+            show: true,
+            width: 2,
+            colors: ['transparent']
+          }" [plotOptions]="{
+            bar: {
+              horizontal: false,
+              endingShape: 'rounded',
+              columnWidth: '55%'
+            }
+          }" [dataLabels]="{
+            enabled: false
+          }" [xaxis]="{
+            categories:listOfDistricts
+          }" [yaxis]="
+          {
+            title: 
+            {
+              text: ''
+            }
+          }" [fill]="{
+            opacity: 1
+          }" [colors]="['#3BB5AA']">
+        </apx-chart>
+      </div>
     </div>
   </div>
-  <div class="col-md-7">
-    <div class="card main-card mb-3 p-3 card-tabbed-header">
-      <apx-chart
-      [series]="[
-        {
-          name: 'Desktops',
-          data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-        }
-      ]"
-      [chart]="{
-        height: 350,
-        type: 'line',
-        zoom: {
-          enabled: false
-        }
-      }"
-      [dataLabels]="{
-        enabled: false
-      }"
-      [stroke]="{
-        curve: 'straight'
-      }"
-      [title]="{
-        text: 'Product Trends by Month',
-        align: 'left'
-      }"
-      [grid]="{
-        row: {
-          colors: ['#f3f3f3', 'transparent'],
-          opacity: 0.5
-        }
-      }"
-      [xaxis]="{
-        categories: [
-          'Jan',
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep'
-        ]
-      }"
-      >
-      </apx-chart>
+</div>
+
+<div class="row mb-2">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header card-header-custom text-capitalize justify-content-center px-0">
+        Jumlah Pasien By Skrining
+      </div>
+      <div class="card-body">
+        <div class="row justify-content-between align-items-center mb-3">
+          <div class="col-5 fw-semi-custom">
+            {{filterSubDistrictBySkrining}}, {{filterMonthBySkrining}} {{filterYearBySkrining}}, {{filterSubClasterBySkrining}}
+          </div>
+          <div class="col-7">
+            <div class="row">
+              <div class="col-6 px-0">
+                <select class="form-select" [(ngModel)]="filterSubDistrictBySkrining">
+                  <option *ngFor="let city of listOfDistricts" [value]="city">{{city}}</option>
+                </select>
+              </div>
+              <div class="col-2 pe-0 ps-2">
+                <select class="form-select" [(ngModel)]="filterSubClasterBySkrining">
+                  <option *ngFor="let subclaster of listOfSubClasters" [value]="subclaster">{{subclaster}}</option>
+                </select>
+              </div>
+              <div class="col-2 pe-0 ps-2">
+                <select class="form-select" [(ngModel)]="filterMonthBySkrining">
+                  <option *ngFor="let month of listOfMonths" [value]="month">{{month}}</option>
+                </select>
+              </div>
+              <div class="col-2 pe-2 ps-2">
+                <select class="form-select" [(ngModel)]="filterYearBySkrining">
+                  <option *ngFor="let year of listOfYears" [value]="year">{{year}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-12 mb-2 fw-semi-custom">
+            Skirining Pre Eklamsia
+          </div>
+          <div class="col-12">
+            <div class="widget-progress-wrapper">
+              <div class="progress-bar-sm progress-bar-animated-alt progress">
+                <div class="progress-bar bg-pb-green-custom" role="progressbar" aria-valuenow="65" aria-valuemin="0"
+                  aria-valuemax="100" style="width: 65%;"></div>
+              </div>
+              <div class="progress-sub-label mt-1">
+                <span class="pe-3">Jumlah Skrining</span>
+                <span>20</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 mb-2 fw-semi-custom">
+            Skrining Kebugaran - Dewasa
+          </div>
+          <div class="col-12">
+            <div class="widget-progress-wrapper">
+              <div class="progress-bar-sm progress-bar-animated-alt progress">
+                <div class="progress-bar bg-pb-brown-custom" role="progressbar" aria-valuenow="30" aria-valuemin="0"
+                  aria-valuemax="100" style="width: 30%;"></div>
+              </div>
+              <div class="progress-sub-label mt-1">
+                <span class="pe-3">Jumlah Skrining</span>
+                <span>5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 mb-2 fw-semi-custom">
+            Skrining Gigi Dewasa
+          </div>
+          <div class="col-12">
+            <div class="widget-progress-wrapper">
+              <div class="progress-bar-sm progress-bar-animated-alt progress">
+                <div class="progress-bar bg-pb-bluesky-custom" role="progressbar" aria-valuenow="30" aria-valuemin="0"
+                  aria-valuemax="100" style="width: 30%;"></div>
+              </div>
+              <div class="progress-sub-label mt-1">
+                <span class="pe-3">Jumlah Skrining</span>
+                <span>5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-12 mb-2 fw-semi-custom">
+            Skrining Imunisasi Dewasa
+          </div>
+          <div class="col-12">
+            <div class="widget-progress-wrapper">
+              <div class="progress-bar-sm progress-bar-animated-alt progress">
+                <div class="progress-bar bg-pb-yellow-custom" role="progressbar" aria-valuenow="30" aria-valuemin="0"
+                  aria-valuemax="100" style="width: 30%;"></div>
+              </div>
+              <div class="progress-sub-label mt-1">
+                <span class="pe-3">Jumlah Skrining</span>
+                <span>5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <button class="btn btn-default text-info">Lihat Lebih</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

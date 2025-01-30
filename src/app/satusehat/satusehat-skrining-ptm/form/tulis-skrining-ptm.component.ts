@@ -50,6 +50,8 @@ import { DataDeteksiDiniKankerServicHpvDiagnosticReport } from '../data/data-det
 import { DataDeteksiDiniKankerServicHpvServiceRequest } from '../data/data-deteksi-dini-kanker-servic-hpv-service-request'
 import { DataDeteksiDiniKankerServicHpvSpecimen } from '../data/data-deteksi-dini-kanker-servic-hpv-specimen'
 import { DataDeteksiDiniJantung } from '../data/data-deteksi-dini-jantung'
+import { DataDeteksiDiniAsamUrat } from '../data/data-deteksi-dini-asam-urat'
+import { DataDeteksiTalesima } from '../data/data-deteksi-dini-talesima'
 
 @Component({
   selector: 'app-tulis-skrining-ptm',
@@ -132,6 +134,8 @@ export class TulisSkriningPtmComponent implements OnInit {
     public deteksiDiniStrokeServiceRequest: DataDeteksiStrokeServiceRequest,
     public deteksiDiniStrokeSpecimen: DataDeteksiStrokeSpecimen,
     public deteksiDiniStrokeReport: DataDeteksiStrokeReport,
+    public deteksiDiniAsamUrat: DataDeteksiDiniAsamUrat,
+    public deteksiDiniTalasemia: DataDeteksiTalesima,
     public deteksiDiniJantung: DataDeteksiDiniJantung,
     public diagnosaPtm: DataDiagnosaPtm,
     public tindakanPtm: DataTindakanPtm,
@@ -193,7 +197,12 @@ export class TulisSkriningPtmComponent implements OnInit {
         break
 
       case 'deteksi-dini-kanker':
-        this.doSubmitDeteksiDiniKanker()
+        this.doSubmitDeteksiDiniKankerServic()
+        this.doSubmitKankerHpv()
+        this.doSubmitKankerIva()
+        this.doSubmitKankerIvaPositif()
+        this.doSubmitKankerJantung()
+        this.doSubmitKankerPayudara()
         break
 
       case 'deteksi-dini-diabetes':
@@ -206,6 +215,14 @@ export class TulisSkriningPtmComponent implements OnInit {
 
       case 'deteksi-dini-jantung':
         this.doSubmitDeteksiDiniJantung()
+        break
+
+      case 'deteksi-dini-asam-urat':
+        this.doSubmitDeteksiDiniAsamUrat()
+        break
+
+      case 'deteksi-dini-talasemia':
+        this.doSubmitDeteksiDiniTalasemia()
         break
 
       case 'diagnosa':
@@ -366,7 +383,7 @@ export class TulisSkriningPtmComponent implements OnInit {
     console.log(await this.skriningPTMService.proceduresCreate(payloadProcedure))
   }
 
-  async doSubmitDeteksiDiniKanker() {
+  async doSubmitDeteksiDiniKankerServic() {
     this.data = {
       rmno: this.notransaksi,
       useCaseId: this.useCaseId,
@@ -390,6 +407,14 @@ export class TulisSkriningPtmComponent implements OnInit {
       console.log(await this.skriningPTMService.proceduresCreate(payloadServicProcedure))
       console.log(await this.skriningPTMService.observationsCreate(payloadServicObservation))
     }
+  }
+
+  async doSubmitKankerIva() {
+    this.data = {
+      rmno: this.notransaksi,
+      useCaseId: this.useCaseId,
+      satusehatId: this.patientData.idsatusehat
+    }
 
     if (this.deteksiDiniKankerServicIvaObservation.result) {
       // iva
@@ -407,6 +432,14 @@ export class TulisSkriningPtmComponent implements OnInit {
       }
       console.log(await this.skriningPTMService.proceduresCreate(payloadServicIvaProcedure))
       console.log(await this.skriningPTMService.observationsCreate(payloadServicIvaObservation))
+    }
+  }
+
+  async doSubmitKankerHpv() {
+    this.data = {
+      rmno: this.notransaksi,
+      useCaseId: this.useCaseId,
+      satusehatId: this.patientData.idsatusehat
     }
 
     // hpv
@@ -439,6 +472,111 @@ export class TulisSkriningPtmComponent implements OnInit {
       console.log(await this.skriningPTMService.specimensCreate(payloadHpvSpecimen))
       console.log(await this.skriningPTMService.observationsCreate(payloadHpvObservation))
       console.log(await this.skriningPTMService.diagnosticReportsCreate(payloadHpvDiagnosticReport))
+    }
+  }
+
+  async doSubmitKankerIvaPositif() {
+    this.data = {
+      rmno: this.notransaksi,
+      useCaseId: this.useCaseId,
+      satusehatId: this.patientData.idsatusehat
+    }
+
+    // iva positif
+    if (
+      this.deteksiDiniKankerServicIvaPositifServiceRequest.code &&
+      this.deteksiDiniKankerServicIvaPositifIntervensiDitolak.code &&
+      this.deteksiDiniKankerServicIvaPositifPatientReferral.patientInstruction
+    ) {
+      let payloadServicIvaPositifServiceRequest = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerServicIvaPositifServiceRequest.getdata()
+        }
+      }
+      let payloadServicIvaPositifProcedure = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerServicIvaPositifIntervensiDitolak.getdata()
+        }
+      }
+      let payloadDeteksiDiniKankerServicIvaPositifPatientReferral = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerServicIvaPositifPatientReferral.getdata()
+        }
+      }
+      console.log(await this.skriningPTMService.serviceRequestsCreate(payloadServicIvaPositifServiceRequest))
+      console.log(await this.skriningPTMService.serviceRequestsCreate(payloadDeteksiDiniKankerServicIvaPositifPatientReferral))
+      console.log(await this.skriningPTMService.proceduresCreate(payloadServicIvaPositifProcedure))
+    }
+  }
+
+  async doSubmitKankerPayudara() {
+    this.data = {
+      rmno: this.notransaksi,
+      useCaseId: this.useCaseId,
+      satusehatId: this.patientData.idsatusehat
+    }
+
+    // kanker payudara
+    if (
+      this.deteksiDiniKankerPayudaraSadanisObservation.display
+    ) {
+      let payloadDeteksiDiniKankerPayudaraSadanisObservation = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerPayudaraSadanisObservation.getdata()
+        }
+      }
+
+      let payloadDeteksiDiniKankerPayudaraHasilUsgObservation = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerPayudaraHasilUsgObservation.getdata()
+        }
+      }
+
+      let payloadDeteksiDiniKankerPayudaraUsgServiceRequest = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerPayudaraUsgServiceRequest.getdata()
+        }
+      }
+
+      let payloadDeteksiDiniKankerPayudaraHasilUsgDiagnosticReport = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerPayudaraHasilUsgDiagnosticReport.getdata()
+        }
+      }
+
+      console.log(await this.skriningPTMService.observationsCreate(payloadDeteksiDiniKankerPayudaraSadanisObservation))
+      console.log(await this.skriningPTMService.serviceRequestsCreate(payloadDeteksiDiniKankerPayudaraUsgServiceRequest))
+      console.log(await this.skriningPTMService.observationsCreate(payloadDeteksiDiniKankerPayudaraHasilUsgObservation))
+      console.log(await this.skriningPTMService.diagnosticReportsCreate(payloadDeteksiDiniKankerPayudaraHasilUsgDiagnosticReport))
+    }
+  }
+
+  async doSubmitKankerJantung() {
+    this.data = {
+      rmno: this.notransaksi,
+      useCaseId: this.useCaseId,
+      satusehatId: this.patientData.idsatusehat
+    }
+
+    // kanker jantung
+    if (
+      this.deteksiDiniKankerJantungQuestionnareResponse.hasil_kuesioner
+    ) {
+      let payloadDeteksiDiniKankerJantungQuestionnareResponse = {
+        data: {
+          ...this.data,
+          ...this.deteksiDiniKankerJantungQuestionnareResponse.getdata()
+        }
+      }
+
+      console.log(await this.skriningPTMService.questionnaireResponsesCreate(payloadDeteksiDiniKankerJantungQuestionnareResponse))
     }
   }
 
@@ -535,6 +673,41 @@ export class TulisSkriningPtmComponent implements OnInit {
       data: {
         ...this.data,
         ...this.deteksiDiniJantung.getdata()
+      }
+    }
+
+    console.log(await this.skriningPTMService.observationsCreate(payload))
+  }
+
+  async doSubmitDeteksiDiniAsamUrat() {
+    this.data = {
+      rmno: this.notransaksi,
+      useCaseId: this.useCaseId,
+      satusehatId: this.patientData.idsatusehat
+    }
+
+    let payload = {
+      data: {
+        ...this.data,
+        ...this.deteksiDiniAsamUrat.getdata()
+      }
+    }
+
+    console.log(await this.skriningPTMService.observationsCreate(payload))
+  }
+
+
+  async doSubmitDeteksiDiniTalasemia() {
+    this.data = {
+      rmno: this.notransaksi,
+      useCaseId: this.useCaseId,
+      satusehatId: this.patientData.idsatusehat
+    }
+
+    let payload = {
+      data: {
+        ...this.data,
+        ...this.deteksiDiniTalasemia.getdata()
       }
     }
 
@@ -788,6 +961,12 @@ export class TulisSkriningPtmComponent implements OnInit {
     this.deteksiDiniKankerServicIvaProcedure.display = procedures?.acid_reaction_procedure?.display
 
     this.deteksiDiniJantung.result = observations?.EKG?.valueCodeableConcept?.display
+
+    this.deteksiDiniAsamUrat.quantity = observations?.deteksi_asam_urat?.result?.value || ''
+    this.deteksiDiniAsamUrat.result = observations?.deteksi_asam_urat?.result?.display || ''
+
+    this.deteksiDiniTalasemia.value = observations?.deteksi_talasemia?.result?.value || ''
+    this.deteksiDiniTalasemia.display = observations?.deteksi_talasemia?.result?.display || ''
   }
 
   findBylinkId(data: any, displayValue: any) {
