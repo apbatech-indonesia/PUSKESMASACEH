@@ -30,11 +30,6 @@ interface YearData {
 export class laporanskriningilpComponent implements OnInit {
   faSearch = faSearch;
   branchId = "091";
-  list: any = [
-    { klaster: 2, subclaster: "test 1" },
-    { klaster: 3, subclaster: "test 2" },
-    { klaster: 4, subclaster: "test 3" },
-  ];
   totalklaster2: number = 0;
   totalklaster3: number = 0;
   totalklaster4: number = 0;
@@ -91,11 +86,11 @@ export class laporanskriningilpComponent implements OnInit {
   constructor(private api: laporanskriningilpService) { }
 
   ngOnInit() {
-    this.getTotal();
+    this.getTotalPasien();
     this.getTotalPasienSkrining();
   }
 
-  async getTotal() {
+  async getTotalPasien() {
     try {
       const data = { branchId: this.branchId };
       const response = await this.api.getPatientStatus(data) as ApiResponse;

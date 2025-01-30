@@ -1037,22 +1037,20 @@
         <div class="row">
           <div class="col-12 col-lg-6">
             <div class="position-relative mb-3">
-              <label for="numerator_mata_kiri" class="form-label">Telinga Kiri</label>
-              <app-master-diagnosa [searchDiagnosaText]="deteksiDiniPendengaran?.leftEar?.display" (selectedItem)="
-                deteksiDiniPendengaran.leftEar.code = $event.kddiagnosa;
-                deteksiDiniPendengaran.leftEar.display = $event.diagnosa;
-                ">
-              </app-master-diagnosa>
+              <label for="numerator_mata_kiri" class="form-label">Urate [Mass/volume] in Serum or
+                Plasma</label>
+              <input type="text" id="terpapar_asap_rokok" class="form-control"
+                [(ngModel)]="deteksiDiniAsamUrat.quantity">
             </div>
           </div>
           <div class="col-12 col-lg-6">
             <div class="position-relative mb-3">
-              <label for="numerator_mata_kanan" class="form-label">Telinga Kanan</label>
-              <app-master-diagnosa [searchDiagnosaText]="deteksiDiniPendengaran?.rightEar?.display" (selectedItem)="
-                deteksiDiniPendengaran.rightEar.code = $event.kddiagnosa;
-                deteksiDiniPendengaran.rightEar.display = $event.diagnosa;
-                ">
-              </app-master-diagnosa>
+              <label for="numerator_mata_kiri" class="form-label">Observation : Urate [Mass/volume] in Serum or
+                Plasma</label>
+              <select class="form-control" id="pernah_menderita_kanker" [(ngModel)]="deteksiDiniAsamUrat.result">
+                <option [value]="'Normal'">Normal</option>
+                <option [value]="'Tinggi'">Tinggi</option>
+              </select>
             </div>
           </div>
         </div>
@@ -1074,22 +1072,18 @@
         <div class="row">
           <div class="col-12 col-lg-6">
             <div class="position-relative mb-3">
-              <label for="numerator_mata_kiri" class="form-label">Telinga Kiri</label>
-              <app-master-diagnosa [searchDiagnosaText]="deteksiDiniPendengaran?.leftEar?.display" (selectedItem)="
-                deteksiDiniPendengaran.leftEar.code = $event.kddiagnosa;
-                deteksiDiniPendengaran.leftEar.display = $event.diagnosa;
-                ">
-              </app-master-diagnosa>
+              <label for="numerator_mata_kiri" class="form-label">Hemoglobin [Mass/volume] in Blood</label>
+              <input type="text" id="terpapar_asap_rokok" class="form-control"
+                [(ngModel)]="deteksiDiniTalasemia.value">
             </div>
           </div>
           <div class="col-12 col-lg-6">
             <div class="position-relative mb-3">
-              <label for="numerator_mata_kanan" class="form-label">Telinga Kanan</label>
-              <app-master-diagnosa [searchDiagnosaText]="deteksiDiniPendengaran?.rightEar?.display" (selectedItem)="
-                deteksiDiniPendengaran.rightEar.code = $event.kddiagnosa;
-                deteksiDiniPendengaran.rightEar.display = $event.diagnosa;
-                ">
-              </app-master-diagnosa>
+              <label for="numerator_mata_kiri" class="form-label">Observation : Hemoglobin [Mass/volume] in Blood</label>
+              <select class="form-control" id="pernah_menderita_kanker" [(ngModel)]="deteksiDiniTalasemia.display">
+                <option [value]="'Normal'">Normal</option>
+                <option [value]="'Tinggi'">Tinggi</option>
+              </select>
             </div>
           </div>
         </div>
@@ -1112,10 +1106,9 @@
           <div class="col-12 col-lg-12">
             <div class="position-relative mb-3">
               <label class="form-label">Observations : Hasil Pemeriksaan Ekg</label>
-              <select class="form-control" id="pernah_menderita_kanker"
-                [(ngModel)]="deteksiDiniJantung.result">
-                <option [value]="'Normal'">Normal</option>
-                <option [value]="'Abnormal'">Abnormal</option>
+              <select class="form-control" id="pernah_menderita_kanker" [(ngModel)]="deteksiDiniJantung.result">
+                <option [value]="'Electrocardiogram Normal'">Electrocardiogram Normal</option>
+                <option [value]="'Electrocardiogram Abnormal'">Electrocardiogram Abnormal</option>
               </select>
             </div>
           </div>

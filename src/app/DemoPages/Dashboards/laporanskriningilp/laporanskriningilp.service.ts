@@ -11,9 +11,12 @@ export class laporanskriningilpService {
     'kd-cabang': this.userData.kdcabang
   })
 
-  constructor(public http: HttpClient) { }
+  constructor(
+    public http: HttpClient
+  ) { }
 
   getPatientStatus(data) {
+
     return this.http.post(satusehatUrl + 'screeningDashboard/getPatientStatus', data, { headers: this.headers }).toPromise()
   }
 }
