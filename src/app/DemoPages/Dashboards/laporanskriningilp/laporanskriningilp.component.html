@@ -22,11 +22,6 @@
           <div class="widget-heading text-success-custom fw-semi-custom">Jumlah Pasien Terskrining</div>
           <div class="widget-subheading fw-semi-custom">{{jumlahPasienTerskrining}}</div>
         </div>
-        <!-- <div class="widget-content-right">
-          <div class="widget-numbers text-white">
-            <span>{{totalklaster3}}</span>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
@@ -38,11 +33,6 @@
           <div class="widget-heading text-danger-custom fw-semi-custom">Jumlah Pasien Belum Skrining</div>
           <div class="widget-subheading fw-semi-custom">{{jumlahPasienBelumSkrining}}</div>
         </div>
-        <!-- <div class="widget-content-right">
-          <div class="widget-numbers text-white">
-            <span>{{totalklaster4}}</span>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
@@ -58,62 +48,41 @@
       <div class="card-body">
         <div class="row justify-content-between align-items-center">
           <div class="col-auto fw-semi-custom">
-            Tahun 2025
+            Tahun {{filterYearTotalSkrining}}
           </div>
           <div class="col-auto">
-            <select class="form-select" [(ngModel)]="grapikTahunanTotalSkriningYear">
-              <option *ngFor="let year of grapikTahunanTotalSkriningListYears" [value]="year">{{year}}</option>
+            <select class="form-select" [(ngModel)]="filterYearTotalSkrining" (change)="getTotalPasienSkrining()">
+              <option *ngFor="let year of listOfYears" [value]="year">{{year}}</option>
             </select>
           </div>
         </div>
-        <apx-chart
-          [series]="[
+        <apx-chart [series]="[
             {
-              name: 'Desktops',
+              name: 'Total Pasien',
               data: grapikTahunanTotalSkrining
             }
-          ]"
-          [chart]="{
+          ]" [chart]="{
             height: 250,
             type: 'line',
             zoom: {
               enabled: false
             }
-          }"
-          [dataLabels]="{
+          }" [dataLabels]="{
             enabled: false
-          }"
-          [stroke]="{
+          }" [stroke]="{
             curve: 'straight',
             width: 2 
-          }"
-          [title]="{
+          }" [title]="{
             text: '',
             align: 'left'
-          }"
-          [grid]="{
+          }" [grid]="{
             row: {
               colors: ['#f3f3f3', 'transparent'],
               opacity: 0.5
             }
-          }"
-          [xaxis]="{
-            categories: [
-              'Jan',
-              'Feb',
-              'Mar',
-              'Apr',
-              'May',
-              'Jun',
-              'Jul',
-              'Aug',
-              'Sep',
-              'Oct',
-              'Nov',
-              'Des'
-            ]
-          }"
-        >
+          }" [xaxis]="{
+            categories: listOfMonths
+          }">
         </apx-chart>
       </div>
     </div>
@@ -121,35 +90,35 @@
   <div class="col-6">
     <div class="card">
       <div class="card-header card-header-custom text-capitalize justify-content-center px-0">
-        Jumlah Pasien Berdasarkan Klaster 
+        Jumlah Pasien Berdasarkan Klaster
       </div>
       <div class="card-body">
         <div class="row justify-content-between align-items-center mb-3">
           <div class="col-5 fw-semi-custom ps-2">
-            Desa Bambu 1, Januari 2025
+            {{filterSubDistrictKlaster}}, {{filterMonthKlaster}} {{filterYearKlaster}}
           </div>
           <div class="col-7">
             <div class="row">
               <div class="col-5 px-0">
-                <select class="form-select">
-                  <option value="">Lokasi</option>
+                <select class="form-select" [(ngModel)]="filterSubDistrictKlaster">
+                  <option *ngFor="let city of listOfDistricts" [value]="city">{{city}}</option>
                 </select>
               </div>
               <div class="col-3 pe-0 ps-2">
-                <select class="form-select">
-                  <option value="">JAN</option>
+                <select class="form-select" [(ngModel)]="filterMonthKlaster">
+                  <option *ngFor="let month of listOfMonths" [value]="month">{{month}}</option>
                 </select>
               </div>
               <div class="col-4 pe-2 ps-2">
-                <select class="form-select">
-                  <option value="">2025</option>
+                <select class="form-select" [(ngModel)]="filterYearKlaster">
+                  <option *ngFor="let year of listOfYears" [value]="year">{{year}}</option>
                 </select>
               </div>
             </div>
           </div>
         </div>
-        
-        <apx-chart [series]="[40,40,20]" [labels]="['Klaster 2','Klaster 3','Klaster 4']"
+
+        <apx-chart [series]="[40,40,20]" [labels]="listOfClasters"
           [chart]="{ height: '250', type: 'pie' }" [colors]="['#E7A422', '#29A259', '#FF5959']">
         </apx-chart>
       </div>
@@ -161,33 +130,33 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header card-header-custom text-capitalize justify-content-center px-0">
-        Jumlah Pasien Berdasarkan Kategori Skrining 
+        Jumlah Pasien Berdasarkan Kategori Skrining
       </div>
       <div class="card-body">
         <div class="row justify-content-between align-items-center mb-3">
           <div class="col-5 fw-semi-custom">
-            Semua, Jan 2025
+            {{filterClasterKategoriSkrining}}, {{filterMonthKategoriSkrining}} {{filterYearKategoriSkrining}}
           </div>
           <div class="col-7">
             <div class="row">
               <div class="col-6 px-0">
-                <select class="form-select">
-                  <option value="">Lokasi</option>
+                <select class="form-select" [(ngModel)]="filterSubDistrictKategoriSkrining">
+                  <option *ngFor="let city of listOfDistricts" [value]="city">{{city}}</option>
                 </select>
               </div>
               <div class="col-2 pe-0 ps-2">
-                <select class="form-select">
-                  <option value="">Semua</option>
+                <select class="form-select" [(ngModel)]="filterClasterKategoriSkrining">
+                  <option *ngFor="let claster of listOfClasters" [value]="claster">{{claster}}</option>
                 </select>
               </div>
               <div class="col-2 pe-0 ps-2">
-                <select class="form-select">
-                  <option value="">JAN</option>
+                <select class="form-select" [(ngModel)]="filterMonthKategoriSkrining">
+                  <option *ngFor="let month of listOfMonths" [value]="month">{{month}}</option>
                 </select>
               </div>
               <div class="col-2 pe-2 ps-2">
-                <select class="form-select">
-                  <option value="">2025</option>
+                <select class="form-select" [(ngModel)]="filterYearKategoriSkrining">
+                  <option *ngFor="let year of listOfYears" [value]="year">{{year}}</option>
                 </select>
               </div>
             </div>
@@ -196,12 +165,12 @@
 
         <div class="row mb-3">
           <div class="col-12 mb-2 fw-semi-custom">
-            Ibu Hamil, Bersalin & Nifas
+            Ibu Hamil, Bersalin, Nifas
           </div>
           <div class="col-12">
             <div class="widget-progress-wrapper">
               <div class="progress-bar-sm progress-bar-animated-alt progress">
-                <div class="progress-bar bg-pb-blue-custom" role="progressbar" aria-valuenow="65" aria-valuemin="0"
+                <div class="progress-bar bg-pb-blue-custom" role="progressbar" aria-valuenow="95" aria-valuemin="0"
                   aria-valuemax="100" style="width: 65%;"></div>
               </div>
               <div class="progress-sub-label mt-1">
@@ -237,81 +206,65 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header card-header-custom text-capitalize justify-content-center px-0">
-        Jumlah Pasien Kategori Skrining Berdasarkan Daerah 
+        Jumlah Pasien Kategori Skrining Berdasarkan Daerah
       </div>
       <div class="card-body">
         <div class="row justify-content-between align-items-center mb-3">
           <div class="col-8 fw-semi-custom">
-            Klaster 2, Periode Januari 2025
+            {{filterClasterKategoriSkriningDaerah}}, Periode {{filterMonthKategoriSkriningDaerah}} {{filterYearKategoriSkriningDaerah}}
           </div>
           <div class="col-4">
             <div class="row">
               <div class="col-6 px-0">
-                <select class="form-select">
-                  <option value="">Klaster 2</option>
+                <select class="form-select" [(ngModel)]="filterClasterKategoriSkriningDaerah">
+                  <option *ngFor="let claster of listOfClasters" [value]="claster">{{claster}}</option>
                 </select>
               </div>
               <div class="col-3 pe-0 ps-2">
-                <select class="form-select">
-                  <option value="">JAN</option>
+                <select class="form-select" [(ngModel)]="filterMonthKategoriSkriningDaerah">
+                  <option *ngFor="let month of listOfMonths" [value]="month">{{month}}</option>
                 </select>
               </div>
               <div class="col-3 pe-2 ps-2">
-                <select class="form-select">
-                  <option value="">2025</option>
+                <select class="form-select" [(ngModel)]="filterYearKategoriSkriningDaerah">
+                  <option *ngFor="let year of listOfYears" [value]="year">{{year}}</option>
                 </select>
               </div>
             </div>
           </div>
         </div>
 
-        <apx-chart 
-          [series]=
-          "[
+        <apx-chart [series]="[
             {
               name: 'Bar',
-              data: barValue
+              data: grapikBerdasarkanDaerah
             }
-          ]"
-          [chart]=
-          "{
+          ]" [chart]="{
             height: '390',
             type: 'bar'
-          }" 
-          [stroke]="{
+          }" [stroke]="{
             show: true,
             width: 2,
             colors: ['transparent']
-          }" 
-          [plotOptions]=
-          "{
+          }" [plotOptions]="{
             bar: {
               horizontal: false,
               endingShape: 'rounded',
               columnWidth: '55%'
             }
-          }" 
-          [dataLabels]=
-          "{
+          }" [dataLabels]="{
             enabled: false
-          }"
-          [xaxis]=  
-          "{
-            categories:barSkrining
-          }" 
-          [yaxis]="
+          }" [xaxis]="{
+            categories:listOfDistricts
+          }" [yaxis]="
           {
             title: 
             {
               text: ''
             }
-          }" 
-          [fill]=
-          "{
+          }" [fill]="{
             opacity: 1
-          }"
-          [colors]="['#3BB5AA']"
-        >
+          }" [colors]="['#3BB5AA']">
         </apx-chart>
       </div>
     </div>
@@ -322,33 +275,33 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header card-header-custom text-capitalize justify-content-center px-0">
-        Jumlah Pasien By Skrining 
+        Jumlah Pasien By Skrining
       </div>
       <div class="card-body">
         <div class="row justify-content-between align-items-center mb-3">
           <div class="col-5 fw-semi-custom">
-            Desa Bambu 1, Januari 2025, Ibu Hamil, Bersalin & Nifas
+            {{filterSubDistrictBySkrining}}, {{filterMonthBySkrining}} {{filterYearBySkrining}}, {{filterSubClasterBySkrining}}
           </div>
           <div class="col-7">
             <div class="row">
               <div class="col-6 px-0">
-                <select class="form-select">
-                  <option value="">Lokasi</option>
+                <select class="form-select" [(ngModel)]="filterSubDistrictBySkrining">
+                  <option *ngFor="let city of listOfDistricts" [value]="city">{{city}}</option>
                 </select>
               </div>
               <div class="col-2 pe-0 ps-2">
-                <select class="form-select">
-                  <option value="">Kategori Skrining</option>
+                <select class="form-select" [(ngModel)]="filterSubClasterBySkrining">
+                  <option *ngFor="let subclaster of listOfSubClasters" [value]="subclaster">{{subclaster}}</option>
                 </select>
               </div>
               <div class="col-2 pe-0 ps-2">
-                <select class="form-select">
-                  <option value="">JAN</option>
+                <select class="form-select" [(ngModel)]="filterMonthBySkrining">
+                  <option *ngFor="let month of listOfMonths" [value]="month">{{month}}</option>
                 </select>
               </div>
               <div class="col-2 pe-2 ps-2">
-                <select class="form-select">
-                  <option value="">2025</option>
+                <select class="form-select" [(ngModel)]="filterYearBySkrining">
+                  <option *ngFor="let year of listOfYears" [value]="year">{{year}}</option>
                 </select>
               </div>
             </div>
@@ -421,6 +374,12 @@
                 <span>5</span>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <button class="btn btn-default text-info">Lihat Lebih</button>
           </div>
         </div>
       </div>
