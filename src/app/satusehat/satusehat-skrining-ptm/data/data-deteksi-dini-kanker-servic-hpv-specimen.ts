@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerServicHpvSpecimen {
+  status: any
   dateNow = new Date().toISOString()
   
   getdata() {
@@ -11,7 +12,7 @@ export class DataDeteksiDiniKankerServicHpvSpecimen {
       specimens: [
         {
           name: "cervical_swab__specimen",
-          status: "available",
+          status: this.status,
           type: {
             system: "http://snomed.info/sct",
             code: "258524009",

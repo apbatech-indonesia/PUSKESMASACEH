@@ -5,7 +5,7 @@ export const environment = {
   emrUrl: "https://emr.clenicapp.com/",
   baseUrl: "",
   pcareUrl: "",
-  socketUrl: "http://sockettabaro.clenic.id/",
+  socketUrl: "https://socketpkm.apbatech.com/",
   satuSehatUrl: "https://satusehat.clenicapp.com/api/",
   rawatJalanUrl: "",
   apiPath: "api/",
@@ -16,5 +16,5 @@ export const environment = {
   cabangPath: "api/master-data/cabang/",
   rawatJalanPath: "/asesmen-rawat-jalan",
   antrianFktpPath: "/antrean-fktp/bpjs/",
-  version: 'v4.0.0'
+  version: "v4.0.0",
 };

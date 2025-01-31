@@ -4,6 +4,8 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerServicHpvDiagnosticReport {
+  code: any
+  display: any
   dateNow = new Date().toISOString()
 
   getdata() {
@@ -43,8 +45,8 @@ export class DataDeteksiDiniKankerServicHpvDiagnosticReport {
           conclusionCode:
           {
             system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
-            code: "N",
-            display: "Normal"
+            code: this.code,
+            display: this.display
           }
         }
       ]

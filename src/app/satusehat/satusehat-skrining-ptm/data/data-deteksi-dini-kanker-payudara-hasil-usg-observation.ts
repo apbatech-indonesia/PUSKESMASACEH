@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerPayudaraHasilUsgObservation {
+  display: any
   dateNow = new Date().toISOString()
   
   getdata() {
@@ -29,7 +30,7 @@ export class DataDeteksiDiniKankerPayudaraHasilUsgObservation {
               valueCodeableConcept: {
                 system: "http://snomed.info/sct",
                 code: "290084006",
-                display: "Breast normal"
+                display: this.display
               }
             }
           ],

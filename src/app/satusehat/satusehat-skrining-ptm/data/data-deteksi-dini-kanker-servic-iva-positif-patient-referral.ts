@@ -4,13 +4,14 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniKankerServicIvaPositifPatientRreferral {
+  patientInstruction: any
   dateNow = new Date().toISOString()
 
   getdata() {
     return {
       serviceRequests: [
         {
-          name: "patient_referral",
+          name: "iva_positif_patient_referral",
           category: [
             {
               coding: [
@@ -31,10 +32,10 @@ export class DataDeteksiDiniKankerServicIvaPositifPatientRreferral {
               ]
             }
           ],
-          patientInstruction: "",
+          patientInstruction: this.patientInstruction,
           encounter: {
             reference: "Encounter/{{Encounter_id}}",
-            display: ""
+            display: this.patientInstruction
           },
           status: "active",
           intent: "original-order",
@@ -48,13 +49,13 @@ export class DataDeteksiDiniKankerServicIvaPositifPatientRreferral {
               display: "Patient referral"
             },
             {
-              text: "Rujukan diduga Kanker Cervix menggunakan ambulance"
+              text: this.patientInstruction
             }
           ],
           reason: [
             {},
             {
-              text: " IVA Positif, perlu ada pemeriksaan tindaklanjut"
+              text: "IVA Positif, perlu ada pemeriksaan tindaklanjut"
             }
           ]
         }
