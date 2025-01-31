@@ -203,7 +203,7 @@ export class kasirfarmasijualComponent implements OnInit {
 
     console.log(this.akses);
 
-    this.socketx = io("https://socketpkm.clenic.id/");
+    this.socketx = io("https://socketpkm.apbatech.com/");
   }
 
   tambahmodal(a) {
