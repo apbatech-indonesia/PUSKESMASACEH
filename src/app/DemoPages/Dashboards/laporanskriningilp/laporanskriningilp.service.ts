@@ -15,8 +15,19 @@ export class laporanskriningilpService {
     public http: HttpClient
   ) { }
 
-  getPatientStatus(data) {
+  getPatientByClusterGroup(data) {
+    return this.http.post(satusehatUrl + 'screeningDashboard/getPatientByClusterGroup', data, { headers: this.headers }).toPromise()
+  }
 
+  getPatientStatus(data) {
     return this.http.post(satusehatUrl + 'screeningDashboard/getPatientStatus', data, { headers: this.headers }).toPromise()
+  }
+
+  getPatientByCluster(data) {
+    return this.http.post(satusehatUrl + 'screeningDashboard/getPatientByCluster', data, { headers: this.headers }).toPromise()
+  }
+
+  getPatientByScreening(data) {
+    return this.http.post(satusehatUrl + 'screeningDashboard/getPatientByScreening', data, { headers: this.headers }).toPromise()
   }
 }
