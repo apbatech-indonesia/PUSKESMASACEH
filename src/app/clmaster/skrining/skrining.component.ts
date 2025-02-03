@@ -78,6 +78,17 @@ import { DatePipe } from '@angular/common';
       cursor: pointer;
     }
     
+    .riwayat-skrining-button-custom {
+      background-color: #E7A422;
+      width: auto;
+      height: 36px;
+      color: white;
+      padding: 4px 10px 4px 10px;
+      border-style: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    
     .create-skrining-button-custom {
       background-color: #009688;
       width: auto;
@@ -207,6 +218,10 @@ export class skriningComponent implements OnInit {
   }
   cabangData: any;
   useCaseId: any;
+  screeningPatientId: null;
+  screeningPatientData: any = {};
+  idScreening: any;
+  closeResultModalRiwayat: string;
 
 
   constructor(
@@ -233,8 +248,9 @@ export class skriningComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ambilDataCluster();
-    // this.initPage()
+    this.getScreeningDataByNoTr();
+    this.initPage()
+    // this.ambilGroup();
   }
 
   showLoading() {
@@ -245,6 +261,38 @@ export class skriningComponent implements OnInit {
 
   stopLoading(timing: number = 1000) {
     setTimeout(() => { Swal.close() }, timing)
+  }
+
+  getScreeningDataByNoTr() {
+    let body = {
+      "transactionNo": this.no_transaksi,
+      "screeningId": ""
+    }
+    this.serviceUrl.getScreeningDataByNoTr(body).subscribe(
+      (data: any) => {
+        if (data.statusCode === 200) {
+          this.screeningPatientId = data.data.screening_patient.id;
+          this.screeningPatientData = data.data;
+          this.ambilGroup();
+        }else{
+          this.screeningPatientId = null;
+          this.screeningPatientData = {};
+          this.ambilGroup();
+        }
+      },(error: any) => {
+        if (error.error.statusCode === 404) {
+          this.screeningPatientId = null;
+          this.screeningPatientData = {};
+          this.ambilGroup();
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Gagal memuat data. Silakan coba lagi.',
+          });
+        }
+      }
+    );
   }
 
   getPasien() {
@@ -270,52 +318,22 @@ export class skriningComponent implements OnInit {
   }
 
   async initPage() {
-    this.showLoading()
+    // this.showLoading()
     this.patientData = await this.getPasien()
     this.cabangData = await this.getCabang()
-
-    const data = {
-      rmno: this.norm,
-      orgId: this.cabangData.kodeorg,
-      branchId: this.cabangData.kdcabang,
-      villageId: "",
-      patientId: this.idpasien,
-      clusterId: "",
-      patientName: this.patientData.pasien,
-      locationId: this.patientData.locationid,
-      locationName: this.patientData.locationid,
-      visitDate: new Date().toISOString(),
-      screening_ids: []
-    }
-    console.log('data init')
-    console.log(data)
-    // let response: any = await this.serviceUrl.register({
-    //   data: {
-    //     rmno: this.notransaksi,
-    //     orgId: this.cabangData.kodeorg,
-    //     branchId: "",
-    //     villageId: "",
-    //     patientId: this.idpasien,
-    //     clusterId: "",
-    //     patientName: this.patientData.pasien,
-    //     locationId: this.patientData.locationid,
-    //     locationName: this.patientData.locationid,
-    //     visitDate:"",
-    //     screening_ids: []
-    //   }
-    // })
-    // this.useCaseId = response.data.use_case_id
-    // this.ambilDataCluster()
+    console.log('this.patientData')
+    console.log(this.patientData)
+    console.log('this.cabangData')
+    console.log(this.cabangData)
   }
 
-  async ambilDataCluster() {
+  async ambilGroup() {
     try {
-      let response: any = await this.serviceUrl.getCluster({
-        // rmno: "02-047-02",     
-        // patientId: "P01078707999"
-        // rmno: this.norm,     
-        // patientId: ''
-        // patientId: this.idpasien
+      let response: any = await this.serviceUrl.getGroup({
+        // "rmno": "02-047-02",     
+        // "transactionNo": "12345"
+        "rmno": this.norm,     
+        "transactionNo": this.notransaksi
       });
       this.arrCluster = response.data;
     } catch (error) {
@@ -327,18 +345,26 @@ export class skriningComponent implements OnInit {
     }
   }
 
-  async getClusterById(idCluster){
+  async getScreeningById(idCluster){
     this.arrSkrining = [];
     this.clusterId = idCluster;
+    // const body = {
+    //   "show_child" : "yes",
+    //   "key_name":"cluster_id",
+    //   "key_operator":"=",
+    //   "key_value":this.clusterId,
+    //   "max_row": 50,
+    //   "order_by": "id",
+    //   "order_type": "Asc"
+    // }
     const body = {
-      "show_child" : "yes",
-      "key_name":"cluster_id",
-      "key_operator":"=",
-      "key_value":this.clusterId,
-      "max_row": 50,
-      "order_by": "id",
-      "order_type": "Asc"
+      "clusterId" : this.clusterId,
+      "transactionNo" : this.notransaksi
     }
+    // const body = {
+    //   "clusterId" : 1,
+    //   "transactionNo" : "12345"
+    // }
     try {
       let response: any = await this.serviceUrl.getSkrinigById(body);
       this.arrSkrining = response.data;
@@ -354,12 +380,30 @@ export class skriningComponent implements OnInit {
   openModal(content, data, cluster, subCluster, number) {
     this.titleModal = `${cluster} - ${subCluster}`
     this.subTitleModal = `${number}. ${data.name}`
+    // const mapQuestion = data.questionnaires.map(parent => ({
+    //   ...parent,
+    //   answered: true
+    // }))
+    // this.questions = mapQuestion
     this.questions = data.questionnaires
+    this.idScreening = data.id
+    console.log('data')
+    console.log(data)
     this.modalService.open(content, {size: 'xl', ariaLabelledBy: 'modal'}).result.then((result) => {
       this.closeResultModal = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResultModal = `Dismissed ${this.getDismissReasonModal(reason)}`;
     });
+  }
+
+  private getDismissReasonModal(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return  `with: ${reason}`;
+    }
   }
 
   change() {
@@ -388,12 +432,143 @@ export class skriningComponent implements OnInit {
     });
   }
 
+  registerAndSave(){
+    // const body = {
+    //   "data": {
+    //     "rmno": "02-047-022",
+    //     "orgId": "1000121966",
+    //     "transactionNo":"2025012401",
+    //     "branchId":"088",
+    //     "villageId":"1101012001",  // Desa/kelurahan  Keude Bakongan Aceh
+    //     "patientId": "P01078707999",
+    //     "clusterId": 1,
+    //     "patientName": "Suherman",
+    //     "locationId" :"5e7aa695-0b35-47ba-bc6b-28c680b99590",
+    //     "locationName":"Rumah Sakit Sehat Semua",
+    //     "visitDate":"2025-01-20",
+    //     "screening_ids": [1,5]
+    //   }
+    // }
+    const body = {
+      data : {
+        rmno: this.norm,
+        orgId: this.cabangData.kodeorg,
+        transactionNo: this.notransaksi,
+        branchId: this.cabangData.kdcabang,
+        villageId: this.patientData.kdkelurahan,
+        patientId: this.idpasien,
+        clusterId: this.clusterId,
+        patientName: this.patientData.pasien,
+        locationId: this.patientData.locationid,
+        locationName: this.patientData.locationid,
+        visitDate: this.patientData.tglpriksa,
+        screening_ids: [this.idScreening]
+      }
+    }
+    console.log('data register')
+    console.log(body)
+    this.serviceUrl.register(body).subscribe(
+      (data: any) => {
+        console.log('data response register')
+        console.log(data)
+        if (data.statusCode == '00') {
+          console.log('terdaftar')
+          this.screeningPatientId = data.data.screening_patient_id
+          console.log('this.screeningPatientId')
+          console.log(this.screeningPatientId)
+          setTimeout(() => {
+            this.saveDataScreening()
+          }, 500);
+        }else{
+          console.log('tidak terdaftar')
+        }
+      },(error: any) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Gagal menyimpan data. Silakan coba lagi.',
+        });
+      }
+    );
+    
+  }
+
   simpan(){
-    console.log('this.questions simpan')
-    console.log(this.questions)
+    if(this.screeningPatientId === null){
+      this.registerAndSave()
+    }else{
+      this.saveDataScreening()
+    }
   }
   
-  private getDismissReasonModal(reason: any): string {
+  saveDataScreening(){
+    const mapQuesioner = this.questions.map(item => {
+      // if(item.type)
+      return {
+        "id": item.id,                 
+        "type": item.type,                   
+        "answer": item.answered
+      }
+    })
+    const body = {
+      "screening_patient": {
+        "id": this.screeningPatientId
+      },
+      "screening_data": [
+        {
+          "screening_id": this.idScreening,
+          "questionnaires":mapQuesioner
+        }
+      ]
+    }
+    console.log('this.questions')
+    console.log(this.questions)
+    console.log('mapQuesioner')
+    console.log(mapQuesioner)
+    console.log('body simpan screening')
+    console.log(body)
+    this.serviceUrl.saveScreening(body).subscribe(
+      (data: any) => {
+        console.log('data response save')
+        console.log(data)
+        if (data.statusCode == '200') {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "<small>Data Skrining Berhasil Di Simpan</small>",
+            showConfirmButton: false,
+            timer: 3000
+          });
+          document.getElementById("closeModal").click();
+          this.getScreeningDataByNoTr()
+          setTimeout(() => {
+            this.getScreeningById(this.clusterId);
+          }, 300);
+        }else{
+          console.log('tidak tersimpan')
+        }
+      },(error: any) => {
+        console.log('error')
+        console.log(error)
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: error.error.statusMsg,
+        });
+      }
+    );
+  }
+  
+  openModalRiwayat(content) {
+    this.getDataHistory();
+    this.modalService.open(content, {size: 'md', ariaLabelledBy: 'modal-riwayat'}).result.then((result) => {
+      this.closeResultModalRiwayat = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResultModalRiwayat = `Dismissed ${this.getDismissReasonModalRiwayat(reason)}`;
+    });
+  }
+
+  private getDismissReasonModalRiwayat(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
@@ -401,5 +576,26 @@ export class skriningComponent implements OnInit {
     } else {
       return  `with: ${reason}`;
     }
+  }  
+
+  getDataHistory(){
+    const body = {
+      "rmno": this.norm,
+      "transactionNo": '' 
+    }
+    this.serviceUrl.getDataHistory(body).subscribe(
+      (data: any) => {
+        console.log('data history')
+        console.log(data)
+      },(error: any) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: error.error.message,
+        });
+      }
+    );
   }
+
+
 }
