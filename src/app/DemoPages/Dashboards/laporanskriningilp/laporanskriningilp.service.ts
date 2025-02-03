@@ -30,4 +30,8 @@ export class laporanskriningilpService {
   getPatientByScreening(data) {
     return this.http.post(satusehatUrl + 'screeningDashboard/getPatientByScreening', data, { headers: this.headers }).toPromise()
   }
+
+  getPatientByVillage(data) {
+    return this.http.post(satusehatUrl + 'screeningDashboard/getPatientByVillage', data, { headers: this.headers }).toPromise()
+  } 
 }

@@ -47,11 +47,8 @@ export class laporanskriningilpComponent implements OnInit {
     'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
     'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
   ];
-  listOfDistricts: string[] = [
-    'Lambaro', 'Lampenerut', 'Jantho', 'Krueng Raya', 'Seulimeum', 'Indrapuri',
-    'Sibreh', 'Cot Irie', 'Montasik', 'Ingin Jaya', 'Kuta Baro', 'Lhoong',
-    'Lhoknga', 'Darussalam', 'Mesjid Raya'
-  ];
+  listOfSubDistricts: string[] = [];
+  listOfSubDistrictsId: string[] = [];
   listOfColors = [
     "bg-pb-green-custom",
     "bg-pb-brown-custom",
@@ -65,19 +62,13 @@ export class laporanskriningilpComponent implements OnInit {
 
   currentYear: string = new Date().getFullYear().toString();
 
-  filterSubDistrict: string = "Jantho";
-  filterClaster: string = "Klaster 2";
-  filterSubClaster: string = "Ibu Hamil, Bersalin, Nifas";
-  filterYear: string = this.currentYear;
-  filterMonth: string = "Januari";
-
   filterYearTotalSkrining: string = this.currentYear;
 
-  filterSubDistrictKlaster: string = "Jantho";
+  filterSubDistrictKlaster: string = "Semua Lokasi";
   filterMonthKlaster: string = "Januari";
   filterYearKlaster: string = this.currentYear;
 
-  filterSubDistrictKategoriSkrining: string = "Jantho";
+  filterSubDistrictKategoriSkrining: string = "Semua Lokasi";
   filterClasterKategoriSkrining: string = "Klaster 2";
   filterMonthKategoriSkrining: string = "Januari";
   filterYearKategoriSkrining: string = this.currentYear;
@@ -86,7 +77,7 @@ export class laporanskriningilpComponent implements OnInit {
   filterMonthKategoriSkriningDaerah: string = "Januari";
   filterYearKategoriSkriningDaerah: string = this.currentYear;
 
-  filterSubDistrictBySkrining: string = "Jantho";
+  filterSubDistrictBySkrining: string = "Semua Lokasi";
   filterSubClasterBySkrining: any = "Ibu Hamil, Bersalin, Nifas";
   filterMonthBySkrining: string = "Januari";
   filterYearBySkrining: string = this.currentYear;
@@ -106,6 +97,7 @@ export class laporanskriningilpComponent implements OnInit {
     this.getTotalPasienSkrining();
     this.getPatientByClusterGroup();
     this.getTotalPasienByCategorySkrining();
+    this.getPatientByVillage();
     this.getAllSubClaster();
     this.getTotalPatientByScreening();
   }
@@ -169,11 +161,13 @@ export class laporanskriningilpComponent implements OnInit {
       if (!this.filterYearKategoriSkrining) {
         throw new Error("Tahun filter tidak tersedia");
       }
-
-      const data = {
+      const data: any = {
         year: this.filterYearKlaster,
-        month: String(this.listOfMonths.indexOf(this.filterMonthKlaster) + 1).padStart(2, '0'),
-        // locationId: "5e7aa695-0b35-47ba-bc6b-28c680b99590"
+        month: String(this.listOfMonths.indexOf(this.filterMonthKlaster) + 1).padStart(2, '0')
+      }
+
+      if (this.listOfSubDistricts.indexOf(this.filterSubDistrictKlaster) != -1) {
+        data.villageId = this.listOfSubDistrictsId[this.listOfSubDistricts.indexOf(this.filterSubDistrictKlaster)]
       }
       const response: any = await this.api.getPatientByClusterGroup(data);
 
@@ -198,11 +192,14 @@ export class laporanskriningilpComponent implements OnInit {
         throw new Error("Tahun filter tidak tersedia");
       }
 
-      const data = {
+      const data: any = {
         year: this.filterYearKategoriSkrining,
         month: String(this.listOfMonths.indexOf(this.filterMonthKategoriSkrining) + 1).padStart(2, '0'),
-        // locationId: "5e7aa695-0b35-47ba-bc6b-28c680b99590",
         clusterGroup: this.filterClasterKategoriSkrining
+      }
+
+      if (this.listOfSubDistricts.indexOf(this.filterSubDistrictKategoriSkrining) != -1) {
+        data.villageId = this.listOfSubDistrictsId[this.listOfSubDistricts.indexOf(this.filterSubDistrictKategoriSkrining)]
       }
       const response: any = await this.api.getPatientByCluster(data);
 
@@ -228,8 +225,30 @@ export class laporanskriningilpComponent implements OnInit {
       this.listOfSubClastersId = response.data.map(item => item.clusters).flat().map(item => item.cluster_id)
       this.listOfSubClasterName = response.data.map(item => item.clusters).flat().map(item => item.cluster_name)
       this.listOfAllSkrining = response.data
+    } catch (error) {
+      console.error("Error saat mengambil total pasien skrining:", error);
+    }
+  }
 
-      console.log(this.listOfAllSkrining)
+  async getPatientByVillage() {
+    try {
+      const data = {
+        year: this.filterYearKategoriSkriningDaerah,
+        month: String(this.listOfMonths.indexOf(this.filterMonthKategoriSkriningDaerah) + 1).padStart(2, '0'),
+        clusterGroup: this.filterClasterKategoriSkriningDaerah
+      }
+      const response: any = await this.api.getPatientByVillage(data);
+
+      if (!response?.data?.length) {
+        this.listOfSubDistrictsId = []
+        this.listOfSubDistricts = []
+        this.grapikBerdasarkanDaerah = []
+        throw new Error("Data tidak tersedia");
+      }
+
+      this.listOfSubDistrictsId = response.data.map(item => item.village_id)
+      this.listOfSubDistricts = response.data.map(item => item.village_name)
+      this.grapikBerdasarkanDaerah = response.data.map(item => item.total_patients)
     } catch (error) {
       console.error("Error saat mengambil total pasien skrining:", error);
     }
@@ -241,11 +260,14 @@ export class laporanskriningilpComponent implements OnInit {
         throw new Error("Tahun filter tidak tersedia");
       }
 
-      const data = {
+      const data: any = {
         year: this.filterYearBySkrining,
         month: String(this.listOfMonths.indexOf(this.filterMonthBySkrining) + 1).padStart(2, '0'),
-        // locationId: "5e7aa695-0b35-47ba-bc6b-28c680b99590",
         clusterId: this.listOfSubClastersId[this.listOfSubClasterName?.indexOf(this.filterSubClasterBySkrining)] ?? 1
+      }
+      
+      if (this.listOfSubDistricts.indexOf(this.filterSubDistrictBySkrining) != -1) {
+        data.villageId = this.listOfSubDistrictsId[this.listOfSubDistricts.indexOf(this.filterSubDistrictBySkrining)]
       }
       const response: any = await this.api.getPatientByScreening(data);
 
