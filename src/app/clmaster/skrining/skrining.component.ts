@@ -221,10 +221,6 @@ export class skriningComponent implements OnInit {
     // this.showLoading()
     this.patientData = await this.getPasien();
     this.cabangData = await this.getCabang();
-    console.log("this.patientData");
-    console.log(this.patientData);
-    console.log("this.cabangData");
-    console.log(this.cabangData);
   }
 
   async ambilGroup() {
@@ -282,10 +278,6 @@ export class skriningComponent implements OnInit {
     this.subTitleNumber = `${number}. `;
     this.subTitleModal = data.name;
 
-    this.isShowSdqCalculator = this.subTitleModal.includes(
-      "Skrining Instrument Strength and Difficulties Questionnaire (SDQ) Usia lebih dari atau sama dengan"
-    );
-
     let mapQuestion = data.questionnaires.map((parent) => {
       return {
         ...parent,
@@ -317,6 +309,15 @@ export class skriningComponent implements OnInit {
     this.questions = mapQuestion;
     this.cekCategories = this.questions.some((q) => q.category);
     this.idScreening = data.id;
+
+    this.isShowSdqCalculator = this.subTitleModal.includes(
+      "Skrining Instrument Strength and Difficulties Questionnaire (SDQ) Usia lebih dari atau sama dengan"
+    );
+
+    if (this.isShowSdqCalculator) {
+      this.doSdqCalculation(mapQuestion);
+    }
+
     this.modalService
       .open(content, { size: "xl", ariaLabelledBy: "modal" })
       .result.then(
@@ -341,9 +342,7 @@ export class skriningComponent implements OnInit {
     }
   }
 
-  change() {
-    console.log(this.questions);
-  }
+  change() {}
 
   onCheckedCQuestions(value, index) {
     this.questions.forEach((item, idx) => {
@@ -401,27 +400,19 @@ export class skriningComponent implements OnInit {
         // screening_ids: [this.idScreening]
       },
     };
-    console.log("data register");
-    console.log(body);
+
     this.serviceUrl.register(body).subscribe(
       (data: any) => {
-        console.log("data response register");
-        console.log(data);
         if (data.statusCode == "00") {
-          console.log("terdaftar");
           this.screeningPatientId = data.data.screening_patient_id;
-          console.log("this.screeningPatientId");
-          console.log(this.screeningPatientId);
+
           setTimeout(() => {
             this.saveDataScreening();
           }, 500);
         } else {
-          console.log("tidak terdaftar");
         }
       },
       (error: any) => {
-        console.log("error.error.statusCode");
-        console.log(error.error.statusCode);
         if (error.error.statusCode == 99) {
           Swal.fire({
             icon: "error",
@@ -447,21 +438,26 @@ export class skriningComponent implements OnInit {
     }
   }
 
-  doSdqCalculation() {
+  doSdqCalculation(data1: any) {
     this.data_sdq.masalah_emosional.skor = this.calculateScore(
-      this.data_sdq.masalah_emosional
+      this.data_sdq.masalah_emosional,
+      data1
     );
     this.data_sdq.masalah_perilaku.skor = this.calculateScore(
-      this.data_sdq.masalah_perilaku
+      this.data_sdq.masalah_perilaku,
+      data1
     );
     this.data_sdq.hiperaktivitas.skor = this.calculateScore(
-      this.data_sdq.hiperaktivitas
+      this.data_sdq.hiperaktivitas,
+      data1
     );
     this.data_sdq.masalah_teman_sebaya.skor = this.calculateScore(
-      this.data_sdq.masalah_teman_sebaya
+      this.data_sdq.masalah_teman_sebaya,
+      data1
     );
     this.data_sdq.perilaku_pro_sosial.skor = this.calculateScore(
-      this.data_sdq.perilaku_pro_sosial
+      this.data_sdq.perilaku_pro_sosial,
+      data1
     );
 
     this.data_sdq.total_kesulitan =
@@ -471,13 +467,19 @@ export class skriningComponent implements OnInit {
       this.data_sdq.masalah_teman_sebaya.skor;
   }
 
-  private calculateScore(category) {
-    return this.questions
+  private calculateScore(category, data) {
+    return data
       .map((item) => {
         let result = 0;
-        if (item.answered === "selalu_benar") {
+        if (
+          item.answered === "selalu_benar" ||
+          item.answer === "selalu_benar"
+        ) {
           result = 2;
-        } else if (item.answered === "agak_benar") {
+        } else if (
+          item.answered === "agak_benar" ||
+          item.answer === "agak_benar"
+        ) {
           result = 1;
         } else {
           result = 0;
@@ -495,8 +497,7 @@ export class skriningComponent implements OnInit {
         const ftrChecked = item.options
           .filter((child) => child.isChecked === true)
           .map((child) => child.option_value.valueReference);
-        console.log("ftrChecked");
-        console.log(ftrChecked);
+
         finalAnswer = ftrChecked;
       } else {
         finalAnswer = item.answered;
@@ -519,16 +520,9 @@ export class skriningComponent implements OnInit {
         },
       ],
     };
-    console.log("this.questions");
-    console.log(this.questions);
-    console.log("mapQuesioner");
-    console.log(mapQuesioner);
-    console.log("body simpan screening");
-    console.log(body);
+
     this.serviceUrl.saveScreening(body).subscribe(
       (data: any) => {
-        console.log("data response save");
-        console.log(data);
         if (data.statusCode == "200") {
           Swal.fire({
             position: "center",
@@ -557,12 +551,9 @@ export class skriningComponent implements OnInit {
               }`,
           });
         } else {
-          console.log("tidak tersimpan");
         }
       },
       (error: any) => {
-        console.log("error");
-        console.log(error);
         Swal.fire({
           icon: "error",
           title: "Error!",
@@ -606,8 +597,6 @@ export class skriningComponent implements OnInit {
     };
     this.serviceUrl.getDataHistory(body).subscribe(
       (data: any) => {
-        console.log("data history");
-        console.log(data);
         const filteredData = data.data.filter(
           (item) => item.screening_data && item.screening_data.length > 0
         );
@@ -632,6 +621,7 @@ export class skriningComponent implements OnInit {
   ) {
     this.titleModalRiwayat = `${group} - ${cluster}`;
     this.subTitleModalRiwayat = `${screening_name}`;
+
     let mapQuestion = questionnaires.map((parent) => {
       return {
         ...parent,
@@ -650,9 +640,6 @@ export class skriningComponent implements OnInit {
       };
     });
 
-    console.log("mapQuestion");
-    console.log(mapQuestion);
-
     mapQuestion = mapQuestion.filter((item, index, self) => {
       return (
         item.category !== "Penurutan Kognitif" ||
@@ -665,6 +652,15 @@ export class skriningComponent implements OnInit {
       .map((item) => item.text);
     this.questionsDetail = mapQuestion;
     this.cekCategoriesDetail = this.questions.some((q) => q.category);
+
+    this.isShowSdqCalculator = this.subTitleModalRiwayat.includes(
+      "Skrining Instrument Strength and Difficulties Questionnaire (SDQ) Usia lebih dari atau sama dengan"
+    );
+
+    if (this.isShowSdqCalculator) {
+      this.doSdqCalculation(mapQuestion);
+    }
+
     this.modalService
       .open(content, { size: "xl", ariaLabelledBy: "modal-riwayat" })
       .result.then(

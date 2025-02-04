@@ -149,7 +149,6 @@
   </div>
   <div class="row">
     <div class="col-12">
-
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
@@ -189,7 +188,7 @@
                   [id]="'option-' + question.id + no"
                   [value]="option.ValueText"
                   [(ngModel)]="question.answered"
-                  (change)="doSdqCalculation()"
+                  (change)="doSdqCalculation(questions)"
                 />
                 <label
                   class="form-check-label pointer"
@@ -312,8 +311,10 @@
             Masalah Teman Sebaya (P) = {{ data_sdq.masalah_teman_sebaya.skor }}
           </li>
         </ul>
-        <p class="total">Total Skor Kesulitan = {{ data_sdq.total_kesulitan }}</p>
-  
+        <p class="total">
+          Total Skor Kesulitan = {{ data_sdq.total_kesulitan }}
+        </p>
+
         <h3>Skor Kekuatan</h3>
         <ul>
           <li>
@@ -323,14 +324,18 @@
       </div>
     </div>
   </div>
-  <div class="row" *ngIf="subTitleModal == 'Skrining Penapisan Kehamilan Pasien KB'">
+  <div
+    class="row"
+    *ngIf="subTitleModal == 'Skrining Penapisan Kehamilan Pasien KB'"
+  >
     <div class="col-12">
       <span class="fst-italic"
-      >Notes : Jika dari 6 pertanyaan satu saja di jawab "Ya" pasien dapat
-      segera menggunakan alat kontrasepsi, Tetapi apabila 6 pertanyaan di jawab
-      "Tidak" Maka pasien harus menunggu haid bulan berikutnya untuk menggunakan
-      alat kontrasepsi (Skrinning penampisan kehamilan KLOP KB WHO)</span
-    >
+        >Notes : Jika dari 6 pertanyaan satu saja di jawab "Ya" pasien dapat
+        segera menggunakan alat kontrasepsi, Tetapi apabila 6 pertanyaan di
+        jawab "Tidak" Maka pasien harus menunggu haid bulan berikutnya untuk
+        menggunakan alat kontrasepsi (Skrinning penampisan kehamilan KLOP KB
+        WHO)</span
+      >
     </div>
   </div>
   <div class="modal-footer justify-content-center">
@@ -601,5 +606,35 @@
         </tr>
       </tbody>
     </table>
+
+    <div class="row" *ngIf="isShowSdqCalculator">
+      <div class="col-12">
+        <div class="container">
+          <h3>Skor Kesulitan</h3>
+          <ul>
+            <li>
+              Gejala Emosional (E) = {{ data_sdq.masalah_emosional.skor }}
+            </li>
+            <li>Masalah Perilaku (C) = {{ data_sdq.masalah_perilaku.skor }}</li>
+            <li>Hiperaktivitas (H) = {{ data_sdq.hiperaktivitas.skor }}</li>
+            <li>
+              Masalah Teman Sebaya (P) =
+              {{ data_sdq.masalah_teman_sebaya.skor }}
+            </li>
+          </ul>
+          <p class="total">
+            Total Skor Kesulitan = {{ data_sdq.total_kesulitan }}
+          </p>
+
+          <h3>Skor Kekuatan</h3>
+          <ul>
+            <li>
+              Perilaku Proposional (Pro) =
+              {{ data_sdq.perilaku_pro_sosial.skor }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </ng-template>
