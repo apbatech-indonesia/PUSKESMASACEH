@@ -207,6 +207,7 @@ export class skriningComponent implements OnInit {
   questions: any = [];
   titleModal: string;
   subTitleModal: string;
+  subTitleNumber: string;
 
   patientData: any = {
     noantrian: '-',
@@ -392,7 +393,8 @@ export class skriningComponent implements OnInit {
 
   openModal(content, data, cluster, subCluster, number) {
     this.titleModal = `${cluster} - ${subCluster}`
-    this.subTitleModal = `${number}. ${data.name}`
+    this.subTitleNumber = `${number}. `
+    this.subTitleModal = data.name
     let mapQuestion = data.questionnaires.map(parent => {
       return {
         ...parent,

@@ -63,7 +63,16 @@
   <div class="modal-body">
       <div class="row">
         <div class="col-12 h5 fw-bold text-primary-custom">
-          {{subTitleModal??''}}
+          {{subTitleNumber??''}}{{subTitleModal??''}}
+        </div>
+        <div *ngIf="subTitleModal == 'Skrining WHO - ASSIST V3.1'">
+          <label class="form-label fw-semi-custom">Dalam hidup Anda, zat apa di bawah ini yang pernah Anda gunakan? (Hanya Penggunaan Non-Medis)</label>
+          <div class="px-3 py-2 mb-2 rounded-3" style="background-color: #d3efff;">
+            <ul class="ps-0 mb-0" style="list-style-type: none;">
+              <li>- Gali bisa semua jawaban tidak pernah. Contoh "Tidak pernah juga menggunakan ketika anda di sekolah ?"</li>
+              <li>- Bila "Tidak pernah" untuk semua buti pertanyaan, Hentikan wawancara. Bila "Pernah" untuk butir manapun. Lanjutkan ke pertanyaan selanjutnya."</li>
+            </ul>
+          </div>
         </div>
       </div>
       <table class="table table-bordered table-hover">
@@ -142,6 +151,9 @@
           </tr>
         </tbody>
       </table>
+      <div *ngIf="subTitleModal == 'Skrining Penapisan Kehamilan Pasien KB'">
+        <span class="fst-italic">Notes : Jika dari 6 pertanyaan satu saja di jawab "Ya" pasien dapat segera menggunakan alat kontrasepsi, Tetapi apabila 6 pertanyaan di jawab "Tidak" Maka pasien harus menunggu haid bulan berikutnya untuk menggunakan alat kontrasepsi (Skrinning penampisan kehamilan KLOP KB WHO)</span>
+      </div>
   </div>
   <div class="modal-footer justify-content-center">
     <button (click)="simpan()" class="save-button-custom w-btn-custom fw-semi-custom">Simpan</button>
