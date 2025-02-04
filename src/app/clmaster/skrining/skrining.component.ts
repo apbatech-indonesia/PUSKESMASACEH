@@ -473,13 +473,17 @@ export class skriningComponent implements OnInit {
 
   private calculateScore(category) {
     return this.questions
-      .map((item) =>
-        item.answered === "selalu_benar"
-          ? 2
-          : item.answered === "agak_benar"
-          ? 1
-          : 0
-      )
+      .map((item) => {
+        let result = 0;
+        if (item.answered === "selalu_benar") {
+          result = 2;
+        } else if (item.answered === "agak_benar") {
+          result = 1;
+        } else {
+          result = 0;
+        }
+        return result;
+      })
       .filter((_, index) => category.listIndex.includes(index))
       .reduce((acc, current) => acc + current, 0);
   }
