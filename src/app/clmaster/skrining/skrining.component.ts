@@ -310,13 +310,7 @@ export class skriningComponent implements OnInit {
     this.cekCategories = this.questions.some((q) => q.category);
     this.idScreening = data.id;
 
-    this.isShowSdqCalculator = this.subTitleModal.includes(
-      "Skrining Instrument Strength and Difficulties Questionnaire (SDQ) Usia lebih dari atau sama dengan"
-    );
-
-    if (this.isShowSdqCalculator) {
-      this.doSdqCalculation(mapQuestion);
-    }
+    this.doSdqCalculation(mapQuestion);
 
     this.modalService
       .open(content, { size: "xl", ariaLabelledBy: "modal" })
@@ -439,32 +433,38 @@ export class skriningComponent implements OnInit {
   }
 
   doSdqCalculation(data1: any) {
-    this.data_sdq.masalah_emosional.skor = this.calculateScore(
-      this.data_sdq.masalah_emosional,
-      data1
-    );
-    this.data_sdq.masalah_perilaku.skor = this.calculateScore(
-      this.data_sdq.masalah_perilaku,
-      data1
-    );
-    this.data_sdq.hiperaktivitas.skor = this.calculateScore(
-      this.data_sdq.hiperaktivitas,
-      data1
-    );
-    this.data_sdq.masalah_teman_sebaya.skor = this.calculateScore(
-      this.data_sdq.masalah_teman_sebaya,
-      data1
-    );
-    this.data_sdq.perilaku_pro_sosial.skor = this.calculateScore(
-      this.data_sdq.perilaku_pro_sosial,
-      data1
+    this.isShowSdqCalculator = this.subTitleModalRiwayat.includes(
+      "Skrining Instrument Strength and Difficulties Questionnaire (SDQ) Usia lebih dari atau sama dengan"
     );
 
-    this.data_sdq.total_kesulitan =
-      this.data_sdq.masalah_emosional.skor +
-      this.data_sdq.masalah_perilaku.skor +
-      this.data_sdq.hiperaktivitas.skor +
-      this.data_sdq.masalah_teman_sebaya.skor;
+    if (this.isShowSdqCalculator) {
+      this.data_sdq.masalah_emosional.skor = this.calculateScore(
+        this.data_sdq.masalah_emosional,
+        data1
+      );
+      this.data_sdq.masalah_perilaku.skor = this.calculateScore(
+        this.data_sdq.masalah_perilaku,
+        data1
+      );
+      this.data_sdq.hiperaktivitas.skor = this.calculateScore(
+        this.data_sdq.hiperaktivitas,
+        data1
+      );
+      this.data_sdq.masalah_teman_sebaya.skor = this.calculateScore(
+        this.data_sdq.masalah_teman_sebaya,
+        data1
+      );
+      this.data_sdq.perilaku_pro_sosial.skor = this.calculateScore(
+        this.data_sdq.perilaku_pro_sosial,
+        data1
+      );
+
+      this.data_sdq.total_kesulitan =
+        this.data_sdq.masalah_emosional.skor +
+        this.data_sdq.masalah_perilaku.skor +
+        this.data_sdq.hiperaktivitas.skor +
+        this.data_sdq.masalah_teman_sebaya.skor;
+    }
   }
 
   private calculateScore(category, data) {
@@ -652,14 +652,7 @@ export class skriningComponent implements OnInit {
       .map((item) => item.text);
     this.questionsDetail = mapQuestion;
     this.cekCategoriesDetail = this.questions.some((q) => q.category);
-
-    this.isShowSdqCalculator = this.subTitleModalRiwayat.includes(
-      "Skrining Instrument Strength and Difficulties Questionnaire (SDQ) Usia lebih dari atau sama dengan"
-    );
-
-    if (this.isShowSdqCalculator) {
-      this.doSdqCalculation(mapQuestion);
-    }
+    this.doSdqCalculation(mapQuestion);
 
     this.modalService
       .open(content, { size: "xl", ariaLabelledBy: "modal-riwayat" })
