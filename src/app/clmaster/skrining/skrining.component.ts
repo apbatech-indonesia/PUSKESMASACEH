@@ -150,6 +150,10 @@ import { DatePipe } from '@angular/common';
       cursor: pointer;
     }
 
+    .pointer {
+      cursor: pointer;
+    }
+
     ::ng-deep .accordion .bg-test {
       background-color: white;
       height: 2.5rem;
@@ -175,7 +179,7 @@ import { DatePipe } from '@angular/common';
 export class skriningComponent implements OnInit {
   @Input() norm: string;
   @Input() idpasien: string;
-  
+
   userData: any = JSON.parse(localStorage.getItem('userDatacl')).userData
   notransaksi: string = this.route.snapshot.paramMap.get('notrans')
 
@@ -222,15 +226,24 @@ export class skriningComponent implements OnInit {
   screeningPatientData: any = {};
   idScreening: any;
   closeResultModalRiwayat: string;
+  cekCategories: boolean = false;
+  listPenurutanKognitif: any;
+  dataHistory: any = [];
+  closeResultModalDetailRiwayat: string;
+  questionsDetail: any = [];
+  cekCategoriesDetail: boolean = false;
+  listPenurutanKognitifDetail: any;
+  titleModalRiwayat: string;
+  subTitleModalRiwayat: string;
 
 
   constructor(
-    private router: Router, 
-    private route: ActivatedRoute, 
-    private modalService: NgbModal, 
-    public toastr: ToastrService, 
-    private authService: ApiserviceService, 
-    private serviceUrl: skriningService, 
+    private router: Router,
+    private route: ActivatedRoute,
+    private modalService: NgbModal,
+    public toastr: ToastrService,
+    private authService: ApiserviceService,
+    private serviceUrl: skriningService,
     private fb: FormBuilder,
     private NgbAccordionConfig: NgbAccordionConfig,
   ) {
@@ -274,17 +287,17 @@ export class skriningComponent implements OnInit {
           this.screeningPatientId = data.data.screening_patient.id;
           this.screeningPatientData = data.data;
           this.ambilGroup();
-        }else{
+        } else {
           this.screeningPatientId = null;
           this.screeningPatientData = {};
           this.ambilGroup();
         }
-      },(error: any) => {
+      }, (error: any) => {
         if (error.error.statusCode === 404) {
           this.screeningPatientId = null;
           this.screeningPatientData = {};
           this.ambilGroup();
-        }else{
+        } else {
           Swal.fire({
             icon: 'error',
             title: 'Error!',
@@ -332,7 +345,7 @@ export class skriningComponent implements OnInit {
       let response: any = await this.serviceUrl.getGroup({
         // "rmno": "02-047-02",     
         // "transactionNo": "12345"
-        "rmno": this.norm,     
+        "rmno": this.norm,
         "transactionNo": this.notransaksi
       });
       this.arrCluster = response.data;
@@ -345,7 +358,7 @@ export class skriningComponent implements OnInit {
     }
   }
 
-  async getScreeningById(idCluster){
+  async getScreeningById(idCluster) {
     this.arrSkrining = [];
     this.clusterId = idCluster;
     // const body = {
@@ -358,8 +371,8 @@ export class skriningComponent implements OnInit {
     //   "order_type": "Asc"
     // }
     const body = {
-      "clusterId" : this.clusterId,
-      "transactionNo" : this.notransaksi
+      "clusterId": this.clusterId,
+      "transactionNo": this.notransaksi
     }
     // const body = {
     //   "clusterId" : 1,
@@ -380,16 +393,33 @@ export class skriningComponent implements OnInit {
   openModal(content, data, cluster, subCluster, number) {
     this.titleModal = `${cluster} - ${subCluster}`
     this.subTitleModal = `${number}. ${data.name}`
-    // const mapQuestion = data.questionnaires.map(parent => ({
-    //   ...parent,
-    //   answered: true
-    // }))
-    // this.questions = mapQuestion
-    this.questions = data.questionnaires
+    let mapQuestion = data.questionnaires.map(parent => {
+      return {
+        ...parent,
+        options: parent.options.map(child => {
+          let isChecked;
+          if (parent.type == 'reference') {
+            isChecked = (parent.answered || []).includes(child.option_value.valueReference);
+          }
+          return {
+            ...child,
+            isChecked: isChecked
+          }
+        })
+      }
+    })
+
+    mapQuestion = mapQuestion.filter((item, index, self) => {
+      return (item.category !== "Penurutan Kognitif" ||
+        index === self.findIndex((t) => t.category === "Penurutan Kognitif")
+      )
+    });
+
+    this.listPenurutanKognitif = data.questionnaires.filter(item => item.category == 'Penurutan Kognitif').map(item => item.text)
+    this.questions = mapQuestion
+    this.cekCategories = this.questions.some(q => q.category)
     this.idScreening = data.id
-    console.log('data')
-    console.log(data)
-    this.modalService.open(content, {size: 'xl', ariaLabelledBy: 'modal'}).result.then((result) => {
+    this.modalService.open(content, { size: 'xl', ariaLabelledBy: 'modal' }).result.then((result) => {
       this.closeResultModal = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResultModal = `Dismissed ${this.getDismissReasonModal(reason)}`;
@@ -402,7 +432,7 @@ export class skriningComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
 
@@ -410,15 +440,15 @@ export class skriningComponent implements OnInit {
     console.log(this.questions)
   }
 
-  onCheckedCQuestions(value, index){
+  onCheckedCQuestions(value, index) {
     this.questions.forEach((item, idx) => {
       if (idx === index) {
         let arrAnswer = []
-        if(!item.answer){
+        if (!item.answer) {
           arrAnswer.push(value)
-        }else if(item.answer.lenght === 0){
+        } else if (item.answer.lenght === 0) {
           arrAnswer.push(value)
-        }else{
+        } else {
           arrAnswer = item.answer
           const indexItem = item.answer.indexOf(value);
           if (indexItem !== -1) {
@@ -432,7 +462,7 @@ export class skriningComponent implements OnInit {
     });
   }
 
-  registerAndSave(){
+  registerAndSave() {
     // const body = {
     //   "data": {
     //     "rmno": "02-047-022",
@@ -450,7 +480,7 @@ export class skriningComponent implements OnInit {
     //   }
     // }
     const body = {
-      data : {
+      data: {
         rmno: this.norm,
         orgId: this.cabangData.kodeorg,
         transactionNo: this.notransaksi,
@@ -462,7 +492,8 @@ export class skriningComponent implements OnInit {
         locationId: this.patientData.locationid,
         locationName: this.patientData.locationid,
         visitDate: this.patientData.tglpriksa,
-        screening_ids: [this.idScreening]
+        screening_ids: []
+        // screening_ids: [this.idScreening]
       }
     }
     console.log('data register')
@@ -479,45 +510,66 @@ export class skriningComponent implements OnInit {
           setTimeout(() => {
             this.saveDataScreening()
           }, 500);
-        }else{
+        } else {
           console.log('tidak terdaftar')
         }
-      },(error: any) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error!',
-          text: 'Gagal menyimpan data. Silakan coba lagi.',
-        });
+      }, (error: any) => {
+        console.log('error.error.statusCode')
+        console.log(error.error.statusCode)
+        if (error.error.statusCode == 99) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Data Pasien Belum Lengkap, Silakan Periksa Kembali.',
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: 'Gagal menyimpan data. Silakan coba lagi.',
+          });
+        }
       }
     );
-    
+
   }
 
-  simpan(){
-    if(this.screeningPatientId === null){
+  simpan() {
+    if (this.screeningPatientId === null) {
       this.registerAndSave()
-    }else{
+    } else {
       this.saveDataScreening()
     }
   }
-  
-  saveDataScreening(){
+
+  saveDataScreening() {
     const mapQuesioner = this.questions.map(item => {
-      // if(item.type)
+      let finalAnswer
+      if (item.type == 'reference') {
+        const ftrChecked = item.options
+          .filter(child => child.isChecked === true)
+          .map(child => child.option_value.valueReference);
+        console.log('ftrChecked')
+        console.log(ftrChecked)
+        finalAnswer = ftrChecked
+      } else {
+        finalAnswer = item.answered
+      }
       return {
-        "id": item.id,                 
-        "type": item.type,                   
-        "answer": item.answered
+        "id": item.id,
+        "type": item.type,
+        "answer": finalAnswer
       }
     })
     const body = {
       "screening_patient": {
-        "id": this.screeningPatientId
+        "id": this.screeningPatientId,
+        "cluster_id": this.clusterId
       },
       "screening_data": [
         {
           "screening_id": this.idScreening,
-          "questionnaires":mapQuesioner
+          "questionnaires": mapQuesioner
         }
       ]
     }
@@ -544,10 +596,20 @@ export class skriningComponent implements OnInit {
           setTimeout(() => {
             this.getScreeningById(this.clusterId);
           }, 300);
-        }else{
+        } else if (data.statusCode == '03') {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            html: `
+              Harap Melakukan Skrining di:<br>
+              <strong>${this.screeningPatientData?.screening_patient?.cluster.group??''}</strong><br>
+              ${this.screeningPatientData?.screening_patient?.cluster.name??''}`,
+          });
+        }
+        else {
           console.log('tidak tersimpan')
         }
-      },(error: any) => {
+      }, (error: any) => {
         console.log('error')
         console.log(error)
         Swal.fire({
@@ -558,10 +620,10 @@ export class skriningComponent implements OnInit {
       }
     );
   }
-  
-  openModalRiwayat(content) {
-    this.getDataHistory();
-    this.modalService.open(content, {size: 'md', ariaLabelledBy: 'modal-riwayat'}).result.then((result) => {
+
+  openModalRiwayat(content, skriId) {
+    this.getDataHistory(skriId);
+    this.modalService.open(content, { size: 'xl', ariaLabelledBy: 'modal-riwayat' }).result.then((result) => {
       this.closeResultModalRiwayat = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResultModalRiwayat = `Dismissed ${this.getDismissReasonModalRiwayat(reason)}`;
@@ -574,20 +636,23 @@ export class skriningComponent implements OnInit {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
-  }  
+  }
 
-  getDataHistory(){
+  getDataHistory(skrinId) {
     const body = {
       "rmno": this.norm,
-      "transactionNo": '' 
+      "screeningId": skrinId,
+      "transactionNo": ''
     }
     this.serviceUrl.getDataHistory(body).subscribe(
       (data: any) => {
         console.log('data history')
         console.log(data)
-      },(error: any) => {
+        const filteredData = data.data.filter(item => item.screening_data && item.screening_data.length > 0);
+        this.dataHistory = filteredData;
+      }, (error: any) => {
         Swal.fire({
           icon: 'error',
           title: 'Error!',
@@ -595,6 +660,54 @@ export class skriningComponent implements OnInit {
         });
       }
     );
+  }
+
+  openModalDetailRiwayat(content, questionnaires, screening_name, group, cluster) {
+    this.titleModalRiwayat = `${group} - ${cluster}`
+    this.subTitleModalRiwayat = `${screening_name}`
+    let mapQuestion = questionnaires.map(parent => {
+      return {
+        ...parent,
+        options: parent.options.map(child => {
+          let isChecked;
+          if (parent.type == 'reference') {
+            isChecked = (parent.answer || []).includes(child.option_value.valueReference);
+          }
+          return {
+            ...child,
+            isChecked: isChecked
+          }
+        })
+      }
+    })
+
+    console.log('mapQuestion')
+    console.log(mapQuestion)
+
+    mapQuestion = mapQuestion.filter((item, index, self) => {
+      return (item.category !== "Penurutan Kognitif" ||
+        index === self.findIndex((t) => t.category === "Penurutan Kognitif")
+      )
+    });
+
+    this.listPenurutanKognitifDetail = questionnaires.filter(item => item.category == 'Penurutan Kognitif').map(item => item.text)
+    this.questionsDetail = mapQuestion
+    this.cekCategoriesDetail = this.questions.some(q => q.category)
+    this.modalService.open(content, { size: 'xl', ariaLabelledBy: 'modal-riwayat' }).result.then((result) => {
+      this.closeResultModalDetailRiwayat = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResultModalDetailRiwayat = `Dismissed ${this.getDismissReasonModalDetailRiwayat(reason)}`;
+    });
+  }
+
+  private getDismissReasonModalDetailRiwayat(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
 
