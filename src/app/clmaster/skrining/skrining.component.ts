@@ -62,12 +62,12 @@ export class skriningComponent implements OnInit {
 
   data_sdq = {
     total_kesulitan: 0,
-    masalah_emosional: {listIndex: [2, 7, 12, 15, 23], skor: 0},
-    masalah_perilaku: {listIndex: [4, 6, 11, 17, 21], skor: 0},
-    hiperaktivitas: {listIndex: [1, 9, 14, 20, 24], skor: 0},
-    masalah_teman_sebaya: {listIndex: [5, 10, 13, 18, 22], skor: 0},
-    perilaku_pro_sosial: {listIndex: [0, 3, 8, 16, 19], skor: 0}
-  }
+    masalah_emosional: { listIndex: [2, 7, 12, 15, 23], skor: 0 },
+    masalah_perilaku: { listIndex: [4, 6, 11, 17, 21], skor: 0 },
+    hiperaktivitas: { listIndex: [1, 9, 14, 20, 24], skor: 0 },
+    masalah_teman_sebaya: { listIndex: [5, 10, 13, 18, 22], skor: 0 },
+    perilaku_pro_sosial: { listIndex: [0, 3, 8, 16, 19], skor: 0 },
+  };
 
   heading = "Skrining";
   subheading: any;
@@ -278,15 +278,15 @@ export class skriningComponent implements OnInit {
   }
 
   openModal(content, data, cluster, subCluster, number) {
-    this.titleModal = `${cluster} - ${subCluster}`
-    this.subTitleNumber = `${number}. `
-    this.subTitleModal = data.name
-    
+    this.titleModal = `${cluster} - ${subCluster}`;
+    this.subTitleNumber = `${number}. `;
+    this.subTitleModal = data.name;
+
     this.isShowSdqCalculator = this.subTitleModal.includes(
       "Skrining Instrument Strength and Difficulties Questionnaire (SDQ) Usia lebih dari atau sama dengan"
     );
-    
-    let mapQuestion = data.questionnaires.map(parent => {
+
+    let mapQuestion = data.questionnaires.map((parent) => {
       return {
         ...parent,
         options: parent.options.map((child) => {
@@ -448,28 +448,40 @@ export class skriningComponent implements OnInit {
   }
 
   doSdqCalculation() {
-    let result = this.questions.map((item) => {
-      let skor = 0;
-      switch (item.answered) {
-        case "selalu_benar":
-          skor = 2;
-          break;
-        case "agak_benar":
-          skor = 1;
-          break;
-        default:
-          skor = 0;
-          break;
-      }
-      return skor;
-    });
+    this.data_sdq.masalah_emosional.skor = this.calculateScore(
+      this.data_sdq.masalah_emosional
+    );
+    this.data_sdq.masalah_perilaku.skor = this.calculateScore(
+      this.data_sdq.masalah_perilaku
+    );
+    this.data_sdq.hiperaktivitas.skor = this.calculateScore(
+      this.data_sdq.hiperaktivitas
+    );
+    this.data_sdq.masalah_teman_sebaya.skor = this.calculateScore(
+      this.data_sdq.masalah_teman_sebaya
+    );
+    this.data_sdq.perilaku_pro_sosial.skor = this.calculateScore(
+      this.data_sdq.perilaku_pro_sosial
+    );
 
-    this.data_sdq.masalah_emosional.skor = result.filter((_, index) => this.data_sdq.masalah_emosional.listIndex.includes(index)).reduce((acc, current) => acc + current, 0)
-    this.data_sdq.masalah_perilaku.skor = result.filter((_, index) => this.data_sdq.masalah_perilaku.listIndex.includes(index)).reduce((acc, current) => acc + current, 0)
-    this.data_sdq.hiperaktivitas.skor = result.filter((_, index) => this.data_sdq.hiperaktivitas.listIndex.includes(index)).reduce((acc, current) => acc + current, 0)
-    this.data_sdq.masalah_teman_sebaya.skor = result.filter((_, index) => this.data_sdq.masalah_teman_sebaya.listIndex.includes(index)).reduce((acc, current) => acc + current, 0)
-    this.data_sdq.perilaku_pro_sosial.skor = result.filter((_, index) => this.data_sdq.perilaku_pro_sosial.listIndex.includes(index)).reduce((acc, current) => acc + current, 0)
-    this.data_sdq.total_kesulitan = this.data_sdq.masalah_emosional.skor + this.data_sdq.masalah_perilaku.skor + this.data_sdq.hiperaktivitas.skor + this.data_sdq.masalah_teman_sebaya.skor
+    this.data_sdq.total_kesulitan =
+      this.data_sdq.masalah_emosional.skor +
+      this.data_sdq.masalah_perilaku.skor +
+      this.data_sdq.hiperaktivitas.skor +
+      this.data_sdq.masalah_teman_sebaya.skor;
+  }
+
+  private calculateScore(category) {
+    return this.questions
+      .map((item) =>
+        item.answered === "selalu_benar"
+          ? 2
+          : item.answered === "agak_benar"
+          ? 1
+          : 0
+      )
+      .filter((_, index) => category.listIndex.includes(index))
+      .reduce((acc, current) => acc + current, 0);
   }
 
   saveDataScreening() {
