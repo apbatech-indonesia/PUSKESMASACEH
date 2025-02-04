@@ -433,9 +433,12 @@ export class skriningComponent implements OnInit {
   }
 
   doSdqCalculation(data1: any) {
-    this.isShowSdqCalculator = this.subTitleModalRiwayat.includes(
-      "Skrining Instrument Strength and Difficulties Questionnaire (SDQ) Usia lebih dari atau sama dengan"
-    );
+    const sdqTitle =
+      "Skrining Instrument Strength and Difficulties Questionnaire (SDQ) Usia lebih dari atau sama dengan";
+
+    this.isShowSdqCalculator =
+      this.subTitleModal?.includes(sdqTitle) ||
+      this.subTitleModalRiwayat?.includes(sdqTitle);
 
     if (this.isShowSdqCalculator) {
       this.data_sdq.masalah_emosional.skor = this.calculateScore(
