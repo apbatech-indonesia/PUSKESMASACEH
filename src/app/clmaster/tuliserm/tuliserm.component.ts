@@ -9891,103 +9891,222 @@ export class tulisermComponent implements OnInit {
         if (!value) {
           Swal.showValidationMessage("Wajib Diisi");
         } else {
-          this.authService
-            .deletependaftaranpcarev(
-              this.noasuransi,
-              this.tglpriksa,
-              this.noantrianbpjs,
-              this.kdpolibpjs
-            )
-            .subscribe((data) => {
-              if (data.metaData.code == 200) {
-              } else {
-              }
+          if (this.dash === "BPJS") {
+            let bodyFktp = {
+              tanggalperiksa: this.tglpriksa,
+              kodepoli: this.kdpolibpjs,
+              nomorkartu: this.noasuransi,
+              alasan: "--",
+            };
+            this.authService
+              .cancelBpjsAntrian(bodyFktp, this.slug)
+              .subscribe((data) => {
+                if (data.data.code == 200) {
+                  this.toastr.success(data.data.message, "Sukses", {
+                    timeOut: 2000,
+                  });
+
+                  this.authService
+                    .deletekunjungan(this.nokunjungan)
+                    .subscribe((data) => {
+                      console.log(data);
+
+                      if (data.metaData.code == 200) {
+                        let body = {
+                          kdcabang: this.kdcabang,
+                          notransaksi: this.notrans,
+                          norm: this.norm,
+                          kddokter: this.kddokter,
+                          kdpoli: this.kdpoli,
+                          kduser: this.username,
+                          stssimpan: "1",
+                        };
+
+                        this.authService
+                          .hapustrx(body)
+                          .subscribe((response) => {});
+
+                        this.toastr.success(data.response, "Sukses", {
+                          timeOut: 2000,
+                        });
+                      } else {
+                        this.authService
+                          .deletependaftaranpcarev(
+                            this.noasuransi,
+                            this.tglpriksa,
+                            this.noantrianbpjs,
+                            this.kdpolibpjs
+                          )
+                          .subscribe((data) => {
+                            if (data.metaData.code == 200) {
+                            } else {
+                            }
+                          });
+
+                        let body = {
+                          kdcabang: this.kdcabang,
+                          notransaksi: this.notrans,
+                          norm: this.norm,
+                          kddokter: this.kddokter,
+                          kdpoli: this.kdpoli,
+                          kduser: this.username,
+                          stssimpan: "1",
+                        };
+
+                        this.authService
+                          .hapustrx(body)
+                          .subscribe((response) => {});
+
+                        this.toastr.success(data.response, "Sukses", {
+                          timeOut: 2000,
+                        });
+                      }
+                    });
+                } else {
+                  this.authService
+                    .deletekunjungan(this.nokunjungan)
+                    .subscribe((data) => {
+                      console.log(data);
+
+                      if (data.metaData.code == 200) {
+                        let body = {
+                          kdcabang: this.kdcabang,
+                          notransaksi: this.notrans,
+                          norm: this.norm,
+                          kddokter: this.kddokter,
+                          kdpoli: this.kdpoli,
+                          kduser: this.username,
+                          stssimpan: "1",
+                        };
+
+                        this.authService
+                          .hapustrx(body)
+                          .subscribe((response) => {});
+
+                        this.toastr.success(data.response, "Sukses", {
+                          timeOut: 2000,
+                        });
+                      } else {
+                        this.authService
+                          .deletependaftaranpcarev(
+                            this.noasuransi,
+                            this.tglpriksa,
+                            this.noantrianbpjs,
+                            this.kdpolibpjs
+                          )
+                          .subscribe((data) => {
+                            if (data.metaData.code == 200) {
+                            } else {
+                            }
+                          });
+
+                        let body = {
+                          kdcabang: this.kdcabang,
+                          notransaksi: this.notrans,
+                          norm: this.norm,
+                          kddokter: this.kddokter,
+                          kdpoli: this.kdpoli,
+                          kduser: this.username,
+                          stssimpan: "1",
+                        };
+
+                        this.authService
+                          .hapustrx(body)
+                          .subscribe((response) => {});
+
+                        this.toastr.success(data.response, "Sukses", {
+                          timeOut: 2000,
+                        });
+                      }
+                    });
+                  this.toastr.error(data.data.message, "Error");
+                }
+              });
+          } else {
+            let body = {
+              kdcabang: this.kdcabang,
+              notransaksi: this.notrans,
+              norm: this.norm,
+              kddokter: this.kddokter,
+              kdpoli: this.kdpoli,
+              kduser: this.username,
+              stssimpan: "1",
+            };
+
+            this.authService.hapustrx(body).subscribe((response) => {
+              // this.tantrian = []
             });
+          }
 
-          this.authService.deletekunjungan(this.nokunjungan).subscribe(
-            (data) => {
-              console.log(data);
+          // this.authService.deletekunjungan(this.nokunjungan).subscribe(
+          //   (data) => {
+          //     console.log(data);
 
-              if (data.metaData.code == 200) {
-                let body = {
-                  kdcabang: this.kdcabang,
-                  notransaksi: this.notrans,
-                  norm: this.norm,
-                  kddokter: this.kddokter,
-                  kdpoli: this.kdpoli,
-                  kduser: this.username,
-                  stssimpan: "1",
-                };
+          //     if (data.metaData.code == 200) {
 
-                this.authService.hapustrx(body).subscribe((response) => {});
+          //       let bodyFktp = {
+          //         tanggalperiksa: this.tglpriksa,
+          //         kodepoli: this.kdpolibpjs,
+          //         nomorkartu: this.noasuransi,
+          //         alasan: "--",
+          //       };
+          //       this.authService
+          //         .cancelBpjsAntrian(bodyFktp, this.slug)
+          //         .subscribe((data) => {
+          //           if (data.data.code == 200) {
+          //             this.toastr.success(data.data.message, "Sukses", {
+          //               timeOut: 2000,
+          //             });
+          //           } else {
+          //             this.toastr.error(data.data.message, "Error");
+          //           }
+          //         });
+          //     } else {
+          //       let body = {
+          //         kdcabang: this.kdcabang,
+          //         notransaksi: this.notrans,
+          //         norm: this.norm,
+          //         kddokter: this.kddokter,
+          //         kdpoli: this.kdpoli,
+          //         kduser: this.username,
+          //         stssimpan: "1",
+          //       };
 
-                this.toastr.success(data.response, "Sukses", {
-                  timeOut: 2000,
-                });
+          //       this.authService.hapustrx(body).subscribe((response) => {
+          //         // this.tantrian = []
+          //       });
 
-                let bodyFktp = {
-                  tanggalperiksa: this.tglpriksa,
-                  kodepoli: this.kdpolibpjs,
-                  nomorkartu: this.noasuransi,
-                  alasan: "--",
-                };
-                this.authService
-                  .cancelBpjsAntrian(bodyFktp, this.slug)
-                  .subscribe((data) => {
-                    if (data.data.code == 200) {
-                      this.toastr.success(data.data.message, "Sukses", {
-                        timeOut: 2000,
-                      });
-                    } else {
-                      this.toastr.error(data.data.message, "Error");
-                    }
-                  });
-              } else {
-                let body = {
-                  kdcabang: this.kdcabang,
-                  notransaksi: this.notrans,
-                  norm: this.norm,
-                  kddokter: this.kddokter,
-                  kdpoli: this.kdpoli,
-                  kduser: this.username,
-                  stssimpan: "1",
-                };
+          //       this.toastr.success(data.response, "Sukses", {
+          //         timeOut: 2000,
+          //       });
 
-                this.authService.hapustrx(body).subscribe((response) => {
-                  // this.tantrian = []
-                });
+          //       let bodyFktp = {
+          //         tanggalperiksa: this.tglpriksa,
+          //         kodepoli: this.kdpolibpjs,
+          //         nomorkartu: this.noasuransi,
+          //         alasan: "ss",
+          //       };
+          //       this.authService
+          //         .cancelBpjsAntrian(bodyFktp, this.slug)
+          //         .subscribe((data) => {
+          //           if (data.data.code == 200) {
+          //             this.toastr.success(data.data.message, "Sukses", {
+          //               timeOut: 2000,
+          //             });
+          //           } else {
+          //             this.toastr.error(data.data.message, "Error");
+          //           }
+          //         });
 
-                this.toastr.success(data.response, "Sukses", {
-                  timeOut: 2000,
-                });
-
-                let bodyFktp = {
-                  tanggalperiksa: this.tglpriksa,
-                  kodepoli: this.kdpolibpjs,
-                  nomorkartu: this.noasuransi,
-                  alasan: "ss",
-                };
-                this.authService
-                  .cancelBpjsAntrian(bodyFktp, this.slug)
-                  .subscribe((data) => {
-                    if (data.data.code == 200) {
-                      this.toastr.success(data.data.message, "Sukses", {
-                        timeOut: 2000,
-                      });
-                    } else {
-                      this.toastr.error(data.data.message, "Error");
-                    }
-                  });
-
-                // this.toastr.error(data.response[0].message, 'Sukses', {
-                //   timeOut: 2000,
-                // });
-              }
-            },
-            (Error) => {
-              console.log(Error);
-            }
-          );
+          //       // this.toastr.error(data.response[0].message, 'Sukses', {
+          //       //   timeOut: 2000,
+          //       // });
+          //     }
+          //   },
+          //   (Error) => {
+          //     console.log(Error);
+          //   }
+          // );
         }
       },
     });

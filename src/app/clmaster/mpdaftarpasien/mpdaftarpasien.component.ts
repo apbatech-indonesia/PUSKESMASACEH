@@ -1720,6 +1720,32 @@ export class MpdaftarpasienComponent implements OnInit {
                                           response.data.message,
                                           ""
                                         );
+
+                                        if (
+                                          response.data.message ===
+                                          "Peserta sudah terdaftar di poli tersebut pada hari ini"
+                                        ) {
+                                          let bodyFktp = {
+                                            tanggalperiksa: this.tglp,
+                                            kodepoli: this.kdpolibpjsku,
+                                            nomorkartu: this.noasuransi,
+                                            alasan: "daftra ulang",
+                                          };
+                                          this.authService
+                                            .cancelBpjsAntrian(
+                                              bodyFktp,
+                                              this.slug
+                                            )
+                                            .subscribe((data) => {
+                                              if (data.data.code == 200) {
+                                                this.toastr.error(
+                                                  "Silahkan Klik Daftar Kembali"
+                                                );
+                                              }
+                                            });
+
+                                          console.log("akuu");
+                                        }
                                       }
                                     });
                                 },
@@ -2431,92 +2457,76 @@ export class MpdaftarpasienComponent implements OnInit {
         } else {
           if (status === "SELESAI") {
             if (dash === "BPJS") {
-              this.authService.deletekunjungan(nokunjungan).subscribe(
-                (data) => {
-                  console.log(data);
-
-                  if (data.metaData.code == 200) {
-                    let body = {
-                      kdcabang: this.kdcabang,
-                      notransaksi: notransaksi,
-                      norm: norm,
-                      kddokter: kddokter,
-                      kdpoli: kdpoli,
-                      kduser: this.username,
-                      stssimpan: "1",
-                    };
-
-                    this.authService.hapustrx(body).subscribe((response) => {
-                      this.tantrian = [];
-                    });
-
-                    this.toastr.success(data.response, "Sukses", {
+              let bodyFktp = {
+                tanggalperiksa: tglPeriksa,
+                kodepoli: kdpolibpjs,
+                nomorkartu: noasuransi,
+                alasan: value,
+              };
+              this.authService
+                .cancelBpjsAntrian(bodyFktp, this.slug)
+                .subscribe((data) => {
+                  if (data.data.code == 200) {
+                    this.toastr.success(data.data.message, "Sukses", {
                       timeOut: 2000,
                     });
+                    this.authService.deletekunjungan(nokunjungan).subscribe(
+                      (data) => {
+                        let body = {
+                          kdcabang: this.kdcabang,
+                          notransaksi: notransaksi,
+                          norm: norm,
+                          kddokter: kddokter,
+                          kdpoli: kdpoli,
+                          kduser: this.username,
+                          stssimpan: "1",
+                        };
 
-                    let bodyFktp = {
-                      tanggalperiksa: tglPeriksa,
-                      kodepoli: kdpolibpjs,
-                      nomorkartu: noasuransi,
-                      alasan: value,
-                    };
-                    this.authService
-                      .cancelBpjsAntrian(bodyFktp, this.slug)
-                      .subscribe((data) => {
-                        if (data.data.code == 200) {
-                          this.toastr.success(data.data.message, "Sukses", {
-                            timeOut: 2000,
+                        this.authService
+                          .hapustrx(body)
+                          .subscribe((response) => {
+                            this.tantrian = [];
                           });
-                        } else {
-                          this.toastr.error(data.data.message, "Error");
-                        }
-                      });
+
+                        this.toastr.success(data.response, "Sukses", {
+                          timeOut: 2000,
+                        });
+                      },
+                      (Error) => {
+                        console.log(Error);
+                      }
+                    );
                   } else {
-                    let body = {
-                      kdcabang: this.kdcabang,
-                      notransaksi: notransaksi,
-                      norm: norm,
-                      kddokter: kddokter,
-                      kdpoli: kdpoli,
-                      kduser: this.username,
-                      stssimpan: "1",
-                    };
+                    this.authService.deletekunjungan(nokunjungan).subscribe(
+                      (data) => {
+                        let body = {
+                          kdcabang: this.kdcabang,
+                          notransaksi: notransaksi,
+                          norm: norm,
+                          kddokter: kddokter,
+                          kdpoli: kdpoli,
+                          kduser: this.username,
+                          stssimpan: "1",
+                        };
 
-                    this.authService.hapustrx(body).subscribe((response) => {
-                      this.tantrian = [];
-                    });
-
-                    this.toastr.success(data.response, "Sukses", {
-                      timeOut: 2000,
-                    });
-
-                    let bodyFktp = {
-                      tanggalperiksa: tglPeriksa,
-                      kodepoli: kdpolibpjs,
-                      nomorkartu: noasuransi,
-                      alasan: value,
-                    };
-                    this.authService
-                      .cancelBpjsAntrian(bodyFktp, this.slug)
-                      .subscribe((data) => {
-                        if (data.data.code == 200) {
-                          this.toastr.success(data.data.message, "Sukses", {
-                            timeOut: 2000,
+                        this.authService
+                          .hapustrx(body)
+                          .subscribe((response) => {
+                            this.tantrian = [];
                           });
-                        } else {
-                          this.toastr.error(data.data.message, "Error");
-                        }
-                      });
 
-                    // this.toastr.error(data.response[0].message, 'Sukses', {
-                    //   timeOut: 2000,
-                    // });
+                        this.toastr.success(data.response, "Sukses", {
+                          timeOut: 2000,
+                        });
+                      },
+                      (Error) => {
+                        console.log(Error);
+                      }
+                    );
+
+                    this.toastr.error(data.data.message, "Error");
                   }
-                },
-                (Error) => {
-                  console.log(Error);
-                }
-              );
+                });
             } else {
               let body = {
                 kdcabang: this.kdcabang,
@@ -2535,73 +2545,82 @@ export class MpdaftarpasienComponent implements OnInit {
           } else {
             if (dash === "BPJS") {
               if (spcare === "TERDAFTAR DI PCARE") {
+                let bodyFktp = {
+                  tanggalperiksa: tglPeriksa,
+                  kodepoli: kdpolibpjs,
+                  nomorkartu: noasuransi,
+                  alasan: value,
+                };
                 this.authService
-                  .deletependaftaranpcare(
-                    noasuransi,
-                    "",
-                    noantrianbpjs,
-                    kdpolibpjs
-                  )
-                  .subscribe(
-                    (data) => {
-                      if (data.metaData.code == 200) {
-                        let bodyFktp = {
-                          tanggalperiksa: tglPeriksa,
-                          kodepoli: kdpolibpjs,
-                          nomorkartu: noasuransi,
-                          alasan: value,
-                        };
-                        this.authService
-                          .cancelBpjsAntrian(bodyFktp, this.slug)
-                          .subscribe((data) => {
-                            if (data.data.code == 200) {
-                              this.toastr.success(data.data.message, "Sukses", {
-                                timeOut: 2000,
+                  .cancelBpjsAntrian(bodyFktp, this.slug)
+                  .subscribe((data) => {
+                    if (data.data.code == 200) {
+                      this.toastr.success(data.data.message, "Sukses", {
+                        timeOut: 2000,
+                      });
+
+                      this.authService
+                        .deletependaftaranpcare(
+                          noasuransi,
+                          "",
+                          noantrianbpjs,
+                          kdpolibpjs
+                        )
+                        .subscribe((data) => {
+                          if (data.metaData.code == 200) {
+                            let body = {
+                              kdcabang: this.kdcabang,
+                              notransaksi: notransaksi,
+                              norm: norm,
+                              kddokter: kddokter,
+                              kdpoli: kdpoli,
+                              kduser: this.username,
+                              stssimpan: "1",
+                            };
+
+                            this.authService
+                              .hapustrx(body)
+                              .subscribe((response) => {
+                                this.tantrian = [];
                               });
-                            } else {
-                              this.toastr.error(data.data.message, "Error");
-                            }
-                          });
+                          } else {
+                            let body = {
+                              kdcabang: this.kdcabang,
+                              notransaksi: notransaksi,
+                              norm: norm,
+                              kddokter: kddokter,
+                              kdpoli: kdpoli,
+                              kduser: this.username,
+                              stssimpan: "1",
+                            };
 
-                        let body = {
-                          kdcabang: this.kdcabang,
-                          notransaksi: notransaksi,
-                          norm: norm,
-                          kddokter: kddokter,
-                          kdpoli: kdpoli,
-                          kduser: this.username,
-                          stssimpan: "1",
-                        };
+                            this.authService
+                              .hapustrx(body)
+                              .subscribe((response) => {
+                                this.tantrian = [];
+                              });
+                          }
+                        });
+                    } else {
+                      let body = {
+                        kdcabang: this.kdcabang,
+                        notransaksi: notransaksi,
+                        norm: norm,
+                        kddokter: kddokter,
+                        kdpoli: kdpoli,
+                        kduser: this.username,
+                        stssimpan: "1",
+                      };
 
-                        this.authService
-                          .hapustrx(body)
-                          .subscribe((response) => {
-                            this.tantrian = [];
-                          });
-                      } else {
-                        let body = {
-                          kdcabang: this.kdcabang,
-                          notransaksi: notransaksi,
-                          norm: norm,
-                          kddokter: kddokter,
-                          kdpoli: kdpoli,
-                          kduser: this.username,
-                          stssimpan: "1",
-                        };
+                      this.authService.hapustrx(body).subscribe((response) => {
+                        this.tantrian = [];
+                      });
 
-                        this.authService
-                          .hapustrx(body)
-                          .subscribe((response) => {
-                            this.tantrian = [];
-                          });
-
-                        this.toastr.error(data.response.message, "Error");
-                      }
-                    },
-                    (Error) => {
-                      console.log(Error);
+                      this.toastr.error(data.data.message, "Error");
                     }
-                  );
+                  });
+
+                // akhir pcare
               } else {
                 let bodyFktp = {
                   tanggalperiksa: tglPeriksa,
@@ -2616,24 +2635,24 @@ export class MpdaftarpasienComponent implements OnInit {
                       this.toastr.success(data.data.message, "Sukses", {
                         timeOut: 2000,
                       });
+
+                      let body = {
+                        kdcabang: this.kdcabang,
+                        notransaksi: notransaksi,
+                        norm: norm,
+                        kddokter: kddokter,
+                        kdpoli: kdpoli,
+                        kduser: this.username,
+                        stssimpan: "1",
+                      };
+
+                      this.authService.hapustrx(body).subscribe((response) => {
+                        this.tantrian = [];
+                      });
                     } else {
                       this.toastr.error(data.data.message, "Error");
                     }
                   });
-
-                let body = {
-                  kdcabang: this.kdcabang,
-                  notransaksi: notransaksi,
-                  norm: norm,
-                  kddokter: kddokter,
-                  kdpoli: kdpoli,
-                  kduser: this.username,
-                  stssimpan: "1",
-                };
-
-                this.authService.hapustrx(body).subscribe((response) => {
-                  this.tantrian = [];
-                });
               }
             } else {
               let body = {
