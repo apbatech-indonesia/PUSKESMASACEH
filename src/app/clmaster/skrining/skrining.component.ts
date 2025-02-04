@@ -90,6 +90,7 @@ export class skriningComponent implements OnInit {
   questions: any = [];
   titleModal: string;
   subTitleModal: string;
+  subTitleNumber: string;
 
   patientData: any = {
     noantrian: "-",
@@ -277,13 +278,15 @@ export class skriningComponent implements OnInit {
   }
 
   openModal(content, data, cluster, subCluster, number) {
-    this.titleModal = `${cluster} - ${subCluster}`;
-    this.subTitleModal = `${number}. ${data.name}`;
+    this.titleModal = `${cluster} - ${subCluster}`
+    this.subTitleNumber = `${number}. `
+    this.subTitleModal = data.name
+    
     this.isShowSdqCalculator = this.subTitleModal.includes(
       "Skrining Instrument Strength and Difficulties Questionnaire (SDQ) Usia lebih dari atau sama dengan"
     );
-
-    let mapQuestion = data.questionnaires.map((parent) => {
+    
+    let mapQuestion = data.questionnaires.map(parent => {
       return {
         ...parent,
         options: parent.options.map((child) => {

@@ -124,10 +124,32 @@
   <div class="modal-body">
     <div class="row">
       <div class="col-12 h5 fw-bold text-primary-custom">
-        {{ subTitleModal ?? "" }}
+        {{ subTitleNumber ?? "" }}{{ subTitleModal ?? "" }}
+      </div>
+      <div *ngIf="subTitleModal == 'Skrining WHO - ASSIST V3.1'">
+        <label class="form-label fw-semi-custom"
+          >Dalam hidup Anda, zat apa di bawah ini yang pernah Anda gunakan?
+          (Hanya Penggunaan Non-Medis)</label
+        >
+        <div class="px-3 py-2 mb-2 rounded-3" style="background-color: #d3efff">
+          <ul class="ps-0 mb-0" style="list-style-type: none">
+            <li>
+              - Gali bisa semua jawaban tidak pernah. Contoh "Tidak pernah juga
+              menggunakan ketika anda di sekolah ?"
+            </li>
+            <li>
+              - Bila "Tidak pernah" untuk semua buti pertanyaan, Hentikan
+              wawancara. Bila "Pernah" untuk butir manapun. Lanjutkan ke
+              pertanyaan selanjutnya."
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div class="row">
+  </div>
+  <div class="row">
+    <div class="col-12">
+
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
@@ -277,22 +299,38 @@
         </tbody>
       </table>
     </div>
-    <div class="row" *ngIf="isShowSdqCalculator">
+  </div>
+  <div class="row" *ngIf="isShowSdqCalculator">
+    <div class="col-12">
       <div class="container">
-        <h1>Skor Kesulitan</h1>
+        <h3>Skor Kesulitan</h3>
         <ul>
           <li>Gejala Emosional (E) = {{ data_sdq.masalah_emosional.skor }}</li>
           <li>Masalah Perilaku (C) = {{ data_sdq.masalah_perilaku.skor }}</li>
           <li>Hiperaktivitas (H) = {{ data_sdq.hiperaktivitas.skor }}</li>
-          <li>Masalah Teman Sebaya (P) = {{ data_sdq.masalah_teman_sebaya.skor }}</li>
+          <li>
+            Masalah Teman Sebaya (P) = {{ data_sdq.masalah_teman_sebaya.skor }}
+          </li>
         </ul>
         <p class="total">Total Skor Kesulitan = {{ data_sdq.total_kesulitan }}</p>
-
-        <h1>Skor Kekuatan</h1>
+  
+        <h3>Skor Kekuatan</h3>
         <ul>
-          <li>Perilaku Proposional (Pro) = {{ data_sdq.perilaku_pro_sosial.skor }}</li>
+          <li>
+            Perilaku Proposional (Pro) = {{ data_sdq.perilaku_pro_sosial.skor }}
+          </li>
         </ul>
       </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="subTitleModal == 'Skrining Penapisan Kehamilan Pasien KB'">
+    <div class="col-12">
+      <span class="fst-italic"
+      >Notes : Jika dari 6 pertanyaan satu saja di jawab "Ya" pasien dapat
+      segera menggunakan alat kontrasepsi, Tetapi apabila 6 pertanyaan di jawab
+      "Tidak" Maka pasien harus menunggu haid bulan berikutnya untuk menggunakan
+      alat kontrasepsi (Skrinning penampisan kehamilan KLOP KB WHO)</span
+    >
     </div>
   </div>
   <div class="modal-footer justify-content-center">
