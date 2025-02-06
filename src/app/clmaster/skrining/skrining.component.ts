@@ -56,6 +56,7 @@ import { DatePipe } from "@angular/common";
 export class skriningComponent implements OnInit {
   @Input() norm: string;
   @Input() idpasien: string;
+  @Input() notrans: string;
 
   userData: any = JSON.parse(localStorage.getItem("userDatacl")).userData;
   notransaksi: string = this.route.snapshot.paramMap.get("notrans");
@@ -135,8 +136,6 @@ export class skriningComponent implements OnInit {
     NgbAccordionConfig.type = "test";
     NgbAccordionConfig.animation = true;
     const data = JSON.parse(localStorage.getItem("userDatacl"));
-    this.no_transaksi = localStorage.getItem("noTransaksi");
-    this.no_rm = localStorage.getItem("noRM");
     this.userDetails = data.userData;
     this.nama = this.userDetails.nama;
     this.akses = this.userDetails.hakakses;
@@ -145,7 +144,7 @@ export class skriningComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getScreeningDataByNoTr();
+    this.getData();
     this.initPage();
     // this.ambilGroup();
   }
@@ -162,12 +161,12 @@ export class skriningComponent implements OnInit {
     }, timing);
   }
 
-  getScreeningDataByNoTr() {
+  getData() {
     let body = {
-      transactionNo: this.no_transaksi,
+      transactionNo: this.notrans,
       screeningId: "",
     };
-    this.serviceUrl.getScreeningDataByNoTr(body).subscribe(
+    this.serviceUrl.getData(body).subscribe(
       (data: any) => {
         if (data.statusCode === 200) {
           this.screeningPatientId = data.data.screening_patient.id;
@@ -360,30 +359,52 @@ export class skriningComponent implements OnInit {
     });
   }
 
-  registerAndSave() {
-    // const body = {
-    //   "data": {
-    //     "rmno": "02-047-022",
-    //     "orgId": "1000121966",
-    //     "transactionNo":"2025012401",
-    //     "branchId":"088",
-    //     "villageId":"1101012001",  // Desa/kelurahan  Keude Bakongan Aceh
-    //     "patientId": "P01078707999",
-    //     "clusterId": 1,
-    //     "patientName": "Suherman",
-    //     "locationId" :"5e7aa695-0b35-47ba-bc6b-28c680b99590",
-    //     "locationName":"Rumah Sakit Sehat Semua",
-    //     "visitDate":"2025-01-20",
-    //     "screening_ids": [1,5]
-    //   }
-    // }
-    const body = {
+  cekKelurahan() {
+    if(!this.patientData?.kdkelurahan){
+      Swal.fire({
+        icon: "error",
+        title: "Error!",
+        text: "Pasien tidak memiliki data Kelurahan"
+      });
+    }else{
+      const slug = this.cabangData?.slug??''
+      const body = {
+        villageId: this.patientData.kdkelurahan,
+      }
+      this.serviceUrl.getDataKelurahan(body, slug).subscribe(
+        (data: any) => {
+          console.log('kelurahan')
+          console.log(data)
+          if(data.data.subdistrict_id) {
+            let dataKelurahan = data.data.subdistrict_id;
+            this.registerAndSave(dataKelurahan)
+          }else{
+            Swal.fire({
+              icon: "error",
+              title: "Error!",
+              text: "Data Kelurahan Belum Di Mapping dengan Satu Sehat",
+            });
+          }
+        },
+        (error: any) => {
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: "Terjadi Kesalahan Saat Mengunjungi Data Kelurahan",
+          });
+        }
+      );
+    }
+  }
+
+  registerAndSave(dataKelurahan){
+    const bodyReg = {
       data: {
         rmno: this.norm,
         orgId: this.cabangData.kodeorg,
         transactionNo: this.notransaksi,
         branchId: this.cabangData.kdcabang,
-        villageId: this.patientData.kdkelurahan,
+        villageId: dataKelurahan,
         patientId: this.idpasien,
         clusterId: this.clusterId,
         patientName: this.patientData.pasien,
@@ -391,42 +412,50 @@ export class skriningComponent implements OnInit {
         locationName: this.patientData.locationid,
         visitDate: this.patientData.tglpriksa,
         screening_ids: [],
-        // screening_ids: [this.idScreening]
       },
     };
-
-    this.serviceUrl.register(body).subscribe(
+    this.serviceUrl.register(bodyReg).subscribe(
       (data: any) => {
         if (data.statusCode == "00") {
           this.screeningPatientId = data.data.screening_patient_id;
-
+          this.screeningPatientData = data.data;
+          this.toastr.success('Berhasil Mendaftar Skrining', 'Sukses', {
+            timeOut: 3000,
+          });
           setTimeout(() => {
             this.saveDataScreening();
           }, 500);
+        } else if(data.statusCode == "02"){
+          const errVilage = data?.data || {}; // Pastikan data.data ada
+          const message = "data.villageId" in errVilage
+            ? "Pasien tidak memiliki data Kelurahan"
+            : "Data Pasien Belum Lengkap, Silakan Periksa Kembali.";
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: message
+          });
         } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: "Data Pasien Belum Lengkap, Silakan Periksa Kembali."
+          });
         }
       },
       (error: any) => {
-        if (error.error.statusCode == 99) {
-          Swal.fire({
-            icon: "error",
-            title: "Error!",
-            text: "Data Pasien Belum Lengkap, Silakan Periksa Kembali.",
-          });
-        } else {
-          Swal.fire({
-            icon: "error",
-            title: "Error!",
-            text: "Gagal menyimpan data. Silakan coba lagi.",
-          });
-        }
+        Swal.fire({
+          icon: "error",
+          title: "Error!",
+          text: "Gagal menyimpan data. Silakan coba lagi.",
+        });
       }
     );
   }
 
   simpan() {
     if (this.screeningPatientId === null) {
-      this.registerAndSave();
+      this.cekKelurahan();
     } else {
       this.saveDataScreening();
     }
@@ -527,15 +556,18 @@ export class skriningComponent implements OnInit {
     this.serviceUrl.saveScreening(body).subscribe(
       (data: any) => {
         if (data.statusCode == "200") {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "<small>Data Skrining Berhasil Di Simpan</small>",
-            showConfirmButton: false,
-            timer: 3000,
+          // Swal.fire({
+          //   position: "center",
+          //   icon: "success",
+          //   title: "<small>Data Skrining Berhasil Di Simpan</small>",
+          //   showConfirmButton: false,
+          //   timer: 3000,
+          // });
+          this.toastr.success('Data Skrining Berhasil Di Simpan', 'Sukses', {
+            timeOut: 3000,
           });
           document.getElementById("closeModal").click();
-          this.getScreeningDataByNoTr();
+          this.ambilGroup();
           setTimeout(() => {
             this.getScreeningById(this.clusterId);
           }, 300);
