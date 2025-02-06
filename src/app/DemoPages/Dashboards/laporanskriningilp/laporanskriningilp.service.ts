@@ -34,4 +34,8 @@ export class laporanskriningilpService {
   getPatientByVillage(data) {
     return this.http.post(satusehatUrl + 'screeningDashboard/getPatientByVillage', data, { headers: this.headers }).toPromise()
   } 
+
+  province() {
+    return this.http.post(satusehatUrl + 'master/province', {}, { headers: this.headers }).toPromise()
+  } 
 }

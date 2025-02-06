@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { laporanskriningilpService } from './laporanskriningilp.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from "@angular/core";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { laporanskriningilpService } from "./laporanskriningilp.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ApiserviceService } from "src/app/apiservice.service";
+import { MasterService } from "src/app/satusehat/satusehat-master/services/master.service";
 
 interface DataScreening {
   registered?: number;
@@ -24,9 +26,9 @@ interface YearData {
 }
 
 @Component({
-  selector: 'app-laporanskriningilp',
-  templateUrl: './laporanskriningilp.component.html',
-  styleUrls: ['./laporanskriningilp.component.css']
+  selector: "app-laporanskriningilp",
+  templateUrl: "./laporanskriningilp.component.html",
+  styleUrls: ["./laporanskriningilp.component.css"],
 })
 export class laporanskriningilpComponent implements OnInit {
   faSearch = faSearch;
@@ -37,15 +39,30 @@ export class laporanskriningilpComponent implements OnInit {
   jumlahPasienBelumSkrining: number = 0;
 
   grapikTahunanTotalSkrining: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  grapikBerdasarkanDaerah: number[] = [100, 96, 6, 22, 11, 51, 17, 38, 68, 66, 19, 42, 62, 37, 73];
+  grapikBerdasarkanDaerah: number[] = [
+    100, 96, 6, 22, 11, 51, 17, 38, 68, 66, 19, 42, 62, 37, 73,
+  ];
 
   listOfClasters: string[] = ["Klaster 2", "Klaster 3", "Klaster 4"];
   listOfClasterLabels: string[] = ["Klaster 2", "Klaster 3", "Klaster 4"];
-  listOfSubClastersId: string[] = ["Ibu Hamil, Bersalin, Nifas", "Balita dan Anak Persekolahan"];
+  listOfSubClastersId: string[] = [
+    "Ibu Hamil, Bersalin, Nifas",
+    "Balita dan Anak Persekolahan",
+  ];
   listOfYears: string[] = [];
   listOfMonths: string[] = [
-    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
   ];
   listOfSubDistricts: string[] = [];
   listOfSubDistrictsId: string[] = [];
@@ -53,12 +70,9 @@ export class laporanskriningilpComponent implements OnInit {
     "bg-pb-green-custom",
     "bg-pb-brown-custom",
     "bg-pb-bluesky-custom",
-    "bg-pb-yellow-custom"
-  ]
-  listOfColors2 = [
-    "bg-pb-blue-custom",
-    "bg-pb-orange-custom"
-  ]
+    "bg-pb-yellow-custom",
+  ];
+  listOfColors2 = ["bg-pb-blue-custom", "bg-pb-orange-custom"];
 
   currentYear: string = new Date().getFullYear().toString();
 
@@ -86,11 +100,17 @@ export class laporanskriningilpComponent implements OnInit {
   listOfPatientByScreening: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   listOfSubClasterName: any;
   listOfAllSkrining: any;
+  mappedProvince: any;
+  mappedKota: any;
+  mappedKecamatan: any;
+  mappedKelurahan: any;
 
   constructor(
     private api: laporanskriningilpService,
-    private modalService: NgbModal,
-  ) { }
+    private apiService: ApiserviceService,
+    private masterService: MasterService,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit() {
     this.getTotalPasien();
@@ -100,18 +120,22 @@ export class laporanskriningilpComponent implements OnInit {
     this.getPatientByVillage();
     this.getAllSubClaster();
     this.getTotalPatientByScreening();
+
+    this.doMappingWilayah();
   }
 
   openModal(content) {
-    this.modalService.open(content, { size: 'xl', ariaLabelledBy: 'modal' }).result.then((result) => {
-      console.log('test')
-    });
+    this.modalService
+      .open(content, { size: "xl", ariaLabelledBy: "modal" })
+      .result.then((result) => {
+        console.log("test");
+      });
   }
 
   async getTotalPasien() {
     try {
       const data = { branchId: this.branchId };
-      const response = await this.api.getPatientStatus(data) as ApiResponse;
+      const response = (await this.api.getPatientStatus(data)) as ApiResponse;
 
       if (!response?.data?.length) {
         throw new Error("Data tidak tersedia");
@@ -137,17 +161,23 @@ export class laporanskriningilpComponent implements OnInit {
         throw new Error("Tahun filter tidak tersedia");
       }
 
-      const data = { year: this.filterYearTotalSkrining, branchId: this.branchId };
+      const data = {
+        year: this.filterYearTotalSkrining,
+        branchId: this.branchId,
+      };
       const response: any = await this.api.getPatientStatus(data);
 
       if (!response?.data?.length) {
         throw new Error("Data tidak tersedia");
       }
 
-      const yearData = response.data[0].data_screenings[this.filterYearTotalSkrining];
+      const yearData =
+        response.data[0].data_screenings[this.filterYearTotalSkrining];
 
       if (!yearData) {
-        throw new Error(`Data untuk tahun ${this.filterYearTotalSkrining} tidak ditemukan`);
+        throw new Error(
+          `Data untuk tahun ${this.filterYearTotalSkrining} tidak ditemukan`
+        );
       }
 
       this.grapikTahunanTotalSkrining = this.extractScreenedValues(yearData);
@@ -163,11 +193,18 @@ export class laporanskriningilpComponent implements OnInit {
       }
       const data: any = {
         year: this.filterYearKlaster,
-        month: String(this.listOfMonths.indexOf(this.filterMonthKlaster) + 1).padStart(2, '0')
-      }
+        month: String(
+          this.listOfMonths.indexOf(this.filterMonthKlaster) + 1
+        ).padStart(2, "0"),
+      };
 
-      if (this.listOfSubDistricts.indexOf(this.filterSubDistrictKlaster) != -1) {
-        data.villageId = this.listOfSubDistrictsId[this.listOfSubDistricts.indexOf(this.filterSubDistrictKlaster)]
+      if (
+        this.listOfSubDistricts.indexOf(this.filterSubDistrictKlaster) != -1
+      ) {
+        data.villageId =
+          this.listOfSubDistrictsId[
+            this.listOfSubDistricts.indexOf(this.filterSubDistrictKlaster)
+          ];
       }
       const response: any = await this.api.getPatientByClusterGroup(data);
 
@@ -175,12 +212,16 @@ export class laporanskriningilpComponent implements OnInit {
         throw new Error("Data tidak tersedia");
       }
 
-      this.listOfPercentageClaster = response.data.map(item => item.percentage)
-      this.listOfClasters = response.data.map(item => item.group.split(' -')[0] || "Unknown")
-      this.listOfClasterLabels = response.data.map(item => {
-        const group = item.group.split(' -')[0] || "Unknown"
-        return `${group} (${item.total_patients} Pasien)`
-      })
+      this.listOfPercentageClaster = response.data.map(
+        (item) => item.percentage
+      );
+      this.listOfClasters = response.data.map(
+        (item) => item.group.split(" -")[0] || "Unknown"
+      );
+      this.listOfClasterLabels = response.data.map((item) => {
+        const group = item.group.split(" -")[0] || "Unknown";
+        return `${group} (${item.total_patients} Pasien)`;
+      });
     } catch (error) {
       console.error("Error saat mengambil total pasien skrining:", error);
     }
@@ -194,12 +235,23 @@ export class laporanskriningilpComponent implements OnInit {
 
       const data: any = {
         year: this.filterYearKategoriSkrining,
-        month: String(this.listOfMonths.indexOf(this.filterMonthKategoriSkrining) + 1).padStart(2, '0'),
-        clusterGroup: this.filterClasterKategoriSkrining
-      }
+        month: String(
+          this.listOfMonths.indexOf(this.filterMonthKategoriSkrining) + 1
+        ).padStart(2, "0"),
+        clusterGroup: this.filterClasterKategoriSkrining,
+      };
 
-      if (this.listOfSubDistricts.indexOf(this.filterSubDistrictKategoriSkrining) != -1) {
-        data.villageId = this.listOfSubDistrictsId[this.listOfSubDistricts.indexOf(this.filterSubDistrictKategoriSkrining)]
+      if (
+        this.listOfSubDistricts.indexOf(
+          this.filterSubDistrictKategoriSkrining
+        ) != -1
+      ) {
+        data.villageId =
+          this.listOfSubDistrictsId[
+            this.listOfSubDistricts.indexOf(
+              this.filterSubDistrictKategoriSkrining
+            )
+          ];
       }
       const response: any = await this.api.getPatientByCluster(data);
 
@@ -207,7 +259,7 @@ export class laporanskriningilpComponent implements OnInit {
         throw new Error("Data tidak tersedia");
       }
 
-      this.listOfCategoryScreening = response.data[0].clusters
+      this.listOfCategoryScreening = response.data[0].clusters;
     } catch (error) {
       console.error("Error saat mengambil total pasien skrining:", error);
     }
@@ -215,16 +267,22 @@ export class laporanskriningilpComponent implements OnInit {
 
   async getAllSubClaster() {
     try {
-      const data = {}
+      const data = {};
       const response: any = await this.api.getPatientByCluster(data);
 
       if (!response?.data?.length) {
         throw new Error("Data tidak tersedia");
       }
 
-      this.listOfSubClastersId = response.data.map(item => item.clusters).flat().map(item => item.cluster_id)
-      this.listOfSubClasterName = response.data.map(item => item.clusters).flat().map(item => item.cluster_name)
-      this.listOfAllSkrining = response.data
+      this.listOfSubClastersId = response.data
+        .map((item) => item.clusters)
+        .flat()
+        .map((item) => item.cluster_id);
+      this.listOfSubClasterName = response.data
+        .map((item) => item.clusters)
+        .flat()
+        .map((item) => item.cluster_name);
+      this.listOfAllSkrining = response.data;
     } catch (error) {
       console.error("Error saat mengambil total pasien skrining:", error);
     }
@@ -234,21 +292,25 @@ export class laporanskriningilpComponent implements OnInit {
     try {
       const data = {
         year: this.filterYearKategoriSkriningDaerah,
-        month: String(this.listOfMonths.indexOf(this.filterMonthKategoriSkriningDaerah) + 1).padStart(2, '0'),
-        clusterGroup: this.filterClasterKategoriSkriningDaerah
-      }
+        month: String(
+          this.listOfMonths.indexOf(this.filterMonthKategoriSkriningDaerah) + 1
+        ).padStart(2, "0"),
+        clusterGroup: this.filterClasterKategoriSkriningDaerah,
+      };
       const response: any = await this.api.getPatientByVillage(data);
 
       if (!response?.data?.length) {
-        this.listOfSubDistrictsId = []
-        this.listOfSubDistricts = []
-        this.grapikBerdasarkanDaerah = []
+        this.listOfSubDistrictsId = [];
+        this.listOfSubDistricts = [];
+        this.grapikBerdasarkanDaerah = [];
         throw new Error("Data tidak tersedia");
       }
 
-      this.listOfSubDistrictsId = response.data.map(item => item.village_id)
-      this.listOfSubDistricts = response.data.map(item => item.village_name)
-      this.grapikBerdasarkanDaerah = response.data.map(item => item.total_patients)
+      this.listOfSubDistrictsId = response.data.map((item) => item.village_id);
+      this.listOfSubDistricts = response.data.map((item) => item.village_name);
+      this.grapikBerdasarkanDaerah = response.data.map(
+        (item) => item.total_patients
+      );
     } catch (error) {
       console.error("Error saat mengambil total pasien skrining:", error);
     }
@@ -262,12 +324,22 @@ export class laporanskriningilpComponent implements OnInit {
 
       const data: any = {
         year: this.filterYearBySkrining,
-        month: String(this.listOfMonths.indexOf(this.filterMonthBySkrining) + 1).padStart(2, '0'),
-        clusterId: this.listOfSubClastersId[this.listOfSubClasterName?.indexOf(this.filterSubClasterBySkrining)] ?? 1
-      }
-      
-      if (this.listOfSubDistricts.indexOf(this.filterSubDistrictBySkrining) != -1) {
-        data.villageId = this.listOfSubDistrictsId[this.listOfSubDistricts.indexOf(this.filterSubDistrictBySkrining)]
+        month: String(
+          this.listOfMonths.indexOf(this.filterMonthBySkrining) + 1
+        ).padStart(2, "0"),
+        clusterId:
+          this.listOfSubClastersId[
+            this.listOfSubClasterName?.indexOf(this.filterSubClasterBySkrining)
+          ] ?? 1,
+      };
+
+      if (
+        this.listOfSubDistricts.indexOf(this.filterSubDistrictBySkrining) != -1
+      ) {
+        data.villageId =
+          this.listOfSubDistrictsId[
+            this.listOfSubDistricts.indexOf(this.filterSubDistrictBySkrining)
+          ];
       }
       const response: any = await this.api.getPatientByScreening(data);
 
@@ -275,7 +347,7 @@ export class laporanskriningilpComponent implements OnInit {
         throw new Error("Data tidak tersedia");
       }
 
-      this.listOfPatientByScreening = response.data
+      this.listOfPatientByScreening = response.data;
     } catch (error) {
       console.error("Error saat mengambil total pasien skrining:", error);
     }
@@ -288,20 +360,273 @@ export class laporanskriningilpComponent implements OnInit {
   }
 
   private extractYears(dataScreenings: YearData): string[] {
-    return Object.keys(dataScreenings).filter(key => key !== 'total_branch');
+    return Object.keys(dataScreenings).filter((key) => key !== "total_branch");
   }
 
   private extractScreenedValues(data: YearData): number[] {
     let filteredData = Object.entries(data).reduce((acc, [key, value]) => {
-      if (key !== 'total') {
+      if (key !== "total") {
         acc[key] = value;
       }
       return acc;
     }, []);
 
-    filteredData = Object.values(filteredData)
-      .map(item => item.screened ?? 0);
+    filteredData = Object.values(filteredData).map(
+      (item) => item.screened ?? 0
+    );
 
-    return filteredData
+    return filteredData;
+  }
+
+  async mappingProvinsi() {
+    try {
+      const province: any = await this.masterService.getProvince({});
+      if (!province?.data?.length)
+        throw new Error("Data provinsi tidak ditemukan");
+
+      this.mappedProvince = (
+        await Promise.all(
+          province.data.map(async (item) => {
+            try {
+              let provinsi: any = await this.apiService
+                .propinsi(item.name)
+                .toPromise();
+              provinsi = provinsi?.[0] || null;
+
+              return provinsi
+                ? {
+                    prov_name: item.name,
+                    prov_satusehat: item.code,
+                    prov_id: provinsi.prov_id,
+                  }
+                : null;
+            } catch (err) {
+              console.warn(`Gagal memproses provinsi: ${item.name}`, err);
+              return null;
+            }
+          })
+        )
+      ).filter(Boolean); // Menghapus nilai `null` atau `undefined`
+
+      // console.log("Mapped Province:", this.mappedProvince);
+    } catch (error) {
+      console.error("Terjadi kesalahan saat mapping provinsi:", error);
+    }
+  }
+
+  async mappingKota() {
+    try {
+      if (!this.mappedProvince?.length)
+        throw new Error("Mapped province tidak tersedia");
+
+      this.mappedKota = await Promise.all(
+        this.mappedProvince.map(async (item) => {
+          try {
+            const response: any = await this.masterService.getCity({
+              province_codes: item.prov_satusehat,
+            });
+
+            return response?.data?.length
+              ? {
+                  prov_id: item.prov_id,
+                  prov_name: item.prov_name,
+                  city: response.data,
+                }
+              : null;
+          } catch (err) {
+            console.warn(
+              `Gagal mengambil data kabupaten untuk ${item.prov_name}`,
+              err
+            );
+            return null;
+          }
+        })
+      );
+
+      this.mappedKota = this.mappedKota.filter(Boolean).flatMap((province) =>
+        province.city.map((city) => ({
+          code: city.code,
+          parent_code: city.parent_code,
+          bps_code: city.bps_code,
+          name: city.name.replace(/^Kota |^Kab\. /, ""),
+          prov_id: province.prov_id,
+        }))
+      );
+
+      this.mappedKota = await Promise.all(
+        this.mappedKota
+          .filter((item) => {
+            const listKecamatan = ["Aceh Besar", "Aceh Barat"];
+            return listKecamatan.includes(item.name);
+          })
+          .map(async (item) => {
+            const response: any = await this.apiService
+              .kabupaten(item.prov_id, item.name)
+              .toPromise();
+            return { ...item, city_id: response[0]?.city_id };
+          })
+      );
+
+      // console.log("Mapped kota:", this.mappedKota);
+    } catch (error) {
+      console.error("Terjadi kesalahan saat mapping kabupaten:", error);
+    }
+  }
+
+  async mappingKecamatan() {
+    try {
+      if (!this.mappedKota?.length)
+        throw new Error("Mapped city tidak tersedia");
+
+      this.mappedKecamatan = await Promise.all(
+        this.mappedKota.map(async (city) => {
+          await this.delay(1000);
+          try {
+            const response: any = await this.masterService.getDistrict({
+              city_codes: city.code,
+            });
+
+            return response?.data?.length
+              ? response.data.map((district) => ({
+                  district_code: district.code,
+                  city_code: city.code,
+                  name: district.name.replace(/^Kec\. /, ""),
+                  prov_id: city.prov_id,
+                  city_id: city.city_id,
+                }))
+              : null;
+          } catch (err) {
+            console.warn(
+              `Gagal mengambil data kecamatan untuk ${city.name}`,
+              err
+            );
+            return null;
+          }
+        })
+      );
+
+      // Filter data null dan flat menjadi array satu dimensi
+      this.mappedKecamatan = this.mappedKecamatan.filter(Boolean).flat();
+
+      // Tambahkan city_id ke setiap kecamatan dari API lain
+      this.mappedKecamatan = await Promise.all(
+        this.mappedKecamatan.map(async (item) => {
+          try {
+            const response: any = await this.apiService
+              .kecamatan(item.city_id, item.name)
+              .toPromise();
+            return { ...item, district_id: response[0]?.dis_id };
+          } catch (error) {
+            console.warn(
+              `Gagal mengambil district_id untuk ${item.name}`,
+              error
+            );
+            return { ...item, district_id: null };
+          }
+        })
+      );
+      this.mappedKecamatan = this.mappedKecamatan.filter(
+        (item) => item.district_id != undefined
+      );
+
+      // console.log("Mapped District:", this.mappedKecamatan);
+    } catch (error) {
+      console.error("Terjadi kesalahan saat mapping kecamatan:", error);
+    }
+  }
+
+  async mappingKelurahan() {
+    try {
+      if (!this.mappedKecamatan?.length)
+        throw new Error("Mapped city tidak tersedia");
+
+      this.mappedKelurahan = await Promise.all(
+        this.mappedKecamatan.map(async (item) => {
+          try {
+            const response: any = await this.masterService.getSubDistrict({
+              district_codes: item.district_code,
+            });
+
+            return response?.data?.length
+              ? {
+                  district_id: item.district_id,
+                  district_name: item.name,
+                  subdistricts: response.data,
+                }
+              : null;
+          } catch (err) {
+            console.warn(
+              `Gagal mengambil data kecamatan untuk ${item.name}`,
+              err
+            );
+            return null;
+          }
+        })
+      );
+
+      this.mappedKelurahan = this.mappedKelurahan
+        .filter(Boolean)
+        .flatMap((district) =>
+          district.subdistricts.map((subdistrict) => ({
+            code: subdistrict.code,
+            parent_code: subdistrict.parent_code,
+            name: subdistrict.name,
+            district_id: district.district_id,
+          }))
+        );
+
+      this.mappedKelurahan = await Promise.all(
+        this.mappedKelurahan.map(async (item) => {
+          try {
+            const response: any = await this.apiService
+              .keluarahan(item.district_id, item.name)
+              .toPromise();
+            return { ...item, subdistrict_id: response[0]?.subdis_id };
+          } catch (err) {
+            console.warn(
+              `Gagal mengambil ID kecamatan untuk ${item.name}`,
+              err
+            );
+            return { ...item, subdistrict_id: null };
+          }
+        })
+      );
+      this.mappedKelurahan = this.mappedKelurahan.filter(
+        (item) => item.subdistrict_id != undefined
+      );
+
+      console.log("Mapped Subdistrict:", this.mappedKelurahan);
+    } catch (error) {
+      console.error("Terjadi kesalahan saat mapping subdistrict:", error);
+    }
+  }
+
+  async delay(ms: number) {
+    return new Promise((resolve, reject) => {
+      try {
+        setTimeout(resolve, ms);
+      } catch (error) {
+        reject(new Error(`Delay failed: ${error.message}`));
+      }
+    });
+  }
+
+  async doMappingWilayah() {
+    let loading = "";
+    let interval = setInterval(function () {
+      loading += ".";
+      console.log("Loading ." + loading);
+    }, 1000);
+
+    await this.mappingProvinsi();
+    await this.mappingKota();
+    await this.mappingKecamatan();
+    await this.mappingKelurahan();
+
+    let query = this.mappedKelurahan.map((item) => {
+      return `UPDATE keluarahan SET satusehat_code = '${item.code}' WHERE subdis_id = '${item.subdistrict_id}';`;
+    });
+    console.log(query);
+    clearInterval(interval);
   }
 }
