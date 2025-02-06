@@ -75,31 +75,39 @@ export class laporanskriningilpComponent implements OnInit {
   listOfColors2 = ["bg-pb-blue-custom", "bg-pb-orange-custom"];
 
   currentYear: string = new Date().getFullYear().toString();
+  
+  SEMUALOKASI = "Semua Lokasi";
+  SEMUABULAN = "Semua Bulan";
+  SEMUAKLASTER = "Semua Klaster";
+  SEMUASKRINING = "Semua Skrining";
+  SEMUATAHUN = "Semua Tahun";
 
   filterYearTotalSkrining: string = this.currentYear;
 
-  filterSubDistrictKlaster: string = "Semua Lokasi";
-  filterMonthKlaster: string = "Januari";
+  filterSubDistrictKlaster: string = this.SEMUALOKASI;
+  filterMonthKlaster: string = this.SEMUABULAN;
   filterYearKlaster: string = this.currentYear;
 
-  filterSubDistrictKategoriSkrining: string = "Semua Lokasi";
-  filterClasterKategoriSkrining: string = "Klaster 2";
-  filterMonthKategoriSkrining: string = "Januari";
+  filterSubDistrictKategoriSkrining: string = this.SEMUALOKASI;
+  filterClasterKategoriSkrining: string = this.SEMUAKLASTER;
+  filterMonthKategoriSkrining: string = this.SEMUABULAN;
   filterYearKategoriSkrining: string = this.currentYear;
 
-  filterClasterKategoriSkriningDaerah: string = "Klaster 2";
-  filterMonthKategoriSkriningDaerah: string = "Januari";
+  filterClasterKategoriSkriningDaerah: string = this.SEMUAKLASTER;
+  filterMonthKategoriSkriningDaerah: string = this.SEMUABULAN;
   filterYearKategoriSkriningDaerah: string = this.currentYear;
 
-  filterSubDistrictBySkrining: string = "Semua Lokasi";
-  filterSubClasterBySkrining: any = "Ibu Hamil, Bersalin, Nifas";
-  filterMonthBySkrining: string = "Januari";
+  filterSubDistrictBySkrining: string = this.SEMUALOKASI;
+  filterSubClasterBySkrining: any = this.SEMUASKRINING;
+  filterMonthBySkrining: string = this.SEMUABULAN;
   filterYearBySkrining: string = this.currentYear;
+
   listOfCategoryScreening: object[];
   listOfPercentageClaster: number[] = [0, 0, 0];
   listOfPatientByScreening: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   listOfSubClasterName: any;
   listOfAllSkrining: any;
+
   mappedProvince: any;
   mappedKota: any;
   mappedKecamatan: any;
@@ -121,7 +129,7 @@ export class laporanskriningilpComponent implements OnInit {
     this.getAllSubClaster();
     this.getTotalPatientByScreening();
 
-    this.doMappingWilayah();
+    // this.doMappingWilayah();
   }
 
   openModal(content) {
@@ -134,8 +142,10 @@ export class laporanskriningilpComponent implements OnInit {
 
   async getTotalPasien() {
     try {
-      const data = { branchId: this.branchId };
-      const response = (await this.api.getPatientStatus(data)) as ApiResponse;
+      const payload = { branchId: this.branchId };
+      const response = (await this.api.getPatientStatus(
+        payload
+      )) as ApiResponse;
 
       if (!response?.data?.length) {
         throw new Error("Data tidak tersedia");
@@ -161,11 +171,12 @@ export class laporanskriningilpComponent implements OnInit {
         throw new Error("Tahun filter tidak tersedia");
       }
 
-      const data = {
+      const payload: any = {
         year: this.filterYearTotalSkrining,
         branchId: this.branchId,
       };
-      const response: any = await this.api.getPatientStatus(data);
+
+      const response: any = await this.api.getPatientStatus(payload);
 
       if (!response?.data?.length) {
         throw new Error("Data tidak tersedia");
@@ -191,22 +202,23 @@ export class laporanskriningilpComponent implements OnInit {
       if (!this.filterYearKategoriSkrining) {
         throw new Error("Tahun filter tidak tersedia");
       }
-      const data: any = {
+      const payload: any = {
         year: this.filterYearKlaster,
-        month: String(
-          this.listOfMonths.indexOf(this.filterMonthKlaster) + 1
-        ).padStart(2, "0"),
       };
 
-      if (
-        this.listOfSubDistricts.indexOf(this.filterSubDistrictKlaster) != -1
-      ) {
-        data.villageId =
+      if (this.filterMonthKlaster != this.SEMUABULAN) {
+        payload.month = String(
+          this.listOfMonths.indexOf(this.filterMonthKlaster) + 1
+        ).padStart(2, "0");
+      }
+
+      if (this.filterSubDistrictKlaster != this.SEMUALOKASI) {
+        payload.villageId =
           this.listOfSubDistrictsId[
             this.listOfSubDistricts.indexOf(this.filterSubDistrictKlaster)
           ];
       }
-      const response: any = await this.api.getPatientByClusterGroup(data);
+      const response: any = await this.api.getPatientByClusterGroup(payload);
 
       if (!response?.data?.length) {
         throw new Error("Data tidak tersedia");
@@ -233,27 +245,29 @@ export class laporanskriningilpComponent implements OnInit {
         throw new Error("Tahun filter tidak tersedia");
       }
 
-      const data: any = {
+      const payload: any = {
         year: this.filterYearKategoriSkrining,
-        month: String(
-          this.listOfMonths.indexOf(this.filterMonthKategoriSkrining) + 1
-        ).padStart(2, "0"),
-        clusterGroup: this.filterClasterKategoriSkrining,
       };
 
-      if (
-        this.listOfSubDistricts.indexOf(
-          this.filterSubDistrictKategoriSkrining
-        ) != -1
-      ) {
-        data.villageId =
+      if (this.filterClasterKategoriSkrining !== this.SEMUAKLASTER) {
+        payload.clusterGroup = this.filterClasterKategoriSkrining;
+      }
+
+      if (this.filterMonthKategoriSkrining !== this.SEMUABULAN) {
+        payload.month = String(
+          this.listOfMonths.indexOf(this.filterMonthKategoriSkrining) + 1
+        ).padStart(2, "0");
+      }
+
+      if (this.filterSubDistrictKategoriSkrining != this.SEMUALOKASI) {
+        payload.villageId =
           this.listOfSubDistrictsId[
             this.listOfSubDistricts.indexOf(
               this.filterSubDistrictKategoriSkrining
             )
           ];
       }
-      const response: any = await this.api.getPatientByCluster(data);
+      const response: any = await this.api.getPatientByCluster(payload);
 
       if (!response?.data?.length) {
         throw new Error("Data tidak tersedia");
@@ -267,8 +281,8 @@ export class laporanskriningilpComponent implements OnInit {
 
   async getAllSubClaster() {
     try {
-      const data = {};
-      const response: any = await this.api.getPatientByCluster(data);
+      const payload = {};
+      const response: any = await this.api.getPatientByCluster(payload);
 
       if (!response?.data?.length) {
         throw new Error("Data tidak tersedia");
@@ -290,14 +304,20 @@ export class laporanskriningilpComponent implements OnInit {
 
   async getPatientByVillage() {
     try {
-      const data = {
+      const payload: any = {
         year: this.filterYearKategoriSkriningDaerah,
-        month: String(
-          this.listOfMonths.indexOf(this.filterMonthKategoriSkriningDaerah) + 1
-        ).padStart(2, "0"),
-        clusterGroup: this.filterClasterKategoriSkriningDaerah,
       };
-      const response: any = await this.api.getPatientByVillage(data);
+
+      if (this.filterMonthKategoriSkriningDaerah !== this.SEMUABULAN) {
+        payload.month = String(
+          this.listOfMonths.indexOf(this.filterMonthKategoriSkriningDaerah) + 1
+        ).padStart(2, "0");
+      }
+      if (this.filterClasterKategoriSkriningDaerah !== this.SEMUAKLASTER) {
+        payload.clusterGroup = this.filterClasterKategoriSkriningDaerah;
+      }
+
+      const response: any = await this.api.getPatientByVillage(payload);
 
       if (!response?.data?.length) {
         this.listOfSubDistrictsId = [];
@@ -322,26 +342,31 @@ export class laporanskriningilpComponent implements OnInit {
         throw new Error("Tahun filter tidak tersedia");
       }
 
-      const data: any = {
+      const payload: any = {
         year: this.filterYearBySkrining,
-        month: String(
-          this.listOfMonths.indexOf(this.filterMonthBySkrining) + 1
-        ).padStart(2, "0"),
-        clusterId:
-          this.listOfSubClastersId[
-            this.listOfSubClasterName?.indexOf(this.filterSubClasterBySkrining)
-          ] ?? 1,
       };
 
-      if (
-        this.listOfSubDistricts.indexOf(this.filterSubDistrictBySkrining) != -1
-      ) {
-        data.villageId =
+      if (this.filterMonthBySkrining !== this.SEMUABULAN) {
+        payload.month = String(
+          this.listOfMonths.indexOf(this.filterMonthBySkrining) + 1
+        ).padStart(2, "0");
+      }
+
+      if (this.filterSubClasterBySkrining !== this.SEMUASKRINING) {
+        payload.clusterId =
+          this.listOfSubClastersId[
+            this.listOfSubClasterName?.indexOf(this.filterSubClasterBySkrining)
+          ] ?? 1;
+      }
+
+      if (this.filterSubDistrictBySkrining !== this.SEMUALOKASI) {
+        payload.villageId =
           this.listOfSubDistrictsId[
             this.listOfSubDistricts.indexOf(this.filterSubDistrictBySkrining)
           ];
       }
-      const response: any = await this.api.getPatientByScreening(data);
+
+      const response: any = await this.api.getPatientByScreening(payload);
 
       if (!response?.data?.length) {
         throw new Error("Data tidak tersedia");

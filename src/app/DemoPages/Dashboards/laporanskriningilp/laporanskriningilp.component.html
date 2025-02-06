@@ -130,7 +130,7 @@
                   [(ngModel)]="filterSubDistrictKlaster"
                   (change)="getPatientByClusterGroup()"
                 >
-                  <option [value]="'Semua Lokasi'">Semua Lokasi</option>
+                  <option [value]="SEMUALOKASI">{{ SEMUALOKASI }}</option>
                   <option
                     *ngFor="let subdistrict of listOfSubDistricts"
                     [value]="subdistrict"
@@ -145,6 +145,7 @@
                   [(ngModel)]="filterMonthKlaster"
                   (change)="getPatientByClusterGroup()"
                 >
+                  <option [value]="SEMUABULAN">{{ SEMUABULAN }}</option>
                   <option *ngFor="let month of listOfMonths" [value]="month">
                     {{ month }}
                   </option>
@@ -199,7 +200,7 @@
                   [(ngModel)]="filterSubDistrictKategoriSkrining"
                   (change)="getTotalPasienByCategorySkrining()"
                 >
-                  <option [value]="'Semua Lokasi'">Semua Lokasi</option>
+                  <option [value]="SEMUALOKASI">{{ SEMUALOKASI }}</option>
                   <option
                     *ngFor="let city of listOfSubDistricts"
                     [value]="city"
@@ -214,6 +215,7 @@
                   [(ngModel)]="filterClasterKategoriSkrining"
                   (change)="getTotalPasienByCategorySkrining()"
                 >
+                  <option [value]="SEMUAKLASTER">{{ SEMUAKLASTER }}</option>
                   <option
                     *ngFor="let claster of listOfClasters"
                     [value]="claster"
@@ -228,6 +230,7 @@
                   [(ngModel)]="filterMonthKategoriSkrining"
                   (change)="getTotalPasienByCategorySkrining()"
                 >
+                  <option [value]="SEMUABULAN">{{ SEMUABULAN }}</option>
                   <option *ngFor="let month of listOfMonths" [value]="month">
                     {{ month }}
                   </option>
@@ -303,6 +306,7 @@
                   [(ngModel)]="filterClasterKategoriSkriningDaerah"
                   (change)="getPatientByVillage()"
                 >
+                  <option [value]="SEMUAKLASTER">{{ SEMUAKLASTER }}</option>
                   <option
                     *ngFor="let claster of listOfClasters"
                     [value]="claster"
@@ -317,6 +321,7 @@
                   [(ngModel)]="filterMonthKategoriSkriningDaerah"
                   (change)="getPatientByVillage()"
                 >
+                  <option [value]="SEMUABULAN">{{ SEMUABULAN }}</option>
                   <option *ngFor="let month of listOfMonths" [value]="month">
                     {{ month }}
                   </option>
@@ -405,7 +410,7 @@
                   [(ngModel)]="filterSubDistrictBySkrining"
                   (change)="getTotalPatientByScreening()"
                 >
-                  <option [value]="'Semua Lokasi'">Semua Lokasi</option>
+                  <option [value]="SEMUALOKASI">{{ SEMUALOKASI }}</option>
                   <option
                     *ngFor="let district of listOfSubDistricts"
                     [value]="district"
@@ -420,6 +425,7 @@
                   [(ngModel)]="filterSubClasterBySkrining"
                   (change)="getTotalPatientByScreening()"
                 >
+                  <option [value]="SEMUASKRINING">{{ SEMUASKRINING }}</option>
                   <option
                     *ngFor="let subclaster of listOfSubClasterName"
                     [value]="subclaster"
@@ -434,6 +440,7 @@
                   [(ngModel)]="filterMonthBySkrining"
                   (change)="getTotalPatientByScreening()"
                 >
+                  <option [value]="SEMUABULAN">{{ SEMUABULAN }}</option>
                   <option *ngFor="let month of listOfMonths" [value]="month">
                     {{ month }}
                   </option>
