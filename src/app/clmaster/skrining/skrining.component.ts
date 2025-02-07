@@ -364,7 +364,7 @@ export class skriningComponent implements OnInit {
       Swal.fire({
         icon: "error",
         title: "Error!",
-        text: "Pasien tidak memiliki data Kelurahan"
+        text: "Pasien Belum Melengkapi Data Alamat"
       });
     }else{
       const slug = this.cabangData?.slug??''
