@@ -379,6 +379,17 @@
         <div class="row mb-2">
           <div class="col-6">
             <div class="row">
+              <div class="col-3 fw-semi-custom">No Transaksi</div>
+              <div class="col-auto">:</div>
+              <div class="col-auto">
+                {{ row.screening_patient?.transaction_no ?? "" }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-6">
+            <div class="row">
               <div class="col-3 fw-semi-custom">Nama Klaster</div>
               <div class="col-auto">:</div>
               <div class="col-auto">

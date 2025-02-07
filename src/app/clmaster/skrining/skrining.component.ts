@@ -628,7 +628,7 @@ export class skriningComponent implements OnInit {
     const body = {
       rmno: this.norm,
       screeningId: skrinId,
-      transactionNo: "",
+      transactionNo: this.notrans,
     };
     this.serviceUrl.getDataHistory(body).subscribe(
       (data: any) => {
@@ -638,11 +638,7 @@ export class skriningComponent implements OnInit {
         this.dataHistory = filteredData;
       },
       (error: any) => {
-        Swal.fire({
-          icon: "error",
-          title: "Error!",
-          text: error.error.message,
-        });
+        console.log(error.error.statusMsg)
       }
     );
   }
