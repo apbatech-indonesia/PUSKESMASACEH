@@ -569,7 +569,7 @@ export class MpasienComponent implements OnInit {
       });
   }
 
-  simpan() {
+  async simpan() {
     if (this.verifsimpan === "1") {
       if (this.norm === "") {
         this.authService.pasien(this.kdcabang, "3", this.norm).subscribe(
@@ -631,6 +631,21 @@ export class MpasienComponent implements OnInit {
           }
         );
       } else {
+        let pasien: any = await this.authService.getPasienByTandaPengenal(
+          "tabaro",
+          this.indetitas,
+          this.noindetitas
+        );
+        let normpasien = pasien?.data?.norm;
+        if (normpasien != null && normpasien != this.norm) {
+          this.toastr.error(
+            `pasien tersebut sudah terdaftar dengan norm ${pasien.data.norm}`,
+            "Simpan Gagal"
+          );
+          this.norm = pasien.data.norm
+          return;
+        }
+
         let body = {
           nama: this.pasien,
           tlahir: this.tempatlahir,

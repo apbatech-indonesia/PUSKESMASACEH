@@ -32,7 +32,8 @@ interface YearData {
 })
 export class laporanskriningilpComponent implements OnInit {
   faSearch = faSearch;
-  branchId = "076";
+  userData: any = JSON.parse(localStorage.getItem('userDatacl')).userData
+  branchId = this.userData.kdcabang;
 
   jumlahPasienTerdaftar: number = 0;
   jumlahPasienTerskrining: number = 0;
