@@ -632,7 +632,7 @@ export class MpasienComponent implements OnInit {
         );
       } else {
         let pasien: any = await this.authService.getPasienByTandaPengenal(
-          "tabaro",
+          this.cabangarr[0]?.slug,
           this.indetitas,
           this.noindetitas
         );
