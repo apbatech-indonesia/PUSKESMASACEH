@@ -631,6 +631,8 @@ export class MpasienComponent implements OnInit {
           }
         );
       } else {
+        // kalau string "" jangan divalidasi (lolos)
+        // kalau 0 jangan divalidasi (lolos)
         let pasien: any = await this.authService.getPasienByTandaPengenal(
           this.cabangarr[0]?.slug,
           this.indetitas,
