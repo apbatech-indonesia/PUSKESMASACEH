@@ -42,7 +42,7 @@ export class skriningService {
       );
   }
   
-  getScreeningDataByNoTr(Objek: Object): Observable<Object>  {
+  getData(Objek: Object): Observable<Object>  {
     return this.http.post<Object>(satusehatUrl + 'screeningPatient/getData', Objek,  { headers: this.httpOptions['headers'] } )
       .pipe(
         catchError(this.handleError('Error Ketika Mendapatkan Data', Objek))
@@ -51,6 +51,15 @@ export class skriningService {
   
   getDataHistory(Objek: Object): Observable<Object>  {
     return this.http.post<Object>(satusehatUrl + 'screeningPatient/getDataHistory', Objek,  { headers: this.httpOptions['headers'] } )
+      .pipe(
+        catchError(this.handleError('Error Ketika Mendapatkan Data', Objek))
+      );
+  }
+  
+  getDataKelurahan(Objek: Object, slug: string): Observable<Object>  {
+    // let urlKelurahan = 'https://661709bd6fdb4f6eab29fc9a4dbfdcb9.api.mockbin.io/'
+    let urlKelurahan = 'https://emr.clenicapp.com/api/tabaro/satusehat/get-sub-district'
+    return this.http.post<Object>(urlKelurahan, Objek,  { headers: this.httpOptions['headers'] } )
       .pipe(
         catchError(this.handleError('Error Ketika Mendapatkan Data', Objek))
       );

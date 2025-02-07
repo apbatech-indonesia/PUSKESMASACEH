@@ -16,8 +16,7 @@
                   class="d-flex align-items-center justify-content-between ng-star-inserted w-100 text-white text-capitalize"
                 >
                   <div class="text-dark fw-semi-custom">
-                    {{ clust.name }} |
-                    <span class="text-danger">id : {{ clust.id }}</span>
+                    {{ clust.name }}
                     <span class="text-info fw-semi-custom ps-3"
                       >{{ clust?.completed_screenings ?? 0 }} dari
                       {{ clust?.total_screenings ?? 0 }} skrining sudah di
@@ -50,8 +49,7 @@
                     >
                       <td class="text-center">{{ k + 1 }}</td>
                       <td>
-                        {{ skrin.name }} |
-                        <span class="text-danger">{{ skrin.id }}</span>
+                        {{ skrin.name }}
                       </td>
                       <td>
                         <div class="row">
@@ -378,6 +376,17 @@
         {{ row.screening_patient?.cluster?.group ?? "" }}
       </div>
       <div class="card-body">
+        <div class="row mb-2">
+          <div class="col-6">
+            <div class="row">
+              <div class="col-3 fw-semi-custom">No Transaksi</div>
+              <div class="col-auto">:</div>
+              <div class="col-auto">
+                {{ row.screening_patient?.transaction_no ?? "" }}
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="row mb-2">
           <div class="col-6">
             <div class="row">
