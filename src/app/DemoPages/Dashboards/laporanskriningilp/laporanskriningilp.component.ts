@@ -32,7 +32,8 @@ interface YearData {
 })
 export class laporanskriningilpComponent implements OnInit {
   faSearch = faSearch;
-  branchId = "076";
+  userData: any = JSON.parse(localStorage.getItem("userDatacl")).userData;
+  branchId = this.userData.kdcabang;
 
   jumlahPasienTerdaftar: number = 0;
   jumlahPasienTerskrining: number = 0;
@@ -66,16 +67,18 @@ export class laporanskriningilpComponent implements OnInit {
   ];
   listOfSubDistricts: string[] = [];
   listOfSubDistrictsId: string[] = [];
-  listOfColors = [
-    "bg-pb-green-custom",
-    "bg-pb-brown-custom",
-    "bg-pb-bluesky-custom",
-    "bg-pb-yellow-custom",
-  ];
-  listOfColors2 = ["bg-pb-blue-custom", "bg-pb-orange-custom"];
+  listOfColors = {
+    color1: [
+      "bg-pb-green-custom",
+      "bg-pb-brown-custom",
+      "bg-pb-bluesky-custom",
+      "bg-pb-yellow-custom",
+    ],
+    color2: ["bg-pb-blue-custom", "bg-pb-orange-custom"],
+  };
 
   currentYear: string = new Date().getFullYear().toString();
-  
+
   SEMUALOKASI = "Semua Lokasi";
   SEMUABULAN = "Semua Bulan";
   SEMUAKLASTER = "Semua Klaster";

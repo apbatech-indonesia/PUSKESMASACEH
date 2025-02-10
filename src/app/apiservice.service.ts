@@ -136,6 +136,14 @@ export class ApiserviceService {
     );
   }
 
+  getPasienByTandaPengenal(cabang: any, tandapengenal: string, nopengenal: string) {
+    return this.http
+      .get(
+        `https://emr.clenicapp.com/api/${cabang}/pasien/tanda-pengenal/${tandapengenal}/no-pengenal/${nopengenal}`
+      )
+      .toPromise();
+  }
+
   getBaseUrlConfig(branchCode: string): Observable<any> {
     let dataProd = this.http.get(
       environment.emrUrl + environment.cabangPath + branchCode
