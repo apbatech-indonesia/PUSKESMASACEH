@@ -633,19 +633,21 @@ export class MpasienComponent implements OnInit {
       } else {
         // kalau string "" jangan divalidasi (lolos)
         // kalau 0 jangan divalidasi (lolos)
-        let pasien: any = await this.authService.getPasienByTandaPengenal(
-          this.cabangarr[0]?.slug,
-          this.indetitas,
-          this.noindetitas
-        );
-        let normpasien = pasien?.data?.norm;
-        if (normpasien != null && normpasien != this.norm) {
-          this.toastr.error(
-            `pasien tersebut sudah terdaftar dengan norm ${pasien.data.norm}`,
-            "Simpan Gagal"
+        if (this.noindetitas != "" && this.noindetitas != "0") {
+          let pasien: any = await this.authService.getPasienByTandaPengenal(
+            this.cabangarr[0]?.slug,
+            this.indetitas,
+            this.noindetitas
           );
-          this.norm = pasien.data.norm
-          return;
+          let normpasien = pasien?.data?.norm;
+          if (normpasien != null && normpasien != this.norm) {
+            this.toastr.error(
+              `pasien tersebut sudah terdaftar dengan norm ${pasien.data.norm}`,
+              "Simpan Gagal"
+            );
+            this.norm = pasien.data.norm
+            return;
+          }
         }
 
         let body = {
