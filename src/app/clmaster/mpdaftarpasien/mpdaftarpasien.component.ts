@@ -1741,6 +1741,206 @@ export class MpdaftarpasienComponent implements OnInit {
                                                 this.toastr.error(
                                                   "Silahkan Klik Daftar Kembali"
                                                 );
+                                              } else {
+                                                let body = {
+                                                  norm: this.norm,
+                                                  pasien: this.pasienin,
+                                                  indetitas: this.indetitas,
+                                                  noindetitas: this.noindetitas,
+                                                  kduser: this.username,
+                                                  hp: this.hp,
+                                                  kdpoli: this.kliniks,
+                                                  kddokter: this.dokter,
+                                                  kelas: "1",
+                                                  tgldaftar: this.tglp,
+                                                  kostumer: this.cusi,
+                                                  kdkostumer: this.cusid,
+                                                  noasuransi: this.noasuransi,
+                                                  kdcabang: this.kdcabang,
+                                                  kdklinik: this.kdklinik,
+                                                  stssimpan: "1",
+                                                  kdprovider: this.kdprovider,
+                                                  idhs: this.idhs,
+                                                };
+
+                                                this.authService
+                                                  .simpandaftarrj(body)
+                                                  .subscribe((response) => {
+                                                    if (response) {
+                                                      this.toastr.success(
+                                                        "" + response,
+                                                        "Sukses",
+                                                        {
+                                                          timeOut: 2000,
+                                                        }
+                                                      );
+                                                      this.appComponent.sendNotificationDokter(
+                                                        this.dokter
+                                                      );
+                                                      this.pasienc = response;
+
+                                                      this.authService
+                                                        .pasienantrian(
+                                                          this.kdcabang,
+                                                          "2",
+                                                          response,
+                                                          "",
+                                                          ""
+                                                        )
+                                                        .subscribe((data) => {
+                                                          if (data.length) {
+                                                            for (let x of data) {
+                                                              this.noasuransi =
+                                                                x.noasuransi;
+                                                              // this.tgldaftarbpjs = x.tglpriksa
+                                                              this.kdpolibpjs =
+                                                                x.kdpolibpjs;
+                                                              this.dashx =
+                                                                x.dash;
+                                                              this.kdprovider =
+                                                                x.kdprovider;
+                                                              this.sudahpcare =
+                                                                x.spcare;
+                                                              this.noantrianbpjs =
+                                                                x.noantrianbpjs;
+                                                            }
+                                                            this.tantrian =
+                                                              data;
+                                                            const headers =
+                                                              new HttpHeaders({
+                                                                "kd-cabang":
+                                                                  this.kdcabang,
+                                                              });
+                                                            this.authService
+                                                              .getpasien(
+                                                                this.tantrian[0]
+                                                                  .nopengenal,
+                                                                headers
+                                                              )
+                                                              .subscribe(
+                                                                (data) => {
+                                                                  if (
+                                                                    data.entry
+                                                                      .length !==
+                                                                    0
+                                                                  ) {
+                                                                    this.idhs =
+                                                                      data.entry[0].resource.id;
+
+                                                                    let bodyvvv =
+                                                                      {
+                                                                        data: {
+                                                                          organizationId:
+                                                                            this
+                                                                              .kodeorg,
+                                                                          patientId:
+                                                                            this
+                                                                              .idhs,
+                                                                          patientNama:
+                                                                            this
+                                                                              .tantrian[0]
+                                                                              .pasien,
+                                                                          practitionerId:
+                                                                            this
+                                                                              .tantrian[0]
+                                                                              .idhis,
+                                                                          practitionerNama:
+                                                                            this
+                                                                              .tantrian[0]
+                                                                              .namdokter,
+                                                                          periodStart:
+                                                                            this
+                                                                              .tglss,
+                                                                          periodEnd:
+                                                                            this
+                                                                              .tglss,
+                                                                          locationId:
+                                                                            this
+                                                                              .tantrian[0]
+                                                                              .idsatusehat,
+                                                                          locationDisplay:
+                                                                            this
+                                                                              .tantrian[0]
+                                                                              .nampoli,
+                                                                        },
+                                                                      };
+
+                                                                    this.authService
+                                                                      .simpanencounter(
+                                                                        bodyvvv,
+                                                                        headers
+                                                                      )
+                                                                      .subscribe(
+                                                                        (
+                                                                          response
+                                                                        ) => {
+                                                                          if (
+                                                                            response.resourceType ===
+                                                                            "Encounter"
+                                                                          ) {
+                                                                            let bodyxss =
+                                                                              {
+                                                                                stssimpan:
+                                                                                  "2",
+                                                                                token:
+                                                                                  response.id,
+                                                                                notransaksi:
+                                                                                  this
+                                                                                    .tantrian[0]
+                                                                                    .notransaksi,
+                                                                                norm: this
+                                                                                  .tantrian[0]
+                                                                                  .norm,
+                                                                                idpasien:
+                                                                                  this
+                                                                                    .idhs,
+                                                                              };
+                                                                            this.authService
+                                                                              .simpantoken(
+                                                                                bodyxss
+                                                                              )
+                                                                              .subscribe(
+                                                                                (
+                                                                                  response
+                                                                                ) => {
+                                                                                  if (
+                                                                                    response.length
+                                                                                  ) {
+                                                                                    // this.toastr.success('Berhasil Kirim ');
+                                                                                  }
+                                                                                }
+                                                                              );
+                                                                          } else {
+                                                                            // console.log(response.issue[0])
+                                                                            // this.toastr.error(response.issue[0].diagnostics);
+                                                                          }
+                                                                        }
+                                                                      );
+                                                                  } else {
+                                                                    this.showloading =
+                                                                      false;
+
+                                                                    this.idhs =
+                                                                      "Gagal Get IHS";
+                                                                    this.toastr.error(
+                                                                      "Silahkan Lengkapi NIK Pasein Agar dapat ID Satu Sehat Pasien",
+                                                                      "SATU SEHAT ID PASIEN",
+                                                                      {
+                                                                        timeOut: 2000,
+                                                                      }
+                                                                    );
+                                                                  }
+                                                                },
+                                                                (Error) => {
+                                                                  console.log(
+                                                                    Error
+                                                                  );
+                                                                }
+                                                              );
+                                                          }
+                                                        });
+                                                    }
+                                                  });
                                               }
                                             });
 

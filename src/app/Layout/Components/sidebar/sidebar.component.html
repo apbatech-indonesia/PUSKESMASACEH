@@ -74,15 +74,7 @@
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
                     <div class="vsm-list">
-                      <div
-                        class="vsm-item"
-                        *ngIf="
-                          akses === 'Kasir RJ' ||
-                          akses === 'Manajemen' ||
-                          akses === 'Kasir Koordinator' ||
-                          akses === 'Admisi'
-                        "
-                      >
+                      <div class="vsm-item">
                         <a
                           routerLink="/dashboards/management"
                           routerLinkActive="active-item"
@@ -91,15 +83,7 @@
                           <span class="vsm-title">Dashboard Management</span>
                         </a>
                       </div>
-                      <!-- <div
-                        class="vsm-item"
-                        *ngIf="
-                          akses === 'Kasir RJ' ||
-                          akses === 'Manajemen' ||
-                          akses === 'Kasir Koordinator' ||
-                          akses === 'Admisi'
-                        "
-                      >
+                      <div class="vsm-item">
                         <a
                           routerLink="/dashboards/skrining-ilp"
                           routerLinkActive="active-item"
@@ -107,7 +91,7 @@
                         >
                           <span class="vsm-title">Dashboard Skrining ILP</span>
                         </a>
-                      </div> -->
+                      </div>
                     </div>
                   </div>
                 </ng-template>
