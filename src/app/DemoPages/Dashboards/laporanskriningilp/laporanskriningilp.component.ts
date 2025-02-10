@@ -286,7 +286,9 @@ export class laporanskriningilpComponent implements OnInit {
 
   async getAllSubClaster() {
     try {
-      const payload = {};
+      const payload = {
+        branchId: this.branchId,
+      };
       const response: any = await this.api.getPatientByCluster(payload);
 
       if (!response?.data?.length) {
