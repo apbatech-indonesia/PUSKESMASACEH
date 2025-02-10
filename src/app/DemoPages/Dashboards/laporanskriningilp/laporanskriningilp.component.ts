@@ -175,8 +175,8 @@ export class laporanskriningilpComponent implements OnInit {
       }
 
       const payload: any = {
-        year: this.filterYearTotalSkrining,
         branchId: this.branchId,
+        year: this.filterYearTotalSkrining,
       };
 
       const response: any = await this.api.getPatientStatus(payload);
@@ -206,6 +206,7 @@ export class laporanskriningilpComponent implements OnInit {
         throw new Error("Tahun filter tidak tersedia");
       }
       const payload: any = {
+        branchId: this.branchId,
         year: this.filterYearKlaster,
       };
 
@@ -249,6 +250,7 @@ export class laporanskriningilpComponent implements OnInit {
       }
 
       const payload: any = {
+        branchId: this.branchId,
         year: this.filterYearKategoriSkrining,
       };
 
@@ -308,6 +310,7 @@ export class laporanskriningilpComponent implements OnInit {
   async getPatientByVillage() {
     try {
       const payload: any = {
+        branchId: this.branchId,
         year: this.filterYearKategoriSkriningDaerah,
       };
 
@@ -346,6 +349,7 @@ export class laporanskriningilpComponent implements OnInit {
       }
 
       const payload: any = {
+        branchId: this.branchId,
         year: this.filterYearBySkrining,
       };
 
