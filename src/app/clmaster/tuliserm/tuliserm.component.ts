@@ -7466,14 +7466,18 @@ export class tulisermComponent implements OnInit {
       this.showbb = false;
       this.verifikasiangka = 0;
     }
+    var tb: number = parseFloat(this.tb); // Tinggi dalam cm
+    var berat: number = parseFloat(a.target.value); // Berat badan dalam kg
 
-    var tbb: number = parseInt(this.tb);
-    var tbbku: number = tbb * 2;
-    var convertn: number = tbbku / 100;
+    if (isNaN(tb) || isNaN(berat) || tb <= 0 || berat <= 0) {
+      this.imt = "0.0";
+      return;
+    }
 
-    var numberx: number = a.target.value / convertn;
+    var tinggiMeter: number = tb / 100; // Konversi tinggi ke meter
+    var imtValue: number = berat / (tinggiMeter * tinggiMeter); // Rumus IMT
 
-    this.imt = numberx.toFixed(2);
+    this.imt = imtValue.toFixed(1); // Format hasil ke 1 desimal
   }
 
   shownadi: boolean;
