@@ -126,7 +126,10 @@
             <div class="row">
               <div class="col-5 px-0">
                 <app-master-select
-                (selectedItem)="filterSubDistrictKlaster = $event.village_name; getPatientByClusterGroup()"
+                  (selectedItem)="
+                    filterSubDistrictKlaster = $event.village_name;
+                    getPatientByClusterGroup()
+                  "
                 ></app-master-select>
               </div>
               <div class="col-3 pe-0 ps-2">
@@ -185,19 +188,12 @@
           <div class="col-7">
             <div class="row">
               <div class="col-6 px-0">
-                <select
-                  class="form-select"
-                  [(ngModel)]="filterSubDistrictKategoriSkrining"
-                  (change)="getTotalPasienByCategorySkrining()"
-                >
-                  <option [value]="SEMUALOKASI">{{ SEMUALOKASI }}</option>
-                  <option
-                    *ngFor="let city of listOfSubDistricts"
-                    [value]="city"
-                  >
-                    {{ city }}
-                  </option>
-                </select>
+                <app-master-select
+                  (selectedItem)="
+                    filterSubDistrictKategoriSkrining = $event.village_name;
+                    getTotalPasienByCategorySkrining()
+                  "
+                ></app-master-select>
               </div>
               <div class="col-2 pe-0 ps-2">
                 <select
@@ -395,19 +391,12 @@
           <div class="col-7">
             <div class="row">
               <div class="col-6 px-0">
-                <select
-                  class="form-select"
-                  [(ngModel)]="filterSubDistrictBySkrining"
-                  (change)="getTotalPatientByScreening()"
-                >
-                  <option [value]="SEMUALOKASI">{{ SEMUALOKASI }}</option>
-                  <option
-                    *ngFor="let district of listOfSubDistricts"
-                    [value]="district"
-                  >
-                    {{ district }}
-                  </option>
-                </select>
+                <app-master-select
+                  (selectedItem)="
+                    filterSubDistrictBySkrining = $event.village_name;
+                    getTotalPatientByScreening()
+                  "
+                ></app-master-select>
               </div>
               <div class="col-2 pe-0 ps-2">
                 <select
