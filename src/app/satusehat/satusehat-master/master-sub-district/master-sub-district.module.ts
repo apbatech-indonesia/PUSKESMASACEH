@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MasterSpecimenComponent } from './master-specimen.component';
 import { FormsModule } from '@angular/forms';
+import { MasterSubDistrictComponent } from './master-sub-district.component';
 
 @NgModule({
   declarations: [
-    MasterSpecimenComponent
+    MasterSubDistrictComponent
   ],
   imports: [
     CommonModule,
     FormsModule
   ],
   exports: [
-    MasterSpecimenComponent
+    MasterSubDistrictComponent
   ]
 })
-export class MasterSpecimenModule { }
+export class MasterSubDistrictModule { }

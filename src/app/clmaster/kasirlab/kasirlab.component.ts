@@ -2815,8 +2815,8 @@ this.tlistmaping = data;
 
 
       swalWithBootstrapButtons.fire(
-        'Berhasil Batal ',
-        'Batal Telah Berhasil.',
+        'Berhasil Mapping',
+        'Mapping Telah Berhasil.',
         'success'
       );
 

@@ -336,6 +336,7 @@ export class laporanskriningilpComponent implements OnInit {
 
       this.listOfSubDistrictsId = response.data.map((item) => item.village_id);
       this.listOfSubDistricts = response.data.map((item) => item.village_name);
+      localStorage.setItem("listOfSubdistrict", JSON.stringify(response.data));
       this.grapikBerdasarkanDaerah = response.data.map(
         (item) => item.total_patients
       );

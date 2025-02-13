@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MasterSpecimenComponent } from './master-specimen.component';
+import { MasterSelectComponent } from './master-select.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    MasterSpecimenComponent
+    MasterSelectComponent
   ],
   imports: [
     CommonModule,
     FormsModule
   ],
   exports: [
-    MasterSpecimenComponent
+    MasterSelectComponent
   ]
 })
-export class MasterSpecimenModule { }
+export class MasterSelectModule { }
