@@ -1050,6 +1050,22 @@
                           <span class="vsm-title">Laporan Laba Rugi</span></a
                         >
                       </div>
+                      
+                      <div class="vsm-item" *ngIf="akses === 'Manajemen'">
+                        <a
+                          routerLinkActive="active-item"
+                          class="vsm-link"
+                          routerLink="/master/laporanskrining"
+                          *ngIf="
+                            akses === 'Kasir Koordinator' ||
+                            akses === 'Manajemen' ||
+                            akses === 'Kasir RJ'
+                          "
+                        >
+                          <span class="vsm-title">Laporan Skrining</span></a
+                        >
+                      </div>
+
                     </div>
                   </div>
                 </ng-template>
