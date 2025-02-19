@@ -440,6 +440,8 @@
                   <option value="PERNAH KAWIN">PERNAH KAWIN</option>
                   <option value="TIDAK KAWIN">TIDAK KAWIN</option>
                   <option value="TIDAK TAHU">TIDAK TAHU</option>
+                  <option value="CERAI">CERAI</option>
+                  <option value="CERAI MATI">CERAI MATI</option>
                 </select>
               </div>
             </form>
@@ -489,6 +491,9 @@
                   class="form-select"
                 >
                   <option value="">-PILIH-</option>
+                  <option *ngFor="let x of tgolonganlab" value="{{ x.metode }}">
+                    {{ x.metode }}
+                  </option>
                   <option value="WIRAUSAHA">WIRAUSAHA</option>
                   <option value="PEGAWAI NEGERI">PEGAWAI NEGERI</option>
                   <option value="PEGAWAI SWASTA">PEGAWAI SWASTA</option>

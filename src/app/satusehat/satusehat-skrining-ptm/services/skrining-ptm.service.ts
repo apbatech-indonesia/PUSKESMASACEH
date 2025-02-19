@@ -20,15 +20,15 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
   updateRiwayat(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'skrining/updateRiwayat', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'skrining/conditionsCreate', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
-  
+
   faktorResiko(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/faktorResiko', data, { headers: this.headers }).subscribe((data) => {
@@ -36,7 +36,7 @@ export class SkriningPTMService {
       })
     })
   }
-  
+
   deteksiDiniObesitas(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/deteksiDini/obesitas', data, { headers: this.headers }).subscribe((data) => {
@@ -44,61 +44,77 @@ export class SkriningPTMService {
       })
     })
   }
-  
-  deteksiDiniHipertensi(data: any) {
+
+  observationsCreate(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'skrining/deteksiDini/hipertensi', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'skrining/observationsCreate', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
-  
-  deteksiDiniMata(data: any) {
+
+  conditionsCreate(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'skrining/deteksiDini/mata', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'skrining/conditionsCreate', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
-  
-  diagnosa(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'skrining/diagnosa', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
-  
-  procedure(data: any) {
+
+  proceduresCreate(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'skrining/proceduresCreate', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
-  
-  tindakLanjut(data: any) {
+
+  serviceRequestsCreate(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'skrining/tindakLanjut', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
-  
-  kondisiKeluar(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'skrining/tindakLanjut', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'skrining/serviceRequestsCreate', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
 
-  updateKunjungan(data: any) {
+  specimensCreate(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'skrining/updateKunjungan', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'skrining/specimensCreate', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
   }
-  
+
+  diagnosticReportsCreate(data: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehatUrl + 'skrining/diagnosticReportsCreate', data, { headers: this.headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
+  questionnaireResponsesCreate(data: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehatUrl + 'skrining/questionnaireResponsesCreate', data, { headers: this.headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
+  tindakLanjut(data: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehatUrl + 'skrining/serviceRequestsCreate', data, { headers: this.headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
+  encountersUpdate(data: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehatUrl + 'skrining/encountersUpdate', data, { headers: this.headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+
 }

@@ -114,27 +114,34 @@ export class ApiserviceService {
     return this.http
       .get(
         `https://emr.clenicapp.com/api/${cabang}/reporting-antrean?search=${search}&page=${page}&isSuccess=${isSuccess}&urlType=${urlType}&dateFrom=${dateFrom}&dateTo=${dateTo}`
-      ).toPromise();
+      )
+      .toPromise();
   }
 
-  getDetailPasien(
-    cabang: any,
-    bpjsnumber: number
-  ) {
-    return this.http.get(
-      `https://emr.clenicapp.com/api/${cabang}/reporting-antrean/pasien/${bpjsnumber}`
-    ).toPromise();
+  getDetailPasien(cabang: any, bpjsnumber: number) {
+    return this.http
+      .get(
+        `https://emr.clenicapp.com/api/${cabang}/reporting-antrean/pasien/${bpjsnumber}`
+      )
+      .toPromise();
   }
   //
 
-  simpanMappingObat(
-    cabang: any,
-    kdobat: number,
-    kdobatsatusehat: number
-  ) {
-    return this.http.post(`https://emr.clenicapp.com/api/${cabang}/manajemen-obat/maping/${kdobat}`, {
-      kdobatsatusehat: kdobatsatusehat
-    })
+  simpanMappingObat(cabang: any, kdobat: number, kdobatsatusehat: number) {
+    return this.http.post(
+      `https://emr.clenicapp.com/api/${cabang}/manajemen-obat/maping/${kdobat}`,
+      {
+        kdobatsatusehat: kdobatsatusehat,
+      }
+    );
+  }
+
+  getPasienByTandaPengenal(cabang: any, tandapengenal: string, nopengenal: string) {
+    return this.http
+      .get(
+        `https://emr.clenicapp.com/api/${cabang}/pasien/tanda-pengenal/${tandapengenal}/no-pengenal/${nopengenal}`
+      )
+      .toPromise();
   }
 
   getBaseUrlConfig(branchCode: string): Observable<any> {
@@ -519,9 +526,27 @@ export class ApiserviceService {
     );
   }
 
+  dokterpolixv2(a, kdpoli, tgl): Observable<any> {
+    return this.http.get(
+      apiurx +
+        "master/dokterpolixv2.php?kdcabang=" +
+        a +
+        "&kdpoli=" +
+        kdpoli +
+        "&tgl=" +
+        tgl
+    );
+  }
+
   caridokter(a, b): Observable<any> {
     return this.http.get(
       apiurx + "master/caridokter.php?kdcabang=" + a + "&dokter=" + b
+    );
+  }
+
+  dokterbyid(a, b): Observable<any> {
+    return this.http.get(
+      apiurx + "master/dokterbyid.php?kdcabang=" + a + "&dokter=" + b
     );
   }
   carirekening(a, b): Observable<any> {
@@ -3020,34 +3045,42 @@ export class ApiserviceService {
 
   medication(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "Medication", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "Medication", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   medicationRequest(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "MedicationRequest", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "MedicationRequest", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   medicationDispense(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "MedicationDispense", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "MedicationDispense", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   medicationStatement(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "MedicationStatement", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "MedicationStatement", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   allergyIntolerance(data: any, headers: any) {
@@ -3062,34 +3095,42 @@ export class ApiserviceService {
 
   serviceRequest(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "ServiceRequest", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "ServiceRequest", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   specimen(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "Specimen", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "Specimen", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   diagnosticReport(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "DiagnosticReport", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "DiagnosticReport", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   questionnaireResponse(data: any, headers: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehat + "QuestionnaireResponse", data, { headers: headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+      this.http
+        .post(satusehat + "QuestionnaireResponse", data, { headers: headers })
+        .subscribe((data) => {
+          resolve(data);
+        });
+    });
   }
 
   clinicalImpression(data: any, headers: any) {
@@ -3324,5 +3365,21 @@ export class ApiserviceService {
       "&tgl=" +
       c
     );
+  }
+  ceknoantrian(a, b, c, d): Observable<any> {
+    return this.http.get(
+      apiurx +
+        "master/ceknoantrian.php?dokter=" +
+        a +
+        "&kdpoli=" +
+        b +
+        "&tgl=" +
+        c +
+        "&kdcabang=" +
+        d
+    );
+  }
+  editpoli(): Observable<any> {
+    return this.http.get(apiurx + "pcare/editpoli.php");
   }
 }

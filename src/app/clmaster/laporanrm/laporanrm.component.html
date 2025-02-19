@@ -35,6 +35,13 @@
             </button>
             <button
               class="dropdown-item"
+              (click)="laprj('Laporan Obat Terbanyak')"
+            >
+              Laporan Obat Terbanyak
+            </button>
+
+            <button
+              class="dropdown-item"
               (click)="laprj('Laporan Pasien Baru')"
             >
               Laporan Pasien Baru
@@ -174,6 +181,15 @@
             (click)="lihatrekap()"
           >
             Lihat Rekap
+          </button>
+        </div>
+
+        <div *ngIf="judul === 'Laporan Obat Terbanyak'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatrekapo()"
+          >
+            Laporan Obat Terbanyak
           </button>
         </div>
       </div>

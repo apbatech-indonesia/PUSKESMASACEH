@@ -4,6 +4,10 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiPpokObservation {
+  isSmoking: any = false
+  smokingStatus: SmokingStatus
+  dateNow: any = new Date().toISOString()
+
   getdata() {
     return {
       observations: [
@@ -21,17 +25,23 @@ export class DataDeteksiPpokObservation {
                 code: "72166-2",
                 display: "Tobacco smoking status"
               },
-              result: {
+              valueCodeableConcept: {
                 system: "http://snomed.info/sct",
-                code: "8392000",
-                display: "Non-smoker"
-              }
+                code: this.smokingStatus.code,
+                display: this.smokingStatus.display
+              },
+              resultBoolean: this.isSmoking == 'true'
             }
           ],
-          effectiveDateTime: "2024-04-24T00:23:30+00:00",
-          issued: "2024-04-24T00:23:30+00:00"
+          effectiveDateTime: this.dateNow,
+          issued: this.dateNow
         }
       ]
     }
   }
+}
+
+class SmokingStatus {
+  code: any
+  display: any
 }

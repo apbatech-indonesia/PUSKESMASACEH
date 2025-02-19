@@ -310,7 +310,7 @@
                 <input
                   formControlName="hp"
                   [(ngModel)]="hp"
-                  maxlength="13"
+                  maxlength="15"
                   id="hp"
                   type="text"
                   class="form-control"
@@ -418,7 +418,7 @@
         <b>KELOMPOK PASIEN</b>
         <hr />
         <div class="row">
-          <div class="col-md-4">
+          <!-- <div class="col-md-4">
             <form [formGroup]="profileForm">
               <div class="position-relative mb-3">
                 <label
@@ -441,9 +441,9 @@
                 </select>
               </div>
             </form>
-          </div>
+          </div> -->
 
-          <div class="col-md-4">
+          <div class="col-md-6">
             <form [formGroup]="profileForm">
               <div class="position-relative mb-3">
                 <label
@@ -468,7 +468,7 @@
             </form>
           </div>
 
-          <div class="col-md-4">
+          <div class="col-md-6">
             <form [formGroup]="profileForm">
               <div class="position-relative mb-3">
                 <label for="exampleCity" class="form-label" style="color: black"
@@ -549,7 +549,22 @@
             </form>
           </div>
           <!-- (change)="pilihdokter($event.target.value)" -->
-          <div class="col-md-4">
+
+          <div class="col-md-8">
+            <div style="text-align: center" *ngIf="showloading">
+              <div
+                class="loader-wrapper d-flex justify-content-center align-items-center"
+              >
+                <div class="loader">
+                  <div class="ball-pulse">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <form [formGroup]="profileForm">
               <div class="position-relative mb-3">
                 <label
@@ -567,7 +582,7 @@
                   <option value="">-PILIH-</option>
 
                   <option *ngFor="let x of tdokter" value="{{ x.kddokter }}">
-                    <b> {{ x.namdokter }} </b>
+                    <b> {{ x.namdokter }} - {{ x.jadwal }} </b>
 
                     <!-- <span *ngIf="x.jadwal === null" style="color: red">
                       - Jadwal Hafis Tidak Ada
@@ -577,7 +592,7 @@
               </div>
             </form>
           </div>
-          <div class="col-md-4">
+          <!-- <div class="col-md-4">
             <div style="text-align: center" *ngIf="showloading">
               <div
                 class="loader-wrapper d-flex justify-content-center align-items-center"
@@ -604,9 +619,22 @@
                 </option>
               </select>
             </div>
+          </div> -->
+        </div>
+        <div style="text-align: center" *ngIf="showloadantrian">
+          <div
+            class="loader-wrapper d-flex justify-content-center align-items-center"
+          >
+            <b>SEDANG DALAM KIRIM DATA ANTREAN KE BPJS</b>
+            <div class="loader">
+              <div class="ball-pulse">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
           </div>
         </div>
-
         <div class="row">
           <div class="col-md-2">
             <div class="d-grid gap-2">
@@ -1360,8 +1388,8 @@
             class="form-select"
             required
           >
-            <option value="10"><b>RJTP</b></option>
-            <option value="20"><b>RITP</b></option>
+            <option value="10"><b>RJTP (Rawat Jalan)</b></option>
+            <option value="20"><b>RITP (Rawat Inap)</b></option>
             <option value="50"><b>Promotif</b></option>
           </select>
         </div>

@@ -1,0 +1,198 @@
+.custom-dropdown-menu {
+  width: max-content;
+  white-space: nowrap;
+}
+
+.dropdown-menu {
+  min-width: 7rem !important;
+}
+
+.nav-active-custom {
+  background-color: #0D128B !important;
+  color: white !important;
+}
+.nav-active-custom:hover {
+  color: white !important;
+}
+.nav-custom {
+  border-radius: 6px !important;
+  padding: 4px 10px 4px 10px !important;
+  width: auto;
+  height: 38px;
+  font-size: 100%;
+}
+.nav-tabs{
+  border-style: none;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
+
+.example-container form {
+  margin-bottom: 20px;
+}
+
+.example-container form > * {
+  margin: 5px 0;
+}
+
+.example-container .mat-radio-button {
+  margin: 0 5px;
+}
+
+.card-header-custom {
+  height: 44px;
+  background-color: #1d2d44;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0px;
+}
+
+.fw-semi-custom {
+  font-weight: 600;
+}
+
+.text-primary-custom {
+  color: #2329be;
+}
+
+.edit-skrining-button-custom {
+  background-color: #2329be;
+  width: auto;
+  height: 36px;
+  color: white;
+  padding: 4px 10px 4px 10px;
+  border-style: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.riwayat-skrining-button-custom {
+  background-color: #e7a422;
+  width: auto;
+  height: 36px;
+  color: white;
+  padding: 4px 10px 4px 10px;
+  border-style: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.create-skrining-button-custom {
+  background-color: #009688;
+  width: auto;
+  height: 36px;
+  color: white;
+  padding: 4px 10px 4px 10px;
+  border-style: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.w-btn-custom {
+  width: 121px !important;
+}
+
+.h-btn-custom {
+  height: 36px !important;
+}
+
+.search-button-custom {
+  background-color: #4ab4de;
+  width: auto;
+  height: 36px;
+  color: white;
+  padding: 6px 14px 6px 14px;
+  border-style: none;
+  border-radius: 6px;
+}
+
+.save-button-custom {
+  background-color: #29a259;
+  width: auto;
+  height: 36px;
+  color: white;
+  padding: 4px 10px 4px 10px;
+  border-style: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.save-button-custom:disabled {
+  background-color: #979797;
+  width: auto;
+  height: 36px;
+  color: white;
+  padding: 4px 10px 4px 10px;
+  border-style: none;
+  border-radius: 6px;
+}
+
+.cancel-button-custom {
+  background-color: #cd1818;
+  width: auto;
+  height: 36px;
+  color: white;
+  padding: 4px 10px 4px 10px;
+  border-style: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.excel-button-custom {
+  background-color: #0F6C63;
+  width: auto;
+  height: 36px;
+  color: white;
+  padding: 4px 10px 4px 10px;
+  border-style: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.print-button-custom {
+  background-color: #2329BE;
+  width: auto;
+  height: 36px;
+  color: white;
+  padding: 4px 10px 4px 10px;
+  border-style: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.filter-button-custom {
+  background-color: #00A4DA;
+  width: auto;
+  height: 36px;
+  color: white;
+  padding: 4px 10px 4px 10px;
+  border-style: none;
+  border-radius: 6px;
+}
+
+.pagination span {
+  color: black;
+  float: left;
+  padding: 8px 14px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+.pagination span.active {
+  color: blue;
+}
+.pagination span.disabled {
+  color: #c6c6c6;
+}

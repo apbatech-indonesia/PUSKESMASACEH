@@ -4,7 +4,8 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniPendengaran {
-  // questioner 
+  leftEar: DiagnosaPendengaran
+  rightEar: DiagnosaPendengaran
   dateNow: any = new Date().toISOString()
 
   getdata() {
@@ -21,8 +22,8 @@ export class DataDeteksiDiniPendengaran {
             {
               code: {
                 system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
-                code: "OC000150",
-                display: "Suspek tuli kongenital"
+                code: this.rightEar.code,
+                display: this.rightEar.display
               },
               bodySite: {
                 system: "http://snomed.info/sct",
@@ -30,12 +31,6 @@ export class DataDeteksiDiniPendengaran {
                 display: "Right ear structure"
               },
               resultBoolean: false,
-              result: {
-                value: 71,
-                unit: "kg",
-                system: "http://unitsofmeasure.org",
-                code: "kg"
-              },
               valueCodeableConcept: {
                 system: "http://snomed.info/sct",
                 code: "164854000",
@@ -57,8 +52,8 @@ export class DataDeteksiDiniPendengaran {
             {
               code: {
                 system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
-                code: "OC000150",
-                display: "Suspek tuli kongenital"
+                code: this.leftEar.code,
+                display: this.leftEar.display
               },
               bodySite: {
                 system: "http://snomed.info/sct",
@@ -79,4 +74,9 @@ export class DataDeteksiDiniPendengaran {
       ]
     }
   }
+}
+
+class DiagnosaPendengaran { 
+  code: any = "OC000150"
+  display: any = "Suspek tuli kongenital"
 }

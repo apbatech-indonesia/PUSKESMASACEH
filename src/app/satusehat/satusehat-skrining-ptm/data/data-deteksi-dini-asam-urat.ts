@@ -4,44 +4,75 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniAsamUrat {
-  // questioner 
-  visusKiri: any
-  visusKanan: any
-  numeratorMataKanan: any
-  denominatorMataKanan: any
-  numeratorMataKiri: any
-  denominatorMataKiri: any
+  quantity: any
+  result: any
+  dateNow = new Date().toISOString()
 
   getdata() {
     return {
       observations: [
         {
-          name: "kanker_vagina",
+          name: "deteksi_asam_urat",
           category: {
             system: "http://terminology.hl7.org/CodeSystem/observation-category",
-            code: "exam",
-            display: "Exam"
+            code: "laboratory",
+            display: "Laboratory"
           },
           data: [
             {
               code: {
-                system: "http://snomed.info/sct",
-                code: "451024007",
-                display: "Inspection of vagina using vaginal speculum"
+                system: "http://loinc.org",
+                code: "3084-1",
+                display: "Urate [Mass/volume] in Serum or Plasma"
               },
-
-              bodySite: {},
-              resultBoolean: false,
-              result: {},
-              valueCodeableConcept: {
-                system: "http://snomed.info/sct",
-                code: "395100000",
-                display: "No evidence of cancer found"
-              }
+              result: {
+                value: this.quantity,
+                unit: "mg/dL",
+                system: "http://unitsofmeasure.org",
+                code: "mg/dL",
+                display: this.result
+              },
             }
           ],
-          effectiveDateTime: "2024-04-24T00:23:30+00:00",
-          issued: "2024-04-24T00:23:30+00:00"
+          interpretation: [
+            {
+              coding: [
+                {
+                  system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                  code: "H",
+                  display: this.result
+                }
+              ]
+            }
+          ],
+          referenceRange: [
+            {
+              low: {
+                value: 2.6,
+                unit: "mg/dL",
+                system: "http://unitsofmeasure.org",
+                code: "mg/dL"
+              },
+              high: {
+                value: 6,
+                unit: "mg/dL",
+                system: "http://unitsofmeasure.org",
+                code: "mg/dL"
+              },
+              text: "Normal"
+            },
+            {
+              low: {
+                value: 6.1,
+                unit: "mg/dL",
+                system: "http://unitsofmeasure.org",
+                code: "mg/dL"
+              },
+              text: "Tinggi"
+            }
+          ],
+          effectiveDateTime: this.dateNow,
+          issued: this.dateNow
         }
       ]
     }

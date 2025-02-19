@@ -9,7 +9,7 @@ import { ConfigActions } from './ThemeOptions/store/config.actions';
 import { AppRoutingModule } from './app-routing.module';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 
-import { CommonModule,HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
@@ -108,9 +108,9 @@ import { LoginclComponent } from './cllogin/logincl/logincl.component';
 
 // Angular Material
 
-import {ApiserviceService} from './apiservice.service';
+import { ApiserviceService } from './apiservice.service';
 import { KosongComponent } from './cllogin/kosong/kosong.component';
-import { LoginGuard } from './auth/login.guard'; 
+import { LoginGuard } from './auth/login.guard';
 import { WINDOW_PROVIDERS } from './window.providers';
 import { SampleService } from './services';
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -127,8 +127,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
 };
 import { AccordionModule } from 'primeng/accordion';
 import { ermdisplayComponent } from './cllogin/ermdisplay/ermdisplay.component';
-import {TreeModule} from 'primeng/tree'
-import {ButtonModule} from 'primeng/button';
+import { TreeModule } from 'primeng/tree'
+import { ButtonModule } from 'primeng/button';
 import { tulisermComponent } from './clmaster/tuliserm/tuliserm.component';
 import { BukuKontrasepsiComponent } from './clmaster/Kebidanan/BukuKontrasepsi/BukuKontrasepsi.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -159,6 +159,7 @@ import { MasterVaccineComponent } from './satusehat/satusehat-master/master-vacc
 import { FormVaccineComponent } from './satusehat/satusehat-imunisasi/form/form-vaccine/form-vaccine.component';
 import { MasterSpecimenModule } from './satusehat/satusehat-master/master-specimen/master-specimen.module';
 import { TulisSatuSehatGiziComponent } from './satusehat/satusehat-gizi/form/tulis-satusehat-gizi.component';
+import { skriningComponent } from "./clmaster/skrining/skrining.component";
 @NgModule({
   declarations: [
 
@@ -171,7 +172,7 @@ import { TulisSatuSehatGiziComponent } from './satusehat/satusehat-gizi/form/tul
     OptionsDrawerComponent,
     ermdisplayComponent,
 
- 
+
     // HEADER
 
     HeaderComponent,
@@ -204,35 +205,37 @@ import { TulisSatuSehatGiziComponent } from './satusehat/satusehat-gizi/form/tul
 
     // Tables
     NgbdSortableHeaderDirective,
-     MasukappComponent,
-     LoginclComponent,
-     KosongComponent,
-     anjunganComponent,
-     anjungansehatComponent,
-     tulisermComponent,
-     BukuKontrasepsiComponent,
-     CatatanImunisasiComponent,
-     KunjunganBumilComponent,
-     KebidananComponent,
-     PartografComponent,
-     tulisermriComponent,
-     PersetujuanTindakanMedisComponent,
-     kajianperawatComponent,
-     riwayatkunjunganComponent,
-     TulisAncComponent,
-     TulisMtbmComponent,
-     TulisMtbsComponent,
-     TulisImunisasiComponent,
-     TulisSkriningPtmComponent,
-     TulisSatuSehatGiziComponent,
-     MasterProvinceComponent,
-     MasterCityComponent,
-     MasterDistrictComponent,
-     MasterSubDistrictComponent,
-     MasterDiagnosaComponent,
-     MasterTindakanComponent,
-     MasterVaccineComponent,
-     FormVaccineComponent,
+    MasukappComponent,
+    LoginclComponent,
+    KosongComponent,
+    anjunganComponent,
+    anjungansehatComponent,
+    tulisermComponent,
+    BukuKontrasepsiComponent,
+    CatatanImunisasiComponent,
+    KunjunganBumilComponent,
+    KebidananComponent,
+    PartografComponent,
+    tulisermriComponent,
+    PersetujuanTindakanMedisComponent,
+    kajianperawatComponent,
+    riwayatkunjunganComponent,
+    TulisAncComponent,
+    TulisMtbmComponent,
+    TulisMtbsComponent,
+    TulisImunisasiComponent,
+    TulisSkriningPtmComponent,
+    TulisSatuSehatGiziComponent,
+    MasterProvinceComponent,
+    MasterCityComponent,
+    MasterDistrictComponent,
+    MasterSubDistrictComponent,
+    MasterDiagnosaComponent,
+    MasterTindakanComponent,
+    MasterVaccineComponent,
+    FormVaccineComponent,
+
+    skriningComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -304,20 +307,20 @@ import { TulisSatuSehatGiziComponent } from './satusehat/satusehat-gizi/form/tul
   providers: [
     {
       provide:
-      LocationStrategy, useClass: HashLocationStrategy
+        LocationStrategy, useClass: HashLocationStrategy
       // PERFECT_SCROLLBAR_CONFIG,
-     
+
       // useValue:DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-       
+
     },
-    
+
     ConfigActions,
     ThemeOptions,
     ApiserviceService,
     LoginGuard,
     WINDOW_PROVIDERS,
     SampleService
-   
+
 
   ],
   bootstrap: [AppComponent]

@@ -5,28 +5,29 @@ import { Injectable } from "@angular/core"
 })
 export class DataKondisiKeluarFaskes {
   // questioner
-  conditionCode: any = '161501007'
-  conditionDisplay: any = 'History of hypertension'
+  conditionCode: any
+  conditionDisplay: any
   dateNow: any = new Date().toISOString()
 
   getdata() {
     return {
-      kondisi_keluar: [
+      conditions: [
         {
-          clinicalStatus: [
+          name: "end_condition",
+          category: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-category",
+            code: "problem-list-item",
+            display: "Problem List Item"
+          },
+          clinicalStatus: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
+            code: "active",
+            display: "Active"
+          },
+          recordedDate: this.dateNow,
+          data: [
             {
-              code: "active",
-              display: "Active"
-            }
-          ],
-          category: [
-            {
-              code: "problem-list-item",
-              display: "Problem List Item"
-            }
-          ],
-          code: [
-            {
+              system: "http://snomed.info/sct",
               code: this.conditionCode,
               display: this.conditionDisplay
             }

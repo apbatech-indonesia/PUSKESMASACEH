@@ -4,36 +4,71 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiTalesima {
+  value: any
+  display: any
+  dateNow = new Date().toISOString()
 
   getdata() {
     return {
       observations: [
         {
-          name: "kanker_vagina",
+          name: "deteksi_talasemia",
           category: {
             system: "http://terminology.hl7.org/CodeSystem/observation-category",
-            code: "exam",
-            display: "Exam"
+            code: "laboratory",
+            display: "Laboratory"
           },
           data: [
             {
               code: {
-                system: "http://snomed.info/sct",
-                code: "451024007",
-                display: "Inspection of vagina using vaginal speculum"
+                system: "http://loinc.org",
+                code: "718-7",
+                display: "Hemoglobin [Mass/volume] in Blood"
               },
               bodySite: {},
               resultBoolean: false,
-              result: {},
-              valueCodeableConcept: {
-                system: "http://snomed.info/sct",
-                code: "395100000",
-                display: "No evidence of cancer found"
+              result: {
+                value: this.value,
+                display: this.display,
+                unit: "g/dL",
+                system: "http://unitsofmeasure.org",
+                code: "g/dL"
               }
             }
           ],
-          effectiveDateTime: "2024-04-24T00:23:30+00:00",
-          issued: "2024-04-24T00:23:30+00:00"
+          effectiveDateTime: this.dateNow,
+          issued: this.dateNow
+        }
+      ],
+      interpretation: [
+        {
+          coding: [
+            {
+              system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+              code: "N",
+              display: this.display
+            }
+          ]
+        }
+      ],
+      referenceRange: [
+        {
+          high: {
+            value: 10.9,
+            unit: "g/dL",
+            system: "http://unitsofmeasure.org",
+            code: "g/dL"
+          },
+          text: "Dibawah Normal"
+        },
+        {
+          low: {
+            value: 11.0,
+            unit: "g/dL",
+            system: "http://unitsofmeasure.org",
+            code: "g/dL"
+          },
+          text: "Normal"
         }
       ]
     }

@@ -5,8 +5,8 @@ import { Injectable } from "@angular/core"
 })
 export class DataTindakanPtm {
   // questioner 
-  procedureCode: any
-  procedureDisplay: any
+  code: any
+  display: any
   dateNow: any = new Date().toISOString()
 
   getdata() {
@@ -28,8 +28,8 @@ export class DataTindakanPtm {
           data: [
             {
               system: "http://hl7.org/fhir/sid/icd-9-cm",
-              code: this.procedureCode,
-              display: this.procedureDisplay,
+              code: this.code,
+              display: this.display,
             }
           ]
         }

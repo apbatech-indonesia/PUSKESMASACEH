@@ -4,6 +4,9 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiPpokProcedure {
+  procedure: Procedure
+  dateNow: any = new Date().toISOString()
+
   getdata() {
     return {
       procedures: [
@@ -14,16 +17,21 @@ export class DataDeteksiPpokProcedure {
             code: "103693007",
             display: "Diagnostic procedure"
           },
-          performedDateTime: "2024-04-24T01:42:50+00:00",
+          performedDateTime: this.dateNow,
           data: [
             {
               system: "http://snomed.info/sct",
-              code: "127783003",
-              display: "Spirometry"
+              code: this.procedure.code,
+              display: this.procedure.display
             }
           ]
         }
       ]
     }
   }
+}
+
+export class Procedure {
+  code: any
+  display: any
 }

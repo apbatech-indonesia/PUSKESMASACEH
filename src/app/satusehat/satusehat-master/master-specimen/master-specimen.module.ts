@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MasterSpecimenComponent } from './master-specimen.component';
 import { FormsModule } from '@angular/forms';
 
-
-
 @NgModule({
   declarations: [
     MasterSpecimenComponent

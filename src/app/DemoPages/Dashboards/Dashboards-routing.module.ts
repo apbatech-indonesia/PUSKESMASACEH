@@ -25,6 +25,10 @@ const routes: Routes = [
         loadChildren: () => import('./management/management.module').then(m => m.ManagementModule)
       },
       {
+        path : 'skrining-ilp',
+        loadChildren:() => import('./laporanskriningilp/laporanskriningilp.module').then(m => m.laporanskriningilpModule)
+      },
+      {
         path: 'helpdesk',
         loadChildren: () => import('./helpdesk/helpdesk.module').then(m => m.HelpdeskModule)
       },

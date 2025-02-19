@@ -4,6 +4,8 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiStrokeObservation {
+  dateNow = new Date().toISOString()
+
   getdata() {
     return {
       observations: [
@@ -37,10 +39,9 @@ export class DataDeteksiStrokeObservation {
             system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
             code: "N",
             display: "Normal"
-
           },
-          effectiveDateTime: "2024-04-24T00:23:30+00:00",
-          issued: "2024-04-24T00:23:30+00:00"
+          effectiveDateTime: this.dateNow,
+          issued: this.dateNow
         }
       ]
     }

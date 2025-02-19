@@ -381,6 +381,10 @@ loadChildren:() => import ('./adjustobat/adjustobat.module').then(m => m.adjusto
       {
         path:'laporanri',
         loadChildren:() => import ('./laporanri/laporanri.module').then(m => m.llaporanriModule)
+      },
+      {
+        path : 'laporanskrining',
+        loadChildren:() => import('./skrininglaporan/skrininglaporan.module').then(m => m.skrininglaporanModule )
       }
   ]
 }

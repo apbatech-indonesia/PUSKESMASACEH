@@ -187,7 +187,7 @@
                       <div class="col-xl-6 col-md-12 my-3">
                         <app-form-vaccine
                           [title]="'Imunisasi Dilakukan oleh Nakes'"
-                          [list]="reportImunisasi.imunisasi_by_nakes"
+                          [list]="reportImunisasi?.imunisasi_by_nakes"
                           (onSelected)="onSelectedVaccine(formPelaporanImunisasi.controls['imunisasi_by_nakes'], $event)">
                         </app-form-vaccine>
                       </div>
@@ -195,7 +195,7 @@
                       <div class="col-xl-6 col-md-12 my-3">
                         <app-form-vaccine
                           [title]="'Imunisasi Dilaporkan oleh Kader'"
-                          [list]="reportImunisasi.imunisasi_by_kader"
+                          [list]="reportImunisasi?.imunisasi_by_kader"
                           (onSelected)="onSelectedVaccine(formPelaporanImunisasi.controls['imunisasi_by_kader'], $event)">
                         </app-form-vaccine>
                       </div>
@@ -219,7 +219,7 @@
                         <div class="col-xl-6 col-md-12 mb-3">
                           <app-form-vaccine
                             [title]="'KIPI oleh Nakes'"
-                            [list]="reportImunisasi.imunisasi_kipi_by_nakes"
+                            [list]="reportImunisasi?.imunisasi_kipi_by_nakes"
                             (onSelected)="onSelectedVaccine(formPelaporanImunisasi.controls['imunisasi_kipi_by_nakes'], $event)">
                           </app-form-vaccine>
                         </div>
@@ -228,7 +228,7 @@
                         <div class="col-xl-6 col-md-12 mb-3">
                           <app-form-vaccine
                             [title]="'KIPI oleh Pasien'"
-                            [list]="reportImunisasi.imunisasi_kipi_by_pasien"
+                            [list]="reportImunisasi?.imunisasi_kipi_by_pasien"
                             (onSelected)="onSelectedVaccine(formPelaporanImunisasi.controls['imunisasi_kipi_by_pasien'], $event)">
                           </app-form-vaccine>
                         </div>
@@ -255,7 +255,7 @@
                         <div class="col-xl-6 col-md-12 my-3">
                           <app-form-vaccine
                             [title]="'Imunisasi Tidak Disetujui'"
-                            [list]="reportImunisasi.imunisasi_tidak_disetujui"
+                            [list]="reportImunisasi?.imunisasi_tidak_disetujui"
                             (onSelected)="onSelectedVaccine(formPelaporanImunisasi.controls['imunisasi_tidak_disetujui'], $event, 'not-done')">
                           </app-form-vaccine>
                         </div>

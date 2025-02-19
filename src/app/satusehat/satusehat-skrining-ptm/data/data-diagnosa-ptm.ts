@@ -5,127 +5,127 @@ import { Injectable } from "@angular/core"
 })
 export class DataDiagnosaPtm {
   // questioner 
-  diagnosaHipertensiCode: any
-  diagnosaHipertensiDisplay: any
-  diagnosaPresbyopiaCode: any
-  diagnosaPresbyopiaDisplay: any
-  diagnosaCervixCode: any
-  diagnosaCervixDisplay: any
-  diagnosaDiabetesCode: any
-  diagnosaDiabetesDisplay: any
-  diagnosaJantungCode: any
-  diagnosaJantungDisplay: any
+  diagnosaHipertensi: Condition
+  diagnosaPresbyopia: Condition
+  diagnosaCervix: Condition
+  diagnosaDiabetes: Condition
+  diagnosaJantung: Condition
   dateNow: any = new Date().toISOString()
 
   getdata() {
     return {
       conditions: [
         {
-          hipertensi_condition: {
-            clinical_status: {
-              system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
-              code: "active",
-              display: "Active"
-            },
-            category: {
-              system: "http://terminology.hl7.org/CodeSystem/condition-category",
-              code: "encounter-diagnosis",
-              display: "Encounter Diagnosis"
-            },
-            condition_item: {
+          name: "Essential_Hypertension",
+          category: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-category",
+            code: "encounter-diagnosis",
+            display: "Encounter Diagnosis"
+          },
+          clinicalStatus: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
+            code: "active",
+            display: "Active"
+          },
+          recordedDate: this.dateNow,
+          data: [
+            {
               system: "http://hl7.org/fhir/sid/icd-10",
-              code: this.diagnosaHipertensiCode,
-              display: this.diagnosaHipertensiDisplay
-            },
-            onset_date_time: this.dateNow,
-            recorded_date: this.dateNow
-          }
+              code: this.diagnosaHipertensi.code,
+              display: this.diagnosaHipertensi.display
+            }
+          ]
         },
         {
-          presbyopia_condition: {
-            clinical_status: {
-              system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
-              code: "active",
-              display: "Active"
-            },
-            category: {
-              system: "http://terminology.hl7.org/CodeSystem/condition-category",
-              code: "encounter-diagnosis",
-              display: "Encounter Diagnosis"
-            },
-            condition_item: {
+          name: "Presbyopia",
+          category: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-category",
+            code: "encounter-diagnosis",
+            display: "Encounter Diagnosis"
+          },
+          clinicalStatus: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
+            code: "active",
+            display: "Active"
+          },
+          recordedDate: this.dateNow,
+          data: [
+            {
               system: "http://hl7.org/fhir/sid/icd-10",
-              code: this.diagnosaPresbyopiaCode,
-              display: this.diagnosaPresbyopiaDisplay,
-            },
-            onset_date_time: this.dateNow,
-            recorded_date: this.dateNow
-          }
+              code: this.diagnosaPresbyopia.code,
+              display: this.diagnosaPresbyopia.display
+            }
+          ]
         },
         {
-          cervix_condition: {
-            clinical_status: {
-              system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
-              code: "active",
-              display: "Active"
-            },
-            category: {
-              system: "http://terminology.hl7.org/CodeSystem/condition-category",
-              code: "encounter-diagnosis",
-              display: "Encounter Diagnosis"
-            },
-            condition_item: {
+          name: "cervix_condition",
+          category: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-category",
+            code: "encounter-diagnosis",
+            display: "Encounter Diagnosis"
+          },
+          clinicalStatus: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
+            code: "active",
+            display: "Active"
+          },
+          recordedDate: this.dateNow,
+          data: [
+            {
               system: "http://hl7.org/fhir/sid/icd-10",
-              code: this.diagnosaCervixCode,
-              display: this.diagnosaCervixDisplay,
-            },
-            onset_date_time: this.dateNow,
-            recorded_date: this.dateNow
-          }
+              code: this.diagnosaCervix.code,
+              display: this.diagnosaCervix.display
+            }
+          ]
         },
         {
-          diabetes_condition: {
-            clinical_status: {
-              system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
-              code: "active",
-              display: "Active"
-            },
-            category: {
-              system: "http://terminology.hl7.org/CodeSystem/condition-category",
-              code: "encounter-diagnosis",
-              display: "Encounter Diagnosis"
-            },
-            condition_item: {
+          name: "Diabetes_mellitus_conditio",
+          category: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-category",
+            code: "encounter-diagnosis",
+            display: "Encounter Diagnosis"
+          },
+          clinicalStatus: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
+            code: "active",
+            display: "Active"
+          },
+          recordedDate: this.dateNow,
+          data: [
+            {
               system: "http://hl7.org/fhir/sid/icd-10",
-              code: this.diagnosaDiabetesCode,
-              display: this.diagnosaDiabetesDisplay,
-            },
-            onset_date_time: this.dateNow,
-            recorded_date: this.dateNow
-          }
+              code: this.diagnosaDiabetes.code,
+              display: this.diagnosaDiabetes.display
+            }
+          ]
         },
         {
-          resiko_jantung_condition: {
-            clinical_status: {
-              system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
-              code: "active",
-              display: "Active"
-            },
-            category: {
-              system: "http://terminology.hl7.org/CodeSystem/condition-category",
-              code: "encounter-diagnosis",
-              display: "Encounter Diagnosis"
-            },
-            condition_item: {
+          name: "cardiovascular_disorders_condition",
+          category: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-category",
+            code: "encounter-diagnosis",
+            display: "Encounter Diagnosis"
+          },
+          clinicalStatus: {
+            system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
+            code: "active",
+            display: "Active"
+          },
+          recordedDate: this.dateNow,
+          data: [
+            {
               system: "http://hl7.org/fhir/sid/icd-10",
-              code: this.diagnosaJantungCode,
-              display: this.diagnosaJantungDisplay,
-            },
-            onset_date_time: this.dateNow,
-            recorded_date: this.dateNow
-          }
+              code: this.diagnosaJantung.code,
+              display: this.diagnosaJantung.display
+            }
+          ]
         }
       ]
     }
   }
+}
+
+export class Condition {
+  code: any = ''
+  display: any = ''
 }

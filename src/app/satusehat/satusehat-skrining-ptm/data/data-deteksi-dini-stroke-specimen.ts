@@ -4,17 +4,19 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiStrokeSpecimen {
+  status: any = ''
+  dateNow: any = new Date().toISOString()
+
   getdata() {
     return {
       specimens: [
         {
-          name: "blood_specimen",
-          status: "available",
+          name: "blood_specimen_stroke",
+          status: this.status,
           type: {
             system: "http://snomed.info/sct",
             code: "119297000",
             display: "Blood specimen"
-
           },
           collection: {
             method: {
@@ -22,7 +24,7 @@ export class DataDeteksiStrokeSpecimen {
               code: "82078001",
               display: "Collection of blood specimen for laboratory"
             },
-            collectedDateTime: "2024-04-24T02:32:15+00:00"
+            collectedDateTime: this.dateNow
           }
         }
       ]

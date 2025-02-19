@@ -4,6 +4,9 @@ import { Injectable } from "@angular/core"
   providedIn: 'root'
 })
 export class DataDeteksiDiniJantung {
+  result: any
+  dateNow: any = new Date().toISOString()
+
   getdata() {
     return {
       observations: [
@@ -30,12 +33,12 @@ export class DataDeteksiDiniJantung {
               valueCodeableConcept: {
                 system: "http://snomed.info/sct",
                 code: "164854000",
-                display: "Electrocardiogram normal"
+                display: this.result
               }
             }
           ],
-          effectiveDateTime: "2024-04-24T00:23:30+00:00",
-          issued: "2024-04-24T00:23:30+00:00"
+          effectiveDateTime: this.dateNow,
+          issued: this.dateNow
         }
       ]
     }
