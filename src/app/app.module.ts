@@ -158,6 +158,7 @@ import { MasterTindakanComponent } from './satusehat/satusehat-master/master-tin
 import { MasterVaccineComponent } from './satusehat/satusehat-master/master-vaccine/master-vaccine.component';
 import { FormVaccineComponent } from './satusehat/satusehat-imunisasi/form/form-vaccine/form-vaccine.component';
 import { MasterSpecimenModule } from './satusehat/satusehat-master/master-specimen/master-specimen.module';
+import { TulisSatuSehatGiziComponent } from './satusehat/satusehat-gizi/form/tulis-satusehat-gizi.component';
 @NgModule({
   declarations: [
 
@@ -223,6 +224,7 @@ import { MasterSpecimenModule } from './satusehat/satusehat-master/master-specim
      TulisMtbsComponent,
      TulisImunisasiComponent,
      TulisSkriningPtmComponent,
+     TulisSatuSehatGiziComponent,
      MasterProvinceComponent,
      MasterCityComponent,
      MasterDistrictComponent,
