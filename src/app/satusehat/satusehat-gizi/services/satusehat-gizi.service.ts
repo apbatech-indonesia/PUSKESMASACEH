@@ -45,7 +45,7 @@ export class GiziService {
   }
   getDataQuestionaire(data: any) {
     return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'question/search', data, { headers: this.headers }).subscribe((data) => {
+      this.http.post(satusehatUrl + 'question/searchV2', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })
