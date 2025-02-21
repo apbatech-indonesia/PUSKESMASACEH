@@ -5815,7 +5815,7 @@ export class tulisermComponent implements OnInit {
     });
   }
 
-  hapustarif(kdpruduk, kdpoli, notransaksi, nomor, kdcppt, nama) {
+  hapustarif(kdpruduk, kdpoli, notransaksi, nomor, kdcppt, nama, nofaktur) {
     this.authService
       .verifhapus(
         this.kdcabang,
@@ -5845,6 +5845,7 @@ export class tulisermComponent implements OnInit {
               jenistransaksi: "DB",
               tarifasli: 0,
               nofaktur: notransaksi,
+              nofakturhap: nofaktur,
               nomorx: nomor,
               kdcabang: this.kdcabang,
               kddokter: this.kddokter,

@@ -1513,19 +1513,6 @@ export class MpdaftarpasienComponent implements OnInit {
 
                                         this.showloadantrian = false;
 
-                                        setTimeout(() => {
-                                          let bodyeditfarmasiterkirim = {
-                                            stssimpan: "3",
-                                            notransaksi: this.pasienc,
-                                          };
-
-                                          this.authService
-                                            .editobatsk(bodyeditfarmasiterkirim)
-                                            .subscribe((response) => {
-                                              console.log(response);
-                                            });
-                                        }, 0);
-
                                         let body = {
                                           norm: this.norm,
                                           pasien: this.pasienin,
@@ -1562,7 +1549,20 @@ export class MpdaftarpasienComponent implements OnInit {
                                                 this.dokter
                                               );
                                               this.pasienc = response;
+                                              setTimeout(() => {
+                                                let bodyeditfarmasiterkirim = {
+                                                  stssimpan: "3",
+                                                  notransaksi: this.pasienc,
+                                                };
 
+                                                this.authService
+                                                  .editobatsk(
+                                                    bodyeditfarmasiterkirim
+                                                  )
+                                                  .subscribe((response) => {
+                                                    console.log(response);
+                                                  });
+                                              }, 0);
                                               this.authService
                                                 .pasienantrian(
                                                   this.kdcabang,
