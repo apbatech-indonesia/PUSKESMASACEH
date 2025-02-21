@@ -9852,6 +9852,7 @@ export class tulisermComponent implements OnInit {
     let body = {
       data: {
         param: this.noasuransi,
+        kddokter: this.kddokter
       },
     };
     this.authService.icare(body).subscribe((response) => {
