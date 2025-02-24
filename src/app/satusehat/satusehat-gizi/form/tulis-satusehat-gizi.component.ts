@@ -31,6 +31,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   antropometriIbuHamilObservationForm: FormGroup
   antropometriIndexObservationForm: FormGroup
   formPemeriksaanFisik: FormGroup
+  formRencanaTindakLanjut: FormGroup
+  formRujukLaborat: FormGroup
   formMalnitrisi: FormGroup
   formKeluhanUtama: FormGroup
   // NOTE: Init form
@@ -88,9 +90,11 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   itemTerminologiEyeNarrative: any;
   itemTerminologiFindingOfLip: any;
   itemsTerminologiAntropometriOservarion: any;
+  itemsTerminologiCholesterolObservationServiceRequest: any;
   itemsTerminologiAntropometriBalitaOservarion: any;
   itemsTerminologiAntropometriIbuHamilOservarion: any;
   itemsTerminologiAntropometriIndexOservarion: any;
+  itemsTerminologiRencanaTindakLanjutServiceRequest: any;
   showOptionsObats: boolean = false;
   pilihMObat: string;
   selectedItemobats: any[] = [];
@@ -171,6 +175,12 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         selectedItemValue: [''],
         tingkatInterprestasiMalNutrisi: ['']
       })
+    });
+    this.formRencanaTindakLanjut = this.fb.group({
+      items: ['']
+    });
+    this.formRujukLaborat = this.fb.group({
+      items: ['']
     });
     this.antropometriObservationForm = this.fb.group({
       pengukuran: this.fb.group({})
@@ -716,7 +726,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
           },
           valueString: "",
           result: {
-            value: item.value, // Example value, replace with actual data
+            value: item.value,
             unit: item.unit,
             system: "http://unitsofmeasure.org",
             code: item.unit
@@ -738,8 +748,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         observations: observations
       }
     };
-
-    console.log(payload);
 
     try
     {
@@ -767,7 +775,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
           },
           valueString: "",
           result: {
-            value: item.value, // Example value, replace with actual data
+            value: item.value,
             unit: item.unit,
             system: "http://unitsofmeasure.org",
             code: item.unit
@@ -790,7 +798,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       }
     };
 
-    console.log(payload);
 
     try
     {
@@ -799,6 +806,32 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     {
       Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
     }
+  }
+  async doSubmitRencanaTindakLanjutServiceRequest() {
+
+    console.log("TEST");
+    // TODO: buat payload
+
+    // try
+    // {
+    //   let response: any = await this.GiziService.createObservations(payload);
+    // } catch (err)
+    // {
+    //   Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+    // }
+  }
+  async doSubmitRujukLaborat() {
+
+    console.log("Form Rujuk Laborat");
+    // TODO: buat payload
+
+    // try
+    // {
+    //   let response: any = await this.GiziService.createObservations(payload);
+    // } catch (err)
+    // {
+    //   Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+    // }
   }
   async doSubmitAntropometriIbuHamilObservation() {
     const observations = this.itemsTerminologiAntropometriIbuHamilOservarion.map(item => ({
@@ -818,7 +851,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
           },
           valueString: "",
           result: {
-            value: item.value, // Example value, replace with actual data
+            value: item.value,
             unit: item.unit,
             system: "http://unitsofmeasure.org",
             code: item.unit
@@ -867,7 +900,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
           },
           valueString: "",
           result: {
-            value: item.value, // Example value, replace with actual data
+            value: item.value,
             unit: item.unit,
             system: "http://unitsofmeasure.org",
             code: item.unit
@@ -1133,6 +1166,27 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       console.error('Error fetching data:', error);
     }
   }
+  async cariitemsTerminologiCholesterolObservationServiceRequest() {
+    let payload = {
+      terminology_id: "",
+      key_operator: "=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "category",
+      key_value: "cholesterol-observation",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsTerminologiCholesterolObservationServiceRequest = itemResponse.data;
+    } catch (error)
+    {
+      console.error('Error fetching data:', error);
+    }
+  }
   async cariitemsTerminologiAntropometriBayiOservarion() {
     let payload = {
       terminology_id: "",
@@ -1192,6 +1246,29 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
       this.itemsTerminologiAntropometriIndexOservarion = itemResponse.data;
+    } catch (error)
+    {
+      console.error('Error fetching data:', error);
+    }
+  }
+  async cariitemsTerminologiRencanaTindakLanjutServiceRequest() {
+    // TODO: change key value
+    let payload = {
+      terminology_id: "",
+      key_operator: "=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "category",
+      key_value: "service-request",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsTerminologiRencanaTindakLanjutServiceRequest = itemResponse.data;
+
     } catch (error)
     {
       console.error('Error fetching data:', error);
@@ -1432,27 +1509,29 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   // NOTE: on page reload
   ngOnInit() {
     this.docreateKunjunganGizi(),
-      this.cariKeluhanUtama(),
-      this.cariListItemMakanan(),
-      this.cariListItemObat(),
-      this.cariMetodePengobatan(),
-      this.getTingkatResponseKesadaran(),
-      this.getSatuanUnit(),
-      this.cariTerminologiTingkatKesadaran(),
-      this.cariTerminologiTandaVitalSistolik(),
-      this.cariTerminologiTandaVitalDistolik(),
-      this.cariTerminologiTandaVitalbodytemprature(),
-      this.cariTerminologiTandaVitalHeartRate(),
-      this.cariTerminologiTandaVitalRespiratoryRate(),
-      this.cariTerminologiEyeNarative(),
-      this.cariTerminologiFindingOfLip(),
-      this.cariTerminologiKategoriMalnutrisi(),
-      this.getTingkatInterprestasi(),
-      this.cariItemsQuestionerMalnutrisi(),
-      this.cariitemsTerminologiAntropometriOservarion(),
-      this.cariitemsTerminologiAntropometriBayiOservarion(),
-      this.cariitemsTerminologiAntropometriIbuHamilOservarion()
-    this.cariitemsTerminologiAntropometriIndexOservarion()
+      // this.cariKeluhanUtama(),
+      // this.cariListItemMakanan(),
+      // this.cariListItemObat(),
+      // this.cariMetodePengobatan(),
+      // this.getTingkatResponseKesadaran(),
+      // this.getSatuanUnit(),
+      // this.cariTerminologiTingkatKesadaran(),
+      // this.cariTerminologiTandaVitalSistolik(),
+      // this.cariTerminologiTandaVitalDistolik(),
+      // this.cariTerminologiTandaVitalbodytemprature(),
+      // this.cariTerminologiTandaVitalHeartRate(),
+      // this.cariTerminologiTandaVitalRespiratoryRate(),
+      // this.cariTerminologiEyeNarative(),
+      // this.cariTerminologiFindingOfLip(),
+      // this.cariTerminologiKategoriMalnutrisi(),
+      // this.getTingkatInterprestasi(),
+      // this.cariItemsQuestionerMalnutrisi(),
+      // this.cariitemsTerminologiAntropometriOservarion(),
+      // this.cariitemsTerminologiAntropometriBayiOservarion(),
+      // this.cariitemsTerminologiAntropometriIbuHamilOservarion(),
+      // this.cariitemsTerminologiAntropometriIndexOservarion(),
+      this.cariitemsTerminologiRencanaTindakLanjutServiceRequest(),
+      this.cariitemsTerminologiCholesterolObservationServiceRequest()
   }
 
   async cariKeluhanUtama() {
@@ -1497,8 +1576,10 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       // this.doSubmitHasilPemeriksaanFisik()
       // this.doSubmitSkriningMalnutrisi()
       // this.doSubmitSkriningMalnutrisiQuestionaire(),
-      this.doSubmitAntropometriObservation(),
-      this.doSubmitAntropometriBalitaObservation()
+      // this.doSubmitAntropometriObservation(),
+      // this.doSubmitAntropometriBalitaObservation(),
+      this.doSubmitRencanaTindakLanjutServiceRequest(),
+      this.doSubmitRujukLaborat()
   }
 
 

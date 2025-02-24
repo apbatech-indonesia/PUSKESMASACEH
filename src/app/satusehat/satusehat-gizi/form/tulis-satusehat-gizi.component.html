@@ -698,6 +698,7 @@
                 </div>
                 <div class="row">
                     <div class="mb-2 col-6">
+                        <!-- NOTE: Questionaire Response -->
                         <div class="card">
                             <div class="card-header navy">
                                 Pertanyaan Resiko Malnutrisi
@@ -705,7 +706,7 @@
                             <div class="card-body">
                                 <form>
                                     <div class="row">
-                                        <div class="col-md-6 border-end"
+                                        <div class="col-md-6 border-end border-start"
                                             *ngFor="let itemMalnutrisi of listQuestionaireMalNutrisi; let i = index">
                                             <div class="form-group mb-3">
                                                 <label [for]="'question' + itemMalnutrisi.id" class="form-label">
@@ -746,8 +747,36 @@
                                 </form>
                             </div>
                         </div>
+                        <!-- NOTE: Rencana Tindak Lanjut -->
+                        <div class="card mt-2">
+                            <div class="card-header navy">
+                                Rencana Tindak Lanjut
+                            </div>
+                            <div class="card-body">
+                                <form [formGroup]="formRujukLaborat">
+                                    <div class="form-group">
+                                        <div *ngFor="let itemServReq of itemsTerminologiRencanaTindakLanjutServiceRequest"
+                                            class="mb-3">
+                                            <label class="fw-bold">{{ itemServReq . terminology_name }}</label>
+                                            <div *ngFor="let itemChol of itemsTerminologiCholesterolObservationServiceRequest"
+                                                class="form-check">
+                                                <input class="form-check-input" type="checkbox"
+                                                    [id]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
+                                                    [value]="itemChol">
+                                                <label class="form-check-label"
+                                                    [for]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
+                                                    [title]="itemChol.description">
+                                                    {{ itemChol . terminology_name }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
 
+                    <!-- NOTE: Observarion Antropometri -->
                     <div class="col-6 mb-2">
                         <div class="card">
                             <div class="card-header navy">Observasi Antropometri</div>
@@ -881,8 +910,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
 
 
