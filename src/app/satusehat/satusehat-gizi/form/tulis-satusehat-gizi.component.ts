@@ -1509,27 +1509,27 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   // NOTE: on page reload
   ngOnInit() {
     this.docreateKunjunganGizi(),
-      // this.cariKeluhanUtama(),
-      // this.cariListItemMakanan(),
-      // this.cariListItemObat(),
-      // this.cariMetodePengobatan(),
-      // this.getTingkatResponseKesadaran(),
-      // this.getSatuanUnit(),
-      // this.cariTerminologiTingkatKesadaran(),
-      // this.cariTerminologiTandaVitalSistolik(),
-      // this.cariTerminologiTandaVitalDistolik(),
-      // this.cariTerminologiTandaVitalbodytemprature(),
-      // this.cariTerminologiTandaVitalHeartRate(),
-      // this.cariTerminologiTandaVitalRespiratoryRate(),
-      // this.cariTerminologiEyeNarative(),
-      // this.cariTerminologiFindingOfLip(),
-      // this.cariTerminologiKategoriMalnutrisi(),
-      // this.getTingkatInterprestasi(),
-      // this.cariItemsQuestionerMalnutrisi(),
-      // this.cariitemsTerminologiAntropometriOservarion(),
-      // this.cariitemsTerminologiAntropometriBayiOservarion(),
-      // this.cariitemsTerminologiAntropometriIbuHamilOservarion(),
-      // this.cariitemsTerminologiAntropometriIndexOservarion(),
+      this.cariKeluhanUtama(),
+      this.cariListItemMakanan(),
+      this.cariListItemObat(),
+      this.cariMetodePengobatan(),
+      this.getTingkatResponseKesadaran(),
+      this.getSatuanUnit(),
+      this.cariTerminologiTingkatKesadaran(),
+      this.cariTerminologiTandaVitalSistolik(),
+      this.cariTerminologiTandaVitalDistolik(),
+      this.cariTerminologiTandaVitalbodytemprature(),
+      this.cariTerminologiTandaVitalHeartRate(),
+      this.cariTerminologiTandaVitalRespiratoryRate(),
+      this.cariTerminologiEyeNarative(),
+      this.cariTerminologiFindingOfLip(),
+      this.cariTerminologiKategoriMalnutrisi(),
+      this.getTingkatInterprestasi(),
+      this.cariItemsQuestionerMalnutrisi(),
+      this.cariitemsTerminologiAntropometriOservarion(),
+      this.cariitemsTerminologiAntropometriBayiOservarion(),
+      this.cariitemsTerminologiAntropometriIbuHamilOservarion(),
+      this.cariitemsTerminologiAntropometriIndexOservarion(),
       this.cariitemsTerminologiRencanaTindakLanjutServiceRequest(),
       this.cariitemsTerminologiCholesterolObservationServiceRequest()
   }
@@ -1569,15 +1569,15 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   // NOTE: Trigger simpan semua form
   simpan() {
     this.showLoading(),
-      // this.doSubmitRelatedPerson()
-      // this.doSubmitkeluhanUtama()
-      // this.doSubmitAlergiMakanan()
-      // this.doSubmitAlergiObat()
-      // this.doSubmitHasilPemeriksaanFisik()
-      // this.doSubmitSkriningMalnutrisi()
-      // this.doSubmitSkriningMalnutrisiQuestionaire(),
-      // this.doSubmitAntropometriObservation(),
-      // this.doSubmitAntropometriBalitaObservation(),
+      this.doSubmitRelatedPerson(),
+      this.doSubmitkeluhanUtama(),
+      this.doSubmitAlergiMakanan(),
+      this.doSubmitAlergiObat(),
+      this.doSubmitHasilPemeriksaanFisik(),
+      this.doSubmitSkriningMalnutrisi(),
+      this.doSubmitSkriningMalnutrisiQuestionaire(),
+      this.doSubmitAntropometriObservation(),
+      this.doSubmitAntropometriBalitaObservation(),
       this.doSubmitRencanaTindakLanjutServiceRequest(),
       this.doSubmitRujukLaborat()
   }
