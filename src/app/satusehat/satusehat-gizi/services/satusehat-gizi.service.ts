@@ -29,13 +29,6 @@ export class GiziService {
     })
   }
 
-  getDataSelectKeluhanUtama(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'terminologi/search', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
   getDataTerminologi(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'terminologi/search', data, { headers: this.headers }).subscribe((data) => {
@@ -72,13 +65,6 @@ export class GiziService {
       })
     })
   }
-  createPemeriksaanFisik(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'gizi/observationsCreate', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
   createAlergyObat(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'gizi/medicationStatementsCreate', data, { headers: this.headers }).subscribe((data) => {
@@ -86,7 +72,8 @@ export class GiziService {
       })
     })
   }
-  createSkriningMalnutrisiObserve(data: any) {
+
+  createObservations(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'gizi/observationsCreate', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)

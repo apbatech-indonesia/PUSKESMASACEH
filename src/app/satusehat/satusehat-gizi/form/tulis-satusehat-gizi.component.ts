@@ -27,6 +27,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   dateNow = new Date().toISOString()
   formIbuAyah: FormGroup
   antropometriObservationForm: FormGroup
+  antropometriBalitaObservationForm: FormGroup
+  antropometriIbuHamilObservationForm: FormGroup
+  antropometriIndexObservationForm: FormGroup
   formPemeriksaanFisik: FormGroup
   formMalnitrisi: FormGroup
   formKeluhanUtama: FormGroup
@@ -59,6 +62,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
 
   umurPasien = parseInt(this.patientData.umur.split(' ')[0], 10);
 
+  bayiOrNot = this.patientData.umur < 2 ? true : false;
 
   @Output() selectedItem = new EventEmitter();
   @Output() deletedItem = new EventEmitter();
@@ -83,6 +87,10 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   itemTerminologiKategoriMalnutrisi: any;
   itemTerminologiEyeNarrative: any;
   itemTerminologiFindingOfLip: any;
+  itemsTerminologiAntropometriOservarion: any;
+  itemsTerminologiAntropometriBalitaOservarion: any;
+  itemsTerminologiAntropometriIbuHamilOservarion: any;
+  itemsTerminologiAntropometriIndexOservarion: any;
   showOptionsObats: boolean = false;
   pilihMObat: string;
   selectedItemobats: any[] = [];
@@ -165,51 +173,18 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       })
     });
     this.antropometriObservationForm = this.fb.group({
-      tinggiBadan: this.fb.group({
-        nilaiTinggiBadan: [''],
-        objectSatuanTinggiBadan: ['']
-      }),
-      beratBadan: this.fb.group({
-        nilaiBeratBadan: [''],
-        objectSatuanBeratBadan: ['']
-      }),
-      lingkarLenganAtas: this.fb.group({
-        nilaiLingkarLenganAtas: [''],
-        objectSatuanLingkarLenganAtas: ['']
-      }),
-      lingkarKepala: this.fb.group({
-        nilaiLingkarKepala: [''],
-        objectSatuanLingkarKepala: ['']
-      }),
-      lingkarPerut: this.fb.group({
-        nilaiLingkarPerut: [''],
-        objectSatuanLingkarPerut: ['']
-      }),
-      lingkarPaha: this.fb.group({
-        nilaiLingkarPaha: [''],
-        objectSatuanLingkarPaha: ['']
-      }),
-      lingkarDada: this.fb.group({
-        nilaiLingkarDada: [''],
-        objectSatuanLingkarDada: ['']
-      }),
-      lingkarBetis: this.fb.group({
-        nilaiLingkarBetis: [''],
-        objectSatuanLingkarBetis: ['']
-      }),
-      lingkarPinggang: this.fb.group({
-        nilaiLingkarPinggang: [''],
-        objectSatuanLingkarPinggang: ['']
-      }),
-      lingkarPinggul: this.fb.group({
-        nilaiLingkarPinggul: [''],
-        objectSatuanLingkarPinggul: ['']
-      }),
-      lingkarLutut: this.fb.group({
-        nilaiLingkarLutut: [''],
-        objectSatuanLingkarLutut: ['']
-      }),
+      pengukuran: this.fb.group({})
     });
+    this.antropometriBalitaObservationForm = this.fb.group({
+      pengukuran: this.fb.group({})
+    });
+    this.antropometriIndexObservationForm = this.fb.group({
+      pengukuran: this.fb.group({})
+    });
+    this.antropometriIbuHamilObservationForm = this.fb.group({
+      pengukuran: this.fb.group({})
+    });
+
     this.formKeluhanUtama = this.fb.group({
       nama_keluhan: [''],
       tuberculosis: [''],
@@ -460,7 +435,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
 
     try
     {
-      let response: any = await this.GiziService.createSkriningMalnutrisiObserve(paylaod);
+      let response: any = await this.GiziService.createObservations(paylaod);
     } catch (err)
     {
     }
@@ -716,7 +691,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let response: any = await this.GiziService.createPemeriksaanFisik(payload);
+      let response: any = await this.GiziService.createObservations(payload);
     } catch (err)
     {
       Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
@@ -724,319 +699,204 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   }
 
   async doSubmitAntropometriObservation() {
-    // Fungsi helper untuk membuat satu observation
-    function createObservation(
-      name: string,
-      category: { system: string; code: string; display: string },
-      codeObj: { system: string; code: string; display: string },
-      value: number,
-      unit: string,
-      unitSystem: string
-    ) {
-      const timestamp = new Date().toISOString();
-      return {
-        name,
-        status: "final",
-        category,
-        data: [
-          {
-            code: codeObj,
-            valueString: "",
-            result: {
-              value,
-              unit,
-              system: unitSystem,
-              code: unit, // atau disesuaikan jika perlu
-            },
-            resultBoolean: {},
-            valueCodeableConcept: {},
+    const observations = this.itemsTerminologiAntropometriOservarion.map(item => ({
+      name: item.terminology_name + "_observation",
+      status: "final",
+      category: {
+        system: "http://terminology.hl7.org/CodeSystem/observation-category",
+        code: item.category,
+        display: item.category
+      },
+      data: [
+        {
+          code: {
+            system: item.source.source_url,
+            code: item.terminology_code,
+            display: item.terminology_name
           },
-        ],
-        interpretation: {},
-        effectiveDateTime: timestamp,
-        issued: timestamp,
-      };
-    }
-
-    // Ambil nilai dari form control (setiap control mengembalikan objek dengan format { nilaiX: number, objectSatuanX: { unit_code, unit_system, ... } })
-    const beratBadanObj = this.antropometriObservationForm.get("beratBadan")?.value;
-    const tinggiBadanObj = this.antropometriObservationForm.get("tinggiBadan")?.value;
-    const lingkarLenganAtasObj = this.antropometriObservationForm.get("lingkarLenganAtas")?.value;
-    const lingkarKepalaObj = this.antropometriObservationForm.get("lingkarKepala")?.value;
-    const lingkarPerutObj = this.antropometriObservationForm.get("lingkarPerut")?.value;
-    const lingkarPahaObj = this.antropometriObservationForm.get("lingkarPaha")?.value;
-    const lingkarDadaObj = this.antropometriObservationForm.get("lingkarDada")?.value;
-    const lingkarBetisObj = this.antropometriObservationForm.get("lingkarBetis")?.value;
-    const lingkarPinggangObj = this.antropometriObservationForm.get("lingkarPinggang")?.value;
-    const lingkarPinggulObj = this.antropometriObservationForm.get("lingkarPinggul")?.value;
-    const lingkarLututObj = this.antropometriObservationForm.get("lingkarLutut")?.value;
-
-    // Ekstrak masing-masing nilai dan satuan
-    const nilaiBeratBadan = beratBadanObj?.nilaiBeratBadan;
-    const satuanBeratBadan = beratBadanObj?.objectSatuanBeratBadan?.unit_code;
-    const systemSatuanBeratBadan = beratBadanObj?.objectSatuanBeratBadan?.unit_system;
-
-    const nilaiTinggiBadan = tinggiBadanObj?.nilaiTinggiBadan;
-    const satuanTinggiBadan = tinggiBadanObj?.objectSatuanTinggiBadan?.unit_code;
-    const systemSatuanTinggiBadan = tinggiBadanObj?.objectSatuanTinggiBadan?.unit_system;
-
-    const nilaiLingkarLenganAtas = lingkarLenganAtasObj?.nilaiLingkarLenganAtas;
-    const satuanLingkarLenganAtas = lingkarLenganAtasObj?.objectSatuanLingkarLenganAtas?.unit_code;
-    const systemSatuanLingkarLenganAtas = lingkarLenganAtasObj?.objectSatuanLingkarLenganAtas?.unit_system;
-
-    const nilaiLingkarKepala = lingkarKepalaObj?.nilaiLingkarKepala;
-    const satuanLingkarKepala = lingkarKepalaObj?.objectSatuanLingkarKepala?.unit_code;
-    const systemSatuanLingkarKepala = lingkarKepalaObj?.objectSatuanLingkarKepala?.unit_system;
-
-    const nilaiLingkarPerut = lingkarPerutObj?.nilaiLingkarPerut;
-    const satuanLingkarPerut = lingkarPerutObj?.objectSatuanLingkarPerut?.unit_code;
-    const systemSatuanLingkarPerut = lingkarPerutObj?.objectSatuanLingkarPerut?.unit_system;
-
-    const nilaiLingkarPaha = lingkarPahaObj?.nilaiLingkarPaha;
-    const satuanLingkarPaha = lingkarPahaObj?.objectSatuanLingkarPaha?.unit_code;
-    const systemSatuanLingkarPaha = lingkarPahaObj?.objectSatuanLingkarPaha?.unit_system;
-
-    const nilaiLingkarDada = lingkarDadaObj?.nilaiLingkarDada;
-    const satuanLingkarDada = lingkarDadaObj?.objectSatuanLingkarDada?.unit_code;
-    const systemSatuanLingkarDada = lingkarDadaObj?.objectSatuanLingkarDada?.unit_system;
-
-    const nilaiLingkarBetis = lingkarBetisObj?.nilaiLingkarBetis;
-    const satuanLingkarBetis = lingkarBetisObj?.objectSatuanLingkarBetis?.unit_code;
-    const systemSatuanLingkarBetis = lingkarBetisObj?.objectSatuanLingkarBetis?.unit_system;
-
-    const nilaiLingkarPinggang = lingkarPinggangObj?.nilaiLingkarPinggang;
-    const satuanLingkarPinggang = lingkarPinggangObj?.objectSatuanLingkarPinggang?.unit_code;
-    const systemSatuanLingkarPinggang = lingkarPinggangObj?.objectSatuanLingkarPinggang?.unit_system;
-
-    const nilaiLingkarPinggul = lingkarPinggulObj?.nilaiLingkarPinggul;
-    const satuanLingkarPinggul = lingkarPinggulObj?.objectSatuanLingkarPinggul?.unit_code;
-    const systemSatuanLingkarPinggul = lingkarPinggulObj?.objectSatuanLingkarPinggul?.unit_system;
-
-    const nilaiLingkarLutut = lingkarLututObj?.nilaiLingkarLutut;
-    const satuanLingkarLutut = lingkarLututObj?.objectSatuanLingkarLutut?.unit_code;
-    const systemSatuanLingkarLutut = lingkarLututObj?.objectSatuanLingkarLutut?.unit_system;
-
-    // Buat masing-masing observation menggunakan fungsi helper
-
-    // Body Weight Observation
-    const bodyWeightObservation = createObservation(
-      "body_weight_observation",
-      {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: "vital-signs",
-        display: "Vital Signs",
-      },
-      {
-        system: "http://loinc.org",
-        code: "29463-7",
-        display: "Body weight",
-      },
-      nilaiBeratBadan,
-      satuanBeratBadan,
-      systemSatuanBeratBadan
-    );
-
-    // Body Height Observation
-    const bodyHeightObservation = createObservation(
-      "body_height_observation",
-      {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: "vital-signs",
-        display: "Vital Signs",
-      },
-      {
-        system: "http://loinc.org",
-        code: "8302-2",
-        display: "Body height",
-      },
-      nilaiTinggiBadan,
-      satuanTinggiBadan || "cm",
-      systemSatuanTinggiBadan || "http://unitsofmeasure.org"
-    );
-
-    // Upper Arm Circumference Observation (Lingkar Lengan Atas)
-    const upperArmObservation = createObservation(
-      "upper_arm_circumference_observation",
-      {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: "exam",
-        display: "Exam",
-      },
-      {
-        system: "http://loinc.org",
-        code: "XXXX-1", // Ganti dengan kode yang sesuai
-        display: "Upper Arm Circumference",
-      },
-      nilaiLingkarLenganAtas,
-      satuanLingkarLenganAtas,
-      systemSatuanLingkarLenganAtas
-    );
-
-    // Head Circumference Observation (Lingkar Kepala)
-    const headCircumferenceObservation = createObservation(
-      "head_circumference_observation",
-      {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: "vital-signs",
-        display: "Vital Signs",
-      },
-      {
-        system: "http://loinc.org",
-        code: "8287-7", // LOINC untuk Head Circumference
-        display: "Head circumference",
-      },
-      nilaiLingkarKepala,
-      satuanLingkarKepala,
-      systemSatuanLingkarKepala
-    );
-
-    // Abdominal Circumference Observation (Lingkar Perut)
-    const abdominalCircumferenceObservation = createObservation(
-      "abdominal_circumference_observation",
-      {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: "exam",
-        display: "Exam",
-      },
-      {
-        system: "http://snomed.info/sct",
-        code: "396552003",
-        display: "Abdominal circumference",
-      },
-      nilaiLingkarPerut,
-      satuanLingkarPerut,
-      systemSatuanLingkarPerut
-    );
-
-    // Thigh Circumference Observation (Lingkar Paha)
-    const thighCircumferenceObservation = createObservation(
-      "thigh_circumference_observation",
-      {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: "exam",
-        display: "Exam",
-      },
-      {
-        system: "http://loinc.org",
-        code: "XXXX-2", // Ganti dengan kode yang sesuai
-        display: "Thigh circumference",
-      },
-      nilaiLingkarPaha,
-      satuanLingkarPaha,
-      systemSatuanLingkarPaha
-    );
-
-    // Chest Circumference Observation (Lingkar Dada)
-    const chestCircumferenceObservation = createObservation(
-      "chest_circumference_observation",
-      {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: "exam",
-        display: "Exam",
-      },
-      {
-        system: "http://loinc.org",
-        code: "XXXX-3", // Ganti dengan kode yang sesuai
-        display: "Chest circumference",
-      },
-      nilaiLingkarDada,
-      satuanLingkarDada,
-      systemSatuanLingkarDada
-    );
-
-    // Calf Circumference Observation (Lingkar Betis)
-    const calfCircumferenceObservation = createObservation(
-      "calf_circumference_observation",
-      {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: "exam",
-        display: "Exam",
-      },
-      {
-        system: "http://loinc.org",
-        code: "XXXX-4", // Ganti dengan kode yang sesuai
-        display: "Calf circumference",
-      },
-      nilaiLingkarBetis,
-      satuanLingkarBetis,
-      systemSatuanLingkarBetis
-    );
-
-    // Waist Circumference Observation (Lingkar Pinggang)
-    const waistCircumferenceObservation = createObservation(
-      "waist_circumference_observation",
-      {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: "exam",
-        display: "Exam",
-      },
-      {
-        system: "http://snomed.info/sct",
-        code: "276361009",
-        display: "Waist circumference",
-      },
-      nilaiLingkarPinggang,
-      satuanLingkarPinggang,
-      systemSatuanLingkarPinggang
-    );
-
-    // Hip Circumference Observation (Lingkar Pinggul)
-    const hipCircumferenceObservation = createObservation(
-      "hip_circumference_observation",
-      {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: "exam",
-        display: "Exam",
-      },
-      {
-        system: "http://loinc.org",
-        code: "XXXX-5", // Ganti dengan kode yang sesuai
-        display: "Hip circumference",
-      },
-      nilaiLingkarPinggul,
-      satuanLingkarPinggul,
-      systemSatuanLingkarPinggul
-    );
-
-    // Knee Circumference Observation (Lingkar Lutut)
-    const kneeCircumferenceObservation = createObservation(
-      "knee_circumference_observation",
-      {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: "exam",
-        display: "Exam",
-      },
-      {
-        system: "http://loinc.org",
-        code: "XXXX-6", // Ganti dengan kode yang sesuai
-        display: "Knee circumference",
-      },
-      nilaiLingkarLutut,
-      satuanLingkarLutut,
-      systemSatuanLingkarLutut
-    );
+          valueString: "",
+          result: {
+            value: item.value, // Example value, replace with actual data
+            unit: item.unit,
+            system: "http://unitsofmeasure.org",
+            code: item.unit
+          },
+          resultBoolean: {},
+          valueCodeableConcept: {}
+        }
+      ],
+      interpretation: {},
+      effectiveDateTime: this.dateNow,
+      issued: this.dateNow
+    }));
 
     const payload = {
       data: {
         encounterId: this.encounter_id,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
-        observations: [
-          bodyWeightObservation,
-          bodyHeightObservation,
-          upperArmObservation,
-          headCircumferenceObservation,
-          abdominalCircumferenceObservation,
-          thighCircumferenceObservation,
-          chestCircumferenceObservation,
-          calfCircumferenceObservation,
-          waistCircumferenceObservation,
-          hipCircumferenceObservation,
-          kneeCircumferenceObservation,
-        ]
+        observations: observations
       }
     };
+
     console.log(payload);
+
+    try
+    {
+      let response: any = await this.GiziService.createObservations(payload);
+    } catch (err)
+    {
+      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+    }
+  }
+  async doSubmitAntropometriBalitaObservation() {
+    const observations = this.itemsTerminologiAntropometriBalitaOservarion.map(item => ({
+      name: item.terminology_name + "_observation",
+      status: "final",
+      category: {
+        system: "http://terminology.hl7.org/CodeSystem/observation-category",
+        code: item.category,
+        display: item.category
+      },
+      data: [
+        {
+          code: {
+            system: item.source.source_url,
+            code: item.terminology_code,
+            display: item.terminology_name
+          },
+          valueString: "",
+          result: {
+            value: item.value, // Example value, replace with actual data
+            unit: item.unit,
+            system: "http://unitsofmeasure.org",
+            code: item.unit
+          },
+          resultBoolean: {},
+          valueCodeableConcept: {}
+        }
+      ],
+      interpretation: {},
+      effectiveDateTime: this.dateNow,
+      issued: this.dateNow
+    }));
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        observations: observations
+      }
+    };
+
+    console.log(payload);
+
+    try
+    {
+      let response: any = await this.GiziService.createObservations(payload);
+    } catch (err)
+    {
+      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+    }
+  }
+  async doSubmitAntropometriIbuHamilObservation() {
+    const observations = this.itemsTerminologiAntropometriIbuHamilOservarion.map(item => ({
+      name: item.terminology_name + "_observation",
+      status: "final",
+      category: {
+        system: "http://terminology.hl7.org/CodeSystem/observation-category",
+        code: item.category,
+        display: item.category
+      },
+      data: [
+        {
+          code: {
+            system: item.source.source_url,
+            code: item.terminology_code,
+            display: item.terminology_name
+          },
+          valueString: "",
+          result: {
+            value: item.value, // Example value, replace with actual data
+            unit: item.unit,
+            system: "http://unitsofmeasure.org",
+            code: item.unit
+          },
+          resultBoolean: {},
+          valueCodeableConcept: {}
+        }
+      ],
+      interpretation: {},
+      effectiveDateTime: this.dateNow,
+      issued: this.dateNow
+    }));
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        observations: observations
+      }
+    };
+
+    try
+    {
+      let response: any = await this.GiziService.createObservations(payload);
+    } catch (err)
+    {
+      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+    }
+  }
+  async doSubmitAntropometriIndexhObservation() {
+    const observations = this.itemsTerminologiAntropometriIndexOservarion.map(item => ({
+      name: item.terminology_name + "_observation",
+      status: "final",
+      category: {
+        system: "http://terminology.hl7.org/CodeSystem/observation-category",
+        code: item.category,
+        display: item.category
+      },
+      data: [
+        {
+          code: {
+            system: item.source.source_url,
+            code: item.terminology_code,
+            display: item.terminology_name
+          },
+          valueString: "",
+          result: {
+            value: item.value, // Example value, replace with actual data
+            unit: item.unit,
+            system: "http://unitsofmeasure.org",
+            code: item.unit
+          },
+          resultBoolean: {},
+          valueCodeableConcept: {}
+        }
+      ],
+      interpretation: {},
+      effectiveDateTime: this.dateNow,
+      issued: this.dateNow
+    }));
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        observations: observations
+      }
+    };
+
+    try
+    {
+      let response: any = await this.GiziService.createObservations(payload);
+    } catch (err)
+    {
+      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+    }
   }
 
 
@@ -1238,7 +1098,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     {
       console.error('Error fetching data:', error);
     }
-  } async cariTerminologiKategoriMalnutrisi() {
+  }
+  async cariTerminologiKategoriMalnutrisi() {
     let payload = {
       terminology_id: 252,
     };
@@ -1246,6 +1107,91 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
       this.itemTerminologiKategoriMalnutrisi = [itemResponse.data[0]];
+    } catch (error)
+    {
+      console.error('Error fetching data:', error);
+    }
+  }
+  async cariitemsTerminologiAntropometriOservarion() {
+    let payload = {
+      terminology_id: "",
+      key_operator: "=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "satusehat_category",
+      key_value: "data-antropometri",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsTerminologiAntropometriOservarion = itemResponse.data;
+    } catch (error)
+    {
+      console.error('Error fetching data:', error);
+    }
+  }
+  async cariitemsTerminologiAntropometriBayiOservarion() {
+    let payload = {
+      terminology_id: "",
+      key_operator: "=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "satusehat_category",
+      key_value: "data-antropometri-bayi",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsTerminologiAntropometriBalitaOservarion = itemResponse.data;
+    } catch (error)
+    {
+      console.error('Error fetching data:', error);
+    }
+  }
+  async cariitemsTerminologiAntropometriIbuHamilOservarion() {
+    let payload = {
+      terminology_id: "",
+      key_operator: "=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "satusehat_category",
+      key_value: "data-antropometri-hamil",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsTerminologiAntropometriIbuHamilOservarion = itemResponse.data;
+    } catch (error)
+    {
+      console.error('Error fetching data:', error);
+    }
+  }
+  async cariitemsTerminologiAntropometriIndexOservarion() {
+    // TODO: change key value
+    let payload = {
+      terminology_id: "",
+      key_operator: "=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "satusehat_category",
+      key_value: "data-antropometri-index",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsTerminologiAntropometriIndexOservarion = itemResponse.data;
     } catch (error)
     {
       console.error('Error fetching data:', error);
@@ -1502,7 +1448,11 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       this.cariTerminologiFindingOfLip(),
       this.cariTerminologiKategoriMalnutrisi(),
       this.getTingkatInterprestasi(),
-      this.cariItemsQuestionerMalnutrisi()
+      this.cariItemsQuestionerMalnutrisi(),
+      this.cariitemsTerminologiAntropometriOservarion(),
+      this.cariitemsTerminologiAntropometriBayiOservarion(),
+      this.cariitemsTerminologiAntropometriIbuHamilOservarion()
+    this.cariitemsTerminologiAntropometriIndexOservarion()
   }
 
   async cariKeluhanUtama() {
@@ -1520,7 +1470,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
 
     try
     {
-      let keluhanData: any = await this.GiziService.getDataSelectKeluhanUtama(payload);
+      let keluhanData: any = await this.GiziService.getDataTerminologi(payload);
       this.listKeluhanUtama = [...keluhanData.data];
     } catch (error)
     {
@@ -1539,15 +1489,16 @@ export class TulisSatuSehatGiziComponent implements OnInit {
 
   // NOTE: Trigger simpan semua form
   simpan() {
-    this.showLoading()
-    // this.doSubmitRelatedPerson()
-    // this.doSubmitkeluhanUtama()
-    // this.doSubmitAlergiMakanan()
-    // this.doSubmitAlergiObat()
-    // this.doSubmitHasilPemeriksaanFisik()
-    // this.doSubmitSkriningMalnutrisi()
-    // this.doSubmitSkriningMalnutrisiQuestionaire(),
-    this.doSubmitAntropometriObservation()
+    this.showLoading(),
+      // this.doSubmitRelatedPerson()
+      // this.doSubmitkeluhanUtama()
+      // this.doSubmitAlergiMakanan()
+      // this.doSubmitAlergiObat()
+      // this.doSubmitHasilPemeriksaanFisik()
+      // this.doSubmitSkriningMalnutrisi()
+      // this.doSubmitSkriningMalnutrisiQuestionaire(),
+      this.doSubmitAntropometriObservation(),
+      this.doSubmitAntropometriBalitaObservation()
   }
 
 

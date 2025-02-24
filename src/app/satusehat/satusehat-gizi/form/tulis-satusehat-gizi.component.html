@@ -559,79 +559,121 @@
                                         <h3 class="mb-2">Tanda Vital</h3>
                                         <div class="col-md-3 mb-3">
                                             <label for="tdSistolik" class="form-label">TD SISTOLIK</label>
-                                            <div class="input-group" formGroupName="tdSistolik">
-                                                <input formControlName="nilaiSistolik" type="number"
-                                                    class="form-control" id="tdSistolik"
-                                                    placeholder="Nilai TD Sistolik" />
-                                                <select class="form-select" formControlName="objectSatuanSistolik">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit" (click)="onSelectItem(satuanUnit)">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
+                                            <div formGroupName="tdSistolik">
+                                                <div class="row g-0">
+                                                    <div class="col-9">
+                                                        <input formControlName="nilaiSistolik" type="number"
+                                                            class="form-control" id="tdSistolik"
+                                                            placeholder="Nilai TD Sistolik" />
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <select class="form-select select-small"
+                                                            formControlName="objectSatuanSistolik">
+                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
+                                                                [ngValue]="satuanUnit"
+                                                                (click)="onSelectItem(satuanUnit)">
+                                                                {{ satuanUnit . unit_code }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="tdDiastolik" class="form-label">TD DIASTOLIK</label>
-                                            <div class="input-group" formGroupName="tdDiastolik">
-                                                <input formControlName="nilaiDiastolik" type="number"
-                                                    class="form-control" id="tdDiastolik"
-                                                    placeholder="Nilai TD Diastolik" />
-                                                <select class="form-select" formControlName="objectSatuanDiastolik">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit" (click)="onSelectItem(satuanUnit)">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
+                                            <div formGroupName="tdDiastolik">
+                                                <div class="row g-0">
+                                                    <div class="col-9">
+                                                        <input formControlName="nilaiDiastolik" type="number"
+                                                            class="form-control" id="tdDiastolik"
+                                                            placeholder="Nilai TD Diastolik" />
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <select class="form-select"
+                                                            formControlName="objectSatuanDiastolik">
+                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
+                                                                [ngValue]="satuanUnit"
+                                                                (click)="onSelectItem(satuanUnit)">
+                                                                {{ satuanUnit . unit_code }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3 mb-3">
                                             <label for="suhuTubuh" class="form-label">Suhu Tubuh</label>
-                                            <div class="input-group" formGroupName="suhuTubuh">
-                                                <input formControlName="nilaiSuhu" type="number"
-                                                    class="form-control" id="suhuTubuh"
-                                                    placeholder="Nilai Suhu Tubuh" />
-                                                <select class="form-select" formControlName="objectSatuanSuhu">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit" (click)="onSelectItem(satuanUnit)">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
+                                            <div formGroupName="suhuTubuh">
+                                                <div class="row g-0">
+                                                    <div class="col-9">
+                                                        <input formControlName="nilaiSuhu" type="number"
+                                                            class="form-control" id="suhuTubuh"
+                                                            placeholder="Nilai Suhu Tubuh" />
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <select class="form-select"
+                                                            formControlName="objectSatuanSuhu">
+                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
+                                                                [ngValue]="satuanUnit"
+                                                                (click)="onSelectItem(satuanUnit)">
+                                                                {{ satuanUnit . unit_code }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3 mb-3">
-                                            <label for="denyutJantung" class="form-label">Denyut Jantung</label>
-                                            <div class="input-group" formGroupName="denyutJantung">
-                                                <input formControlName="nilaiDenyut" type="number"
-                                                    class="form-control" id="denyutJantung"
-                                                    placeholder="Nilai Denyut Jantung" />
-                                                <select class="form-select" formControlName="objectSatuanDenyut">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit" (click)="onSelectItem(satuanUnit)">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
+                                            <label for="denyutJantung" class="form-label">Denyut
+                                                Jantung</label>
+                                            <div formGroupName="denyutJantung">
+                                                <div class="row g-0">
+                                                    <div class="col-9">
+                                                        <input formControlName="nilaiDenyut" type="number"
+                                                            class="form-control" id="denyutJantung"
+                                                            placeholder="Nilai Denyut Jantung" />
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <select class="form-select"
+                                                            formControlName="objectSatuanDenyut">
+                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
+                                                                [ngValue]="satuanUnit"
+                                                                (click)="onSelectItem(satuanUnit)">
+                                                                {{ satuanUnit . unit_code }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-3 mb-3 border-end">
                                             <label for="pernapasan" class="form-label">Pernapasan</label>
-                                            <div class="input-group" formGroupName="pernapasan">
-                                                <input formControlName="nilaiPernapasan" type="number"
-                                                    class="form-control" id="pernapasan"
-                                                    placeholder="Nilai Pernapasan" />
-                                                <select class="form-select" formControlName="objectSatuanPernapasan">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit" (click)="onSelectItem(satuanUnit)">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
+                                            <div formGroupName="pernapasan">
+                                                <div class="row g-0">
+                                                    <div class="col-9">
+                                                        <input formControlName="nilaiPernapasan" type="number"
+                                                            class="form-control" id="pernapasan"
+                                                            placeholder="Nilai Pernapasan" />
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <select class="form-select"
+                                                            formControlName="objectSatuanPernapasan">
+                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
+                                                                [ngValue]="satuanUnit"
+                                                                (click)="onSelectItem(satuanUnit)">
+                                                                {{ satuanUnit . unit_code }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
 
 
                                         <div class="col-md-5 mb-3">
-                                            <label for="kondisiMataInput" class="form-label">Kondisi Mata</label>
+                                            <label for="kondisiMataInput" class="form-label">Kondisi
+                                                Mata</label>
                                             <div class="input-group">
                                                 <input formControlName="kondisiMata" type="text"
                                                     class="form-control" id="kondisiMataInput"
@@ -640,7 +682,8 @@
                                         </div>
 
                                         <div class="col-md-4 mb-3">
-                                            <label for="kondisiBibirInput" class="form-label">Kondisi Bibir</label>
+                                            <label for="kondisiBibirInput" class="form-label">Kondisi
+                                                Bibir</label>
                                             <div class="input-group">
                                                 <input formControlName="kondisiBibir" type="text"
                                                     class="form-control" id="kondisiBibirInput"
@@ -653,7 +696,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="mb-2 col-6">
                         <div class="card">
@@ -663,15 +705,13 @@
                             <div class="card-body">
                                 <form>
                                     <div class="row">
-                                        <!-- Kolom Kiri -->
-                                        <div class="col-md-6 border-end">
-                                            <!-- Pertanyaan 1 -->
-                                            <div *ngFor="let itemMalnutrisi of listQuestionaireMalNutrisi">
-                                                <div *ngIf="itemMalnutrisi.type === 'Boolean'"
-                                                    class="form-group mb-3">
-                                                    <label [for]="'question' + itemMalnutrisi.id" class="form-label">
-                                                        {{ itemMalnutrisi . text }}
-                                                    </label>
+                                        <div class="col-md-6 border-end"
+                                            *ngFor="let itemMalnutrisi of listQuestionaireMalNutrisi; let i = index">
+                                            <div class="form-group mb-3">
+                                                <label [for]="'question' + itemMalnutrisi.id" class="form-label">
+                                                    {{ itemMalnutrisi . text }}
+                                                </label>
+                                                <div *ngIf="itemMalnutrisi.type === 'Boolean'">
                                                     <div class="form-check"
                                                         *ngFor="let option of itemMalnutrisi.default_options">
                                                         <input class="form-check-input" type="radio"
@@ -685,17 +725,7 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <!-- Kolom Kanan -->
-                                        <div class="col-md-6 border-start">
-                                            <div *ngFor="let itemMalnutrisi of listQuestionaireMalNutrisi">
-                                                <div *ngIf="itemMalnutrisi.type === 'reference'"
-                                                    class="form-group mb-3">
-                                                    <label [for]="'question' + itemMalnutrisi.id" class="form-label">
-                                                        {{ itemMalnutrisi . text }}
-                                                        {{ itemMalnutrisi }}
-                                                    </label>
+                                                <div *ngIf="itemMalnutrisi.type === 'reference'">
                                                     <div class="form-check"
                                                         *ngFor="let option of itemMalnutrisi.options">
                                                         <input class="form-check-input" type="checkbox"
@@ -716,177 +746,134 @@
                                 </form>
                             </div>
                         </div>
-
                     </div>
 
-                    <div class="mb-2 col-6">
+                    <div class="col-6 mb-2">
                         <div class="card">
-                            <div class="card-header navy">
-                                Observasi Antropometri
-                            </div>
+                            <div class="card-header navy">Observasi Antropometri</div>
                             <div class="card-body">
                                 <form [formGroup]="antropometriObservationForm">
-                                    <div class="row mt-2 border-bottom">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="tinggiBadan" class="form-label">Tinggi Badan</label>
-                                            <div class="input-group" formGroupName="tinggiBadan">
-                                                <input formControlName="nilaiTinggiBadan" type="number"
-                                                    class="form-control" id="tinggiBadan"
-                                                    placeholder="Nilai Tinggi Badan" />
-                                                <select class="form-select" formControlName="objectSatuanTinggiBadan">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3"
+                                            *ngFor="let item of itemsTerminologiAntropometriOservarion">
+                                            <label class="form-label">{{ item . terminology_name }}</label>
+                                            <div>
+                                                <div class="row g-0">
+                                                    <div class="col-9">
+                                                        <input type="number" class="form-control"
+                                                            [placeholder]="'Nilai ' + item.terminology_name"
+                                                            [value]="item.value"
+                                                            (input)="item.value = $event.target.value"
+                                                            [title]="item.description" />
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <select class="form-select"
+                                                            (change)="item.unit = $event.target.value">
+                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
+                                                                [ngValue]="satuanUnit"
+                                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
+                                                                {{ satuanUnit . unit_code }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="beratBadan" class="form-label">Berat Badan</label>
-                                            <div class="input-group" formGroupName="beratBadan">
-                                                <input formControlName="nilaiBeratBadan" type="number"
-                                                    class="form-control" id="beratBadan"
-                                                    placeholder="Nilai Berat Badan" />
-                                                <select class="form-select" formControlName="objectSatuanBeratBadan">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
+                                    </div>
+                                </form>
+                                <!-- Create Form for balita -->
+                                <hr>
+                                <form class="mt-2" [formGroup]="antropometriBalitaObservationForm">
+                                    <div class="row">
+                                        <strong class="font-weight-bold">Observasi Antropometri Balita</strong>
+                                        <div class="col-md-6 mb-3"
+                                            *ngFor="let item of itemsTerminologiAntropometriBalitaOservarion">
+                                            <label class="form-label">{{ item . terminology_name }}</label>
+                                            <div>
+                                                <div class="row g-0">
+                                                    <div class="col-9">
+                                                        <input type="number" class="form-control"
+                                                            [placeholder]="'Nilai ' + item.terminology_name"
+                                                            [value]="item.value"
+                                                            (input)="item.value = $event.target.value"
+                                                            [title]="item.description" />
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <select class="form-select"
+                                                            (change)="item.unit = $event.target.value">
+                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
+                                                                [ngValue]="satuanUnit"
+                                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
+                                                                {{ satuanUnit . unit_code }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="lingkarLenganAtas" class="form-label">Lingkar Lengan
-                                                Atas</label>
-                                            <div class="input-group" formGroupName="lingkarLenganAtas">
-                                                <input formControlName="nilaiLingkarLenganAtas" type="number"
-                                                    class="form-control" id="lingkarLenganAtas"
-                                                    placeholder="Nilai Lingkar Lengan Atas" />
-                                                <select class="form-select"
-                                                    formControlName="objectSatuanLingkarLenganAtas">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
+                                    </div>
+                                </form>
+
+                                <!-- form ibu hamil -->
+                                <hr>
+                                <form class="mt-2" [formGroup]="antropometriIbuHamilObservationForm">
+                                    <div class="row">
+                                        <strong class="font-weight-bold">Observasi Antropometri Ibu Hamil</strong>
+                                        <div class="col-md-6 mb-3"
+                                            *ngFor="let item of itemsTerminologiAntropometriIbuHamilOservarion">
+                                            <label class="form-label">{{ item . terminology_name }}</label>
+                                            <div>
+                                                <div class="row g-0">
+                                                    <div class="col-9">
+                                                        <input type="number" class="form-control"
+                                                            [placeholder]="'Nilai ' + item.terminology_name"
+                                                            [value]="item.value"
+                                                            (input)="item.value = $event.target.value"
+                                                            [title]="item.description" />
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <select class="form-select"
+                                                            (change)="item.unit = $event.target.value">
+                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
+                                                                [ngValue]="satuanUnit"
+                                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
+                                                                {{ satuanUnit . unit_code }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="lingkarKepala" class="form-label">Lingkar Kepala</label>
-                                            <div class="input-group" formGroupName="lingkarKepala">
-                                                <input formControlName="nilaiLingkarKepala" type="number"
-                                                    class="form-control" id="lingkarKepala"
-                                                    placeholder="Nilai Lingkar Kepala" />
-                                                <select class="form-select"
-                                                    formControlName="objectSatuanLingkarKepala">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="lingkarPerut" class="form-label">Lingkar Perut</label>
-                                            <div class="input-group" formGroupName="lingkarPerut">
-                                                <input formControlName="nilaiLingkarPerut" type="number"
-                                                    class="form-control" id="lingkarPerut"
-                                                    placeholder="Nilai Lingkar Perut" />
-                                                <select class="form-select"
-                                                    formControlName="objectSatuanLingkarPerut">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="lingkarPaha" class="form-label">Lingkar Paha</label>
-                                            <div class="input-group" formGroupName="lingkarPaha">
-                                                <input formControlName="nilaiLingkarPaha" type="number"
-                                                    class="form-control" id="lingkarPaha"
-                                                    placeholder="Nilai Lingkar Paha" />
-                                                <select class="form-select" formControlName="objectSatuanLingkarPaha">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="lingkarDada" class="form-label">Lingkar Dada</label>
-                                            <div class="input-group" formGroupName="lingkarDada">
-                                                <input formControlName="nilaiLingkarDada" type="number"
-                                                    class="form-control" id="lingkarDada"
-                                                    placeholder="Nilai Lingkar Dada" />
-                                                <select class="form-select" formControlName="objectSatuanLingkarDada">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="lingkarBetis" class="form-label">Lingkar Betis</label>
-                                            <div class="input-group" formGroupName="lingkarBetis">
-                                                <input formControlName="nilaiLingkarBetis" type="number"
-                                                    class="form-control" id="lingkarBetis"
-                                                    placeholder="Nilai Lingkar Betis" />
-                                                <select class="form-select"
-                                                    formControlName="objectSatuanLingkarBetis">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="lingkarPinggang" class="form-label">Lingkar Pinggang</label>
-                                            <div class="input-group" formGroupName="lingkarPinggang">
-                                                <input formControlName="nilaiLingkarPinggang" type="number"
-                                                    class="form-control" id="lingkarPinggang"
-                                                    placeholder="Nilai Lingkar Pinggang" />
-                                                <select class="form-select"
-                                                    formControlName="objectSatuanLingkarPinggang">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="lingkarPinggul" class="form-label">Lingkar Pinggul</label>
-                                            <div class="input-group" formGroupName="lingkarPinggul">
-                                                <input formControlName="nilaiLingkarPinggul" type="number"
-                                                    class="form-control" id="lingkarPinggul"
-                                                    placeholder="Nilai Lingkar Pinggul" />
-                                                <select class="form-select"
-                                                    formControlName="objectSatuanLingkarPinggul">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 mb-3">
-                                            <label for="lingkarLutut" class="form-label">Lingkar Lutut</label>
-                                            <div class="input-group" formGroupName="lingkarLutut">
-                                                <input formControlName="nilaiLingkarLutut" type="number"
-                                                    class="form-control" id="lingkarLutut"
-                                                    placeholder="Nilai Lingkar Lutut" />
-                                                <select class="form-select"
-                                                    formControlName="objectSatuanLingkarLutut">
-                                                    <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                        [ngValue]="satuanUnit">
-                                                        {{ satuanUnit . unit_code }} : {{ satuanUnit . unit_name }}
-                                                    </option>
-                                                </select>
+                                    </div>
+                                </form>
+                                <!-- Index -->
+                                <hr>
+                                <form class="mt-2" [formGroup]="antropometriIndexObservationForm">
+                                    <div class="row">
+                                        <strong class="font-weight-bold">Observasi Antropometri Masa Tubuh</strong>
+                                        <div class="col-md-6 mb-3"
+                                            *ngFor="let item of itemsTerminologiAntropometriIndexOservarion">
+                                            <label class="form-label">{{ item . terminology_name }}</label>
+                                            <div>
+                                                <div class="row g-0">
+                                                    <div class="col-9">
+                                                        <input type="number" class="form-control"
+                                                            [placeholder]="'Nilai ' + item.terminology_name"
+                                                            [value]="item.value"
+                                                            (input)="item.value = $event.target.value"
+                                                            [title]="item.description" />
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <select class="form-select"
+                                                            (change)="item.unit = $event.target.value">
+                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
+                                                                [ngValue]="satuanUnit"
+                                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
+                                                                {{ satuanUnit . unit_code }}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -894,7 +881,10 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
+
 
                 <div class="col-12" align="center">
                     <button class="btn btn-success mx-1" (click)="simpan()" [disabled]="isDisabledFormGizi">
