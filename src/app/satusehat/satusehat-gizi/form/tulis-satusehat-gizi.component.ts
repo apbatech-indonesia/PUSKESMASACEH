@@ -34,7 +34,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   formPemeriksaanFisik: FormGroup
   formRencanaTindakLanjut: FormGroup
   formRujukLaborat: FormGroup
+  selectedCheckboxes: { [key: string]: string } = {}; // Pastikan ini ada
   formMalnitrisi: FormGroup
+  formLaboratSpecimen: FormGroup
   formKeluhanUtama: FormGroup
   // NOTE: Init form
   formSkriningMalnutrisiQuestionaire: FormGroup
@@ -181,7 +183,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       items: ['']
     });
     this.formRujukLaborat = this.fb.group({
-      items: ['']
+      items: [''],
+      selectedItems: this.fb.array([]),
     });
     this.antropometriObservationForm = this.fb.group({
       pengukuran: this.fb.group({})
@@ -194,6 +197,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     });
     this.antropometriIbuHamilObservationForm = this.fb.group({
       pengukuran: this.fb.group({})
+    });
+    this.formLaboratSpecimen = this.fb.group({
+      item: this.fb.group({})
     });
 
     this.formKeluhanUtama = this.fb.group({
@@ -219,6 +225,19 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       questions: this.fb.array([])
     });
   }
+  toggleInput(id: string) {
+    if (this.selectedCheckboxes[id])
+    {
+      delete this.selectedCheckboxes[id];
+    } else
+    {
+      this.selectedCheckboxes = { ...this.selectedCheckboxes, [id]: "" };
+    }
+  }
+
+  updateSelectedCheckboxes(id: string, value: string) {
+    this.selectedCheckboxes = { ...this.selectedCheckboxes, [id]: value };
+  }
 
   loadQuestions() {
     // Membuat kontrol dinamis berdasarkan pertanyaan
@@ -236,18 +255,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   // NOTE: mengisi form ketika di select
 
   onCheckboxChange(event: Event, index: number, value: any) {
-    //  const answersControl = this.questions.at(index).get('answer');
-    //     let currentValue = answersControl?.value || [];
-
-    //     if (event.target instanceof HTMLInputElement && event.target.checked)
-    //     {
-    //       currentValue.push(value);
-    //     } else
-    //     {
-    //       currentValue = currentValue.filter((v: any) => v !== value);
-    //     }
-
-    //     answersControl?.setValue(currentValue);
   }
 
   // TODO: mengisi form ketika di select
@@ -821,22 +828,90 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   }
   async doSubmitRencanaTindakLanjutServiceRequest() {
-
-    console.log("TEST");
     // TODO: buat payload
+    let serviceRequests = [];
 
-    // try
-    // {
-    //   let response: any = await this.GiziService.createObservations(payload);
-    // } catch (err)
-    // {
-    //   Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
-    // }
+    for (let itemServReq of this.itemsTerminologiRencanaTindakLanjutServiceRequest)
+    {
+      let selectedObservations = [];
+      let selectedReasons = [];
+
+      for (let itemChol of this.itemsTerminologiCholesterolObservationServiceRequest)
+      {
+        let checkboxId = `${itemServReq.terminology_id}-${itemChol.terminology_id}`;
+
+        if (this.selectedCheckboxes[checkboxId] !== undefined)
+        {
+          selectedObservations.push({
+            system: itemChol.source.source_url,
+            code: itemChol.terminology_code,
+            display: itemChol.terminology_name
+          });
+
+          // Ambil deskripsi dari inputan user
+          let userInput = this.selectedCheckboxes[checkboxId];
+          selectedReasons.push({ text: userInput });
+        }
+      }
+
+      if (selectedObservations.length > 0)
+      {
+        serviceRequests.push({
+          name: `Lab_serviceRequest_${itemServReq.terminology_name.replace(/\s+/g, '_')}`,
+          category: [
+            {
+              coding: [
+                {
+                  system: itemServReq.source?.source_url || "http://default-category.org",
+                  code: itemServReq.terminology_code,
+                  display: itemServReq.terminology_name
+                }
+              ]
+            }
+          ],
+          patientInstruction: "",
+          status: "active",
+          intent: "original-order",
+          priority: "routine",
+          occurrenceDateTime: new Date().toISOString(),
+          authoredOn: new Date().toISOString(),
+          encounter: {
+            reference: `Encounter/${this.encounter_id}`,
+            display: `Permintaan Pemeriksaan ${itemServReq.terminology_name}`
+          },
+          data: [
+            ...selectedObservations,
+            {
+              text: itemServReq.description
+            }
+          ],
+          reason: [{ text: itemServReq.description }]
+        });
+      }
+    }
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        serviceRequests: serviceRequests
+      }
+    };
+
+    try
+    {
+      let response: any = await this.GiziService.createServiceRequests(payload);
+
+      let msg = response.statusMsg.split(': ');
+      Swal.fire('Success', msg.join(', '), 'success');
+    } catch (err)
+    {
+      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+    }
+
   }
   async doSubmitRujukLaborat() {
-
-    console.log("Form Rujuk Laborat");
-    // TODO: buat payload
 
     // try
     // {
@@ -883,7 +958,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         encounterId: this.encounter_id,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
-        observations: observations
+        serviceRequests: observations
       }
     };
 
@@ -1250,7 +1325,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   }
   async cariitemsTerminologiAntropometriIndexOservarion() {
-    // TODO: change key value
     let payload = {
       terminology_id: "",
       key_operator: "=",
@@ -1261,6 +1335,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       order_type: "Asc",
       key_name: "satusehat_category",
       key_value: "data-antropometri-index",
+      is_active: 1
+
     };
     try
     {
@@ -1275,14 +1351,15 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     // TODO: change key value
     let payload = {
       terminology_id: "",
-      key_operator: "=",
+      key_operator: "=|=",
       show_parent: "yes",
       show_child: "yes",
       max_row: 100,
       order_by: "terminology_name",
       order_type: "Asc",
-      key_name: "category",
-      key_value: "service-request",
+      key_name: "category|is_active",
+      key_value: "service-request|1",
+
     };
     try
     {
@@ -1615,9 +1692,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       case 'form-questionaire-response':
         this.doSubmitSkriningMalnutrisiQuestionaire();
         break;
-      case 'form-rencana-tindak-lanjut':
-        this.doSubmitRencanaTindakLanjutServiceRequest();
-        break;
       case 'form-antropometri':
         this.doSubmitAntropometriObservation();
         break;
@@ -1629,6 +1703,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         break;
       case 'form-antropometri-index':
         this.doSubmitAntropometriIndexhObservation();
+        break;
+      case 'form-rencana-tindak-lanjut':
+        this.doSubmitRencanaTindakLanjutServiceRequest();
         break;
       default:
         Swal.fire('Error', 'Form tidak ditemukan', 'error');

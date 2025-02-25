@@ -80,6 +80,13 @@ export class GiziService {
       })
     })
   }
+  createServiceRequests(data: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehatUrl + 'gizi/serviceRequestsCreate', data, { headers: this.headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
   createSkriningMalnutrisiQuestionaire(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'gizi/questionnaireResponsesCreate', data, { headers: this.headers }).subscribe((data) => {

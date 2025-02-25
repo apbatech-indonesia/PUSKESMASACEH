@@ -71,56 +71,62 @@
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
                         <a class="nav-link {{ activeTab == 'form-ibu-ayah' ? 'active' : '' }}" href="javascript:;"
-                            (click)="openTab('form-ibu-ayah')">Form Ibu Ayah</a>
+                            (click)="openTab('form-ibu-ayah')"> Ibu Ayah</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ activeTab == 'form-keluhan-utama' ? 'active' : '' }}" href="javascript:;"
-                            (click)="openTab('form-keluhan-utama')">Form Keluhan Utama</a>
+                            (click)="openTab('form-keluhan-utama')"> Keluhan Utama</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ activeTab == 'form-lergiMakanan' ? 'active' : '' }}" href="javascript:;"
-                            (click)="openTab('form-lergiMakanan')">Form Alergi Makanan</a>
+                            (click)="openTab('form-lergiMakanan')"> Alergi Makanan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ activeTab == 'form-alergi-obat' ? 'active' : '' }}" href="javascript:;"
-                            (click)="openTab('form-alergi-obat')">Form Alergi Obat</a>
+                            (click)="openTab('form-alergi-obat')"> Alergi Obat</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ activeTab == 'form-mal-nutrisi' ? 'active' : '' }}" href="javascript:;"
-                            (click)="openTab('form-mal-nutrisi')">Form Malnutrisi</a>
+                            (click)="openTab('form-mal-nutrisi')"> Malnutrisi</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ activeTab == 'form-pemeriksaan-fisik' ? 'active' : '' }}"
-                            href="javascript:;" (click)="openTab('form-pemeriksaan-fisik')">Form Pemeriksaan Fisik</a>
+                            href="javascript:;" (click)="openTab('form-pemeriksaan-fisik')"> Pemeriksaan Fisik</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ activeTab == 'form-questionaire-response' ? 'active' : '' }}"
-                            href="javascript:;" (click)="openTab('form-questionaire-response')">Form
+                            href="javascript:;" (click)="openTab('form-questionaire-response')">
                             QuestionaireResponse (ChangeNeeded)</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ activeTab == 'form-rencana-tindak-lanjut' ? 'active' : '' }}"
-                            href="javascript:;" (click)="openTab('form-rencana-tindak-lanjut')">Form Rencana Tindak
-                            Lanjut</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link {{ activeTab == 'form-antropometri' ? 'active' : '' }}" href="javascript:;"
-                            (click)="openTab('form-antropometri')">Form Antropometri</a>
+                            (click)="openTab('form-antropometri')"> Antropometri</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ activeTab == 'form-antropometri-balita' ? 'active' : '' }}"
-                            href="javascript:;" (click)="openTab('form-antropometri-balita')">Form Antropometri
+                            href="javascript:;" (click)="openTab('form-antropometri-balita')"> Antropometri
                             Balita</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ activeTab == 'form-antropometri-ibu-hamil' ? 'active' : '' }}"
-                            href="javascript:;" (click)="openTab('form-antropometri-ibu-hamil')">Form Antropometri
+                            href="javascript:;" (click)="openTab('form-antropometri-ibu-hamil')">Antropometri
                             Ibu Hamil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ activeTab == 'form-antropometri-index' ? 'active' : '' }}"
-                            href="javascript:;" (click)="openTab('form-antropometri-index')">Form Antropometri Index
+                            href="javascript:;" (click)="openTab('form-antropometri-index')">Antropometri Index
                             Masa Tubuh</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-rencana-tindak-lanjut' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('form-rencana-tindak-lanjut')">Rencana Tindak
+                            Lanjut</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-laborat-specimen' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('form-laborat-specimen')">
+                            Laborat Specimen
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -683,24 +689,31 @@
                 </form>
             </div>
         </div>
-        <!-- NOTE: Rencana Tindak Lanjut -->
         <div class="card" *ngIf="activeTab == 'form-rencana-tindak-lanjut'">
             <div class="card-body">
                 <form [formGroup]="formRujukLaborat">
                     <div class="form-group">
-                        <div *ngFor="let itemServReq of itemsTerminologiRencanaTindakLanjutServiceRequest"
-                            class="mb-3">
-                            <label class="fw-bold">{{ itemServReq . terminology_name }}</label>
-                            <div *ngFor="let itemChol of itemsTerminologiCholesterolObservationServiceRequest"
-                                class="form-check">
-                                <input class="form-check-input" type="checkbox"
-                                    [id]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
-                                    [value]="itemChol">
-                                <label class="form-check-label"
-                                    [for]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
-                                    [title]="itemChol.description">
-                                    {{ itemChol . terminology_name }}
+                        <div class="row">
+                            <div class="col-md-6 border-start border-end mb-2"
+                                *ngFor="let itemServReq of itemsTerminologiRencanaTindakLanjutServiceRequest">
+                                <label class="fw-bold" [title]="itemServReq.description">
+                                    {{ itemServReq . terminology_name }}
                                 </label>
+                                <div class="alert alert-info" role="alert">
+                                    Deskripsi: {{ itemServReq . description }}
+                                </div>
+
+                                <div *ngFor="let itemChol of itemsTerminologiCholesterolObservationServiceRequest"
+                                    class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                        [id]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
+                                        (change)="toggleInput(itemServReq.terminology_id + '-' + itemChol.terminology_id)">
+                                    <label class="form-check-label"
+                                        [for]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
+                                        [title]="itemChol.description">
+                                        {{ itemChol . terminology_name }}
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -708,7 +721,6 @@
             </div>
         </div>
 
-        <!-- NOTE: Observarion Antropometri -->
         <div class="card" *ngIf="activeTab == 'form-antropometri'">
             <div class="card-body">
                 <form [formGroup]="antropometriObservationForm">
@@ -825,6 +837,15 @@
                             </div>
                         </div>
                     </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="activeTab == 'form-laborat-specimen'">
+            <div class="card-body">
+                <form class="mt-2" [formGroup]="formLaboratSpecimen">
+                    <h1>onProgress</h1> <!-- Corrected the spelling of "onProgress" -->
+                    <!-- Add additional form fields here as needed for the laboratory specimen observation -->
                 </form>
             </div>
         </div>
