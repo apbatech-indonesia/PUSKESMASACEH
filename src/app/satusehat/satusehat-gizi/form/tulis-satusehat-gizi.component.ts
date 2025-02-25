@@ -17,6 +17,7 @@ import { W } from '@angular/cdk/keycodes'
 
 export class TulisSatuSehatGiziComponent implements OnInit {
   // NOTE: property dasar
+  activeTab: string = 'form-ibu-ayah'
   userData: any = JSON.parse(localStorage.getItem('userDatacl')).userData
   notransaksi: string = this.route.snapshot.paramMap.get('notrans')
   relatedPersonResponse: any
@@ -338,6 +339,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     try
     {
       let response: any = await this.GiziService.createAlergyObat(payload);
+      let msg = response.statusMsg.split(': ');
+      Swal.fire('Success', msg.join(', '), 'success');
     } catch (err)
     {
       Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
@@ -391,6 +394,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     try
     {
       let response: any = await this.GiziService.createSkriningMalnutrisiQuestionaire(payload);
+      let msg = response.statusMsg.split(': ');
+      Swal.fire('Success', msg.join(', '), 'success');
     } catch (err)
     {
     }
@@ -446,6 +451,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     try
     {
       let response: any = await this.GiziService.createObservations(paylaod);
+      let msg = response.statusMsg.split(': ');
+      Swal.fire('Success', msg.join(', '), 'success');
     } catch (err)
     {
     }
@@ -702,6 +709,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     try
     {
       let response: any = await this.GiziService.createObservations(payload);
+      let msg = response.statusMsg.split(': ');
+      Swal.fire('Success', msg.join(', '), 'success');
     } catch (err)
     {
       Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
@@ -752,6 +761,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     try
     {
       let response: any = await this.GiziService.createObservations(payload);
+      let msg = response.statusMsg.split(': ');
+      Swal.fire('Success', msg.join(', '), 'success');
     } catch (err)
     {
       Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
@@ -802,6 +813,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     try
     {
       let response: any = await this.GiziService.createObservations(payload);
+      let msg = response.statusMsg.split(': ');
+      Swal.fire('Success', msg.join(', '), 'success');
     } catch (err)
     {
       Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
@@ -877,6 +890,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     try
     {
       let response: any = await this.GiziService.createObservations(payload);
+      let msg = response.statusMsg.split(': ');
+      Swal.fire('Success', msg.join(', '), 'success');
     } catch (err)
     {
       Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
@@ -926,6 +941,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     try
     {
       let response: any = await this.GiziService.createObservations(payload);
+      let msg = response.statusMsg.split(': ');
+      Swal.fire('Success', msg.join(', '), 'success');
     } catch (err)
     {
       Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
@@ -985,6 +1002,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     try
     {
       let response: any = await this.GiziService.createAlergyInteolerance(payload);
+      let msg = response.statusMsg.split(': ');
+      Swal.fire('Success', msg.join(', '), 'success');
     } catch (err)
     {
       Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
@@ -1007,6 +1026,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     {
       let dataListManakan: any = await this.GiziService.getDataTerminologi(payload);
       this.listItemMakananAlergi = [...dataListManakan.data];
+
     } catch (error)
     {
       console.error('Error fetching data:', error);
@@ -1497,6 +1517,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       this.showLoading();
       let response: any = await this.GiziService.createKeluhanUtama(data);
       let msg = response.statusMsg.split(': ');
+      Swal.fire('Success', msg.join(', '), 'success');
     } catch (err)
     {
       Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
@@ -1533,7 +1554,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       this.cariitemsTerminologiRencanaTindakLanjutServiceRequest(),
       this.cariitemsTerminologiCholesterolObservationServiceRequest()
   }
-
+  openTab(tab: string) {
+    this.activeTab = tab
+  }
   async cariKeluhanUtama() {
     let payload = {
       terminology_id: "",
@@ -1568,18 +1591,49 @@ export class TulisSatuSehatGiziComponent implements OnInit {
 
   // NOTE: Trigger simpan semua form
   simpan() {
-    this.showLoading(),
-      this.doSubmitRelatedPerson(),
-      this.doSubmitkeluhanUtama(),
-      this.doSubmitAlergiMakanan(),
-      this.doSubmitAlergiObat(),
-      this.doSubmitHasilPemeriksaanFisik(),
-      this.doSubmitSkriningMalnutrisi(),
-      this.doSubmitSkriningMalnutrisiQuestionaire(),
-      this.doSubmitAntropometriObservation(),
-      this.doSubmitAntropometriBalitaObservation(),
-      this.doSubmitRencanaTindakLanjutServiceRequest(),
-      this.doSubmitRujukLaborat()
+    this.showLoading();
+    switch (this.activeTab)
+    {
+      case 'form-ibu-ayah':
+        this.doSubmitRelatedPerson();
+        break;
+      case 'form-keluhan-utama':
+        this.doSubmitkeluhanUtama();
+        break;
+      case 'form-alergi-makanan':
+        this.doSubmitAlergiMakanan();
+        break;
+      case 'form-alergi-obat':
+        this.doSubmitAlergiObat();
+        break;
+      case 'form-malnutrisi':
+        this.doSubmitSkriningMalnutrisi();
+        break;
+      case 'form-pemeriksaan-fisik':
+        this.doSubmitHasilPemeriksaanFisik();
+        break;
+      case 'form-questionaire-response':
+        this.doSubmitSkriningMalnutrisiQuestionaire();
+        break;
+      case 'form-rencana-tindak-lanjut':
+        this.doSubmitRencanaTindakLanjutServiceRequest();
+        break;
+      case 'form-antropometri':
+        this.doSubmitAntropometriObservation();
+        break;
+      case 'form-antropometri-balita':
+        this.doSubmitAntropometriBalitaObservation();
+        break;
+      case 'form-antropometri-ibu-hamil':
+        this.doSubmitAntropometriIbuHamilObservation();
+        break;
+      case 'form-antropometri-index':
+        this.doSubmitAntropometriIndexhObservation();
+        break;
+      default:
+        Swal.fire('Error', 'Form tidak ditemukan', 'error');
+        break;
+    }
   }
 
 

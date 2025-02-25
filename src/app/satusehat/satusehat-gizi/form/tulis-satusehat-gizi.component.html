@@ -66,864 +66,780 @@
                 </div>
             </div>
         </div>
-
-        <div class="card mb-2">
-            <div class="card-header navy">
-                Gizi
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="mb-2 col-6">
-                        <div class="card">
-                            <div class="card-header navy">
-                                Form Ibu Ayah
-                            </div>
-                            <div class="card-body">
-                                <form [formGroup]="formIbuAyah">
-                                    <div class="row">
-                                        <!-- Kolom Informasi Ibu -->
-                                        <div class="col-12 col-md-6 border-end">
-                                            <h3 class="mb-2">Data Ibu</h3>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="nama_ibu" class="form-label">Nama Ibu</label>
-                                                        <input type="text" class="form-control" id="nama_ibu"
-                                                            formControlName="nama_ibu">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="nik_ibu" class="form-label">NIK Ibu</label>
-                                                        <input type="text" class="form-control" id="nik_ibu"
-                                                            formControlName="nik_ibu">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="tl_ibu" class="form-label">
-                                                            Tanggal Lahir Ibu
-                                                        </label>
-                                                        <input type="date" class="form-control" id="tl_ibu"
-                                                            formControlName="tl_ibu">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="hp_ibu" class="form-label">No. HP Ibu</label>
-                                                        <input type="text" class="form-control" id="hp_ibu"
-                                                            formControlName="hp_ibu">
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="mb-2">
-                                                        <label for="alamat_jalan_ibu" class="form-label">Alamat
-                                                            Ibu</label>
-                                                        <textarea class="form-control" id="alamat_jalan_ibu" formControlName="alamat_jalan_ibu"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="province_id_ibu" class="form-label">Provinsi
-                                                            Ibu</label>
-                                                        <app-master-province
-                                                            [provinceId]="formIbuAyah.value.province_id_ibu"
-                                                            (provinceOutput)="formIbuAyah.value.province_id_ibu = $event">
-                                                        </app-master-province>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="city_id_ibu" class="form-label">Kota Ibu</label>
-                                                        <app-master-city [cityId]="formIbuAyah.value.city_id_ibu"
-                                                            [provinceId]="formIbuAyah.value.province_id_ibu"
-                                                            (cityOutput)="formIbuAyah.value.city_id_ibu = $event">
-                                                        </app-master-city>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="district_id_ibu" class="form-label">Kecamatan
-                                                            Ibu</label>
-                                                        <app-master-district
-                                                            [districtId]="formIbuAyah.value.district_id_ibu"
-                                                            [cityId]="formIbuAyah.value.city_id_ibu"
-                                                            (districtOutput)="formIbuAyah.value.district_id_ibu = $event">
-                                                        </app-master-district>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="village_id_ibu" class="form-label">Kelurahan
-                                                            Ibu</label>
-                                                        <app-master-sub-district
-                                                            [subdistrictId]="formIbuAyah.value.village_id_ibu"
-                                                            [districtId]="formIbuAyah.value.district_id_ibu"
-                                                            (subDistrictOutput)="formIbuAyah.value.village_id_ibu = $event">
-                                                        </app-master-sub-district>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="rt_ibu" class="form-label">RT Ibu</label>
-                                                        <input type="text" class="form-control" id="rt_ibu"
-                                                            formControlName="rt_ibu">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="rw_ibu" class="form-label">RW Ibu</label>
-                                                        <input type="text" class="form-control" id="rw_ibu"
-                                                            formControlName="rw_ibu">
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="mb-2">
-                                                        <label for="postal_code_ibu" class="form-label">Kode Pos
-                                                            Ibu</label>
-                                                        <input type="text" class="form-control"
-                                                            id="postal_code_ibu" formControlName="postal_code_ibu">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Kolom Informasi Ayah -->
-                                        <div class="col-12 col-md-6 border-start">
-                                            <h3 class="mb-2">Data Ayah</h3>
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="nama_ayah" class="form-label">Nama
-                                                            Ayah</label>
-                                                        <input type="text" class="form-control" id="nama_ayah"
-                                                            formControlName="nama_ayah">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="nik_ayah" class="form-label">NIK Ayah</label>
-                                                        <input type="text" class="form-control" id="nik_ayah"
-                                                            formControlName="nik_ayah">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="tl_ayah" class="form-label">Tanggal Lahir
-                                                            Ayah</label>
-                                                        <input type="date" class="form-control" id="tl_ayah"
-                                                            formControlName="tl_ayah">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="hp_ayah" class="form-label">No. HP
-                                                            Ayah</label>
-                                                        <input type="text" class="form-control" id="hp_ayah"
-                                                            formControlName="hp_ayah">
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="mb-2">
-                                                        <label for="alamat_jalan_ayah" class="form-label">Alamat
-                                                            Ayah</label>
-                                                        <textarea class="form-control" id="alamat_jalan_ayah" formControlName="alamat_jalan_ayah"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="province_id_ayah" class="form-label">Provinsi
-                                                            Ayah</label>
-                                                        <app-master-province
-                                                            [provinceId]="formIbuAyah.value.province_id_ayah"
-                                                            (provinceOutput)="formIbuAyah.value.province_id_ayah = $event">
-                                                        </app-master-province>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="city_id_ayah" class="form-label">Kota
-                                                            Ayah</label>
-                                                        <app-master-city [cityId]="formIbuAyah.value.city_id_ayah"
-                                                            [provinceId]="formIbuAyah.value.province_id_ayah"
-                                                            (cityOutput)="formIbuAyah.value.city_id_ayah = $event">
-                                                        </app-master-city>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="district_id_ayah" class="form-label">Kecamatan
-                                                            Ayah</label>
-                                                        <app-master-district
-                                                            [districtId]="formIbuAyah.value.district_id_ayah"
-                                                            [cityId]="formIbuAyah.value.city_id_ayah"
-                                                            (districtOutput)="formIbuAyah.value.district_id_ayah = $event">
-                                                        </app-master-district>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="village_id_ayah" class="form-label">Kelurahan
-                                                            Ayah</label>
-                                                        <app-master-sub-district
-                                                            [subdistrictId]="formIbuAyah.value.village_id_ayah"
-                                                            [districtId]="formIbuAyah.value.district_id_ayah"
-                                                            (subDistrictOutput)="formIbuAyah.value.village_id_ayah = $event">
-                                                        </app-master-sub-district>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="rt_ayah" class="form-label">RT Ayah</label>
-                                                        <input type="text" class="form-control" id="rt_ayah"
-                                                            formControlName="rt_ayah">
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="mb-2">
-                                                        <label for="rw_ayah" class="form-label">RW Ayah</label>
-                                                        <input type="text" class="form-control" id="rw_ayah"
-                                                            formControlName="rw_ayah">
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="mb-2">
-                                                        <label for="postal_code_ayah" class="form-label">Kode Pos
-                                                            Ayah</label>
-                                                        <input type="text" class="form-control"
-                                                            id="postal_code_ayah" formControlName="postal_code_ayah">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-2 col-6">
-                        <div class="row">
-                            <div class=" col-6">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header navy">
-                                                Keluhan Utama
-                                            </div>
-                                            <div class="card-body">
-                                                <form [formGroup]="formKeluhanUtama">
-                                                    <div class="row">
-                                                        <div class="col-12 mt-2">
-
-                                                            <select formControlName="nama_keluhan"
-                                                                class="form-control" id="exampleFormControlSelect2">
-                                                                <option *ngFor="let item of listKeluhanUtama"
-                                                                    (click)="pilihKeluhanUtama(item)"
-                                                                    [value]="item.terminology_name">
-                                                                    {{ item . terminology_name }}
-                                                                </option>
-                                                            </select>
-                                                            <div class="form-check mt-2">
-                                                                <input class="form-check-input" type="checkbox"
-                                                                    formControlName="tuberculosis" id="tuberculosis">
-                                                                <label class="form-check-label" for="tuberculosis">
-                                                                    Apakah pasien pernah tuberkulosis?
-                                                                </label>
-                                                            </div>
-
-                                                            <!-- Input diagnosa awal dan terakhir -->
-                                                            <div *ngIf="formKeluhanUtama.get('tuberculosis')?.value"
-                                                                class="mt-2">
-                                                                <label for="diagnosaAwal" class="form-label">Diagnosa
-                                                                    Awal</label>
-                                                                <input type="date" id="diagnosaAwal"
-                                                                    class="form-control"
-                                                                    formControlName="diagnosa_awal">
-
-                                                                <label for="diagnosaAkhir"
-                                                                    class="form-label mt-2">Diagnosa
-                                                                    Terakhir</label>
-                                                                <input type="date" id="diagnosaAkhir"
-                                                                    class="form-control"
-                                                                    formControlName="diagnosa_akhir">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-2">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header navy">
-                                                Riwayat Alergi Makanan
-                                            </div>
-                                            <div class="card-body">
-                                                <form [formGroup]="formAlergiMakanan">
-                                                    <div class="col-12 mt-1">
-                                                        <!-- Input untuk mencari item makanan -->
-                                                        <input type="text" class="form-control" id="searchMakanan"
-                                                            placeholder="Pilih Item Makanan"
-                                                            (focus)="onFocusAlergiMakanan()"
-                                                            (blur)="onBlurAlergiMakanan()" autocomplete="off">
-                                                    </div>
-                                                    <div class="col-12 mt-2">
-                                                        <!-- Menampilkan item makanan yang dipilih sebagai badge -->
-                                                        <div *ngFor="let item of selectedItemMakanans"
-                                                            class="badge bg-primary text-white me-2"
-                                                            (click)="onRemoveItem(item)" style="cursor: pointer;">
-                                                            {{ item . terminology_name }} <span
-                                                                class="ms-1">&times;</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 mt-2" *ngIf="showOptionsAlergiMakanan">
-                                                        <label for="selectMakanan" class="form-label">Pilih item
-                                                            Makanan</label>
-                                                        <!-- Select untuk memilih item makanan dari daftar -->
-                                                        <select formGroupName="namaMakanan" class="form-control"
-                                                            id="selectMakanan" multiple>
-                                                            <option *ngFor="let item of listItemMakananAlergi"
-                                                                [ngValue]="item" (click)="onSelectItem(item)">
-                                                                {{ item . terminology_code }} :
-                                                                {{ item . terminology_name }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-
-                                                    <!-- Medical Status Radio Button -->
-                                                    <div class="col-12 mt-2">
-                                                        <label class="form-label">Status Medis</label>
-                                                        <div formGroupName="statusClinical"
-                                                            class="d-flex justify-content-between">
-                                                            <div class="form-check form-check-inline">
-                                                                <input type="radio" formControlName="status"
-                                                                    id="statusActive" value="Active"
-                                                                    class="form-check-input">
-                                                                <label class="form-check-label"
-                                                                    for="statusActive">Aktif</label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input type="radio" formControlName="status"
-                                                                    id="statusInactive" value="Inactive"
-                                                                    class="form-check-input">
-                                                                <label class="form-check-label"
-                                                                    for="statusInactive">Tidak
-                                                                    Aktif</label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input type="radio" formControlName="status"
-                                                                    id="statusResolved" value="Resolved"
-                                                                    class="form-check-input">
-                                                                <label class="form-check-label"
-                                                                    for="statusResolved">Terselesaikan</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class=" col-6">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header navy">
-                                                Riwayat Alergi Obat
-                                            </div>
-                                            <div class="card-body">
-                                                <form [formGroup]="formAlergiObat">
-                                                    <!-- Form untuk Metode Pengobatan -->
-                                                    <div class="col-12 mt-2">
-                                                        <label for="methodSelectionElement" class="form-label">
-                                                            Pilih Metode Pengobatan
-                                                        </label>
-                                                        <select class="form-control" id="methodSelectionElement"
-                                                            formControlName="metodePengobatan">
-                                                            <option *ngFor="let methodItem of listMedicationMethods"
-                                                                [ngValue]="methodItem"
-                                                                (click)="onSelectItemObat(methodItem)">
-                                                                {{ methodItem . terminology_name }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                    <!-- Medical Status Radio Button -->
-                                                    <div class="col-12 mt-2">
-                                                        <label class="form-label">Status Medis</label>
-                                                        <div formGroupName="statusClinical"
-                                                            class="d-flex justify-content-between">
-                                                            <div class="form-check form-check-inline">
-                                                                <input type="radio" formControlName="status"
-                                                                    id="statusResolvedObat" value="completed"
-                                                                    class="form-check-input" />
-                                                                <label class="form-check-label"
-                                                                    for="statusResolvedObat">Terselesaikan</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-lg-12">
-                                        <div class="card">
-                                            <div class="card-header navy">
-                                                Maltutrisi
-                                            </div>
-                                            <div class="card-body">
-                                                <form [formGroup]="formMalnitrisi">
-                                                    <label class="form-label" for="skorMalnutrisi">Skor
-                                                        Maltutrisi</label>
-                                                    <div class="d-flex justify-content-between">
-                                                        <input type="number" class="form-control"
-                                                            id="skorMalnutrisi" formControlName="nilaiSkorMalnutrisi">
-                                                    </div>
-
-                                                    <div class="col-12 mt-2">
-                                                        <label class="form-label">Tingkat Interprestasi
-                                                            Malnutrisi</label>
-                                                        <div formGroupName="items"
-                                                            class="d-flex justify-content-between">
-                                                            <div class="form-check form-check-inline"
-                                                                *ngFor="let interpretasi of listTingkatInterprestasi">
-                                                                <input type="radio"
-                                                                    id="{{ interpretasi . terminology_code }}"
-                                                                    class="form-check-input"
-                                                                    formControlName="selectedItemValue"
-                                                                    [value]="interpretasi . terminology_code"
-                                                                    (change)="onSelectItemInterprestasi(interpretasi)">
-                                                                <label class="form-check-label"
-                                                                    for="{{ interpretasi . terminology_code }}">
-                                                                    {{ interpretasi . terminology_name }}
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-2 row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-header navy">
-                                        -
-                                    </div>
-                                    <div class="card-body">
-                                        NOTE: Free Space For Simple Input
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="mb-2 col-12">
-                        <div class="card">
-                            <div class="card-header navy">
-                                Form Pemeriksaan fisik
-                            </div>
-                            <div class="card-body">
-                                <form [formGroup]="formPemeriksaanFisik">
-                                    <div class="row border-bottom">
-                                        <h3 class="mb-2">Tingkat Kesadaran</h3>
-                                        <div class="col-lg-6">
-                                            <label class="form-label">Hasil Response </label>
-                                            <div class="d-flex justify-content-between">
-                                                <div class="form-check form-check-inline"
-                                                    *ngFor="let tingkatSadar of listTingkatKesadaran; let i = index">
-                                                    <!-- Input Radio -->
-                                                    <input type="radio" formControlName="tingkatResponseKesadaran"
-                                                        [id]="'tingkatResponseKesadaran' + i" [value]="tingkatSadar"
-                                                        class="form-check-input" />
-                                                    <!-- Label -->
-                                                    <label class="form-check-label"
-                                                        [for]="'tingkatResponseKesadaran' + i">
-                                                        {{ tingkatSadar . terminology_name }}
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Tanda vital -->
-                                    <div class="row mt-2 border-bottom">
-                                        <h3 class="mb-2">Tanda Vital</h3>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="tdSistolik" class="form-label">TD SISTOLIK</label>
-                                            <div formGroupName="tdSistolik">
-                                                <div class="row g-0">
-                                                    <div class="col-9">
-                                                        <input formControlName="nilaiSistolik" type="number"
-                                                            class="form-control" id="tdSistolik"
-                                                            placeholder="Nilai TD Sistolik" />
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <select class="form-select select-small"
-                                                            formControlName="objectSatuanSistolik">
-                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                                [ngValue]="satuanUnit"
-                                                                (click)="onSelectItem(satuanUnit)">
-                                                                {{ satuanUnit . unit_code }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="tdDiastolik" class="form-label">TD DIASTOLIK</label>
-                                            <div formGroupName="tdDiastolik">
-                                                <div class="row g-0">
-                                                    <div class="col-9">
-                                                        <input formControlName="nilaiDiastolik" type="number"
-                                                            class="form-control" id="tdDiastolik"
-                                                            placeholder="Nilai TD Diastolik" />
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <select class="form-select"
-                                                            formControlName="objectSatuanDiastolik">
-                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                                [ngValue]="satuanUnit"
-                                                                (click)="onSelectItem(satuanUnit)">
-                                                                {{ satuanUnit . unit_code }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="suhuTubuh" class="form-label">Suhu Tubuh</label>
-                                            <div formGroupName="suhuTubuh">
-                                                <div class="row g-0">
-                                                    <div class="col-9">
-                                                        <input formControlName="nilaiSuhu" type="number"
-                                                            class="form-control" id="suhuTubuh"
-                                                            placeholder="Nilai Suhu Tubuh" />
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <select class="form-select"
-                                                            formControlName="objectSatuanSuhu">
-                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                                [ngValue]="satuanUnit"
-                                                                (click)="onSelectItem(satuanUnit)">
-                                                                {{ satuanUnit . unit_code }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="denyutJantung" class="form-label">Denyut
-                                                Jantung</label>
-                                            <div formGroupName="denyutJantung">
-                                                <div class="row g-0">
-                                                    <div class="col-9">
-                                                        <input formControlName="nilaiDenyut" type="number"
-                                                            class="form-control" id="denyutJantung"
-                                                            placeholder="Nilai Denyut Jantung" />
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <select class="form-select"
-                                                            formControlName="objectSatuanDenyut">
-                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                                [ngValue]="satuanUnit"
-                                                                (click)="onSelectItem(satuanUnit)">
-                                                                {{ satuanUnit . unit_code }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 mb-3 border-end">
-                                            <label for="pernapasan" class="form-label">Pernapasan</label>
-                                            <div formGroupName="pernapasan">
-                                                <div class="row g-0">
-                                                    <div class="col-9">
-                                                        <input formControlName="nilaiPernapasan" type="number"
-                                                            class="form-control" id="pernapasan"
-                                                            placeholder="Nilai Pernapasan" />
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <select class="form-select"
-                                                            formControlName="objectSatuanPernapasan">
-                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                                [ngValue]="satuanUnit"
-                                                                (click)="onSelectItem(satuanUnit)">
-                                                                {{ satuanUnit . unit_code }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-
-                                        <div class="col-md-5 mb-3">
-                                            <label for="kondisiMataInput" class="form-label">Kondisi
-                                                Mata</label>
-                                            <div class="input-group">
-                                                <input formControlName="kondisiMata" type="text"
-                                                    class="form-control" id="kondisiMataInput"
-                                                    placeholder="Kondisi mata" />
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4 mb-3">
-                                            <label for="kondisiBibirInput" class="form-label">Kondisi
-                                                Bibir</label>
-                                            <div class="input-group">
-                                                <input formControlName="kondisiBibir" type="text"
-                                                    class="form-control" id="kondisiBibirInput"
-                                                    placeholder="Kondisi bibir" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="mb-2 col-6">
-                        <!-- NOTE: Questionaire Response -->
-                        <div class="card">
-                            <div class="card-header navy">
-                                Pertanyaan Resiko Malnutrisi
-                            </div>
-                            <div class="card-body">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-md-6 border-end border-start"
-                                            *ngFor="let itemMalnutrisi of listQuestionaireMalNutrisi; let i = index">
-                                            <div class="form-group mb-3">
-                                                <label [for]="'question' + itemMalnutrisi.id" class="form-label">
-                                                    {{ itemMalnutrisi . text }}
-                                                </label>
-                                                <div *ngIf="itemMalnutrisi.type === 'Boolean'">
-                                                    <div class="form-check"
-                                                        *ngFor="let option of itemMalnutrisi.default_options">
-                                                        <input class="form-check-input" type="radio"
-                                                            [name]="'question' + itemMalnutrisi.id"
-                                                            [id]="'question' + itemMalnutrisi.id + option.id"
-                                                            [value]="option.valueBoolean"
-                                                            [(ngModel)]="itemMalnutrisi.answer" />
-                                                        <label class="form-check-label"
-                                                            [for]="'question' + itemMalnutrisi.id + option.id">
-                                                            {{ option . display }}
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <div *ngIf="itemMalnutrisi.type === 'reference'">
-                                                    <div class="form-check"
-                                                        *ngFor="let option of itemMalnutrisi.options">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            [name]="'question' + itemMalnutrisi.id"
-                                                            [id]="'question' + itemMalnutrisi.id + option.id"
-                                                            [value]="option.option_value"
-                                                            (change)="onCheckboxChange(itemMalnutrisi, option.option_value, $event)"
-                                                            [checked]="isOptionSelected(itemMalnutrisi.answer, option.option_value)" />
-                                                        <label class="form-check-label"
-                                                            [for]="'question' + itemMalnutrisi.id + option.id">
-                                                            {{ option . display }}
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- NOTE: Rencana Tindak Lanjut -->
-                        <div class="card mt-2">
-                            <div class="card-header navy">
-                                Rencana Tindak Lanjut
-                            </div>
-                            <div class="card-body">
-                                <form [formGroup]="formRujukLaborat">
-                                    <div class="form-group">
-                                        <div *ngFor="let itemServReq of itemsTerminologiRencanaTindakLanjutServiceRequest"
-                                            class="mb-3">
-                                            <label class="fw-bold">{{ itemServReq . terminology_name }}</label>
-                                            <div *ngFor="let itemChol of itemsTerminologiCholesterolObservationServiceRequest"
-                                                class="form-check">
-                                                <input class="form-check-input" type="checkbox"
-                                                    [id]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
-                                                    [value]="itemChol">
-                                                <label class="form-check-label"
-                                                    [for]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
-                                                    [title]="itemChol.description">
-                                                    {{ itemChol . terminology_name }}
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- NOTE: Observarion Antropometri -->
-                    <div class="col-6 mb-2">
-                        <div class="card">
-                            <div class="card-header navy">Observasi Antropometri</div>
-                            <div class="card-body">
-                                <form [formGroup]="antropometriObservationForm">
-                                    <div class="row">
-                                        <div class="col-md-6 mb-3"
-                                            *ngFor="let item of itemsTerminologiAntropometriOservarion">
-                                            <label class="form-label">{{ item . terminology_name }}</label>
-                                            <div>
-                                                <div class="row g-0">
-                                                    <div class="col-9">
-                                                        <input type="number" class="form-control"
-                                                            [placeholder]="'Nilai ' + item.terminology_name"
-                                                            [value]="item.value"
-                                                            (input)="item.value = $event.target.value"
-                                                            [title]="item.description" />
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <select class="form-select"
-                                                            (change)="item.unit = $event.target.value">
-                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                                [ngValue]="satuanUnit"
-                                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
-                                                                {{ satuanUnit . unit_code }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <!-- Create Form for balita -->
-                                <hr>
-                                <form class="mt-2" [formGroup]="antropometriBalitaObservationForm">
-                                    <div class="row">
-                                        <strong class="font-weight-bold">Observasi Antropometri Balita</strong>
-                                        <div class="col-md-6 mb-3"
-                                            *ngFor="let item of itemsTerminologiAntropometriBalitaOservarion">
-                                            <label class="form-label">{{ item . terminology_name }}</label>
-                                            <div>
-                                                <div class="row g-0">
-                                                    <div class="col-9">
-                                                        <input type="number" class="form-control"
-                                                            [placeholder]="'Nilai ' + item.terminology_name"
-                                                            [value]="item.value"
-                                                            (input)="item.value = $event.target.value"
-                                                            [title]="item.description" />
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <select class="form-select"
-                                                            (change)="item.unit = $event.target.value">
-                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                                [ngValue]="satuanUnit"
-                                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
-                                                                {{ satuanUnit . unit_code }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-
-                                <!-- form ibu hamil -->
-                                <hr>
-                                <form class="mt-2" [formGroup]="antropometriIbuHamilObservationForm">
-                                    <div class="row">
-                                        <strong class="font-weight-bold">Observasi Antropometri Ibu Hamil</strong>
-                                        <div class="col-md-6 mb-3"
-                                            *ngFor="let item of itemsTerminologiAntropometriIbuHamilOservarion">
-                                            <label class="form-label">{{ item . terminology_name }}</label>
-                                            <div>
-                                                <div class="row g-0">
-                                                    <div class="col-9">
-                                                        <input type="number" class="form-control"
-                                                            [placeholder]="'Nilai ' + item.terminology_name"
-                                                            [value]="item.value"
-                                                            (input)="item.value = $event.target.value"
-                                                            [title]="item.description" />
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <select class="form-select"
-                                                            (change)="item.unit = $event.target.value">
-                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                                [ngValue]="satuanUnit"
-                                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
-                                                                {{ satuanUnit . unit_code }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <!-- Index -->
-                                <hr>
-                                <form class="mt-2" [formGroup]="antropometriIndexObservationForm">
-                                    <div class="row">
-                                        <strong class="font-weight-bold">Observasi Antropometri Masa Tubuh</strong>
-                                        <div class="col-md-6 mb-3"
-                                            *ngFor="let item of itemsTerminologiAntropometriIndexOservarion">
-                                            <label class="form-label">{{ item . terminology_name }}</label>
-                                            <div>
-                                                <div class="row g-0">
-                                                    <div class="col-9">
-                                                        <input type="number" class="form-control"
-                                                            [placeholder]="'Nilai ' + item.terminology_name"
-                                                            [value]="item.value"
-                                                            (input)="item.value = $event.target.value"
-                                                            [title]="item.description" />
-                                                    </div>
-                                                    <div class="col-3">
-                                                        <select class="form-select"
-                                                            (change)="item.unit = $event.target.value">
-                                                            <option *ngFor="let satuanUnit of listSatuanUnit"
-                                                                [ngValue]="satuanUnit"
-                                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
-                                                                {{ satuanUnit . unit_code }}
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-12" align="center">
-                    <button class="btn btn-success mx-1" (click)="simpan()" [disabled]="isDisabledFormGizi">
-                        SIMPAN
-                    </button>
-                    <button class="btn btn-danger btn-danger" routerLink="/master/satusehat-gizi">
-                        KEMBALI
-                    </button>
-                </div>
+        <div class="row">
+            <div class="col-12">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-ibu-ayah' ? 'active' : '' }}" href="javascript:;"
+                            (click)="openTab('form-ibu-ayah')">Form Ibu Ayah</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-keluhan-utama' ? 'active' : '' }}" href="javascript:;"
+                            (click)="openTab('form-keluhan-utama')">Form Keluhan Utama</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-lergiMakanan' ? 'active' : '' }}" href="javascript:;"
+                            (click)="openTab('form-lergiMakanan')">Form Alergi Makanan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-alergi-obat' ? 'active' : '' }}" href="javascript:;"
+                            (click)="openTab('form-alergi-obat')">Form Alergi Obat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-mal-nutrisi' ? 'active' : '' }}" href="javascript:;"
+                            (click)="openTab('form-mal-nutrisi')">Form Malnutrisi</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-pemeriksaan-fisik' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('form-pemeriksaan-fisik')">Form Pemeriksaan Fisik</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-questionaire-response' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('form-questionaire-response')">Form
+                            QuestionaireResponse (ChangeNeeded)</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-rencana-tindak-lanjut' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('form-rencana-tindak-lanjut')">Form Rencana Tindak
+                            Lanjut</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-antropometri' ? 'active' : '' }}" href="javascript:;"
+                            (click)="openTab('form-antropometri')">Form Antropometri</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-antropometri-balita' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('form-antropometri-balita')">Form Antropometri
+                            Balita</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-antropometri-ibu-hamil' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('form-antropometri-ibu-hamil')">Form Antropometri
+                            Ibu Hamil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-antropometri-index' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('form-antropometri-index')">Form Antropometri Index
+                            Masa Tubuh</a>
+                    </li>
+                </ul>
             </div>
         </div>
+        <div class="card mb-2" *ngIf="activeTab == 'form-ibu-ayah'">
+            <div class="card-body">
+                <form [formGroup]="formIbuAyah">
+                    <div class="row">
+                        <!-- Kolom Informasi Ibu -->
+                        <div class="col-12 col-md-6 border-end">
+                            <h3 class="mb-2">Data Ibu</h3>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="nama_ibu" class="form-label">Nama Ibu</label>
+                                        <input type="text" class="form-control" id="nama_ibu"
+                                            formControlName="nama_ibu">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="nik_ibu" class="form-label">NIK Ibu</label>
+                                        <input type="text" class="form-control" id="nik_ibu"
+                                            formControlName="nik_ibu">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="tl_ibu" class="form-label">
+                                            Tanggal Lahir Ibu
+                                        </label>
+                                        <input type="date" class="form-control" id="tl_ibu"
+                                            formControlName="tl_ibu">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="hp_ibu" class="form-label">No. HP Ibu</label>
+                                        <input type="text" class="form-control" id="hp_ibu"
+                                            formControlName="hp_ibu">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-2">
+                                        <label for="alamat_jalan_ibu" class="form-label">Alamat
+                                            Ibu</label>
+                                        <textarea class="form-control" id="alamat_jalan_ibu" formControlName="alamat_jalan_ibu"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="province_id_ibu" class="form-label">Provinsi
+                                            Ibu</label>
+                                        <app-master-province [provinceId]="formIbuAyah.value.province_id_ibu"
+                                            (provinceOutput)="formIbuAyah.value.province_id_ibu = $event">
+                                        </app-master-province>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="city_id_ibu" class="form-label">Kota Ibu</label>
+                                        <app-master-city [cityId]="formIbuAyah.value.city_id_ibu"
+                                            [provinceId]="formIbuAyah.value.province_id_ibu"
+                                            (cityOutput)="formIbuAyah.value.city_id_ibu = $event">
+                                        </app-master-city>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="district_id_ibu" class="form-label">Kecamatan
+                                            Ibu</label>
+                                        <app-master-district [districtId]="formIbuAyah.value.district_id_ibu"
+                                            [cityId]="formIbuAyah.value.city_id_ibu"
+                                            (districtOutput)="formIbuAyah.value.district_id_ibu = $event">
+                                        </app-master-district>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="village_id_ibu" class="form-label">Kelurahan
+                                            Ibu</label>
+                                        <app-master-sub-district [subdistrictId]="formIbuAyah.value.village_id_ibu"
+                                            [districtId]="formIbuAyah.value.district_id_ibu"
+                                            (subDistrictOutput)="formIbuAyah.value.village_id_ibu = $event">
+                                        </app-master-sub-district>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="rt_ibu" class="form-label">RT Ibu</label>
+                                        <input type="text" class="form-control" id="rt_ibu"
+                                            formControlName="rt_ibu">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="rw_ibu" class="form-label">RW Ibu</label>
+                                        <input type="text" class="form-control" id="rw_ibu"
+                                            formControlName="rw_ibu">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-2">
+                                        <label for="postal_code_ibu" class="form-label">Kode Pos
+                                            Ibu</label>
+                                        <input type="text" class="form-control" id="postal_code_ibu"
+                                            formControlName="postal_code_ibu">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Kolom Informasi Ayah -->
+                        <div class="col-12 col-md-6 border-start">
+                            <h3 class="mb-2">Data Ayah</h3>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="nama_ayah" class="form-label">Nama
+                                            Ayah</label>
+                                        <input type="text" class="form-control" id="nama_ayah"
+                                            formControlName="nama_ayah">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="nik_ayah" class="form-label">NIK Ayah</label>
+                                        <input type="text" class="form-control" id="nik_ayah"
+                                            formControlName="nik_ayah">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="tl_ayah" class="form-label">Tanggal Lahir
+                                            Ayah</label>
+                                        <input type="date" class="form-control" id="tl_ayah"
+                                            formControlName="tl_ayah">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="hp_ayah" class="form-label">No. HP
+                                            Ayah</label>
+                                        <input type="text" class="form-control" id="hp_ayah"
+                                            formControlName="hp_ayah">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-2">
+                                        <label for="alamat_jalan_ayah" class="form-label">Alamat
+                                            Ayah</label>
+                                        <textarea class="form-control" id="alamat_jalan_ayah" formControlName="alamat_jalan_ayah"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="province_id_ayah" class="form-label">Provinsi
+                                            Ayah</label>
+                                        <app-master-province [provinceId]="formIbuAyah.value.province_id_ayah"
+                                            (provinceOutput)="formIbuAyah.value.province_id_ayah = $event">
+                                        </app-master-province>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="city_id_ayah" class="form-label">Kota
+                                            Ayah</label>
+                                        <app-master-city [cityId]="formIbuAyah.value.city_id_ayah"
+                                            [provinceId]="formIbuAyah.value.province_id_ayah"
+                                            (cityOutput)="formIbuAyah.value.city_id_ayah = $event">
+                                        </app-master-city>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="district_id_ayah" class="form-label">Kecamatan
+                                            Ayah</label>
+                                        <app-master-district [districtId]="formIbuAyah.value.district_id_ayah"
+                                            [cityId]="formIbuAyah.value.city_id_ayah"
+                                            (districtOutput)="formIbuAyah.value.district_id_ayah = $event">
+                                        </app-master-district>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="village_id_ayah" class="form-label">Kelurahan
+                                            Ayah</label>
+                                        <app-master-sub-district [subdistrictId]="formIbuAyah.value.village_id_ayah"
+                                            [districtId]="formIbuAyah.value.district_id_ayah"
+                                            (subDistrictOutput)="formIbuAyah.value.village_id_ayah = $event">
+                                        </app-master-sub-district>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="rt_ayah" class="form-label">RT Ayah</label>
+                                        <input type="text" class="form-control" id="rt_ayah"
+                                            formControlName="rt_ayah">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="mb-2">
+                                        <label for="rw_ayah" class="form-label">RW Ayah</label>
+                                        <input type="text" class="form-control" id="rw_ayah"
+                                            formControlName="rw_ayah">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="mb-2">
+                                        <label for="postal_code_ayah" class="form-label">Kode Pos
+                                            Ayah</label>
+                                        <input type="text" class="form-control" id="postal_code_ayah"
+                                            formControlName="postal_code_ayah">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card" *ngIf="activeTab == 'form-keluhan-utama'">
+            <div class="card-body">
+                <form [formGroup]="formKeluhanUtama">
+                    <div class="row">
+                        <div class="col-12 mt-2">
+
+                            <select formControlName="nama_keluhan" class="form-control"
+                                id="exampleFormControlSelect2">
+                                <option *ngFor="let item of listKeluhanUtama" (click)="pilihKeluhanUtama(item)"
+                                    [value]="item.terminology_name">
+                                    {{ item . terminology_name }}
+                                </option>
+                            </select>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" formControlName="tuberculosis"
+                                    id="tuberculosis">
+                                <label class="form-check-label" for="tuberculosis">
+                                    Apakah pasien pernah tuberkulosis?
+                                </label>
+                            </div>
+
+                            <!-- Input diagnosa awal dan terakhir -->
+                            <div *ngIf="formKeluhanUtama.get('tuberculosis')?.value" class="mt-2">
+                                <label for="diagnosaAwal" class="form-label">Diagnosa
+                                    Awal</label>
+                                <input type="date" id="diagnosaAwal" class="form-control"
+                                    formControlName="diagnosa_awal">
+
+                                <label for="diagnosaAkhir" class="form-label mt-2">Diagnosa
+                                    Terakhir</label>
+                                <input type="date" id="diagnosaAkhir" class="form-control"
+                                    formControlName="diagnosa_akhir">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="activeTab == 'form-lergiMakanan'">
+            <div class="card-body">
+                <form [formGroup]="formAlergiMakanan">
+                    <div class="col-12 mt-1">
+                        <!-- Input untuk mencari item makanan -->
+                        <input type="text" class="form-control" id="searchMakanan"
+                            placeholder="Pilih Item Makanan" (focus)="onFocusAlergiMakanan()"
+                            (blur)="onBlurAlergiMakanan()" autocomplete="off">
+                    </div>
+                    <div class="col-12 mt-2">
+                        <!-- Menampilkan item makanan yang dipilih sebagai badge -->
+                        <div *ngFor="let item of selectedItemMakanans" class="badge bg-primary text-white me-2"
+                            (click)="onRemoveItem(item)" style="cursor: pointer;">
+                            {{ item . terminology_name }} <span class="ms-1">&times;</span>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2" *ngIf="showOptionsAlergiMakanan">
+                        <label for="selectMakanan" class="form-label">Pilih item
+                            Makanan</label>
+                        <!-- Select untuk memilih item makanan dari daftar -->
+                        <select formGroupName="namaMakanan" class="form-control" id="selectMakanan" multiple>
+                            <option *ngFor="let item of listItemMakananAlergi" [ngValue]="item"
+                                (click)="onSelectItem(item)">
+                                {{ item . terminology_code }} :
+                                {{ item . terminology_name }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <!-- Medical Status Radio Button -->
+                    <div class="col-12 mt-2">
+                        <label class="form-label">Status Medis</label>
+                        <div formGroupName="statusClinical" class="d-flex justify-content-between">
+                            <div class="form-check form-check-inline">
+                                <input type="radio" formControlName="status" id="statusActive" value="Active"
+                                    class="form-check-input">
+                                <label class="form-check-label" for="statusActive">Aktif</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" formControlName="status" id="statusInactive" value="Inactive"
+                                    class="form-check-input">
+                                <label class="form-check-label" for="statusInactive">Tidak
+                                    Aktif</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" formControlName="status" id="statusResolved" value="Resolved"
+                                    class="form-check-input">
+                                <label class="form-check-label" for="statusResolved">Terselesaikan</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card" *ngIf="activeTab == 'form-alergi-obat'">
+            <div class="card-body">
+                <form [formGroup]="formAlergiObat">
+                    <!-- Form untuk Metode Pengobatan -->
+                    <div class="col-12 mt-2">
+                        <label for="methodSelectionElement" class="form-label">
+                            Pilih Metode Pengobatan
+                        </label>
+                        <select class="form-control" id="methodSelectionElement" formControlName="metodePengobatan">
+                            <option *ngFor="let methodItem of listMedicationMethods" [ngValue]="methodItem"
+                                (click)="onSelectItemObat(methodItem)">
+                                {{ methodItem . terminology_name }}
+                            </option>
+                        </select>
+                    </div>
+                    <!-- Medical Status Radio Button -->
+                    <div class="col-12 mt-2">
+                        <label class="form-label">Status Medis</label>
+                        <div formGroupName="statusClinical" class="d-flex justify-content-between">
+                            <div class="form-check form-check-inline">
+                                <input type="radio" formControlName="status" id="statusResolvedObat"
+                                    value="completed" class="form-check-input" />
+                                <label class="form-check-label" for="statusResolvedObat">Terselesaikan</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="activeTab == 'form-mal-nutrisi'">
+            <div class="card-body">
+                <form [formGroup]="formMalnitrisi">
+                    <label class="form-label" for="skorMalnutrisi">Skor
+                        Maltutrisi</label>
+                    <div class="d-flex justify-content-between">
+                        <input type="number" class="form-control" id="skorMalnutrisi"
+                            formControlName="nilaiSkorMalnutrisi">
+                    </div>
+
+                    <div class="col-12 mt-2">
+                        <label class="form-label">Tingkat Interprestasi
+                            Malnutrisi</label>
+                        <div formGroupName="items" class="d-flex justify-content-between">
+                            <div class="form-check form-check-inline"
+                                *ngFor="let interpretasi of listTingkatInterprestasi">
+                                <input type="radio" id="{{ interpretasi . terminology_code }}"
+                                    class="form-check-input" formControlName="selectedItemValue"
+                                    [value]="interpretasi . terminology_code"
+                                    (change)="onSelectItemInterprestasi(interpretasi)">
+                                <label class="form-check-label" for="{{ interpretasi . terminology_code }}">
+                                    {{ interpretasi . terminology_name }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="activeTab == 'form-pemeriksaan-fisik'">
+            <div class="card-body">
+                <form [formGroup]="formPemeriksaanFisik">
+                    <div class="row border-bottom">
+                        <h3 class="mb-2">Tingkat Kesadaran</h3>
+                        <div class="col-lg-6">
+                            <label class="form-label">Hasil Response </label>
+                            <div class="d-flex justify-content-between">
+                                <div class="form-check form-check-inline"
+                                    *ngFor="let tingkatSadar of listTingkatKesadaran; let i = index">
+                                    <!-- Input Radio -->
+                                    <input type="radio" formControlName="tingkatResponseKesadaran"
+                                        [id]="'tingkatResponseKesadaran' + i" [value]="tingkatSadar"
+                                        class="form-check-input" />
+                                    <!-- Label -->
+                                    <label class="form-check-label" [for]="'tingkatResponseKesadaran' + i">
+                                        {{ tingkatSadar . terminology_name }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tanda vital -->
+                    <div class="row mt-2 border-bottom">
+                        <h3 class="mb-2">Tanda Vital</h3>
+                        <div class="col-md-3 mb-3">
+                            <label for="tdSistolik" class="form-label">TD SISTOLIK</label>
+                            <div formGroupName="tdSistolik">
+                                <div class="row g-0">
+                                    <div class="col-9">
+                                        <input formControlName="nilaiSistolik" type="number" class="form-control"
+                                            id="tdSistolik" placeholder="Nilai TD Sistolik" />
+                                    </div>
+                                    <div class="col-3">
+                                        <select class="form-select select-small"
+                                            formControlName="objectSatuanSistolik">
+                                            <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                                (click)="onSelectItem(satuanUnit)">
+                                                {{ satuanUnit . unit_code }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="tdDiastolik" class="form-label">TD DIASTOLIK</label>
+                            <div formGroupName="tdDiastolik">
+                                <div class="row g-0">
+                                    <div class="col-9">
+                                        <input formControlName="nilaiDiastolik" type="number" class="form-control"
+                                            id="tdDiastolik" placeholder="Nilai TD Diastolik" />
+                                    </div>
+                                    <div class="col-3">
+                                        <select class="form-select" formControlName="objectSatuanDiastolik">
+                                            <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                                (click)="onSelectItem(satuanUnit)">
+                                                {{ satuanUnit . unit_code }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="suhuTubuh" class="form-label">Suhu Tubuh</label>
+                            <div formGroupName="suhuTubuh">
+                                <div class="row g-0">
+                                    <div class="col-9">
+                                        <input formControlName="nilaiSuhu" type="number" class="form-control"
+                                            id="suhuTubuh" placeholder="Nilai Suhu Tubuh" />
+                                    </div>
+                                    <div class="col-3">
+                                        <select class="form-select" formControlName="objectSatuanSuhu">
+                                            <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                                (click)="onSelectItem(satuanUnit)">
+                                                {{ satuanUnit . unit_code }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="denyutJantung" class="form-label">Denyut
+                                Jantung</label>
+                            <div formGroupName="denyutJantung">
+                                <div class="row g-0">
+                                    <div class="col-9">
+                                        <input formControlName="nilaiDenyut" type="number" class="form-control"
+                                            id="denyutJantung" placeholder="Nilai Denyut Jantung" />
+                                    </div>
+                                    <div class="col-3">
+                                        <select class="form-select" formControlName="objectSatuanDenyut">
+                                            <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                                (click)="onSelectItem(satuanUnit)">
+                                                {{ satuanUnit . unit_code }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 mb-3 border-end">
+                            <label for="pernapasan" class="form-label">Pernapasan</label>
+                            <div formGroupName="pernapasan">
+                                <div class="row g-0">
+                                    <div class="col-9">
+                                        <input formControlName="nilaiPernapasan" type="number" class="form-control"
+                                            id="pernapasan" placeholder="Nilai Pernapasan" />
+                                    </div>
+                                    <div class="col-3">
+                                        <select class="form-select" formControlName="objectSatuanPernapasan">
+                                            <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                                (click)="onSelectItem(satuanUnit)">
+                                                {{ satuanUnit . unit_code }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-md-5 mb-3">
+                            <label for="kondisiMataInput" class="form-label">Kondisi
+                                Mata</label>
+                            <div class="input-group">
+                                <input formControlName="kondisiMata" type="text" class="form-control"
+                                    id="kondisiMataInput" placeholder="Kondisi mata" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="kondisiBibirInput" class="form-label">Kondisi
+                                Bibir</label>
+                            <div class="input-group">
+                                <input formControlName="kondisiBibir" type="text" class="form-control"
+                                    id="kondisiBibirInput" placeholder="Kondisi bibir" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="activeTab == 'form-questionaire-response'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 border-end border-start"
+                            *ngFor="let itemMalnutrisi of listQuestionaireMalNutrisi; let i = index">
+                            <div class="form-group mb-3">
+                                <label [for]="'question' + itemMalnutrisi.id" class="form-label">
+                                    {{ itemMalnutrisi . text }}
+                                </label>
+                                <div *ngIf="itemMalnutrisi.type === 'Boolean'">
+                                    <div class="form-check" *ngFor="let option of itemMalnutrisi.default_options">
+                                        <input class="form-check-input" type="radio"
+                                            [name]="'question' + itemMalnutrisi.id"
+                                            [id]="'question' + itemMalnutrisi.id + option.id"
+                                            [value]="option.valueBoolean" [(ngModel)]="itemMalnutrisi.answer" />
+                                        <label class="form-check-label"
+                                            [for]="'question' + itemMalnutrisi.id + option.id">
+                                            {{ option . display }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div *ngIf="itemMalnutrisi.type === 'reference'">
+                                    <div class="form-check" *ngFor="let option of itemMalnutrisi.options">
+                                        <input class="form-check-input" type="checkbox"
+                                            [name]="'question' + itemMalnutrisi.id"
+                                            [id]="'question' + itemMalnutrisi.id + option.id"
+                                            [value]="option.option_value"
+                                            (change)="onCheckboxChange(itemMalnutrisi, option.option_value, $event)"
+                                            [checked]="isOptionSelected(itemMalnutrisi.answer, option.option_value)" />
+                                        <label class="form-check-label"
+                                            [for]="'question' + itemMalnutrisi.id + option.id">
+                                            {{ option . display }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- NOTE: Rencana Tindak Lanjut -->
+        <div class="card" *ngIf="activeTab == 'form-rencana-tindak-lanjut'">
+            <div class="card-body">
+                <form [formGroup]="formRujukLaborat">
+                    <div class="form-group">
+                        <div *ngFor="let itemServReq of itemsTerminologiRencanaTindakLanjutServiceRequest"
+                            class="mb-3">
+                            <label class="fw-bold">{{ itemServReq . terminology_name }}</label>
+                            <div *ngFor="let itemChol of itemsTerminologiCholesterolObservationServiceRequest"
+                                class="form-check">
+                                <input class="form-check-input" type="checkbox"
+                                    [id]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
+                                    [value]="itemChol">
+                                <label class="form-check-label"
+                                    [for]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
+                                    [title]="itemChol.description">
+                                    {{ itemChol . terminology_name }}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- NOTE: Observarion Antropometri -->
+        <div class="card" *ngIf="activeTab == 'form-antropometri'">
+            <div class="card-body">
+                <form [formGroup]="antropometriObservationForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3" *ngFor="let item of itemsTerminologiAntropometriOservarion">
+                            <label class="form-label">{{ item . terminology_name }}</label>
+                            <div>
+                                <div class="row g-0">
+                                    <div class="col-9">
+                                        <input type="number" class="form-control"
+                                            [placeholder]="'Nilai ' + item.terminology_name" [value]="item.value"
+                                            (input)="item.value = $event.target.value" [title]="item.description" />
+                                    </div>
+                                    <div class="col-3">
+                                        <select class="form-select" (change)="item.unit = $event.target.value">
+                                            <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
+                                                {{ satuanUnit . unit_code }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card" *ngIf="activeTab == 'form-antropometri-balita'">
+            <div class="card-body">
+                <form class="mt-2" [formGroup]="antropometriBalitaObservationForm">
+                    <div class="row">
+                        <strong class="font-weight-bold">Observasi Antropometri Balita</strong>
+                        <div class="col-md-6 mb-3" *ngFor="let item of itemsTerminologiAntropometriBalitaOservarion">
+                            <label class="form-label">{{ item . terminology_name }}</label>
+                            <div>
+                                <div class="row g-0">
+                                    <div class="col-9">
+                                        <input type="number" class="form-control"
+                                            [placeholder]="'Nilai ' + item.terminology_name" [value]="item.value"
+                                            (input)="item.value = $event.target.value" [title]="item.description" />
+                                    </div>
+                                    <div class="col-3">
+                                        <select class="form-select" (change)="item.unit = $event.target.value">
+                                            <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
+                                                {{ satuanUnit . unit_code }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- form ibu hamil -->
+        <div class="card" *ngIf="activeTab == 'form-antropometri-ibu-hamil'">
+            <div class="card-body">
+                <form class="mt-2" [formGroup]="antropometriIbuHamilObservationForm">
+                    <div class="row">
+                        <strong class="font-weight-bold">Observasi Antropometri Ibu Hamil</strong>
+                        <div class="col-md-6 mb-3"
+                            *ngFor="let item of itemsTerminologiAntropometriIbuHamilOservarion">
+                            <label class="form-label">{{ item . terminology_name }}</label>
+                            <div>
+                                <div class="row g-0">
+                                    <div class="col-9">
+                                        <input type="number" class="form-control"
+                                            [placeholder]="'Nilai ' + item.terminology_name" [value]="item.value"
+                                            (input)="item.value = $event.target.value" [title]="item.description" />
+                                    </div>
+                                    <div class="col-3">
+                                        <select class="form-select" (change)="item.unit = $event.target.value">
+                                            <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
+                                                {{ satuanUnit . unit_code }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Index masa tubuh-->
+        <div class="card" *ngIf="activeTab == 'form-antropometri-index'">
+            <div class="card-body">
+                <form class="mt-2" [formGroup]="antropometriIndexObservationForm">
+                    <div class="row">
+                        <strong class="font-weight-bold">Observasi Antropometri Masa Tubuh</strong>
+                        <div class="col-md-6 mb-3" *ngFor="let item of itemsTerminologiAntropometriIndexOservarion">
+                            <label class="form-label">{{ item . terminology_name }}</label>
+                            <div>
+                                <div class="row g-0">
+                                    <div class="col-9">
+                                        <input type="number" class="form-control"
+                                            [placeholder]="'Nilai ' + item.terminology_name" [value]="item.value"
+                                            (input)="item.value = $event.target.value" [title]="item.description" />
+                                    </div>
+                                    <div class="col-3">
+                                        <select class="form-select" (change)="item.unit = $event.target.value">
+                                            <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
+                                                {{ satuanUnit . unit_code }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
+</div>
+
+
+<div class="col-12 mb-4" align="center">
+    <button class="btn btn-success mx-1" (click)="simpan()" [disabled]="isDisabledFormGizi">
+        SIMPAN
+    </button>
+    <button class="btn btn-danger btn-danger" routerLink="/master/satusehat-gizi">
+        KEMBALI
+    </button>
 </div>
 
 

@@ -22,7 +22,7 @@ export class TulisAncComponent implements OnInit {
   faCog = faCog
   faSave = faSave
   isDisabledFormAnc: boolean = true
-  
+
   userData: any = JSON.parse(localStorage.getItem('userDatacl')).userData
   headers = new HttpHeaders({
     'kd-cabang': this.userData.kdcabang
@@ -62,7 +62,7 @@ export class TulisAncComponent implements OnInit {
     private ancService: AncService,
     private route: ActivatedRoute,
     private fb: FormBuilder
-  ) { 
+  ) {
     this.formObstetri = this.fb.group({
       gravida: [''],
       paritas: [''],
@@ -140,7 +140,7 @@ export class TulisAncComponent implements OnInit {
       diagnostic_code: [''],
       diagnostic_name: ['']
     })
-    
+
     this.formDiagnosa = this.fb.group({
       diagnostic_code: [''],
       diagnostic_name: ['']
@@ -213,7 +213,8 @@ export class TulisAncComponent implements OnInit {
   }
 
   simpan() {
-    switch (this.activeTab) {
+    switch (this.activeTab)
+    {
       case 'form-anc': this.doSubmitObstetri(); break;
       case 'data-tindakan': this.doSubmitTindakan(); break;
       case 'data-konseling': this.doSubmitKonseling(); break;
@@ -225,7 +226,7 @@ export class TulisAncComponent implements OnInit {
     }
   }
 
-  async doSubmitObstetri(){
+  async doSubmitObstetri() {
     var data = {
       data: {
         rmno: this.notransaksi,
@@ -262,25 +263,29 @@ export class TulisAncComponent implements OnInit {
     let response1: any = await this.ancService.updateStatusObstetri(data)
     let response2: any = await this.ancService.updateKunjunganKehamilan(data)
     let response3: any = await this.ancService.updatePelayananKehamilan(data)
-    if (response1.statusCode != '00') {
+    if (response1.statusCode != '00')
+    {
       Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
-    } 
-    else if(response2.statusCode != '00') {
+    }
+    else if (response2.statusCode != '00')
+    {
       Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
-    } 
-    else if(response3.statusCode != '00') {
+    }
+    else if (response3.statusCode != '00')
+    {
       Swal.fire(response3.statusMsg.split(': ')[0], response3.statusMsg.split(': ')[1], 'error')
-    } 
-    else if(
+    }
+    else if (
       response1.statusCode == '00' &&
       response2.statusCode == '00' &&
       response3.statusCode == '00'
-    ) {
+    )
+    {
       Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
-    } 
+    }
   }
 
-  async doSubmitTindakan(){
+  async doSubmitTindakan() {
     var data = {
       data: {
         rmno: this.notransaksi,
@@ -297,14 +302,16 @@ export class TulisAncComponent implements OnInit {
 
     this.showLoading()
     let response: any = await this.ancService.updateTindakanKehamilan(data)
-    if(response.statusCode == '00') {
+    if (response.statusCode == '00')
+    {
       Swal.fire(response.statusMsg.split(': ')[0], response.statusMsg.split(': ')[1], 'success')
-    } else {
+    } else
+    {
       Swal.fire(response.statusMsg.split(': ')[0], response.statusMsg.split(': ')[1], 'error')
     }
   }
 
-  async doSubmitKonseling(){
+  async doSubmitKonseling() {
     var data = {
       data: {
         rmno: this.notransaksi,
@@ -318,9 +325,11 @@ export class TulisAncComponent implements OnInit {
 
     this.showLoading()
     let response: any = await this.ancService.updateKonseling(data)
-    if(response.statusCode == '00') {
+    if (response.statusCode == '00')
+    {
       Swal.fire(response.statusMsg.split(': ')[0], response.statusMsg.split(': ')[1], 'success')
-    } else {
+    } else
+    {
       Swal.fire(response.statusMsg.split(': ')[0], response.statusMsg.split(': ')[1], 'error')
     }
   }
@@ -339,14 +348,16 @@ export class TulisAncComponent implements OnInit {
 
     this.showLoading()
     let response: any = await this.ancService.diagnosisFinal(data)
-    if(response.statusCode == '00') {
+    if (response.statusCode == '00')
+    {
       Swal.fire(response.statusMsg.split(': ')[0], response.statusMsg.split(': ')[1], 'success')
-    } else {
+    } else
+    {
       Swal.fire(response.statusMsg.split(': ')[0], response.statusMsg.split(': ')[1], 'error')
     }
   }
 
-  async doSubmitMeninggalkanFaskes(){
+  async doSubmitMeninggalkanFaskes() {
     var data = {
       data: {
         rmno: this.notransaksi,
@@ -360,9 +371,11 @@ export class TulisAncComponent implements OnInit {
 
     this.showLoading()
     let response: any = await this.ancService.meninggalkanFaskes(data)
-    if(response.statusCode == '00') {
+    if (response.statusCode == '00')
+    {
       Swal.fire(response.statusMsg.split(': ')[0], response.statusMsg.split(': ')[1], 'success')
-    } else {
+    } else
+    {
       Swal.fire(response.statusMsg.split(': ')[0], response.statusMsg.split(': ')[1], 'error')
     }
   }
@@ -383,16 +396,20 @@ export class TulisAncComponent implements OnInit {
 
     let response1: any = await this.ancService.tindakLanjutEncounter(data)
     let response2: any = await this.ancService.tindakLanjutCreate(data)
-    if (response1.statusCode != '00') {
+    if (response1.statusCode != '00')
+    {
       Swal.fire(`tindakLanjutEncounter : ${response1.statusMsg.split(': ')[0]}`, response1.statusMsg.split(': ')[1], 'error')
     }
-    else if (response2.statusCode != '00') {
+    else if (response2.statusCode != '00')
+    {
       Swal.fire(`tindakLanjutCreate : ${response2.statusMsg.split(': ')[0]}`, response2.statusMsg.split(': ')[1], 'error')
     }
-    else if(response1.statusCode == '00') {
+    else if (response1.statusCode == '00')
+    {
       Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
-    } 
-    else {
+    }
+    else
+    {
       this.stopLoading()
     }
   }
@@ -414,23 +431,28 @@ export class TulisAncComponent implements OnInit {
     let response1: any = await this.ancService.createLaboratorium(data)
     let response2: any = await this.ancService.observationLaboratorium(data)
     let response3: any = await this.ancService.diagLaboratorium(data)
-    if (response1.statusCode != '00') {
+    if (response1.statusCode != '00')
+    {
       Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'error')
     }
-    else if (response2.statusCode != '00') {
+    else if (response2.statusCode != '00')
+    {
       Swal.fire(response2.statusMsg.split(': ')[0], response2.statusMsg.split(': ')[1], 'error')
     }
-    else if (response3.statusCode != '00') {
+    else if (response3.statusCode != '00')
+    {
       Swal.fire(response3.statusMsg.split(': ')[0], response3.statusMsg.split(': ')[1], 'error')
     }
-    else if(
+    else if (
       response1.statusCode == '00' &&
       response2.statusCode == '00' &&
       response3.statusCode == '00'
-    ) {
+    )
+    {
       Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
     }
-    else {
+    else
+    {
       this.stopLoading()
     }
   }
@@ -452,24 +474,29 @@ export class TulisAncComponent implements OnInit {
     let response1: any = await this.ancService.createRadiologi(data)
     let response2: any = await this.ancService.observationRadiologi(data)
     let response3: any = await this.ancService.diagnosisReportRadiologi(data)
-    
-    if (response1.statusCode != '00') {
+
+    if (response1.statusCode != '00')
+    {
       Swal.fire(`createRadiologi : ${response1.statusMsg.split(': ')[0]}`, response1.statusMsg.split(': ')[1], 'error')
     }
-    else if (response2.statusCode != '00') {
+    else if (response2.statusCode != '00')
+    {
       Swal.fire(`observationRadiologi : ${response2.statusMsg.split(': ')[0]}`, response2.statusMsg.split(': ')[1], 'error')
     }
-    else if (response3.statusCode != '00') {
+    else if (response3.statusCode != '00')
+    {
       Swal.fire(`diagnosisReportRadiologi : ${response3.statusMsg.split(': ')[0]}`, response3.statusMsg.split(': ')[1], 'error')
     }
-    else if(
+    else if (
       response1.statusCode == '00' &&
       response2.statusCode == '00' &&
       response3.statusCode == '00'
-    ) {
+    )
+    {
       Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
     }
-    else {
+    else
+    {
       this.stopLoading()
     }
   }
@@ -482,14 +509,14 @@ export class TulisAncComponent implements OnInit {
 
     let response: any = await this.ancService.createAnc({
       data: {
-          rmno: this.notransaksi,
-          orgId: this.cabangData.kodeorg,
-          patientId: this.idpasien,
-          patientName: this.patientData.pasien,
-          practitionerId: this.patientData.idhis,
-          practitionerName: this.patientData.namdokter,
-          locationId: this.patientData.locationid,
-          satusehatId: this.patientData.idsatusehat
+        rmno: this.notransaksi,
+        orgId: this.cabangData.kodeorg,
+        patientId: this.idpasien,
+        patientName: this.patientData.pasien,
+        practitionerId: this.patientData.idhis,
+        practitionerName: this.patientData.namdokter,
+        locationId: this.patientData.locationid,
+        satusehatId: this.patientData.idsatusehat
       }
     })
     this.useCaseId = response.data.use_case_id
@@ -497,15 +524,19 @@ export class TulisAncComponent implements OnInit {
   }
 
   async setIdPasien() {
-    if (!this.patientData.idpasien) {
+    if (!this.patientData.idpasien)
+    {
       let idpasien = await this.getPasienSatuSehat()
-      if (!idpasien) {
+      if (!idpasien)
+      {
         Swal.fire('Data Pasien Tidak ditemukan di SatuSehat')
-      } else {
+      } else
+      {
         this.idpasien = idpasien
         this.isDisabledFormAnc = false
       }
-    } else {
+    } else
+    {
       this.idpasien = this.patientData.idpasien
       this.isDisabledFormAnc = false
     }
@@ -523,7 +554,8 @@ export class TulisAncComponent implements OnInit {
     })
 
     let patient = response.data
-    if (patient) {
+    if (patient)
+    {
       this.formObstetri.patchValue(patient.status_obstetri)
       this.formKunjungan.patchValue(patient.data_kunjungan_kehamilan)
       this.formPemeriksaanIbu.patchValue(patient.pemeriksaan_ibu)
@@ -564,7 +596,8 @@ export class TulisAncComponent implements OnInit {
         this.patientData.nopengenal,
         this.headers
       ).subscribe((data) => {
-        if (data.entry.length !== 0) {
+        if (data.entry.length !== 0)
+        {
           resolve(data.entry[0].resource.id)
         }
       })
