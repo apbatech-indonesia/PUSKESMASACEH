@@ -280,7 +280,7 @@ export class anjungansehatComponent implements OnInit {
   kliniks: string = "";
 
   tmppuser() {
-    this.authService.poli(this.kdcabang).subscribe(
+    this.authService.poliByStatussakit(this.kdcabang, '2').subscribe(
       (data) => {
         this.tklinik = data;
 

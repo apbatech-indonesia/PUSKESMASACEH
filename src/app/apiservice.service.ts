@@ -454,6 +454,11 @@ export class ApiserviceService {
     return this.http.get(apiurx + "master/poliklinik.php?kdcabang=" + a);
   }
 
+  poliByStatussakit(a, statussakit = '1'): Observable<any> {
+    // statussakit sakit => 1, sehat => 2
+    return this.http.get(apiurx + "master/polibystatussakit.php?kdcabang=" + a + "&statussakit="+statussakit);
+  }
+
   caripoli(a, b): Observable<any> {
     return this.http.get(
       apiurx + "master/caripoli.php?kdcabang=" + a + "&nampoli=" + b

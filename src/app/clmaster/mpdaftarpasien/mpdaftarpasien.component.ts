@@ -465,7 +465,7 @@ export class MpdaftarpasienComponent implements OnInit {
   kliniks: string = "";
 
   tmppuser() {
-    this.authService.poli(this.kdcabang).subscribe(
+    this.authService.poliByStatussakit(this.kdcabang).subscribe(
       (data) => {
         this.tklinik = data;
       },
