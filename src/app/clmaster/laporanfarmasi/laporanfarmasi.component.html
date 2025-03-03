@@ -115,6 +115,24 @@
             >
               Pemakaian Obat Terbanyak
             </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pemakaian Obat ISPA-Pneumonia')"
+            >
+              Pemakaian Obat ISPA-Pneumonia
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pemakaian Obat ISPA-Pneumonia Antibiotik')"
+            >
+              Pemakaian Obat ISPA-Pneumonia Antibiotik
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pemakaian Obat Diare Non-Spesifik')"
+            >
+              Pemakaian Obat Diare Non-Spesifik
+            </button>
           </div>
         </div>
         <hr />
@@ -166,7 +184,10 @@
             judul === 'Pemakaian Obat By Obat' ||
             judul === 'Pemakaian Obat By Dokter' ||
             judul === 'Laba Rugi Farmasi' ||
-            judul === 'Pemakaian Obat Terbanyak'
+            judul === 'Pemakaian Obat Terbanyak' ||
+            judul === 'Pemakaian Obat ISPA-Pneumonia' ||
+            judul === 'Pemakaian Obat ISPA-Pneumonia Antibiotik' ||
+            judul === 'Pemakaian Obat Diare Non-Spesifik'
           "
         >
           <div class="position-relative mb-3">
@@ -206,7 +227,10 @@
             judul !== 'Pemakaian Obat By Obat' &&
             judul !== 'Pemakaian Obat By Dokter' &&
             judul !== 'Laba Rugi Farmasi' &&
-            judul !== 'Pemakaian Obat Terbanyak'
+            judul !== 'Pemakaian Obat Terbanyak' &&
+            judul !== 'Pemakaian Obat ISPA-Pneumonia' &&
+            judul !== 'Pemakaian Obat ISPA-Pneumonia Antibiotik' &&
+            judul !== 'Pemakaian Obat Diare Non-Spesifik'
           "
         >
           <label for="exampleSelect" class="form-label" style="color: black"
@@ -454,6 +478,18 @@
             (click)="penjualanex()"
           >
             Export Excel Laporan Pemakaian Obat
+          </button>
+        </div>
+        
+        <div *ngIf="['Pemakaian Obat ISPA-Pneumonia','Pemakaian Obat ISPA-Pneumonia Antibiotik', 'Pemakaian Obat Diare Non-Spesifik'].includes(judul) ">
+          <button class="mb-2 me-2 btn-pill btn btn-info" (click)="laporanobat(judul)">
+            {{ judul }}
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="laporanobat(judul, true)"
+          >
+            Export Excel {{ judul }}
           </button>
         </div>
 

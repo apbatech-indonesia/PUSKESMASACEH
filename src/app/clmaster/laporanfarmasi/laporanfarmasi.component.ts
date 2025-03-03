@@ -71,6 +71,7 @@ export class laporanfarmasiComponent implements OnInit {
   myDate = new Date();
   hostName: string;
   URLINVOICE: string;
+  jenis_obat: string;
   constructor(
     public hots: SampleService,
     private datepipe: DatePipe,
@@ -696,6 +697,54 @@ export class laporanfarmasiComponent implements OnInit {
       "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
     );
     redirectWindow.location;
+  }
+
+  laporanobat(judul: any, isExcel: boolean = false) {
+    switch (judul) {
+      case "Pemakaian Obat ISPA-Pneumonia":
+        this.jenis_obat = "analgesik";
+        break;
+      case "Pemakaian Obat ISPA-Pneumonia Antibiotik":
+        this.jenis_obat = "antibiotik";
+        break;
+      case "Pemakaian Obat Diare Non-Spesifik":
+        this.jenis_obat = "antidiare";
+        break;
+      default:
+        this.jenis_obat = "analgesik";
+        break;
+    }
+    if (isExcel === true) {
+      var redirectWindow = window.open(
+        "https://tabaro.clenicapp.com/" +
+          "clenic/report/laporanobatexcel.php?kdcabang=" +
+          this.kdcabang +
+          "&start_date=" +
+          this.tgldari +
+          "&end_date=" +
+          this.tglsampai +
+          "&jenis_obat=" +
+          this.jenis_obat,
+        "_blank",
+        "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      );
+      redirectWindow.location;
+    } else {
+      var redirectWindow = window.open(
+        "https://tabaro.clenicapp.com/" +
+          "clenic/report/laporanobat.php?kdcabang=" +
+          this.kdcabang +
+          "&start_date=" +
+          this.tgldari +
+          "&end_date=" +
+          this.tglsampai +
+          "&jenis_obat=" +
+          this.jenis_obat,
+        "_blank",
+        "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      );
+      redirectWindow.location;
+    }
   }
 
   penjualanobatex() {
