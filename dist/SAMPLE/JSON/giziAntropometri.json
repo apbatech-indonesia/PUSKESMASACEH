@@ -1,0 +1,309 @@
+{
+    "data": {
+        "encounterId": "68143573-63c1-4311-a1b3-35cf596d31eb",
+        "useCaseId": 482,
+        "satusehatId": "f360a2fc-4e7a-4a78-a091-2f2a83f67474",
+        "observations": [
+            {
+                "name": "Abdominal circumference_observation",
+                "status": "final",
+                "category": {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "exam",
+                    "display": "exam"
+                },
+                "data": [
+                    {
+                        "code": {
+                            "system": "https://www.snomed.org",
+                            "code": "396552003",
+                            "display": "Abdominal circumference"
+                        },
+                        "valueString": "",
+                        "result": {
+                            "value": 12,
+                            "unit": "cm",
+                            "system": "http://unitsofmeasure.org",
+                            "code": "cm"
+                        },
+                        "resultBoolean": {},
+                        "valueCodeableConcept": {}
+                    }
+                ],
+                "interpretation": {},
+                "effectiveDateTime": "2025-02-26T07:36:13.835Z",
+                "issued": "2025-02-26T07:36:13.835Z"
+            },
+            {
+                "name": "Body height_observation",
+                "status": "final",
+                "category": {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "vital-signs",
+                    "display": "vital-signs"
+                },
+                "data": [
+                    {
+                        "code": {
+                            "system": "https://loinc.org",
+                            "code": "8302-2",
+                            "display": "Body height"
+                        },
+                        "valueString": "",
+                        "result": {
+                            "value": 12,
+                            "unit": "cm",
+                            "system": "http://unitsofmeasure.org",
+                            "code": "cm"
+                        },
+                        "resultBoolean": {},
+                        "valueCodeableConcept": {}
+                    }
+                ],
+                "interpretation": {},
+                "effectiveDateTime": "2025-02-26T07:36:13.835Z",
+                "issued": "2025-02-26T07:36:13.835Z"
+            },
+            {
+                "name": "Body height --lying_observation",
+                "status": "final",
+                "category": {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "vital-signs",
+                    "display": "vital-signs"
+                },
+                "data": [
+                    {
+                        "code": {
+                            "system": "https://loinc.org",
+                            "code": "8306-3",
+                            "display": "Body height --lying"
+                        },
+                        "valueString": "",
+                        "result": {
+                            "value": 12,
+                            "unit": "cm",
+                            "system": "http://unitsofmeasure.org",
+                            "code": "cm"
+                        },
+                        "resultBoolean": {},
+                        "valueCodeableConcept": {}
+                    }
+                ],
+                "interpretation": {},
+                "effectiveDateTime": "2025-02-26T07:36:13.835Z",
+                "issued": "2025-02-26T07:36:13.835Z"
+            },
+            {
+                "name": "Body height --standing_observation",
+                "status": "final",
+                "category": {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "vital-signs",
+                    "display": "vital-signs"
+                },
+                "data": [
+                    {
+                        "code": {
+                            "system": "https://loinc.org",
+                            "code": "8308-9",
+                            "display": "Body height --standing"
+                        },
+                        "valueString": "",
+                        "result": {
+                            "value": 12,
+                            "unit": "cm",
+                            "system": "http://unitsofmeasure.org",
+                            "code": "cm"
+                        },
+                        "resultBoolean": {},
+                        "valueCodeableConcept": {}
+                    }
+                ],
+                "interpretation": {},
+                "effectiveDateTime": "2025-02-26T07:36:13.835Z",
+                "issued": "2025-02-26T07:36:13.835Z"
+            },
+            {
+                "name": "Body weight_observation",
+                "status": "final",
+                "category": {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "vital-sign",
+                    "display": "vital-sign"
+                },
+                "data": [
+                    {
+                        "code": {
+                            "system": "https://loinc.org",
+                            "code": "29463-7",
+                            "display": "Body weight"
+                        },
+                        "valueString": "",
+                        "result": {
+                            "value": 12,
+                            "unit": "kg",
+                            "system": "http://unitsofmeasure.org",
+                            "code": "kg"
+                        },
+                        "resultBoolean": {},
+                        "valueCodeableConcept": {}
+                    }
+                ],
+                "interpretation": {},
+                "effectiveDateTime": "2025-02-26T07:36:13.835Z",
+                "issued": "2025-02-26T07:36:13.835Z"
+            },
+            {
+                "name": "Head Occipital-frontal circumference_observation",
+                "status": "final",
+                "category": {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "vital-signs",
+                    "display": "vital-signs"
+                },
+                "data": [
+                    {
+                        "code": {
+                            "system": "https://loinc.org",
+                            "code": "9843-4",
+                            "display": "Head Occipital-frontal circumference"
+                        },
+                        "valueString": "",
+                        "result": {
+                            "value": 12,
+                            "unit": "cm",
+                            "system": "http://unitsofmeasure.org",
+                            "code": "cm"
+                        },
+                        "resultBoolean": {},
+                        "valueCodeableConcept": {}
+                    }
+                ],
+                "interpretation": {},
+                "effectiveDateTime": "2025-02-26T07:36:13.835Z",
+                "issued": "2025-02-26T07:36:13.835Z"
+            },
+            {
+                "name": "Kenaikan Berat Badan Adekuat_observation",
+                "status": "final",
+                "category": {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "exam",
+                    "display": "exam"
+                },
+                "data": [
+                    {
+                        "code": {
+                            "system": "http://sys-ids.kemkes.go.id/kfa",
+                            "code": "OC000012",
+                            "display": "Kenaikan Berat Badan Adekuat"
+                        },
+                        "valueString": "",
+                        "result": {
+                            "value": 12,
+                            "unit": "kg",
+                            "system": "http://unitsofmeasure.org",
+                            "code": "kg"
+                        },
+                        "resultBoolean": {},
+                        "valueCodeableConcept": {}
+                    }
+                ],
+                "interpretation": {},
+                "effectiveDateTime": "2025-02-26T07:36:13.835Z",
+                "issued": "2025-02-26T07:36:13.835Z"
+            },
+            {
+                "name": "Mid upper arm circumference_observation",
+                "status": "final",
+                "category": {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "exam",
+                    "display": "exam"
+                },
+                "data": [
+                    {
+                        "code": {
+                            "system": "https://www.snomed.org",
+                            "code": "284473002",
+                            "display": "Mid upper arm circumference"
+                        },
+                        "valueString": "",
+                        "result": {
+                            "value": 12,
+                            "unit": "cm",
+                            "system": "http://unitsofmeasure.org",
+                            "code": "cm"
+                        },
+                        "resultBoolean": {},
+                        "valueCodeableConcept": {}
+                    }
+                ],
+                "interpretation": {},
+                "effectiveDateTime": "2025-02-26T07:36:13.835Z",
+                "issued": "2025-02-26T07:36:13.835Z"
+            },
+            {
+                "name": "Percentage weight loss_observation",
+                "status": "final",
+                "category": {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "exam",
+                    "display": "exam"
+                },
+                "data": [
+                    {
+                        "code": {
+                            "system": "https://loinc.org",
+                            "code": "248349002",
+                            "display": "Percentage weight loss"
+                        },
+                        "valueString": "",
+                        "result": {
+                            "value": 12,
+                            "unit": "kg",
+                            "system": "http://unitsofmeasure.org",
+                            "code": "kg"
+                        },
+                        "resultBoolean": {},
+                        "valueCodeableConcept": {}
+                    }
+                ],
+                "interpretation": {},
+                "effectiveDateTime": "2025-02-26T07:36:13.835Z",
+                "issued": "2025-02-26T07:36:13.835Z"
+            },
+            {
+                "name": "Waist circumference_observation",
+                "status": "final",
+                "category": {
+                    "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+                    "code": "exam",
+                    "display": "exam"
+                },
+                "data": [
+                    {
+                        "code": {
+                            "system": "https://www.snomed.org",
+                            "code": "276361009",
+                            "display": "Waist circumference"
+                        },
+                        "valueString": "",
+                        "result": {
+                            "value": 12,
+                            "unit": "cm",
+                            "system": "http://unitsofmeasure.org",
+                            "code": "cm"
+                        },
+                        "resultBoolean": {},
+                        "valueCodeableConcept": {}
+                    }
+                ],
+                "interpretation": {},
+                "effectiveDateTime": "2025-02-26T07:36:13.835Z",
+                "issued": "2025-02-26T07:36:13.835Z"
+            }
+        ]
+    }
+}

@@ -1,5 +1,5 @@
 import { HttpHeaders } from '@angular/common/http'
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core'
 import Swal from 'sweetalert2'
 import { ApiserviceService } from '../../../apiservice.service'
 import { ActivatedRoute } from '@angular/router'
@@ -35,6 +35,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   formRencanaTindakLanjut: FormGroup
   formRujukLaborat: FormGroup
   selectedCheckboxes: { [key: string]: string } = {}; // Pastikan ini ada
+  selectedCheckboxesSpecimentLab: { [key: string]: string } = {}; // Pastikan ini ada
+  selectedServiceRequests: { [key: string]: string } = {};
+
   formMalnitrisi: FormGroup
   formLaboratSpecimen: FormGroup
   formKeluhanUtama: FormGroup
@@ -98,6 +101,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   itemsTerminologiAntropometriIbuHamilOservarion: any;
   itemsTerminologiAntropometriIndexOservarion: any;
   itemsTerminologiRencanaTindakLanjutServiceRequest: any;
+  itemsTerminologiLaboratSpecimenType: any;
+  itemsTerminologiLaboratSpecimenCollection: any;
+  riwayatServiceRequest: any;
   showOptionsObats: boolean = false;
   pilihMObat: string;
   selectedItemobats: any[] = [];
@@ -225,7 +231,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       questions: this.fb.array([])
     });
   }
-  toggleInput(id: string) {
+  toggleInputRencanaTindakLanjut(id: string) {
     if (this.selectedCheckboxes[id])
     {
       delete this.selectedCheckboxes[id];
@@ -237,6 +243,19 @@ export class TulisSatuSehatGiziComponent implements OnInit {
 
   updateSelectedCheckboxes(id: string, value: string) {
     this.selectedCheckboxes = { ...this.selectedCheckboxes, [id]: value };
+  }
+  toggleInputSpecimentLab(id: string) {
+    if (this.selectedCheckboxesSpecimentLab[id])
+    {
+      delete this.selectedCheckboxesSpecimentLab[id];
+    } else
+    {
+      this.selectedCheckboxesSpecimentLab = { ...this.selectedCheckboxesSpecimentLab, [id]: "" };
+    }
+  }
+
+  updateselectedCheckboxesSpecimentLab(id: string, value: string) {
+    this.selectedCheckboxesSpecimentLab = { ...this.selectedCheckboxesSpecimentLab, [id]: value };
   }
 
   loadQuestions() {
@@ -440,7 +459,12 @@ export class TulisSatuSehatGiziComponent implements OnInit {
                   code: "{score}"
                 },
                 resultBoolean: {},
-                valueCodeableConcept: {}
+                valueCodeableConcept: {
+                  value: formMalnutrisi.nilaiSkorMalnutrisi,
+                  unit: "{score}",
+                  system: "http://unitsofmeasure.org",
+                  code: "{score}"
+                }
               }
             ],
             interpretation: {
@@ -736,13 +760,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       data: [
         {
           code: {
-            system: item.source.source_url,
+            system: "http://terminology.hl7.org/CodeSystem/observation-category",
             code: item.terminology_code,
             display: item.terminology_name
           },
           valueString: "",
           result: {
-            value: item.value,
+            value: Number(item.value),
             unit: item.unit,
             system: "http://unitsofmeasure.org",
             code: item.unit
@@ -787,13 +811,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       data: [
         {
           code: {
-            system: item.source.source_url,
+            system: "http://loinc.org",
             code: item.terminology_code,
             display: item.terminology_name
           },
           valueString: "",
           result: {
-            value: item.value,
+            value: Number(item.value),
             unit: item.unit,
             system: "http://unitsofmeasure.org",
             code: item.unit
@@ -828,7 +852,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   }
   async doSubmitRencanaTindakLanjutServiceRequest() {
-    // TODO: buat payload
     let serviceRequests = [];
 
     for (let itemServReq of this.itemsTerminologiRencanaTindakLanjutServiceRequest)
@@ -909,10 +932,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     {
       Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
     }
-
   }
   async doSubmitRujukLaborat() {
-
     // try
     // {
     //   let response: any = await this.GiziService.createObservations(payload);
@@ -921,9 +942,11 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     //   Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
     // }
   }
+
+
   async doSubmitAntropometriIbuHamilObservation() {
     const observations = this.itemsTerminologiAntropometriIbuHamilOservarion.map(item => ({
-      name: item.terminology_name + "_observation",
+      name: item.terminology_name.toLowerCase().replace(/\s+/g, '_'),
       status: "final",
       category: {
         system: "http://terminology.hl7.org/CodeSystem/observation-category",
@@ -933,19 +956,25 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       data: [
         {
           code: {
-            system: item.source.source_url,
+            system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
             code: item.terminology_code,
             display: item.terminology_name
           },
           valueString: "",
-          result: {
-            value: item.value,
-            unit: item.unit,
-            system: "http://unitsofmeasure.org",
-            code: item.unit
-          },
+          result: item.value
+            ? {
+              value: Number(item.value),
+              unit: item.unit,
+              system: "http://unitsofmeasure.org",
+              code: item.unit
+            }
+            : {},
           resultBoolean: {},
-          valueCodeableConcept: {}
+          valueCodeableConcept: {
+            system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
+            code: "OV000009",
+            display: Number(item.value) + ' ' + item.unit
+          }
         }
       ],
       interpretation: {},
@@ -958,7 +987,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         encounterId: this.encounter_id,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
-        serviceRequests: observations
+        observations: observations
       }
     };
 
@@ -990,7 +1019,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
           },
           valueString: "",
           result: {
-            value: item.value,
+            value: Number(item.value),
             unit: item.unit,
             system: "http://unitsofmeasure.org",
             code: item.unit
@@ -1023,6 +1052,74 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
     }
   }
+
+  async doSubmitLaboratSpecimen() {
+    let specimens = [];
+    for (let typeSpecimen of this.itemsTerminologiLaboratSpecimenType)
+    {
+      for (let collectionSpecimen of this.itemsTerminologiLaboratSpecimenCollection)
+      {
+        let checkboxId = `${typeSpecimen.terminology_id}-${collectionSpecimen.terminology_id}`;
+
+        if (this.selectedCheckboxesSpecimentLab[checkboxId] !== undefined)
+        {
+          let selectedRequest = this.selectedServiceRequests[typeSpecimen.terminology_id] || null;
+          let specimen = {
+            name: `gizi_lab_${typeSpecimen.terminology_name.replace(/\s+/g, '_')}`,
+            status: "available",
+            type: {
+              system: typeSpecimen.source?.source_url || "http://default-category.org",
+              code: typeSpecimen.terminology_code,
+              display: typeSpecimen.terminology_name
+            },
+            collection: {
+              method: {
+                system: collectionSpecimen.source?.source_url || "http://default-system.org",
+                code: collectionSpecimen.terminology_code,
+                display: collectionSpecimen.terminology_name
+              },
+              collectedDateTime: new Date().toISOString()
+            },
+            receivedTime: new Date().toISOString(),
+
+            request: [{ reference: "ServiceRequest/" + selectedRequest }]
+
+          };
+
+          specimens.push(specimen);
+        }
+      }
+    }
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        specimens: specimens
+      }
+    };
+    console.log(payload);
+
+    if (specimens.length > 0)
+    {
+      try
+      {
+        let response: any = await this.GiziService.createSpeciment(payload);
+        let msg = response.statusMsg.split(': ');
+        Swal.fire('Success', msg.join(', '), 'success');
+      } catch (err)
+      {
+        Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+      }
+    } else
+    {
+      Swal.fire('Warning', 'Tidak ada specimen yang dipilih.', 'warning');
+    }
+  }
+
+
+
 
 
 
@@ -1342,6 +1439,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
       this.itemsTerminologiAntropometriIndexOservarion = itemResponse.data;
+
     } catch (error)
     {
       console.error('Error fetching data:', error);
@@ -1371,6 +1469,82 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       console.error('Error fetching data:', error);
     }
   }
+  async cariitemsTerminologiLaboratSpecimenType() {
+    // TODO: change key value
+    let payload = {
+      terminology_id: "",
+      key_operator: "=|=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "category|is_active",
+      key_value: "specimen-type|1",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsTerminologiLaboratSpecimenType = itemResponse.data;
+    } catch (error)
+    {
+      console.error('Error fetching data:', error);
+    }
+  }
+  async cariitemsTerminologiLaboratSpecimenCollection() {
+    // TODO: change key value
+    let payload = {
+      terminology_id: "",
+      key_operator: "=|=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "category|is_active",
+      key_value: "specimen-collection|1",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsTerminologiLaboratSpecimenCollection = itemResponse.data;
+
+    } catch (error)
+    {
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  async caririwayatServiceRequest() {
+    // TODO: change key value
+    let payload = {
+      "usecase_id": this.useCaseId,
+      "patientId": this.idpasien,
+      // "rmno": this.patientData.norm,
+      "type": "gizi",
+      "status": "active"
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getRiwayat(payload);
+      if (itemResponse.service_request_responses)
+      {
+        this.riwayatServiceRequest = itemResponse.service_request_responses;
+        console.log(this.riwayatServiceRequest);
+      } else
+      {
+        if (this.activeTab === "form-laborat-specimen")
+        {
+          Swal.fire('Error', 'Mohon Buat Rencana Tindakan', 'error');
+          this.activeTab = 'form-rencana-tindak-lanjut';
+        }
+      }
+    } catch (error)
+    {
+      console.error('Error fetching data:', error);
+    }
+  }
+
   async cariTerminologiEyeNarative() {
     let payload = {
       terminology_id: 250,
@@ -1629,11 +1803,23 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       this.cariitemsTerminologiAntropometriIbuHamilOservarion(),
       this.cariitemsTerminologiAntropometriIndexOservarion(),
       this.cariitemsTerminologiRencanaTindakLanjutServiceRequest(),
-      this.cariitemsTerminologiCholesterolObservationServiceRequest()
+      this.cariitemsTerminologiCholesterolObservationServiceRequest(),
+      this.cariitemsTerminologiLaboratSpecimenType(),
+      this.cariitemsTerminologiLaboratSpecimenCollection(),
+      this.caririwayatServiceRequest();
   }
+
+
   openTab(tab: string) {
-    this.activeTab = tab
+    this.activeTab = tab;
+    if (tab === "form-laborat-specimen")
+    {
+      this.caririwayatServiceRequest();
+    }
   }
+
+  private _activeTab: string = 'form-ibu-ayah';
+
   async cariKeluhanUtama() {
     let payload = {
       terminology_id: "",
@@ -1677,13 +1863,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       case 'form-keluhan-utama':
         this.doSubmitkeluhanUtama();
         break;
-      case 'form-alergi-makanan':
+      case 'form-lergiMakanan':
         this.doSubmitAlergiMakanan();
         break;
       case 'form-alergi-obat':
         this.doSubmitAlergiObat();
         break;
-      case 'form-malnutrisi':
+      case 'form-mal-nutrisi':
         this.doSubmitSkriningMalnutrisi();
         break;
       case 'form-pemeriksaan-fisik':
@@ -1706,6 +1892,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         break;
       case 'form-rencana-tindak-lanjut':
         this.doSubmitRencanaTindakLanjutServiceRequest();
+        break;
+      case 'form-laborat-specimen':
+        this.doSubmitLaboratSpecimen();
         break;
       default:
         Swal.fire('Error', 'Form tidak ditemukan', 'error');

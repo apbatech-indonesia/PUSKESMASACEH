@@ -20,6 +20,13 @@ export class GiziService {
       })
     })
   }
+  getRiwayat(data: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehatUrl + 'master/getUseCase', data, { headers: this.headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
 
   createRelatedPersonGIZI(data: any) {
     return new Promise((resolve) => {
@@ -83,6 +90,13 @@ export class GiziService {
   createServiceRequests(data: any) {
     return new Promise((resolve) => {
       this.http.post(satusehatUrl + 'gizi/serviceRequestsCreate', data, { headers: this.headers }).subscribe((data) => {
+        resolve(data)
+      })
+    })
+  }
+  createSpeciment(data: any) {
+    return new Promise((resolve) => {
+      this.http.post(satusehatUrl + 'gizi/specimensCreate', data, { headers: this.headers }).subscribe((data) => {
         resolve(data)
       })
     })

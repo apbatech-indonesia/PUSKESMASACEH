@@ -128,6 +128,12 @@
                             Laborat Specimen
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-laborat-observasi' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('form-laborat-observasi')">
+                            Laborat Observasi
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -179,7 +185,7 @@
                                 <div class="col-6">
                                     <div class="mb-2">
                                         <label for="province_id_ibu" class="form-label">Provinsi
-                                            Ibu</label>
+                                        </label>
                                         <app-master-province [provinceId]="formIbuAyah.value.province_id_ibu"
                                             (provinceOutput)="formIbuAyah.value.province_id_ibu = $event">
                                         </app-master-province>
@@ -187,7 +193,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-2">
-                                        <label for="city_id_ibu" class="form-label">Kota Ibu</label>
+                                        <label for="city_id_ibu" class="form-label">Kota </label>
                                         <app-master-city [cityId]="formIbuAyah.value.city_id_ibu"
                                             [provinceId]="formIbuAyah.value.province_id_ibu"
                                             (cityOutput)="formIbuAyah.value.city_id_ibu = $event">
@@ -197,7 +203,7 @@
                                 <div class="col-6">
                                     <div class="mb-2">
                                         <label for="district_id_ibu" class="form-label">Kecamatan
-                                            Ibu</label>
+                                        </label>
                                         <app-master-district [districtId]="formIbuAyah.value.district_id_ibu"
                                             [cityId]="formIbuAyah.value.city_id_ibu"
                                             (districtOutput)="formIbuAyah.value.district_id_ibu = $event">
@@ -207,7 +213,7 @@
                                 <div class="col-6">
                                     <div class="mb-2">
                                         <label for="village_id_ibu" class="form-label">Kelurahan
-                                            Ibu</label>
+                                        </label>
                                         <app-master-sub-district [subdistrictId]="formIbuAyah.value.village_id_ibu"
                                             [districtId]="formIbuAyah.value.district_id_ibu"
                                             (subDistrictOutput)="formIbuAyah.value.village_id_ibu = $event">
@@ -282,8 +288,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-2">
-                                        <label for="province_id_ayah" class="form-label">Provinsi
-                                            Ayah</label>
+                                        <label for="province_id_ayah" class="form-label">Provinsi</label>
                                         <app-master-province [provinceId]="formIbuAyah.value.province_id_ayah"
                                             (provinceOutput)="formIbuAyah.value.province_id_ayah = $event">
                                         </app-master-province>
@@ -291,8 +296,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-2">
-                                        <label for="city_id_ayah" class="form-label">Kota
-                                            Ayah</label>
+                                        <label for="city_id_ayah" class="form-label">Kota</label>
                                         <app-master-city [cityId]="formIbuAyah.value.city_id_ayah"
                                             [provinceId]="formIbuAyah.value.province_id_ayah"
                                             (cityOutput)="formIbuAyah.value.city_id_ayah = $event">
@@ -301,8 +305,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-2">
-                                        <label for="district_id_ayah" class="form-label">Kecamatan
-                                            Ayah</label>
+                                        <label for="district_id_ayah" class="form-label">Kecamatan</label>
                                         <app-master-district [districtId]="formIbuAyah.value.district_id_ayah"
                                             [cityId]="formIbuAyah.value.city_id_ayah"
                                             (districtOutput)="formIbuAyah.value.district_id_ayah = $event">
@@ -311,8 +314,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="mb-2">
-                                        <label for="village_id_ayah" class="form-label">Kelurahan
-                                            Ayah</label>
+                                        <label for="village_id_ayah" class="form-label">Kelurahan</label>
                                         <app-master-sub-district [subdistrictId]="formIbuAyah.value.village_id_ayah"
                                             [districtId]="formIbuAyah.value.district_id_ayah"
                                             (subDistrictOutput)="formIbuAyah.value.village_id_ayah = $event">
@@ -689,37 +691,6 @@
                 </form>
             </div>
         </div>
-        <div class="card" *ngIf="activeTab == 'form-rencana-tindak-lanjut'">
-            <div class="card-body">
-                <form [formGroup]="formRujukLaborat">
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-6 border-start border-end mb-2"
-                                *ngFor="let itemServReq of itemsTerminologiRencanaTindakLanjutServiceRequest">
-                                <label class="fw-bold" [title]="itemServReq.description">
-                                    {{ itemServReq . terminology_name }}
-                                </label>
-                                <div class="alert alert-info" role="alert">
-                                    Deskripsi: {{ itemServReq . description }}
-                                </div>
-
-                                <div *ngFor="let itemChol of itemsTerminologiCholesterolObservationServiceRequest"
-                                    class="form-check">
-                                    <input class="form-check-input" type="checkbox"
-                                        [id]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
-                                        (change)="toggleInput(itemServReq.terminology_id + '-' + itemChol.terminology_id)">
-                                    <label class="form-check-label"
-                                        [for]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
-                                        [title]="itemChol.description">
-                                        {{ itemChol . terminology_name }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
 
         <div class="card" *ngIf="activeTab == 'form-antropometri'">
             <div class="card-body">
@@ -749,6 +720,7 @@
                 </form>
             </div>
         </div>
+
         <div class="card" *ngIf="activeTab == 'form-antropometri-balita'">
             <div class="card-body">
                 <form class="mt-2" [formGroup]="antropometriBalitaObservationForm">
@@ -841,11 +813,113 @@
             </div>
         </div>
 
+
+        <div class="card" *ngIf="activeTab == 'form-rencana-tindak-lanjut'">
+            <div class="card-body">
+                <form [formGroup]="formRujukLaborat">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6 border-start border-end mb-2"
+                                *ngFor="let itemServReq of itemsTerminologiRencanaTindakLanjutServiceRequest">
+                                <label class="fw-bold" [title]="itemServReq.description">
+                                    {{ itemServReq . terminology_name }}
+                                </label>
+                                <div class="alert alert-info" role="alert">
+                                    Deskripsi: {{ itemServReq . description }}
+                                </div>
+
+                                <div *ngFor="let itemChol of itemsTerminologiCholesterolObservationServiceRequest"
+                                    class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                        [id]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
+                                        (change)="toggleInputRencanaTindakLanjut(itemServReq.terminology_id + '-' + itemChol.terminology_id)">
+                                    <label class="form-check-label"
+                                        [for]="itemServReq.terminology_id + '-' + itemChol.terminology_id"
+                                        [title]="itemChol.description">
+                                        {{ itemChol . terminology_name }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Laborat Specimen -->
         <div class="card" *ngIf="activeTab == 'form-laborat-specimen'">
             <div class="card-body">
-                <form class="mt-2" [formGroup]="formLaboratSpecimen">
-                    <h1>onProgress</h1> <!-- Corrected the spelling of "onProgress" -->
-                    <!-- Add additional form fields here as needed for the laboratory specimen observation -->
+                <form class="mt-2">
+                    <!-- Tambahkan select service request mana yang mau di pasangkan dengan type terkait -->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6 border-start border-end mb-2"
+                                *ngFor="let typeSpecimen of itemsTerminologiLaboratSpecimenType">
+                                <label class="fw-bold d-flex justify-content-between align-items-center"
+                                    [title]="typeSpecimen.description">
+                                    {{ typeSpecimen . terminology_name }}
+                                    <select class="form-select w-auto ms-auto h-auto"
+                                        [(ngModel)]="selectedServiceRequests[typeSpecimen.terminology_id]"
+                                        name="selectedServiceRequest_{{ typeSpecimen . terminology_id }}">
+                                        <option selected>
+                                            Pilih Service Request
+                                        </option>
+                                        <option *ngFor="let serReq of riwayatServiceRequest"
+                                            [value]="serReq.response_id">
+                                            {{ serReq . request_code }}
+                                        </option>
+                                    </select>
+
+                                </label>
+                                <div class="alert alert-info" role="alert">
+                                    Deskripsi: {{ typeSpecimen . description }}
+                                </div>
+
+                                <div *ngFor="let cpecimenColection of itemsTerminologiLaboratSpecimenCollection"
+                                    class="form-check">
+                                    <input class="form-check-input" type="checkbox"
+                                        [id]="typeSpecimen.terminology_id + '-' + cpecimenColection.terminology_id"
+                                        (change)="toggleInputSpecimentLab(typeSpecimen.terminology_id + '-' + cpecimenColection.terminology_id, $event)">
+
+                                    <label class="form-check-label"
+                                        [for]="cpecimenColection.terminology_id + '-' + cpecimenColection.terminology_id"
+                                        [title]="cpecimenColection.description">
+                                        {{ cpecimenColection . terminology_name }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="activeTab == 'form-laborat-observasi'">
+            <div class="card-body">
+                <!-- <form [formGroup]="formAlergiMakanan"> -->
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 mb-3" *ngFor="let item of itemsTerminologiAntropometriOservarion">
+                            <label class="form-label">{{ item . terminology_name }}</label>
+                            <div>
+                                <div class="row g-0">
+                                    <div class="col-9">
+                                        <input type="number" class="form-control"
+                                            [placeholder]="'Nilai ' + item.terminology_name" [value]="item.value"
+                                            (input)="item.value = $event.target.value" [title]="item.description" />
+                                    </div>
+                                    <div class="col-3">
+                                        <select class="form-select" (change)="item.unit = $event.target.value">
+                                            <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
+                                                {{ satuanUnit . unit_code }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
