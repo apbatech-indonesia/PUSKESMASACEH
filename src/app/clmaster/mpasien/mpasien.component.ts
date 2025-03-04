@@ -645,7 +645,7 @@ export class MpasienComponent implements OnInit {
               `pasien tersebut sudah terdaftar dengan norm ${pasien.data.norm}`,
               "Simpan Gagal"
             );
-            this.norm = pasien.data.norm
+            this.norm = pasien.data.norm;
             return;
           }
         }
@@ -897,7 +897,8 @@ export class MpasienComponent implements OnInit {
     perkerjaan,
     keluarahan,
     kdpanggil,
-    usia
+    usia,
+    x
   ) {
     this.norm = norm;
     this.pasien = pasien;
@@ -922,6 +923,9 @@ export class MpasienComponent implements OnInit {
     this.keluarahan = keluarahan;
     this.verifsimpan = "0";
     this.usia = usia;
+    this.propinsi = x.prov_name;
+    this.kabupaten = x.city_name;
+    this.kecamatan = x.dis_name;
 
     this.an = kdpanggil;
 
