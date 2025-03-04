@@ -861,9 +861,6 @@
                                     <select class="form-select w-auto ms-auto h-auto"
                                         [(ngModel)]="selectedServiceRequests[typeSpecimen.terminology_id]"
                                         name="selectedServiceRequest_{{ typeSpecimen . terminology_id }}">
-                                        <option selected>
-                                            Pilih Service Request
-                                        </option>
                                         <option *ngFor="let serReq of riwayatServiceRequest"
                                             [value]="serReq.response_id">
                                             {{ serReq . request_code }}
@@ -896,25 +893,48 @@
 
         <div class="card" *ngIf="activeTab == 'form-laborat-observasi'">
             <div class="card-body">
-                <!-- <form [formGroup]="formAlergiMakanan"> -->
                 <form>
                     <div class="row">
-                        <div class="col-md-6 mb-3" *ngFor="let item of itemsTerminologiAntropometriOservarion">
-                            <label class="form-label">{{ item . terminology_name }}</label>
-                            <div>
-                                <div class="row g-0">
-                                    <div class="col-9">
-                                        <input type="number" class="form-control"
-                                            [placeholder]="'Nilai ' + item.terminology_name" [value]="item.value"
-                                            (input)="item.value = $event.target.value" [title]="item.description" />
-                                    </div>
-                                    <div class="col-3">
-                                        <select class="form-select" (change)="item.unit = $event.target.value">
-                                            <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
-                                                [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (item.unit?.toLowerCase() || '')">
-                                                {{ satuanUnit . unit_code }}
-                                            </option>
-                                        </select>
+                        <div class="col-md-6" *ngFor="let itemCategory of itemsTerminologiObservationCategory">
+                            <label class="fw-bold d-flex justify-content-between align-items-center"
+                                [title]="itemCategory.description">
+                                {{ itemCategory . terminology_name }}
+                            </label>
+                            <select class="form-select w-auto ms-auto h-auto"
+                                [(ngModel)]="selectedServiceRequests[itemCategory.terminology_id]"
+                                name="selectedServiceRequest_{{ itemCategory . terminology_id }}">
+                                <option *ngFor="let serReq of riwayatServiceRequest" [value]="serReq.response_id">
+                                    {{ serReq . request_code }}
+                                </option>
+                            </select>
+
+                            <div class="alert alert-info" role="alert">
+                                Deskripsi: {{ itemCategory . description }}
+                            </div>
+                            <div class="col-md-12 mb-3"
+                                *ngFor="let itemCodeData of itemsTerminologiAntropometriOservarion">
+                                <label class="form-label">{{ itemCodeData . terminology_name }}</label>
+                                <div>
+                                    <div class="row g-0">
+                                        <div class="col-6">
+                                            <input type="number" class="form-control"
+                                                [placeholder]="'Nilai ' + itemCodeData.terminology_name"
+                                                [value]="selectedValues[itemCategory.terminology_id]?.[itemCodeData.terminology_id] || ''"
+                                                (input)="updateValue(itemCategory.terminology_id, itemCodeData.terminology_id, $event.target.value)"
+                                                [title]="itemCodeData.description" />
+
+                                        </div>
+                                        <div class="col-6">
+                                            <select class="form-select"
+                                                (change)="updateUnit(itemCategory.terminology_id, itemCodeData.terminology_id, $event.target.value)">
+                                                <option *ngFor="let satuanUnit of listSatuanUnit"
+                                                    [ngValue]="satuanUnit.unit_code"
+                                                    [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (itemCodeData.unit?.toLowerCase() || '')">
+                                                    {{ satuanUnit . unit_code }}
+                                                </option>
+                                            </select>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>

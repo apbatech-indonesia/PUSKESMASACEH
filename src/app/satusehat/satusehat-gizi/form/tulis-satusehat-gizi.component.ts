@@ -37,6 +37,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   selectedCheckboxes: { [key: string]: string } = {}; // Pastikan ini ada
   selectedCheckboxesSpecimentLab: { [key: string]: string } = {}; // Pastikan ini ada
   selectedServiceRequests: { [key: string]: string } = {};
+  selectedValues: { [categoryId: string]: { [codeId: string]: any } } = {};
 
   formMalnitrisi: FormGroup
   formLaboratSpecimen: FormGroup
@@ -97,6 +98,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   itemTerminologiFindingOfLip: any;
   itemsTerminologiAntropometriOservarion: any;
   itemsTerminologiCholesterolObservationServiceRequest: any;
+  itemsTerminologiObservationCategory: any;
   itemsTerminologiAntropometriBalitaOservarion: any;
   itemsTerminologiAntropometriIbuHamilOservarion: any;
   itemsTerminologiAntropometriIndexOservarion: any;
@@ -256,6 +258,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
 
   updateselectedCheckboxesSpecimentLab(id: string, value: string) {
     this.selectedCheckboxesSpecimentLab = { ...this.selectedCheckboxesSpecimentLab, [id]: value };
+  }
+  updateValue(categoryId: string, codeId: string, value: any) {
+    if (!this.selectedValues[categoryId])
+    {
+      this.selectedValues[categoryId] = {};
+    }
+    this.selectedValues[categoryId][codeId] = value;
   }
 
   loadQuestions() {
@@ -1099,7 +1108,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         specimens: specimens
       }
     };
-    console.log(payload);
 
     if (specimens.length > 0)
     {
@@ -1118,6 +1126,220 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   }
 
+  async doSubmitLabObservationBackup() {
+    // TODO: tangkap data dan bentuk payload
+    // NOTE: TARGET PAYLOAD
+    // {
+    //   "data": {
+    //     "encounterId": "d0f27131-8e90-4614-8450-f945a62399f1",
+    //       "useCaseId": 341,
+    //         "satusehatId": "250102-46b9bd46-9500-467a-b9f3-471a62c28a42",
+    //           "observations": [
+    //             {
+    //               "name": "cholesterol_observation",
+    //               "status": "final",
+    //               "category": {
+    //                 "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+    //                 "code": "laboratory", // observation-category
+    //                 "display": "Laboratory"
+    //               },
+    //               "data": [
+    //                 {
+    //                   "code": {
+    //                     "system": "http://loinc.org",
+    //                     "code": "2093-3", // category = cholesterol-observation
+    //                     "display": "Cholesterol [Mass/volume] in Serum or Plasma"
+    //                   },
+    //                   "valueString": "",
+    //                   "result": {
+    //                     "value": 240,
+    //                     "unit": "mg/dL",
+    //                     "system": "http://unitsofmeasure.org",
+    //                     "code": "mg/dL"
+    //                   },
+    //                   "resultBoolean": {},
+    //                   "valueCodeableConcept": {}
+    //                 }
+    //               ],
+    //               "specimen": {
+    //                 "reference": "Specimen/{{Specimen_Kuantitatif}}"
+    //               },
+    //               "basedOn": [
+    //                 {
+    //                   "reference": "ServiceRequest/{{ServiceRequest_Kuantitatif}}"
+    //                 }
+    //               ],
+    //               "interpretation": {
+    //                 "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+    //                 "code": "H", //base
+    //                 "display": "High"
+    //               },
+    //               "effectiveDateTime": "2024-04-24T00:23:30+00:00",
+    //               "issued": "2024-04-24T00:23:30+00:00"
+    //             }
+    //             // .... tambahkan observation  lainnya jika ada yang dikirim dr FE ke BE
+    //             // -----dengan format mengikuti struktur per observation di atas   
+    //           ]
+    //   }
+    // }
+
+    // try
+    // {
+    //   let response: any = await this.GiziService.createObservations(payload);
+    //   let msg = response.statusMsg.split(': ');
+    //   Swal.fire('Success', msg.join(', '), 'success');
+    // } catch (err)
+    // {
+    //   Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+    // }
+    const observations = this.itemsTerminologiObservationCategory
+      .map((itemCategory) => {
+        const selectedData = Object.entries(this.selectedValues[itemCategory.terminology_id] || {}).map(([key, value]) => ({
+          terminology_code: key,
+          value: value
+        }));
+
+        const filteredData = selectedData.filter(item => item.value !== null && item.value !== undefined);
+
+        if (filteredData.length === 0) return null; // Skip kalau kosong
+
+        return {
+          name: itemCategory.terminology_name.replace(/\s+/g, "_").toLowerCase(),
+          status: "final",
+          category: {
+            system: "http://terminology.hl7.org/CodeSystem/observation-category",
+            code: itemCategory.terminology_code,
+            display: itemCategory.terminology_name
+          },
+          data: filteredData.map((itemCodeData) => ({
+            code: {
+              system: "http://loinc.org",
+              code: itemCodeData.terminology_code,
+              display: itemCategory.terminology_name
+            },
+            valueString: "",
+            result: {
+              value: itemCodeData.value,
+              unit: "mg/dL", // Bisa diubah sesuai kebutuhan
+              system: "http://unitsofmeasure.org",
+              code: "mg/dL"
+            },
+            resultBoolean: {},
+            valueCodeableConcept: {}
+          })),
+          specimen: {
+            reference: `Specimen/${this.selectedServiceRequests[itemCategory.terminology_id] || ''}`
+          },
+          basedOn: [
+            {
+              reference: `ServiceRequest/${this.selectedServiceRequests[itemCategory.terminology_id] || ''}`
+            }
+          ],
+          interpretation: {
+            system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+            code: "H",
+            display: "High"
+          },
+          effectiveDateTime: new Date().toISOString(),
+          issued: new Date().toISOString()
+        };
+      })
+      .filter(obs => obs !== null); // Buang yang kosong
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        observations: observations
+      }
+    };
+
+    console.log(payload);
+
+
+    // try
+    // {
+    //   let response: any = await this.GiziService.createObservations(payload);
+    //   let msg = response.statusMsg.split(": ");
+    //   Swal.fire("Success", msg.join(", "), "success");
+    // } catch (err)
+    // {
+    //   Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    // }
+  }
+
+  async doSubmitLabObservation() {
+    // TODO: tangkap data dan bentuk payload
+
+    // Tangkap data dan bentuk payload
+    const observations = this.itemsTerminologiObservationCategory.map(itemCategory => {
+      return {
+        name: itemCategory.terminology_name.replace(/\s+/g, '_').toLowerCase() + '_observation',
+        status: "final",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: "laboratory",
+          display: "Laboratory"
+        },
+        data: this.itemsTerminologiAntropometriOservarion.map(itemCodeData => {
+          return {
+            code: {
+              system: "http://loinc.org",
+              code: itemCodeData.terminology_id, // Asumsikan terminology_id sebagai kode LOINC
+              display: itemCodeData.terminology_name
+            },
+            valueString: "",
+            result: {
+              value: this.selectedValues[itemCategory.terminology_id]?.[itemCodeData.terminology_id] || null,
+              unit: this.selectedItem[itemCategory.terminology_id]?.[itemCodeData.terminology_id] || "",
+              system: "http://unitsofmeasure.org",
+              code: this.selectedItem[itemCategory.terminology_id]?.[itemCodeData.terminology_id] || ""
+            },
+            resultBoolean: {},
+            valueCodeableConcept: {}
+          };
+        }),
+        specimen: {
+          reference: `Specimen/${this.selectedServiceRequests[itemCategory.terminology_id]}`
+        },
+        basedOn: [
+          {
+            reference: `ServiceRequest/${this.selectedServiceRequests[itemCategory.terminology_id]}`
+          }
+        ],
+        interpretation: {
+          system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+          code: "H",
+          display: "High"
+        },
+        effectiveDateTime: new Date().toISOString(),
+        issued: new Date().toISOString()
+      };
+    });
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        observations: observations
+      }
+    };
+
+    console.log(payload);
+
+
+    // try
+    // {
+    //   let response: any = await this.GiziService.createObservations(payload);
+    //   let msg = response.statusMsg.split(": ");
+    //   Swal.fire("Success", msg.join(", "), "success");
+    // } catch (err)
+    // {
+    //   Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    // }
+  }
 
 
 
@@ -1379,6 +1601,29 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       console.error('Error fetching data:', error);
     }
   }
+
+  async cariItemObservarionsCategory() {
+    let payload = {
+      terminology_id: "",
+      key_operator: "=|=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "category|is_active",
+      key_value: "observation-category|1",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+
+      this.itemsTerminologiObservationCategory = itemResponse.data;
+    } catch (error)
+    {
+      console.error('Error fetching data:', error);
+    }
+  }
   async cariitemsTerminologiAntropometriBayiOservarion() {
     let payload = {
       terminology_id: "",
@@ -1516,34 +1761,41 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   }
 
   async caririwayatServiceRequest() {
-    // TODO: change key value
     let payload = {
       "usecase_id": this.useCaseId,
       "patientId": this.idpasien,
-      // "rmno": this.patientData.norm,
       "type": "gizi",
       "status": "active"
     };
+
     try
     {
       let itemResponse: any = await this.GiziService.getRiwayat(payload);
-      if (itemResponse.service_request_responses)
+
+      // Pastikan `service_request_responses` ada sebelum membaca `.length`
+      if (itemResponse?.service_request_responses && Array.isArray(itemResponse.service_request_responses))
       {
-        this.riwayatServiceRequest = itemResponse.service_request_responses;
-        console.log(this.riwayatServiceRequest);
+        if (itemResponse.service_request_responses.length > 0)
+        {
+          this.riwayatServiceRequest = itemResponse.service_request_responses;
+        } else
+        {
+          if (this.activeTab === "form-laborat-specimen" || this.activeTab === "form-laborat-observasi")
+          {
+            Swal.fire('Error', 'Mohon Buat Rencana Tindakan', 'error');
+            this.activeTab = 'form-rencana-tindak-lanjut';
+          }
+        }
       } else
       {
-        if (this.activeTab === "form-laborat-specimen")
-        {
-          Swal.fire('Error', 'Mohon Buat Rencana Tindakan', 'error');
-          this.activeTab = 'form-rencana-tindak-lanjut';
-        }
+        console.warn("service_request_responses tidak ditemukan dalam response:", itemResponse);
       }
     } catch (error)
     {
       console.error('Error fetching data:', error);
     }
   }
+
 
   async cariTerminologiEyeNarative() {
     let payload = {
@@ -1806,15 +2058,24 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       this.cariitemsTerminologiCholesterolObservationServiceRequest(),
       this.cariitemsTerminologiLaboratSpecimenType(),
       this.cariitemsTerminologiLaboratSpecimenCollection(),
-      this.caririwayatServiceRequest();
+      this.caririwayatServiceRequest()
   }
 
 
   openTab(tab: string) {
     this.activeTab = tab;
-    if (tab === "form-laborat-specimen")
+    switch (tab)
     {
-      this.caririwayatServiceRequest();
+      case "form-laborat-specimen":
+        this.caririwayatServiceRequest();
+        break;
+      case "form-laborat-observasi":
+        this.caririwayatServiceRequest();
+        this.cariItemObservarionsCategory();
+        break;
+      // Add more cases if needed for other tabs
+      default:
+        break;
     }
   }
 
@@ -1895,6 +2156,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         break;
       case 'form-laborat-specimen':
         this.doSubmitLaboratSpecimen();
+        break;
+      case 'form-laborat-observasi':
+        this.doSubmitLabObservation();
         break;
       default:
         Swal.fire('Error', 'Form tidak ditemukan', 'error');
