@@ -374,7 +374,14 @@ export class MpdaftarpasienComponent implements OnInit {
 
     this.authService.kostumerd(this.kdcabang, "10", "", "").subscribe(
       (data) => {
-        this.tcusid = data;
+        if (data.length) {
+          this.tcusid = data;
+          const bpjsData = data.find((item) => item.dash === "BPJS");
+
+          if (bpjsData) {
+            this.cusid = bpjsData.kdkostumerd; // Ambil kdkostumerd dari data yang memiliki dash: "BPJS"
+          }
+        }
       },
       (Error) => {
         console.log(Error);
@@ -2550,7 +2557,7 @@ export class MpdaftarpasienComponent implements OnInit {
     perkerjaan,
     idhs
   ) {
-    this.cusid = "";
+    // this.cusid = "";
     this.noasuransi = "";
     this.noindetitas = nopengenal;
     this.hp = hp;
@@ -2604,6 +2611,8 @@ export class MpdaftarpasienComponent implements OnInit {
     this.tjadwal = [];
     this.kliniks = "";
     this.dokter = "";
+
+    this.cekbpjsk(this.cusid);
   }
   usia: any = "";
   cetaknoantrian() {
