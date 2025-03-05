@@ -16,7 +16,6 @@ import { W } from '@angular/cdk/keycodes'
 })
 
 export class TulisSatuSehatGiziComponent implements OnInit {
-  // NOTE: property dasar
   activeTab: string = 'form-ibu-ayah'
   userData: any = JSON.parse(localStorage.getItem('userDatacl')).userData
   notransaksi: string = this.route.snapshot.paramMap.get('notrans')
@@ -37,12 +36,12 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   selectedCheckboxes: { [key: string]: string } = {}; // Pastikan ini ada
   selectedCheckboxesSpecimentLab: { [key: string]: string } = {}; // Pastikan ini ada
   selectedServiceRequests: { [key: string]: string } = {};
-  selectedValues: { [categoryId: string]: { [codeId: string]: any } } = {};
+  selectedValues: { [categoryId: string]: { [codeId: string]: { value: any, unit: string } } } = {};
+
 
   formMalnitrisi: FormGroup
   formLaboratSpecimen: FormGroup
   formKeluhanUtama: FormGroup
-  // NOTE: Init form
   formSkriningMalnutrisiQuestionaire: FormGroup
   formAlergiMakanan: FormGroup
   formAlergiObat: FormGroup
@@ -228,7 +227,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         status: ['']
       })
     });
-    // NOTE: Setup form
     this.formSkriningMalnutrisiQuestionaire = this.fb.group({
       questions: this.fb.array([])
     });
@@ -259,13 +257,46 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   updateselectedCheckboxesSpecimentLab(id: string, value: string) {
     this.selectedCheckboxesSpecimentLab = { ...this.selectedCheckboxesSpecimentLab, [id]: value };
   }
-  updateValue(categoryId: string, codeId: string, value: any) {
+  updateValue(categoryId: string, codeId: string, value: any, defaultUnit: string) {
     if (!this.selectedValues[categoryId])
     {
       this.selectedValues[categoryId] = {};
     }
-    this.selectedValues[categoryId][codeId] = value;
+    if (!this.selectedValues[categoryId][codeId])
+    {
+      this.selectedValues[categoryId][codeId] = { value: '', unit: '' };
+    }
+
+    this.selectedValues[categoryId][codeId].value = value;
+
+    // Jika unit masih undefined atau kosong, set default unit dari parameter
+    if (!this.selectedValues[categoryId][codeId].unit && defaultUnit)
+    {
+      this.selectedValues[categoryId][codeId].unit = defaultUnit;
+    }
   }
+
+
+
+  updateUnit(categoryId: string, codeId: string, unit: string) {
+    if (this.selectedValues[categoryId] && this.selectedValues[categoryId][codeId])
+    {
+      this.selectedValues[categoryId][codeId].unit = unit;
+    }
+  }
+
+  getSelectedValue(categoryId: string, codeId: string) {
+    if (!this.selectedValues[categoryId])
+    {
+      this.selectedValues[categoryId] = {};
+    }
+    if (!this.selectedValues[categoryId][codeId])
+    {
+      this.selectedValues[categoryId][codeId] = { value: '', unit: '' };
+    }
+    return this.selectedValues[categoryId][codeId];
+  }
+
 
   loadQuestions() {
     // Membuat kontrol dinamis berdasarkan pertanyaan
@@ -279,13 +310,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     });
   }
 
-
-  // NOTE: mengisi form ketika di select
-
   onCheckboxChange(event: Event, index: number, value: any) {
   }
-
-  // TODO: mengisi form ketika di select
   onSelectMedicationMethod(value: any) {
     if (!this.selectedItemObat.includes(value))
     {
@@ -391,7 +417,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
 
   async doSubmitSkriningMalnutrisiQuestionaire() {
     const ItemTerjawab = this.listQuestionaireMalNutrisi;
-    // TODO: bangun payload
     const questionaireResponse = [
       {
         name: "questions_resiko_malnutrisi_<=18",
@@ -905,8 +930,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
           status: "active",
           intent: "original-order",
           priority: "routine",
-          occurrenceDateTime: new Date().toISOString(),
-          authoredOn: new Date().toISOString(),
+          occurrenceDateTime: this.dateNow,
+          authoredOn: this.dateNow,
           encounter: {
             reference: `Encounter/${this.encounter_id}`,
             display: `Permintaan Pemeriksaan ${itemServReq.terminology_name}`
@@ -1087,9 +1112,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
                 code: collectionSpecimen.terminology_code,
                 display: collectionSpecimen.terminology_name
               },
-              collectedDateTime: new Date().toISOString()
+              collectedDateTime: this.dateNow
             },
-            receivedTime: new Date().toISOString(),
+            receivedTime: this.dateNow,
 
             request: [{ reference: "ServiceRequest/" + selectedRequest }]
 
@@ -1126,113 +1151,70 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   }
 
-  async doSubmitLabObservationBackup() {
-    // TODO: tangkap data dan bentuk payload
-    // NOTE: TARGET PAYLOAD
-    // {
-    //   "data": {
-    //     "encounterId": "d0f27131-8e90-4614-8450-f945a62399f1",
-    //       "useCaseId": 341,
-    //         "satusehatId": "250102-46b9bd46-9500-467a-b9f3-471a62c28a42",
-    //           "observations": [
-    //             {
-    //               "name": "cholesterol_observation",
-    //               "status": "final",
-    //               "category": {
-    //                 "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-    //                 "code": "laboratory", // observation-category
-    //                 "display": "Laboratory"
-    //               },
-    //               "data": [
-    //                 {
-    //                   "code": {
-    //                     "system": "http://loinc.org",
-    //                     "code": "2093-3", // category = cholesterol-observation
-    //                     "display": "Cholesterol [Mass/volume] in Serum or Plasma"
-    //                   },
-    //                   "valueString": "",
-    //                   "result": {
-    //                     "value": 240,
-    //                     "unit": "mg/dL",
-    //                     "system": "http://unitsofmeasure.org",
-    //                     "code": "mg/dL"
-    //                   },
-    //                   "resultBoolean": {},
-    //                   "valueCodeableConcept": {}
-    //                 }
-    //               ],
-    //               "specimen": {
-    //                 "reference": "Specimen/{{Specimen_Kuantitatif}}"
-    //               },
-    //               "basedOn": [
-    //                 {
-    //                   "reference": "ServiceRequest/{{ServiceRequest_Kuantitatif}}"
-    //                 }
-    //               ],
-    //               "interpretation": {
-    //                 "system": "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
-    //                 "code": "H", //base
-    //                 "display": "High"
-    //               },
-    //               "effectiveDateTime": "2024-04-24T00:23:30+00:00",
-    //               "issued": "2024-04-24T00:23:30+00:00"
-    //             }
-    //             // .... tambahkan observation  lainnya jika ada yang dikirim dr FE ke BE
-    //             // -----dengan format mengikuti struktur per observation di atas   
-    //           ]
-    //   }
-    // }
 
-    // try
-    // {
-    //   let response: any = await this.GiziService.createObservations(payload);
-    //   let msg = response.statusMsg.split(': ');
-    //   Swal.fire('Success', msg.join(', '), 'success');
-    // } catch (err)
-    // {
-    //   Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
-    // }
-    const observations = this.itemsTerminologiObservationCategory
-      .map((itemCategory) => {
-        const selectedData = Object.entries(this.selectedValues[itemCategory.terminology_id] || {}).map(([key, value]) => ({
-          terminology_code: key,
-          value: value
-        }));
+  async doSubmitLabObservation() {
 
-        const filteredData = selectedData.filter(item => item.value !== null && item.value !== undefined);
 
-        if (filteredData.length === 0) return null; // Skip kalau kosong
+    console.log(this.selectedServiceRequests);
+    console.log(this.itemsTerminologiCholesterolObservationServiceRequest);
+    console.log(this.selectedValues);
+
+    const observations = this.itemsTerminologiCholesterolObservationServiceRequest
+      .map(itemCodeData => {
+        // Ambil nilai yang dipilih secara lebih aman
+        let selectedValue = null;
+
+        for (const categoryKey in this.selectedValues)
+        {
+          if (this.selectedValues.hasOwnProperty(categoryKey))
+          {
+            const category = this.selectedValues[categoryKey];
+            if (category[itemCodeData.terminology_id])
+            {
+              selectedValue = category[itemCodeData.terminology_id];
+              break; // Stop setelah menemukan nilai pertama yang cocok
+            }
+          }
+        }
+
+        if (!selectedValue || selectedValue.value === null || selectedValue.value === undefined)
+        {
+          return null; // Skip jika tidak ada nilai
+        }
+        console.log(this.selectedServiceRequests[itemCodeData.terminology_id]);
 
         return {
-          name: itemCategory.terminology_name.replace(/\s+/g, "_").toLowerCase(),
+          name: `${itemCodeData.terminology_name.replace(/\s+/g, '_').toLowerCase()}_observation`, // Nama sesuai data
           status: "final",
           category: {
             system: "http://terminology.hl7.org/CodeSystem/observation-category",
-            code: itemCategory.terminology_code,
-            display: itemCategory.terminology_name
+            code: "laboratory",
+            display: "Laboratory"
           },
-          data: filteredData.map((itemCodeData) => ({
-            code: {
-              system: "http://loinc.org",
-              code: itemCodeData.terminology_code,
-              display: itemCategory.terminology_name
-            },
-            valueString: "",
-            result: {
-              value: itemCodeData.value,
-              unit: "mg/dL", // Bisa diubah sesuai kebutuhan
-              system: "http://unitsofmeasure.org",
-              code: "mg/dL"
-            },
-            resultBoolean: {},
-            valueCodeableConcept: {}
-          })),
+          data: [
+            {
+              code: {
+                system: "http://loinc.org",
+                code: itemCodeData.terminology_code,
+                display: itemCodeData.terminology_name
+              },
+              valueString: "",
+              result: {
+                value: Number(selectedValue.value) || null,
+                unit: selectedValue.unit || "",
+                system: "http://unitsofmeasure.org",
+                code: selectedValue.unit || ""
+              },
+              resultBoolean: {},
+              valueCodeableConcept: {}
+            }
+          ],
           specimen: {
-            reference: `Specimen/${this.selectedServiceRequests[itemCategory.terminology_id] || ''}`
+            reference: "Specimen/{{Specimen_Kuantitatif}}"
           },
           basedOn: [
             {
-              reference: `ServiceRequest/${this.selectedServiceRequests[itemCategory.terminology_id] || ''}`
+              reference: "ServiceRequest/{{ServiceRequest_Kuantitatif}}"
             }
           ],
           interpretation: {
@@ -1240,11 +1222,12 @@ export class TulisSatuSehatGiziComponent implements OnInit {
             code: "H",
             display: "High"
           },
-          effectiveDateTime: new Date().toISOString(),
-          issued: new Date().toISOString()
+          effectiveDateTime: this.dateNow,
+          issued: this.dateNow
         };
       })
-      .filter(obs => obs !== null); // Buang yang kosong
+      .filter(obs => obs !== null); // Buang yang tidak memiliki nilai valid
+
 
     const payload = {
       data: {
@@ -1254,94 +1237,16 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         observations: observations
       }
     };
-
-    console.log(payload);
-
-
-    // try
-    // {
-    //   let response: any = await this.GiziService.createObservations(payload);
-    //   let msg = response.statusMsg.split(": ");
-    //   Swal.fire("Success", msg.join(", "), "success");
-    // } catch (err)
-    // {
-    //   Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
-    // }
+    try
+    {
+      let response: any = await this.GiziService.createObservations(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
   }
-
-  async doSubmitLabObservation() {
-    // TODO: tangkap data dan bentuk payload
-
-    // Tangkap data dan bentuk payload
-    const observations = this.itemsTerminologiObservationCategory.map(itemCategory => {
-      return {
-        name: itemCategory.terminology_name.replace(/\s+/g, '_').toLowerCase() + '_observation',
-        status: "final",
-        category: {
-          system: "http://terminology.hl7.org/CodeSystem/observation-category",
-          code: "laboratory",
-          display: "Laboratory"
-        },
-        data: this.itemsTerminologiAntropometriOservarion.map(itemCodeData => {
-          return {
-            code: {
-              system: "http://loinc.org",
-              code: itemCodeData.terminology_id, // Asumsikan terminology_id sebagai kode LOINC
-              display: itemCodeData.terminology_name
-            },
-            valueString: "",
-            result: {
-              value: this.selectedValues[itemCategory.terminology_id]?.[itemCodeData.terminology_id] || null,
-              unit: this.selectedItem[itemCategory.terminology_id]?.[itemCodeData.terminology_id] || "",
-              system: "http://unitsofmeasure.org",
-              code: this.selectedItem[itemCategory.terminology_id]?.[itemCodeData.terminology_id] || ""
-            },
-            resultBoolean: {},
-            valueCodeableConcept: {}
-          };
-        }),
-        specimen: {
-          reference: `Specimen/${this.selectedServiceRequests[itemCategory.terminology_id]}`
-        },
-        basedOn: [
-          {
-            reference: `ServiceRequest/${this.selectedServiceRequests[itemCategory.terminology_id]}`
-          }
-        ],
-        interpretation: {
-          system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
-          code: "H",
-          display: "High"
-        },
-        effectiveDateTime: new Date().toISOString(),
-        issued: new Date().toISOString()
-      };
-    });
-
-    const payload = {
-      data: {
-        encounterId: this.encounter_id,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        observations: observations
-      }
-    };
-
-    console.log(payload);
-
-
-    // try
-    // {
-    //   let response: any = await this.GiziService.createObservations(payload);
-    //   let msg = response.statusMsg.split(": ");
-    //   Swal.fire("Success", msg.join(", "), "success");
-    // } catch (err)
-    // {
-    //   Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
-    // }
-  }
-
-
 
 
 
@@ -1605,19 +1510,18 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   async cariItemObservarionsCategory() {
     let payload = {
       terminology_id: "",
-      key_operator: "=|=",
+      key_operator: "=|=|=",
       show_parent: "yes",
       show_child: "yes",
       max_row: 100,
       order_by: "terminology_name",
       order_type: "Asc",
-      key_name: "category|is_active",
-      key_value: "observation-category|1",
+      key_name: "category|is_active|terminology_name",
+      key_value: "observation-category|1|Laboratory",
     };
     try
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
-
       this.itemsTerminologiObservationCategory = itemResponse.data;
     } catch (error)
     {
@@ -1691,7 +1595,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   }
   async cariitemsTerminologiRencanaTindakLanjutServiceRequest() {
-    // TODO: change key value
     let payload = {
       terminology_id: "",
       key_operator: "=|=",
@@ -1715,7 +1618,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   }
   async cariitemsTerminologiLaboratSpecimenType() {
-    // TODO: change key value
     let payload = {
       terminology_id: "",
       key_operator: "=|=",
@@ -1737,7 +1639,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   }
   async cariitemsTerminologiLaboratSpecimenCollection() {
-    // TODO: change key value
     let payload = {
       terminology_id: "",
       key_operator: "=|=",
@@ -2073,7 +1974,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         this.caririwayatServiceRequest();
         this.cariItemObservarionsCategory();
         break;
-      // Add more cases if needed for other tabs
       default:
         break;
     }
