@@ -714,7 +714,9 @@ export class ApiserviceService {
     sts,
     aktif,
     sn,
-    kddokterbpjs
+    kddokterbpjs,
+    usericare,
+    passicare,
   ) {
     let url = apiurx + "master/simpandokter.php";
     let param = {
@@ -722,6 +724,8 @@ export class ApiserviceService {
       kdcabang: kdcabang,
       stssimpan: sts,
       kddokterbpjs: kddokterbpjs,
+      usericare: usericare,
+      passicare: passicare,
       dokter: namadokter,
       online: online,
       kddokter: kddokter,
