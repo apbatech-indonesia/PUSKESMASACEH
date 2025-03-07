@@ -134,6 +134,12 @@
                             Laborat Observasi
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'form-laporan-diagnosis' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('form-laporan-diagnosis')">
+                            Laporan Diagnosis
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -890,7 +896,6 @@
                 </form>
             </div>
         </div>
-
         <div class="card" *ngIf="activeTab == 'form-laborat-observasi'">
             <div class="card-body">
                 <form>
@@ -903,7 +908,64 @@
                             <select class="form-select w-auto ms-auto h-auto"
                                 [(ngModel)]="selectedServiceRequests[itemCategory.terminology_id]"
                                 name="selectedServiceRequest_{{ itemCategory . terminology_id }}">
-                                <option *ngFor="let serReq of riwayatServiceRequest" [value]="serReq.response_id">
+                                <option
+                                    *ngFor="let serReq of riwayatServiceRequestForObserve?.service_request_responses"
+                                    [ngValue]="serReq">
+                                    {{ serReq . request_code }}
+                                </option>
+                            </select>
+
+                            <div class="alert alert-info" role="alert">
+                                Deskripsi: {{ itemCategory . description }}
+                            </div>
+                            <div class="col-md-12 mb-3"
+                                *ngFor="let itemCodeData of itemsTerminologiCholesterolObservationServiceRequest">
+                                <label class="form-label">{{ itemCodeData . terminology_name }}</label>
+                                <div>
+                                    <div class="row g-0">
+                                        <div class="col-10">
+                                            <input type="number" class="form-control"
+                                                [placeholder]="'Nilai ' + itemCodeData.terminology_name"
+                                                [value]="selectedValues[itemCategory.terminology_id]?.[itemCodeData.terminology_id]?.value || ''"
+                                                (input)="updateValue(itemCategory.terminology_id, itemCodeData.terminology_id, $event.target.value, itemCodeData.unit)"
+                                                [title]="itemCodeData.description" />
+                                        </div>
+                                        <div class="col-2">
+                                            <select class="form-select"
+                                                (change)="updateUnit(itemCategory.terminology_id, itemCodeData.terminology_id, $event.target.value)"
+                                                [value]="selectedValues[itemCategory.terminology_id]?.[itemCodeData.terminology_id]?.unit || ''">
+                                                <option *ngFor="let satuanUnit of listSatuanUnit"
+                                                    [ngValue]="satuanUnit.unit_code"
+                                                    [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (selectedValues[itemCategory.terminology_id]?.[itemCodeData.terminology_id]?.unit?.toLowerCase() || itemCodeData.unit?.toLowerCase() || '')">
+                                                    {{ satuanUnit . unit_code }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card" *ngIf="activeTab == 'form-laporan-diagnosis'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12" *ngFor="let itemCategory of itemsTerminologiDiagnostikReportCategory">
+                            <label class="fw-bold d-flex justify-content-between align-items-center"
+                                [title]="itemCategory.description">
+                                {{ itemCategory . terminology_name }}
+                            </label>
+                            <!-- TODO: Buat select ini hanya memunculkan item yang memiliki observation_response dan response_id != null -->
+                            <select class="form-select w-auto ms-auto h-auto"
+                                [(ngModel)]="selectedServiceRequests[itemCategory.terminology_id]"
+                                name="selectedServiceRequest_{{ itemCategory . terminology_id }}">
+                                <option
+                                    *ngFor="let serReq of riwayatServiceRequestForObserve?.service_request_responses"
+                                    [ngValue]="serReq">
                                     {{ serReq . request_code }}
                                 </option>
                             </select>

@@ -98,6 +98,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   itemsTerminologiAntropometriOservarion: any;
   itemsTerminologiCholesterolObservationServiceRequest: any;
   itemsTerminologiObservationCategory: any;
+  itemsTerminologiDiagnostikReportCategory: any;
   itemsTerminologiAntropometriBalitaOservarion: any;
   itemsTerminologiAntropometriIbuHamilOservarion: any;
   itemsTerminologiAntropometriIndexOservarion: any;
@@ -105,6 +106,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   itemsTerminologiLaboratSpecimenType: any;
   itemsTerminologiLaboratSpecimenCollection: any;
   riwayatServiceRequest: any;
+  riwayatServiceRequestForObserve: any;
   showOptionsObats: boolean = false;
   pilihMObat: string;
   selectedItemobats: any[] = [];
@@ -1138,7 +1140,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     {
       try
       {
-        let response: any = await this.GiziService.createSpeciment(payload);
+        let response: any = await this.GiziService.createSpecimen(payload);
         let msg = response.statusMsg.split(': ');
         Swal.fire('Success', msg.join(', '), 'success');
       } catch (err)
@@ -1155,15 +1157,26 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   async doSubmitLabObservation() {
 
 
-    console.log(this.selectedServiceRequests);
-    console.log(this.itemsTerminologiCholesterolObservationServiceRequest);
-    console.log(this.selectedValues);
+    const itemKategoori = this.itemsTerminologiObservationCategory[0];
+    const selectedServiceReq = this.selectedServiceRequests[itemKategoori.terminology_id];
+    const selectedServiceReqId = selectedServiceReq['response_id'] || null;
+    let specimentTID = null;
+    for (let item of this.riwayatServiceRequestForObserve['specimen_responses'])
+    {
+      if (item?.response_id !== null)
+      {
+        specimentTID = item.response_id;
+        break;
+      }
+    }
+
+
 
     const observations = this.itemsTerminologiCholesterolObservationServiceRequest
       .map(itemCodeData => {
         // Ambil nilai yang dipilih secara lebih aman
         let selectedValue = null;
-
+        const itemServiceRequest = this.selectedServiceRequests[itemCodeData.terminology_id];
         for (const categoryKey in this.selectedValues)
         {
           if (this.selectedValues.hasOwnProperty(categoryKey))
@@ -1181,20 +1194,19 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         {
           return null; // Skip jika tidak ada nilai
         }
-        console.log(this.selectedServiceRequests[itemCodeData.terminology_id]);
 
         return {
           name: `${itemCodeData.terminology_name.replace(/\s+/g, '_').toLowerCase()}_observation`, // Nama sesuai data
           status: "final",
           category: {
-            system: "http://terminology.hl7.org/CodeSystem/observation-category",
-            code: "laboratory",
-            display: "Laboratory"
+            system: itemKategoori.source.source_url + itemKategoori.category,
+            code: itemKategoori.terminology_code,
+            display: itemKategoori.terminology_name
           },
           data: [
             {
               code: {
-                system: "http://loinc.org",
+                system: itemCodeData.source.source_url,
                 code: itemCodeData.terminology_code,
                 display: itemCodeData.terminology_name
               },
@@ -1210,11 +1222,11 @@ export class TulisSatuSehatGiziComponent implements OnInit {
             }
           ],
           specimen: {
-            reference: "Specimen/{{Specimen_Kuantitatif}}"
+            reference: `Specimen/${specimentTID}`
           },
           basedOn: [
             {
-              reference: "ServiceRequest/{{ServiceRequest_Kuantitatif}}"
+              reference: `ServiceRequest/${selectedServiceReqId}`
             }
           ],
           interpretation: {
@@ -1226,7 +1238,11 @@ export class TulisSatuSehatGiziComponent implements OnInit {
           issued: this.dateNow
         };
       })
-      .filter(obs => obs !== null); // Buang yang tidak memiliki nilai valid
+      .filter(obs => obs !== null);
+
+    // Buang yang tidak memiliki nilai valid
+
+
 
 
     const payload = {
@@ -1300,7 +1316,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
 
     try
     {
-      let response: any = await this.GiziService.createAlergyInteolerance(payload);
+      let response: any = await this.GiziService.createAlergyIntolerance(payload);
       let msg = response.statusMsg.split(': ');
       Swal.fire('Success', msg.join(', '), 'success');
     } catch (err)
@@ -1528,6 +1544,27 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       console.error('Error fetching data:', error);
     }
   }
+  async cariitemsTerminologiDiagnostikReportCategory() {
+    let payload = {
+      terminology_id: "",
+      key_operator: "=|=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "category|is_active",
+      key_value: "diagnostic-service|1",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsTerminologiDiagnostikReportCategory = itemResponse.data;
+    } catch (error)
+    {
+      console.error('Error fetching data:', error);
+    }
+  }
   async cariitemsTerminologiAntropometriBayiOservarion() {
     let payload = {
       terminology_id: "",
@@ -1679,9 +1716,10 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         if (itemResponse.service_request_responses.length > 0)
         {
           this.riwayatServiceRequest = itemResponse.service_request_responses;
+          this.riwayatServiceRequestForObserve = itemResponse;
         } else
         {
-          if (this.activeTab === "form-laborat-specimen" || this.activeTab === "form-laborat-observasi")
+          if (this.activeTab === "form-laborat-specimen" || this.activeTab === "form-laborat-observasi" || this.activeTab === "form-laporan-diagnosis")
           {
             Swal.fire('Error', 'Mohon Buat Rencana Tindakan', 'error');
             this.activeTab = 'form-rencana-tindak-lanjut';
@@ -1973,6 +2011,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       case "form-laborat-observasi":
         this.caririwayatServiceRequest();
         this.cariItemObservarionsCategory();
+        break;
+      case "form-laporan-diagnosis":
+        this.cariitemsTerminologiDiagnostikReportCategory();
         break;
       default:
         break;

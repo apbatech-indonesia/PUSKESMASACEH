@@ -1,111 +1,75 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-let satusehatUrl = 'https://besatusehat.clenicapp.com/api/';
+
+const satusehatUrl = 'https://besatusehat.clenicapp.com/api/';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GiziService {
-  userData: any = JSON.parse(localStorage.getItem('userDatacl')).userData
-  headers = new HttpHeaders({
-    'kd-cabang': this.userData.kdcabang
-  })
+  userData: any = JSON.parse(localStorage.getItem('userDatacl'))?.userData;
+  headers = new HttpHeaders({ 'kd-cabang': this.userData?.kdcabang });
 
-  constructor(public http: HttpClient) { }
+  constructor(private http: HttpClient) { }
+
+  private request(endpoint: string, data: any) {
+    return new Promise((resolve, reject) => {
+      this.http.post(`${satusehatUrl}${endpoint}`, data, { headers: this.headers }).subscribe(
+        response => resolve(response),
+        error => reject(error)
+      );
+    });
+  }
 
   createKunjunganGizi(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'gizi/createKunjungan', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+    return this.request('gizi/createKunjungan', data);
   }
+
   getRiwayat(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'master/getUseCase', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+    return this.request('master/getUseCase', data);
   }
 
   createRelatedPersonGIZI(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'gizi/createRelatedPerson', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+    return this.request('gizi/createRelatedPerson', data);
   }
 
   getDataTerminologi(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'terminologi/search', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
-  getDataQuestionaire(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'question/searchV2', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
-  getDataSatuanUnit(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'unitofmeasure/search', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
-  }
-  createKeluhanUtama(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'gizi/conditionsCreate', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+    return this.request('terminologi/search', data);
   }
 
-  createAlergyInteolerance(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'gizi/allergyIntolerancesCreate', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+  getDataQuestionaire(data: any) {
+    return this.request('question/searchV2', data);
   }
+
+  getDataSatuanUnit(data: any) {
+    return this.request('unitofmeasure/search', data);
+  }
+
+  createKeluhanUtama(data: any) {
+    return this.request('gizi/conditionsCreate', data);
+  }
+
+  createAlergyIntolerance(data: any) {
+    return this.request('gizi/allergyIntolerancesCreate', data);
+  }
+
   createAlergyObat(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'gizi/medicationStatementsCreate', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+    return this.request('gizi/medicationStatementsCreate', data);
   }
 
   createObservations(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'gizi/observationsCreate', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+    return this.request('gizi/observationsCreate', data);
   }
+
   createServiceRequests(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'gizi/serviceRequestsCreate', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+    return this.request('gizi/serviceRequestsCreate', data);
   }
-  createSpeciment(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'gizi/specimensCreate', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+
+  createSpecimen(data: any) {
+    return this.request('gizi/specimensCreate', data);
   }
+
   createSkriningMalnutrisiQuestionaire(data: any) {
-    return new Promise((resolve) => {
-      this.http.post(satusehatUrl + 'gizi/questionnaireResponsesCreate', data, { headers: this.headers }).subscribe((data) => {
-        resolve(data)
-      })
-    })
+    return this.request('gizi/questionnaireResponsesCreate', data);
   }
 }
