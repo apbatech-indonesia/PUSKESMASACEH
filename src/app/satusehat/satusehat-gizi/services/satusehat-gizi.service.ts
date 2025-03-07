@@ -72,4 +72,7 @@ export class GiziService {
   createSkriningMalnutrisiQuestionaire(data: any) {
     return this.request('gizi/questionnaireResponsesCreate', data);
   }
+  createDiagnosticReport(data: any) {
+    return this.request('gizi/diagnosticReportsCreate', data);
+  }
 }
