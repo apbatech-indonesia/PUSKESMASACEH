@@ -1,81 +1,89 @@
-import { HttpHeaders } from '@angular/common/http'
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core'
-import Swal from 'sweetalert2'
-import { ApiserviceService } from '../../../apiservice.service'
-import { ActivatedRoute } from '@angular/router'
-import { faArrowLeft, faSave } from '@fortawesome/free-solid-svg-icons'
-import { GiziService } from '../services/satusehat-gizi.service'
-import { DataRiwayat } from '../data/data-riwayat'
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms'
-import { W } from '@angular/cdk/keycodes'
+import { HttpHeaders } from "@angular/common/http";
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from "@angular/core";
+import Swal from "sweetalert2";
+import { ApiserviceService } from "../../../apiservice.service";
+import { ActivatedRoute } from "@angular/router";
+import { faArrowLeft, faSave } from "@fortawesome/free-solid-svg-icons";
+import { GiziService } from "../services/satusehat-gizi.service";
+import { DataRiwayat } from "../data/data-riwayat";
+import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
+import { W } from "@angular/cdk/keycodes";
 
 @Component({
-  selector: 'app-tulis-satusehat-gizi',
-  templateUrl: './tulis-satusehat-gizi.component.html',
-  styleUrls: ['./tulis-satusehat-gizi.component.sass']
+  selector: "app-tulis-satusehat-gizi",
+  templateUrl: "./tulis-satusehat-gizi.component.html",
+  styleUrls: ["./tulis-satusehat-gizi.component.sass"],
 })
-
 export class TulisSatuSehatGiziComponent implements OnInit {
-  activeTab: string = 'form-ibu-ayah'
-  userData: any = JSON.parse(localStorage.getItem('userDatacl')).userData
-  notransaksi: string = this.route.snapshot.paramMap.get('notrans')
-  relatedPersonResponse: any
-  encounter_id: string
-  useCaseId: string
-  cabangData: any
-  idpasien: any
-  dateNow = new Date().toISOString()
-  formIbuAyah: FormGroup
-  antropometriObservationForm: FormGroup
-  antropometriBalitaObservationForm: FormGroup
-  antropometriIbuHamilObservationForm: FormGroup
-  antropometriIndexObservationForm: FormGroup
-  formPemeriksaanFisik: FormGroup
-  formRencanaTindakLanjut: FormGroup
-  formRujukLaborat: FormGroup
+  activeTab: string = "form-ibu-ayah";
+  userData: any = JSON.parse(localStorage.getItem("userDatacl")).userData;
+  notransaksi: string = this.route.snapshot.paramMap.get("notrans");
+  relatedPersonResponse: any;
+  encounter_id: string;
+  useCaseId: string;
+  cabangData: any;
+  idpasien: any;
+  dateNow = new Date().toISOString();
+  formIbuAyah: FormGroup;
+  antropometriObservationForm: FormGroup;
+  antropometriBalitaObservationForm: FormGroup;
+  antropometriIbuHamilObservationForm: FormGroup;
+  antropometriIndexObservationForm: FormGroup;
+  formPemeriksaanFisik: FormGroup;
+  formRencanaTindakLanjut: FormGroup;
+  formRujukLaborat: FormGroup;
   selectedCheckboxes: { [key: string]: string } = {}; // Pastikan ini ada
   selectedCheckboxesSpecimentLab: { [key: string]: string } = {}; // Pastikan ini ada
   selectedServiceRequests: { [key: string]: string } = {};
-  selectedValues: { [categoryId: string]: { [codeId: string]: { value: any, unit: string } } } = {};
+  selectedValues: {
+    [categoryId: string]: { [codeId: string]: { value: any; unit: string } };
+  } = {};
 
+  formMalnitrisi: FormGroup;
+  formLaboratSpecimen: FormGroup;
+  formKeluhanUtama: FormGroup;
+  formSkriningMalnutrisiQuestionaire: FormGroup;
+  formAlergiMakanan: FormGroup;
+  formAlergiObat: FormGroup;
+  faArrowLeft = faArrowLeft;
+  faSave = faSave;
 
-  formMalnitrisi: FormGroup
-  formLaboratSpecimen: FormGroup
-  formKeluhanUtama: FormGroup
-  formSkriningMalnutrisiQuestionaire: FormGroup
-  formAlergiMakanan: FormGroup
-  formAlergiObat: FormGroup
-  faArrowLeft = faArrowLeft
-  faSave = faSave
-
-  isDisabledFormGizi: boolean = true
+  isDisabledFormGizi: boolean = true;
   headers = new HttpHeaders({
-    'kd-cabang': this.userData.kdcabang
-  })
+    "kd-cabang": this.userData.kdcabang,
+  });
 
-  data: any
+  data: any;
 
   patientData: any = {
-    noantrian: '-',
-    norm: '-',
-    pasien: '-',
-    umur: '-',
-    tgllahir: '-',
-    jeniskelamin: '-',
-    nampoli: '-',
-    costumer: '-',
-    namdokter: '-',
-    alamat: '-'
-  }
+    noantrian: "-",
+    norm: "-",
+    pasien: "-",
+    umur: "-",
+    tgllahir: "-",
+    jeniskelamin: "-",
+    nampoli: "-",
+    costumer: "-",
+    namdokter: "-",
+    alamat: "-",
+  };
 
-  umurPasien = parseInt(this.patientData.umur.split(' ')[0], 10);
+  umurPasien = parseInt(this.patientData.umur.split(" ")[0], 10);
 
   bayiOrNot = this.patientData.umur < 2 ? true : false;
 
   @Output() selectedItem = new EventEmitter();
   @Output() deletedItem = new EventEmitter();
   @Input() searchKeluhanUtamaText: string;
-  searchKeluhanUtama: any = 'terminology_name';
+  searchKeluhanUtama: any = "terminology_name";
   listKeluhanUtama: any = [];
   // Makanan
   listItemMakananAlergi: any;
@@ -122,115 +130,114 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef
   ) {
-
     this.formIbuAyah = this.fb.group({
-      nama_ibu: [''],
-      nik_ibu: [''],
-      tl_ibu: [''],
-      hp_ibu: [''],
-      kota_ibu: [''],
-      alamat_jalan_ibu: [''],
-      postal_code_ibu: [''],
-      province_id_ibu: [''],
-      city_id_ibu: [''],
-      district_id_ibu: [''],
-      village_id_ibu: [''],
-      rt_ibu: [''],
-      rw_ibu: [''],
-      nama_ayah: [''],
-      nik_ayah: [''],
-      tl_ayah: [''],
-      hp_ayah: [''],
-      kota_ayah: [''],
-      alamat_jalan_ayah: [''],
-      postal_code_ayah: [''],
-      province_id_ayah: [''],
-      city_id_ayah: [''],
-      district_id_ayah: [''],
-      village_id_ayah: [''],
-      rt_ayah: [''],
-      rw_ayah: ['']
-    })
+      nama_ibu: [""],
+      nik_ibu: [""],
+      tl_ibu: [""],
+      hp_ibu: [""],
+      kota_ibu: [""],
+      alamat_jalan_ibu: [""],
+      postal_code_ibu: [""],
+      province_id_ibu: [""],
+      city_id_ibu: [""],
+      district_id_ibu: [""],
+      village_id_ibu: [""],
+      rt_ibu: [""],
+      rw_ibu: [""],
+      nama_ayah: [""],
+      nik_ayah: [""],
+      tl_ayah: [""],
+      hp_ayah: [""],
+      kota_ayah: [""],
+      alamat_jalan_ayah: [""],
+      postal_code_ayah: [""],
+      province_id_ayah: [""],
+      city_id_ayah: [""],
+      district_id_ayah: [""],
+      village_id_ayah: [""],
+      rt_ayah: [""],
+      rw_ayah: [""],
+    });
     this.formPemeriksaanFisik = this.fb.group({
-      tingkatResponseKesadaran: [''],
+      tingkatResponseKesadaran: [""],
       tdSistolik: this.fb.group({
-        nilaiSistolik: [''],
-        objectSistolik: [''],
-        objectSatuanSistolik: ['']
+        nilaiSistolik: [""],
+        objectSistolik: [""],
+        objectSatuanSistolik: [""],
       }),
       tdDiastolik: this.fb.group({
-        nilaiDiastolik: [''],
-        objectDiastolik: [''],
-        objectSatuanDiastolik: ['']
+        nilaiDiastolik: [""],
+        objectDiastolik: [""],
+        objectSatuanDiastolik: [""],
       }),
       suhuTubuh: this.fb.group({
-        nilaiSuhu: [''],
-        objectSuhu: [''],
-        objectSatuanSuhu: ['']
+        nilaiSuhu: [""],
+        objectSuhu: [""],
+        objectSatuanSuhu: [""],
       }),
       denyutJantung: this.fb.group({
-        nilaiDenyut: [''],
-        objectDenyut: [''],
-        objectSatuanDenyut: ['']
+        nilaiDenyut: [""],
+        objectDenyut: [""],
+        objectSatuanDenyut: [""],
       }),
       pernapasan: this.fb.group({
-        nilaiPernapasan: [''],
-        objectPernapasan: [''],
-        objectSatuanPernapasan: ['']
+        nilaiPernapasan: [""],
+        objectPernapasan: [""],
+        objectSatuanPernapasan: [""],
       }),
-      kondisiMata: [''],
-      kondisiBibir: [''],
+      kondisiMata: [""],
+      kondisiBibir: [""],
     });
     this.formMalnitrisi = this.fb.group({
-      nilaiSkorMalnutrisi: [''],
+      nilaiSkorMalnutrisi: [""],
       items: this.fb.group({
-        selectedItemValue: [''],
-        tingkatInterprestasiMalNutrisi: ['']
-      })
+        selectedItemValue: [""],
+        tingkatInterprestasiMalNutrisi: [""],
+      }),
     });
     this.formRencanaTindakLanjut = this.fb.group({
-      items: ['']
+      items: [""],
     });
     this.formRujukLaborat = this.fb.group({
-      items: [''],
+      items: [""],
       selectedItems: this.fb.array([]),
     });
     this.antropometriObservationForm = this.fb.group({
-      pengukuran: this.fb.group({})
+      pengukuran: this.fb.group({}),
     });
     this.antropometriBalitaObservationForm = this.fb.group({
-      pengukuran: this.fb.group({})
+      pengukuran: this.fb.group({}),
     });
     this.antropometriIndexObservationForm = this.fb.group({
-      pengukuran: this.fb.group({})
+      pengukuran: this.fb.group({}),
     });
     this.antropometriIbuHamilObservationForm = this.fb.group({
-      pengukuran: this.fb.group({})
+      pengukuran: this.fb.group({}),
     });
     this.formLaboratSpecimen = this.fb.group({
-      item: this.fb.group({})
+      item: this.fb.group({}),
     });
 
     this.formKeluhanUtama = this.fb.group({
-      nama_keluhan: [''],
-      tuberculosis: [''],
-      diagnosa_awal: [''],
-      diagnosa_akhir: ['']
+      nama_keluhan: [""],
+      tuberculosis: [""],
+      diagnosa_awal: [""],
+      diagnosa_akhir: [""],
     });
     this.formAlergiMakanan = this.fb.group({
-      namaMakanan: [''],
+      namaMakanan: [""],
       statusClinical: this.fb.group({
-        status: ['']
-      })
+        status: [""],
+      }),
     });
     this.formAlergiObat = this.fb.group({
-      metodePengobatan: [''],
+      metodePengobatan: [""],
       statusClinical: this.fb.group({
-        status: ['']
-      })
+        status: [""],
+      }),
     });
     this.formSkriningMalnutrisiQuestionaire = this.fb.group({
-      questions: this.fb.array([])
+      questions: this.fb.array([]),
     });
   }
   toggleInputRencanaTindakLanjut(id: string) {
@@ -252,21 +259,32 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       delete this.selectedCheckboxesSpecimentLab[id];
     } else
     {
-      this.selectedCheckboxesSpecimentLab = { ...this.selectedCheckboxesSpecimentLab, [id]: "" };
+      this.selectedCheckboxesSpecimentLab = {
+        ...this.selectedCheckboxesSpecimentLab,
+        [id]: "",
+      };
     }
   }
 
   updateselectedCheckboxesSpecimentLab(id: string, value: string) {
-    this.selectedCheckboxesSpecimentLab = { ...this.selectedCheckboxesSpecimentLab, [id]: value };
+    this.selectedCheckboxesSpecimentLab = {
+      ...this.selectedCheckboxesSpecimentLab,
+      [id]: value,
+    };
   }
-  updateValue(categoryId: string, codeId: string, value: any, defaultUnit: string) {
+  updateValue(
+    categoryId: string,
+    codeId: string,
+    value: any,
+    defaultUnit: string
+  ) {
     if (!this.selectedValues[categoryId])
     {
       this.selectedValues[categoryId] = {};
     }
     if (!this.selectedValues[categoryId][codeId])
     {
-      this.selectedValues[categoryId][codeId] = { value: '', unit: '' };
+      this.selectedValues[categoryId][codeId] = { value: "", unit: "" };
     }
 
     this.selectedValues[categoryId][codeId].value = value;
@@ -278,10 +296,11 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   }
 
-
-
   updateUnit(categoryId: string, codeId: string, unit: string) {
-    if (this.selectedValues[categoryId] && this.selectedValues[categoryId][codeId])
+    if (
+      this.selectedValues[categoryId] &&
+      this.selectedValues[categoryId][codeId]
+    )
     {
       this.selectedValues[categoryId][codeId].unit = unit;
     }
@@ -294,44 +313,54 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
     if (!this.selectedValues[categoryId][codeId])
     {
-      this.selectedValues[categoryId][codeId] = { value: '', unit: '' };
+      this.selectedValues[categoryId][codeId] = { value: "", unit: "" };
     }
     return this.selectedValues[categoryId][codeId];
   }
 
-
   loadQuestions() {
     // Membuat kontrol dinamis berdasarkan pertanyaan
-    this.listQuestionaireMalNutrisi.forEach(question => {
+    this.listQuestionaireMalNutrisi.forEach((question) => {
       const questionForm = this.fb.group({
         objectId: [question.id],
-        objectPertanyaan: [''],
-        answer: ['']
+        objectPertanyaan: [""],
+        answer: [""],
       });
-      this.formSkriningMalnutrisiQuestionaire.get('questions')?.setValue(questionForm);
+      this.formSkriningMalnutrisiQuestionaire
+        .get("questions")
+        ?.setValue(questionForm);
     });
   }
 
-  onCheckboxChange(event: Event, index: number, value: any) {
-  }
+  onCheckboxChange(event: Event, index: number, value: any) { }
   onSelectMedicationMethod(value: any) {
     if (!this.selectedItemObat.includes(value))
     {
       this.selectedItemObat.push(value);
-      this.formAlergiObat.get('metodePengobatan')?.setValue(this.selectedItemObat);
+      this.formAlergiObat
+        .get("metodePengobatan")
+        ?.setValue(this.selectedItemObat);
     }
   }
   onSelectItemObat(item: any) {
-    this.formAlergiMakanan.get('metodePengobatan')?.setValue(this.selectedItemObat);
+    this.formAlergiMakanan
+      .get("metodePengobatan")
+      ?.setValue(this.selectedItemObat);
   }
   // malnutrisi item
   onSelectItemInterprestasi(item: any) {
-    this.formMalnitrisi.get('items.tingkatInterprestasiMalNutrisi')?.setValue(item);
+    this.formMalnitrisi
+      .get("items.tingkatInterprestasiMalNutrisi")
+      ?.setValue(item);
   }
   // Fungsi untuk menentukan apakah item sedang "ter-select"
   isSelected(item: any): boolean {
-    const selectedItem = this.formMalnitrisi.get('items.tingkatInterprestasiMalNutrisi')?.value;
-    return selectedItem && selectedItem.terminology_code === item.terminology_code;
+    const selectedItem = this.formMalnitrisi.get(
+      "items.tingkatInterprestasiMalNutrisi"
+    )?.value;
+    return (
+      selectedItem && selectedItem.terminology_code === item.terminology_code
+    );
   }
 
   // Makanan
@@ -345,13 +374,14 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }, 200); // Delay untuk memungkinkan klik pada opsi
   }
 
-
   onSelectItem(item: any) {
     if (!this.selectedItemMakanans.includes(item))
     {
       this.selectedItemMakanans.push(item);
-      this.formAlergiMakanan.get('namaMakanan')?.setValue(this.selectedItemMakanans);
-      this.pilihMakanan = '';
+      this.formAlergiMakanan
+        .get("namaMakanan")
+        ?.setValue(this.selectedItemMakanans);
+      this.pilihMakanan = "";
     }
   }
 
@@ -360,20 +390,24 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     if (index !== -1)
     {
       this.selectedItemMakanans.splice(index, 1);
-      this.formAlergiMakanan.get('namaMakanan')?.setValue(this.selectedItemMakanans);
+      this.formAlergiMakanan
+        .get("namaMakanan")
+        ?.setValue(this.selectedItemMakanans);
     }
   }
   convertToSlug(value: string): string {
-    if (!value) return '';
+    if (!value) return "";
     return value
       .toLowerCase()
-      .replace(/[^\w\s]/g, '')
-      .replace(/\s+/g, '_');
+      .replace(/[^\w\s]/g, "")
+      .replace(/\s+/g, "_");
   }
   async doSubmitAlergiObat() {
     let formObat = this.formAlergiObat.value;
     let StagementKagegori = this.listItemObats[0];
-    let metodePengobatanName = this.formAlergiObat.value.metodePengobatan?.terminology_name || "gizi_milk_allergy";
+    let metodePengobatanName =
+      this.formAlergiObat.value.metodePengobatan?.terminology_name ||
+      "gizi_milk_allergy";
     const payload = {
       data: {
         encounterId: this.encounter_id,
@@ -383,39 +417,42 @@ export class TulisSatuSehatGiziComponent implements OnInit {
           {
             name: metodePengobatanName || "gizi_milk_allergy",
             category: {
-              system: "http://terminology.hl7.org/CodeSystem/medication-statement-category",
+              system:
+                "http://terminology.hl7.org/CodeSystem/medication-statement-category",
               code: StagementKagegori.terminology_code,
-              display: StagementKagegori.terminology_name
+              display: StagementKagegori.terminology_name,
             },
-            status: this.formAlergiObat.value.statusClinical?.status || "completed",
+            status:
+              this.formAlergiObat.value.statusClinical?.status || "completed",
             medicationCodeableConcept: {
               system: "http://sys-ids.kemkes.go.id/kfa",
               code: formObat.metodePengobatan.terminology_code,
-              display: formObat.metodePengobatan.terminology_name
+              display: formObat.metodePengobatan.terminology_name,
             },
             dateAsserted: this.dateNow,
-            effectiveDateTime: "2023-01-23T18:00:00+00:00"
-          }
-        ]
-      }
+            effectiveDateTime: "2023-01-23T18:00:00+00:00",
+          },
+        ],
+      },
     };
     try
     {
       let response: any = await this.GiziService.createAlergyObat(payload);
-      let msg = response.statusMsg.split(': ');
-      Swal.fire('Success', msg.join(', '), 'success');
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
     } catch (err)
     {
-      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
     }
   }
 
   isOptionSelected(answer: any[], optionValue: any): boolean {
     if (!answer) return false;
     const parsedOption = JSON.parse(optionValue);
-    return answer.some((ans: any) => JSON.stringify(ans) === JSON.stringify(parsedOption));
+    return answer.some(
+      (ans: any) => JSON.stringify(ans) === JSON.stringify(parsedOption)
+    );
   }
-
 
   async doSubmitSkriningMalnutrisiQuestionaire() {
     const ItemTerjawab = this.listQuestionaireMalNutrisi;
@@ -429,7 +466,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
 
           if (question.type === "Reference")
           {
-            parsedAnswer = question.options.map((option) => JSON.parse(option.option_value));
+            parsedAnswer = question.options.map((option) =>
+              JSON.parse(option.option_value)
+            );
           } else if (question.answer)
           {
             parsedAnswer = [JSON.parse(question.answer)];
@@ -449,23 +488,22 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         encounterId: this.encounter_id,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
-        questionnaireResponses: questionaireResponse
-      }
+        questionnaireResponses: questionaireResponse,
+      },
     };
 
     try
     {
-      let response: any = await this.GiziService.createSkriningMalnutrisiQuestionaire(payload);
-      let msg = response.statusMsg.split(': ');
-      Swal.fire('Success', msg.join(', '), 'success');
-    } catch (err)
-    {
-    }
-
+      let response: any =
+        await this.GiziService.createSkriningMalnutrisiQuestionaire(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err) { }
   }
   async doSubmitSkriningMalnutrisi() {
     let formMalnutrisi = this.formMalnitrisi.value;
-    const obeserveName = this.umurPasien > 18 ? "resiko_malnutrisi_>=18" : "resiko_malnutrisi_<18";
+    const obeserveName =
+      this.umurPasien > 18 ? "resiko_malnutrisi_>=18" : "resiko_malnutrisi_<18";
     const terminologiCode = this.itemTerminologiKategoriMalnutrisi[0];
     const paylaod = {
       data: {
@@ -476,60 +514,67 @@ export class TulisSatuSehatGiziComponent implements OnInit {
           {
             name: obeserveName,
             category: {
-              system: "http://terminology.hl7.org/CodeSystem/observation-category",
+              system:
+                "http://terminology.hl7.org/CodeSystem/observation-category",
               code: "exam",
-              display: "Exam"
+              display: "Exam",
             },
             data: [
               {
                 code: {
-                  system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
+                  system:
+                    "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                   code: terminologiCode.terminology_code,
-                  displa: terminologiCode.terminology_name
+                  displa: terminologiCode.terminology_name,
                 },
                 valueString: "",
                 result: {
                   value: formMalnutrisi.nilaiSkorMalnutrisi,
                   unit: "{score}",
                   system: "http://unitsofmeasure.org",
-                  code: "{score}"
+                  code: "{score}",
                 },
                 resultBoolean: {},
                 valueCodeableConcept: {
                   value: formMalnutrisi.nilaiSkorMalnutrisi,
                   unit: "{score}",
                   system: "http://unitsofmeasure.org",
-                  code: "{score}"
-                }
-              }
+                  code: "{score}",
+                },
+              },
             ],
             interpretation: {
-              system: formMalnutrisi.items.tingkatInterprestasiMalNutrisi.source.source_url,
-              code: formMalnutrisi.items.tingkatInterprestasiMalNutrisi.terminology_code,
-              display: formMalnutrisi.items.tingkatInterprestasiMalNutrisi.terminology_name
+              system:
+                formMalnutrisi.items.tingkatInterprestasiMalNutrisi.source
+                  .source_url,
+              code: formMalnutrisi.items.tingkatInterprestasiMalNutrisi
+                .terminology_code,
+              display:
+                formMalnutrisi.items.tingkatInterprestasiMalNutrisi
+                  .terminology_name,
             },
             effectiveDateTime: "2024-04-24T00:23:30+00:00",
-            issued: this.dateNow
-          }
-        ]
-      }
-    }
+            issued: this.dateNow,
+          },
+        ],
+      },
+    };
 
     try
     {
       let response: any = await this.GiziService.createObservations(paylaod);
-      let msg = response.statusMsg.split(': ');
-      Swal.fire('Success', msg.join(', '), 'success');
-    } catch (err)
-    {
-    }
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err) { }
   }
 
   async doSubmitHasilPemeriksaanFisik() {
     // itemPayload
     const itemPayloadTingkatKesadaran = this.itemTerminologiTingkatKesadaran[0];
-    const itemPayloadSistolikTandaVital = this.itemTerminologiTandaVitalSistolik[0];
-    const itemPayloadDiastolikTandaVital = this.itemTerminologiTandaVitalDiastolik[0];
+    const itemPayloadSistolikTandaVital =
+      this.itemTerminologiTandaVitalSistolik[0];
+    const itemPayloadDiastolikTandaVital =
+      this.itemTerminologiTandaVitalDiastolik[0];
     const itemBodyTemprature = this.itemTerminologiTandaVitalBodyTemprature[0];
     const itemHeartRate = this.itemTerminologiTandaVitalHeartRate[0];
     const itemRespiratoryRate = this.itemTerminologiTandaVitalRespiratory[0];
@@ -549,709 +594,229 @@ export class TulisSatuSehatGiziComponent implements OnInit {
 
     const tingkatKesadaranPayload = [
       {
-        "name": "responsiveness",
-        "category": {
-          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-          "code": "exam",
-          "display": "Exam"
+        name: "responsiveness",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: "exam",
+          display: "Exam",
         },
-        "data": [
+        data: [
           {
-            "code": {
-              "system": "http://loinc.org",
-              "code": itemPayloadTingkatKesadaran.terminology_code,
-              "display": itemPayloadTingkatKesadaran.terminology_name
+            code: {
+              system: "http://loinc.org",
+              code: itemPayloadTingkatKesadaran.terminology_code,
+              display: itemPayloadTingkatKesadaran.terminology_name,
             },
-            "result": {},
-            "resultBoolean": {},
-            "valueCodeableConcept": {
-              "system": "http://snomed.info/sct",
-              "code": tingkatKesadaranInput.terminology_code,
-              "display": tingkatKesadaranInput.terminology_name
-            }
-          }
+            result: {},
+            resultBoolean: {},
+            valueCodeableConcept: {
+              system: "http://snomed.info/sct",
+              code: tingkatKesadaranInput.terminology_code,
+              display: tingkatKesadaranInput.terminology_name,
+            },
+          },
         ],
-        "effectiveDateTime": "2024-04-24T00:23:30+00:00",
-        "issued": this.dateNow
-      }
+        effectiveDateTime: "2024-04-24T00:23:30+00:00",
+        issued: this.dateNow,
+      },
     ];
     const tandaVitalPayload = [
       {
-        "name": "systolic",
-        "category": {
-          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-          "code": "vital-signs",
-          "display": "Vital Signs"
+        name: "systolic",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: "vital-signs",
+          display: "Vital Signs",
         },
-        "data": [
+        data: [
           {
-            "code": {
-              "system": "http://loinc.org",
-              "code": itemPayloadSistolikTandaVital.terminology_code,
-              "display": itemPayloadSistolikTandaVital.terminology_name
+            code: {
+              system: "http://loinc.org",
+              code: itemPayloadSistolikTandaVital.terminology_code,
+              display: itemPayloadSistolikTandaVital.terminology_name,
             },
-            "result": {
-              "value": tdSistolikInput.nilaiSistolik,
-              "unit": tdSistolikInput.objectSatuanSistolik.unit_code,
-              "system": tdSistolikInput.objectSatuanSistolik.unit_system,
-              "code": tdSistolikInput.objectSatuanSistolik.unit_code
+            result: {
+              value: tdSistolikInput.nilaiSistolik,
+              unit: tdSistolikInput.objectSatuanSistolik.unit_code,
+              system: tdSistolikInput.objectSatuanSistolik.unit_system,
+              code: tdSistolikInput.objectSatuanSistolik.unit_code,
             },
-            "resultBoolean": {},
-            "valueCodeableConcept": {}
-          }
+            resultBoolean: {},
+            valueCodeableConcept: {},
+          },
         ],
-        "effectiveDateTime": "2024-04-24T00:23:30+00:00",
-        "issued": this.dateNow
+        effectiveDateTime: "2024-04-24T00:23:30+00:00",
+        issued: this.dateNow,
       },
       {
-        "name": "diastolic",
-        "category": {
-          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-          "code": "vital-signs",
-          "display": "Vital Signs"
+        name: "diastolic",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: "vital-signs",
+          display: "Vital Signs",
         },
-        "data": [
+        data: [
           {
-            "code": {
-              "system": "http://loinc.org",
-              "code": itemPayloadDiastolikTandaVital.terminology_code,
-              "display": itemPayloadDiastolikTandaVital.terminology_name
+            code: {
+              system: "http://loinc.org",
+              code: itemPayloadDiastolikTandaVital.terminology_code,
+              display: itemPayloadDiastolikTandaVital.terminology_name,
             },
-            "result": {
-              "value": tdDiastolikInput.nilaiDiastolik,
-              "unit": tdDiastolikInput.objectSatuanDiastolik.unit_code,
-              "system": tdDiastolikInput.objectSatuanDiastolik.unit_system,
-              "code": tdDiastolikInput.objectSatuanDiastolik.unit_code
+            result: {
+              value: tdDiastolikInput.nilaiDiastolik,
+              unit: tdDiastolikInput.objectSatuanDiastolik.unit_code,
+              system: tdDiastolikInput.objectSatuanDiastolik.unit_system,
+              code: tdDiastolikInput.objectSatuanDiastolik.unit_code,
             },
-            "resultBoolean": {},
-            "valueCodeableConcept": {}
-          }
+            resultBoolean: {},
+            valueCodeableConcept: {},
+          },
         ],
-        "effectiveDateTime": "2024-04-24T00:23:30+00:00",
-        "issued": this.dateNow
+        effectiveDateTime: "2024-04-24T00:23:30+00:00",
+        issued: this.dateNow,
       },
       {
-        "name": "body_temperature",
-        "category": {
-          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-          "code": "vital-signs",
-          "display": "Vital Signs"
+        name: "body_temperature",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: "vital-signs",
+          display: "Vital Signs",
         },
-        "data": [
+        data: [
           {
-            "code": {
-              "system": "http://loinc.org",
-              "code": itemBodyTemprature.terminology_code,
-              "display": itemBodyTemprature.terminology_name
+            code: {
+              system: "http://loinc.org",
+              code: itemBodyTemprature.terminology_code,
+              display: itemBodyTemprature.terminology_name,
             },
-            "result": {
-              "value": BodyTempratureInput.nilaiSuhu,
-              "unit": BodyTempratureInput.objectSatuanSuhu.unit_code,
-              "system": BodyTempratureInput.objectSatuanSuhu.unit_system,
-              "code": BodyTempratureInput.objectSatuanSuhu.unit_code
+            result: {
+              value: BodyTempratureInput.nilaiSuhu,
+              unit: BodyTempratureInput.objectSatuanSuhu.unit_code,
+              system: BodyTempratureInput.objectSatuanSuhu.unit_system,
+              code: BodyTempratureInput.objectSatuanSuhu.unit_code,
             },
-            "resultBoolean": {},
-            "valueCodeableConcept": {}
-          }
+            resultBoolean: {},
+            valueCodeableConcept: {},
+          },
         ],
-        "effectiveDateTime": "2024-04-24T00:23:30+00:00",
-        "issued": this.dateNow
+        effectiveDateTime: "2024-04-24T00:23:30+00:00",
+        issued: this.dateNow,
       },
       {
-        "name": "heart_rate",
-        "category": {
-          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-          "code": "vital-signs",
-          "display": "Vital Signs"
+        name: "heart_rate",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: "vital-signs",
+          display: "Vital Signs",
         },
-        "data": [
+        data: [
           {
-            "code": {
-              "system": "http://loinc.org",
-              "code": itemHeartRate.terminology_code,
-              "display": itemHeartRate.terminology_name
+            code: {
+              system: "http://loinc.org",
+              code: itemHeartRate.terminology_code,
+              display: itemHeartRate.terminology_name,
             },
-            "result": {
-              "value": heartRateInput.nilaiDenyut,
-              "unit": heartRateInput.objectSatuanDenyut.unit_code,
-              "system": heartRateInput.objectSatuanDenyut.unit_system,
-              "code": heartRateInput.objectSatuanDenyut.unit_code
+            result: {
+              value: heartRateInput.nilaiDenyut,
+              unit: heartRateInput.objectSatuanDenyut.unit_code,
+              system: heartRateInput.objectSatuanDenyut.unit_system,
+              code: heartRateInput.objectSatuanDenyut.unit_code,
             },
-            "resultBoolean": {},
-            "valueCodeableConcept": {}
-          }
+            resultBoolean: {},
+            valueCodeableConcept: {},
+          },
         ],
-        "effectiveDateTime": "2024-04-24T00:23:30+00:00",
-        "issued": this.dateNow
+        effectiveDateTime: "2024-04-24T00:23:30+00:00",
+        issued: this.dateNow,
       },
       {
-        "name": "respiratory_rate",
-        "category": {
-          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-          "code": "vital-signs",
-          "display": "Vital Signs"
+        name: "respiratory_rate",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: "vital-signs",
+          display: "Vital Signs",
         },
-        "data": [
+        data: [
           {
-            "code": {
-              "system": "http://loinc.org",
-              "code": itemRespiratoryRate.terminology_code,
-              "display": itemRespiratoryRate.terminology_name
+            code: {
+              system: "http://loinc.org",
+              code: itemRespiratoryRate.terminology_code,
+              display: itemRespiratoryRate.terminology_name,
             },
-            "result": {
-              "value": respiratoryRateInput.nilaiPernapasan,
-              "unit": respiratoryRateInput.objectSatuanPernapasan.unit_code,
-              "system": respiratoryRateInput.objectSatuanPernapasan.unit_system,
-              "code": respiratoryRateInput.objectSatuanPernapasan.unit_code
+            result: {
+              value: respiratoryRateInput.nilaiPernapasan,
+              unit: respiratoryRateInput.objectSatuanPernapasan.unit_code,
+              system: respiratoryRateInput.objectSatuanPernapasan.unit_system,
+              code: respiratoryRateInput.objectSatuanPernapasan.unit_code,
             },
-            "resultBoolean": {},
-            "valueCodeableConcept": {}
-          }
+            resultBoolean: {},
+            valueCodeableConcept: {},
+          },
         ],
-        "effectiveDateTime": "2024-04-24T00:23:30+00:00",
-        "issued": this.dateNow
+        effectiveDateTime: "2024-04-24T00:23:30+00:00",
+        issued: this.dateNow,
       },
     ];
     const headToToePayload = [
       {
-        "name": "eye_narrative",
-        "category": {
-          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-          "code": "exam",
-          "display": "Exam"
+        name: "eye_narrative",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: "exam",
+          display: "Exam",
         },
-        "data": [
+        data: [
           {
-            "code": {
-              "system": "http://loinc.org",
-              "code": itemEyeNarrative.terminology_code,
-              "display": itemEyeNarrative.terminology_name
+            code: {
+              system: "http://loinc.org",
+              code: itemEyeNarrative.terminology_code,
+              display: itemEyeNarrative.terminology_name,
             },
-            "valueString": kondisiMataInput,
-            "result": {},
-            "resultBoolean": {},
-            "valueCodeableConcept": {}
-          }
+            valueString: kondisiMataInput,
+            result: {},
+            resultBoolean: {},
+            valueCodeableConcept: {},
+          },
         ],
-        "effectiveDateTime": "2024-04-24T00:23:30+00:00",
-        "issued": this.dateNow
+        effectiveDateTime: "2024-04-24T00:23:30+00:00",
+        issued: this.dateNow,
       },
       {
-        "name": "lip",
-        "category": {
-          "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-          "code": "vital-signs",
-          "display": "Vital Signs"
+        name: "lip",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: "vital-signs",
+          display: "Vital Signs",
         },
-        "data": [
+        data: [
           {
-            "code": {
-              "system": "http://loinc.org",
-              "code": itemFindingOfLip.terminology_code,
-              "display": itemFindingOfLip.terminology_name
+            code: {
+              system: "http://loinc.org",
+              code: itemFindingOfLip.terminology_code,
+              display: itemFindingOfLip.terminology_name,
             },
-            "valueString": kondisiBibirInput,
-            "result": {},
-            "resultBoolean": {},
-            "valueCodeableConcept": {}
-          }
+            valueString: kondisiBibirInput,
+            result: {},
+            resultBoolean: {},
+            valueCodeableConcept: {},
+          },
         ],
-        "effectiveDateTime": "2024-04-24T00:23:30+00:00",
-        "issued": "2024-04-24T00:23:30+00:00"
-      }
+        effectiveDateTime: "2024-04-24T00:23:30+00:00",
+        issued: "2024-04-24T00:23:30+00:00",
+      },
     ];
     const margingItems = [
       ...tingkatKesadaranPayload,
       ...tandaVitalPayload,
-      ...headToToePayload
+      ...headToToePayload,
     ];
     const payload = {
       data: {
         encounterId: this.encounter_id,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
-        observations: margingItems
-      }
-    };
-    try
-    {
-      let response: any = await this.GiziService.createObservations(payload);
-      let msg = response.statusMsg.split(': ');
-      Swal.fire('Success', msg.join(', '), 'success');
-    } catch (err)
-    {
-      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
-    }
-  }
-
-  async doSubmitAntropometriObservation() {
-    const observations = this.itemsTerminologiAntropometriOservarion.map(item => ({
-      name: item.terminology_name + "_observation",
-      status: "final",
-      category: {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: item.category,
-        display: item.category
+        observations: margingItems,
       },
-      data: [
-        {
-          code: {
-            system: "http://terminology.hl7.org/CodeSystem/observation-category",
-            code: item.terminology_code,
-            display: item.terminology_name
-          },
-          valueString: "",
-          result: {
-            value: Number(item.value),
-            unit: item.unit,
-            system: "http://unitsofmeasure.org",
-            code: item.unit
-          },
-          resultBoolean: {},
-          valueCodeableConcept: {}
-        }
-      ],
-      interpretation: {},
-      effectiveDateTime: this.dateNow,
-      issued: this.dateNow
-    }));
-
-    const payload = {
-      data: {
-        encounterId: this.encounter_id,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        observations: observations
-      }
-    };
-
-    try
-    {
-      let response: any = await this.GiziService.createObservations(payload);
-      let msg = response.statusMsg.split(': ');
-      Swal.fire('Success', msg.join(', '), 'success');
-    } catch (err)
-    {
-      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
-    }
-  }
-  async doSubmitAntropometriBalitaObservation() {
-    const observations = this.itemsTerminologiAntropometriBalitaOservarion.map(item => ({
-      name: item.terminology_name + "_observation",
-      status: "final",
-      category: {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: item.category,
-        display: item.category
-      },
-      data: [
-        {
-          code: {
-            system: "http://loinc.org",
-            code: item.terminology_code,
-            display: item.terminology_name
-          },
-          valueString: "",
-          result: {
-            value: Number(item.value),
-            unit: item.unit,
-            system: "http://unitsofmeasure.org",
-            code: item.unit
-          },
-          resultBoolean: {},
-          valueCodeableConcept: {}
-        }
-      ],
-      interpretation: {},
-      effectiveDateTime: this.dateNow,
-      issued: this.dateNow
-    }));
-
-    const payload = {
-      data: {
-        encounterId: this.encounter_id,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        observations: observations
-      }
-    };
-
-
-    try
-    {
-      let response: any = await this.GiziService.createObservations(payload);
-      let msg = response.statusMsg.split(': ');
-      Swal.fire('Success', msg.join(', '), 'success');
-    } catch (err)
-    {
-      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
-    }
-  }
-  async doSubmitRencanaTindakLanjutServiceRequest() {
-    let serviceRequests = [];
-
-    for (let itemServReq of this.itemsTerminologiRencanaTindakLanjutServiceRequest)
-    {
-      let selectedObservations = [];
-      let selectedReasons = [];
-
-      for (let itemChol of this.itemsTerminologiCholesterolObservationServiceRequest)
-      {
-        let checkboxId = `${itemServReq.terminology_id}-${itemChol.terminology_id}`;
-
-        if (this.selectedCheckboxes[checkboxId] !== undefined)
-        {
-          selectedObservations.push({
-            system: itemChol.source.source_url,
-            code: itemChol.terminology_code,
-            display: itemChol.terminology_name
-          });
-
-          // Ambil deskripsi dari inputan user
-          let userInput = this.selectedCheckboxes[checkboxId];
-          selectedReasons.push({ text: userInput });
-        }
-      }
-
-      if (selectedObservations.length > 0)
-      {
-        serviceRequests.push({
-          name: `Lab_serviceRequest_${itemServReq.terminology_name.replace(/\s+/g, '_')}`,
-          category: [
-            {
-              coding: [
-                {
-                  system: itemServReq.source?.source_url || "http://default-category.org",
-                  code: itemServReq.terminology_code,
-                  display: itemServReq.terminology_name
-                }
-              ]
-            }
-          ],
-          patientInstruction: "",
-          status: "active",
-          intent: "original-order",
-          priority: "routine",
-          occurrenceDateTime: this.dateNow,
-          authoredOn: this.dateNow,
-          encounter: {
-            reference: `Encounter/${this.encounter_id}`,
-            display: `Permintaan Pemeriksaan ${itemServReq.terminology_name}`
-          },
-          data: [
-            ...selectedObservations,
-            {
-              text: itemServReq.description
-            }
-          ],
-          reason: [{ text: itemServReq.description }]
-        });
-      }
-    }
-
-    const payload = {
-      data: {
-        encounterId: this.encounter_id,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        serviceRequests: serviceRequests
-      }
-    };
-
-    try
-    {
-      let response: any = await this.GiziService.createServiceRequests(payload);
-
-      let msg = response.statusMsg.split(': ');
-      Swal.fire('Success', msg.join(', '), 'success');
-    } catch (err)
-    {
-      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
-    }
-  }
-  async doSubmitRujukLaborat() {
-    // try
-    // {
-    //   let response: any = await this.GiziService.createObservations(payload);
-    // } catch (err)
-    // {
-    //   Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
-    // }
-  }
-
-
-  async doSubmitAntropometriIbuHamilObservation() {
-    const observations = this.itemsTerminologiAntropometriIbuHamilOservarion.map(item => ({
-      name: item.terminology_name.toLowerCase().replace(/\s+/g, '_'),
-      status: "final",
-      category: {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: item.category,
-        display: item.category
-      },
-      data: [
-        {
-          code: {
-            system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
-            code: item.terminology_code,
-            display: item.terminology_name
-          },
-          valueString: "",
-          result: item.value
-            ? {
-              value: Number(item.value),
-              unit: item.unit,
-              system: "http://unitsofmeasure.org",
-              code: item.unit
-            }
-            : {},
-          resultBoolean: {},
-          valueCodeableConcept: {
-            system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
-            code: "OV000009",
-            display: Number(item.value) + ' ' + item.unit
-          }
-        }
-      ],
-      interpretation: {},
-      effectiveDateTime: this.dateNow,
-      issued: this.dateNow
-    }));
-
-    const payload = {
-      data: {
-        encounterId: this.encounter_id,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        observations: observations
-      }
-    };
-
-    try
-    {
-      let response: any = await this.GiziService.createObservations(payload);
-      let msg = response.statusMsg.split(': ');
-      Swal.fire('Success', msg.join(', '), 'success');
-    } catch (err)
-    {
-      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
-    }
-  }
-  async doSubmitAntropometriIndexhObservation() {
-    const observations = this.itemsTerminologiAntropometriIndexOservarion.map(item => ({
-      name: item.terminology_name + "_observation",
-      status: "final",
-      category: {
-        system: "http://terminology.hl7.org/CodeSystem/observation-category",
-        code: item.category,
-        display: item.category
-      },
-      data: [
-        {
-          code: {
-            system: item.source.source_url,
-            code: item.terminology_code,
-            display: item.terminology_name
-          },
-          valueString: "",
-          result: {
-            value: Number(item.value),
-            unit: item.unit,
-            system: "http://unitsofmeasure.org",
-            code: item.unit
-          },
-          resultBoolean: {},
-          valueCodeableConcept: {}
-        }
-      ],
-      interpretation: {},
-      effectiveDateTime: this.dateNow,
-      issued: this.dateNow
-    }));
-
-    const payload = {
-      data: {
-        encounterId: this.encounter_id,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        observations: observations
-      }
-    };
-
-    try
-    {
-      let response: any = await this.GiziService.createObservations(payload);
-      let msg = response.statusMsg.split(': ');
-      Swal.fire('Success', msg.join(', '), 'success');
-    } catch (err)
-    {
-      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
-    }
-  }
-
-  async doSubmitLaboratSpecimen() {
-    let specimens = [];
-    for (let typeSpecimen of this.itemsTerminologiLaboratSpecimenType)
-    {
-      for (let collectionSpecimen of this.itemsTerminologiLaboratSpecimenCollection)
-      {
-        let checkboxId = `${typeSpecimen.terminology_id}-${collectionSpecimen.terminology_id}`;
-
-        if (this.selectedCheckboxesSpecimentLab[checkboxId] !== undefined)
-        {
-          let selectedRequest = this.selectedServiceRequests[typeSpecimen.terminology_id] || null;
-          let specimen = {
-            name: `gizi_lab_${typeSpecimen.terminology_name.replace(/\s+/g, '_')}`,
-            status: "available",
-            type: {
-              system: typeSpecimen.source?.source_url || "http://default-category.org",
-              code: typeSpecimen.terminology_code,
-              display: typeSpecimen.terminology_name
-            },
-            collection: {
-              method: {
-                system: collectionSpecimen.source?.source_url || "http://default-system.org",
-                code: collectionSpecimen.terminology_code,
-                display: collectionSpecimen.terminology_name
-              },
-              collectedDateTime: this.dateNow
-            },
-            receivedTime: this.dateNow,
-
-            request: [{ reference: "ServiceRequest/" + selectedRequest }]
-
-          };
-
-          specimens.push(specimen);
-        }
-      }
-    }
-
-    const payload = {
-      data: {
-        encounterId: this.encounter_id,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        specimens: specimens
-      }
-    };
-
-    if (specimens.length > 0)
-    {
-      try
-      {
-        let response: any = await this.GiziService.createSpecimen(payload);
-        let msg = response.statusMsg.split(': ');
-        Swal.fire('Success', msg.join(', '), 'success');
-      } catch (err)
-      {
-        Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
-      }
-    } else
-    {
-      Swal.fire('Warning', 'Tidak ada specimen yang dipilih.', 'warning');
-    }
-  }
-
-
-  async doSubmitLabObservation() {
-
-
-    const itemKategoori = this.itemsTerminologiObservationCategory[0];
-    const selectedServiceReq = this.selectedServiceRequests[itemKategoori.terminology_id];
-    const selectedServiceReqId = selectedServiceReq['response_id'] || null;
-    let specimentTID = null;
-    for (let item of this.riwayatServiceRequestForObserve['specimen_responses'])
-    {
-      if (item?.response_id !== null)
-      {
-        specimentTID = item.response_id;
-        break;
-      }
-    }
-
-
-
-    const observations = this.itemsTerminologiCholesterolObservationServiceRequest
-      .map(itemCodeData => {
-        // Ambil nilai yang dipilih secara lebih aman
-        let selectedValue = null;
-        const itemServiceRequest = this.selectedServiceRequests[itemCodeData.terminology_id];
-        for (const categoryKey in this.selectedValues)
-        {
-          if (this.selectedValues.hasOwnProperty(categoryKey))
-          {
-            const category = this.selectedValues[categoryKey];
-            if (category[itemCodeData.terminology_id])
-            {
-              selectedValue = category[itemCodeData.terminology_id];
-              break; // Stop setelah menemukan nilai pertama yang cocok
-            }
-          }
-        }
-
-        if (!selectedValue || selectedValue.value === null || selectedValue.value === undefined)
-        {
-          return null; // Skip jika tidak ada nilai
-        }
-
-        return {
-          name: `${itemCodeData.terminology_name.replace(/\s+/g, '_').toLowerCase()}_observation`, // Nama sesuai data
-          status: "final",
-          category: {
-            system: itemKategoori.source.source_url + itemKategoori.category,
-            code: itemKategoori.terminology_code,
-            display: itemKategoori.terminology_name
-          },
-          data: [
-            {
-              code: {
-                system: itemCodeData.source.source_url,
-                code: itemCodeData.terminology_code,
-                display: itemCodeData.terminology_name
-              },
-              valueString: "",
-              result: {
-                value: Number(selectedValue.value) || null,
-                unit: selectedValue.unit || "",
-                system: "http://unitsofmeasure.org",
-                code: selectedValue.unit || ""
-              },
-              resultBoolean: {},
-              valueCodeableConcept: {}
-            }
-          ],
-          specimen: {
-            reference: `Specimen/${specimentTID}`
-          },
-          basedOn: [
-            {
-              reference: `ServiceRequest/${selectedServiceReqId}`
-            }
-          ],
-          interpretation: {
-            system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
-            code: "H",
-            display: "High"
-          },
-          effectiveDateTime: this.dateNow,
-          issued: this.dateNow
-        };
-      })
-      .filter(obs => obs !== null);
-
-    // Buang yang tidak memiliki nilai valid
-
-
-
-
-    const payload = {
-      data: {
-        encounterId: this.encounter_id,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        observations: observations
-      }
     };
     try
     {
@@ -1264,8 +829,512 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   }
 
+  async doSubmitAntropometriObservation() {
+    const observations = this.itemsTerminologiAntropometriOservarion.map(
+      (item) => ({
+        name: item.terminology_name + "_observation",
+        status: "final",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: item.category,
+          display: item.category,
+        },
+        data: [
+          {
+            code: {
+              system:
+                "http://terminology.hl7.org/CodeSystem/observation-category",
+              code: item.terminology_code,
+              display: item.terminology_name,
+            },
+            valueString: "",
+            result: {
+              value: Number(item.value),
+              unit: item.unit,
+              system: "http://unitsofmeasure.org",
+              code: item.unit,
+            },
+            resultBoolean: {},
+            valueCodeableConcept: {},
+          },
+        ],
+        interpretation: {},
+        effectiveDateTime: this.dateNow,
+        issued: this.dateNow,
+      })
+    );
 
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        observations: observations,
+      },
+    };
 
+    try
+    {
+      let response: any = await this.GiziService.createObservations(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitAntropometriBalitaObservation() {
+    const observations = this.itemsTerminologiAntropometriBalitaOservarion.map(
+      (item) => ({
+        name: item.terminology_name + "_observation",
+        status: "final",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: item.category,
+          display: item.category,
+        },
+        data: [
+          {
+            code: {
+              system: "http://loinc.org",
+              code: item.terminology_code,
+              display: item.terminology_name,
+            },
+            valueString: "",
+            result: {
+              value: Number(item.value),
+              unit: item.unit,
+              system: "http://unitsofmeasure.org",
+              code: item.unit,
+            },
+            resultBoolean: {},
+            valueCodeableConcept: {},
+          },
+        ],
+        interpretation: {},
+        effectiveDateTime: this.dateNow,
+        issued: this.dateNow,
+      })
+    );
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        observations: observations,
+      },
+    };
+
+    try
+    {
+      let response: any = await this.GiziService.createObservations(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitRencanaTindakLanjutServiceRequest() {
+    let serviceRequests = [];
+
+    for (let itemServReq of this
+      .itemsTerminologiRencanaTindakLanjutServiceRequest)
+    {
+      let selectedObservations = [];
+      let selectedReasons = [];
+
+      for (let itemChol of this
+        .itemsTerminologiCholesterolObservationServiceRequest)
+      {
+        let checkboxId = `${itemServReq.terminology_id}-${itemChol.terminology_id}`;
+
+        if (this.selectedCheckboxes[checkboxId] !== undefined)
+        {
+          selectedObservations.push({
+            system: itemChol.source.source_url,
+            code: itemChol.terminology_code,
+            display: itemChol.terminology_name,
+          });
+
+          // Ambil deskripsi dari inputan user
+          let userInput = this.selectedCheckboxes[checkboxId];
+          selectedReasons.push({ text: userInput });
+        }
+      }
+
+      if (selectedObservations.length > 0)
+      {
+        serviceRequests.push({
+          name: `Lab_serviceRequest_${itemServReq.terminology_name.replace(
+            /\s+/g,
+            "_"
+          )}`,
+          category: [
+            {
+              coding: [
+                {
+                  system:
+                    itemServReq.source?.source_url ||
+                    "http://default-category.org",
+                  code: itemServReq.terminology_code,
+                  display: itemServReq.terminology_name,
+                },
+              ],
+            },
+          ],
+          patientInstruction: "",
+          status: "active",
+          intent: "original-order",
+          priority: "routine",
+          occurrenceDateTime: this.dateNow,
+          authoredOn: this.dateNow,
+          encounter: {
+            reference: `Encounter/${this.encounter_id}`,
+            display: `Permintaan Pemeriksaan ${itemServReq.terminology_name}`,
+          },
+          data: [
+            ...selectedObservations,
+            {
+              text: itemServReq.description,
+            },
+          ],
+          reason: [{ text: itemServReq.description }],
+        });
+      }
+    }
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        serviceRequests: serviceRequests,
+      },
+    };
+
+    try
+    {
+      let response: any = await this.GiziService.createServiceRequests(payload);
+
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitRujukLaborat() {
+    // try
+    // {
+    //   let response: any = await this.GiziService.createObservations(payload);
+    // } catch (err)
+    // {
+    //   Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+    // }
+  }
+
+  async doSubmitAntropometriIbuHamilObservation() {
+    const observations =
+      this.itemsTerminologiAntropometriIbuHamilOservarion.map((item) => ({
+        name: item.terminology_name.toLowerCase().replace(/\s+/g, "_"),
+        status: "final",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: item.category,
+          display: item.category,
+        },
+        data: [
+          {
+            code: {
+              system:
+                "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
+              code: item.terminology_code,
+              display: item.terminology_name,
+            },
+            valueString: "",
+            result: item.value
+              ? {
+                value: Number(item.value),
+                unit: item.unit,
+                system: "http://unitsofmeasure.org",
+                code: item.unit,
+              }
+              : {},
+            resultBoolean: {},
+            valueCodeableConcept: {
+              system:
+                "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
+              code: "OV000009",
+              display: Number(item.value) + " " + item.unit,
+            },
+          },
+        ],
+        interpretation: {},
+        effectiveDateTime: this.dateNow,
+        issued: this.dateNow,
+      }));
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        observations: observations,
+      },
+    };
+
+    try
+    {
+      let response: any = await this.GiziService.createObservations(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitAntropometriIndexhObservation() {
+    const observations = this.itemsTerminologiAntropometriIndexOservarion.map(
+      (item) => ({
+        name: item.terminology_name + "_observation",
+        status: "final",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/observation-category",
+          code: item.category,
+          display: item.category,
+        },
+        data: [
+          {
+            code: {
+              system: item.source.source_url,
+              code: item.terminology_code,
+              display: item.terminology_name,
+            },
+            valueString: "",
+            result: {
+              value: Number(item.value),
+              unit: item.unit,
+              system: "http://unitsofmeasure.org",
+              code: item.unit,
+            },
+            resultBoolean: {},
+            valueCodeableConcept: {},
+          },
+        ],
+        interpretation: {},
+        effectiveDateTime: this.dateNow,
+        issued: this.dateNow,
+      })
+    );
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        observations: observations,
+      },
+    };
+
+    try
+    {
+      let response: any = await this.GiziService.createObservations(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+
+  async doSubmitLaboratSpecimen() {
+    let specimens = [];
+    for (let typeSpecimen of this.itemsTerminologiLaboratSpecimenType)
+    {
+      for (let collectionSpecimen of this
+        .itemsTerminologiLaboratSpecimenCollection)
+      {
+        let checkboxId = `${typeSpecimen.terminology_id}-${collectionSpecimen.terminology_id}`;
+
+        if (this.selectedCheckboxesSpecimentLab[checkboxId] !== undefined)
+        {
+          let selectedRequest =
+            this.selectedServiceRequests[typeSpecimen.terminology_id] || null;
+          let specimen = {
+            name: `gizi_lab_${typeSpecimen.terminology_name.replace(
+              /\s+/g,
+              "_"
+            )}`,
+            status: "available",
+            type: {
+              system:
+                typeSpecimen.source?.source_url ||
+                "http://default-category.org",
+              code: typeSpecimen.terminology_code,
+              display: typeSpecimen.terminology_name,
+            },
+            collection: {
+              method: {
+                system:
+                  collectionSpecimen.source?.source_url ||
+                  "http://default-system.org",
+                code: collectionSpecimen.terminology_code,
+                display: collectionSpecimen.terminology_name,
+              },
+              collectedDateTime: this.dateNow,
+            },
+            receivedTime: this.dateNow,
+
+            request: [{ reference: "ServiceRequest/" + selectedRequest }],
+          };
+
+          specimens.push(specimen);
+        }
+      }
+    }
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        specimens: specimens,
+      },
+    };
+
+    if (specimens.length > 0)
+    {
+      try
+      {
+        let response: any = await this.GiziService.createSpecimen(payload);
+        let msg = response.statusMsg.split(": ");
+        Swal.fire("Success", msg.join(", "), "success");
+      } catch (err)
+      {
+        Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+      }
+    } else
+    {
+      Swal.fire("Warning", "Tidak ada specimen yang dipilih.", "warning");
+    }
+  }
+
+  async doSubmitLabObservation() {
+    const itemKategoori = this.itemsTerminologiObservationCategory[0];
+    const selectedServiceReq =
+      this.selectedServiceRequests[itemKategoori.terminology_id];
+    const selectedServiceReqId = selectedServiceReq["response_id"] || null;
+    let specimentTID = null;
+    for (let item of this.riwayatServiceRequestForObserve[
+      "specimen_responses"
+    ])
+    {
+      if (item?.response_id !== null)
+      {
+        specimentTID = item.response_id;
+        break;
+      }
+    }
+
+    const observations =
+      this.itemsTerminologiCholesterolObservationServiceRequest
+        .map((itemCodeData) => {
+          // Ambil nilai yang dipilih secara lebih aman
+          let selectedValue = null;
+          const itemServiceRequest =
+            this.selectedServiceRequests[itemCodeData.terminology_id];
+          for (const categoryKey in this.selectedValues)
+          {
+            if (this.selectedValues.hasOwnProperty(categoryKey))
+            {
+              const category = this.selectedValues[categoryKey];
+              if (category[itemCodeData.terminology_id])
+              {
+                selectedValue = category[itemCodeData.terminology_id];
+                break; // Stop setelah menemukan nilai pertama yang cocok
+              }
+            }
+          }
+
+          if (
+            !selectedValue ||
+            selectedValue.value === null ||
+            selectedValue.value === undefined
+          )
+          {
+            return null; // Skip jika tidak ada nilai
+          }
+
+          return {
+            name: `${itemCodeData.terminology_name
+              .replace(/\s+/g, "_")
+              .toLowerCase()}_observation`, // Nama sesuai data
+            status: "final",
+            category: {
+              system: itemKategoori.source.source_url + itemKategoori.category,
+              code: itemKategoori.terminology_code,
+              display: itemKategoori.terminology_name,
+            },
+            data: [
+              {
+                code: {
+                  system: itemCodeData.source.source_url,
+                  code: itemCodeData.terminology_code,
+                  display: itemCodeData.terminology_name,
+                },
+                valueString: "",
+                result: {
+                  value: Number(selectedValue.value) || null,
+                  unit: selectedValue.unit || "",
+                  system: "http://unitsofmeasure.org",
+                  code: selectedValue.unit || "",
+                },
+                resultBoolean: {},
+                valueCodeableConcept: {},
+              },
+            ],
+            specimen: {
+              reference: `Specimen/${specimentTID}`,
+            },
+            basedOn: [
+              {
+                reference: `ServiceRequest/${selectedServiceReqId}`,
+              },
+            ],
+            interpretation: {
+              system:
+                "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+              code: "H",
+              display: "High",
+            },
+            effectiveDateTime: this.dateNow,
+            issued: this.dateNow,
+          };
+        })
+        .filter((obs) => obs !== null);
+
+    // Buang yang tidak memiliki nilai valid
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        observations: observations,
+      },
+    };
+    try
+    {
+      let response: any = await this.GiziService.createObservations(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
 
   async doSubmitAlergiMakanan() {
     // Ambil data dari form
@@ -1282,16 +1351,33 @@ export class TulisSatuSehatGiziComponent implements OnInit {
 
     // Konversi status klinis ke format yang sesuai
     const clinicalStatusMapping = {
-      Active: { system: "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical", code: "active", display: "Active" },
-      Inactive: { system: "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical", code: "inactive", display: "Inactive" },
-      Resolved: { system: "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical", code: "resolved", display: "Resolved" }
+      Active: {
+        system:
+          "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
+        code: "active",
+        display: "Active",
+      },
+      Inactive: {
+        system:
+          "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
+        code: "inactive",
+        display: "Inactive",
+      },
+      Resolved: {
+        system:
+          "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
+        code: "resolved",
+        display: "Resolved",
+      },
     };
 
     const mappedClinicalStatus = clinicalStatusMapping[clinicalStatus];
 
     // Siapkan data untuk `dataAlergi`
     const dataAlergi = selectedItemMakanans.map((item: any) => ({
-      name: `gizi_${item.terminology_name.toLowerCase().replace(/ /g, "_")}_allergy`,
+      name: `gizi_${item.terminology_name
+        .toLowerCase()
+        .replace(/ /g, "_")}_allergy`,
       category: ["food"],
       clinicalStatus: mappedClinicalStatus,
       recordedDate: this.dateNow,
@@ -1299,9 +1385,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         {
           system: "http://snomed.info/sct",
           code: item.terminology_code,
-          display: item.terminology_name
-        }
-      ]
+          display: item.terminology_name,
+        },
+      ],
     }));
 
     // Buat payload akhir
@@ -1310,18 +1396,20 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         encounterId: this.encounter_id,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
-        allergyIntolerances: dataAlergi
-      }
+        allergyIntolerances: dataAlergi,
+      },
     };
 
     try
     {
-      let response: any = await this.GiziService.createAlergyIntolerance(payload);
-      let msg = response.statusMsg.split(': ');
-      Swal.fire('Success', msg.join(', '), 'success');
+      let response: any = await this.GiziService.createAlergyIntolerance(
+        payload
+      );
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
     } catch (err)
     {
-      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
     }
   }
   async cariListItemMakanan() {
@@ -1334,37 +1422,39 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       show_child: "yes",
       max_row: 100,
       order_by: "terminology_name",
-      order_type: "Asc"
+      order_type: "Asc",
     };
 
     try
     {
-      let dataListManakan: any = await this.GiziService.getDataTerminologi(payload);
+      let dataListManakan: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.listItemMakananAlergi = [...dataListManakan.data];
-
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariItemsQuestionerMalnutrisi() {
     let payload = {
-      "key_name": "category",
-      "key_operator": "=",
-      "key_value": "nutrition-status",
-      "max_row": 50,
-      "order_by": "id",
-      "order_type": "Asc"
+      key_name: "category",
+      key_operator: "=",
+      key_value: "nutrition-status",
+      max_row: 50,
+      order_by: "id",
+      order_type: "Asc",
     };
 
     try
     {
-      let itemListResponse: any = await this.GiziService.getDataQuestionaire(payload);
+      let itemListResponse: any = await this.GiziService.getDataQuestionaire(
+        payload
+      );
       this.listQuestionaireMalNutrisi = [...itemListResponse.data];
-
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariListItemObat() {
@@ -1377,16 +1467,18 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       show_child: "yes",
       max_row: 100,
       order_by: "terminology_name",
-      order_type: "Asc"
+      order_type: "Asc",
     };
 
     try
     {
-      let dataListManakan: any = await this.GiziService.getDataTerminologi(payload);
+      let dataListManakan: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.listItemObats = [...dataListManakan.data];
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariTerminologiTingkatKesadaran() {
@@ -1395,11 +1487,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemTerminologiTingkatKesadaran = [itemResponse.data[0]];
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariTerminologiTandaVitalSistolik() {
@@ -1408,11 +1502,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemTerminologiTandaVitalSistolik = [itemResponse.data[0]];
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariTerminologiTandaVitalDistolik() {
@@ -1421,11 +1517,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemTerminologiTandaVitalDiastolik = [itemResponse.data[0]];
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariTerminologiTandaVitalbodytemprature() {
@@ -1434,11 +1532,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemTerminologiTandaVitalBodyTemprature = [itemResponse.data[0]];
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariTerminologiTandaVitalHeartRate() {
@@ -1447,11 +1547,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemTerminologiTandaVitalHeartRate = [itemResponse.data[0]];
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariTerminologiTandaVitalRespiratoryRate() {
@@ -1460,11 +1562,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemTerminologiTandaVitalRespiratory = [itemResponse.data[0]];
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariTerminologiKategoriMalnutrisi() {
@@ -1473,11 +1577,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemTerminologiKategoriMalnutrisi = [itemResponse.data[0]];
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariitemsTerminologiAntropometriOservarion() {
@@ -1494,11 +1600,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemsTerminologiAntropometriOservarion = itemResponse.data;
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariitemsTerminologiCholesterolObservationServiceRequest() {
@@ -1515,11 +1623,14 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
-      this.itemsTerminologiCholesterolObservationServiceRequest = itemResponse.data;
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
+      this.itemsTerminologiCholesterolObservationServiceRequest =
+        itemResponse.data;
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
 
@@ -1537,11 +1648,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemsTerminologiObservationCategory = itemResponse.data;
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariitemsTerminologiDiagnostikReportCategory() {
@@ -1558,11 +1671,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemsTerminologiDiagnostikReportCategory = itemResponse.data;
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariitemsTerminologiAntropometriBayiOservarion() {
@@ -1579,11 +1694,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemsTerminologiAntropometriBalitaOservarion = itemResponse.data;
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariitemsTerminologiAntropometriIbuHamilOservarion() {
@@ -1600,11 +1717,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemsTerminologiAntropometriIbuHamilOservarion = itemResponse.data;
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariitemsTerminologiAntropometriIndexOservarion() {
@@ -1618,17 +1737,17 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       order_type: "Asc",
       key_name: "satusehat_category",
       key_value: "data-antropometri-index",
-      is_active: 1
-
+      is_active: 1,
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemsTerminologiAntropometriIndexOservarion = itemResponse.data;
-
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariitemsTerminologiRencanaTindakLanjutServiceRequest() {
@@ -1642,16 +1761,17 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       order_type: "Asc",
       key_name: "category|is_active",
       key_value: "service-request|1",
-
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
-      this.itemsTerminologiRencanaTindakLanjutServiceRequest = itemResponse.data;
-
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
+      this.itemsTerminologiRencanaTindakLanjutServiceRequest =
+        itemResponse.data;
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariitemsTerminologiLaboratSpecimenType() {
@@ -1668,11 +1788,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemsTerminologiLaboratSpecimenType = itemResponse.data;
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariitemsTerminologiLaboratSpecimenCollection() {
@@ -1689,21 +1811,22 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemsTerminologiLaboratSpecimenCollection = itemResponse.data;
-
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
 
   async caririwayatServiceRequest() {
     let payload = {
-      "usecase_id": this.useCaseId,
-      "patientId": this.idpasien,
-      "type": "gizi",
-      "status": "active"
+      usecase_id: this.useCaseId,
+      patientId: this.idpasien,
+      type: "gizi",
+      status: "active",
     };
 
     try
@@ -1711,7 +1834,10 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       let itemResponse: any = await this.GiziService.getRiwayat(payload);
 
       // Pastikan `service_request_responses` ada sebelum membaca `.length`
-      if (itemResponse?.service_request_responses && Array.isArray(itemResponse.service_request_responses))
+      if (
+        itemResponse?.service_request_responses &&
+        Array.isArray(itemResponse.service_request_responses)
+      )
       {
         if (itemResponse.service_request_responses.length > 0)
         {
@@ -1719,22 +1845,28 @@ export class TulisSatuSehatGiziComponent implements OnInit {
           this.riwayatServiceRequestForObserve = itemResponse;
         } else
         {
-          if (this.activeTab === "form-laborat-specimen" || this.activeTab === "form-laborat-observasi" || this.activeTab === "form-laporan-diagnosis")
+          if (
+            this.activeTab === "form-laborat-specimen" ||
+            this.activeTab === "form-laborat-observasi" ||
+            this.activeTab === "form-laporan-diagnosis"
+          )
           {
-            Swal.fire('Error', 'Mohon Buat Rencana Tindakan', 'error');
-            this.activeTab = 'form-rencana-tindak-lanjut';
+            Swal.fire("Error", "Mohon Buat Rencana Tindakan", "error");
+            this.activeTab = "form-rencana-tindak-lanjut";
           }
         }
       } else
       {
-        console.warn("service_request_responses tidak ditemukan dalam response:", itemResponse);
+        console.warn(
+          "service_request_responses tidak ditemukan dalam response:",
+          itemResponse
+        );
       }
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
-
 
   async cariTerminologiEyeNarative() {
     let payload = {
@@ -1742,11 +1874,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemTerminologiEyeNarrative = [itemResponse.data[0]];
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariTerminologiFindingOfLip() {
@@ -1755,11 +1889,13 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     };
     try
     {
-      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      let itemResponse: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.itemTerminologiFindingOfLip = [itemResponse.data[0]];
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   async cariMetodePengobatan() {
@@ -1772,40 +1908,37 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       show_child: "yes",
       max_row: 100,
       order_by: "terminology_name",
-      order_type: "Asc"
+      order_type: "Asc",
     };
 
     try
     {
-      let ListItemDariPencarian: any = await this.GiziService.getDataTerminologi(payload);
+      let ListItemDariPencarian: any =
+        await this.GiziService.getDataTerminologi(payload);
       this.listMedicationMethods = [...ListItemDariPencarian.data];
-    } catch (error)
-    {
-    }
+    } catch (error) { }
   }
   async getSatuanUnit() {
     let payload = {
-      "unit_code": "",
-      "key_name": "unit_name",
-      "key_operator": "like",
-      "key_value": "",
-      "max_row": 50,
-      "order_by": "unit_code",
-      "order_type": "Asc"
+      unit_code: "",
+      key_name: "unit_name",
+      key_operator: "like",
+      key_value: "",
+      max_row: 50,
+      order_by: "unit_code",
+      order_type: "Asc",
     };
 
     try
     {
-      let listSatuanUnitGet: any = await this.GiziService.getDataSatuanUnit(payload);
+      let listSatuanUnitGet: any = await this.GiziService.getDataSatuanUnit(
+        payload
+      );
       this.listSatuanUnit = [...listSatuanUnitGet.data];
-    } catch (error)
-    {
-    }
+    } catch (error) { }
   }
 
   async getTingkatResponseKesadaran() {
-
-
     let payload = {
       terminology_id: "",
       key_name: `satusehat_category`,
@@ -1815,16 +1948,15 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       show_child: "yes",
       max_row: 100,
       order_by: "terminology_name",
-      order_type: "Asc"
+      order_type: "Asc",
     };
 
     try
     {
-      let listTingkatKesadaranGet: any = await this.GiziService.getDataTerminologi(payload);
+      let listTingkatKesadaranGet: any =
+        await this.GiziService.getDataTerminologi(payload);
       this.listTingkatKesadaran = [...listTingkatKesadaranGet.data];
-    } catch (error)
-    {
-    }
+    } catch (error) { }
   }
 
   async getTingkatInterprestasi() {
@@ -1837,25 +1969,23 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       show_child: "yes",
       max_row: 100,
       order_by: "terminology_name",
-      order_type: "Asc"
+      order_type: "Asc",
     };
 
     try
     {
-      let responseData: any = await this.GiziService.getDataTerminologi(payload);
+      let responseData: any = await this.GiziService.getDataTerminologi(
+        payload
+      );
       this.listTingkatInterprestasi = [...responseData.data];
-    } catch (error)
-    {
-    }
+    } catch (error) { }
   }
 
-
-
   async docreateKunjunganGizi() {
-    this.showLoading()
-    this.patientData = await this.getPasien()
-    this.cabangData = await this.getCabang()
-    await this.setIdPasien()
+    this.showLoading();
+    this.patientData = await this.getPasien();
+    this.cabangData = await this.getCabang();
+    await this.setIdPasien();
 
     let response: any = await this.GiziService.createKunjunganGizi({
       data: {
@@ -1867,11 +1997,11 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         practitionerName: this.patientData.namdokter,
         locationId: this.patientData.locationid,
         satusehatId: this.patientData.idsatusehat,
-        locationName: this.cabangData.nama
-      }
-    })
-    this.useCaseId = response.data.use_case_id
-    this.encounter_id = response.data.encounter_id
+        locationName: this.cabangData.nama,
+      },
+    });
+    this.useCaseId = response.data.use_case_id;
+    this.encounter_id = response.data.encounter_id;
   }
   async doSubmitRelatedPerson() {
     var data = {
@@ -1880,38 +2010,42 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
         related_person: {
-          ...this.formIbuAyah.value
-        }
-      }
+          ...this.formIbuAyah.value,
+        },
+      },
     };
     let response: any = await this.GiziService.createRelatedPersonGIZI(data);
-    let msg = response.statusMsg.split(': ');
+    let msg = response.statusMsg.split(": ");
 
     this.relatedPersonResponse = response;
   }
   async doSubmitkeluhanUtama() {
     const conditions = [
       {
-        name: this.formKeluhanUtama.value.nama_keluhan || "gizi-nausea_vomiting",
+        name:
+          this.formKeluhanUtama.value.nama_keluhan || "gizi-nausea_vomiting",
         category: {
           system: "http://terminology.hl7.org/CodeSystem/condition-category",
           code: "problem-list-item",
-          display: "Problem List Item"
+          display: "Problem List Item",
         },
         clinicalStatus: {
           system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
           code: this.formKeluhanUtama.value.status_klinis || "active",
-          display: this.formKeluhanUtama.value.status_klinis_display || "Active"
+          display:
+            this.formKeluhanUtama.value.status_klinis_display || "Active",
         },
-        recordedDate: this.formKeluhanUtama.value.tanggal_pencatatan || this.dateNow,
+        recordedDate:
+          this.formKeluhanUtama.value.tanggal_pencatatan || this.dateNow,
         data: [
           {
             system: "http://snomed.info/sct",
             code: this.formKeluhanUtama.value.kode_keluhan || "16932000",
-            display: this.formKeluhanUtama.value.nama_keluhan || "Nausea and vomiting"
-          }
-        ]
-      }
+            display:
+              this.formKeluhanUtama.value.nama_keluhan || "Nausea and vomiting",
+          },
+        ],
+      },
     ];
 
     // Periksa apakah tuberculosis diisi, jika ya, tambahkan ke conditions
@@ -1922,26 +2056,27 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         category: {
           system: "http://terminology.hl7.org/CodeSystem/condition-category",
           code: "problem-list-item",
-          display: "Problem List Item"
+          display: "Problem List Item",
         },
         clinicalStatus: {
           system: "http://terminology.hl7.org/CodeSystem/condition-clinical",
           code: "active",
-          display: "Active"
+          display: "Active",
         },
         recordedDate: this.dateNow,
         onsetPeriod: {
           start: this.formKeluhanUtama.value.diagnosa_awal,
-          end: this.formKeluhanUtama.value.diagnosa_akhir
+          end: this.formKeluhanUtama.value.diagnosa_akhir,
         },
         data: [
           {
             system: "http://snomed.info/sct",
             code: "161414005",
-            display: "H/O: tuberculosis"
-          }
+            display: "H/O: tuberculosis",
+          },
         ],
-        note: `Riwayat tuberkulosis pada pasien ${this.patientData.patientName || 'Unknown'}`
+        note: `Riwayat tuberkulosis pada pasien ${this.patientData.patientName || "Unknown"
+          }`,
       } as any);
     }
 
@@ -1951,18 +2086,18 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         encounterId: this.encounter_id,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
-        conditions: conditions
-      }
+        conditions: conditions,
+      },
     };
     try
     {
       this.showLoading();
       let response: any = await this.GiziService.createKeluhanUtama(data);
-      let msg = response.statusMsg.split(': ');
-      Swal.fire('Success', msg.join(', '), 'success');
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
     } catch (err)
     {
-      Swal.fire('Error', 'Terjadi kesalahan saat mengirim data', 'error');
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
     } finally
     {
       this.stopLoading();
@@ -1997,9 +2132,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       this.cariitemsTerminologiCholesterolObservationServiceRequest(),
       this.cariitemsTerminologiLaboratSpecimenType(),
       this.cariitemsTerminologiLaboratSpecimenCollection(),
-      this.caririwayatServiceRequest()
+      this.caririwayatServiceRequest();
   }
-
 
   openTab(tab: string) {
     this.activeTab = tab;
@@ -2020,7 +2154,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   }
 
-  private _activeTab: string = 'form-ibu-ayah';
+  private _activeTab: string = "form-ibu-ayah";
 
   async cariKeluhanUtama() {
     let payload = {
@@ -2032,7 +2166,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       show_child: "yes",
       max_row: 5,
       order_by: "terminology_name",
-      order_type: "Asc"
+      order_type: "Asc",
     };
 
     try
@@ -2041,17 +2175,19 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       this.listKeluhanUtama = [...keluhanData.data];
     } catch (error)
     {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }
   showLoading() {
-    Swal.fire('Mohon tunggu!')
-    Swal.showLoading()
-    this.stopLoading(3000)
+    Swal.fire("Mohon tunggu!");
+    Swal.showLoading();
+    this.stopLoading(3000);
   }
 
   stopLoading(timing: number = 1000) {
-    setTimeout(() => { Swal.close() }, timing)
+    setTimeout(() => {
+      Swal.close();
+    }, timing);
   }
 
   // NOTE: Trigger simpan semua form
@@ -2059,115 +2195,111 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     this.showLoading();
     switch (this.activeTab)
     {
-      case 'form-ibu-ayah':
+      case "form-ibu-ayah":
         this.doSubmitRelatedPerson();
         break;
-      case 'form-keluhan-utama':
+      case "form-keluhan-utama":
         this.doSubmitkeluhanUtama();
         break;
-      case 'form-lergiMakanan':
+      case "form-lergiMakanan":
         this.doSubmitAlergiMakanan();
         break;
-      case 'form-alergi-obat':
+      case "form-alergi-obat":
         this.doSubmitAlergiObat();
         break;
-      case 'form-mal-nutrisi':
+      case "form-mal-nutrisi":
         this.doSubmitSkriningMalnutrisi();
         break;
-      case 'form-pemeriksaan-fisik':
+      case "form-pemeriksaan-fisik":
         this.doSubmitHasilPemeriksaanFisik();
         break;
-      case 'form-questionaire-response':
+      case "form-questionaire-response":
         this.doSubmitSkriningMalnutrisiQuestionaire();
         break;
-      case 'form-antropometri':
+      case "form-antropometri":
         this.doSubmitAntropometriObservation();
         break;
-      case 'form-antropometri-balita':
+      case "form-antropometri-balita":
         this.doSubmitAntropometriBalitaObservation();
         break;
-      case 'form-antropometri-ibu-hamil':
+      case "form-antropometri-ibu-hamil":
         this.doSubmitAntropometriIbuHamilObservation();
         break;
-      case 'form-antropometri-index':
+      case "form-antropometri-index":
         this.doSubmitAntropometriIndexhObservation();
         break;
-      case 'form-rencana-tindak-lanjut':
+      case "form-rencana-tindak-lanjut":
         this.doSubmitRencanaTindakLanjutServiceRequest();
         break;
-      case 'form-laborat-specimen':
+      case "form-laborat-specimen":
         this.doSubmitLaboratSpecimen();
         break;
-      case 'form-laborat-observasi':
+      case "form-laborat-observasi":
         this.doSubmitLabObservation();
         break;
       default:
-        Swal.fire('Error', 'Form tidak ditemukan', 'error');
+        Swal.fire("Error", "Form tidak ditemukan", "error");
         break;
     }
   }
-
-
-
 
   async setIdPasien() {
     if (!this.patientData.idpasien)
     {
-      let idpasien = await this.getPasienSatuSehat()
+      let idpasien = await this.getPasienSatuSehat();
       if (!idpasien)
       {
-        Swal.fire('Data Pasien Tidak ditemukan di SatuSehat')
+        Swal.fire("Data Pasien Tidak ditemukan di SatuSehat");
       } else
       {
-        this.idpasien = idpasien
-        this.isDisabledFormGizi = false
+        this.idpasien = idpasien;
+        this.isDisabledFormGizi = false;
       }
     } else
     {
-      this.idpasien = this.patientData.idpasien
-      this.isDisabledFormGizi = false
+      this.idpasien = this.patientData.idpasien;
+      this.isDisabledFormGizi = false;
     }
 
-    return this.idpasien
+    return this.idpasien;
   }
   getPasien() {
     return new Promise((resolve) => {
-      this.api.datapasien(this.userData.kdcabang, this.notransaksi)
+      this.api
+        .datapasien(this.userData.kdcabang, this.notransaksi)
         .subscribe((data) => {
-          data.forEach(e => {
-            resolve(e)
-          })
-        })
-    })
+          data.forEach((e) => {
+            resolve(e);
+          });
+        });
+    });
   }
 
   getPasienSatuSehat() {
     return new Promise((resolve) => {
-      this.api.getpasien(
-        this.patientData.nopengenal,
-        this.headers
-      ).subscribe((data) => {
-        if (data.entry.length !== 0)
-        {
-          resolve(data.entry[0].resource.id)
-        }
-      })
-    })
+      this.api
+        .getpasien(this.patientData.nopengenal, this.headers)
+        .subscribe((data) => {
+          if (data.entry.length !== 0)
+          {
+            resolve(data.entry[0].resource.id);
+          }
+        });
+    });
   }
 
   getCabang() {
     return new Promise((resolve) => {
-      this.api.cabangper(this.userData.kdklinik)
-        .subscribe((data) => {
-          data.forEach(e => {
-            resolve(e)
-          })
-        })
-    })
+      this.api.cabangper(this.userData.kdklinik).subscribe((data) => {
+        data.forEach((e) => {
+          resolve(e);
+        });
+      });
+    });
   }
 
   removeNullValues(obj: Object) {
-    if (typeof obj !== 'object' || obj === null) return obj; // Jika bukan object, kembalikan nilai asli
+    if (typeof obj !== "object" || obj === null) return obj; // Jika bukan object, kembalikan nilai asli
 
     // Iterasi pada setiap properti
     for (const key in obj)
@@ -2175,7 +2307,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       if (obj[key] === null)
       {
         delete obj[key]; // Hapus properti jika nilainya null
-      } else if (typeof obj[key] === 'object')
+      } else if (typeof obj[key] === "object")
       {
         obj[key] = this.removeNullValues(obj[key]); // Rekursif untuk objek bersarang
       }
