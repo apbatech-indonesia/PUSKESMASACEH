@@ -87,6 +87,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   selectedItemObat: any[] = [];
   listItemObats: any;
   itemTerminologiTingkatKesadaran: any;
+  itemTerminologiFisikKlinisObserve: any;
   itemTerminologiTandaVitalSistolik: any;
   itemTerminologiTandaVitalDiastolik: any;
   itemTerminologiTandaVitalBodyTemprature: any;
@@ -98,6 +99,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   itemsTerminologiAntropometriOservarion: any;
   itemsTerminologiCholesterolObservationServiceRequest: any;
   itemsTerminologiObservationCategory: any;
+  itemsTerminologiObserveCategory: any;
   itemsTerminologiDiagnostikReportCategory: any;
   itemsTerminologiAntropometriBalitaOservarion: any;
   itemsTerminologiAntropometriIbuHamilOservarion: any;
@@ -1249,117 +1251,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   }
 
-  generateDiagnostikReportPayloadBackup() {
-    const encounterId = this.encounter_id;
-    const useCaseId = this.useCaseId;
-    const satusehatId = this.patientData.idsatusehat;
 
-    let diagnosticReports = this.itemsTerminologiDiagnostikReportCategory.map(itemCategory => {
-      const selectedServiceReqId = this.selectedServiceRequests[itemCategory.terminology_id] || null;
-
-      if (!selectedServiceReqId) return null; // Skip kalau nggak ada pilihan user
-
-      // Ambil data pertama dari itemsTerminologiCholesterolObservationServiceRequest
-      const itemCodeData = this.itemsTerminologiCholesterolObservationServiceRequest.find(item => item.terminology_id);
-
-      if (!itemCodeData) return null;
-
-      // Ambil specimen ID (asumsi pertama yang ada)
-      let specimenId = this.riwayatServiceRequestForObserve.specimen_responses?.find(item => item.response_id)?.response_id || null;
-      let ServiceRequestId = this.riwayatServiceRequestForObserve.service_request_responses?.find(item => item.response_id)?.response_id || null;
-      let observeResponseId = this.riwayatServiceRequestForObserve.observation_responses?.find(item => item.response_id)?.response_id || null;
-
-      return {
-        name: itemCategory.terminology_name.toLowerCase().replace(/\s+/g, "_") + "_report",
-        status: "final",
-        category: {
-          system: itemCategory.system,
-          code: itemCategory.terminology_code,
-          display: itemCategory.terminology_name
-        },
-        data: [
-          {
-            code: {
-              system: "http://loinc.org",
-              code: itemCodeData.terminology_id,
-              display: itemCodeData.terminology_name
-            },
-            result: {
-              reference: `Observation/${observeResponseId}`
-            }
-          }
-        ],
-        effectiveDateTime: this.dateNow,
-        specimen: specimenId ? [{ reference: `Specimen/${specimenId}` }] : [],
-        basedOn: [{ reference: `ServiceRequest/${ServiceRequestId}` }]
-      };
-    }).filter(report => report !== null); // Hapus yang null (tanpa selection user)
-
-    return {
-      data: {
-        encounterId,
-        useCaseId,
-        satusehatId,
-        diagnosticReports
-      }
-    };
-  }
-
-  generateDiagnostikReportPayloadb() {
-    const encounterId = this.encounter_id;
-    const useCaseId = this.useCaseId;
-    const satusehatId = this.patientData.idsatusehat;
-
-    let diagnosticReports = this.itemsTerminologiDiagnostikReportCategory.map(itemCategory => {
-      // Ambil ID request yang dipilih user
-      const selectedServiceReqId = this.selectedServiceRequests[itemCategory.terminology_id] || null;
-
-      if (!selectedServiceReqId) return null; // Skip kalau user belum pilih
-
-      // Ambil data pertama dari itemsTerminologiCholesterolObservationServiceRequest
-      const itemCodeData = this.itemsTerminologiCholesterolObservationServiceRequest.find(item => item.terminology_id);
-
-      if (!itemCodeData) return null;
-
-      // Ambil specimen ID (asumsi pertama yang ada)
-      let specimenId = this.riwayatServiceRequestForObserve.specimen_responses?.find(item => item.response_id)?.response_id || null;
-      let ServiceRequestId = this.riwayatServiceRequestForObserve.service_request_responses?.find(item => item.response_id)?.response_id || null;
-      let observeResponseId = this.riwayatServiceRequestForObserve.observation_responses?.find(item => item.response_id)?.response_id || null;
-      return {
-        name: itemCategory.terminology_name.toLowerCase().replace(/\s+/g, "_") + "_report",
-        status: "final",
-        category: {
-          system: itemCategory.system,
-          code: itemCategory.terminology_code,
-          display: itemCategory.terminology_name
-        },
-        data: [
-          {
-            code: {
-              system: "http://loinc.org",
-              code: itemCodeData.terminology_id,
-              display: itemCodeData.terminology_name
-            },
-            result: {
-              reference: `Observation/${selectedServiceReqId}` // FIXED
-            }
-          }
-        ],
-        effectiveDateTime: this.dateNow,
-        specimen: specimenId ? [{ reference: `Specimen/${specimenId}` }] : [],
-        basedOn: [{ reference: `ServiceRequest/${selectedServiceReqId}` }] // FIXED
-      };
-    }).filter(report => report !== null); // Hapus yang null (tanpa selection user)
-
-    return {
-      data: {
-        encounterId,
-        useCaseId,
-        satusehatId,
-        diagnosticReports
-      }
-    };
-  }
   generateDiagnostikReportPayloade() {
     const encounterId = this.encounter_id;
     const useCaseId = this.useCaseId;
@@ -1481,8 +1373,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       }
     };
   }
-
-
   async doSubmitAlergiMakanan() {
     // Ambil data dari form
     const formData = this.formAlergiMakanan.value;
@@ -1749,7 +1639,6 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       console.error("Error fetching data:", error);
     }
   }
-
   async cariItemObservarionsCategory() {
     let payload = {
       terminology_id: "",
@@ -1766,6 +1655,27 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
       this.itemsTerminologiObservationCategory = itemResponse.data;
+    } catch (error)
+    {
+      console.error("Error fetching data:", error);
+    }
+  }
+  async cariItemObserveCategory() {
+    let payload = {
+      terminology_id: "",
+      key_operator: "=|=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "category|is_active",
+      key_value: "observation-category|1",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsTerminologiObserveCategory = itemResponse.data;
     } catch (error)
     {
       console.error("Error fetching data:", error);
@@ -2008,6 +1918,25 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       this.listMedicationMethods = [...ListItemDariPencarian.data];
     } catch (error) { }
   }
+  async cariitemTerminologiFisikKlinisObserve() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "like|=",
+      key_value: `clinical-sign|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+
+    try
+    {
+      let ListItemDariPencarian: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemTerminologiFisikKlinisObserve = [...ListItemDariPencarian.data];
+    } catch (error) { }
+  }
   async getSatuanUnit() {
     let payload = {
       unit_code: "",
@@ -2212,7 +2141,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       this.cariitemsTerminologiCholesterolObservationServiceRequest(),
       this.cariitemsTerminologiLaboratSpecimenType(),
       this.cariitemsTerminologiLaboratSpecimenCollection(),
-      this.caririwayatServiceRequest();
+      this.caririwayatServiceRequest(),
+      this.cariItemObserveCategory(),
+      this.cariitemTerminologiFisikKlinisObserve();
   }
 
   openTab(tab: string) {
