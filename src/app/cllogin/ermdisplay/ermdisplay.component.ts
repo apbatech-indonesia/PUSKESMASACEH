@@ -105,7 +105,7 @@ export class ermdisplayComponent implements OnInit {
   private socketx: any;
   public data: any;
   vidioid: any;
-
+  videoId = "dQw4w9WgXcQ";
   constructor(
     // private chatService: ChatService,
     private WebsocketService: WebsocketService,
@@ -165,12 +165,11 @@ export class ermdisplayComponent implements OnInit {
     console.log(localStorage.getItem("urlsocket"));
     this.vidioid = localStorage.getItem("vidioid");
   }
-
-  // playerVars = {
-  //   autoplay: 1,
-  //   loop: 1,
-  //   playlist: localStorage.getItem("vidioid") // Required for loop to work, use the same video ID
-  // };
+  playerVars = {
+    autoplay: 1,
+    loop: 1,
+    playlist: localStorage.getItem("vidioid"), // Required for loop to work, use the same video ID
+  };
 
   sendMessage() {
     // this.chatService.sendMessage(this.newMessage);

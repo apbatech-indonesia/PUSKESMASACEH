@@ -1352,6 +1352,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
+                <th scope="col">NO.AN</th>
                 <th scope="col">TGL</th>
                 <th scope="col">NORM</th>
 
@@ -1368,6 +1369,11 @@
             </thead>
             <tbody>
               <tr *ngFor="let x of tbeli" style="border-bottom: 1px solid grey">
+                <td>
+                  <div class="badge bg-pill bg-warning">
+                    {{ x.no_antrian }}
+                  </div>
+                </td>
                 <td style="font-size: 12px; color: black">
                   {{ x.tgl }}
                 </td>
