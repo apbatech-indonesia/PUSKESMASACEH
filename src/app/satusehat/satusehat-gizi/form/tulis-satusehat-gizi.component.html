@@ -146,6 +146,24 @@
                             Observasi Fisik Klinis
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'observasi-riwayat-makan' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('observasi-riwayat-makan')">
+                            Observasi Riwayat Makan
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'observasi-riwayat-makan-bayi' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('observasi-riwayat-makan-bayi')">
+                            Observasi Riwayat Makan Bayi
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'observasi-masalah' ? 'active' : '' }}" href="javascript:;"
+                            (click)="openTab('observasi-masalah')">
+                            Observasi Masalah
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -1002,12 +1020,15 @@
                                 {{ itemObserveFk . terminology_name }}
                             </label>
                             <div class="col-md-12 mt-3">
-                                <textarea class="form-control mb-2" rows="3" placeholder="Masukkan Keterangan"></textarea>
-                                <!-- opsi select dari itemsTerminologiObserveCategory -->
-                                <select class="form-select w-100"
+                                <!-- Inputan User -->
+                                <textarea class="form-control mb-2" rows="3" placeholder="Masukkan Keterangan"
+                                    [(ngModel)]="itemObserveFk.userInput" name="textarea_{{ itemObserveFk . terminology_id }}">
+                        </textarea>
+
+                                <!-- Select Kategori dari itemsTerminologiObserveCategory -->
+                                <select class="form-select w-100" [(ngModel)]="itemObserveFk.selectedCategory"
                                     name="selectedCategory_{{ itemObserveFk . terminology_id }}">
-                                    <option
-                                        *ngFor="let itemCodeData of itemsTerminologiCholesterolObservationServiceRequest"
+                                    <option *ngFor="let itemCodeData of itemsTerminologiObserveCategory"
                                         [ngValue]="itemCodeData">
                                         {{ itemCodeData . terminology_name }}
                                     </option>
@@ -1018,9 +1039,100 @@
                 </form>
             </div>
         </div>
+        <div class="card" *ngIf="activeTab == 'observasi-riwayat-makan'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-4 p-3 mb-3 border rounded shadow-sm bg-light"
+                            *ngFor="let itemObserveFk of itemTerminologinutritionObservation">
+                            <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
+                                [title]="itemObserveFk.description">
+                                {{ itemObserveFk . terminology_name }}
+                            </label>
+                            <div class="col-md-12 mt-3">
+                                <!-- Inputan User -->
+                                <textarea class="form-control mb-2" rows="3" placeholder="Masukkan Keterangan"
+                                    [(ngModel)]="itemObserveFk.userInput" name="textarea_{{ itemObserveFk . terminology_id }}">
+                        </textarea>
 
+                                <!-- Select Kategori dari itemsTerminologiObserveCategory -->
+                                <select class="form-select w-100" [(ngModel)]="itemObserveFk.selectedCategory"
+                                    name="selectedCategory_{{ itemObserveFk . terminology_id }}">
+                                    <option *ngFor="let itemCodeData of itemsTerminologiObserveCategory"
+                                        [ngValue]="itemCodeData">
+                                        {{ itemCodeData . terminology_name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card" *ngIf="activeTab == 'observasi-riwayat-makan-bayi'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-4 p-3 mb-3 border rounded shadow-sm bg-light"
+                            *ngFor="let itemObserveFk of itemTerminologinutritionObservationBayi">
+                            <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
+                                [title]="itemObserveFk.description">
+                                {{ itemObserveFk . terminology_name }}
+                            </label>
+                            <div class="col-md-12 mt-3">
+                                <!-- Inputan User -->
+                                <textarea class="form-control mb-2" rows="3" placeholder="Masukkan Keterangan"
+                                    [(ngModel)]="itemObserveFk.userInput" name="textarea_{{ itemObserveFk . terminology_id }}">
+                        </textarea>
 
+                                <!-- Select Kategori dari itemsTerminologiObserveCategory -->
+                                <select class="form-select w-100" [(ngModel)]="itemObserveFk.selectedCategory"
+                                    name="selectedCategory_{{ itemObserveFk . terminology_id }}">
+                                    <option *ngFor="let itemCodeData of itemsTerminologiObserveCategory"
+                                        [ngValue]="itemCodeData">
+                                        {{ itemCodeData . terminology_name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card" *ngIf="activeTab == 'observasi-masalah'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
+                            *ngFor="let listIttemVital of ListItemsVitalSign">
+                            <label class="fw-bold text-primary d-flex justify-content-between align-items-center">
+                                {{ listIttemVital . terminology_name }}
+                            </label>
+                            <div class="d-flex align-items-center gap-2 mt-3">
+                                <!-- Input Angka -->
+                                <input type="number" class="form-control w-50" placeholder="Masukkan nilai"
+                                    [(ngModel)]="listIttemVital.userInput" name="userInput">
+                                <!-- Select Unit (Auto-Selected) -->
+                                <select class="form-select w-25">
+                                    <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                        [selected]="satuanUnit.unit_code === listIttemVital.unit">
+                                        {{ satuanUnit . unit_code }}
+                                    </option>
+                                </select>
 
+                                <!-- Select Kategori -->
+                                <select class="form-select w-25" [(ngModel)]="listIttemVital.selectedCategory"
+                                    name="selectedCategory">
+                                    <option *ngFor="let item of itemsTerminologiObserveCategory" [ngValue]="item">
+                                        {{ item . terminology_name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
