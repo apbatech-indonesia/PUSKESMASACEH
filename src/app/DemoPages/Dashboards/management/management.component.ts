@@ -111,7 +111,8 @@ export class ManagementComponent implements OnInit {
   tglpx = "2013-12-12";
   myDate = new Date();
   // tglp : String = new Date().toISOString();
-
+  urlsoket: any = "";
+  vidioid: any = "";
   constructor(
     public router: Router,
     private datepipe: DatePipe,
@@ -132,6 +133,17 @@ export class ManagementComponent implements OnInit {
     }, 200);
 
     this.nom = 40;
+    this.authService.klinikper(this.kdklinik).subscribe(
+      (data) => {
+        this.urlsoket = data[0].urlsoket;
+        this.vidioid = data[0].vidioid;
+        localStorage.setItem("urlsocket", this.urlsoket);
+        localStorage.setItem("vidioid", this.vidioid);
+      },
+      (Error) => {
+        console.log(Error);
+      }
+    );
   }
 
   totalpenjualan: number = 0;
@@ -387,7 +399,7 @@ export class ManagementComponent implements OnInit {
       } else if (this.akses === "farmasi") {
         this.router.navigate(["/master/kasirfarmasijual"]);
       } else if (this.akses.includes("Dinkes")) {
-        let slugCity = this.akses.split("Dinkes ")[1] || '';
+        let slugCity = this.akses.split("Dinkes ")[1] || "";
         slugCity = slugCity.toLowerCase().replace(/\s+/g, "-");
         this.router.navigate([`/dashboards/dinkes/${slugCity}`]);
       } else {
