@@ -29,6 +29,10 @@ const routes: Routes = [
         loadChildren:() => import('./laporanskriningilp/laporanskriningilp.module').then(m => m.laporanskriningilpModule)
       },
       {
+        path : 'dinkes/:dinkesloc',
+        loadChildren:() => import('./dashboard-dinkes/dashboard-dinkes.module').then(m => m.DashboardDinkesModule)
+      },
+      {
         path: 'helpdesk',
         loadChildren: () => import('./helpdesk/helpdesk.module').then(m => m.HelpdeskModule)
       },

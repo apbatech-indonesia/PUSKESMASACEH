@@ -48,7 +48,8 @@
                   akses === 'Kasir RJ' ||
                   akses === 'Manajemen' ||
                   akses === 'Kasir Koordinator' ||
-                  akses === 'Admisi'
+                  akses === 'Admisi' ||
+                  akses.includes('Dinkes')
                 "
               >
                 <ng-template ngbPanelHeader>
@@ -61,7 +62,8 @@
                   akses === 'Kasir RJ' ||
                   akses === 'Manajemen' ||
                   akses === 'Kasir Koordinator' ||
-                  akses === 'Admisi'
+                  akses === 'Admisi' ||
+                  akses.includes('Dinkes')
                 "
               >
                 <ng-template ngbPanelHeader>
@@ -74,7 +76,15 @@
                 <ng-template ngbPanelContent>
                   <div class="vsm-dropdown">
                     <div class="vsm-list">
-                      <div class="vsm-item">
+                      <div
+                        class="vsm-item"
+                        *ngIf="
+                          akses === 'Kasir RJ' ||
+                          akses === 'Manajemen' ||
+                          akses === 'Kasir Koordinator' ||
+                          akses === 'Admisi'
+                        "
+                      >
                         <a
                           routerLink="/dashboards/management"
                           routerLinkActive="active-item"
@@ -84,13 +94,31 @@
                         </a>
                       </div>
 
-                      <div class="vsm-item">
+                      <div
+                        class="vsm-item"
+                        *ngIf="
+                          akses === 'Kasir RJ' ||
+                          akses === 'Manajemen' ||
+                          akses === 'Kasir Koordinator' ||
+                          akses === 'Admisi'
+                        "
+                      >
                         <a
                           routerLink="/dashboards/skrining-ilp"
                           routerLinkActive="active-item"
                           class="vsm-link"
                         >
                           <span class="vsm-title">Dashboard Skrining ILP</span>
+                        </a>
+                      </div>
+
+                      <div class="vsm-item" *ngIf="akses.includes('Dinkes')">
+                        <a
+                          routerLink="/dashboards/dinkes/aceh-barat"
+                          routerLinkActive="active-item"
+                          class="vsm-link"
+                        >
+                          <span class="vsm-title">Dashboard Dinkes</span>
                         </a>
                       </div>
                     </div>
@@ -455,8 +483,16 @@
                         </a>
                       </div>
                       <div class="vsm-item">
-                        <a routerLink="/master/satusehat-gizi" routerLinkActive="active-item" class="vsm-link">
-                          <span class="vsm-title">Gizi<b style="font-size: 8px;color:red">New</b></span>
+                        <a
+                          routerLink="/master/satusehat-gizi"
+                          routerLinkActive="active-item"
+                          class="vsm-link"
+                        >
+                          <span class="vsm-title"
+                            >Gizi<b style="font-size: 8px; color: red"
+                              >New</b
+                            ></span
+                          >
                         </a>
                       </div>
                       <div class="vsm-item">
@@ -710,14 +746,14 @@
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel>
+              <ngb-panel *ngIf="!akses.includes('Dinkes')">
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header" *ngIf="emr === '1'">
                     E-Medical Record
                   </div>
                 </ng-template>
               </ngb-panel>
-              <ngb-panel id="form-controls">
+              <ngb-panel id="form-controls" *ngIf="!akses.includes('Dinkes')">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link" *ngIf="emr === '1'">
                     <i class="vsm-icon pe-7s-ribbon"></i>
@@ -1054,7 +1090,7 @@
                           <span class="vsm-title">Laporan Laba Rugi</span></a
                         >
                       </div>
-                      
+
                       <div class="vsm-item" *ngIf="akses === 'Manajemen'">
                         <a
                           routerLinkActive="active-item"
@@ -1069,25 +1105,24 @@
                           <span class="vsm-title">Laporan Skrining</span></a
                         >
                       </div>
-
                     </div>
                   </div>
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel>
+              <ngb-panel *ngIf="!akses.includes('Dinkes')">
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header">-</div>
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel>
+              <ngb-panel *ngIf="!akses.includes('Dinkes')">
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header">Master</div>
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel id="widgetss">
+              <ngb-panel id="widgetss" *ngIf="!akses.includes('Dinkes')">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-graph2"></i>
