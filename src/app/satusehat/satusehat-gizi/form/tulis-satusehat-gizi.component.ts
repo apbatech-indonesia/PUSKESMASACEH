@@ -79,6 +79,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   // Makanan
   listItemMakananAlergi: any;
   ListItemsVitalSign: any;
+  ListItemsTerminologyConditionProblemo: any;
   listQuestionaireMalNutrisi: any;
   showOptionsAlergiMakanan: boolean = false;
   pilihMakanan: string;
@@ -107,6 +108,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   itemsTerminologiCholesterolObservationServiceRequest: any;
   itemsTerminologiObservationCategory: any;
   itemsTerminologiObserveCategory: any;
+  itemsTerminologiMasalahCondition: any;
+  itemsTerminologyConditionClinical: any;
   itemsTerminologiDiagnostikReportCategory: any;
   itemsTerminologiAntropometriBalitaOservarion: any;
   itemsTerminologiAntropometriIbuHamilOservarion: any;
@@ -1253,7 +1256,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         status: "final",
         category: {
           system: item.selectedCategory?.system || "http://terminology.hl7.org/CodeSystem/observation-category",
-          code: item.selectedCategory?.terminology_code || "unknown", // **Kategori dari itemsTerminologiObserveCategory**
+          code: item.selectedCategory?.terminology_code || "unknown",
           display: item.selectedCategory?.terminology_name || "Unknown Category"
         },
         data: [
@@ -1304,7 +1307,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         status: "final",
         category: {
           system: item.selectedCategory?.system || "http://terminology.hl7.org/CodeSystem/observation-category",
-          code: item.selectedCategory?.terminology_code || "unknown", // **Kategori dari itemsTerminologiObserveCategory**
+          code: item.selectedCategory?.terminology_code || "unknown",
           display: item.selectedCategory?.terminology_name || "Unknown Category"
         },
         data: [
@@ -1354,7 +1357,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         status: "final",
         category: {
           system: item.selectedCategory?.system || "http://terminology.hl7.org/CodeSystem/observation-category",
-          code: item.selectedCategory?.terminology_code || "unknown", // **Kategori dari itemsTerminologiObserveCategory**
+          code: item.selectedCategory?.terminology_code || "unknown",
           display: item.selectedCategory?.terminology_name || "Unknown Category"
         },
         data: [
@@ -1446,6 +1449,48 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     try
     {
       let response: any = await this.GiziService.createObservations(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitConditionMasalah() {
+    const conditions = this.ListItemsTerminologyConditionProblemo
+      .filter(item => item.selectedCategory && item.selectedStatus) // Filter hanya yang dipilih
+      .map(item => ({
+        name: item.terminology_name,
+        category: {
+          system: item.selectedCategory?.system ? item.selectedCategory?.system : item.selectedCategory?.source.source_url,
+          code: item.selectedCategory?.terminology_code,
+          display: item.selectedCategory?.terminology_name
+        },
+        clinicalStatus: {
+          system: item.selectedStatus?.system ? item.selectedStatus?.system : item.selectedStatus?.source.source_url,
+          code: item.selectedStatus?.terminology_code,
+          display: item.selectedStatus?.terminology_name
+        },
+        recordedDate: new Date().toISOString(), // Format ISO datetime
+        data: [
+          {
+            code: item.terminology_code,
+            display: item.terminology_name,
+            system: item.system ? item.system : item.source.source_url
+          }
+        ]
+      }));
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        conditions: conditions
+      }
+    };
+    try
+    {
+      let response: any = await this.GiziService.conditionCreate(payload);
       let msg = response.statusMsg.split(": ");
       Swal.fire("Success", msg.join(", "), "success");
     } catch (err)
@@ -1837,6 +1882,27 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     {
       console.error("Error fetching data:", error);
     }
+  } async cariListItemsTerminologyConditionProblemo() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "like|=",
+      key_value: `condition-code|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+
+    try
+    {
+      let data: any = await this.GiziService.getDataTerminologi(payload);
+      this.ListItemsTerminologyConditionProblemo = [...data.data];
+    } catch (error)
+    {
+      console.error("Error fetching data:", error);
+    }
   }
   async cariTerminologiTingkatKesadaran() {
     let payload = {
@@ -2013,6 +2079,27 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       console.error("Error fetching data:", error);
     }
   }
+  async cariitemsTerminologiMasalahCondition() {
+    let payload = {
+      terminology_id: "",
+      key_operator: "=|=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "category|is_active",
+      key_value: "condition-category|1",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsTerminologiMasalahCondition = itemResponse.data;
+    } catch (error)
+    {
+      console.error("Error fetching data:", error);
+    }
+  }
   async cariitemsTerminologiDiagnostikReportCategory() {
     let payload = {
       terminology_id: "",
@@ -2050,6 +2137,27 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
       this.itemsTerminologiAntropometriBalitaOservarion = itemResponse.data;
+    } catch (error)
+    {
+      console.error("Error fetching data:", error);
+    }
+  }
+  async cariitemsTerminologyConditionClinical() {
+    let payload = {
+      terminology_id: "",
+      key_operator: "=|=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "category|is_active",
+      key_value: "condition-clinical|1",
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsTerminologyConditionClinical = itemResponse.data;
     } catch (error)
     {
       console.error("Error fetching data:", error);
@@ -2580,7 +2688,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     try
     {
       this.showLoading();
-      let response: any = await this.GiziService.createKeluhanUtama(data);
+      let response: any = await this.GiziService.conditionCreate(data);
       let msg = response.statusMsg.split(": ");
       Swal.fire("Success", msg.join(", "), "success");
     } catch (err)
@@ -2609,47 +2717,76 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       this.cariTerminologiEyeNarative(),
       this.cariTerminologiFindingOfLip(),
       this.cariTerminologiKategoriMalnutrisi(),
-      this.getTingkatInterprestasi(),
-      this.cariItemsQuestionerMalnutrisi(),
-      this.cariitemsTerminologiAntropometriOservarion(),
-      this.cariitemsTerminologiAntropometriBayiOservarion(),
-      this.cariitemsTerminologiAntropometriIbuHamilOservarion(),
-      this.cariitemsTerminologiAntropometriIndexOservarion(),
-      this.cariitemsTerminologiRencanaTindakLanjutServiceRequest(),
-      this.cariitemsTerminologiCholesterolObservationServiceRequest(),
-      this.cariitemsTerminologiLaboratSpecimenType(),
-      this.cariitemsTerminologiLaboratSpecimenCollection(),
-      this.caririwayatServiceRequest(),
-      this.cariItemObserveCategory(),
-      this.cariitemTerminologiFisikKlinisObserve();
+      this.cariitemsTerminologiAntropometriOservarion()
   }
-
+  // NOTE: NOW TODO
   openTab(tab: string) {
     this.activeTab = tab;
     switch (tab)
     {
+      case "form-ibu-ayah":
+        break;
       case "form-keluhan-utama":
         this.cariKeluhanUtama();
         break;
       case "form-lergiMakanan":
         this.cariListItemMakanan();
         break;
+      case "form-alergi-obat":
+        break;
+      case "form-mal-nutrisi":
+        this.getTingkatInterprestasi()
+        break;
+      case "form-pemeriksaan-fisik":
+        break;
+      case "form-questionaire-response":
+        this.cariItemsQuestionerMalnutrisi()
+        break;
+      case "form-antropometri":
+        break;
+      case "form-antropometri-balita":
+        this.cariitemsTerminologiAntropometriBayiOservarion()
+        break;
+      case "form-antropometri-ibu-hamil":
+        this.cariitemsTerminologiAntropometriIbuHamilOservarion()
+        break;
+      case "form-antropometri-index":
+        this.cariitemsTerminologiAntropometriIndexOservarion();
+        break;
+      case "form-rencana-tindak-lanjut":
+        this.cariitemsTerminologiCholesterolObservationServiceRequest();
+        this.cariitemsTerminologiRencanaTindakLanjutServiceRequest();
+        break;
       case "form-laborat-specimen":
         this.caririwayatServiceRequest();
+        this.cariitemsTerminologiLaboratSpecimenCollection();
+        this.cariitemsTerminologiLaboratSpecimenType();
         break;
       case "form-laborat-observasi":
         this.caririwayatServiceRequest();
         this.cariItemObservarionsCategory();
+        this.cariitemsTerminologiCholesterolObservationServiceRequest();
         break;
       case "form-laporan-diagnosis":
         this.caririwayatServiceRequest();
         this.cariitemsTerminologiDiagnostikReportCategory();
+        this.cariitemsTerminologiCholesterolObservationServiceRequest();
+        this.cariitemsTerminologiRencanaTindakLanjutServiceRequest()
+        break;
+      case "observasi-fisik-klinis":
+        this.cariitemTerminologiFisikKlinisObserve();
+        this.cariItemObserveCategory();
         break;
       case "observasi-riwayat-makan":
         this.cariitemTerminologinutritionObservation();
         break;
       case "observasi-riwayat-makan-bayi":
         this.cariitemTerminologinutritionObservationBayi();
+        break;
+      case "kondisi-masalah":
+        this.cariListItemsTerminologyConditionProblemo();
+        this.cariitemsTerminologiMasalahCondition();
+        this.cariitemsTerminologyConditionClinical();
         break;
       case "observasi-masalah":
         this.cariListItemsVitalSign();
@@ -2763,6 +2900,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         break;
       case "observasi-riwayat-makan-bayi":
         this.doSubmitObservasiRiwayatMakanBayi();
+        break;
+      case "kondisi-masalah":
+        this.doSubmitConditionMasalah();
         break;
       case "observasi-masalah":
         this.doSubmitObservasiMasalah();

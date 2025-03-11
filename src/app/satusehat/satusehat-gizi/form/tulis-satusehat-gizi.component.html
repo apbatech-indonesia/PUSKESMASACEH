@@ -159,8 +159,14 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ activeTab == 'observasi-masalah' ? 'active' : '' }}" href="javascript:;"
-                            (click)="openTab('observasi-masalah')">
+                        <a class="nav-link {{ activeTab == 'kondisi-masalah' ? 'active' : '' }}" href="javascript:;"
+                            (click)="openTab('kondisi-masalah')">
+                            Kondisi Kesehatan (Keluhan Awal & Diagnosa )
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'observasi-masalah' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('observasi-masalah')">
                             Observasi Masalah
                         </a>
                     </li>
@@ -1105,6 +1111,46 @@
                                         {{ itemCodeData . terminology_name }}
                                     </option>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card" *ngIf="activeTab == 'kondisi-masalah'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-3 p-3 mb-3 border rounded shadow-sm bg-light"
+                            *ngFor="let itemCondition of ListItemsTerminologyConditionProblemo">
+                            <label class="fw-bold text-primary d-flex justify-content-between align-items-center">
+                                {{ itemCondition . terminology_name }}
+                            </label>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center gap-2 mt-3">
+                                        <!-- Select Kategori -->
+                                        <select class="form-select w-100" [(ngModel)]="itemCondition.selectedCategory"
+                                            name="selectedCategory">
+                                            <option *ngFor="let item of itemsTerminologiMasalahCondition"
+                                                [ngValue]="item">
+                                                {{ item . terminology_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center gap-2 mt-3">
+                                        <!-- Select clinicalStatus -->
+                                        <select class="form-select w-100" [(ngModel)]="itemCondition.selectedStatus"
+                                            name="selectedStatus">
+                                            <option *ngFor="let item of itemsTerminologyConditionClinical"
+                                                [ngValue]="item">
+                                                {{ item . terminology_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

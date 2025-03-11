@@ -48,7 +48,7 @@ export class GiziService {
     return this.request('unitofmeasure/search', data);
   }
 
-  createKeluhanUtama(data: any) {
+  conditionCreate(data: any) {
     return this.request('gizi/conditionsCreate', data);
   }
 
