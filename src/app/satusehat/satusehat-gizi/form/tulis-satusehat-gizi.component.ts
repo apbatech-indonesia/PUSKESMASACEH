@@ -96,6 +96,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   itemTerminologiTandaVitalHeartRate: any;
   itemTerminologiTandaVitalRespiratory: any;
   itemTerminologiKategoriMalnutrisi: any;
+  itemTerminologiKategoriProcedureInisiasiMenyusuiDini: any;
+  itemsEventStatus: any;
+  itemTerminologiProcedureInisiasiMenyusuiDini: any;
   itemTerminologiEyeNarrative: any;
   itemTerminologiFindingOfLip: any;
   itemsTerminologiAntropometriOservarion: any;
@@ -1448,6 +1451,57 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
     }
   }
+  formatDateTime(dateTime: string): string {
+    if (!dateTime) return "";
+    return `${dateTime}:00+00:00`; // Tambah detik dan zona waktu
+  }
+  async doSubmitProcedureInisiasiMenyusui() {
+
+    // Filter hanya prosedur yang diisi user
+    const filledProcedures = this.itemTerminologiProcedureInisiasiMenyusuiDini
+      .filter(procedure => procedure.status && procedure.performedDateTime)
+      .map(procedure => ({
+        name: "breastfeeding_procedure",
+        status: procedure.status,
+        category: {
+          system: procedure.category?.system || "http://snomed.info/sct",
+          code: procedure.category?.terminology_code || "440626008",
+          display: procedure.category?.terminology_name || "Procedure related to breastfeeding"
+        },
+        performedDateTime: this.formatDateTime(procedure.performedDateTime),
+        data: [
+          {
+            system: procedure.system || "http://snomed.info/sct",
+            code: procedure.terminology_code || "431868002",
+            display: procedure.terminology_name || "Initiation of breastfeeding"
+          }
+        ]
+      }));
+
+    // Buat payload final
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        procedures: filledProcedures
+      }
+    };
+
+    console.log("Final Payload:", payload);
+
+    // Try send data
+    try
+    {
+      let response: any = await this.GiziService.createProcedures(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+
 
 
 
@@ -1996,6 +2050,72 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       console.error("Error fetching data:", error);
     }
   }
+  async cariitemTerminologiKategoriProcedureInisiasiMenyusuiDini() {
+    let payload = {
+      terminology_id: "",
+      key_operator: "=|=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "category|is_active",
+      key_value: "breastfeeding-category|1",
+      is_active: 1,
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemTerminologiKategoriProcedureInisiasiMenyusuiDini = itemResponse.data;
+    } catch (error)
+    {
+      console.error("Error fetching data:", error);
+    }
+  }
+  async cariitemsEventStatus() {
+    let payload = {
+      terminology_id: "",
+      key_operator: "=|=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "category|is_active",
+      key_value: "event_status|1",
+      is_active: 1,
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemsEventStatus = itemResponse.data;
+    } catch (error)
+    {
+      console.error("Error fetching data:", error);
+    }
+  }
+  async cariitemTerminologiProcedureInisiasiMenyusuiDini() {
+    let payload = {
+      terminology_id: "",
+      key_operator: "=|=",
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+      key_name: "category|is_active",
+      key_value: "breastfeeding-procedure|1",
+      is_active: 1,
+    };
+    try
+    {
+      let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
+      this.itemTerminologiProcedureInisiasiMenyusuiDini = itemResponse.data;
+    } catch (error)
+    {
+      console.error("Error fetching data:", error);
+    }
+  }
   async cariitemsTerminologiRencanaTindakLanjutServiceRequest() {
     let payload = {
       terminology_id: "",
@@ -2442,6 +2562,11 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       case "observasi-masalah":
         this.cariListItemsVitalSign();
         break;
+      case "inisiasi-menyusui-dini-prosedure":
+        this.cariitemTerminologiKategoriProcedureInisiasiMenyusuiDini();
+        this.cariitemTerminologiProcedureInisiasiMenyusuiDini();
+        this.cariitemsEventStatus();
+        break;
       default:
         break;
     }
@@ -2544,6 +2669,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         break;
       case "observasi-masalah":
         this.doSubmitObservasiMasalah();
+        break;
+      case "inisiasi-menyusui-dini-prosedure":
+        this.doSubmitProcedureInisiasiMenyusui();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");

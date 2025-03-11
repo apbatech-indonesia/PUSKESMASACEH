@@ -24,6 +24,9 @@ export class GiziService {
   createKunjunganGizi(data: any) {
     return this.request('gizi/createKunjungan', data);
   }
+  createProcedures(data: any) {
+    return this.request('gizi/proceduresCreate', data);
+  }
 
   getRiwayat(data: any) {
     return this.request('master/getUseCase', data);

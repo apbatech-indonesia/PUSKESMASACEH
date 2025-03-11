@@ -164,6 +164,18 @@
                             Observasi Masalah
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'inisiasi-menyusui-dini-prosedure' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('inisiasi-menyusui-dini-prosedure')">
+                            Inisiasi Menyusui Dini
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'prosedur-tindakan-medis' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('prosedur-tindakan-medis')">
+                            Prosedur Tindak Medis
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -1133,6 +1145,85 @@
                 </form>
             </div>
         </div>
+        <div class="card" *ngIf="activeTab == 'inisiasi-menyusui-dini-prosedure'">
+            <div class="card-body">
+                <form>
+                    <!-- Prosedur -->
+                    <div class="row gx-4">
+                        <div *ngFor="let procedure of itemTerminologiProcedureInisiasiMenyusuiDini; let i = index"
+                            class="border p-3 mb-3 rounded bg-light col-6">
+                            <!-- Nama Prosedur (Hidden/Readonly) -->
+                            <input type="text" [(ngModel)]="procedure.terminology_name"
+                                name="{{ procedure . terminology_name }}" class="form-control" readonly>
+                            <div class="alert alert-info my-1 mx-1" role="alert"> {{ procedure . description }}
+                            </div>
+                            <!-- Status : TODO: Tambahkan status dinamis dari BE-->
+                            <label>Status:</label>
+                            <select [(ngModel)]="procedure.status" name="procedureStatus{{ i }}"
+                                class="form-select">
+                                <option value="{{ itemStatus . terminology_code }}"
+                                    *ngFor="let itemStatus of itemsEventStatus">
+                                    {{ itemStatus . terminology_name }}</option>
+                            </select>
+
+                            <!-- Kategori -->
+                            <label>Kategori:</label>
+                            <select [(ngModel)]="procedure.category" name="procedureCategory{{ i }}"
+                                class="form-select">
+                                <option *ngFor="let category of itemTerminologiKategoriProcedureInisiasiMenyusuiDini"
+                                    [ngValue]="category">
+                                    {{ category . terminology_name }}
+                                </option>
+                            </select>
+
+                            <!-- Tanggal Performed -->
+                            <label>Tanggal & Waktu Dilakukan:</label>
+                            <input type="datetime-local" [(ngModel)]="procedure.performedDateTime" name=""
+                                class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card" *ngIf="activeTab == 'prosedur-tindakan-medis'">
+            <div class="card-body">
+                <form>
+                    <!-- Prosedur -->
+                    <div class="row gx-4">
+                        <div *ngFor="let procedure of itemTerminologiProcedureInisiasiMenyusuiDini; let i = index"
+                            class="border p-3 mb-3 rounded bg-light col-6">
+                            <!-- Nama Prosedur (Hidden/Readonly) -->
+                            <input type="text" [(ngModel)]="procedure.terminology_name"
+                                name="{{ procedure . terminology_name }}" class="form-control" readonly>
+                            <div class="alert alert-info my-1 mx-1" role="alert"> {{ procedure . description }}
+                            </div>
+                            <!-- Status : TODO: Tambahkan status dinamis dari BE-->
+                            <label>Status:</label>
+                            <select [(ngModel)]="procedure.status" name="procedureStatus{{ i }}"
+                                class="form-select">
+                                <option value="completed">Completed</option>
+                            </select>
+
+                            <!-- Kategori -->
+                            <label>Kategori:</label>
+                            <select [(ngModel)]="procedure.category" name="procedureCategory{{ i }}"
+                                class="form-select">
+                                <option *ngFor="let category of itemTerminologiKategoriProcedureInisiasiMenyusuiDini"
+                                    [ngValue]="category">
+                                    {{ category . terminology_name }}
+                                </option>
+                            </select>
+
+                            <!-- Tanggal Performed -->
+                            <label>Tanggal & Waktu Dilakukan:</label>
+                            <input type="datetime-local" [(ngModel)]="procedure.performedDateTime" name=""
+                                class="form-control">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
 </div>
 
