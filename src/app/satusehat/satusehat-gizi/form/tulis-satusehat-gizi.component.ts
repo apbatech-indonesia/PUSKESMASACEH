@@ -1458,7 +1458,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   }
   async doSubmitConditionMasalah() {
     const conditions = this.ListItemsTerminologyConditionProblemo
-      .filter(item => item.selectedCategory && item.selectedStatus) // Filter hanya yang dipilih
+      .filter(item => item.selectedCategory && item.selectedStatus)
       .map(item => ({
         name: item.terminology_name,
         category: {
@@ -1471,7 +1471,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
           code: item.selectedStatus?.terminology_code,
           display: item.selectedStatus?.terminology_name
         },
-        recordedDate: new Date().toISOString(), // Format ISO datetime
+        recordedDate: new Date().toISOString(),
         data: [
           {
             code: item.terminology_code,
@@ -1855,6 +1855,23 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     try
     {
       let dataListManakan: any = await this.GiziService.getDataTerminologi(payload);
+      this.listItemObats = [...dataListManakan.data];
+    } catch (error)
+    {
+      console.error("Error fetching data:", error);
+    }
+  }
+  async getDataRiwayatPasien() {
+    let payload = {
+      usecase_id: this.useCaseId,
+      patientId: this.idpasien,
+      type: "gizi",
+      status: "active"
+    };
+
+    try
+    {
+      let dataListManakan: any = await this.GiziService.getRiwayatPasien(payload);
       this.listItemObats = [...dataListManakan.data];
     } catch (error)
     {
@@ -2717,7 +2734,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
       this.cariTerminologiEyeNarative(),
       this.cariTerminologiFindingOfLip(),
       this.cariTerminologiKategoriMalnutrisi(),
-      this.cariitemsTerminologiAntropometriOservarion()
+      this.cariitemsTerminologiAntropometriOservarion(),
+      this.getDataRiwayatPasien()
   }
   // NOTE: NOW TODO
   openTab(tab: string) {
@@ -2800,6 +2818,11 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         this.cariitemTerminologiProcedureTindakanMedis();
         this.cariitemTerminologiKategoriProcedureTindakanMedis();
         this.cariitemsEventStatus();
+        break;
+      case "diagnosis-condition":
+        this.cariListItemsTerminologyConditionProblemo();
+        this.cariitemsTerminologiMasalahCondition();
+        this.cariitemsTerminologyConditionClinical();
         break;
       default:
         break;
@@ -2902,6 +2925,9 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         this.doSubmitObservasiRiwayatMakanBayi();
         break;
       case "kondisi-masalah":
+        this.doSubmitConditionMasalah();
+        break;
+      case "diagnosis-condition":
         this.doSubmitConditionMasalah();
         break;
       case "observasi-masalah":
