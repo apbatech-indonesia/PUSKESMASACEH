@@ -20,7 +20,9 @@ export class PncService {
       );
     });
   }
-
+  getDataSatuanUnit(data: any) {
+    return this.request('unitofmeasure/search', data);
+  }
   createKunjunganPnc(data: any) {
     return this.request('PNC/createKunjungan', data);
   }
@@ -30,5 +32,7 @@ export class PncService {
   getRiwayatPasien(data: any) {
     return this.request('master/getDataPatient', data);
   }
-
+  getDataTerminologi(data: any) {
+    return this.request('terminologi/search', data);
+  }
 }

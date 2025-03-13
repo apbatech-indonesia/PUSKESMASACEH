@@ -83,6 +83,16 @@
               Related Person
             </a>
           </li>
+          <li class="nav-item">
+            <a
+              class="nav-link {{
+                activeTab == 'observasi-data-persalinan' ? 'active' : ''
+              }}"
+              href="javascript:;"
+              (click)="openTab('observasi-data-persalinan')">
+              Observasi Data Persalinan
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -97,9 +107,9 @@
               <div class="mb-3">
                 <label
                   for="relates_person"
-                  class="form-label fw-bold"
-                  >Jenis Relasi</label
-                >
+                  class="form-label fw-bold">
+                  Jenis Relasi
+                </label>
                 <select
                   id="relates_person"
                   class="form-select"
@@ -306,92 +316,131 @@
         </form>
       </div>
     </div>
+    <div
+      class="card mb-2"
+      *ngIf="activeTab == 'observasi-data-persalinan'">
+      <div class="card-body">
+        <form>
+          <div class="row">
+            <div
+              class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
+              *ngFor="let itemPersalinan of listObservasiPersalinan">
+              <label
+                class="fw-bold text-primary d-flex justify-content-between align-items-center"
+                [title]="itemPersalinan.description">
+                {{ itemPersalinan.terminology_name }}
+              </label>
+              <div class="d-flex align-items-center gap-2 mt-3">
+                <!-- Input Angka -->
+                <input
+                  type="number"
+                  class="form-control w-50"
+                  placeholder="Masukkan nilai"
+                  [(ngModel)]="itemPersalinan.userInput"
+                  name="userInput" />
+                <!-- Select Kategori -->
+                <select
+                  class="form-select w-25"
+                  [(ngModel)]="itemPersalinan.selectedCategory"
+                  name="selectedCategory">
+                  <option
+                    *ngFor="let item of listKategoriObservasi"
+                    [ngValue]="item">
+                    {{ item.terminology_name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+
+  <div
+    class="col-12 mb-4"
+    align="center">
+    <button
+      class="btn btn-success mx-1"
+      (click)="simpan()"
+      [disabled]="isDisabledFormPnc">
+      SIMPAN
+    </button>
+    <button
+      class="btn btn-danger btn-danger"
+      routerLink="/master/satusehat-pnc">
+      KEMBALI
+    </button>
+  </div>
+
+  <style scoped>
+    /* Styling untuk card-header navy */
+    .card-header navy {
+      background-color: #343a40;
+      /* Warna gelap */
+      color: white;
+      /* Warna teks putih */
+      font-weight: bold;
+    }
+
+    /* Styling untuk tombol */
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      border: none;
+    }
+
+    .btn-danger:hover {
+      background-color: #a71d2a;
+    }
+
+    .btn-success {
+      background-color: #28a745;
+      border: none;
+    }
+
+    .btn-success:hover {
+      background-color: #218838;
+    }
+
+    /* Styling untuk form control */
+    .form-control {
+      border-radius: 5px;
+      border: 1px solid #ced4da;
+    }
+
+    /* Spacing untuk elemen dalam form */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    /* Styling tambahan untuk input radio */
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    /* Styling untuk card body */
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    /* Margin tambahan untuk elemen di dalam card */
+    .mt-2 {
+      margin-top: 0.5rem;
+    }
+
+    /* Styling container */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+  </style>
 </div>
-
-<div
-  class="col-12 mb-4"
-  align="center">
-  <button
-    class="btn btn-success mx-1"
-    (click)="simpan()"
-    [disabled]="isDisabledFormPnc">
-    SIMPAN
-  </button>
-  <button
-    class="btn btn-danger btn-danger"
-    routerLink="/master/satusehat-pnc">
-    KEMBALI
-  </button>
-</div>
-
-<style scoped>
-  /* Styling untuk card-header navy */
-  .card-header navy {
-    background-color: #343a40;
-    /* Warna gelap */
-    color: white;
-    /* Warna teks putih */
-    font-weight: bold;
-  }
-
-  /* Styling untuk tombol */
-  .btn-primary {
-    background-color: #007bff;
-    border: none;
-  }
-
-  .btn-primary:hover {
-    background-color: #0056b3;
-  }
-
-  .btn-danger {
-    background-color: #dc3545;
-    border: none;
-  }
-
-  .btn-danger:hover {
-    background-color: #a71d2a;
-  }
-
-  .btn-success {
-    background-color: #28a745;
-    border: none;
-  }
-
-  .btn-success:hover {
-    background-color: #218838;
-  }
-
-  /* Styling untuk form control */
-  .form-control {
-    border-radius: 5px;
-    border: 1px solid #ced4da;
-  }
-
-  /* Spacing untuk elemen dalam form */
-  .form-group {
-    margin-bottom: 1.5rem;
-  }
-
-  /* Styling tambahan untuk input radio */
-  input[type="radio"] {
-    margin-right: 5px;
-  }
-
-  /* Styling untuk card body */
-  .card-body {
-    padding: 1.5rem;
-  }
-
-  /* Margin tambahan untuk elemen di dalam card */
-  .mt-2 {
-    margin-top: 0.5rem;
-  }
-
-  /* Styling container */
-  .container {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-</style>

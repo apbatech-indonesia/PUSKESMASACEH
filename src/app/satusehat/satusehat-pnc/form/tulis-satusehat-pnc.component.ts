@@ -25,7 +25,10 @@ export class TulisSatuSehatPncComponent implements OnInit {
   dateNow = new Date().toISOString();
   faArrowLeft = faArrowLeft;
   faSave = faSave;
+  listSatuanUnit: any;
 
+  listObservasiPersalinan: any;
+  listKategoriObservasi: any;
   isDisabledFormPnc: boolean = true;
   headers = new HttpHeaders({
     "kd-cabang": this.userData.kdcabang,
@@ -154,6 +157,10 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
       case "form-related-person":
         break;
+      case "observasi-data-persalinan":
+        this.carilistObservasiPersalinan();
+        this.carilistKategoriObservasi();
+        break;
       default:
         break;
     }
@@ -237,7 +244,65 @@ export class TulisSatuSehatPncComponent implements OnInit {
       });
     });
   }
+  async carilistObservasiPersalinan() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|satusehat_category|is_active|source_id`,
+      key_operator: "=|=|=|=",
+      key_value: `observation|riwayat-kehamilan|1|3`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listObservasiPersalinan = [...response.data];
+    } catch (error)
+    {
+      console.error("Error fetching data:", error);
+    }
+  }
+  async carilistKategoriObservasi() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `observation-category|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listKategoriObservasi = [...response.data];
+    } catch (error)
+    {
+      console.error("Error fetching data:", error);
+    }
+  }
+  async getSatuanUnit() {
+    let payload = {
+      unit_code: "",
+      key_name: "unit_name",
+      key_operator: "like",
+      key_value: "",
+      max_row: 50,
+      order_by: "unit_code",
+      order_type: "Asc",
+    };
 
+    try
+    {
+      let listSatuanUnitGet: any = await this.PncService.getDataSatuanUnit(payload);
+      this.listSatuanUnit = [...listSatuanUnitGet.data];
+    } catch (error) { }
+  }
   removeNullValues(obj: Object) {
     if (typeof obj !== "object" || obj === null) return obj; // Jika bukan object, kembalikan nilai asli
 
@@ -264,7 +329,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       return;
     }
     console.log(this.relatedPersonData);
-    // TODO: pembentukan payload :
     const relationPrefix = this.selectedRelatesPerson;
 
     // Bentuk payload
@@ -287,6 +351,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
         encounterId: this.encounter_id,
         useCaseId: this.useCaseId,
         satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
         related_person: related_person,
       },
     };
