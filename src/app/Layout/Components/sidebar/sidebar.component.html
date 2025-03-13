@@ -49,7 +49,7 @@
                   akses === 'Manajemen' ||
                   akses === 'Kasir Koordinator' ||
                   akses === 'Admisi' ||
-                  akses.includes('Dinkes')
+                  isDinkes
                 "
               >
                 <ng-template ngbPanelHeader>
@@ -63,7 +63,7 @@
                   akses === 'Manajemen' ||
                   akses === 'Kasir Koordinator' ||
                   akses === 'Admisi' ||
-                  akses.includes('Dinkes')
+                  isDinkes
                 "
               >
                 <ng-template ngbPanelHeader>
@@ -112,9 +112,9 @@
                         </a>
                       </div>
 
-                      <div class="vsm-item" *ngIf="akses.includes('Dinkes')">
+                      <div class="vsm-item" *ngIf="isDinkes">
                         <a
-                          routerLink="/dashboards/dinkes/aceh-barat"
+                          [routerLink]="['/dashboards/dinkes/', slugCity]"
                           routerLinkActive="active-item"
                           class="vsm-link"
                         >
@@ -746,14 +746,14 @@
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel *ngIf="!akses.includes('Dinkes')">
+              <ngb-panel *ngIf="!isDinkes">
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header" *ngIf="emr === '1'">
                     E-Medical Record
                   </div>
                 </ng-template>
               </ngb-panel>
-              <ngb-panel id="form-controls" *ngIf="!akses.includes('Dinkes')">
+              <ngb-panel id="form-controls" *ngIf="!isDinkes">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link" *ngIf="emr === '1'">
                     <i class="vsm-icon pe-7s-ribbon"></i>
@@ -1110,19 +1110,19 @@
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel *ngIf="!akses.includes('Dinkes')">
+              <ngb-panel *ngIf="!isDinkes">
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header">-</div>
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel *ngIf="!akses.includes('Dinkes')">
+              <ngb-panel *ngIf="!isDinkes">
                 <ng-template ngbPanelHeader>
                   <div class="vsm-header">Master</div>
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel id="widgetss" *ngIf="!akses.includes('Dinkes')">
+              <ngb-panel id="widgetss" *ngIf="!isDinkes">
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-graph2"></i>

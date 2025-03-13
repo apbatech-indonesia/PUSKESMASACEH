@@ -30,6 +30,8 @@ export class SidebarComponent implements OnInit {
   namadokter = "";
   online = "";
   kddokter = "";
+  slugCity: any;
+  isDinkes: any;
   constructor(
     public globals: ThemeOptions,
     private activatedRoute: ActivatedRoute,
@@ -42,6 +44,11 @@ export class SidebarComponent implements OnInit {
     this.akses = this.userDetails.hakakses;
     this.kdklinik = this.userDetails.kdklinik;
     this.kdcabang = this.userDetails.kdcabang;
+    this.isDinkes = this.akses.includes("Dinkes")
+    if (this.isDinkes) {
+      this.slugCity = this.akses.split("Dinkes ")[1];
+      this.slugCity = this.slugCity.toLowerCase().replace(/\s+/g, "-");
+    }
   }
 
   @select("config") public config$: Observable<any>;
