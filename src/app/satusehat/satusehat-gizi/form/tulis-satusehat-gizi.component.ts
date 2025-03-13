@@ -2797,9 +2797,11 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         break;
       case "observasi-riwayat-makan":
         this.cariitemTerminologinutritionObservation();
+        this.cariItemObserveCategory();
         break;
       case "observasi-riwayat-makan-bayi":
         this.cariitemTerminologinutritionObservationBayi();
+        this.cariItemObserveCategory();
         break;
       case "kondisi-masalah":
         this.cariListItemsTerminologyConditionProblemo();

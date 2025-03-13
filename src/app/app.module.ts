@@ -160,6 +160,7 @@ import { FormVaccineComponent } from './satusehat/satusehat-imunisasi/form/form-
 import { MasterSpecimenModule } from './satusehat/satusehat-master/master-specimen/master-specimen.module';
 import { TulisSatuSehatGiziComponent } from './satusehat/satusehat-gizi/form/tulis-satusehat-gizi.component';
 import { skriningComponent } from "./clmaster/skrining/skrining.component";
+import { TulisSatuSehatPncComponent } from './satusehat/satusehat-pnc/form/tulis-satusehat-pnc.component';
 @NgModule({
   declarations: [
 
@@ -226,6 +227,7 @@ import { skriningComponent } from "./clmaster/skrining/skrining.component";
     TulisImunisasiComponent,
     TulisSkriningPtmComponent,
     TulisSatuSehatGiziComponent,
+    TulisSatuSehatPncComponent,
     MasterProvinceComponent,
     MasterCityComponent,
     MasterDistrictComponent,

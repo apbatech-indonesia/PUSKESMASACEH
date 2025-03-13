@@ -1,0 +1,397 @@
+<div>
+  <div
+    class="app-inner-layout"
+    style="margin: 0 auto; padding: 20px">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-2">
+          <div class="card-header navy">Data Pasien</div>
+          <div class="card-body">
+            <div align="right">
+              <button
+                class="btn btn-primary btn-icon"
+                routerLink="/master/satusehat-pnc">
+                <span class="pe-2 opacity-7">
+                  <fa-icon [icon]="faArrowLeft"></fa-icon>
+                </span>
+                Kembali
+              </button>
+            </div>
+            <!-- header body -->
+            <div class="row">
+              <div class="col-lg-3 col-6">
+                <strong>No Rm</strong>
+                <br />
+                {{ patientData.norm }}
+              </div>
+              <div class="col-lg-3 col-6">
+                <strong>Nama Pasien</strong>
+                <br />
+                {{ patientData.pasien }}
+              </div>
+              <div class="col-lg-3 col-6">
+                <strong>Tanggal Lahir</strong>
+                <br />
+                {{ patientData.tgllahir }}
+              </div>
+              <div class="col-lg-3 col-6">
+                <strong>Umur</strong>
+                <br />
+                {{ patientData.umur }}
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-lg-3 col-6">
+                <strong>Jenis Kelamin</strong>
+                <br />
+                {{
+                  patientData.jeniskelamin == "L" ? "Laki laki" : "Perempuan"
+                }}
+              </div>
+              <div class="col-lg-3 col-6">
+                <strong>Poli</strong>
+                <br />
+                {{ patientData.nampoli }}
+              </div>
+              <div class="col-lg-3 col-6">
+                <strong>Jenis Pesien</strong>
+                <br />
+                {{ patientData.costumer }}
+              </div>
+              <div class="col-lg-3 col-6">
+                <strong>Alamat</strong>
+                <br />
+                {{ patientData.alamat }}
+              </div>
+            </div>
+            <!-- header body -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a
+              class="nav-link {{
+                activeTab == 'form-related-person' ? 'active' : ''
+              }}"
+              href="javascript:;"
+              (click)="openTab('form-related-person')">
+              Related Person
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div
+      class="card mb-2"
+      *ngIf="activeTab == 'form-related-person'">
+      <div class="card-body">
+        <form>
+          <div class="row">
+            <!-- Pilihan Jenis Relasi -->
+            <div class="col-12">
+              <div class="mb-3">
+                <label
+                  for="relates_person"
+                  class="form-label fw-bold"
+                  >Jenis Relasi</label
+                >
+                <select
+                  id="relates_person"
+                  class="form-select"
+                  [(ngModel)]="selectedRelatesPerson"
+                  name="relates_person"
+                  (change)="onChangeRelatesPerson()">
+                  <option value="ibu">Ibu</option>
+                  <option value="ayah">Ayah</option>
+                  <option value="kakak">Kakak</option>
+                  <option value="saudara">Saudara</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Form Data Relasi -->
+            <div class="col-12">
+              <h3 class="mb-2">Data {{ relationLabel }}</h3>
+              <div class="row">
+                <div class="col-6">
+                  <div class="mb-2">
+                    <label
+                      for="nama_relasi"
+                      class="form-label">
+                      Nama {{ relationLabel }}
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nama_relasi"
+                      [(ngModel)]="relatedPersonData.nama_relasi"
+                      name="nama_relasi" />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mb-2">
+                    <label
+                      for="nik_relasi"
+                      class="form-label">
+                      NIK {{ relationLabel }}
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nik_relasi"
+                      [(ngModel)]="relatedPersonData.nik_relasi"
+                      name="nik_relasi" />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mb-2">
+                    <label
+                      for="tl_relasi"
+                      class="form-label">
+                      Tanggal Lahir {{ relationLabel }}
+                    </label>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="tl_relasi"
+                      [(ngModel)]="relatedPersonData.tl_relasi"
+                      name="tl_relasi" />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mb-2">
+                    <label
+                      for="hp_relasi"
+                      class="form-label">
+                      No. HP {{ relationLabel }}
+                    </label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="hp_relasi"
+                      [(ngModel)]="relatedPersonData.hp_relasi"
+                      name="hp_relasi" />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="mb-2">
+                    <label
+                      for="alamat_jalan_relasi"
+                      class="form-label">
+                      Alamat {{ relationLabel }}
+                    </label>
+                    <textarea
+                      class="form-control"
+                      id="alamat_jalan_relasi"
+                      [(ngModel)]="relatedPersonData.alamat_jalan_relasi"
+                      name="alamat_jalan_relasi"></textarea>
+                  </div>
+                </div>
+
+                <!-- Dropdown Provinsi, Kota, Kecamatan, Kelurahan -->
+                <div class="col-6">
+                  <div class="mb-2">
+                    <label
+                      for="province_id_relasi"
+                      class="form-label">
+                      Provinsi
+                    </label>
+                    <app-master-province
+                      [provinceId]="relatedPersonData.province_id_relasi"
+                      (provinceOutput)="
+                        relatedPersonData.province_id_relasi = $event
+                      "></app-master-province>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mb-2">
+                    <label
+                      for="city_id_relasi"
+                      class="form-label"
+                      >Kota
+                    </label>
+                    <app-master-city
+                      [cityId]="relatedPersonData.city_id_relasi"
+                      [provinceId]="relatedPersonData.province_id_relasi"
+                      (cityOutput)="
+                        relatedPersonData.city_id_relasi = $event
+                      "></app-master-city>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mb-2">
+                    <label
+                      for="district_id_relasi"
+                      class="form-label"
+                      >Kecamatan</label
+                    >
+                    <app-master-district
+                      [districtId]="relatedPersonData.district_id_relasi"
+                      [cityId]="relatedPersonData.city_id_relasi"
+                      (districtOutput)="
+                        relatedPersonData.district_id_relasi = $event
+                      "></app-master-district>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mb-2">
+                    <label
+                      for="village_id_relasi"
+                      class="form-label"
+                      >Kelurahan</label
+                    >
+                    <app-master-sub-district
+                      [subdistrictId]="relatedPersonData.village_id_relasi"
+                      [districtId]="relatedPersonData.district_id_relasi"
+                      (subDistrictOutput)="
+                        relatedPersonData.village_id_relasi = $event
+                      "></app-master-sub-district>
+                  </div>
+                </div>
+
+                <!-- RT, RW, dan Kode Pos -->
+                <div class="col-6">
+                  <div class="mb-2">
+                    <label
+                      for="rt_relasi"
+                      class="form-label"
+                      >RT {{ relationLabel }}</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="rt_relasi"
+                      [(ngModel)]="relatedPersonData.rt_relasi"
+                      name="rt_relasi" />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="mb-2">
+                    <label
+                      for="rw_relasi"
+                      class="form-label"
+                      >RW {{ relationLabel }}</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="rw_relasi"
+                      [(ngModel)]="relatedPersonData.rw_relasi"
+                      name="rw_relasi" />
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="mb-2">
+                    <label
+                      for="postal_code_relasi"
+                      class="form-label"
+                      >Kode Pos {{ relationLabel }}</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="postal_code_relasi"
+                      [(ngModel)]="relatedPersonData.postal_code_relasi"
+                      name="postal_code_relasi" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="col-12 mb-4"
+  align="center">
+  <button
+    class="btn btn-success mx-1"
+    (click)="simpan()"
+    [disabled]="isDisabledFormPnc">
+    SIMPAN
+  </button>
+  <button
+    class="btn btn-danger btn-danger"
+    routerLink="/master/satusehat-pnc">
+    KEMBALI
+  </button>
+</div>
+
+<style scoped>
+  /* Styling untuk card-header navy */
+  .card-header navy {
+    background-color: #343a40;
+    /* Warna gelap */
+    color: white;
+    /* Warna teks putih */
+    font-weight: bold;
+  }
+
+  /* Styling untuk tombol */
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    border: none;
+  }
+
+  .btn-danger:hover {
+    background-color: #a71d2a;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    border: none;
+  }
+
+  .btn-success:hover {
+    background-color: #218838;
+  }
+
+  /* Styling untuk form control */
+  .form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+  }
+
+  /* Spacing untuk elemen dalam form */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Styling tambahan untuk input radio */
+  input[type="radio"] {
+    margin-right: 5px;
+  }
+
+  /* Styling untuk card body */
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  /* Margin tambahan untuk elemen di dalam card */
+  .mt-2 {
+    margin-top: 0.5rem;
+  }
+
+  /* Styling container */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+</style>
