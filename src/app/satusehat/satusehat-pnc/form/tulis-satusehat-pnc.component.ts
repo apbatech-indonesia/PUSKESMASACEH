@@ -188,6 +188,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
       case "form-related-person":
         this.doSubmitRelatedPerson();
         break;
+      case "observasi-data-persalinan":
+        this.doSubmitObservasiPataPersalinan();
+        break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
         break;
@@ -365,4 +368,56 @@ export class TulisSatuSehatPncComponent implements OnInit {
       Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
     }
   }
+
+  async doSubmitObservasiPataPersalinan() {
+    const itemDataObservasiPersalinan = this.listObservasiPersalinan;
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        observations: itemDataObservasiPersalinan
+          .filter(item => item.userInput !== undefined && item.userInput !== null && item.userInput !== "") // Hanya ambil item yang punya userInput
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system : (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "observation",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : "Observation"
+              },
+              data: [
+                {
+                  code: {
+                    system: item.system,
+                    code: item.terminology_code,
+                    display: item.terminology_name
+                  },
+                  result: {},
+                  resultBoolean: {},
+                  valueCodeableConcept: {},
+                  valueInteger: item.userInput
+                }
+              ],
+              effectiveDateTime: this.dateNow,
+              issued: this.dateNow
+            };
+          })
+      }
+    };
+
+    try
+    {
+      let response: any = await this.PncService.craeteObservationPnc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+
+
+
 }

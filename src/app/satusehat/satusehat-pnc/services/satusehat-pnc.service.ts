@@ -29,6 +29,9 @@ export class PncService {
   craeteRelatedPersonPnc(data: any) {
     return this.request('PNC/createRelatedPerson', data);
   }
+  craeteObservationPnc(data: any) {
+    return this.request('PNC/observationsCreate', data);
+  }
   getRiwayatPasien(data: any) {
     return this.request('master/getDataPatient', data);
   }
