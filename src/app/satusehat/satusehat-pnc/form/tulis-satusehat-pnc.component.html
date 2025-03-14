@@ -85,6 +85,12 @@
                             Observasi Pelayanan Nifas
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'observasi-pelayanan-nifas-pendarahan' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('observasi-pelayanan-nifas-pendarahan')">
+                            Observasi Pelayanan Nifas Pendarahan
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -264,22 +270,72 @@
                 <form>
                     <div class="row">
                         <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
-                            *ngFor="let itemPersalinan of listObservasiPersalinan">
+                            *ngFor="let itemPelayananNifas of listObservasiPelayananNifas">
                             <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
-                                [title]="itemPersalinan.description">
-                                {{ itemPersalinan . terminology_name }}
+                                [title]="itemPelayananNifas.description">
+                                {{ itemPelayananNifas . terminology_name }}
                             </label>
                             <div class="d-flex align-items-center gap-2 mt-3">
                                 <!-- Input Angka -->
                                 <input type="number" class="form-control w-50" placeholder="Masukkan nilai"
-                                    [(ngModel)]="itemPersalinan.userInput" name="userInput" />
+                                    [(ngModel)]="itemPelayananNifas.userInput" name="userInput" />
                                 <!-- Select Kategori -->
-                                <select class="form-select w-25" [(ngModel)]="itemPersalinan.selectedCategory"
+                                <select class="form-select w-25" [(ngModel)]="itemPelayananNifas.selectedCategory"
                                     name="selectedCategory">
                                     <option *ngFor="let item of listKategoriObservasi" [ngValue]="item">
                                         {{ item . terminology_name }}
                                     </option>
                                 </select>
+                                <div class="col-3">
+                                    <select class="form-select"
+                                        (change)="itemPelayananNifas.unit = $event.target.value">
+                                        <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                            [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (itemPelayananNifas.unit?.toLowerCase() || '')">
+                                            {{ satuanUnit . unit_code }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card mb-2" *ngIf="activeTab == 'observasi-pelayanan-nifas-pendarahan'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
+                            *ngFor="let itemPelayananNifasPendarahan of listObservasiPelayananNifasPendarahan">
+                            <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
+                                [title]="itemPelayananNifasPendarahan.description">
+                                {{ itemPelayananNifasPendarahan . terminology_name }}
+                            </label>
+                            <div class="d-flex align-items-center gap-2 mt-3">
+                                <textarea class="form-control w-50" name="inputString" [(ngModel)]="itemPelayananNifasPendarahan.inputString"
+                                    placeholder="Input Keterangan" rows="1">
+                                </textarea>
+                                <!-- Input Angka -->
+                                <input type="number" class="form-control w-50" placeholder="Masukkan nilai"
+                                    [(ngModel)]="itemPelayananNifasPendarahan.userInput" name="userInput" />
+                                <!-- Select Kategori -->
+                                <select class="form-select w-25"
+                                    [(ngModel)]="itemPelayananNifasPendarahan.selectedCategory"
+                                    name="selectedCategory" title="kategori">
+                                    <option *ngFor="let item of listKategoriObservasi" [ngValue]="item">
+                                        {{ item . terminology_name }}
+                                    </option>
+                                </select>
+                                <div class="col-3">
+                                    <select class="form-select"
+                                        (change)="itemPelayananNifasPendarahan.unit = $event.target.value">
+                                        <option [ngValuevalue]="null">Pilih Satuan Unit</option>
+                                        <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
+                                            [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (itemPelayananNifasPendarahan.unit?.toLowerCase() || '')">
+                                            {{ satuanUnit . unit_code }}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>

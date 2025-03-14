@@ -29,6 +29,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
   listObservasiPersalinan: any;
   listKategoriObservasi: any;
+
+  listObservasiPelayananNifas: any;
+  listObservasiPelayananNifasPendarahan: any;
   isDisabledFormPnc: boolean = true;
   headers = new HttpHeaders({
     "kd-cabang": this.userData.kdcabang,
@@ -161,6 +164,16 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistObservasiPersalinan();
         this.carilistKategoriObservasi();
         break;
+      case "observasi-pelayanan-nifas":
+        this.carilistObservasiPelayananNifas();
+        this.carilistKategoriObservasi();
+        this.getSatuanUnit();
+        break;
+      case "observasi-pelayanan-nifas-pendarahan":
+        this.carilistObservasiPelayananNifasPendarahan();
+        this.carilistKategoriObservasi();
+        this.getSatuanUnit();
+        break;
       default:
         break;
     }
@@ -190,6 +203,12 @@ export class TulisSatuSehatPncComponent implements OnInit {
         break;
       case "observasi-data-persalinan":
         this.doSubmitObservasiPataPersalinan();
+        break;
+      case "observasi-pelayanan-nifas":
+        this.doSubmitObservasiPelayananNifas();
+        break;
+      case "observasi-pelayanan-nifas-pendarahan":
+        this.doSubmitObservasiPelayananNifasPendarahan();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -265,7 +284,62 @@ export class TulisSatuSehatPncComponent implements OnInit {
       this.listObservasiPersalinan = [...response.data];
     } catch (error)
     {
-      console.error("Error fetching data:", error);
+    }
+  }
+  async carilistObservasiPelayananNifas() {
+    let payload = {
+      terminology_id: "",
+      key_name: `satusehat_category|is_active`,
+      key_operator: "=|=|=",
+      key_value: `tanda-vital|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listObservasiPelayananNifas = [...response.data];
+
+    } catch (error)
+    {
+    }
+  }
+  async carilistObservasiPelayananNifasPendarahan() {
+    let payloadTemuanKlinis = {
+      terminology_id: "",
+      key_name: `satusehat_category|is_active`,
+      key_operator: "=|=|=",
+      key_value: `temuan-klinis|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    let payloadPemeriksaan = {
+      terminology_id: "",
+      key_name: `satusehat_category|is_active`,
+      key_operator: "=|=|=",
+      key_value: `pemeriksaan|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let responseTemuanKlinis: any = await this.PncService.getDataTerminologi(payloadTemuanKlinis);
+      let responsePemeriksaan: any = await this.PncService.getDataTerminologi(payloadPemeriksaan);
+      this.listObservasiPelayananNifasPendarahan = [
+        ...responseTemuanKlinis.data,
+        ...responsePemeriksaan.data,
+      ];
+    } catch (error)
+    {
     }
   }
   async carilistKategoriObservasi() {
@@ -286,7 +360,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       this.listKategoriObservasi = [...response.data];
     } catch (error)
     {
-      console.error("Error fetching data:", error);
     }
   }
   async getSatuanUnit() {
@@ -299,11 +372,10 @@ export class TulisSatuSehatPncComponent implements OnInit {
       order_by: "unit_code",
       order_type: "Asc",
     };
-
     try
     {
-      let listSatuanUnitGet: any = await this.PncService.getDataSatuanUnit(payload);
-      this.listSatuanUnit = [...listSatuanUnitGet.data];
+      let response: any = await this.PncService.getDataSatuanUnit(payload);
+      this.listSatuanUnit = [...response.data];
     } catch (error) { }
   }
   removeNullValues(obj: Object) {
@@ -331,7 +403,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       Swal.fire("Error", "Jenis Relasi Perlu di pilih", "error");
       return;
     }
-    console.log(this.relatedPersonData);
     const relationPrefix = this.selectedRelatesPerson;
 
     // Bentuk payload
@@ -417,7 +488,118 @@ export class TulisSatuSehatPncComponent implements OnInit {
       Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
     }
   }
+  async doSubmitObservasiPelayananNifas() {
+    const dataPelayanan = this.listObservasiPelayananNifas;
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        observations: dataPelayanan
+          .filter(item => item.userInput !== undefined && item.userInput !== null && item.userInput !== "") // Hanya ambil item yang punya userInput
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system :
+                  (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "observation",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : "Observation"
+              },
+              data: [
+                {
+                  code: {
+                    system: item.source ? item.source.source_url : "http://loinc.org",
+                    code: item.terminology_code,
+                    display: item.terminology_name
+                  },
+                  result: {
+                    value: item.userInput,
+                    unit: item.unit,
+                    system: "http://unitsofmeasure.org",
+                    code: item.unit
+                  },
+                  resultBoolean: {},
+                  valueCodeableConcept: {
+                    system: "http://snomed.info/sct",
+                    code: "102514002",
+                    display: "Well female adult"
+                  }
+                }
+              ],
+              effectiveDateTime: this.dateNow,
+              issued: this.dateNow
+            };
+          })
+      }
+    };
+    try
+    {
+      let response: any = await this.PncService.craeteObservationPnc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitObservasiPelayananNifasPendarahan() {
+    const dataPelayananPendarahan = this.listObservasiPelayananNifasPendarahan;
 
 
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        observations: dataPelayananPendarahan
+          .filter(item => item.userInput !== undefined && item.userInput !== null && item.userInput !== "") // Hanya ambil item yang punya userInput
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system :
+                  (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "observation",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : "Observation"
+              },
+              data: [
+                {
+                  code: {
+                    system: item.system ? item.system : (item.source ? item.source.source_url : "http://loinc.org"),
+                    code: item.terminology_code,
+                    display: item.terminology_name
+                  },
+                  result: {
+                    value: item.userInput,
+                    unit: item.unit,
+                    system: "http://unitsofmeasure.org",
+                    code: item.unit
+                  },
+                  resultBoolean: {},
+                  valueCodeableConcept: {},
+                  valueInteger: item.userInput,
+                  valueString: item.inputString
+                }
+              ],
+              effectiveDateTime: this.dateNow,
+              issued: this.dateNow
+            };
+          })
+      }
+    };
 
+    try
+    {
+      let response: any = await this.PncService.craeteObservationPnc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
 }
