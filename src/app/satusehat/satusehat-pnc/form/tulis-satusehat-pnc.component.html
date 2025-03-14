@@ -91,6 +91,12 @@
                             Observasi Pelayanan Nifas Pendarahan
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ activeTab == 'observasi-pemeriksaan-hasil-lab' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('observasi-pemeriksaan-hasil-lab')">
+                            Observasi Pemeriksaan Hasil Lab
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -336,6 +342,36 @@
                                         </option>
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card mb-2" *ngIf="activeTab == 'observasi-pemeriksaan-hasil-lab'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
+                            *ngFor="let itemPemeriksaanLab of listObservasiPemeriksaanLab">
+                            <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
+                                [title]="itemPemeriksaanLab.description">
+                                {{ itemPemeriksaanLab . terminology_name }}
+                            </label>
+                            <div class="d-flex align-items-center gap-2 mt-3">
+                                <!--<textarea class="form-control w-50" name="inputString" [(ngModel)]="itemPemeriksaanLab.inputString"
+                                    placeholder="Input Keterangan" rows="1">
+                                </textarea> -->
+                                <!-- Input Angka -->
+                                <!-- <input type="number" class="form-control w-50" placeholder="Masukkan nilai"
+                                    [(ngModel)]="itemPemeriksaanLab.userInput" name="userInput" /> -->
+                                <!-- Select Kategori -->
+                                <select class="form-select w-100" [(ngModel)]="itemPemeriksaanLab.selectedCategory"
+                                    name="selectedCategory" title="kategori">
+                                    <option *ngFor="let item of listKategoriObservasi" [ngValue]="item">
+                                        {{ item . terminology_name }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>

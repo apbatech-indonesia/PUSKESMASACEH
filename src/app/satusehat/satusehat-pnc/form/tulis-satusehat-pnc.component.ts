@@ -32,6 +32,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
   listObservasiPelayananNifas: any;
   listObservasiPelayananNifasPendarahan: any;
+  listObservasiPemeriksaanLab: any;
   isDisabledFormPnc: boolean = true;
   headers = new HttpHeaders({
     "kd-cabang": this.userData.kdcabang,
@@ -174,6 +175,10 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistKategoriObservasi();
         this.getSatuanUnit();
         break;
+      case "observasi-pemeriksaan-hasil-lab":
+        this.carilistObservasiPemeriksaanLab();
+        this.carilistKategoriObservasi();
+        break;
       default:
         break;
     }
@@ -209,6 +214,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         break;
       case "observasi-pelayanan-nifas-pendarahan":
         this.doSubmitObservasiPelayananNifasPendarahan();
+        break;
+      case "observasi-pemeriksaan-hasil-lab":
+        this.doSubmitObservasiPemeriksaanHasilLab();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -342,6 +350,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+
   async carilistKategoriObservasi() {
     let payload = {
       terminology_id: "",
@@ -358,6 +367,41 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
       let response: any = await this.PncService.getDataTerminologi(payload);
       this.listKategoriObservasi = [...response.data];
+    } catch (error)
+    {
+    }
+  }
+  async carilistObservasiPemeriksaanLab() {
+    let payloadTemuanKlinis = {
+      terminology_id: "",
+      key_name: `satusehat_category|is_active`,
+      key_operator: "=|=|=",
+      key_value: `temuan-klinis|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    let payloadObsRes = {
+      terminology_id: "",
+      key_name: `satusehat_category|is_active`,
+      key_operator: "=|=|=",
+      key_value: `observation-result|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let responseTemuanKlinis: any = await this.PncService.getDataTerminologi(payloadTemuanKlinis);
+      let responsePemeriksaan: any = await this.PncService.getDataTerminologi(payloadObsRes);
+      this.listObservasiPemeriksaanLab = [
+        ...responseTemuanKlinis.data,
+        ...responsePemeriksaan.data,
+      ];
     } catch (error)
     {
     }
@@ -547,8 +591,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
   }
   async doSubmitObservasiPelayananNifasPendarahan() {
     const dataPelayananPendarahan = this.listObservasiPelayananNifasPendarahan;
-
-
     const payload = {
       data: {
         encounterId: this.encounter_id,
@@ -592,6 +634,57 @@ export class TulisSatuSehatPncComponent implements OnInit {
       }
     };
 
+    try
+    {
+      let response: any = await this.PncService.craeteObservationPnc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitObservasiPemeriksaanHasilLab() {
+    const dataPemeriksaanHasilLab = this.listObservasiPemeriksaanLab;
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        observations: dataPemeriksaanHasilLab
+          .filter(item => item.selectedCategory)
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system :
+                  (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "observation",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : "Observation"
+              },
+              data: [
+                {
+                  code: {
+                    system: item.system ? item.system : (item.source ? item.source.source_url : "http://loinc.org"),
+                    code: item.terminology_code,
+                    display: item.terminology_name
+                  },
+                  result: {},
+                  resultBoolean: {},
+                  valueCodeableConcept: {
+                    system: "http://snomed.info/sct",
+                    code: "260347006",
+                    display: "+"
+                  }
+                }
+              ],
+              effectiveDateTime: this.dateNow,
+              issued: this.dateNow
+            };
+          })
+      }
+    };
     try
     {
       let response: any = await this.PncService.craeteObservationPnc(payload);
