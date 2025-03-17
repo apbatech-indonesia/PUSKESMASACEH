@@ -1,217 +1,255 @@
 <div class="row">
-  <!-- Card Total Kunjungan -->
-  <div class="col-md-4">
-    <div class="card mb-3 widget-content bg-plum-plate">
-      <div class="widget-content-wrapper text-white">
-        <div class="widget-content-left">
-          <div class="widget-heading">Jumlah Kunjungan Pasien</div>
-          <div class="widget-subheading">Total Pasien Semua PKM</div>
-        </div>
-        <div class="widget-content-right">
-          <div class="widget-numbers text-white">
-            <span>{{ totalKunjungan }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Card Non BPJS -->
-  <div class="col-md-4">
-    <div class="card mb-3 widget-content bg-arielle-smile">
-      <div class="widget-content-wrapper text-white">
-        <div class="widget-content-left">
-          <div class="widget-heading">Pasien Non BPJS</div>
-          <div class="widget-subheading">Total Pasien Non BPJS</div>
-        </div>
-        <div class="widget-content-right">
-          <div class="widget-numbers text-white">
-            <span>{{ totalNonBpjs }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Card BPJS -->
-  <div class="col-md-4">
-    <div class="card mb-3 widget-content bg-happy-green">
-      <div class="widget-content-wrapper text-white">
-        <div class="widget-content-left">
-          <div class="widget-heading">Pasien BPJS</div>
-          <div class="widget-subheading">Total Pasien BPJS</div>
-        </div>
-        <div class="widget-content-right">
-          <div class="widget-numbers text-white">
-            <span>{{ totalBpjs }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Pie Chart BPJS vs Non BPJS + Pasien Baru vs Lama -->
-<div class="row">
-  <div class="col-md-6">
-    <div class="card mb-3">
-      <div class="card-header">Pasien BPJS vs Non BPJS</div>
-      <div class="card-body">
-        <apx-chart
-          [series]="bpjsSeries"
-          [chart]="{ type: 'pie', height: 250 }"
-          [labels]="bpjsLabels"
-          [colors]="['#00e396', '#008ffb']"
+  <div class="row">
+    <!-- Filter Tanggal -->
+    <div class="col-md-12">
+      <div class="card mb-3">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
         >
-        </apx-chart>
+          <span>Total Kunjungan Pasien Semua PKM</span>
+          <div class="d-flex align-items-center">
+            <label for="startDateTotalKunjungan" class="me-2">Dari:</label>
+            <input
+              type="date"
+              id="startDateTotalKunjungan"
+              class="form-control me-3"
+              style="width: auto"
+              [(ngModel)]="startDateTotalKunjungan"
+              (change)="filterTotalKunjungan()"
+            />
+            <label for="endDateTotalKunjungan" class="me-2">Sampai:</label>
+            <input
+              type="date"
+              id="endDateTotalKunjungan"
+              class="form-control"
+              style="width: auto"
+              [(ngModel)]="endDateTotalKunjungan"
+              (change)="filterTotalKunjungan()"
+            />
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <!-- Card Total Kunjungan -->
+            <div class="col-md-4">
+              <div class="card mb-3 widget-content bg-plum-plate">
+                <div class="widget-content-wrapper text-white">
+                  <div class="widget-content-left">
+                    <div class="widget-heading">Jumlah Kunjungan Pasien</div>
+                    <div class="widget-subheading">Total Pasien Semua PKM</div>
+                  </div>
+                  <div class="widget-content-right">
+                    <div class="widget-numbers text-white">
+                      <span>{{ totalKunjungan }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Non BPJS -->
+            <div class="col-md-4">
+              <div class="card mb-3 widget-content bg-arielle-smile">
+                <div class="widget-content-wrapper text-white">
+                  <div class="widget-content-left">
+                    <div class="widget-heading">Pasien Non BPJS</div>
+                    <div class="widget-subheading">Total Pasien Non BPJS</div>
+                  </div>
+                  <div class="widget-content-right">
+                    <div class="widget-numbers text-white">
+                      <span>{{ totalNonBpjs }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card BPJS -->
+            <div class="col-md-4">
+              <div class="card mb-3 widget-content bg-happy-green">
+                <div class="widget-content-wrapper text-white">
+                  <div class="widget-content-left">
+                    <div class="widget-heading">Pasien BPJS</div>
+                    <div class="widget-subheading">Total Pasien BPJS</div>
+                  </div>
+                  <div class="widget-content-right">
+                    <div class="widget-numbers text-white">
+                      <span>{{ totalBpjs }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pie Chart BPJS vs Non BPJS + Pasien Baru vs Lama -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card mb-3">
+                <div class="card-header">Pasien BPJS vs Non BPJS</div>
+                <div class="card-body">
+                  <apx-chart
+                    [series]="[totalNonBpjs, totalBpjs]"
+                    [chart]="{ type: 'pie', height: 250 }"
+                    [labels]="bpjsLabels"
+                    [colors]="['#00e396', '#008ffb']"
+                  >
+                  </apx-chart>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="card mb-3">
+                <div class="card-header">Pasien Baru vs Lama</div>
+                <div class="card-body">
+                  <apx-chart
+                    [series]="[pasienBaru, pasienLama]"
+                    [chart]="{ type: 'pie', height: 250 }"
+                    [labels]="['Pasien Baru', 'Pasien Lama']"
+                    [colors]="['#fa3939', '#f97316']"
+                  >
+                  </apx-chart>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="col-md-6">
-    <div class="card mb-3">
-      <div class="card-header">Pasien Baru vs Lama</div>
-      <div class="card-body">
-        <apx-chart
-          [series]="[pasienBaru, pasienLama]"
-          [chart]="{ type: 'pie', height: 250 }"
-          [labels]="['Pasien Baru', 'Pasien Lama']"
-          [colors]="['#fa3939', '#f97316']"
+  <!-- Diagram Kunjungan Per Poli -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-3">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
         >
-        </apx-chart>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Diagram Kunjungan Per Poli -->
-<div class="row">
-  <div class="col-md-12">
-    <div class="card mb-3">
-      <div
-        class="card-header d-flex justify-content-between align-items-center"
-      >
-        <span>Diagram Kunjungan Per Poli per Bulan</span>
-        <div class="d-flex align-items-center">
-          <label for="bulan" class="me-2">Bulan:</label>
-          <select
-            id="bulan"
-            class="form-control me-3"
-            style="width: auto"
-            [(ngModel)]="selectedBulan"
-            (change)="filterKunjunganPoli()"
-          >
-            <option value="">-- Pilih Bulan --</option>
-            <option
-              *ngFor="let bulan of bulanList; let i = index"
-              [value]="i + 1"
+          <span>Diagram Kunjungan Per Poli per Bulan</span>
+          <div class="d-flex align-items-center">
+            <label for="bulan" class="me-2">Bulan:</label>
+            <select
+              id="bulan"
+              class="form-control me-3"
+              style="width: auto"
+              [(ngModel)]="selectedBulan"
+              (change)="filterKunjunganPoli()"
             >
-              {{ bulan }}
-            </option>
-          </select>
+              <option value="">-- Pilih Bulan --</option>
+              <option
+                *ngFor="let bulan of bulanList; let i = index"
+                [value]="i + 1"
+              >
+                {{ bulan }}
+              </option>
+            </select>
 
-          <label for="tahun" class="me-2">Tahun:</label>
-          <select
-            id="tahun"
-            class="form-control"
-            style="width: auto"
-            [(ngModel)]="selectedTahun"
-            (change)="filterKunjunganPoli()"
+            <label for="tahun" class="me-2">Tahun:</label>
+            <select
+              id="tahun"
+              class="form-control"
+              style="width: auto"
+              [(ngModel)]="selectedTahun"
+              (change)="filterKunjunganPoli()"
+            >
+              <option value="">-- Pilih Tahun --</option>
+              <option *ngFor="let tahun of tahunList" [value]="tahun">
+                {{ tahun }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="card-body">
+          <apx-chart
+            [series]="kunjunganPoliSeries"
+            [chart]="{ type: 'bar', height: 350 }"
+            [xaxis]="{ categories: poliCategories }"
           >
-            <option value="">-- Pilih Tahun --</option>
-            <option *ngFor="let tahun of tahunList" [value]="tahun">
-              {{ tahun }}
-            </option>
-          </select>
+          </apx-chart>
         </div>
       </div>
-      <div class="card-body">
-        <apx-chart
-          [series]="kunjunganPoliSeries"
-          [chart]="{ type: 'bar', height: 350 }"
-          [xaxis]="{ categories: poliCategories }"
-        >
-        </apx-chart>
-      </div>
     </div>
   </div>
-</div>
 
-<!-- Grafik Kunjungan PKM -->
-<div class="row">
-  <div class="col-md-12">
-    <div class="card mb-3">
-      <div
-        class="card-header d-flex justify-content-between align-items-center"
-      >
-        <span>Grafik Kunjungan Pasien per PKM</span>
-        <div class="d-flex align-items-center">
-          <label for="startDate" class="me-2">Dari:</label>
-          <input
-            type="date"
-            id="startDate"
-            class="form-control me-3"
-            style="width: auto"
-            [(ngModel)]="startDate"
-            (change)="filterKunjunganPKM()"
-          />
-          <label for="endDate" class="me-2">Sampai:</label>
-          <input
-            type="date"
-            id="endDate"
-            class="form-control"
-            style="width: auto"
-            [(ngModel)]="endDate"
-            (change)="filterKunjunganPKM()"
-          />
+  <!-- Grafik Kunjungan PKM -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card mb-3">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <span>Grafik Kunjungan Pasien per PKM</span>
+          <div class="d-flex align-items-center">
+            <label for="startDate" class="me-2">Dari:</label>
+            <input
+              type="date"
+              id="startDate"
+              class="form-control me-3"
+              style="width: auto"
+              [(ngModel)]="startDate"
+              (change)="filterKunjunganPKM()"
+            />
+            <label for="endDate" class="me-2">Sampai:</label>
+            <input
+              type="date"
+              id="endDate"
+              class="form-control"
+              style="width: auto"
+              [(ngModel)]="endDate"
+              (change)="filterKunjunganPKM()"
+            />
+          </div>
+        </div>
+        <div class="card-body">
+          <apx-chart
+            [series]="kunjunganPkmSeries"
+            [chart]="{ type: 'line', height: 350 }"
+            [xaxis]="{ categories: bulanCategories }"
+          >
+          </apx-chart>
         </div>
       </div>
-      <div class="card-body">
-        <apx-chart
-          [series]="kunjunganPkmSeries"
-          [chart]="{ type: 'line', height: 350 }"
-          [xaxis]="{ categories: bulanCategories }"
-        >
-        </apx-chart>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Top 10 Obat & Penyakit -->
-<div class="row">
-  <div class="col-md-6">
-    <div class="card mb-3">
-      <div class="card-header">10 Obat Terbanyak</div>
-      <div class="card-body">
-        <ul class="list-group">
-          <li
-            *ngFor="let obat of topObat; let i = index"
-            class="list-group-item d-flex justify-content-between list-group-item-action"
-          >
-            {{ i+1 }}. 
-            {{ obat.nama_obat }}
-            <span class="text-info ms-auto">{{ obat.jumlah_penggunaan }} Item</span>
-          </li>
-        </ul>
-      </div>
     </div>
   </div>
 
-  <div class="col-md-6">
-    <div class="card mb-3">
-      <div class="card-header">10 Penyakit Terbanyak</div>
-      <div class="card-body">
-        <ul class="list-group">
-          <li
-            *ngFor="let penyakit of topPenyakit; let i = index"
-            class="list-group-item d-flex justify-content-between list-group-item-action"
-          >
-            {{ i+1 }}. 
-            {{ penyakit.diagnosa }}
-            <span class="text-info ms-auto">{{ penyakit.total }} Kasus</span>
-          </li>
-        </ul>
+  <!-- Top 10 Obat & Penyakit -->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-header">10 Obat Terbanyak</div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li
+              *ngFor="let obat of topObat; let i = index"
+              class="list-group-item d-flex justify-content-between list-group-item-action"
+            >
+              {{ i + 1 }}.
+              {{ obat.nama_obat }}
+              <span class="text-info ms-auto"
+                >{{ obat.jumlah_penggunaan }} Item</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <div class="card-header">10 Penyakit Terbanyak</div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li
+              *ngFor="let penyakit of topPenyakit; let i = index"
+              class="list-group-item d-flex justify-content-between list-group-item-action"
+            >
+              {{ i + 1 }}.
+              {{ penyakit.diagnosa }}
+              <span class="text-info ms-auto">{{ penyakit.total }} Kasus</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

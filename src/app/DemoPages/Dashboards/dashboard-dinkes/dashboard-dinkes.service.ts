@@ -14,22 +14,47 @@ export class DashboardDinkesService {
       .toPromise();
   }
 
-  getTotalKunjungan(slugCity: any) {
-    return this.http
-      .get(emrUrl + `${slugCity}/dashboard-dinkes/total-kunjungan`)
-      .toPromise();
+  getTotalKunjungan(
+    slugCity: any,
+    startDate: string | null = null,
+    endDate: string | null = null
+  ) {
+    const url = new URL(
+      `${emrUrl}${slugCity}/dashboard-dinkes/total-kunjungan`
+    );
+
+    if (startDate) url.searchParams.append("start_date", startDate);
+    if (endDate) url.searchParams.append("end_date", endDate);
+
+    return this.http.get(url.toString()).toPromise();
   }
 
-  getTotalBpjs(slugCity: any) {
-    return this.http
-      .get(emrUrl + `${slugCity}/dashboard-dinkes/total-bpjs`)
-      .toPromise();
+  getTotalBpjs(
+    slugCity: any,
+    startDate: string | null = null,
+    endDate: string | null = null
+  ) {
+    const url = new URL(`${emrUrl}${slugCity}/dashboard-dinkes/total-bpjs`);
+
+    if (startDate) url.searchParams.append("start_date", startDate);
+    if (endDate) url.searchParams.append("end_date", endDate);
+
+    return this.http.get(url.toString()).toPromise();
   }
 
-  getPasienBaruLama(slugCity: any) {
-    return this.http
-      .get(emrUrl + `${slugCity}/dashboard-dinkes/pasien-baru-lama`)
-      .toPromise();
+  getPasienBaruLama(
+    slugCity: any,
+    startDate: string | null = null,
+    endDate: string | null = null
+  ) {
+    const url = new URL(
+      `${emrUrl}${slugCity}/dashboard-dinkes/pasien-baru-lama`
+    );
+
+    if (startDate) url.searchParams.append("start_date", startDate);
+    if (endDate) url.searchParams.append("end_date", endDate);
+
+    return this.http.get(url.toString()).toPromise();
   }
 
   getTopTenObat(slugCity: any) {

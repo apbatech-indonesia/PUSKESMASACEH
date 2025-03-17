@@ -7,37 +7,31 @@ import { ToastrService } from "ngx-toastr";
 @Component({
   selector: "app-dashboard-dinkes",
   templateUrl: "./dashboard-dinkes.component.html",
-  styles: [],
+  styleUrls: ["./dashboard-dinkes.component.css"],
   providers: [DatePipe],
 })
 export class DashboardDinkesComponent implements OnInit {
+  // Lokasi Dinkes
   dinkesloc: string | null;
+
+  // Filter Tanggal
   startDate: string;
   endDate: string;
-  totalKunjungan = 200;
-  totalBpjs = 120;
+  startDateTotalKunjungan: string;
+  endDateTotalKunjungan: string;
+
+  // Total Data Kunjungan
+  totalall = 0;
+  totalumum = 0;
+  totalpenjualan = 0;
+  totalasuransi = 0;
+  totalKunjungan = 0;
+  pasienBaru = 0;
+  pasienLama = 0;
+  totalBpjs = 0;
   totalNonBpjs = this.totalKunjungan - this.totalBpjs;
 
-  bpjsSeries = [this.totalNonBpjs, this.totalBpjs];
-  bpjsLabels = ["Non BPJS", "BPJS"];
-  bulanCategories: string[] = Array.from(
-    { length: 12 },
-    (_, i) => `${i + 1} Januari 2025`
-  );
-
-  kunjunganPkmSeries = Array(3).fill({ name: "PKM", data: Array(12).fill(0) });
-  topObat = Array(5).fill({ nama_obat: "-", jumlah_penggunaan: 0 });
-  pasienBaru = 200;
-  pasienLama = 150;
-  topPenyakit = Array(5).fill({ namapenyakit: "-", jumlah: 0 });
-  poliCategories = ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"];
-
-  kunjunganPoliSeries = Array(4).fill({
-    name: "Poli",
-    data: Array(4).fill(0),
-    color: "#3b82f6",
-  });
-
+  // Informasi Pengguna
   userDetails: any;
   nama: string;
   akses: string;
@@ -45,13 +39,30 @@ export class DashboardDinkesComponent implements OnInit {
   kdcabang: string;
   username: string;
 
-  totalall = 0;
-  totalumum = 0;
-  totalpenjualan = 0;
-  totalasuransi = 0;
-
+  // Filter Tahun & Bulan yang Dipilih
   selectedBulan = new Date().getMonth() + 1;
   selectedTahun = new Date().getFullYear();
+
+  // Kategori dan Label
+  poliCategories = ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4"];
+  bpjsLabels = ["Non BPJS", "BPJS"];
+  bulanCategories: string[] = [];
+
+  // Data Kunjungan PKM
+  kunjunganPkmSeries = Array(3).fill({ name: "PKM", data: Array(12).fill(0) });
+
+  // Data Top Obat & Penyakit
+  topObat = Array(5).fill({ nama_obat: "-", jumlah_penggunaan: 0 });
+  topPenyakit = Array(5).fill({ namapenyakit: "-", jumlah: 0 });
+
+  // Data Kunjungan Poli
+  kunjunganPoliSeries = Array(4).fill({
+    name: "Poli",
+    data: Array(4).fill(0),
+    color: "#3b82f6",
+  });
+
+  // List Bulan & Tahun
   bulanList = [
     "Januari",
     "Februari",
@@ -66,7 +77,7 @@ export class DashboardDinkesComponent implements OnInit {
     "November",
     "Desember",
   ];
-  tahunList = [2023, 2024, 2025];
+  tahunList = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -116,7 +127,6 @@ export class DashboardDinkesComponent implements OnInit {
       this.totalBpjs = totalBpjs.data;
       this.totalKunjungan = totalKunjungan.data;
       this.totalNonBpjs = this.totalKunjungan - this.totalBpjs;
-      this.bpjsSeries = [this.totalNonBpjs, this.totalBpjs];
       this.pasienLama = totalPasienBaruLama.data.pasien_lama;
       this.pasienBaru = totalPasienBaruLama.data.pasien_baru;
       this.topObat = topTenObat.data;
@@ -140,6 +150,49 @@ export class DashboardDinkesComponent implements OnInit {
       this.kunjunganPoliSeries = response.data;
     } catch (error) {
       this.toast.error("Gagal memfilter data Poli.");
+    }
+  }
+
+  async filterTotalKunjungan() {
+    if (!this.startDateTotalKunjungan || !this.endDateTotalKunjungan) {
+      return this.toast.warning("Harap pilih tanggal mulai dan tanggal akhir.");
+    }
+
+    const start = new Date(this.startDateTotalKunjungan);
+    const end = new Date(this.endDateTotalKunjungan);
+    const diffDays = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
+
+    if (diffDays < 1 || diffDays > 30) {
+      return this.toast.error("Rentang tanggal harus antara 1 hingga 30 hari.");
+    }
+
+    try {
+      const [totalKunjungan, totalPasienBaruLama, totalBpjs]: any =
+        await Promise.all([
+          this.service.getTotalKunjungan(
+            this.dinkesloc,
+            this.startDateTotalKunjungan,
+            this.endDateTotalKunjungan
+          ),
+          this.service.getPasienBaruLama(
+            this.dinkesloc,
+            this.startDateTotalKunjungan,
+            this.endDateTotalKunjungan
+          ),
+          this.service.getTotalBpjs(
+            this.dinkesloc,
+            this.startDateTotalKunjungan,
+            this.endDateTotalKunjungan
+          ),
+        ]);
+
+      this.totalBpjs = totalBpjs.data;
+      this.totalKunjungan = totalKunjungan.data;
+      this.totalNonBpjs = this.totalKunjungan - this.totalBpjs;
+      this.pasienLama = totalPasienBaruLama.data.pasien_lama;
+      this.pasienBaru = totalPasienBaruLama.data.pasien_baru;
+    } catch (error) {
+      this.toast.error("Gagal mengambil data PKM.");
     }
   }
 
