@@ -126,6 +126,7 @@
                                 </label>
                                 <select id="relates_person" class="form-select" [(ngModel)]="selectedRelatesPerson"
                                     name="relates_person" (change)="onChangeRelatesPerson()">
+                                    <option [ngValue]="undefined" selected>Pilih Hubungan</option>
                                     <option value="ibu">Ibu</option>
                                     <option value="ayah">Ayah</option>
                                     <option value="kakak">Kakak</option>
@@ -275,6 +276,7 @@
                                 <!-- Select Kategori -->
                                 <select class="form-select w-25" [(ngModel)]="itemPersalinan.selectedCategory"
                                     name="selectedCategory">
+                                    <option [ngValue]="undefined" selected>Pilih Kategori</option>
                                     <option *ngFor="let item of listKategoriObservasi" [ngValue]="item">
                                         {{ item . terminology_name }}
                                     </option>
@@ -302,6 +304,7 @@
                                 <!-- Select Kategori -->
                                 <select class="form-select w-25" [(ngModel)]="itemPelayananNifas.selectedCategory"
                                     name="selectedCategory">
+                                    <option [ngValue]="undefined" selected>Pilih Kategori</option>
                                     <option *ngFor="let item of listKategoriObservasi" [ngValue]="item">
                                         {{ item . terminology_name }}
                                     </option>
@@ -309,6 +312,7 @@
                                 <div class="col-3">
                                     <select class="form-select"
                                         (change)="itemPelayananNifas.unit = $event.target.value">
+                                        <option [ngValue]="undefined" selected>Pilih Satuan Unit</option>
                                         <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
                                             [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (itemPelayananNifas.unit?.toLowerCase() || '')">
                                             {{ satuanUnit . unit_code }}
@@ -373,15 +377,10 @@
                                 {{ itemPemeriksaanLab . terminology_name }}
                             </label>
                             <div class="d-flex align-items-center gap-2 mt-3">
-                                <!--<textarea class="form-control w-50" name="inputString" [(ngModel)]="itemPemeriksaanLab.inputString"
-                                    placeholder="Input Keterangan" rows="1">
-                                </textarea> -->
-                                <!-- Input Angka -->
-                                <!-- <input type="number" class="form-control w-50" placeholder="Masukkan nilai"
-                                    [(ngModel)]="itemPemeriksaanLab.userInput" name="userInput" /> -->
                                 <!-- Select Kategori -->
                                 <select class="form-select w-100" [(ngModel)]="itemPemeriksaanLab.selectedCategory"
                                     name="selectedCategory" title="kategori">
+                                    <option [ngValue]="undefined" selected>Pilih Kategori</option>
                                     <option *ngFor="let item of listKategoriObservasi" [ngValue]="item">
                                         {{ item . terminology_name }}
                                     </option>
@@ -420,6 +419,47 @@
                                         <select class="form-select"
                                             [(ngModel)]="itemConditionPelayananNifas.clinicalStatus"
                                             name="clinicalStatus">
+                                            <option [ngValue]="undefined" selected>Pilih Kondisi Klinis</option>
+                                            <option *ngFor="let conditionClinical of listCondtionClinical"
+                                                [ngValue]="conditionClinical">
+                                                {{ conditionClinical . terminology_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-2" *ngIf="activeTab == 'diagnosa-condition'">
+            <div class="card-body">
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
+                                *ngFor="let itemConditionDiagnosis of listConditionDiagnosis">
+                                <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
+                                    [title]="itemConditionDiagnosis.description">
+                                    {{ itemConditionDiagnosis . terminology_name }}
+                                </label>
+                                <div class="d-flex align-items-center gap-2 mt-3">
+                                    <textarea class="form-control w-50" name="inputString" [(ngModel)]="itemConditionDiagnosis.inputString"
+                                        placeholder="Input Keterangan" rows="1">
+                                </textarea>
+                                    <!-- Select Kategori -->
+                                    <select class="form-select w-25"
+                                        [(ngModel)]="itemConditionDiagnosis.selectedCategory" name="selectedCategory"
+                                        title="kategori">
+                                        <option [ngValue]="undefined" selected>Pilih Kategori</option>
+                                        <option *ngFor="let item of listKategoriCondition" [ngValue]="item">
+                                            {{ item . terminology_name }}
+                                        </option>
+                                    </select>
+                                    <div class="col-3">
+                                        <select class="form-select"
+                                            [(ngModel)]="itemConditionDiagnosis.clinicalStatus" name="clinicalStatus">
                                             <option [ngValue]="undefined" selected>Pilih Kondisi Klinis</option>
                                             <option *ngFor="let conditionClinical of listCondtionClinical"
                                                 [ngValue]="conditionClinical">

@@ -32,6 +32,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
   listKategoriCondition: any;
   listCondtionClinical: any;
   listConditionPelayananNifas: any;
+  listConditionDiagnosis: any;
 
   listObservasiPelayananNifas: any;
   listObservasiPelayananNifasPendarahan: any;
@@ -187,6 +188,11 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistKategoriCondition();
         this.carilistClinicalCondition();
         break;
+      case "diagnosa-condition":
+        this.carilistConditionDiagnosis();
+        this.carilistKategoriCondition();
+        this.carilistClinicalCondition();
+        break;
       default:
         break;
     }
@@ -228,6 +234,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         break;
       case "condition-pelayanan-nifas":
         this.doSubmitConditionPelayananNifas();
+        break;
+      case "diagnosa-condition":
+        this.doSubmitConditionDiagnosis();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -378,6 +387,29 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
       let response: any = await this.PncService.getDataTerminologi(payload);
       this.listConditionPelayananNifas = [
+        ...response.data,
+      ];
+    } catch (error)
+    {
+    }
+  }
+  async carilistConditionDiagnosis() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `observation-result|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listConditionDiagnosis = [
         ...response.data,
       ];
     } catch (error)
@@ -557,7 +589,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
     }
   }
-
   async doSubmitObservasiPataPersalinan() {
     const itemDataObservasiPersalinan = this.listObservasiPersalinan;
     const payload = {
@@ -728,6 +759,59 @@ export class TulisSatuSehatPncComponent implements OnInit {
         satusehatId: this.patientData.idsatusehat,
         rmno: this.notransaksi,
         conditions: dataConditionPelayananNifas
+          .filter(item => item.inputString !== undefined && item.inputString !== null && item.inputString !== "")
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system :
+                  (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "observation",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : "Observation"
+              },
+              clinicalStatus: {
+                system: item.clinicalStatus ? item.clinicalStatus.system :
+                  (item.clinicalStatus.source ? item.clinicalStatus.source.source_url : ''),
+                code: item.clinicalStatus ? item.clinicalStatus.terminology_code : "observation",
+                display: item.clinicalStatus ? item.clinicalStatus.terminology_name : "Observation"
+              },
+              data: [
+                {
+                  system: item.system ? item.system : (item.source ? item.source.source_url : "http://snomed.info/sct"),
+                  code: item.terminology_code,
+                  display: item.terminology_name
+                }
+              ],
+              note: [
+                {
+                  text: item.inputString
+                }
+              ],
+              recordedDate: this.dateNow
+            };
+          })
+      }
+    };
+    try
+    {
+      let response: any = await this.PncService.craeteConditionPnc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitConditionDiagnosis() {
+    const dataConditionDiagnosis = this.listConditionDiagnosis;
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        conditions: dataConditionDiagnosis
           .filter(item => item.inputString !== undefined && item.inputString !== null && item.inputString !== "")
           .map(item => {
             return {
