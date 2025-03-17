@@ -396,9 +396,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
   async carilistConditionDiagnosis() {
     let payload = {
       terminology_id: "",
-      key_name: `category|is_active`,
+      key_name: `satusehat_category|is_active`,
       key_operator: "=|=",
-      key_value: `observation-result|1`,
+      key_value: `kondisi-kehamilan|1`,
       show_parent: "yes",
       show_child: "yes",
       max_row: 100,
