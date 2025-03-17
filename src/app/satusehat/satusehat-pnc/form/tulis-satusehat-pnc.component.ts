@@ -30,10 +30,12 @@ export class TulisSatuSehatPncComponent implements OnInit {
   listObservasiPersalinan: any;
   listKategoriObservasi: any;
   listKategoriCondition: any;
+  listKategoriProcedure: any;
   listCondtionClinical: any;
   listConditionPelayananNifas: any;
   listConditionDiagnosis: any;
   listConditionLeaveFasyankes: any;
+  listProcedureKonselingNifas: any;
 
   listObservasiPelayananNifas: any;
   listObservasiPelayananNifasPendarahan: any;
@@ -199,6 +201,10 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistKategoriCondition();
         this.carilistClinicalCondition();
         break;
+      case "procedure-konseling-pelayanan-nifas":
+        this.carilistProcedureKonselingNifas();
+        this.carilistKategoriProcedure();
+        break;
       default:
         break;
     }
@@ -246,6 +252,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         break;
       case "condition-leave-fasyankes":
         this.doSubmitConditionLeaveFasyankes();
+        break;
+      case "procedure-konseling-pelayanan-nifas":
+        this.doSubmitProcedureKonselingPelayananNifas();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -448,6 +457,29 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+  async carilistProcedureKonselingNifas() {
+    let payload = {
+      terminology_id: "",
+      key_name: `satusehat_category|is_active`,
+      key_operator: "=|=",
+      key_value: `edukasi-kesehatan|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listProcedureKonselingNifas = [
+        ...response.data,
+      ];
+    } catch (error)
+    {
+    }
+  }
 
   async carilistKategoriObservasi() {
     let payload = {
@@ -485,6 +517,26 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
       let response: any = await this.PncService.getDataTerminologi(payload);
       this.listKategoriCondition = [...response.data];
+    } catch (error)
+    {
+    }
+  }
+  async carilistKategoriProcedure() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `procedure-category|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listKategoriProcedure = [...response.data];
     } catch (error)
     {
     }
@@ -933,6 +985,56 @@ export class TulisSatuSehatPncComponent implements OnInit {
     try
     {
       let response: any = await this.PncService.craeteConditionPnc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitProcedureKonselingPelayananNifas() {
+    const dataProcedureKonselingPelayananNifas = this.listProcedureKonselingNifas;
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        procedures: dataProcedureKonselingPelayananNifas
+          .filter(item =>
+            item.periodeMulai !== undefined && item.periodeMulai !== null && item.periodeMulai !== "" &&
+            item.periodeBerakhir !== undefined && item.periodeBerakhir !== null && item.periodeBerakhir !== ""
+          )
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system :
+                  (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : ""
+              },
+              data: [
+                {
+                  system: item.system ? item.system : (item.source ? item.source.source_url : "http://snomed.info/sct"),
+                  code: item.terminology_code,
+                  display: item.terminology_name
+                }
+              ],
+              "performedPeriod": {
+                start: item.periodeMulai,
+                end: item.periodeBerakhir
+              },
+              performedDateTime: this.dateNow
+            };
+          })
+      }
+    };
+
+    try
+    {
+      let response: any = await this.PncService.craeteProceduresPnc(payload);
       let msg = response.statusMsg.split(": ");
       Swal.fire("Success", msg.join(", "), "success");
     } catch (err)
