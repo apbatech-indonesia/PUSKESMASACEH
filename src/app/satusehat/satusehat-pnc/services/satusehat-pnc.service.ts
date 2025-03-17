@@ -32,6 +32,9 @@ export class PncService {
   craeteObservationPnc(data: any) {
     return this.request('PNC/observationsCreate', data);
   }
+  craeteConditionPnc(data: any) {
+    return this.request('PNC/conditionsCreate', data);
+  }
   getRiwayatPasien(data: any) {
     return this.request('master/getDataPatient', data);
   }
