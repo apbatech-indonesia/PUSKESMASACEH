@@ -36,6 +36,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
   listConditionDiagnosis: any;
   listConditionLeaveFasyankes: any;
   listProcedureKonselingNifas: any;
+  listProcedureTindakan: any;
 
   listObservasiPelayananNifas: any;
   listObservasiPelayananNifasPendarahan: any;
@@ -205,6 +206,10 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistProcedureKonselingNifas();
         this.carilistKategoriProcedure();
         break;
+      case "procedure-tindakan":
+        this.carilistProcedureTindakan();
+        this.carilistKategoriProcedure();
+        break;
       default:
         break;
     }
@@ -255,6 +260,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         break;
       case "procedure-konseling-pelayanan-nifas":
         this.doSubmitProcedureKonselingPelayananNifas();
+        break;
+      case "procedure-tindakan":
+        this.doSubmitProcedureTindakan();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -474,6 +482,29 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
       let response: any = await this.PncService.getDataTerminologi(payload);
       this.listProcedureKonselingNifas = [
+        ...response.data,
+      ];
+    } catch (error)
+    {
+    }
+  }
+  async carilistProcedureTindakan() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `procedure|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listProcedureTindakan = [
         ...response.data,
       ];
     } catch (error)
@@ -1002,6 +1033,56 @@ export class TulisSatuSehatPncComponent implements OnInit {
         satusehatId: this.patientData.idsatusehat,
         rmno: this.notransaksi,
         procedures: dataProcedureKonselingPelayananNifas
+          .filter(item =>
+            item.periodeMulai !== undefined && item.periodeMulai !== null && item.periodeMulai !== "" &&
+            item.periodeBerakhir !== undefined && item.periodeBerakhir !== null && item.periodeBerakhir !== ""
+          )
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system :
+                  (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : ""
+              },
+              data: [
+                {
+                  system: item.system ? item.system : (item.source ? item.source.source_url : "http://snomed.info/sct"),
+                  code: item.terminology_code,
+                  display: item.terminology_name
+                }
+              ],
+              "performedPeriod": {
+                start: item.periodeMulai,
+                end: item.periodeBerakhir
+              },
+              performedDateTime: this.dateNow
+            };
+          })
+      }
+    };
+
+    try
+    {
+      let response: any = await this.PncService.craeteProceduresPnc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitProcedureTindakan() {
+    const dataProcedureTindakan = this.listProcedureTindakan;
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        procedures: dataProcedureTindakan
           .filter(item =>
             item.periodeMulai !== undefined && item.periodeMulai !== null && item.periodeMulai !== "" &&
             item.periodeBerakhir !== undefined && item.periodeBerakhir !== null && item.periodeBerakhir !== ""

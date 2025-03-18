@@ -116,7 +116,12 @@
                             Diagnosa Kondisi
                         </a>
                     </li>
-
+                    <li class="nav-item border-end">
+                        <a class="nav-link {{ activeTab == 'procedure-tindakan' ? 'active' : '' }}" href="javascript:;"
+                            (click)="openTab('procedure-tindakan')">
+                            Prosedur tindakan
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {{ activeTab == 'condition-leave-fasyankes' ? 'active' : '' }}"
                             href="javascript:;" (click)="openTab('condition-leave-fasyankes')">
@@ -558,6 +563,48 @@
                                     <div class="col-3">
                                         <select class="form-select"
                                             [(ngModel)]="itemProcedureKonselingNifas.selectedCategory"
+                                            name="selectedCategory" title="kategori">
+                                            <option [ngValue]="undefined" selected>Pilih Kategori</option>
+                                            <option *ngFor="let item of listKategoriProcedure" [ngValue]="item">
+                                                {{ item . terminology_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card mb-2" *ngIf="activeTab == 'procedure-tindakan'">
+            <div class="card-body">
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
+                                *ngFor="let itemProcedureTindakan of listProcedureTindakan">
+                                <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
+                                    [title]="itemProcedureTindakan.description">
+                                    {{ itemProcedureTindakan . terminology_name }}
+
+                                    <small>{{ itemProcedureTindakan . description }}</small>
+                                </label>
+                                <div class="d-flex align-items-center gap-2 mt-3">
+                                    <!-- Input Periode Mulai -->
+
+                                    <label for="periode_mulai" class="form-label">Periode Mulai</label>
+                                    <input type="datetime-local" class="form-control" id="periode_mulai"
+                                        [(ngModel)]="itemProcedureTindakan.periodeMulai" name="periode_mulai" />
+                                    <!-- Input Periode Berakhir -->
+                                    <label for="periode_berakhir" class="form-label">Periode
+                                        Berakhir</label>
+                                    <input type="datetime-local" class="form-control" id="periode_berakhir"
+                                        [(ngModel)]="itemProcedureTindakan.periodeBerakhir" name="periode_berakhir" />
+                                    <!-- Select Kategori -->
+                                    <div class="col-3">
+                                        <select class="form-select"
+                                            [(ngModel)]="itemProcedureTindakan.selectedCategory"
                                             name="selectedCategory" title="kategori">
                                             <option [ngValue]="undefined" selected>Pilih Kategori</option>
                                             <option *ngFor="let item of listKategoriProcedure" [ngValue]="item">
