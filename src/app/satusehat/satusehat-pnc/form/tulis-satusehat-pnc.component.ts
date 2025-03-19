@@ -32,8 +32,11 @@ export class TulisSatuSehatPncComponent implements OnInit {
   listKategoriCondition: any;
   listKategoriProcedure: any;
   listKategoriServiceRequest: any;
+  listTipeSpecimen: any;
+  listServiceRequest: any;
   listCondtionClinical: any;
   listRequestPemeriksaanLab: any;
+  listSpecimenPemeriksaanLab: any;
   listConditionPelayananNifas: any;
   listConditionDiagnosis: any;
   listConditionLeaveFasyankes: any;
@@ -216,6 +219,11 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistRequestPemeriksaanLab();
         this.carilistKategoriServiceRequest();
         break;
+      case "specimen-pemeriksaan-hasil-lab":
+        this.carilistSpecimenPemeriksaanLab();
+        this.carilistTypeSpeciment();
+        this.carilistServiceRequest();
+        break;
       default:
         break;
     }
@@ -272,6 +280,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         break;
       case "request-pemeriksaan-hasil-lab":
         this.doSubmitPermintaanPemeriksaanLab();
+        break;
+      case "specimen-pemeriksaan-hasil-lab":
+        this.doSubmitSpecimenPemeriksaanLab();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -601,6 +612,49 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+  async carilistTypeSpeciment() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `specimen-type|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listTipeSpecimen = [...response.data];
+    } catch (error)
+    {
+    }
+  }
+  async carilistServiceRequest() {
+    let payload = {
+      usecase_id: this.useCaseId,
+      patientId: this.idpasien,
+      type: "pnc",
+      status: "active"
+    };
+    try
+    {
+      let response: any = await this.PncService.getUseCaseResponse(payload);
+      this.listServiceRequest = response.service_request_responses;
+
+      if (this.listServiceRequest.length < 1)
+      {
+        Swal.fire("Error", "Data permintaan pemeriksaan lab tidak ditemukan", "error");
+        this.openTab("request-pemeriksaan-hasil-lab");
+        return;
+      }
+
+    } catch (error)
+    {
+    }
+  }
   async carilistClinicalCondition() {
     let payload = {
       terminology_id: "",
@@ -637,6 +691,26 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
       let response: any = await this.PncService.getDataTerminologi(payload);
       this.listRequestPemeriksaanLab = [...response.data];
+    } catch (error)
+    {
+    }
+  }
+  async carilistSpecimenPemeriksaanLab() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `specimen-collection|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listSpecimenPemeriksaanLab = [...response.data];
     } catch (error)
     {
     }
@@ -692,36 +766,10 @@ export class TulisSatuSehatPncComponent implements OnInit {
       this.listSatuanUnit = [...response.data];
     } catch (error) { }
   }
-  removeNullValues(obj: Object) {
-    if (typeof obj !== "object" || obj === null) return obj; // Jika bukan object, kembalikan nilai asli
 
-    // Iterasi pada setiap properti
-    for (const key in obj)
-    {
-      if (obj[key] === null)
-      {
-        delete obj[key]; // Hapus properti jika nilainya null
-      } else if (typeof obj[key] === "object")
-      {
-        obj[key] = this.removeNullValues(obj[key]); // Rekursif untuk objek bersarang
-      }
-    }
-
-    return obj;
-  }
 
 
   // partial func
-  // toggleInputPermintaanPemeriksaanLab(id: string) {
-  //   if (this.selectedPemeriksaanLab[id])
-  //   {
-  //     delete this.selectedPemeriksaanLab[id];
-  //   } else
-  //   {
-  //     this.selectedPemeriksaanLab = { ...this.selectedPemeriksaanLab, [id]: "" };
-  //   }
-  // }
-
   toggleInputPermintaanPemeriksaanLab(id: string, categoryServiceRequest: any, terminologyId: string) {
     // Cari itemServiceRequest yang sesuai dengan terminologyId
     const itemServiceRequest = this.listRequestPemeriksaanLab.find(item => item.terminology_id === terminologyId);
@@ -748,7 +796,23 @@ export class TulisSatuSehatPncComponent implements OnInit {
       }
     }
   }
+  removeNullValues(obj: Object) {
+    if (typeof obj !== "object" || obj === null) return obj; // Jika bukan object, kembalikan nilai asli
 
+    // Iterasi pada setiap properti
+    for (const key in obj)
+    {
+      if (obj[key] === null)
+      {
+        delete obj[key]; // Hapus properti jika nilainya null
+      } else if (typeof obj[key] === "object")
+      {
+        obj[key] = this.removeNullValues(obj[key]); // Rekursif untuk objek bersarang
+      }
+    }
+
+    return obj;
+  }
 
   // send func
   async doSubmitRelatedPerson() {
@@ -844,6 +908,16 @@ export class TulisSatuSehatPncComponent implements OnInit {
   }
   async doSubmitObservasiPelayananNifas() {
     const dataPelayanan = this.listObservasiPelayananNifas;
+
+    // Cek apakah ada systolic/diastolic yang kosong
+    const systolicItem = dataPelayanan.find(item => item.terminology_name.toLowerCase().includes("systolic"));
+    const diastolicItem = dataPelayanan.find(item => item.terminology_name.toLowerCase().includes("diastolic"));
+
+    if ((systolicItem && !systolicItem.userInput) || (diastolicItem && !diastolicItem.userInput))
+    {
+      Swal.fire("Error", "Jika mengisi Systolic, maka Diastolic juga wajib diisi (dan sebaliknya).", 'error');
+      return; // Stop proses jika ada yang kosong
+    }
 
     const payload = {
       data: {
@@ -1215,8 +1289,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
   }
   async doSubmitPermintaanPemeriksaanLab() {
     const dataPermintaanPemeriksaanLab = this.listRequestPemeriksaanLab;
-    console.log(dataPermintaanPemeriksaanLab);
-
     const serviceRequest = dataPermintaanPemeriksaanLab
       .flatMap(item =>
         (item.selectedCategory || []).map(category => ({
@@ -1273,6 +1345,57 @@ export class TulisSatuSehatPncComponent implements OnInit {
     try
     {
       let response: any = await this.PncService.craeteServiceRequestPnc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitSpecimenPemeriksaanLab() {
+    const dataSpecimen = this.listSpecimenPemeriksaanLab;
+    console.log(dataSpecimen);
+    const specimens = dataSpecimen
+      .filter(item => item.selectedServiceRequest && item.selectedType) // Filter data yang lengkap
+      .map(item => ({
+        name: item.terminology_name.replace(/\s+/g, '_'), // Ubah spasi jadi underscore
+        status: "available",
+        type: {
+          system: item.selectedType.system || "http://snomed.info/sct",
+          code: item.selectedType.terminology_code,
+          display: item.selectedType.terminology_name
+        },
+        collection: {
+          method: {
+            system: item.system || "http://snomed.info/sct",
+            code: item.terminology_code,
+            display: item.terminology_name
+          },
+          collectedDateTime: this.dateNow
+        },
+        receivedTime: this.dateNow,
+        request: [
+          {
+            reference: "ServiceRequest/" + item.selectedServiceRequest.response_id
+          }
+        ]
+      }));
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        specimens: specimens
+      }
+    };
+
+    console.log(payload);
+
+    try
+    {
+      let response: any = await this.PncService.craeteSpecimenPnc(payload);
       let msg = response.statusMsg.split(": ");
       Swal.fire("Success", msg.join(", "), "success");
     } catch (err)

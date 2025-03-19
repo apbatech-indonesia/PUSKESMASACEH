@@ -35,6 +35,9 @@ export class PncService {
   craeteServiceRequestPnc(data: any) {
     return this.request('PNC/serviceRequestsCreate', data);
   }
+  craeteSpecimenPnc(data: any) {
+    return this.request('PNC/specimensCreate', data);
+  }
   craeteConditionPnc(data: any) {
     return this.request('PNC/conditionsCreate', data);
   }
@@ -46,5 +49,8 @@ export class PncService {
   }
   getDataTerminologi(data: any) {
     return this.request('terminologi/search', data);
+  }
+  getUseCaseResponse(data: any) {
+    return this.request('master/getUseCase', data);
   }
 }
