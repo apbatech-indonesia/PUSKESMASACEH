@@ -104,6 +104,12 @@
                         </a>
                     </li>
                     <li class="nav-item border-end">
+                        <a class="nav-link {{ activeTab == 'request-pemeriksaan-hasil-lab' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('request-pemeriksaan-hasil-lab')">
+                            Permintaan Pemeriksaan Lab
+                        </a>
+                    </li>
+                    <li class="nav-item border-end">
                         <a class="nav-link {{ activeTab == 'observasi-pemeriksaan-hasil-lab' ? 'active' : '' }}"
                             href="javascript:;" (click)="openTab('observasi-pemeriksaan-hasil-lab')">
                             Observasi Pemeriksaan Hasil Lab
@@ -619,6 +625,44 @@
                 </div>
             </div>
         </div>
+        <div class="card mb-2" *ngIf="activeTab == 'request-pemeriksaan-hasil-lab'">
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-6 border-start border-end mb-2"
+                                *ngFor="let itemServiceRequest of listRequestPemeriksaanLab">
+                                <label class="fw-bold" [title]="itemServiceRequest.description">
+                                    {{ itemServiceRequest . terminology_name }}
+                                </label>
+                                <div class="alert alert-info" role="alert">
+                                    Deskripsi: {{ itemServiceRequest . description }}
+                                </div>
+                                <textarea class="form-control" id="deskripsi" [(ngModel)]="itemServiceRequest.deskripsi" name="deskripsi"
+                                    rows="3" placeholder="Input keterangan"></textarea>
+                                <div *ngFor="let categoryServiceRequest of listKategoriServiceRequest"
+                                    class="form-check">
+
+                                    <input class="form-check-input" type="checkbox"
+                                        (change)="toggleInputPermintaanPemeriksaanLab(itemServiceRequest.terminology_id + '-' + categoryServiceRequest.terminology_id,categoryServiceRequest,itemServiceRequest.terminology_id)"
+                                        [id]="itemServiceRequest.terminology_id + '-' + categoryServiceRequest.terminology_id"
+                                        [name]="'checkbox_' + itemServiceRequest.terminology_id + '-' + categoryServiceRequest.terminology_id"
+                                        [value]="categoryServiceRequest">
+
+                                    <label class="form-check-label"
+                                        [for]="itemServiceRequest.terminology_id + '-' + categoryServiceRequest.terminology_id"
+                                        [title]="categoryServiceRequest.description">
+                                        {{ categoryServiceRequest . terminology_name }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
     </div>
 
     <div class="col-12 mb-4" align="center">

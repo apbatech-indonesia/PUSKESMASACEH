@@ -31,17 +31,19 @@ export class TulisSatuSehatPncComponent implements OnInit {
   listKategoriObservasi: any;
   listKategoriCondition: any;
   listKategoriProcedure: any;
+  listKategoriServiceRequest: any;
   listCondtionClinical: any;
+  listRequestPemeriksaanLab: any;
   listConditionPelayananNifas: any;
   listConditionDiagnosis: any;
   listConditionLeaveFasyankes: any;
   listProcedureKonselingNifas: any;
   listProcedureTindakan: any;
-
   listObservasiPelayananNifas: any;
   listObservasiPelayananNifasPendarahan: any;
   listObservasiPemeriksaanLab: any;
   isDisabledFormPnc: boolean = true;
+  selectedPemeriksaanLab: { [key: string]: string } = {};
   headers = new HttpHeaders({
     "kd-cabang": this.userData.kdcabang,
   });
@@ -210,6 +212,10 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistProcedureTindakan();
         this.carilistKategoriProcedure();
         break;
+      case "request-pemeriksaan-hasil-lab":
+        this.carilistRequestPemeriksaanLab();
+        this.carilistKategoriServiceRequest();
+        break;
       default:
         break;
     }
@@ -263,6 +269,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         break;
       case "procedure-tindakan":
         this.doSubmitProcedureTindakan();
+        break;
+      case "request-pemeriksaan-hasil-lab":
+        this.doSubmitPermintaanPemeriksaanLab();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -572,6 +581,26 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+  async carilistKategoriServiceRequest() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `service-request|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listKategoriServiceRequest = [...response.data];
+    } catch (error)
+    {
+    }
+  }
   async carilistClinicalCondition() {
     let payload = {
       terminology_id: "",
@@ -588,6 +617,26 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
       let response: any = await this.PncService.getDataTerminologi(payload);
       this.listCondtionClinical = [...response.data];
+    } catch (error)
+    {
+    }
+  }
+  async carilistRequestPemeriksaanLab() {
+    let payload = {
+      terminology_id: "",
+      key_name: `satusehat_category|is_active`,
+      key_operator: "=|=",
+      key_value: `temuan-klinis|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listRequestPemeriksaanLab = [...response.data];
     } catch (error)
     {
     }
@@ -661,6 +710,47 @@ export class TulisSatuSehatPncComponent implements OnInit {
     return obj;
   }
 
+
+  // partial func
+  // toggleInputPermintaanPemeriksaanLab(id: string) {
+  //   if (this.selectedPemeriksaanLab[id])
+  //   {
+  //     delete this.selectedPemeriksaanLab[id];
+  //   } else
+  //   {
+  //     this.selectedPemeriksaanLab = { ...this.selectedPemeriksaanLab, [id]: "" };
+  //   }
+  // }
+
+  toggleInputPermintaanPemeriksaanLab(id: string, categoryServiceRequest: any, terminologyId: string) {
+    // Cari itemServiceRequest yang sesuai dengan terminologyId
+    const itemServiceRequest = this.listRequestPemeriksaanLab.find(item => item.terminology_id === terminologyId);
+
+    if (itemServiceRequest)
+    {
+      // Pastikan ada `selectedCategory` di dalam itemServiceRequest
+      if (!itemServiceRequest.selectedCategory)
+      {
+        itemServiceRequest.selectedCategory = [];
+      }
+
+      // Cek apakah kategori sudah dipilih atau belum
+      const index = itemServiceRequest.selectedCategory.findIndex(item => item.terminology_id === categoryServiceRequest.terminology_id);
+
+      if (index !== -1)
+      {
+        // Kalau kategori sudah ada, hapus dari array
+        itemServiceRequest.selectedCategory.splice(index, 1);
+      } else
+      {
+        // Kalau belum ada, tambahkan ke array
+        itemServiceRequest.selectedCategory.push(categoryServiceRequest);
+      }
+    }
+  }
+
+
+  // send func
   async doSubmitRelatedPerson() {
     // Pastikan selectedRelatesPerson valid
     if (!this.selectedRelatesPerson)
@@ -1123,6 +1213,76 @@ export class TulisSatuSehatPncComponent implements OnInit {
       Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
     }
   }
+  async doSubmitPermintaanPemeriksaanLab() {
+    const dataPermintaanPemeriksaanLab = this.listRequestPemeriksaanLab;
+    console.log(dataPermintaanPemeriksaanLab);
+
+    const serviceRequest = dataPermintaanPemeriksaanLab
+      .flatMap(item =>
+        (item.selectedCategory || []).map(category => ({
+          name: item.terminology_name,
+          category: [
+            {
+              coding: [
+                {
+                  system: category.system || "http://snomed.info/sct",
+                  code: category.terminology_code,
+                  display: category.terminology_name
+                }
+              ]
+            }
+          ],
+          patientInstruction: "",
+          status: "active",
+          intent: "original-order",
+          priority: "routine",
+          occurrenceDateTime: this.dateNow,
+          authoredOn: this.dateNow,
+          encounter: {
+            reference: `Encounter/${this.encounter_id}`,
+            display: `Kunjungan ${this.patientData.pasien} pada ${this.dateNow}`
+          },
+          data: [
+            {
+              system: item.system || "http://loinc.org",
+              code: item.terminology_code,
+              display: item.terminology_name
+            },
+            {
+              text: `Pemeriksaan ${item.terminology_name}`
+            }
+          ],
+          reason: [],
+          reasonCode: [
+            {
+              text: item.deskripsi || "Tidak ada deskripsi"
+            }
+          ]
+        }))
+      );
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        serviceRequests: serviceRequest
+      }
+    };
+    try
+    {
+      let response: any = await this.PncService.craeteServiceRequestPnc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+
+
+
   async doSubmitObservasiPemeriksaanHasilLab() {
     const dataPemeriksaanHasilLab = this.listObservasiPemeriksaanLab;
     const payload = {
