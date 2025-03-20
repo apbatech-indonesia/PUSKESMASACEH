@@ -234,9 +234,8 @@
                                             Provinsi
                                         </label>
                                         <app-master-province [provinceId]="relatedPersonData.province_id_relasi"
-                                            (provinceOutput)="
-                        relatedPersonData.province_id_relasi = $event
-                      "></app-master-province>
+                                            (provinceOutput)="relatedPersonData.province_id_relasi = $event">
+                                        </app-master-province>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -245,9 +244,8 @@
                                         </label>
                                         <app-master-city [cityId]="relatedPersonData.city_id_relasi"
                                             [provinceId]="relatedPersonData.province_id_relasi"
-                                            (cityOutput)="
-                        relatedPersonData.city_id_relasi = $event
-                      "></app-master-city>
+                                            (cityOutput)="relatedPersonData.city_id_relasi = $event">
+                                        </app-master-city>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -255,9 +253,8 @@
                                         <label for="district_id_relasi" class="form-label">Kecamatan</label>
                                         <app-master-district [districtId]="relatedPersonData.district_id_relasi"
                                             [cityId]="relatedPersonData.city_id_relasi"
-                                            (districtOutput)="
-                        relatedPersonData.district_id_relasi = $event
-                      "></app-master-district>
+                                            (districtOutput)="relatedPersonData.district_id_relasi = $event">
+                                        </app-master-district>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -265,9 +262,8 @@
                                         <label for="village_id_relasi" class="form-label">Kelurahan</label>
                                         <app-master-sub-district [subdistrictId]="relatedPersonData.village_id_relasi"
                                             [districtId]="relatedPersonData.district_id_relasi"
-                                            (subDistrictOutput)="
-                        relatedPersonData.village_id_relasi = $event
-                      "></app-master-sub-district>
+                                            (subDistrictOutput)="relatedPersonData.village_id_relasi = $event">
+                                        </app-master-sub-district>
                                     </div>
                                 </div>
 

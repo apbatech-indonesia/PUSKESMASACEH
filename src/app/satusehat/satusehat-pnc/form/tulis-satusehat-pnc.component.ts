@@ -36,6 +36,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
   listCategoryDiagnosaLab: any;
   listServiceRequest: any;
   listSpecimens: any;
+  listHistory: any;
   listObservationLab: any;
   listCondtionClinical: any;
   listRequestPemeriksaanLab: any;
@@ -108,7 +109,34 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
     // Update label sesuai pilihan
     this.relationLabel = this.getRelationLabel();
+
+    // Cek apakah listHistory ada data terkait relasi yang dipilih
+    if (this.listHistory?.data?.related_person)
+    {
+      const keyPrefix = this.selectedRelatesPerson; // 'ibu', 'ayah', dll.
+      const relatedData = this.listHistory.data.related_person;
+
+      // Cek apakah ada key dengan prefix relasi yang dipilih
+      if (relatedData[`nama_${keyPrefix}`])
+      {
+        this.relatedPersonData = {
+          nama_relasi: relatedData[`nama_${keyPrefix}`] || '',
+          nik_relasi: relatedData[`nik_${keyPrefix}`] || '',
+          tl_relasi: relatedData[`tl_${keyPrefix}`] || '',
+          hp_relasi: relatedData[`hp_${keyPrefix}`] || '',
+          alamat_jalan_relasi: relatedData[`alamat_jalan_${keyPrefix}`] || '',
+          province_id_relasi: relatedData[`province_id_${keyPrefix}`] || null,
+          city_id_relasi: relatedData[`city_id_${keyPrefix}`] || null,
+          district_id_relasi: relatedData[`district_id_${keyPrefix}`] || null,
+          village_id_relasi: relatedData[`village_id_${keyPrefix}`] || null,
+          rt_relasi: relatedData[`rt_${keyPrefix}`] || '',
+          rw_relasi: relatedData[`rw_${keyPrefix}`] || '',
+          postal_code_relasi: relatedData[`postal_code_${keyPrefix}`] || '',
+        };
+      }
+    }
   }
+
   getRelationLabel() {
     switch (this.selectedRelatesPerson)
     {
@@ -119,6 +147,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
       default: return '';
     }
   }
+
   umurPasien = parseInt(this.patientData.umur.split(" ")[0], 10);
 
   bayiOrNot = this.patientData.umur < 2 ? true : false;
@@ -169,8 +198,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
 
   // NOTE: on page reload
-  ngOnInit() {
-    this.fiCreateKunjunganPnc()
+  async ngOnInit() {
+    await this.fiCreateKunjunganPnc();
+    this.cariHistory()
   }
   // NOTE: NOW TODO
   openTab(tab: string) {
@@ -720,6 +750,22 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+  async cariHistory() {
+    let payload = {
+      usecase_id: this.useCaseId,
+      patientId: this.idpasien,
+      type: "pnc",
+      status: "active"
+    };
+    try
+    {
+      let response: any = await this.PncService.getUseCaseResponse(payload);
+      this.listHistory = response;
+      console.log(this.listHistory);
+    } catch (error)
+    {
+    }
+  }
   async carilistObservation() {
     let payload = {
       usecase_id: this.useCaseId,
@@ -759,6 +805,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
       let response: any = await this.PncService.getDataTerminologi(payload);
       this.listCondtionClinical = [...response.data];
+
     } catch (error)
     {
     }
