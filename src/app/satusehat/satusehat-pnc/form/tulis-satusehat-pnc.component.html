@@ -121,6 +121,12 @@
                             Speciment Pemeriksaan Hasil Lab
                         </a>
                     </li>
+                    <li class="nav-item border-end">
+                        <a class="nav-link {{ activeTab == 'laporan-diagnosa-lab' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('laporan-diagnosa-lab')">
+                            Laporan Diagnosa Lab
+                        </a>
+                    </li>
 
                     <li class="nav-item border-end">
                         <a class="nav-link {{ activeTab == 'diagnosa-condition' ? 'active' : '' }}" href="javascript:;"
@@ -506,31 +512,34 @@
         </div>
         <div class="card mb-2" *ngIf="activeTab == 'condition-leave-fasyankes'">
             <div class="card-body">
-                <div class="card-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
-                                *ngFor="let itemConditionLeaveFasyankes of listConditionLeaveFasyankes">
-                                <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
-                                    [title]="itemConditionLeaveFasyankes.description">
-                                    {{ itemConditionLeaveFasyankes . terminology_name }}
-                                </label>
-                                <div class="d-flex align-items-center gap-2 mt-3">
-                                    <textarea class="form-control w-50" name="inputString" [(ngModel)]="itemConditionLeaveFasyankes.inputString"
-                                        placeholder="Input Keterangan" rows="1">
-                                </textarea>
-                                    <!-- Select Kategori -->
-                                    <select class="form-select w-25"
-                                        [(ngModel)]="itemConditionLeaveFasyankes.selectedCategory"
-                                        name="selectedCategory" title="kategori">
-                                        <option [ngValue]="undefined" selected>Pilih Kategori</option>
-                                        <option *ngFor="let item of listKategoriCondition" [ngValue]="item">
-                                            {{ item . terminology_name }}
-                                        </option>
-                                    </select>
-                                    <div class="col-3">
-                                        <select class="form-select"
-                                            [(ngModel)]="itemConditionLeaveFasyankes.clinicalStatus"
+                <form>
+                    <div class="row">
+                        <div class="col-md-12 p-3 mb-3 border rounded shadow-sm bg-light">
+                            <!-- Pilih Condition -->
+                            <label class="fw-bold text-primary">Pilih Kondisi</label>
+                            <select class="form-select" [(ngModel)]="selectedCondition" name="selectedCondition">
+                                <option [ngValue]="undefined" selected>Pilih Kondisi</option>
+                                <option *ngFor="let item of listConditionLeaveFasyankes" [ngValue]="item">
+                                    {{ item . terminology_name }}
+                                </option>
+                            </select>
+
+                            <!-- Jika condition dipilih, tampilkan opsi lanjutan -->
+                            <div *ngIf="selectedCondition">
+                                <div class="d-flex align-items-center gap-3 mt-3">
+                                    <div class="w-50">
+                                        <label class="fw-bold text-primary">Pilih Kategori</label>
+                                        <select class="form-select" [(ngModel)]="selectedCondition.selectedCategory"
+                                            name="selectedCategory">
+                                            <option [ngValue]="undefined" selected>Pilih Kategori</option>
+                                            <option *ngFor="let item of listKategoriCondition" [ngValue]="item">
+                                                {{ item . terminology_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="w-50">
+                                        <label class="fw-bold text-primary">Pilih Kondisi Klinis</label>
+                                        <select class="form-select" [(ngModel)]="selectedCondition.clinicalStatus"
                                             name="clinicalStatus">
                                             <option [ngValue]="undefined" selected>Pilih Kondisi Klinis</option>
                                             <option *ngFor="let conditionClinical of listCondtionClinical"
@@ -540,12 +549,16 @@
                                         </select>
                                     </div>
                                 </div>
+                                <label class="fw-bold text-primary mt-3">Keterangan</label>
+                                <textarea class="form-control" [(ngModel)]="selectedCondition.inputString" name="inputString"
+                                    placeholder="Input Keterangan" rows="3"></textarea>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
+
         <div class="card mb-2" *ngIf="activeTab == 'procedure-konseling-pelayanan-nifas'">
             <div class="card-body">
                 <div class="card-body">
@@ -694,6 +707,49 @@
                                     <option *ngFor="let itemSeviceRequest of listServiceRequest"
                                         [ngValue]="itemSeviceRequest">
                                         {{ itemSeviceRequest . request_code }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card mb-2" *ngIf="activeTab == 'laporan-diagnosa-lab'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
+                            *ngFor="let itemReportLab of listLaporanDiagnosaLab">
+                            <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
+                                [title]="itemReportLab.description">
+                                {{ itemReportLab . terminology_name }}
+                            </label>
+                            <div class="d-flex align-items-center gap-2 mt-3">
+                                <!-- Select Kategori -->
+                                <select class="form-select w-50" [(ngModel)]="itemReportLab.selectedCategory"
+                                    name="selectedCategory" title="kategori">
+                                    <option [ngValue]="undefined" selected>Pilih Kategori</option>
+                                    <option *ngFor="let itemCategory of listCategoryDiagnosaLab"
+                                        [ngValue]="itemCategory">
+                                        {{ itemCategory . terminology_name }}
+                                    </option>
+                                </select>
+                                <!-- Select Service speciment -->
+                                <select class="form-select w-50" [(ngModel)]="itemReportLab.selectedSpecimen"
+                                    name="selectedSpecimen" title="kategori">
+                                    <option [ngValue]="undefined" selected>Pilih Data Specimen Sebelumnya</option>
+                                    <option *ngFor="let itemSpecimen of listSpecimens" [ngValue]="itemSpecimen">
+                                        {{ itemSpecimen . request_code }}
+                                    </option>
+                                </select>
+                                <!-- list observation -->
+                                <select class="form-select w-50" [(ngModel)]="itemReportLab.selectedObservation"
+                                    name="selectedObservation" title="kategori">
+                                    <option [ngValue]="undefined" selected>Pilih Data Observasi Sebelumnya</option>
+                                    <option *ngFor="let itemObservation of listObservationLab"
+                                        [ngValue]="itemObservation">
+                                        {{ itemObservation . request_code }}
                                     </option>
                                 </select>
                             </div>

@@ -38,6 +38,9 @@ export class PncService {
   craeteSpecimenPnc(data: any) {
     return this.request('PNC/specimensCreate', data);
   }
+  craeteDiagnosticReportPnc(data: any) {
+    return this.request('PNC/diagnosticReportsCreate', data);
+  }
   craeteConditionPnc(data: any) {
     return this.request('PNC/conditionsCreate', data);
   }

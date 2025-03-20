@@ -33,10 +33,14 @@ export class TulisSatuSehatPncComponent implements OnInit {
   listKategoriProcedure: any;
   listKategoriServiceRequest: any;
   listTipeSpecimen: any;
+  listCategoryDiagnosaLab: any;
   listServiceRequest: any;
+  listSpecimens: any;
+  listObservationLab: any;
   listCondtionClinical: any;
   listRequestPemeriksaanLab: any;
   listSpecimenPemeriksaanLab: any;
+  listLaporanDiagnosaLab: any;
   listConditionPelayananNifas: any;
   listConditionDiagnosis: any;
   listConditionLeaveFasyankes: any;
@@ -224,6 +228,12 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistTypeSpeciment();
         this.carilistServiceRequest();
         break;
+      case "laporan-diagnosa-lab":
+        this.carilistLaporanDiagnosaLab();
+        this.carilistCategoryDiagnosaLab();
+        this.carilistSpecimen();
+        this.carilistObservation();
+        break;
       default:
         break;
     }
@@ -283,6 +293,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         break;
       case "specimen-pemeriksaan-hasil-lab":
         this.doSubmitSpecimenPemeriksaanLab();
+        break;
+      case "laporan-diagnosa-lab":
+        this.doSubmitLaporanDiagnosaLab();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -632,6 +645,26 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+  async carilistCategoryDiagnosaLab() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `diagnostic-report-category|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listCategoryDiagnosaLab = [...response.data];
+    } catch (error)
+    {
+    }
+  }
   async carilistServiceRequest() {
     let payload = {
       usecase_id: this.useCaseId,
@@ -648,6 +681,54 @@ export class TulisSatuSehatPncComponent implements OnInit {
       {
         Swal.fire("Error", "Data permintaan pemeriksaan lab tidak ditemukan", "error");
         this.openTab("request-pemeriksaan-hasil-lab");
+        return;
+      }
+
+    } catch (error)
+    {
+    }
+  }
+  async carilistSpecimen() {
+    let payload = {
+      usecase_id: this.useCaseId,
+      patientId: this.idpasien,
+      type: "pnc",
+      status: "active"
+    };
+    try
+    {
+      let response: any = await this.PncService.getUseCaseResponse(payload);
+
+      this.listSpecimens = response.specimen_responses;
+
+
+      if (this.listSpecimens.length < 1)
+      {
+        Swal.fire("Error", "Data Specimen belum di isi", "error");
+        this.openTab("specimen-pemeriksaan-hasil-lab");
+        return;
+      }
+
+    } catch (error)
+    {
+    }
+  }
+  async carilistObservation() {
+    let payload = {
+      usecase_id: this.useCaseId,
+      patientId: this.idpasien,
+      type: "pnc",
+      status: "active"
+    };
+    try
+    {
+      let response: any = await this.PncService.getUseCaseResponse(payload);
+
+      this.listObservationLab = response.observation_responses;
+      if (this.listObservationLab.length < 1)
+      {
+        Swal.fire("Error", "Data Observasi belum di isi", "error");
+        this.openTab("observasi-pemeriksaan-hasil-lab");
         return;
       }
 
@@ -711,6 +792,26 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
       let response: any = await this.PncService.getDataTerminologi(payload);
       this.listSpecimenPemeriksaanLab = [...response.data];
+    } catch (error)
+    {
+    }
+  }
+  async carilistLaporanDiagnosaLab() {
+    let payload = {
+      terminology_id: "",
+      key_name: `satusehat_category|is_active`,
+      key_operator: "=|=",
+      key_value: `temuan-klinis|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listLaporanDiagnosaLab = [...response.data];
     } catch (error)
     {
     }
@@ -1354,7 +1455,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
   }
   async doSubmitSpecimenPemeriksaanLab() {
     const dataSpecimen = this.listSpecimenPemeriksaanLab;
-    console.log(dataSpecimen);
     const specimens = dataSpecimen
       .filter(item => item.selectedServiceRequest && item.selectedType) // Filter data yang lengkap
       .map(item => ({
@@ -1391,11 +1491,77 @@ export class TulisSatuSehatPncComponent implements OnInit {
       }
     };
 
-    console.log(payload);
 
     try
     {
       let response: any = await this.PncService.craeteSpecimenPnc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitLaporanDiagnosaLab() {
+    const diagnosticReports = this.listLaporanDiagnosaLab
+      .filter(item => item.selectedSpecimen && item.selectedCategory && item.selectedObservation) // Filter data yang valid
+      .map(item => ({
+        name: item.terminology_name.replace(/\s+/g, "_"), // Convert nama ke format underscore
+        status: "final",
+        category: {
+          system: "http://terminology.hl7.org/CodeSystem/v2-0074",
+          code: item.selectedCategory.terminology_code,
+          display: item.selectedCategory.terminology_name
+        },
+        data: [
+          {
+            code: {
+              system: "http://loinc.org",
+              code: item.terminology_code,
+              display: item.terminology_name
+            },
+            result: {
+              reference: `Observation/${item.selectedObservation.response_id}`
+            }
+          }
+        ],
+        effectiveDateTime: item.selectedSpecimen.response_data.collection.collectedDateTime,
+        specimen: [
+          {
+            reference: `Specimen/${item.selectedSpecimen.response_id}`
+          }
+        ],
+        basedOn: [
+          {
+            reference: item.selectedSpecimen.response_data.request[0].reference
+          }
+        ],
+        conclusionCode: [
+          {
+            coding: [
+              {
+                system: "http://snomed.info/sct",
+                code: "260347006",
+                display: "+"
+              }
+            ]
+          }
+        ]
+      }));
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        diagnosticReports: diagnosticReports
+      }
+    };
+
+    try
+    {
+      let response: any = await this.PncService.craeteDiagnosticReportPnc(payload);
       let msg = response.statusMsg.split(": ");
       Swal.fire("Success", msg.join(", "), "success");
     } catch (err)
