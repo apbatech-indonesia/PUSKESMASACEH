@@ -199,19 +199,20 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
   // NOTE: on page reload
   async ngOnInit() {
-    await this.fiCreateKunjunganPnc();
-    this.cariHistory()
+    await this.fiCreateKunjunganPnc()
   }
   // NOTE: NOW TODO
-  openTab(tab: string) {
+  async openTab(tab: string) {
     this.activeTab = tab;
     switch (tab)
     {
       case "form-related-person":
+        this.cariHistory();
         break;
       case "observasi-data-persalinan":
         this.carilistObservasiPersalinan();
         this.carilistKategoriObservasi();
+        await this.cariHistory();
         break;
       case "observasi-pelayanan-nifas":
         this.carilistObservasiPelayananNifas();
@@ -760,7 +761,53 @@ export class TulisSatuSehatPncComponent implements OnInit {
     try
     {
       let response: any = await this.PncService.getUseCaseResponse(payload);
-      this.listHistory = response;
+      const tab = this.activeTab;
+      console.log(tab);
+
+      switch (tab)
+      {
+        case "form-related-person":
+          this.listHistory = response;
+          break;
+        case "observasi-pelayanan-nifas":
+          this.listHistory = response.observation_responses;
+          break;
+        case "observasi-pelayanan-nifas-pendarahan":
+          this.listHistory = response.observation_responses;
+          break;
+        case "observasi-pemeriksaan-hasil-lab":
+          this.listHistory = response.observation_responses;
+          break;
+        case "condition-pelayanan-nifas":
+          this.listHistory = response.condition_responses;
+          break;
+        case "diagnosa-condition":
+          this.listHistory = response.condition_responses;
+          break;
+        case "condition-leave-fasyankes":
+          this.listHistory = response.condition_responses;
+          break;
+        case "procedure-konseling-pelayanan-nifas":
+          this.listHistory = response.procedure_responses;
+          break;
+        case "procedure-tindakan":
+          this.listHistory = response.procedure_responses;
+          break;
+        case "request-pemeriksaan-hasil-lab":
+          this.listHistory = response.service_request_responses;
+          break;
+        case "specimen-pemeriksaan-hasil-lab":
+          this.listHistory = response.specimen_responses;
+          break;
+        case "laporan-diagnosa-lab":
+          this.listHistory = response.observation_responses;
+          break;
+        case "rencana-tindak-lanjut":
+          this.listHistory = response.care_plan_responses;
+          break;
+        default:
+          break;
+      }
       console.log(this.listHistory);
     } catch (error)
     {
@@ -776,7 +823,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
     try
     {
       let response: any = await this.PncService.getUseCaseResponse(payload);
-
       this.listObservationLab = response.observation_responses;
       if (this.listObservationLab.length < 1)
       {
@@ -944,29 +990,24 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
 
 
-  // partial func
+  // NOTE: partial func
   toggleInputPermintaanPemeriksaanLab(id: string, categoryServiceRequest: any, terminologyId: string) {
-    // Cari itemServiceRequest yang sesuai dengan terminologyId
     const itemServiceRequest = this.listRequestPemeriksaanLab.find(item => item.terminology_id === terminologyId);
 
     if (itemServiceRequest)
     {
-      // Pastikan ada `selectedCategory` di dalam itemServiceRequest
       if (!itemServiceRequest.selectedCategory)
       {
         itemServiceRequest.selectedCategory = [];
       }
 
-      // Cek apakah kategori sudah dipilih atau belum
       const index = itemServiceRequest.selectedCategory.findIndex(item => item.terminology_id === categoryServiceRequest.terminology_id);
 
       if (index !== -1)
       {
-        // Kalau kategori sudah ada, hapus dari array
         itemServiceRequest.selectedCategory.splice(index, 1);
       } else
       {
-        // Kalau belum ada, tambahkan ke array
         itemServiceRequest.selectedCategory.push(categoryServiceRequest);
       }
     }
@@ -974,12 +1015,11 @@ export class TulisSatuSehatPncComponent implements OnInit {
   removeNullValues(obj: Object) {
     if (typeof obj !== "object" || obj === null) return obj; // Jika bukan object, kembalikan nilai asli
 
-    // Iterasi pada setiap properti
     for (const key in obj)
     {
       if (obj[key] === null)
       {
-        delete obj[key]; // Hapus properti jika nilainya null
+        delete obj[key];
       } else if (typeof obj[key] === "object")
       {
         obj[key] = this.removeNullValues(obj[key]); // Rekursif untuk objek bersarang
@@ -989,9 +1029,8 @@ export class TulisSatuSehatPncComponent implements OnInit {
     return obj;
   }
 
-  // send func
+  // NOTE: send func
   async doSubmitRelatedPerson() {
-    // Pastikan selectedRelatesPerson valid
     if (!this.selectedRelatesPerson)
     {
       Swal.fire("Error", "Jenis Relasi Perlu di pilih", "error");
@@ -999,7 +1038,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
     }
     const relationPrefix = this.selectedRelatesPerson;
 
-    // Bentuk payload
     const related_person = {
       [`nama_${relationPrefix}`]: this.relatedPersonData.nama_relasi,
       [`nik_${relationPrefix}`]: this.relatedPersonData.nik_relasi,
@@ -1042,7 +1080,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
         satusehatId: this.patientData.idsatusehat,
         rmno: this.notransaksi,
         observations: itemDataObservasiPersalinan
-          .filter(item => item.userInput !== undefined && item.userInput !== null && item.userInput !== "") // Hanya ambil item yang punya userInput
+          .filter(item => item.userInput !== undefined && item.userInput !== null && item.userInput !== "")
           .map(item => {
             return {
               name: item.terminology_name,
@@ -1084,14 +1122,13 @@ export class TulisSatuSehatPncComponent implements OnInit {
   async doSubmitObservasiPelayananNifas() {
     const dataPelayanan = this.listObservasiPelayananNifas;
 
-    // Cek apakah ada systolic/diastolic yang kosong
     const systolicItem = dataPelayanan.find(item => item.terminology_name.toLowerCase().includes("systolic"));
     const diastolicItem = dataPelayanan.find(item => item.terminology_name.toLowerCase().includes("diastolic"));
 
     if ((systolicItem && !systolicItem.userInput) || (diastolicItem && !diastolicItem.userInput))
     {
       Swal.fire("Error", "Jika mengisi Systolic, maka Diastolic juga wajib diisi (dan sebaliknya).", 'error');
-      return; // Stop proses jika ada yang kosong
+      return;
     }
 
     const payload = {
@@ -1157,7 +1194,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
         satusehatId: this.patientData.idsatusehat,
         rmno: this.notransaksi,
         observations: dataPelayananPendarahan
-          .filter(item => item.userInput !== undefined && item.userInput !== null && item.userInput !== "") // Hanya ambil item yang punya userInput
+          .filter(item => item.userInput !== undefined && item.userInput !== null && item.userInput !== "")
           .map(item => {
             return {
               name: item.terminology_name,
@@ -1170,7 +1207,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
               data: [
                 {
                   code: {
-                    system: item.system ? item.system : (item.source ? item.source.source_url : "http://loinc.org"),
+                    system: item.system ? item.system : (item.source ? item.source.source_url : ""),
                     code: item.terminology_code,
                     display: item.terminology_name
                   },
@@ -1231,7 +1268,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
               },
               data: [
                 {
-                  system: item.system ? item.system : (item.source ? item.source.source_url : "http://snomed.info/sct"),
+                  system: item.system ? item.system : (item.source ? item.source.source_url : ""),
                   code: item.terminology_code,
                   display: item.terminology_name
                 }
@@ -1284,7 +1321,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
               },
               data: [
                 {
-                  system: item.system ? item.system : (item.source ? item.source.source_url : "http://snomed.info/sct"),
+                  system: item.system ? item.system : (item.source ? item.source.source_url : ""),
                   code: item.terminology_code,
                   display: item.terminology_name
                 }
@@ -1337,7 +1374,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
               },
               data: [
                 {
-                  system: item.system ? item.system : (item.source ? item.source.source_url : "http://snomed.info/sct"),
+                  system: item.system ? item.system : (item.source ? item.source.source_url : ""),
                   code: item.terminology_code,
                   display: item.terminology_name
                 }
@@ -1387,7 +1424,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
               },
               data: [
                 {
-                  system: item.system ? item.system : (item.source ? item.source.source_url : "http://snomed.info/sct"),
+                  system: item.system ? item.system : (item.source ? item.source.source_url : ""),
                   code: item.terminology_code,
                   display: item.terminology_name
                 }
@@ -1437,7 +1474,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
               },
               data: [
                 {
-                  system: item.system ? item.system : (item.source ? item.source.source_url : "http://snomed.info/sct"),
+                  system: item.system ? item.system : (item.source ? item.source.source_url : ""),
                   code: item.terminology_code,
                   display: item.terminology_name
                 }
@@ -1472,7 +1509,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
             {
               coding: [
                 {
-                  system: category.system || "http://snomed.info/sct",
+                  system: category.system || "",
                   code: category.terminology_code,
                   display: category.terminology_name
                 }
