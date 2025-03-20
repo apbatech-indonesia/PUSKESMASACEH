@@ -41,6 +41,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
   listRequestPemeriksaanLab: any;
   listSpecimenPemeriksaanLab: any;
   listLaporanDiagnosaLab: any;
+  listCarePlantCategory: any;
   listConditionPelayananNifas: any;
   listConditionDiagnosis: any;
   listConditionLeaveFasyankes: any;
@@ -234,6 +235,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistSpecimen();
         this.carilistObservation();
         break;
+      case "rencana-tindak-lanjut":
+        this.carilistCategoryCarePlant();
+        break;
       default:
         break;
     }
@@ -296,6 +300,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         break;
       case "laporan-diagnosa-lab":
         this.doSubmitLaporanDiagnosaLab();
+        break;
+      case "rencana-tindak-lanjut":
+        this.doSubmitRencanaTindakLanjut();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -812,6 +819,26 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
       let response: any = await this.PncService.getDataTerminologi(payload);
       this.listLaporanDiagnosaLab = [...response.data];
+    } catch (error)
+    {
+    }
+  }
+  async carilistCategoryCarePlant() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `careplan-category|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.PncService.getDataTerminologi(payload);
+      this.listCarePlantCategory = [...response.data];
     } catch (error)
     {
     }
@@ -1562,6 +1589,47 @@ export class TulisSatuSehatPncComponent implements OnInit {
     try
     {
       let response: any = await this.PncService.craeteDiagnosticReportPnc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitRencanaTindakLanjut() {
+
+    const dataCarePlan = this.listCarePlantCategory;
+
+    // Filter hanya yang punya inputString
+    const filteredCarePlans = dataCarePlan
+      .filter(item => item.inputString)
+      .map(item => ({
+        name: item.terminology_name.toLowerCase().replace(/\s+/g, '_'), // Format nama jadi snake_case
+        status: "active",
+        intent: "plan",
+        title: item.terminology_name,
+        category: {
+          system: item.system ? item.system : (item.source ? item.source.source_url : ""),
+          code: item.terminology_code,
+          display: item.terminology_name
+        },
+        description: item.inputString,
+        created: this.dateNow
+      }));
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        carePlans: filteredCarePlans
+      }
+    };
+
+    try
+    {
+      let response: any = await this.PncService.craeteCarePlantPnc(payload);
       let msg = response.statusMsg.split(": ");
       Swal.fire("Success", msg.join(", "), "success");
     } catch (err)
