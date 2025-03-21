@@ -317,7 +317,7 @@
                                     [name]="'userInput_' + i" />
 
                                 <!-- Select Kategori -->
-                                <select class="form-select w-25" [(ngModel)]="itemPersalinan.selectedCategory"
+                                <select class="form-select w-50" [(ngModel)]="itemPersalinan.selectedCategory"
                                     [name]="'selectedCategory_' + i">
                                     <option [ngValue]="undefined" selected>Pilih Kategori</option>
                                     <option *ngFor="let item of listKategoriObservasi" [ngValue]="item">
@@ -336,7 +336,7 @@
                 <form>
                     <div class="row">
                         <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
-                            *ngFor="let itemPelayananNifas of listObservasiPelayananNifas">
+                            *ngFor="let itemPelayananNifas of listObservasiPelayananNifas; let i = index">
                             <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
                                 [title]="itemPelayananNifas.description">
                                 {{ itemPelayananNifas . terminology_name }}
@@ -344,25 +344,26 @@
                             <div class="d-flex align-items-center gap-2 mt-3">
                                 <!-- Input Angka -->
                                 <input type="number" class="form-control w-50" placeholder="Masukkan nilai"
-                                    [(ngModel)]="itemPelayananNifas.userInput" name="userInput" />
+                                    [(ngModel)]="listObservasiPelayananNifas[i].userInput"
+                                    name="userInput_{{ i }}" />
+
                                 <!-- Select Kategori -->
                                 <select class="form-select w-25" [(ngModel)]="itemPelayananNifas.selectedCategory"
-                                    name="selectedCategory">
+                                    [name]="'selectedCategory_' + i">
                                     <option [ngValue]="undefined" selected>Pilih Kategori</option>
                                     <option *ngFor="let item of listKategoriObservasi" [ngValue]="item">
                                         {{ item . terminology_name }}
                                     </option>
                                 </select>
-                                <div class="col-3">
-                                    <select class="form-select"
-                                        (change)="itemPelayananNifas.unit = $event.target.value">
-                                        <option [ngValue]="undefined" selected>Pilih Satuan Unit</option>
-                                        <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
-                                            [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (itemPelayananNifas.unit?.toLowerCase() || '')">
-                                            {{ satuanUnit . unit_code }}
-                                        </option>
-                                    </select>
-                                </div>
+                                <select class="form-select w-25"
+                                    (change)="itemPelayananNifas.unit = $event.target.value">
+                                    <option [ngValue]="undefined" selected>Pilih Satuan Unit</option>
+                                    <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit.unit_code"
+                                        [selected]="satuanUnit.unit_code?.toLowerCase() === itemPelayananNifas.unit?.toLowerCase()">
+                                        {{ satuanUnit . unit_code }}
+                                    </option>
+
+                                </select>
                             </div>
                         </div>
                     </div>

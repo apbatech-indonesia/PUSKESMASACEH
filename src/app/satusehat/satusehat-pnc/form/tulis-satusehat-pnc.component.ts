@@ -203,7 +203,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
     await this.cariHistory();
 
   }
-  // NOTE: NOW TODO
+  // NOTE: TAB
   async openTab(tab: string) {
     this.activeTab = tab;
     switch (tab)
@@ -220,6 +220,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistObservasiPelayananNifas();
         this.carilistKategoriObservasi();
         this.getSatuanUnit();
+        await this.cariHistory();
         break;
       case "observasi-pelayanan-nifas-pendarahan":
         this.carilistObservasiPelayananNifasPendarahan();
@@ -775,6 +776,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         case "observasi-data-persalinan":
           this.handleObservasiPersalinan();
           break;
+        case "observasi-pelayanan-nifas":
+          this.handleObservasiPelayananNifas();
+          break;
         default:
           break;
       }
@@ -782,6 +786,58 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+  handleObservasiPelayananNifas() {
+    if (!this.listHistory?.data?.observations) return;
+
+    this.listObservasiPelayananNifas = this.listObservasiPelayananNifas.map(itemPelayananNifas => {
+      let terminologyName = itemPelayananNifas.terminology_name.trim().toLowerCase();
+
+      // 🔥 Cari SEMUA observasi yang cocok
+      let matchedObservations = this.listHistory.data.observations.filter(obs =>
+        obs.name.trim().toLowerCase() === terminologyName
+      );
+
+      if (matchedObservations.length > 0)
+      {
+        // 🔥 Ambil SEMUA value dari result.value
+        let allValues = matchedObservations.flatMap(obs =>
+          (obs.data || []).map(d => d.result?.value).filter(v => v !== undefined)
+        );
+
+        // 🔥 Ambil unit dari result.unit
+        let matchedUnits = matchedObservations.flatMap(obs =>
+          (obs.data || []).map(d => d.result?.unit).filter(v => v !== undefined)
+        );
+
+        // 🔥 Ambil kategori yang cocok
+        let matchedCategories = matchedObservations.flatMap(obs => {
+          let matchedCat = this.listKategoriObservasi.find(cat =>
+            cat.terminology_name.trim().toLowerCase() === obs.category?.display?.trim().toLowerCase()
+          );
+          return matchedCat ? [matchedCat] : [];
+        });
+
+        // 🔥 Cocokin unit dengan `listSatuanUnit`
+        let selectedUnit = this.listSatuanUnit.find(unit =>
+          unit.unit_code?.trim().toLowerCase() === matchedUnits[0]?.trim().toLowerCase()
+        );
+
+        return {
+          ...itemPelayananNifas,
+          userInput: allValues.length > 0 ? allValues[0] : null, // Ambil yang pertama kalau ada
+          selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
+          unit: selectedUnit ? selectedUnit.unit_code : undefined
+        };
+      }
+
+      return itemPelayananNifas;
+    });
+
+    console.log("✅ Final listObservasiPelayananNifas:", JSON.stringify(this.listObservasiPelayananNifas, null, 2));
+  }
+
+
+
   handleObservasiPersalinan() {
     if (!this.listHistory?.data?.observations) return;
 
@@ -813,7 +869,8 @@ export class TulisSatuSehatPncComponent implements OnInit {
         return {
           ...itemPersalinan,
           userInput: allValues.length > 0 ? allValues[0] : null, // Ambil yang pertama kalau ada
-          selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined
+          selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
+
         };
       }
 
@@ -821,6 +878,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
     });
 
   }
+
 
   async carilistObservation() {
     let payload = {
@@ -1039,47 +1097,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
   }
 
   // NOTE: send func
-  async doSubmitRelatedPerson1() {
-    if (!this.selectedRelatesPerson)
-    {
-      Swal.fire("Error", "Jenis Relasi Perlu di pilih", "error");
-      return;
-    }
-    const relationPrefix = this.selectedRelatesPerson;
-
-    const related_person = {
-      [`nama_${relationPrefix}`]: this.relatedPersonData.nama_relasi,
-      [`nik_${relationPrefix}`]: this.relatedPersonData.nik_relasi,
-      [`tl_${relationPrefix}`]: this.relatedPersonData.tl_relasi,
-      [`hp_${relationPrefix}`]: this.relatedPersonData.hp_relasi,
-      [`alamat_jalan_${relationPrefix}`]: this.relatedPersonData.alamat_jalan_relasi,
-      [`postal_code_${relationPrefix}`]: this.relatedPersonData.postal_code_relasi,
-      [`province_id_${relationPrefix}`]: this.relatedPersonData.province_id_relasi,
-      [`city_id_${relationPrefix}`]: this.relatedPersonData.city_id_relasi,
-      [`district_id_${relationPrefix}`]: this.relatedPersonData.district_id_relasi,
-      [`village_id_${relationPrefix}`]: this.relatedPersonData.village_id_relasi,
-      [`rt_${relationPrefix}`]: this.relatedPersonData.rt_relasi,
-      [`rw_${relationPrefix}`]: this.relatedPersonData.rw_relasi,
-    };
-    const payload = {
-      data: {
-        encounterId: this.encounter_id,
-        useCaseId: this.useCaseId,
-        satusehatId: this.patientData.idsatusehat,
-        rmno: this.notransaksi,
-        related_person: related_person,
-      },
-    };
-    try
-    {
-      let response: any = await this.PncService.craeteRelatedPersonPnc(payload);
-      let msg = response.statusMsg.split(": ");
-      Swal.fire("Success", msg.join(", "), "success");
-    } catch (err)
-    {
-      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
-    }
-  }
   async doSubmitRelatedPerson() {
     if (!this.selectedRelatesPerson)
     {
@@ -1137,8 +1154,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
     }
   }
-
-
   async doSubmitObservasiPataPersalinan() {
     const itemDataObservasiPersalinan = this.listObservasiPersalinan;
     const payload = {
@@ -1190,14 +1205,19 @@ export class TulisSatuSehatPncComponent implements OnInit {
   async doSubmitObservasiPelayananNifas() {
     const dataPelayanan = this.listObservasiPelayananNifas;
 
-    const systolicItem = dataPelayanan.find(item => item.terminology_name.toLowerCase().includes("systolic"));
-    const diastolicItem = dataPelayanan.find(item => item.terminology_name.toLowerCase().includes("diastolic"));
+    const systolicItem = dataPelayanan.find(item =>
+      item.userInput && item.terminology_name.toLowerCase().includes("systolic")
+    );
+    const diastolicItem = dataPelayanan.find(item =>
+      item.userInput && item.terminology_name.toLowerCase().includes("diastolic")
+    );
 
-    if ((systolicItem && !systolicItem.userInput) || (diastolicItem && !diastolicItem.userInput))
+    if ((systolicItem && !diastolicItem) || (diastolicItem && !systolicItem))
     {
       Swal.fire("Error", "Jika mengisi Systolic, maka Diastolic juga wajib diisi (dan sebaliknya).", 'error');
       return;
     }
+
 
     const payload = {
       data: {
