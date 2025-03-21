@@ -765,7 +765,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
       let response: any = await this.PncService.getUseCaseResponse(payload);
       this.listHistory = response;
-      console.log("🔥 RAW listHistory:", JSON.stringify(this.listHistory, null, 2));
+      console.log(this.listHistory);
 
       // 🔥 Handle tab aktif
       switch (this.activeTab)
