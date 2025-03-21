@@ -199,7 +199,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
   // NOTE: on page reload
   async ngOnInit() {
-    await this.fiCreateKunjunganPnc()
+    await this.fiCreateKunjunganPnc();
+    await this.cariHistory();
+
   }
   // NOTE: NOW TODO
   async openTab(tab: string) {
@@ -1030,7 +1032,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
   }
 
   // NOTE: send func
-  async doSubmitRelatedPerson() {
+  async doSubmitRelatedPerson1() {
     if (!this.selectedRelatesPerson)
     {
       Swal.fire("Error", "Jenis Relasi Perlu di pilih", "error");
@@ -1071,6 +1073,65 @@ export class TulisSatuSehatPncComponent implements OnInit {
       Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
     }
   }
+  async doSubmitRelatedPerson() {
+    if (!this.selectedRelatesPerson)
+    {
+      Swal.fire("Error", "Jenis Relasi Perlu dipilih", "error");
+      return;
+    }
+
+    const relationPrefix = this.selectedRelatesPerson;
+    let existingData = this.listHistory?.data?.related_person || {}; // Ambil data lama kalau ada
+
+    // Buat objek baru yang hanya berisi data dengan prefix yang dipilih
+    const newRelatedPersonData = {
+      [`nama_${relationPrefix}`]: this.relatedPersonData.nama_relasi,
+      [`nik_${relationPrefix}`]: this.relatedPersonData.nik_relasi,
+      [`tl_${relationPrefix}`]: this.relatedPersonData.tl_relasi,
+      [`hp_${relationPrefix}`]: this.relatedPersonData.hp_relasi,
+      [`alamat_jalan_${relationPrefix}`]: this.relatedPersonData.alamat_jalan_relasi,
+      [`postal_code_${relationPrefix}`]: this.relatedPersonData.postal_code_relasi,
+      [`province_id_${relationPrefix}`]: this.relatedPersonData.province_id_relasi,
+      [`city_id_${relationPrefix}`]: this.relatedPersonData.city_id_relasi,
+      [`district_id_${relationPrefix}`]: this.relatedPersonData.district_id_relasi,
+      [`village_id_${relationPrefix}`]: this.relatedPersonData.village_id_relasi,
+      [`rt_${relationPrefix}`]: this.relatedPersonData.rt_relasi,
+      [`rw_${relationPrefix}`]: this.relatedPersonData.rw_relasi,
+    };
+
+    // Hapus semua data lama dengan prefix yang sama
+    Object.keys(existingData).forEach(key => {
+      if (key.startsWith(`${relationPrefix}_`))
+      {
+        delete existingData[key];
+      }
+    });
+
+    // Gabungkan data lama dengan data baru
+    const updatedRelatedPerson = { ...existingData, ...newRelatedPersonData };
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        related_person: updatedRelatedPerson,
+      },
+    };
+
+    try
+    {
+      let response: any = await this.PncService.craeteRelatedPersonPnc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+
+
   async doSubmitObservasiPataPersalinan() {
     const itemDataObservasiPersalinan = this.listObservasiPersalinan;
     const payload = {
