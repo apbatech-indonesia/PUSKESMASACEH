@@ -375,36 +375,39 @@
                 <form>
                     <div class="row">
                         <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
-                            *ngFor="let itemPelayananNifasPendarahan of listObservasiPelayananNifasPendarahan">
+                            *ngFor="let itemPelayananNifasPendarahan of listObservasiPelayananNifasPendarahan; let i = index">
                             <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
                                 [title]="itemPelayananNifasPendarahan.description">
                                 {{ itemPelayananNifasPendarahan . terminology_name }}
                             </label>
                             <div class="d-flex align-items-center gap-2 mt-3">
-                                <textarea class="form-control w-50" name="inputString" [(ngModel)]="itemPelayananNifasPendarahan.inputString"
-                                    placeholder="Input Keterangan" rows="1">
-                                </textarea>
-                                <!-- Input Angka -->
+                                <!-- 🔥 Input Keterangan (inputString) -->
+                                <textarea class="form-control w-50" [(ngModel)]="itemPelayananNifasPendarahan.inputString"
+                                    [name]="'inputString_' + i" placeholder="Input Keterangan" rows="1"></textarea>
+
+                                <!-- 🔥 Input Angka -->
                                 <input type="number" class="form-control w-50" placeholder="Masukkan nilai"
-                                    [(ngModel)]="itemPelayananNifasPendarahan.userInput" name="userInput" />
-                                <!-- Select Kategori -->
+                                    [(ngModel)]="itemPelayananNifasPendarahan.userInput" [name]="'userInput_' + i" />
+
+                                <!-- 🔥 Select Kategori -->
                                 <select class="form-select w-25"
                                     [(ngModel)]="itemPelayananNifasPendarahan.selectedCategory"
-                                    name="selectedCategory" title="kategori">
+                                    [name]="'selectedCategory_' + i">
+                                    <option [ngValue]="undefined" selected>Pilih Kategori</option>
                                     <option *ngFor="let item of listKategoriObservasi" [ngValue]="item">
                                         {{ item . terminology_name }}
                                     </option>
                                 </select>
-                                <div class="col-3">
-                                    <select class="form-select"
-                                        (change)="itemPelayananNifasPendarahan.unit = $event.target.value">
-                                        <option [ngValuevalue]="null">Pilih Satuan Unit</option>
-                                        <option *ngFor="let satuanUnit of listSatuanUnit" [ngValue]="satuanUnit"
-                                            [selected]="(satuanUnit.unit_code?.toLowerCase() || '') === (itemPelayananNifasPendarahan.unit?.toLowerCase() || '')">
-                                            {{ satuanUnit . unit_code }}
-                                        </option>
-                                    </select>
-                                </div>
+
+                                <!-- 🔥 Select Satuan Unit -->
+                                <select class="form-select w-25" [(ngModel)]="itemPelayananNifasPendarahan.unit"
+                                    [name]="'unit_' + i">
+                                    <option [ngValue]="undefined" selected>Pilih Satuan Unit</option>
+                                    <option *ngFor="let satuanUnit of listSatuanUnit"
+                                        [ngValue]="satuanUnit.unit_code">
+                                        {{ satuanUnit . unit_code }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>

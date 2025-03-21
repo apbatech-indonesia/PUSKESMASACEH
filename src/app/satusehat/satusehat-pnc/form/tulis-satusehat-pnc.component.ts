@@ -209,7 +209,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
     switch (tab)
     {
       case "form-related-person":
-        this.cariHistory();
+        await this.cariHistory();
         break;
       case "observasi-data-persalinan":
         this.carilistObservasiPersalinan();
@@ -226,6 +226,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistObservasiPelayananNifasPendarahan();
         this.carilistKategoriObservasi();
         this.getSatuanUnit();
+        await this.cariHistory();
         break;
       case "observasi-pemeriksaan-hasil-lab":
         this.carilistObservasiPemeriksaanLab();
@@ -779,6 +780,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         case "observasi-pelayanan-nifas":
           this.handleObservasiPelayananNifas();
           break;
+        case "observasi-pelayanan-nifas-pendarahan":
+          this.handleObservasiPelayananNifasPendarahan();
+          break;
         default:
           break;
       }
@@ -786,6 +790,61 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+  handleObservasiPelayananNifasPendarahan() {
+    if (!this.listHistory?.data?.observations) return;
+
+    this.listObservasiPelayananNifasPendarahan = this.listObservasiPelayananNifasPendarahan.map(itemPelayananNifasPendarahan => {
+      let terminologyName = itemPelayananNifasPendarahan.terminology_name.trim().toLowerCase();
+
+      // 🔥 Cari SEMUA observasi yang cocok
+      let matchedObservations = this.listHistory.data.observations.filter(obs =>
+        obs.name.trim().toLowerCase() === terminologyName
+      );
+
+      if (matchedObservations.length > 0)
+      {
+        // 🔥 Ambil SEMUA value dari result.value
+        let allValues = matchedObservations.flatMap(obs =>
+          (obs.data || []).map(d => d.result?.value).filter(v => v !== undefined)
+        );
+
+        // 🔥 Ambil unit dari result.unit
+        let matchedUnits = matchedObservations.flatMap(obs =>
+          (obs.data || []).map(d => d.result?.unit).filter(v => v !== undefined)
+        );
+
+        // 🔥 Ambil kategori yang cocok
+        let matchedCategories = matchedObservations.flatMap(obs => {
+          let matchedCat = this.listKategoriObservasi.find(cat =>
+            cat.terminology_name.trim().toLowerCase() === obs.category?.display?.trim().toLowerCase()
+          );
+          return matchedCat ? [matchedCat] : [];
+        });
+
+        // 🔥 Ambil keterangan dari notes / description
+        let matchedDescriptions = matchedObservations.flatMap(obs =>
+          (obs.data || []).map(d => d.result?.notes || obs.description).filter(v => v !== undefined)
+        );
+
+        // 🔥 Cocokin unit dengan `listSatuanUnit`
+        let selectedUnit = this.listSatuanUnit.find(unit =>
+          unit.unit_code?.trim().toLowerCase() === matchedUnits[0]?.trim().toLowerCase()
+        );
+
+        return {
+          ...itemPelayananNifasPendarahan,
+          userInput: allValues.length > 0 ? allValues[0] : null, // Ambil yang pertama kalau ada
+          selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
+          unit: selectedUnit ? selectedUnit.unit_code : undefined,
+          inputString: matchedDescriptions.length > 0 ? matchedDescriptions[0] : "" // Ambil deskripsi pertama kalau ada
+        };
+      }
+      console.log(itemPelayananNifasPendarahan);
+
+      return itemPelayananNifasPendarahan;
+    });
+  }
+
   handleObservasiPelayananNifas() {
     if (!this.listHistory?.data?.observations) return;
 
@@ -832,8 +891,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
       return itemPelayananNifas;
     });
-
-    console.log("✅ Final listObservasiPelayananNifas:", JSON.stringify(this.listObservasiPelayananNifas, null, 2));
   }
 
 
