@@ -760,61 +760,68 @@ export class TulisSatuSehatPncComponent implements OnInit {
       type: "pnc",
       status: "active"
     };
+
     try
     {
       let response: any = await this.PncService.getUseCaseResponse(payload);
-      const tab = this.activeTab;
-      console.log(tab);
+      this.listHistory = response;
+      console.log("🔥 RAW listHistory:", JSON.stringify(this.listHistory, null, 2));
 
-      switch (tab)
+      // 🔥 Handle tab aktif
+      switch (this.activeTab)
       {
         case "form-related-person":
-          this.listHistory = response;
           break;
-        case "observasi-pelayanan-nifas":
-          this.listHistory = response.observation_responses;
-          break;
-        case "observasi-pelayanan-nifas-pendarahan":
-          this.listHistory = response.observation_responses;
-          break;
-        case "observasi-pemeriksaan-hasil-lab":
-          this.listHistory = response.observation_responses;
-          break;
-        case "condition-pelayanan-nifas":
-          this.listHistory = response.condition_responses;
-          break;
-        case "diagnosa-condition":
-          this.listHistory = response.condition_responses;
-          break;
-        case "condition-leave-fasyankes":
-          this.listHistory = response.condition_responses;
-          break;
-        case "procedure-konseling-pelayanan-nifas":
-          this.listHistory = response.procedure_responses;
-          break;
-        case "procedure-tindakan":
-          this.listHistory = response.procedure_responses;
-          break;
-        case "request-pemeriksaan-hasil-lab":
-          this.listHistory = response.service_request_responses;
-          break;
-        case "specimen-pemeriksaan-hasil-lab":
-          this.listHistory = response.specimen_responses;
-          break;
-        case "laporan-diagnosa-lab":
-          this.listHistory = response.observation_responses;
-          break;
-        case "rencana-tindak-lanjut":
-          this.listHistory = response.care_plan_responses;
+        case "observasi-data-persalinan":
+          this.handleObservasiPersalinan();
           break;
         default:
           break;
       }
-      console.log(this.listHistory);
     } catch (error)
     {
     }
   }
+  handleObservasiPersalinan() {
+    if (!this.listHistory?.data?.observations) return;
+
+    this.listObservasiPersalinan = this.listObservasiPersalinan.map(itemPersalinan => {
+      let terminologyName = itemPersalinan.terminology_name.trim().toLowerCase();
+
+      // 🔥 Cari SEMUA observasi yang cocok
+      let matchedObservations = this.listHistory.data.observations.filter(obs =>
+        obs.name.trim().toLowerCase() === terminologyName
+      );
+
+
+      if (matchedObservations.length > 0)
+      {
+        // 🔥 Ambil SEMUA valueInteger yang ada di semua data
+        let allValues = matchedObservations.flatMap(obs =>
+          (obs.data || []).map(d => d.valueInteger).filter(v => v !== undefined)
+        );
+
+
+        // 🔥 Ambil kategori yang cocok
+        let matchedCategories = matchedObservations.flatMap(obs => {
+          let matchedCat = this.listKategoriObservasi.find(cat =>
+            cat.terminology_name.trim().toLowerCase() === obs.category?.display?.trim().toLowerCase()
+          );
+          return matchedCat ? [matchedCat] : [];
+        });
+
+        return {
+          ...itemPersalinan,
+          userInput: allValues.length > 0 ? allValues[0] : null, // Ambil yang pertama kalau ada
+          selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined
+        };
+      }
+
+      return itemPersalinan;
+    });
+
+  }
+
   async carilistObservation() {
     let payload = {
       usecase_id: this.useCaseId,
