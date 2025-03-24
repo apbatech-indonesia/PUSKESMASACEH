@@ -165,6 +165,7 @@ import { MasterSpecimenModule } from "./satusehat/satusehat-master/master-specim
 import { TulisSatuSehatGiziComponent } from "./satusehat/satusehat-gizi/form/tulis-satusehat-gizi.component";
 import { skriningComponent } from "./clmaster/skrining/skrining.component";
 import { NgxYoutubePlayerModule } from "ngx-youtube-player";
+import { TulisSatuSehatGigiComponent } from "./satusehat/satusehat-gigi/form/tulis-satusehat-gigi.component";
 
 @NgModule({
   declarations: [
@@ -230,6 +231,7 @@ import { NgxYoutubePlayerModule } from "ngx-youtube-player";
     TulisImunisasiComponent,
     TulisSkriningPtmComponent,
     TulisSatuSehatGiziComponent,
+    TulisSatuSehatGigiComponent,
     MasterProvinceComponent,
     MasterCityComponent,
     MasterDistrictComponent,
@@ -238,7 +240,6 @@ import { NgxYoutubePlayerModule } from "ngx-youtube-player";
     MasterTindakanComponent,
     MasterVaccineComponent,
     FormVaccineComponent,
-
     skriningComponent,
   ],
   imports: [
