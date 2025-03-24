@@ -231,6 +231,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
       case "observasi-pemeriksaan-hasil-lab":
         this.carilistObservasiPemeriksaanLab();
         this.carilistKategoriObservasi();
+        await this.cariHistory();
         break;
       case "condition-pelayanan-nifas":
         this.carilistConditionPelayananNifas();
@@ -769,7 +770,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
       this.listHistory = response;
       console.log(this.listHistory);
 
-      // 🔥 Handle tab aktif
+      // 🔥 Handle tab aktif default value
       switch (this.activeTab)
       {
         case "form-related-person":
@@ -783,6 +784,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         case "observasi-pelayanan-nifas-pendarahan":
           this.handleObservasiPelayananNifasPendarahan();
           break;
+        case "observasi-pemeriksaan-hasil-lab":
+          this.handleObservasiPemeriksaanHasilLab();
+          break;
         default:
           break;
       }
@@ -790,6 +794,38 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+  handleObservasiPemeriksaanHasilLab() {
+    if (!this.listHistory?.data?.observations) return;
+
+    this.listObservasiPemeriksaanLab = this.listObservasiPemeriksaanLab.map(itemPemeriksaanLab => {
+      let terminologyName = itemPemeriksaanLab.terminology_name.trim().toLowerCase();
+
+      // 🔥 Cari observasi yang cocok berdasarkan terminology_name
+      let matchedObservations = this.listHistory.data.observations.filter(obs =>
+        obs.name.trim().toLowerCase() === terminologyName
+      );
+
+      if (matchedObservations.length > 0)
+      {
+        // 🔥 Ambil kategori yang cocok
+        let matchedCategories = matchedObservations.flatMap(obs => {
+          let matchedCat = this.listKategoriObservasi.find(cat =>
+            cat.terminology_name.trim().toLowerCase() === obs.category?.display?.trim().toLowerCase()
+          );
+          return matchedCat ? [matchedCat] : [];
+        });
+
+        return {
+          ...itemPemeriksaanLab,
+          selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
+        };
+      }
+
+      return itemPemeriksaanLab;
+    });
+  }
+
+
   handleObservasiPelayananNifasPendarahan() {
     if (!this.listHistory?.data?.observations) return;
 
@@ -839,7 +875,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
           inputString: matchedDescriptions.length > 0 ? matchedDescriptions[0] : "" // Ambil deskripsi pertama kalau ada
         };
       }
-      console.log(itemPelayananNifasPendarahan);
 
       return itemPelayananNifasPendarahan;
     });
