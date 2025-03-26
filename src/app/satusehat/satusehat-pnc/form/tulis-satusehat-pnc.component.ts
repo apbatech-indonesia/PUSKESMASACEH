@@ -237,6 +237,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistConditionPelayananNifas();
         this.carilistKategoriCondition();
         this.carilistClinicalCondition();
+        await this.cariHistory();
         break;
       case "diagnosa-condition":
         this.carilistConditionDiagnosis();
@@ -787,12 +788,63 @@ export class TulisSatuSehatPncComponent implements OnInit {
         case "observasi-pemeriksaan-hasil-lab":
           this.handleObservasiPemeriksaanHasilLab();
           break;
+        case "condition-pelayanan-nifas":
+          // NOTE: Now TODO
+          this.handleConditionPelayananNifas();
+          break;
         default:
           break;
       }
     } catch (error)
     {
     }
+  }
+
+
+  handleConditionPelayananNifas() {
+    if (!this.listHistory?.data?.conditions || !Array.isArray(this.listHistory.data.conditions)) return;
+
+    this.listConditionPelayananNifas = this.listConditionPelayananNifas.map(itemConditionPelayananNifas => {
+      let terminologyName = itemConditionPelayananNifas.terminology_name.trim().toLowerCase();
+
+      // 🔥 Cari SEMUA kondisi yang cocok
+      let matchedConditions = this.listHistory.data.conditions.filter(cond =>
+        cond.name.trim().toLowerCase() === terminologyName
+      );
+
+      if (matchedConditions.length > 0)
+      {
+        // 🔥 Ambil SEMUA notes dari matchedConditions
+        let allNotes = matchedConditions.flatMap(cond =>
+          (cond.note || []).map(n => n.text).filter(v => v !== undefined)
+        );
+
+        // 🔥 Ambil kategori yang cocok
+        let matchedCategories = matchedConditions.flatMap(cond => {
+          let matchedCat = this.listKategoriCondition.find(cat =>
+            cat.terminology_name.trim().toLowerCase() === cond.category?.display?.trim().toLowerCase()
+          );
+          return matchedCat ? [matchedCat] : [];
+        });
+
+        // 🔥 Ambil kondisi klinis yang cocok
+        let matchedClinicalStatuses = matchedConditions.flatMap(cond => {
+          let matchedStatus = this.listCondtionClinical.find(status =>
+            status.terminology_name.trim().toLowerCase() === cond.clinicalStatus?.display?.trim().toLowerCase()
+          );
+          return matchedStatus ? [matchedStatus] : [];
+        });
+
+        return {
+          ...itemConditionPelayananNifas,
+          inputString: allNotes.length > 0 ? allNotes.join(", ") : "", // 🔥 Gabung semua notes jadi satu string
+          selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
+          clinicalStatus: matchedClinicalStatuses.length > 0 ? matchedClinicalStatuses[0] : undefined
+        };
+      }
+
+      return itemConditionPelayananNifas;
+    });
   }
   handleObservasiPemeriksaanHasilLab() {
     if (!this.listHistory?.data?.observations) return;
@@ -824,8 +876,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       return itemPemeriksaanLab;
     });
   }
-
-
   handleObservasiPelayananNifasPendarahan() {
     if (!this.listHistory?.data?.observations) return;
 
@@ -872,14 +922,13 @@ export class TulisSatuSehatPncComponent implements OnInit {
           userInput: allValues.length > 0 ? allValues[0] : null, // Ambil yang pertama kalau ada
           selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
           unit: selectedUnit ? selectedUnit.unit_code : undefined,
-          inputString: matchedDescriptions.length > 0 ? matchedDescriptions[0] : "" // Ambil deskripsi pertama kalau ada
+          inputString: matchedDescriptions.length > 0 ? matchedDescriptions[0] : ""
         };
       }
 
       return itemPelayananNifasPendarahan;
     });
   }
-
   handleObservasiPelayananNifas() {
     if (!this.listHistory?.data?.observations) return;
 
@@ -927,9 +976,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       return itemPelayananNifas;
     });
   }
-
-
-
   handleObservasiPersalinan() {
     if (!this.listHistory?.data?.observations) return;
 
@@ -970,8 +1016,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
     });
 
   }
-
-
   async carilistObservation() {
     let payload = {
       usecase_id: this.useCaseId,
@@ -1130,6 +1174,12 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+
+  // NOTE: partial func
+  trackByIndex(index: number, item: any) {
+    return index;
+  }
+
   async getSatuanUnit() {
     let payload = {
       unit_code: "",
@@ -1146,10 +1196,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       this.listSatuanUnit = [...response.data];
     } catch (error) { }
   }
-
-
-
-  // NOTE: partial func
   toggleInputPermintaanPemeriksaanLab(id: string, categoryServiceRequest: any, terminologyId: string) {
     const itemServiceRequest = this.listRequestPemeriksaanLab.find(item => item.terminology_id === terminologyId);
 
@@ -1901,9 +1947,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
     }
   }
-
-
-
   async doSubmitObservasiPemeriksaanHasilLab() {
     const dataPemeriksaanHasilLab = this.listObservasiPemeriksaanLab;
     const payload = {
