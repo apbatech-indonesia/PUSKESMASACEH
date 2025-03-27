@@ -816,7 +816,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
   handleProcedureKonselingPelayananNifas() {
     if (!this.listHistory?.data?.procedures || !Array.isArray(this.listHistory.data.procedures))
     {
-      console.warn("⚠️ listHistory.data.procedures tidak ditemukan atau bukan array.");
       return;
     }
 
@@ -830,7 +829,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
       if (matchedProcedure)
       {
-        console.log(`✅ Match ditemukan: ${matchedProcedure.name}`, matchedProcedure);
 
         // 🔥 Ambil kategori yang cocok
         let matchedCategory = this.listKategoriProcedure.find(cat =>
@@ -848,7 +846,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
         return newItem;
       }
 
-      console.warn(`⚠️ Tidak ada match untuk: ${terminologyName}`);
       return itemProcedure;
     });
   }
@@ -857,7 +854,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
   handleConditionLeaveFasyankes() {
     if (!this.listHistory?.data?.conditions || !Array.isArray(this.listHistory.data.conditions))
     {
-      console.warn("⚠️ listHistory.data.conditions tidak ditemukan atau bukan array.");
       return;
     }
 
@@ -902,7 +898,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
   handleConditionDiagnosa() {
     if (!this.listHistory?.data?.conditions || !Array.isArray(this.listHistory.data.conditions))
     {
-      console.warn("⚠️ listHistory.data.conditions tidak ditemukan atau bukan array.");
       return;
     }
     this.listConditionDiagnosis = this.listConditionDiagnosis.map(itemConditionDiagnosis => {
@@ -940,7 +935,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
         return newItem;
       }
 
-      console.warn(`⚠️ Tidak ada match untuk: ${terminologyName}`);
       return itemConditionDiagnosis;
     });
   }
