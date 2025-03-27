@@ -568,7 +568,6 @@
             </div>
         </div>
 
-        <!-- NOTE : Now TODO -->
         <div class="card mb-2" *ngIf="activeTab == 'procedure-konseling-pelayanan-nifas'">
             <div class="card-body">
                 <div class="card-body">
@@ -613,37 +612,41 @@
                 </div>
             </div>
         </div>
-        <div class="card mb-2" *ngIf="activeTab == 'procedure-tindakan'">
+        <div class="card mb-2" *ngIf="activeTab === 'procedure-tindakan'">
             <div class="card-body">
                 <div class="card-body">
                     <form>
                         <div class="row">
                             <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
-                                *ngFor="let itemProcedureTindakan of listProcedureTindakan">
+                                *ngFor="let itemProcedureTindakan of listProcedureTindakan; let i = index; trackBy: trackByIndex">
                                 <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
                                     [title]="itemProcedureTindakan.description">
                                     {{ itemProcedureTindakan . terminology_name }}
-
                                     <small>{{ itemProcedureTindakan . description }}</small>
                                 </label>
+
                                 <div class="d-flex align-items-center gap-2 mt-3">
                                     <!-- Input Periode Mulai -->
+                                    <label class="form-label" [for]="'periode_mulai_' + i">Periode Mulai</label>
+                                    <input type="datetime-local" class="form-control" [id]="'periode_mulai_' + i"
+                                        [(ngModel)]="itemProcedureTindakan.periodeMulai"
+                                        [name]="'periode_mulai_' + i" />
 
-                                    <label for="periode_mulai" class="form-label">Periode Mulai</label>
-                                    <input type="datetime-local" class="form-control" id="periode_mulai"
-                                        [(ngModel)]="itemProcedureTindakan.periodeMulai" name="periode_mulai" />
                                     <!-- Input Periode Berakhir -->
-                                    <label for="periode_berakhir" class="form-label">Periode
-                                        Berakhir</label>
-                                    <input type="datetime-local" class="form-control" id="periode_berakhir"
-                                        [(ngModel)]="itemProcedureTindakan.periodeBerakhir" name="periode_berakhir" />
+                                    <label class="form-label" [for]="'periode_berakhir_' + i">Periode Berakhir</label>
+                                    <input type="datetime-local" class="form-control" [id]="'periode_berakhir_' + i"
+                                        [(ngModel)]="itemProcedureTindakan.periodeBerakhir"
+                                        [name]="'periode_berakhir_' + i" />
+
                                     <!-- Select Kategori -->
                                     <div class="col-3">
                                         <select class="form-select"
                                             [(ngModel)]="itemProcedureTindakan.selectedCategory"
-                                            name="selectedCategory" title="kategori">
-                                            <option [ngValue]="undefined" selected>Pilih Kategori</option>
-                                            <option *ngFor="let item of listKategoriProcedure" [ngValue]="item">
+                                            [name]="'selectedCategory_' + i" title="kategori">
+                                            <option [ngValue]="undefined" disabled selected>Pilih Kategori</option>
+                                            <option
+                                                *ngFor="let item of listKategoriProcedure; trackBy: trackByTerminology"
+                                                [ngValue]="item">
                                                 {{ item . terminology_name }}
                                             </option>
                                         </select>
@@ -655,6 +658,7 @@
                 </div>
             </div>
         </div>
+
         <div class="card mb-2" *ngIf="activeTab == 'request-pemeriksaan-hasil-lab'">
             <div class="card-body">
                 <form>

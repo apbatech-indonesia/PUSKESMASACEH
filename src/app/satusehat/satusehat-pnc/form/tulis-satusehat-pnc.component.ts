@@ -260,6 +260,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
       case "procedure-tindakan":
         this.carilistProcedureTindakan();
         this.carilistKategoriProcedure();
+        await this.cariHistory();
         break;
       case "request-pemeriksaan-hasil-lab":
         this.carilistRequestPemeriksaanLab();
@@ -801,9 +802,11 @@ export class TulisSatuSehatPncComponent implements OnInit {
         case "condition-leave-fasyankes":
           this.handleConditionLeaveFasyankes();
           break;
-        // NOTE: NOW TODO
         case "procedure-konseling-pelayanan-nifas":
           this.handleProcedureKonselingPelayananNifas();
+          break;
+        case "procedure-tindakan":
+          this.handleProcedureTindakan();
           break;
         default:
           break;
@@ -811,6 +814,43 @@ export class TulisSatuSehatPncComponent implements OnInit {
     } catch (error)
     {
     }
+  }
+
+  handleProcedureTindakan() {
+    if (!this.listHistory?.data?.procedures || !Array.isArray(this.listHistory.data.procedures))
+    {
+      return;
+    }
+
+    this.listProcedureTindakan = this.listProcedureTindakan.map(itemProcedure => {
+      let terminologyName = itemProcedure.terminology_name.trim().toLowerCase().replace(/\s+/g, " ");
+
+      // 🔥 Cari procedure yang cocok berdasarkan name
+      let matchedProcedure = this.listHistory.data.procedures.find(proc =>
+        proc.name.trim().toLowerCase().replace(/\s+/g, " ") === terminologyName
+      );
+
+      if (matchedProcedure)
+      {
+
+        // 🔥 Ambil kategori yang cocok
+        let matchedCategory = this.listKategoriProcedure.find(cat =>
+          cat.terminology_name.trim().toLowerCase().replace(/\s+/g, " ") ===
+          matchedProcedure.category?.display?.trim().toLowerCase().replace(/\s+/g, " ")
+        );
+
+        // 🔥 Set data ke UI
+        let newItem = {
+          ...itemProcedure,
+          periodeMulai: matchedProcedure.performedPeriod?.start || "",  // Ambil start date
+          periodeBerakhir: matchedProcedure.performedPeriod?.end || "", // Ambil end date
+          selectedCategory: matchedCategory || undefined                // Cocokkan kategori
+        };
+
+        return newItem;
+      }
+      return itemProcedure;
+    });
   }
 
   handleProcedureKonselingPelayananNifas() {
@@ -849,8 +889,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       return itemProcedure;
     });
   }
-
-
   handleConditionLeaveFasyankes() {
     if (!this.listHistory?.data?.conditions || !Array.isArray(this.listHistory.data.conditions))
     {
