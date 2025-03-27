@@ -243,6 +243,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
         this.carilistConditionDiagnosis();
         this.carilistKategoriCondition();
         this.carilistClinicalCondition();
+        await this.cariHistory();
         break;
       case "condition-leave-fasyankes":
         this.carilistConditionLeaveFasyankes();
@@ -789,8 +790,11 @@ export class TulisSatuSehatPncComponent implements OnInit {
           this.handleObservasiPemeriksaanHasilLab();
           break;
         case "condition-pelayanan-nifas":
-          // NOTE: Now TODO
           this.handleConditionPelayananNifas();
+          break;
+        case "diagnosa-condition":
+          // NOTE: Now TODO
+          this.handleConditionDiagnosa();
           break;
         default:
           break;
@@ -799,6 +803,78 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+
+  // NOTE: NOW TODO
+  handleConditionDiagnosa() {
+    if (!this.listHistory?.data?.conditions || !Array.isArray(this.listHistory.data.conditions))
+    {
+      console.warn("⚠️ listHistory.data.conditions tidak ditemukan atau bukan array.");
+      return;
+    }
+
+    console.log("🟢 Memulai handleConditionDiagnosa()");
+    console.log("📌 Data kondisi dari history:", this.listHistory.data.conditions);
+    console.log("📌 Data listConditionDiagnosis sebelum mapping:", this.listConditionDiagnosis);
+
+    this.listConditionDiagnosis = this.listConditionDiagnosis.map(itemConditionDiagnosis => {
+      let terminologyName = itemConditionDiagnosis.terminology_name.trim().toLowerCase();
+      console.log(`🔎 Mencari kondisi yang cocok untuk: ${terminologyName}`);
+
+      // 🔥 Cari SEMUA kondisi yang cocok
+      let matchedConditions = this.listHistory.data.conditions.filter(cond =>
+        cond.name.trim().toLowerCase() === terminologyName
+      );
+
+      console.log("✅ Kondisi yang cocok ditemukan:", matchedConditions);
+
+      if (matchedConditions.length > 0)
+      {
+        // 🔥 Ambil SEMUA notes dari matchedConditions
+        let allNotes = matchedConditions.flatMap(cond =>
+          (cond.note || []).map(n => n.text).filter(v => v !== undefined)
+        );
+
+        console.log("📝 Notes yang ditemukan:", allNotes);
+
+        // 🔥 Ambil kategori yang cocok
+        let matchedCategories = matchedConditions.flatMap(cond => {
+          let matchedCat = this.listKategoriCondition.find(cat =>
+            cat.terminology_name.trim().toLowerCase() === cond.category?.display?.trim().toLowerCase()
+          );
+          return matchedCat ? [matchedCat] : [];
+        });
+
+        console.log("🏷️ Kategori yang cocok:", matchedCategories);
+
+        // 🔥 Ambil kondisi klinis yang cocok
+        let matchedClinicalStatuses = matchedConditions.flatMap(cond => {
+          let matchedStatus = this.listCondtionClinical.find(status =>
+            status.terminology_name.trim().toLowerCase() === cond.clinicalStatus?.display?.trim().toLowerCase()
+          );
+          return matchedStatus ? [matchedStatus] : [];
+        });
+
+        console.log("🩺 Clinical Status yang cocok:", matchedClinicalStatuses);
+
+        let newItem = {
+          ...itemConditionDiagnosis,
+          inputString: allNotes.length > 0 ? allNotes.join(", ") : "", // 🔥 Gabung semua notes jadi satu string
+          selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
+          clinicalStatus: matchedClinicalStatuses.length > 0 ? matchedClinicalStatuses[0] : undefined
+        };
+
+        console.log("🆕 Item yang akan disimpan:", newItem);
+        return newItem;
+      }
+
+      console.warn(`⚠️ Tidak ada match untuk: ${terminologyName}`);
+      return itemConditionDiagnosis;
+    });
+
+    console.log("✅ Selesai handleConditionDiagnosa()");
+    console.log("📌 Data listConditionDiagnosis setelah mapping:", this.listConditionDiagnosis);
+  }
+
 
 
   handleConditionPelayananNifas() {
