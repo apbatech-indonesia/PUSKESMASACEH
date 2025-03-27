@@ -255,6 +255,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
       case "procedure-konseling-pelayanan-nifas":
         this.carilistProcedureKonselingNifas();
         this.carilistKategoriProcedure();
+        await this.cariHistory();
         break;
       case "procedure-tindakan":
         this.carilistProcedureTindakan();
@@ -800,6 +801,10 @@ export class TulisSatuSehatPncComponent implements OnInit {
         case "condition-leave-fasyankes":
           this.handleConditionLeaveFasyankes();
           break;
+        // NOTE: NOW TODO
+        case "procedure-konseling-pelayanan-nifas":
+          this.handleProcedureKonselingPelayananNifas();
+          break;
         default:
           break;
       }
@@ -807,6 +812,47 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+
+  handleProcedureKonselingPelayananNifas() {
+    if (!this.listHistory?.data?.procedures || !Array.isArray(this.listHistory.data.procedures))
+    {
+      console.warn("⚠️ listHistory.data.procedures tidak ditemukan atau bukan array.");
+      return;
+    }
+
+    this.listProcedureKonselingNifas = this.listProcedureKonselingNifas.map(itemProcedure => {
+      let terminologyName = itemProcedure.terminology_name.trim().toLowerCase().replace(/\s+/g, " ");
+
+      // 🔥 Cari procedure yang cocok berdasarkan name
+      let matchedProcedure = this.listHistory.data.procedures.find(proc =>
+        proc.name.trim().toLowerCase().replace(/\s+/g, " ") === terminologyName
+      );
+
+      if (matchedProcedure)
+      {
+        console.log(`✅ Match ditemukan: ${matchedProcedure.name}`, matchedProcedure);
+
+        // 🔥 Ambil kategori yang cocok
+        let matchedCategory = this.listKategoriProcedure.find(cat =>
+          cat.terminology_name.trim().toLowerCase().replace(/\s+/g, " ") === matchedProcedure.category?.display?.trim().toLowerCase().replace(/\s+/g, " ")
+        );
+
+        // 🔥 Set data ke UI
+        let newItem = {
+          ...itemProcedure,
+          periodeMulai: matchedProcedure.performedPeriod?.start || "",  // Ambil start date
+          periodeBerakhir: matchedProcedure.performedPeriod?.end || "", // Ambil end date
+          selectedCategory: matchedCategory || undefined                // Cocokkan kategori
+        };
+
+        return newItem;
+      }
+
+      console.warn(`⚠️ Tidak ada match untuk: ${terminologyName}`);
+      return itemProcedure;
+    });
+  }
+
 
   handleConditionLeaveFasyankes() {
     if (!this.listHistory?.data?.conditions || !Array.isArray(this.listHistory.data.conditions))

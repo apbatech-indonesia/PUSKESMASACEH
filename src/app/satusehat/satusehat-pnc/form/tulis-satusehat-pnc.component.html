@@ -519,8 +519,6 @@
                 </form>
             </div>
         </div>
-
-        <!-- NOTE : Now TODO -->
         <div class="card mb-2" *ngIf="activeTab == 'condition-leave-fasyankes'">
             <div class="card-body">
                 <form>
@@ -570,13 +568,14 @@
             </div>
         </div>
 
+        <!-- NOTE : Now TODO -->
         <div class="card mb-2" *ngIf="activeTab == 'procedure-konseling-pelayanan-nifas'">
             <div class="card-body">
                 <div class="card-body">
                     <form>
                         <div class="row">
                             <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
-                                *ngFor="let itemProcedureKonselingNifas of listProcedureKonselingNifas">
+                                *ngFor="let itemProcedureKonselingNifas of listProcedureKonselingNifas; let i = index; trackBy: trackByIndex">
                                 <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
                                     [title]="itemProcedureKonselingNifas.description">
                                     {{ itemProcedureKonselingNifas . terminology_name }}
@@ -588,18 +587,19 @@
 
                                     <label for="periode_mulai" class="form-label">Periode Mulai</label>
                                     <input type="datetime-local" class="form-control" id="periode_mulai"
-                                        [(ngModel)]="itemProcedureKonselingNifas.periodeMulai" name="periode_mulai" />
+                                        [(ngModel)]="itemProcedureKonselingNifas.periodeMulai"
+                                        [name]="'periode_mulai_' + i" />
                                     <!-- Input Periode Berakhir -->
                                     <label for="periode_berakhir" class="form-label">Periode
                                         Berakhir</label>
                                     <input type="datetime-local" class="form-control" id="periode_berakhir"
                                         [(ngModel)]="itemProcedureKonselingNifas.periodeBerakhir"
-                                        name="periode_berakhir" />
+                                        [name]="'periode_berakhir_' + i" />
                                     <!-- Select Kategori -->
                                     <div class="col-3">
                                         <select class="form-select"
                                             [(ngModel)]="itemProcedureKonselingNifas.selectedCategory"
-                                            name="selectedCategory" title="kategori">
+                                            [name]="'selectedCategory_' + i" title="kategori">
                                             <option [ngValue]="undefined" selected>Pilih Kategori</option>
                                             <option *ngFor="let item of listKategoriProcedure" [ngValue]="item">
                                                 {{ item . terminology_name }}
