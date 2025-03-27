@@ -795,11 +795,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
           this.handleConditionPelayananNifas();
           break;
         case "diagnosa-condition":
-          // NOTE: Now TODO
           this.handleConditionDiagnosa();
           break;
         case "condition-leave-fasyankes":
-          // NOTE: Now TODO
           this.handleConditionLeaveFasyankes();
           break;
         default:
@@ -810,7 +808,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
     }
   }
 
-  // NOTE: NOW TODO
   handleConditionLeaveFasyankes() {
     if (!this.listHistory?.data?.conditions || !Array.isArray(this.listHistory.data.conditions))
     {
