@@ -763,6 +763,11 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+
+  isCategorySelected(itemServiceRequest: any, categoryServiceRequest: any): boolean {
+    return itemServiceRequest.selectedCategories?.some(cat => cat.terminology_id === categoryServiceRequest.terminology_id) ?? false;
+  }
+
   async cariHistory() {
     let payload = {
       usecase_id: this.useCaseId,
@@ -819,10 +824,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
-  isCategorySelected(itemServiceRequest: any, categoryServiceRequest: any): boolean {
-    return itemServiceRequest.selectedCategories?.some(cat => cat.terminology_id === categoryServiceRequest.terminology_id) ?? false;
-  }
-
   handleRequestPemeriksaanHasilLab() {
     console.log("🔥 handleRequestPemeriksaanHasilLab() called");
 
