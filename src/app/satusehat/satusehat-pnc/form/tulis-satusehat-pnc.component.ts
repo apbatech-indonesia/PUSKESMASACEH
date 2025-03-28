@@ -265,6 +265,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
       case "request-pemeriksaan-hasil-lab":
         this.carilistRequestPemeriksaanLab();
         this.carilistKategoriServiceRequest();
+        await this.cariHistory();
         break;
       case "specimen-pemeriksaan-hasil-lab":
         this.carilistSpecimenPemeriksaanLab();
@@ -808,6 +809,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         case "procedure-tindakan":
           this.handleProcedureTindakan();
           break;
+        case "request-pemeriksaan-hasil-lab":
+          this.handleRequestPemeriksaanHasilLab();
+          break;
         default:
           break;
       }
@@ -815,6 +819,89 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+  isCategorySelected(itemServiceRequest: any, categoryServiceRequest: any): boolean {
+    return itemServiceRequest.selectedCategories?.some(cat => cat.terminology_id === categoryServiceRequest.terminology_id) ?? false;
+  }
+
+  handleRequestPemeriksaanHasilLab() {
+    console.log("🔥 handleRequestPemeriksaanHasilLab() called");
+
+    if (!this.listHistory?.data?.serviceRequests || !Array.isArray(this.listHistory.data.serviceRequests))
+    {
+      console.warn("⚠️ Data serviceRequests tidak ditemukan atau bukan array!", this.listHistory?.data?.serviceRequests);
+      return;
+    }
+
+    this.listRequestPemeriksaanLab = this.listRequestPemeriksaanLab.map(itemServiceRequest => {
+      let terminologyName = itemServiceRequest.terminology_name.trim().toLowerCase().replace(/\s+/g, " ");
+
+      // 🔥 Cari SEMUA service request yang cocok (bukan cuma satu)
+      let matchedServiceRequests = this.listHistory.data.serviceRequests.filter(req => {
+        let reqName = req.name.trim().toLowerCase().replace(/\s+/g, " ");
+        return reqName === terminologyName;
+      });
+
+      if (matchedServiceRequests.length > 0)
+      {
+        console.log("🎯 Match ditemukan:", matchedServiceRequests);
+
+        let allMatchedCategories: any[] = [];
+
+        matchedServiceRequests.forEach(matchedServiceRequest => {
+          console.log("🔎 Struktur kategori pada matchedServiceRequest:", matchedServiceRequest.category);
+
+          if (!matchedServiceRequest.category || !Array.isArray(matchedServiceRequest.category))
+          {
+            console.warn(`⚠️ matchedServiceRequest.category undefined atau bukan array untuk ${matchedServiceRequest.name}`, matchedServiceRequest.category);
+          }
+
+          let matchedCategories = (matchedServiceRequest.category || []).flatMap(cat => {
+            let categoryText = cat.text?.trim().toLowerCase().replace(/\s+/g, " ");
+
+            if (!categoryText && cat.coding)
+            {
+              categoryText = cat.coding[0]?.display?.trim().toLowerCase().replace(/\s+/g, " ");
+            }
+
+            console.log(`   🏷️ Checking kategori: ${categoryText}`);
+
+            return this.listKategoriServiceRequest.find(kat =>
+              kat.terminology_name.trim().toLowerCase().replace(/\s+/g, " ") === categoryText
+            ) || [];
+          }).filter(cat => cat !== undefined);
+
+          console.log("✅ matchedCategories:", matchedCategories);
+
+          allMatchedCategories.push(...matchedCategories);
+        });
+
+        // 🔥 Pastikan kategori tidak duplikat
+        allMatchedCategories = [...new Map(allMatchedCategories.map(item => [item.terminology_id, item])).values()];
+
+        // 🔥 Set data ke UI dengan deskripsi dari reasonCode[0].text (ambil dari service request pertama)
+        let newItem = {
+          ...itemServiceRequest,
+          identifier: matchedServiceRequests[0].identifier || "N/A", // Kalau gak ada, kasih default "N/A"
+          deskripsi: matchedServiceRequests[0].reasonCode?.[0]?.text || "",
+          selectedCategories: allMatchedCategories
+        };
+
+        console.log("📝 Data yang di-set ke UI:", newItem);
+        return newItem;
+      }
+
+      console.warn(`⚠️ Tidak ada match ditemukan untuk ${terminologyName}`);
+      return itemServiceRequest;
+    });
+
+    console.log("✅ Data listRequestPemeriksaanLab setelah mapping:", this.listRequestPemeriksaanLab);
+  }
+
+
+
+
+
+
 
   handleProcedureTindakan() {
     if (!this.listHistory?.data?.procedures || !Array.isArray(this.listHistory.data.procedures))
