@@ -670,6 +670,7 @@
                                 <label class="fw-bold">
                                     {{ itemServiceRequest . terminology_name }}
                                 </label>
+
                                 <!-- 🔥 Input Keterangan -->
                                 <textarea class="form-control" id="deskripsi" [(ngModel)]="itemServiceRequest.deskripsi" name="deskripsi"
                                     rows="3" placeholder="Input keterangan"></textarea>
@@ -677,7 +678,7 @@
                                 <!-- 🔥 Checkbox Kategori -->
                                 <div *ngFor="let categoryServiceRequest of listKategoriServiceRequest"
                                     class="form-check">
-                                    <input class="form-check-input" type="radio"
+                                    <input class="form-check-input" type="checkbox"
                                         (change)="toggleInputPermintaanPemeriksaanLab(itemServiceRequest.terminology_id + '-' + categoryServiceRequest.terminology_id, categoryServiceRequest, itemServiceRequest.terminology_id)"
                                         [id]="itemServiceRequest.terminology_id + '-' + categoryServiceRequest.terminology_id"
                                         [name]="'checkbox_' + itemServiceRequest.terminology_id + '-' + categoryServiceRequest.terminology_id"
@@ -704,7 +705,7 @@
                 <form>
                     <div class="row">
                         <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
-                            *ngFor="let itemSpecimenPemeriksaanLab of listSpecimenPemeriksaanLab">
+                            *ngFor="let itemSpecimenPemeriksaanLab of listSpecimenPemeriksaanLab; let i = index; trackBy: trackByIndex">
                             <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
                                 [title]="itemSpecimenPemeriksaanLab.description">
                                 {{ itemSpecimenPemeriksaanLab . terminology_name }}
@@ -712,7 +713,7 @@
                             <div class="d-flex align-items-center gap-2 mt-3">
                                 <!-- Select Kategori -->
                                 <select class="form-select w-50" [(ngModel)]="itemSpecimenPemeriksaanLab.selectedType"
-                                    name="selectedType" title="kategori">
+                                    [name]="'selectedType_' + i" title="kategori">
                                     <option [ngValue]="undefined" selected>Pilih Kategori</option>
                                     <option *ngFor="let itemType of listTipeSpecimen" [ngValue]="itemType">
                                         {{ itemType . terminology_name }}
@@ -721,11 +722,11 @@
                                 <!-- Select Service Request -->
                                 <select class="form-select w-50"
                                     [(ngModel)]="itemSpecimenPemeriksaanLab.selectedServiceRequest"
-                                    name="selectedType" title="kategori">
+                                    [name]="'selectedServiceRequest_' + i" title="kategori">
                                     <option [ngValue]="undefined" selected>Pilih Permintaan Sebelumnya</option>
-                                    <option *ngFor="let itemSeviceRequest of listServiceRequest"
-                                        [ngValue]="itemSeviceRequest">
-                                        {{ itemSeviceRequest . request_code }}
+                                    <option *ngFor="let itemServiceRequest of listServiceRequest"
+                                        [ngValue]="itemServiceRequest">
+                                        {{ itemServiceRequest . request_code }}
                                     </option>
                                 </select>
                             </div>
@@ -734,6 +735,8 @@
                 </form>
             </div>
         </div>
+
+
         <div class="card mb-2" *ngIf="activeTab == 'laporan-diagnosa-lab'">
             <div class="card-body">
                 <form>

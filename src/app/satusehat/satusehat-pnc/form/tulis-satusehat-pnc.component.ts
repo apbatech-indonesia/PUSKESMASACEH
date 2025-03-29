@@ -270,7 +270,8 @@ export class TulisSatuSehatPncComponent implements OnInit {
       case "specimen-pemeriksaan-hasil-lab":
         this.carilistSpecimenPemeriksaanLab();
         this.carilistTypeSpeciment();
-        this.carilistServiceRequest();
+        await this.carilistServiceRequest();
+        await this.cariHistory();
         break;
       case "laporan-diagnosa-lab":
         this.carilistLaporanDiagnosaLab();
@@ -817,6 +818,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         case "request-pemeriksaan-hasil-lab":
           this.handleRequestPemeriksaanHasilLab();
           break;
+        case "specimen-pemeriksaan-hasil-lab":
+          this.handleSpecimenPemeriksaanHasilLab();
+          break;
         default:
           break;
       }
@@ -824,12 +828,78 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+  handleSpecimenPemeriksaanHasilLab() {
+
+    if (!this.listHistory?.data?.specimens || !Array.isArray(this.listHistory.data.specimens))
+    {
+      console.warn("⚠️ listHistory.data.specimens tidak ada atau bukan array!");
+      return;
+    }
+
+    this.listSpecimenPemeriksaanLab = this.listSpecimenPemeriksaanLab.map(itemSpecimen => {
+      let terminologyName = itemSpecimen.terminology_name.trim().toLowerCase();
+      let terminologyCode = itemSpecimen.terminology_code;
+      const normalizeName = (name) => name.replace(/_/g, ' ').trim().toLowerCase();
+      let matchedSpecimens = this.listHistory.data.specimens.filter(spec =>
+        (normalizeName(spec.name) === terminologyName) ||
+        (spec.type?.display?.trim().toLowerCase() === terminologyName) ||
+        (spec.collection?.method?.display?.trim().toLowerCase() === terminologyName) ||
+        (spec.collection?.method?.code === terminologyCode)
+      );
+
+      if (matchedSpecimens.length > 0)
+      {
+        let matchedTypes = matchedSpecimens.flatMap(spec => {
+          let matchedType = this.listTipeSpecimen.find(type =>
+            type.terminology_code === spec.type?.code
+          );
+          return matchedType ? [matchedType] : [];
+        });
+        let matchedServiceRequests = matchedSpecimens.flatMap(spec => {
+          if (!spec.request || spec.request.length === 0)
+          {
+            return [];
+          }
+
+          let serviceRequestRef = spec.request[0]?.reference?.split("/")[1];
+
+          let matchedRequest = this.listServiceRequest?.find(req => {
+            if (!req.response_data.identifier)
+            {
+              return false;
+            }
+            return req.response_data.identifier.some(id => id.value?.trim() === serviceRequestRef?.trim());
+          });
+
+          if (!matchedRequest)
+          {
+            matchedRequest = this.listServiceRequest?.find(req =>
+              req.response_data.encounter?.reference?.includes(serviceRequestRef)
+            );
+          }
+
+          return matchedRequest ? [matchedRequest] : [];
+        });
+
+
+        return {
+          ...itemSpecimen,
+          selectedType: matchedTypes.length > 0 ? matchedTypes[0] : undefined,
+          selectedServiceRequest: matchedServiceRequests.length > 0 ? matchedServiceRequests[0] : undefined
+        };
+      }
+
+      return itemSpecimen;
+    });
+  }
+
+
+
+
   handleRequestPemeriksaanHasilLab() {
-    console.log("🔥 handleRequestPemeriksaanHasilLab() called");
 
     if (!this.listHistory?.data?.serviceRequests || !Array.isArray(this.listHistory.data.serviceRequests))
     {
-      console.warn("⚠️ Data serviceRequests tidak ditemukan atau bukan array!", this.listHistory?.data?.serviceRequests);
       return;
     }
 
@@ -844,41 +914,26 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
       if (matchedServiceRequests.length > 0)
       {
-        console.log("🎯 Match ditemukan:", matchedServiceRequests);
-
         let allMatchedCategories: any[] = [];
-
         matchedServiceRequests.forEach(matchedServiceRequest => {
-          console.log("🔎 Struktur kategori pada matchedServiceRequest:", matchedServiceRequest.category);
-
           if (!matchedServiceRequest.category || !Array.isArray(matchedServiceRequest.category))
           {
-            console.warn(`⚠️ matchedServiceRequest.category undefined atau bukan array untuk ${matchedServiceRequest.name}`, matchedServiceRequest.category);
           }
-
           let matchedCategories = (matchedServiceRequest.category || []).flatMap(cat => {
             let categoryText = cat.text?.trim().toLowerCase().replace(/\s+/g, " ");
-
             if (!categoryText && cat.coding)
             {
               categoryText = cat.coding[0]?.display?.trim().toLowerCase().replace(/\s+/g, " ");
             }
-
-            console.log(`   🏷️ Checking kategori: ${categoryText}`);
-
             return this.listKategoriServiceRequest.find(kat =>
               kat.terminology_name.trim().toLowerCase().replace(/\s+/g, " ") === categoryText
             ) || [];
           }).filter(cat => cat !== undefined);
-
-          console.log("✅ matchedCategories:", matchedCategories);
-
           allMatchedCategories.push(...matchedCategories);
         });
 
         // 🔥 Pastikan kategori tidak duplikat
         allMatchedCategories = [...new Map(allMatchedCategories.map(item => [item.terminology_id, item])).values()];
-
         // 🔥 Set data ke UI dengan deskripsi dari reasonCode[0].text (ambil dari service request pertama)
         let newItem = {
           ...itemServiceRequest,
@@ -886,16 +941,10 @@ export class TulisSatuSehatPncComponent implements OnInit {
           deskripsi: matchedServiceRequests[0].reasonCode?.[0]?.text || "",
           selectedCategories: allMatchedCategories
         };
-
-        console.log("📝 Data yang di-set ke UI:", newItem);
         return newItem;
       }
-
-      console.warn(`⚠️ Tidak ada match ditemukan untuk ${terminologyName}`);
       return itemServiceRequest;
     });
-
-    console.log("✅ Data listRequestPemeriksaanLab setelah mapping:", this.listRequestPemeriksaanLab);
   }
 
 
@@ -2028,7 +2077,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
           reason: [],
           reasonCode: [
             {
-              text: item.deskripsi || "Tidak ada deskripsi"
+              text: item.deskripsi || ""
             }
           ]
         }))
