@@ -276,8 +276,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
       case "laporan-diagnosa-lab":
         this.carilistLaporanDiagnosaLab();
         this.carilistCategoryDiagnosaLab();
-        this.carilistSpecimen();
-        this.carilistObservation();
+        await this.carilistSpecimen();
+        await this.carilistObservation();
+        await this.cariHistory();
         break;
       case "rencana-tindak-lanjut":
         this.carilistCategoryCarePlant();
@@ -821,6 +822,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         case "specimen-pemeriksaan-hasil-lab":
           this.handleSpecimenPemeriksaanHasilLab();
           break;
+        case "laporan-diagnosa-lab":
+          this.handleLaporanDiagnosaLab();
+          break;
         default:
           break;
       }
@@ -828,11 +832,105 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
-  handleSpecimenPemeriksaanHasilLab() {
 
+  handleLaporanDiagnosaLab() {
+    if (!this.listHistory?.data?.diagnosticReports || !Array.isArray(this.listHistory.data.diagnosticReports))
+    {
+      return;
+    }
+
+    this.listLaporanDiagnosaLab = this.listLaporanDiagnosaLab.map(itemReportLab => {
+      let terminologyCode = itemReportLab.terminology_code.trim().toLowerCase();
+
+      let matchedDiagnosticReports = this.listHistory.data.diagnosticReports.filter(report =>
+        report.data.some(d => d.code.code.trim().toLowerCase() === terminologyCode)
+      );
+
+      if (matchedDiagnosticReports.length > 0)
+      {
+        let matchedReport = matchedDiagnosticReports[0];
+        let matchedData = matchedReport.data.find(d => d.code.code.trim().toLowerCase() === terminologyCode);
+
+        let allMatchedCategories = [];
+        let allMatchedSpecimens = [];
+        let allMatchedObservations = [];
+
+        // ✅ Pencocokan kategori
+        if (matchedReport.category)
+        {
+          let categoryText = matchedReport.category.display.trim().toLowerCase();
+          let matchedCategories = this.listCategoryDiagnosaLab.filter(kat =>
+            kat.terminology_name.trim().toLowerCase() === categoryText
+          );
+          allMatchedCategories.push(...matchedCategories);
+        }
+
+        // ✅ Pencocokan spesimen dari `specimen[0].reference`
+        if (matchedReport.specimen?.length > 0)
+        {
+          let specimenReference = matchedReport.specimen[0].reference;
+          if (specimenReference)
+          {
+            let specimenId = specimenReference.split('/').pop().trim();
+            let matchedSpecimen = this.listSpecimens.find(specimen =>
+              specimen.response_id?.trim() === specimenId
+            );
+            if (matchedSpecimen)
+            {
+              allMatchedSpecimens.push(matchedSpecimen);
+            }
+          }
+        }
+
+        // ✅ Pencocokan observasi dari `basedOn[].reference`
+        // ✅ Pencocokan observasi dari `data[].result.reference`
+        matchedReport.data.forEach(dataItem => {
+          let observationReference = dataItem.result?.reference;
+
+          if (observationReference)
+          {
+            let obsId = observationReference.split('/').pop().trim();
+            let matchedObservation = this.listObservationLab.find(obs =>
+              obs.response_id?.trim() === obsId
+            );
+            if (matchedObservation)
+            {
+              allMatchedObservations.push(matchedObservation);
+            }
+          }
+        });
+
+
+
+
+
+        // 🔥 Menghapus duplikasi berdasarkan key yang benar
+        allMatchedCategories = [...new Map(allMatchedCategories.map(item => [item.terminology_id, item])).values()];
+        allMatchedSpecimens = [...new Map(allMatchedSpecimens.map(item => [item.response_id, item])).values()];
+        allMatchedObservations = [...new Map(allMatchedObservations.map(item => [item.response_id, item])).values()];
+
+        // 🔥 Menetapkan data ke UI
+        return {
+          ...itemReportLab,
+          identifier: matchedReport.basedOn?.[0]?.reference || "N/A",
+          deskripsi: matchedReport.conclusionCode?.[0]?.coding?.[0]?.display || "",
+          selectedCategory: allMatchedCategories[0] || undefined,
+          selectedSpecimen: allMatchedSpecimens[0] || undefined,
+          selectedObservation: allMatchedObservations[0] || undefined
+        };
+      }
+
+      return itemReportLab;
+    });
+  }
+
+
+
+
+
+  handleSpecimenPemeriksaanHasilLab() {
     if (!this.listHistory?.data?.specimens || !Array.isArray(this.listHistory.data.specimens))
     {
-      console.warn("⚠️ listHistory.data.specimens tidak ada atau bukan array!");
       return;
     }
 
@@ -861,25 +959,28 @@ export class TulisSatuSehatPncComponent implements OnInit {
             return [];
           }
 
-          let serviceRequestRef = spec.request[0]?.reference?.split("/")[1];
+          let serviceRequestRef = spec.request[0]?.reference?.split("/").pop()?.trim(); // Ambil ID dari reference
 
-          let matchedRequest = this.listServiceRequest?.find(req => {
-            if (!req.response_data.identifier)
-            {
-              return false;
-            }
-            return req.response_data.identifier.some(id => id.value?.trim() === serviceRequestRef?.trim());
-          });
+          if (!serviceRequestRef)
+          {
+            return [];
+          }
+
+
+          // ✅ Cari ServiceRequest berdasarkan response_id
+          let matchedRequest = this.listServiceRequest?.find(req =>
+            req.response_id?.trim() === serviceRequestRef
+          );
 
           if (!matchedRequest)
           {
-            matchedRequest = this.listServiceRequest?.find(req =>
-              req.response_data.encounter?.reference?.includes(serviceRequestRef)
-            );
+          } else
+          {
           }
 
           return matchedRequest ? [matchedRequest] : [];
         });
+
 
 
         return {
@@ -892,9 +993,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       return itemSpecimen;
     });
   }
-
-
-
 
   handleRequestPemeriksaanHasilLab() {
 
@@ -946,13 +1044,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       return itemServiceRequest;
     });
   }
-
-
-
-
-
-
-
   handleProcedureTindakan() {
     if (!this.listHistory?.data?.procedures || !Array.isArray(this.listHistory.data.procedures))
     {
