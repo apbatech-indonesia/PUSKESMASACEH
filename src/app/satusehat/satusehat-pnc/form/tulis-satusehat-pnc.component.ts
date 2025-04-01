@@ -281,7 +281,8 @@ export class TulisSatuSehatPncComponent implements OnInit {
         await this.cariHistory();
         break;
       case "rencana-tindak-lanjut":
-        this.carilistCategoryCarePlant();
+        await this.carilistCategoryCarePlant();
+        await this.cariHistory();
         break;
       default:
         break;
@@ -782,9 +783,8 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
       let response: any = await this.PncService.getUseCaseResponse(payload);
       this.listHistory = response;
-      console.log(this.listHistory);
 
-      // 🔥 Handle tab aktif default value
+      //  Handle tab aktif default value
       switch (this.activeTab)
       {
         case "form-related-person":
@@ -825,6 +825,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
         case "laporan-diagnosa-lab":
           this.handleLaporanDiagnosaLab();
           break;
+        case "rencana-tindak-lanjut":
+          this.handleRencanaTindakLanjut();
+          break;
         default:
           break;
       }
@@ -832,6 +835,45 @@ export class TulisSatuSehatPncComponent implements OnInit {
     {
     }
   }
+
+  handleRencanaTindakLanjut() {
+    if (!this.listHistory?.data?.carePlans || !Array.isArray(this.listHistory.data.carePlans))
+    {
+      return;
+    }
+
+
+    this.listCarePlantCategory = this.listCarePlantCategory.map(itemCategoruCarePlant => {
+      let terminologyName = itemCategoruCarePlant.terminology_name.trim().toLowerCase().replace(/\s+/g, " ");
+
+      let matchedCarePlans = this.listHistory.data.carePlans.filter(carePlan => {
+        let carePlanName = carePlan.name.trim().toLowerCase().replace(/_/g, " ");
+
+        if (terminologyName === carePlanName)
+        {
+        }
+
+        return terminologyName === carePlanName;
+      });
+
+
+      if (matchedCarePlans.length > 0)
+      {
+        let newItem = {
+          ...itemCategoruCarePlant,
+          inputString: itemCategoruCarePlant.inputString || matchedCarePlans[0].description || "",
+        };
+
+        return newItem;
+      }
+
+      return itemCategoruCarePlant;
+    });
+  }
+
+
+
+
 
   handleLaporanDiagnosaLab() {
     if (!this.listHistory?.data?.diagnosticReports || !Array.isArray(this.listHistory.data.diagnosticReports))
@@ -855,7 +897,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
         let allMatchedSpecimens = [];
         let allMatchedObservations = [];
 
-        // ✅ Pencocokan kategori
         if (matchedReport.category)
         {
           let categoryText = matchedReport.category.display.trim().toLowerCase();
@@ -865,7 +906,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
           allMatchedCategories.push(...matchedCategories);
         }
 
-        // ✅ Pencocokan spesimen dari `specimen[0].reference`
         if (matchedReport.specimen?.length > 0)
         {
           let specimenReference = matchedReport.specimen[0].reference;
@@ -882,8 +922,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
           }
         }
 
-        // ✅ Pencocokan observasi dari `basedOn[].reference`
-        // ✅ Pencocokan observasi dari `data[].result.reference`
         matchedReport.data.forEach(dataItem => {
           let observationReference = dataItem.result?.reference;
 
@@ -904,12 +942,10 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
 
 
-        // 🔥 Menghapus duplikasi berdasarkan key yang benar
         allMatchedCategories = [...new Map(allMatchedCategories.map(item => [item.terminology_id, item])).values()];
         allMatchedSpecimens = [...new Map(allMatchedSpecimens.map(item => [item.response_id, item])).values()];
         allMatchedObservations = [...new Map(allMatchedObservations.map(item => [item.response_id, item])).values()];
 
-        // 🔥 Menetapkan data ke UI
         return {
           ...itemReportLab,
           identifier: matchedReport.basedOn?.[0]?.reference || "N/A",
@@ -923,11 +959,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
       return itemReportLab;
     });
   }
-
-
-
-
-
   handleSpecimenPemeriksaanHasilLab() {
     if (!this.listHistory?.data?.specimens || !Array.isArray(this.listHistory.data.specimens))
     {
@@ -967,7 +998,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
           }
 
 
-          // ✅ Cari ServiceRequest berdasarkan response_id
+          //  Cari ServiceRequest berdasarkan response_id
           let matchedRequest = this.listServiceRequest?.find(req =>
             req.response_id?.trim() === serviceRequestRef
           );
@@ -1004,7 +1035,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
     this.listRequestPemeriksaanLab = this.listRequestPemeriksaanLab.map(itemServiceRequest => {
       let terminologyName = itemServiceRequest.terminology_name.trim().toLowerCase().replace(/\s+/g, " ");
 
-      // 🔥 Cari SEMUA service request yang cocok (bukan cuma satu)
+      //  Cari SEMUA service request yang cocok (bukan cuma satu)
       let matchedServiceRequests = this.listHistory.data.serviceRequests.filter(req => {
         let reqName = req.name.trim().toLowerCase().replace(/\s+/g, " ");
         return reqName === terminologyName;
@@ -1030,9 +1061,9 @@ export class TulisSatuSehatPncComponent implements OnInit {
           allMatchedCategories.push(...matchedCategories);
         });
 
-        // 🔥 Pastikan kategori tidak duplikat
+        //  Pastikan kategori tidak duplikat
         allMatchedCategories = [...new Map(allMatchedCategories.map(item => [item.terminology_id, item])).values()];
-        // 🔥 Set data ke UI dengan deskripsi dari reasonCode[0].text (ambil dari service request pertama)
+        //  Set data ke UI dengan deskripsi dari reasonCode[0].text (ambil dari service request pertama)
         let newItem = {
           ...itemServiceRequest,
           identifier: matchedServiceRequests[0].identifier || "N/A", // Kalau gak ada, kasih default "N/A"
@@ -1044,6 +1075,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
       return itemServiceRequest;
     });
   }
+
   handleProcedureTindakan() {
     if (!this.listHistory?.data?.procedures || !Array.isArray(this.listHistory.data.procedures))
     {
@@ -1053,7 +1085,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
     this.listProcedureTindakan = this.listProcedureTindakan.map(itemProcedure => {
       let terminologyName = itemProcedure.terminology_name.trim().toLowerCase().replace(/\s+/g, " ");
 
-      // 🔥 Cari procedure yang cocok berdasarkan name
+      //  Cari procedure yang cocok berdasarkan name
       let matchedProcedure = this.listHistory.data.procedures.find(proc =>
         proc.name.trim().toLowerCase().replace(/\s+/g, " ") === terminologyName
       );
@@ -1061,13 +1093,13 @@ export class TulisSatuSehatPncComponent implements OnInit {
       if (matchedProcedure)
       {
 
-        // 🔥 Ambil kategori yang cocok
+        //  Ambil kategori yang cocok
         let matchedCategory = this.listKategoriProcedure.find(cat =>
           cat.terminology_name.trim().toLowerCase().replace(/\s+/g, " ") ===
           matchedProcedure.category?.display?.trim().toLowerCase().replace(/\s+/g, " ")
         );
 
-        // 🔥 Set data ke UI
+        //  Set data ke UI
         let newItem = {
           ...itemProcedure,
           periodeMulai: matchedProcedure.performedPeriod?.start || "",  // Ambil start date
@@ -1090,7 +1122,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
     this.listProcedureKonselingNifas = this.listProcedureKonselingNifas.map(itemProcedure => {
       let terminologyName = itemProcedure.terminology_name.trim().toLowerCase().replace(/\s+/g, " ");
 
-      // 🔥 Cari procedure yang cocok berdasarkan name
+      //  Cari procedure yang cocok berdasarkan name
       let matchedProcedure = this.listHistory.data.procedures.find(proc =>
         proc.name.trim().toLowerCase().replace(/\s+/g, " ") === terminologyName
       );
@@ -1098,12 +1130,12 @@ export class TulisSatuSehatPncComponent implements OnInit {
       if (matchedProcedure)
       {
 
-        // 🔥 Ambil kategori yang cocok
+        //  Ambil kategori yang cocok
         let matchedCategory = this.listKategoriProcedure.find(cat =>
           cat.terminology_name.trim().toLowerCase().replace(/\s+/g, " ") === matchedProcedure.category?.display?.trim().toLowerCase().replace(/\s+/g, " ")
         );
 
-        // 🔥 Set data ke UI
+        //  Set data ke UI
         let newItem = {
           ...itemProcedure,
           periodeMulai: matchedProcedure.performedPeriod?.start || "",  // Ambil start date
@@ -1123,7 +1155,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
       return;
     }
 
-    // 🔥 Cari kondisi yang mengandung "Patient's condition"
+    //  Cari kondisi yang mengandung "Patient's condition"
     let matchedCondition = this.listHistory.data.conditions.find(cond =>
       cond.name.trim().toLowerCase().includes("patient?s condition") // Bisa juga pakai regex kalau perlu
     );
@@ -1131,20 +1163,20 @@ export class TulisSatuSehatPncComponent implements OnInit {
     if (matchedCondition)
     {
 
-      // 🔥 Ambil SEMUA notes dari matchedCondition
+      //  Ambil SEMUA notes dari matchedCondition
       let allNotes = (matchedCondition.note || []).map(n => n.text).filter(v => v !== undefined);
 
-      // 🔥 Ambil kategori yang cocok
+      //  Ambil kategori yang cocok
       let matchedCategory = this.listKategoriCondition.find(cat =>
         cat.terminology_name.trim().toLowerCase() === matchedCondition.category?.display?.trim().toLowerCase()
       );
 
-      // 🔥 Ambil kondisi klinis yang cocok
+      //  Ambil kondisi klinis yang cocok
       let matchedClinicalStatus = this.listCondtionClinical.find(status =>
         status.terminology_name.trim().toLowerCase() === matchedCondition.clinicalStatus?.display?.trim().toLowerCase()
       );
 
-      // 🔥 Setel `selectedCondition` sesuai hasil pencarian
+      //  Setel `selectedCondition` sesuai hasil pencarian
       this.selectedCondition = this.listConditionLeaveFasyankes.find(item =>
         item.terminology_name.trim().toLowerCase() === matchedCondition.name.trim().toLowerCase()
       ) || undefined;
@@ -1168,24 +1200,24 @@ export class TulisSatuSehatPncComponent implements OnInit {
     }
     this.listConditionDiagnosis = this.listConditionDiagnosis.map(itemConditionDiagnosis => {
       let terminologyName = itemConditionDiagnosis.terminology_name.trim().toLowerCase();
-      // 🔥 Cari SEMUA kondisi yang cocok
+      //  Cari SEMUA kondisi yang cocok
       let matchedConditions = this.listHistory.data.conditions.filter(cond =>
         cond.name.trim().toLowerCase() === terminologyName
       );
       if (matchedConditions.length > 0)
       {
-        // 🔥 Ambil SEMUA notes dari matchedConditions
+        //  Ambil SEMUA notes dari matchedConditions
         let allNotes = matchedConditions.flatMap(cond =>
           (cond.note || []).map(n => n.text).filter(v => v !== undefined)
         );
-        // 🔥 Ambil kategori yang cocok
+        //  Ambil kategori yang cocok
         let matchedCategories = matchedConditions.flatMap(cond => {
           let matchedCat = this.listKategoriCondition.find(cat =>
             cat.terminology_name.trim().toLowerCase() === cond.category?.display?.trim().toLowerCase()
           );
           return matchedCat ? [matchedCat] : [];
         });
-        // 🔥 Ambil kondisi klinis yang cocok
+        //  Ambil kondisi klinis yang cocok
         let matchedClinicalStatuses = matchedConditions.flatMap(cond => {
           let matchedStatus = this.listCondtionClinical.find(status =>
             status.terminology_name.trim().toLowerCase() === cond.clinicalStatus?.display?.trim().toLowerCase()
@@ -1194,7 +1226,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
         });
         let newItem = {
           ...itemConditionDiagnosis,
-          inputString: allNotes.length > 0 ? allNotes.join(", ") : "", // 🔥 Gabung semua notes jadi satu string
+          inputString: allNotes.length > 0 ? allNotes.join(", ") : "", //  Gabung semua notes jadi satu string
           selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
           clinicalStatus: matchedClinicalStatuses.length > 0 ? matchedClinicalStatuses[0] : undefined
         };
@@ -1210,19 +1242,19 @@ export class TulisSatuSehatPncComponent implements OnInit {
     this.listConditionPelayananNifas = this.listConditionPelayananNifas.map(itemConditionPelayananNifas => {
       let terminologyName = itemConditionPelayananNifas.terminology_name.trim().toLowerCase();
 
-      // 🔥 Cari SEMUA kondisi yang cocok
+      //  Cari SEMUA kondisi yang cocok
       let matchedConditions = this.listHistory.data.conditions.filter(cond =>
         cond.name.trim().toLowerCase() === terminologyName
       );
 
       if (matchedConditions.length > 0)
       {
-        // 🔥 Ambil SEMUA notes dari matchedConditions
+        //  Ambil SEMUA notes dari matchedConditions
         let allNotes = matchedConditions.flatMap(cond =>
           (cond.note || []).map(n => n.text).filter(v => v !== undefined)
         );
 
-        // 🔥 Ambil kategori yang cocok
+        //  Ambil kategori yang cocok
         let matchedCategories = matchedConditions.flatMap(cond => {
           let matchedCat = this.listKategoriCondition.find(cat =>
             cat.terminology_name.trim().toLowerCase() === cond.category?.display?.trim().toLowerCase()
@@ -1230,7 +1262,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
           return matchedCat ? [matchedCat] : [];
         });
 
-        // 🔥 Ambil kondisi klinis yang cocok
+        //  Ambil kondisi klinis yang cocok
         let matchedClinicalStatuses = matchedConditions.flatMap(cond => {
           let matchedStatus = this.listCondtionClinical.find(status =>
             status.terminology_name.trim().toLowerCase() === cond.clinicalStatus?.display?.trim().toLowerCase()
@@ -1240,7 +1272,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
         return {
           ...itemConditionPelayananNifas,
-          inputString: allNotes.length > 0 ? allNotes.join(", ") : "", // 🔥 Gabung semua notes jadi satu string
+          inputString: allNotes.length > 0 ? allNotes.join(", ") : "", //  Gabung semua notes jadi satu string
           selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
           clinicalStatus: matchedClinicalStatuses.length > 0 ? matchedClinicalStatuses[0] : undefined
         };
@@ -1255,14 +1287,14 @@ export class TulisSatuSehatPncComponent implements OnInit {
     this.listObservasiPemeriksaanLab = this.listObservasiPemeriksaanLab.map(itemPemeriksaanLab => {
       let terminologyName = itemPemeriksaanLab.terminology_name.trim().toLowerCase();
 
-      // 🔥 Cari observasi yang cocok berdasarkan terminology_name
+      //  Cari observasi yang cocok berdasarkan terminology_name
       let matchedObservations = this.listHistory.data.observations.filter(obs =>
         obs.name.trim().toLowerCase() === terminologyName
       );
 
       if (matchedObservations.length > 0)
       {
-        // 🔥 Ambil kategori yang cocok
+        //  Ambil kategori yang cocok
         let matchedCategories = matchedObservations.flatMap(obs => {
           let matchedCat = this.listKategoriObservasi.find(cat =>
             cat.terminology_name.trim().toLowerCase() === obs.category?.display?.trim().toLowerCase()
@@ -1285,24 +1317,24 @@ export class TulisSatuSehatPncComponent implements OnInit {
     this.listObservasiPelayananNifasPendarahan = this.listObservasiPelayananNifasPendarahan.map(itemPelayananNifasPendarahan => {
       let terminologyName = itemPelayananNifasPendarahan.terminology_name.trim().toLowerCase();
 
-      // 🔥 Cari SEMUA observasi yang cocok
+      //  Cari SEMUA observasi yang cocok
       let matchedObservations = this.listHistory.data.observations.filter(obs =>
         obs.name.trim().toLowerCase() === terminologyName
       );
 
       if (matchedObservations.length > 0)
       {
-        // 🔥 Ambil SEMUA value dari result.value
+        //  Ambil SEMUA value dari result.value
         let allValues = matchedObservations.flatMap(obs =>
           (obs.data || []).map(d => d.result?.value).filter(v => v !== undefined)
         );
 
-        // 🔥 Ambil unit dari result.unit
+        //  Ambil unit dari result.unit
         let matchedUnits = matchedObservations.flatMap(obs =>
           (obs.data || []).map(d => d.result?.unit).filter(v => v !== undefined)
         );
 
-        // 🔥 Ambil kategori yang cocok
+        //  Ambil kategori yang cocok
         let matchedCategories = matchedObservations.flatMap(obs => {
           let matchedCat = this.listKategoriObservasi.find(cat =>
             cat.terminology_name.trim().toLowerCase() === obs.category?.display?.trim().toLowerCase()
@@ -1310,12 +1342,12 @@ export class TulisSatuSehatPncComponent implements OnInit {
           return matchedCat ? [matchedCat] : [];
         });
 
-        // 🔥 Ambil keterangan dari notes / description
+        //  Ambil keterangan dari notes / description
         let matchedDescriptions = matchedObservations.flatMap(obs =>
           (obs.data || []).map(d => d.result?.notes || obs.description).filter(v => v !== undefined)
         );
 
-        // 🔥 Cocokin unit dengan `listSatuanUnit`
+        //  Cocokin unit dengan `listSatuanUnit`
         let selectedUnit = this.listSatuanUnit.find(unit =>
           unit.unit_code?.trim().toLowerCase() === matchedUnits[0]?.trim().toLowerCase()
         );
@@ -1338,24 +1370,24 @@ export class TulisSatuSehatPncComponent implements OnInit {
     this.listObservasiPelayananNifas = this.listObservasiPelayananNifas.map(itemPelayananNifas => {
       let terminologyName = itemPelayananNifas.terminology_name.trim().toLowerCase();
 
-      // 🔥 Cari SEMUA observasi yang cocok
+      //  Cari SEMUA observasi yang cocok
       let matchedObservations = this.listHistory.data.observations.filter(obs =>
         obs.name.trim().toLowerCase() === terminologyName
       );
 
       if (matchedObservations.length > 0)
       {
-        // 🔥 Ambil SEMUA value dari result.value
+        //  Ambil SEMUA value dari result.value
         let allValues = matchedObservations.flatMap(obs =>
           (obs.data || []).map(d => d.result?.value).filter(v => v !== undefined)
         );
 
-        // 🔥 Ambil unit dari result.unit
+        //  Ambil unit dari result.unit
         let matchedUnits = matchedObservations.flatMap(obs =>
           (obs.data || []).map(d => d.result?.unit).filter(v => v !== undefined)
         );
 
-        // 🔥 Ambil kategori yang cocok
+        //  Ambil kategori yang cocok
         let matchedCategories = matchedObservations.flatMap(obs => {
           let matchedCat = this.listKategoriObservasi.find(cat =>
             cat.terminology_name.trim().toLowerCase() === obs.category?.display?.trim().toLowerCase()
@@ -1363,7 +1395,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
           return matchedCat ? [matchedCat] : [];
         });
 
-        // 🔥 Cocokin unit dengan `listSatuanUnit`
+        //  Cocokin unit dengan `listSatuanUnit`
         let selectedUnit = this.listSatuanUnit.find(unit =>
           unit.unit_code?.trim().toLowerCase() === matchedUnits[0]?.trim().toLowerCase()
         );
@@ -1385,7 +1417,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
     this.listObservasiPersalinan = this.listObservasiPersalinan.map(itemPersalinan => {
       let terminologyName = itemPersalinan.terminology_name.trim().toLowerCase();
 
-      // 🔥 Cari SEMUA observasi yang cocok
+      //  Cari SEMUA observasi yang cocok
       let matchedObservations = this.listHistory.data.observations.filter(obs =>
         obs.name.trim().toLowerCase() === terminologyName
       );
@@ -1393,13 +1425,13 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
       if (matchedObservations.length > 0)
       {
-        // 🔥 Ambil SEMUA valueInteger yang ada di semua data
+        //  Ambil SEMUA valueInteger yang ada di semua data
         let allValues = matchedObservations.flatMap(obs =>
           (obs.data || []).map(d => d.valueInteger).filter(v => v !== undefined)
         );
 
 
-        // 🔥 Ambil kategori yang cocok
+        //  Ambil kategori yang cocok
         let matchedCategories = matchedObservations.flatMap(obs => {
           let matchedCat = this.listKategoriObservasi.find(cat =>
             cat.terminology_name.trim().toLowerCase() === obs.category?.display?.trim().toLowerCase()

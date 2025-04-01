@@ -777,18 +777,31 @@
                 </form>
             </div>
         </div>
+
+
+        <!-- NOTE: NOW TODO -->
+        <!-- Rencana Tindak Lanjut -->
         <div class="card mb-2" *ngIf="activeTab == 'rencana-tindak-lanjut'">
             <div class="card-body">
                 <form>
                     <div class="row">
                         <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
-                            *ngFor="let itemCategoruCarePlant of listCarePlantCategory">
+                            *ngFor="let itemCategoruCarePlant of listCarePlantCategory; let i = index; trackBy: trackByIndex">
+
+                            <!-- Label Nama Care Plan -->
                             <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
-                                [title]="itemCategoruCarePlant.description">
+                                [title]="itemCategoruCarePlant.deskripsi">
                                 {{ itemCategoruCarePlant . terminology_name }}
                             </label>
+
+                            <!-- Tambahkan deskripsi kalau ada -->
+                            <p class="text-muted mt-2" *ngIf="itemCategoruCarePlant.deskripsi">
+                                {{ itemCategoruCarePlant . deskripsi }}
+                            </p>
+
+                            <!-- Input Keterangan -->
                             <div class="d-flex align-items-center gap-2 mt-3">
-                                <textarea class="form-control" [(ngModel)]="itemCategoruCarePlant.inputString" name="inputString"
+                                <textarea class="form-control" [(ngModel)]="itemCategoruCarePlant.inputString" [name]="'inputString_' + i"
                                     placeholder="Input Keterangan" rows="3"></textarea>
                             </div>
                         </div>
@@ -796,6 +809,8 @@
                 </form>
             </div>
         </div>
+
+
 
     </div>
 
