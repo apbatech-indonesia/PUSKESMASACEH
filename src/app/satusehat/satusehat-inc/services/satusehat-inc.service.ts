@@ -26,6 +26,9 @@ export class IncService {
   createKunjunganInc(data: any) {
     return this.request('INC/createKunjungan', data);
   }
+  createRelatedPersonInc(data: any) {
+    return this.request('INC/createRelatedPerson', data);
+  }
   getUseCaseResponse(data: any) {
     return this.request('master/getUseCase', data);
   }
