@@ -161,6 +161,7 @@ import { MasterSpecimenModule } from './satusehat/satusehat-master/master-specim
 import { TulisSatuSehatGiziComponent } from './satusehat/satusehat-gizi/form/tulis-satusehat-gizi.component';
 import { skriningComponent } from "./clmaster/skrining/skrining.component";
 import { TulisSatuSehatPncComponent } from './satusehat/satusehat-pnc/form/tulis-satusehat-pnc.component';
+import { TulisSatuSehatIncComponent } from './satusehat/satusehat-inc/form/tulis-satusehat-inc.component';
 @NgModule({
   declarations: [
 
@@ -228,6 +229,7 @@ import { TulisSatuSehatPncComponent } from './satusehat/satusehat-pnc/form/tulis
     TulisSkriningPtmComponent,
     TulisSatuSehatGiziComponent,
     TulisSatuSehatPncComponent,
+    TulisSatuSehatIncComponent,
     MasterProvinceComponent,
     MasterCityComponent,
     MasterDistrictComponent,

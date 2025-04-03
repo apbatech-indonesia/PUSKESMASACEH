@@ -81,7 +81,8 @@ export class SidebarComponent implements OnInit {
   hak() {
     this.authService.hakakses(this.kdcabang).subscribe(
       (data) => {
-        for (let x of data) {
+        for (let x of data)
+        {
           this.rj = x.rj;
           this.far = x.farmasi;
           this.lab = x.lab;
@@ -100,7 +101,8 @@ export class SidebarComponent implements OnInit {
     this.hak();
     setTimeout(() => {
       this.innerWidth = window.innerWidth;
-      if (this.innerWidth < 1200) {
+      if (this.innerWidth < 1200)
+      {
         this.globals.toggleSidebar = true;
       }
     });
@@ -115,9 +117,11 @@ export class SidebarComponent implements OnInit {
   onResize(event) {
     this.newInnerWidth = event.target.innerWidth;
 
-    if (this.newInnerWidth < 1200) {
+    if (this.newInnerWidth < 1200)
+    {
       this.globals.toggleSidebar = true;
-    } else {
+    } else
+    {
       this.globals.toggleSidebar = false;
     }
   }
@@ -127,10 +131,10 @@ export class SidebarComponent implements OnInit {
       "https://fronttemprs.clenic.id/#/masuk/002000001/002000001/Wirahman/Wirahman Usman/Super Admin/002/12345",
       "_blank",
       "location=no,menubar=yes,toolbar=yes,height=" +
-        screen.height +
-        ",width=" +
-        screen.width +
-        ",scrollbars=yes,status=yes"
+      screen.height +
+      ",width=" +
+      screen.width +
+      ",scrollbars=yes,status=yes"
     );
     redirectWindow.location;
   }
@@ -139,10 +143,10 @@ export class SidebarComponent implements OnInit {
       "http://localhost:8011/anjungan/AJG-v3/awal.php",
       "_blank",
       "location=no,menubar=yes,toolbar=yes,height=" +
-        screen.height +
-        ",width=" +
-        screen.width +
-        ",scrollbars=yes,status=yes"
+      screen.height +
+      ",width=" +
+      screen.width +
+      ",scrollbars=yes,status=yes"
     );
     redirectWindow.location;
   }
