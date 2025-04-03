@@ -1011,9 +1011,6 @@ export class TulisSatuSehatPncComponent implements OnInit {
 
           return matchedRequest ? [matchedRequest] : [];
         });
-
-
-
         return {
           ...itemSpecimen,
           selectedType: matchedTypes.length > 0 ? matchedTypes[0] : undefined,
@@ -1317,24 +1314,29 @@ export class TulisSatuSehatPncComponent implements OnInit {
     this.listObservasiPelayananNifasPendarahan = this.listObservasiPelayananNifasPendarahan.map(itemPelayananNifasPendarahan => {
       let terminologyName = itemPelayananNifasPendarahan.terminology_name.trim().toLowerCase();
 
-      //  Cari SEMUA observasi yang cocok
+      // Cari SEMUA observasi yang cocok
       let matchedObservations = this.listHistory.data.observations.filter(obs =>
         obs.name.trim().toLowerCase() === terminologyName
       );
 
       if (matchedObservations.length > 0)
       {
-        //  Ambil SEMUA value dari result.value
+        // Ambil SEMUA nilai angka dari result.value
         let allValues = matchedObservations.flatMap(obs =>
           (obs.data || []).map(d => d.result?.value).filter(v => v !== undefined)
         );
 
-        //  Ambil unit dari result.unit
+        // 🔥 Ambil `valueString` dari observasi yang cocok
+        let matchedValueStrings = matchedObservations.flatMap(obs =>
+          (obs.data || []).map(d => d.valueString).filter(v => v !== undefined)
+        );
+
+        // Ambil unit dari result.unit
         let matchedUnits = matchedObservations.flatMap(obs =>
           (obs.data || []).map(d => d.result?.unit).filter(v => v !== undefined)
         );
 
-        //  Ambil kategori yang cocok
+        // Ambil kategori yang cocok
         let matchedCategories = matchedObservations.flatMap(obs => {
           let matchedCat = this.listKategoriObservasi.find(cat =>
             cat.terminology_name.trim().toLowerCase() === obs.category?.display?.trim().toLowerCase()
@@ -1342,12 +1344,7 @@ export class TulisSatuSehatPncComponent implements OnInit {
           return matchedCat ? [matchedCat] : [];
         });
 
-        //  Ambil keterangan dari notes / description
-        let matchedDescriptions = matchedObservations.flatMap(obs =>
-          (obs.data || []).map(d => d.result?.notes || obs.description).filter(v => v !== undefined)
-        );
-
-        //  Cocokin unit dengan `listSatuanUnit`
+        // Cocokin unit dengan `listSatuanUnit`
         let selectedUnit = this.listSatuanUnit.find(unit =>
           unit.unit_code?.trim().toLowerCase() === matchedUnits[0]?.trim().toLowerCase()
         );
@@ -1357,13 +1354,15 @@ export class TulisSatuSehatPncComponent implements OnInit {
           userInput: allValues.length > 0 ? allValues[0] : null, // Ambil yang pertama kalau ada
           selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
           unit: selectedUnit ? selectedUnit.unit_code : undefined,
-          inputString: matchedDescriptions.length > 0 ? matchedDescriptions[0] : ""
+          inputString: matchedValueStrings.length > 0 ? matchedValueStrings[0] : "" // 🔥 Ambil valueString
         };
       }
 
       return itemPelayananNifasPendarahan;
     });
+
   }
+
   handleObservasiPelayananNifas() {
     if (!this.listHistory?.data?.observations) return;
 

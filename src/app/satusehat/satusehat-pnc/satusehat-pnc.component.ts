@@ -168,8 +168,6 @@ export class satusehatPncComponent implements OnInit {
 
         },
         Error => {
-
-          console.log(Error)
         }
       )
 
@@ -185,13 +183,11 @@ export class satusehatPncComponent implements OnInit {
           this.tampilpas = data;
         },
         Error => {
-          console.log(Error)
         }
       )
   }
 
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-    console.log(moment(event.value).format())
     this.tglpx = moment(event.value).format()
     this.tmptotal()
   }
@@ -204,7 +200,6 @@ export class satusehatPncComponent implements OnInit {
           this.tampilpas = data;
         },
         Error => {
-          console.log(Error)
         }
       )
   }
@@ -374,8 +369,6 @@ export class satusehatPncComponent implements OnInit {
 
               this.authService.editobatsk(bodyeditfarmasi)
                 .subscribe(response => {
-
-                  console.log(response)
                   this.tmptotal()
 
                 })
