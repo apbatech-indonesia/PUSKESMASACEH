@@ -26,30 +26,12 @@ export class TulisSatuSehatIncComponent implements OnInit {
   faArrowLeft = faArrowLeft;
   faSave = faSave;
   listSatuanUnit: any;
+  listHistory: any;
 
   listObservasiKehamilan: any;
   listObservasiIbuPascaPersalinan: any;
   listKategoriObservasi: any;
-  listKategoriCondition: any;
-  selectedCondition: any;
-  listKategoriProcedure: any;
-  listKategoriServiceRequest: any;
-  listTipeSpecimen: any;
-  listCategoryDiagnosaLab: any;
-  listServiceRequest: any;
-  listSpecimens: any;
-  listHistory: any;
-  listObservationLab: any;
-  listCondtionClinical: any;
-  listRequestPemeriksaanLab: any;
-  listSpecimenPemeriksaanLab: any;
-  listLaporanDiagnosaLab: any;
-  listCarePlantCategory: any;
-  listConditionDiagnosis: any;
-  listConditionLeaveFasyankes: any;
-  listProcedureKonselingNifas: any;
-  listProcedureTindakan: any;
-  listObservasiPemeriksaanLab: any;
+  listObservasiKeadaanBayi: any;
   isDisabledFormInc: boolean = true;
   selectedPemeriksaanLab: { [key: string]: string } = {};
   headers = new HttpHeaders({
@@ -219,6 +201,11 @@ export class TulisSatuSehatIncComponent implements OnInit {
         this.getSatuanUnit();
         await this.cariHistory();
         break;
+      case "observasi-keadaan-bayi":
+        this.carilistObservasiKeadaanBayi();
+        this.carilistKategoriObservasi();
+        await this.cariHistory();
+        break;
       default:
         break;
     }
@@ -251,6 +238,9 @@ export class TulisSatuSehatIncComponent implements OnInit {
         break;
       case "observasi-ibu-pasca-persalinan":
         this.doSubmitObservasiPascaPersalinan();
+        break;
+      case "observasi-keadaan-bayi":
+        this.doSubmitObservasiKeadaanBayi();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -337,6 +327,9 @@ export class TulisSatuSehatIncComponent implements OnInit {
         case "observasi-ibu-pasca-persalinan":
           this.handleObservasiIbuPascaMelahirkan();
           break;
+        case "observasi-keadaan-bayi":
+          this.handleObservasiKeadaanBayi();
+          break;
         default:
           break;
       }
@@ -404,10 +397,71 @@ export class TulisSatuSehatIncComponent implements OnInit {
     {
     }
   }
-
+  async carilistObservasiKeadaanBayi() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|satusehat_category|is_active|source_id`,
+      key_operator: "=|=|=|=",
+      key_value: `observation|kondisi-bayi|1|3`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.IncService.getDataTerminologi(payload);
+      this.listObservasiKeadaanBayi = [...response.data];
+    } catch (error)
+    {
+    }
+  }
 
 
   // NOTE: handle data history
+  handleObservasiKeadaanBayi() {
+    if (!this.listHistory?.data?.observations) return;
+
+    this.listObservasiKeadaanBayi = this.listObservasiKeadaanBayi.map(itemPersalinan => {
+      let terminologyName = itemPersalinan.terminology_name.trim().toLowerCase();
+
+      //  Cari SEMUA observasi yang cocok
+      let matchedObservations = this.listHistory.data.observations.filter(obs =>
+        obs.name.trim().toLowerCase() === terminologyName
+      );
+
+
+      if (matchedObservations.length > 0)
+      {
+        //  Ambil SEMUA valueInteger yang ada di semua data
+        let allValues = matchedObservations.flatMap(obs =>
+          (obs.data || []).map(d => d.valueInteger).filter(v => v !== undefined)
+        );
+
+
+        //  Ambil kategori yang cocok
+        let matchedCategories = matchedObservations.flatMap(obs => {
+          let matchedCat = this.listKategoriObservasi.find(cat =>
+            cat.terminology_name.trim().toLowerCase() === obs.category?.display?.trim().toLowerCase()
+          );
+          return matchedCat ? [matchedCat] : [];
+        });
+
+        return {
+          ...itemPersalinan,
+          userInput: allValues.length > 0 ? allValues[0] : null, // Ambil yang pertama kalau ada
+          selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
+
+        };
+      }
+
+      return itemPersalinan;
+    });
+
+  }
+
+
   handleObservasiIbuPascaMelahirkan() {
     if (!this.listHistory?.data?.observations) return;
 
@@ -515,27 +569,7 @@ export class TulisSatuSehatIncComponent implements OnInit {
       this.listSatuanUnit = [...response.data];
     } catch (error) { }
   }
-  toggleInputPermintaanPemeriksaanLab(id: string, categoryServiceRequest: any, terminologyId: string) {
-    const itemServiceRequest = this.listRequestPemeriksaanLab.find(item => item.terminology_id === terminologyId);
 
-    if (itemServiceRequest)
-    {
-      if (!itemServiceRequest.selectedCategory)
-      {
-        itemServiceRequest.selectedCategory = [];
-      }
-
-      const index = itemServiceRequest.selectedCategory.findIndex(item => item.terminology_id === categoryServiceRequest.terminology_id);
-
-      if (index !== -1)
-      {
-        itemServiceRequest.selectedCategory.splice(index, 1);
-      } else
-      {
-        itemServiceRequest.selectedCategory.push(categoryServiceRequest);
-      }
-    }
-  }
   removeNullValues(obj: Object) {
     if (typeof obj !== "object" || obj === null) return obj; // Jika bukan object, kembalikan nilai asli
 
@@ -720,6 +754,58 @@ export class TulisSatuSehatIncComponent implements OnInit {
           })
       }
     };
+    try
+    {
+      let response: any = await this.IncService.craeteObservationInc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitObservasiKeadaanBayi() {
+    const itemDataObservasiKeadaanBayi = this.listObservasiKeadaanBayi;
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        observations: itemDataObservasiKeadaanBayi
+          .filter(item => item.userInput !== undefined && item.userInput !== null && item.userInput !== "")
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system : (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "observation",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : "Observation"
+              },
+              data: [
+                {
+                  code: {
+                    system: item.system,
+                    code: item.terminology_code,
+                    display: item.terminology_name
+                  },
+                  result: {},
+                  resultBoolean: {},
+                  valueCodeableConcept: {
+                    system: item.system,
+                    code: item.terminology_code,
+                    display: item.terminology_name
+                  },
+                  valueInteger: item.userInput
+                }
+              ],
+              effectiveDateTime: this.dateNow,
+              issued: this.dateNow
+            };
+          })
+      }
+    };
+
     try
     {
       let response: any = await this.IncService.craeteObservationInc(payload);
