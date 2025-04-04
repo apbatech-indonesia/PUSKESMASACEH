@@ -27,7 +27,7 @@ export class TulisSatuSehatIncComponent implements OnInit {
   faSave = faSave;
   listSatuanUnit: any;
 
-  listObservasiPersalinan: any;
+  listObservasiKehamilan: any;
   listKategoriObservasi: any;
   listKategoriCondition: any;
   selectedCondition: any;
@@ -202,13 +202,19 @@ export class TulisSatuSehatIncComponent implements OnInit {
   async ngOnInit() {
     await this.CreateKunjunganInc();
     await this.cariHistory();
-
   }
   // NOTE: TAB
   async openTab(tab: string) {
     this.activeTab = tab;
     switch (tab)
     {
+      case "form-related-person":
+        break;
+      case "form-observasi-kehamilan":
+        this.carilistObservasiKehamilan();
+        this.carilistKategoriObservasi();
+        await this.cariHistory();
+        break;
       default:
         break;
     }
@@ -235,6 +241,9 @@ export class TulisSatuSehatIncComponent implements OnInit {
     {
       case "form-related-person":
         this.doSubmitRelatedPerson();
+        break;
+      case "form-observasi-kehamilan":
+        this.doSubmitObservasiKehamilan();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -315,6 +324,9 @@ export class TulisSatuSehatIncComponent implements OnInit {
       {
         case "form-related-person":
           break;
+        case "form-observasi-kehamilan":
+          this.handleObservasiKehamilan();
+          break;
         default:
           break;
       }
@@ -322,12 +334,52 @@ export class TulisSatuSehatIncComponent implements OnInit {
     {
     }
   }
+  async carilistKategoriObservasi() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `observation-category|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.IncService.getDataTerminologi(payload);
+      this.listKategoriObservasi = [...response.data];
+    } catch (error)
+    {
+    }
+  }
+  async carilistObservasiKehamilan() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|satusehat_category|is_active`,
+      key_operator: "=|=|=",
+      key_value: `observation|riwayat-kehamilan|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.IncService.getDataTerminologi(payload);
+      this.listObservasiKehamilan = [...response.data];
+    } catch (error)
+    {
+    }
+  }
   // NOTE: handle data history
-  handleObservasiPersalinan() {
+  handleObservasiKehamilan() {
     if (!this.listHistory?.data?.observations) return;
 
-    this.listObservasiPersalinan = this.listObservasiPersalinan.map(itemPersalinan => {
-      let terminologyName = itemPersalinan.terminology_name.trim().toLowerCase();
+    this.listObservasiKehamilan = this.listObservasiKehamilan.map(itemKehamilan => {
+      let terminologyName = itemKehamilan.terminology_name.trim().toLowerCase();
 
       //  Cari SEMUA observasi yang cocok
       let matchedObservations = this.listHistory.data.observations.filter(obs =>
@@ -341,8 +393,6 @@ export class TulisSatuSehatIncComponent implements OnInit {
         let allValues = matchedObservations.flatMap(obs =>
           (obs.data || []).map(d => d.valueInteger).filter(v => v !== undefined)
         );
-
-
         //  Ambil kategori yang cocok
         let matchedCategories = matchedObservations.flatMap(obs => {
           let matchedCat = this.listKategoriObservasi.find(cat =>
@@ -352,14 +402,13 @@ export class TulisSatuSehatIncComponent implements OnInit {
         });
 
         return {
-          ...itemPersalinan,
+          ...itemKehamilan,
           userInput: allValues.length > 0 ? allValues[0] : null, // Ambil yang pertama kalau ada
           selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
-
         };
       }
 
-      return itemPersalinan;
+      return itemKehamilan;
     });
 
   }
@@ -474,6 +523,54 @@ export class TulisSatuSehatIncComponent implements OnInit {
     try
     {
       let response: any = await this.IncService.createRelatedPersonInc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitObservasiKehamilan() {
+    const itemDataObservasiKehamilan = this.listObservasiKehamilan;
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        observations: itemDataObservasiKehamilan
+          .filter(item => item.userInput !== undefined && item.userInput !== null && item.userInput !== "")
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system : (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "observation",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : "Observation"
+              },
+              data: [
+                {
+                  code: {
+                    system: item.system,
+                    code: item.terminology_code,
+                    display: item.terminology_name
+                  },
+                  result: {},
+                  resultBoolean: {},
+                  valueCodeableConcept: {},
+                  valueInteger: item.userInput
+                }
+              ],
+              effectiveDateTime: this.dateNow,
+              issued: this.dateNow
+            };
+          })
+      }
+    };
+
+    try
+    {
+      let response: any = await this.IncService.craeteObservationInc(payload);
       let msg = response.statusMsg.split(": ");
       Swal.fire("Success", msg.join(", "), "success");
     } catch (err)

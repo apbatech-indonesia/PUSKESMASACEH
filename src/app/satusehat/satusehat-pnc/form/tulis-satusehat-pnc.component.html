@@ -303,7 +303,6 @@
                     <div class="row">
                         <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
                             *ngFor="let itemPersalinan of listObservasiPersalinan; let i = index; trackBy: trackByTerminologyId">
-
                             <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
                                 [title]="itemPersalinan.description">
                                 {{ itemPersalinan . terminology_name }}
@@ -312,8 +311,7 @@
                             <div class="d-flex align-items-center gap-2 mt-3">
                                 <!-- Input Angka -->
                                 <input type="number" class="form-control w-50" placeholder="Masukkan nilai"
-                                    [value]="itemPersalinan.userInput || ''"
-                                    (input)="onInputChange($event, itemPersalinan, 'userInput')"
+                                    [value]="itemPersalinan.userInput || ''" [(ngModel)]="itemPersalinan.userInput"
                                     [name]="'userInput_' + i" />
 
                                 <!-- Select Kategori -->

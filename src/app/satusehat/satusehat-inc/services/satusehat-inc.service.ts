@@ -20,6 +20,9 @@ export class IncService {
       );
     });
   }
+  getDataTerminologi(data: any) {
+    return this.request('terminologi/search', data);
+  }
   getDataSatuanUnit(data: any) {
     return this.request('unitofmeasure/search', data);
   }
@@ -28,6 +31,9 @@ export class IncService {
   }
   createRelatedPersonInc(data: any) {
     return this.request('INC/createRelatedPerson', data);
+  }
+  craeteObservationInc(data: any) {
+    return this.request('INC/observationsCreate', data);
   }
   getUseCaseResponse(data: any) {
     return this.request('master/getUseCase', data);
