@@ -65,11 +65,12 @@ export class TulisSatuSehatGigiComponent implements OnInit {
   headers = new HttpHeaders({
     "kd-cabang": this.userData.kdcabang,
   });
-
   data: any;
+  DELAY = 10;
 
   patientData: any = {};
   isDisabledForm: boolean;
+  isLoading: boolean = false;
   relatedPerson: RelatedPerson = {} as RelatedPerson;
   relatedPersonRequest: RelatedPersonRequest = {} as RelatedPersonRequest;
 
@@ -178,7 +179,26 @@ export class TulisSatuSehatGigiComponent implements OnInit {
       },
     };
 
-    return this.GigiService.createRelatedPerson(this.relatedPersonRequest);
+    let tasksList = [];
+    tasksList.push(() =>
+      this.GigiService.createRelatedPerson(this.relatedPersonRequest)
+    );
+    this.runWithDelay(tasksList, this.DELAY)
+      .then((responses: any) => {
+        if (responses && responses.length > 0) {
+          const allSuccess = responses.every((res) => res.statusCode === "00");
+
+          if (allSuccess) {
+            this.toast.success("Sukses Mengirim Data!");
+          } else {
+            const firstError = responses.find((res) => res.statusCode !== "00");
+            throw new Error(firstError?.statusMsg || "Kesalahan Server");
+          }
+        }
+      })
+      .catch((error) => {
+        this.toast.error("Terjadi kesalahan: " + error.message);
+      });
   }
 
   async doSubmitAnamnesis() {
@@ -186,7 +206,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     this.showLoading();
 
     if (this.keluhanUtama) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitCondition(
           "bleeding_gums",
           "86276007",
@@ -197,7 +217,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
       );
     }
     if (this.golonganDarah) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "golongan_darah",
           category: new Codeable(
@@ -220,7 +240,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.rhesus) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "rhesus",
           category: new Codeable(
@@ -243,13 +263,13 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.riwayatAlergi) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitRiwayatAlergi("riwayat_alergi", this.riwayatAlergi)
       );
     }
 
     if (this.riwayatPenyakit) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitCondition(
           "riwayat_penyakit",
           "472969004",
@@ -261,7 +281,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.statusKehamilan) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "pregnancy_status",
           category: new Codeable(
@@ -279,16 +299,14 @@ export class TulisSatuSehatGigiComponent implements OnInit {
       );
     }
 
-    await Promise.all(tasksList)
+    this.runWithDelay(tasksList, this.DELAY)
       .then((responses: any) => {
         if (responses && responses.length > 0) {
-          // Cek apakah semua response memiliki statusCode "00"
           const allSuccess = responses.every((res) => res.statusCode === "00");
 
           if (allSuccess) {
             this.toast.success("Sukses Mengirim Data!");
           } else {
-            // Cari pesan error pertama yang bukan "00"
             const firstError = responses.find((res) => res.statusCode !== "00");
             throw new Error(firstError?.statusMsg || "Kesalahan Server");
           }
@@ -304,7 +322,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     this.showLoading();
 
     if (this.sistole) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "systolic",
           category: new Codeable(
@@ -328,7 +346,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.diastole) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "diastolic",
           category: new Codeable(
@@ -352,7 +370,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.heartRate) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "heart_rate",
           category: new Codeable(
@@ -372,7 +390,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.bodyTemperature) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "body_temperature",
           category: new Codeable(
@@ -392,7 +410,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.respiratoryRate) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "respiratory_rate",
           category: new Codeable(
@@ -412,7 +430,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.debrisIndeks) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "debris_indeks",
           category: new Codeable(
@@ -436,7 +454,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.kalkulusIndeks) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "kalkulus_indeks",
           category: new Codeable(
@@ -460,7 +478,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.skorTotalKalkulusIndeks) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "skor_total_kalkulus_indeks",
           category: new Codeable(
@@ -484,7 +502,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.skorTotalKalkulusIndeks) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "skor_total_kalkulus_indeks",
           category: new Codeable(
@@ -508,7 +526,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.skorTotalOHIS) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "skor_total_OHIS",
           category: new Codeable(
@@ -542,7 +560,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.pemeriksaanOdontogram) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "pemeriksaan_odontogram",
           category: new Codeable(
@@ -567,16 +585,14 @@ export class TulisSatuSehatGigiComponent implements OnInit {
       );
     }
 
-    await Promise.all(tasksList)
+    this.runWithDelay(tasksList, this.DELAY)
       .then((responses: any) => {
         if (responses && responses.length > 0) {
-          // Cek apakah semua response memiliki statusCode "00"
           const allSuccess = responses.every((res) => res.statusCode === "00");
 
           if (allSuccess) {
             this.toast.success("Sukses Mengirim Data!");
           } else {
-            // Cari pesan error pertama yang bukan "00"
             const firstError = responses.find((res) => res.statusCode !== "00");
             throw new Error(firstError?.statusMsg || "Kesalahan Server");
           }
@@ -603,13 +619,14 @@ export class TulisSatuSehatGigiComponent implements OnInit {
 
   async doSubmitLaborat() {
     let tasksList = [];
+    this.showLoading();
 
     if (
       this.statusPuasa &&
       this.procedureFastingCode &&
       this.procedureFastingDisplay
     ) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitProcedure({
           name: "other_endoscopy",
           category: new Codeable(
@@ -631,7 +648,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.serviceRequestName) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitServiceRequest({
           name: "follow_up_visit",
           category: [
@@ -641,7 +658,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
               "Laboratory procedure"
             ),
           ],
-          patientInstruction: this.tindakLanjutPatientInstrruction,
+          patientInstruction: "",
           status: "active",
           intent: "original-order",
           priority: "routine",
@@ -670,7 +687,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.specimenName) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitSpecimen({
           name: "blood_specimen",
           status: "available",
@@ -698,7 +715,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.hemoglobinValue) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "hemoglobin_inblood",
           category: new Codeable(
@@ -722,7 +739,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.mcvValue) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitObservation({
           name: "mcv_count",
           category: new Codeable(
@@ -745,16 +762,14 @@ export class TulisSatuSehatGigiComponent implements OnInit {
       );
     }
 
-    await Promise.all(tasksList)
+    this.runWithDelay(tasksList, this.DELAY)
       .then((responses: any) => {
         if (responses && responses.length > 0) {
-          // Cek apakah semua response memiliki statusCode "00"
           const allSuccess = responses.every((res) => res.statusCode === "00");
 
           if (allSuccess) {
             this.toast.success("Sukses Mengirim Data!");
           } else {
-            // Cari pesan error pertama yang bukan "00"
             const firstError = responses.find((res) => res.statusCode !== "00");
             throw new Error(firstError?.statusMsg || "Kesalahan Server");
           }
@@ -819,8 +834,10 @@ export class TulisSatuSehatGigiComponent implements OnInit {
 
   async doSubmitEncounterDiagnosa() {
     let tasksList = [];
+    this.showLoading();
+
     if (this.encounterDiagnosisCode && this.encounterDiagnosisDisplay) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitCondition(
           "encounter_diagnosis",
           "86276007",
@@ -831,16 +848,14 @@ export class TulisSatuSehatGigiComponent implements OnInit {
       );
     }
 
-    await Promise.all(tasksList)
+    this.runWithDelay(tasksList, this.DELAY)
       .then((responses: any) => {
         if (responses && responses.length > 0) {
-          // Cek apakah semua response memiliki statusCode "00"
           const allSuccess = responses.every((res) => res.statusCode === "00");
 
           if (allSuccess) {
             this.toast.success("Sukses Mengirim Data!");
           } else {
-            // Cari pesan error pertama yang bukan "00"
             const firstError = responses.find((res) => res.statusCode !== "00");
             throw new Error(firstError?.statusMsg || "Kesalahan Server");
           }
@@ -867,8 +882,10 @@ export class TulisSatuSehatGigiComponent implements OnInit {
 
   async doSubmitTindakLanjut() {
     let tasksList = [];
+    this.showLoading();
+
     if (this.tindakLanjutPatientInstrruction && this.tindakLanjutText) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitServiceRequest({
           name: "follow_up_visit",
           category: [
@@ -878,7 +895,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
               "Laboratory procedure"
             ),
           ],
-          patientInstruction: this.tindakLanjutPatientInstrruction,
+          patientInstruction: "A",
           status: "active",
           intent: "original-order",
           priority: "routine",
@@ -906,16 +923,14 @@ export class TulisSatuSehatGigiComponent implements OnInit {
       );
     }
 
-    await Promise.all(tasksList)
+    this.runWithDelay(tasksList, this.DELAY)
       .then((responses: any) => {
         if (responses && responses.length > 0) {
-          // Cek apakah semua response memiliki statusCode "00"
           const allSuccess = responses.every((res) => res.statusCode === "00");
 
           if (allSuccess) {
             this.toast.success("Sukses Mengirim Data!");
           } else {
-            // Cari pesan error pertama yang bukan "00"
             const firstError = responses.find((res) => res.statusCode !== "00");
             throw new Error(firstError?.statusMsg || "Kesalahan Server");
           }
@@ -942,11 +957,10 @@ export class TulisSatuSehatGigiComponent implements OnInit {
 
   async doKeluarFaskes() {
     let tasksList = [];
-
     this.showLoading();
 
     if (this.conditionStable) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitCondition(
           "condition_stable",
           "359746009",
@@ -958,7 +972,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     }
 
     if (this.serviceRequestName) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitServiceRequest({
           name: "patient_referral",
           category: [
@@ -987,16 +1001,14 @@ export class TulisSatuSehatGigiComponent implements OnInit {
       );
     }
 
-    await Promise.all(tasksList)
+    this.runWithDelay(tasksList, this.DELAY)
       .then((responses: any) => {
         if (responses && responses.length > 0) {
-          // Cek apakah semua response memiliki statusCode "00"
           const allSuccess = responses.every((res) => res.statusCode === "00");
 
           if (allSuccess) {
             this.toast.success("Sukses Mengirim Data!");
           } else {
-            // Cari pesan error pertama yang bukan "00"
             const firstError = responses.find((res) => res.statusCode !== "00");
             throw new Error(firstError?.statusMsg || "Kesalahan Server");
           }
@@ -1023,10 +1035,10 @@ export class TulisSatuSehatGigiComponent implements OnInit {
 
   async doSubmitEncounterProcedure() {
     let tasksList = [];
-
     this.showLoading();
+
     if (this.encounterProcedureCode && this.encounterProcedureDisplay) {
-      tasksList.push(
+      tasksList.push(() =>
         this.doSubmitProcedure({
           name: "encounter_procedure",
           category: new Codeable(
@@ -1043,24 +1055,22 @@ export class TulisSatuSehatGigiComponent implements OnInit {
           ],
           reasonCode: new Codeable(
             "http://hl7.org/fhir/sid/icd-10",
-            "K04.7",
-            "Periapical abscess without sinus"
+            "K05.2",
+            "Acute periodontitis"
           ),
           note: this.encounterProcedureNote,
         })
       );
     }
 
-    await Promise.all(tasksList)
+    this.runWithDelay(tasksList, this.DELAY)
       .then((responses: any) => {
         if (responses && responses.length > 0) {
-          // Cek apakah semua response memiliki statusCode "00"
           const allSuccess = responses.every((res) => res.statusCode === "00");
 
           if (allSuccess) {
             this.toast.success("Sukses Mengirim Data!");
           } else {
-            // Cari pesan error pertama yang bukan "00"
             const firstError = responses.find((res) => res.statusCode !== "00");
             throw new Error(firstError?.statusMsg || "Kesalahan Server");
           }
@@ -1358,7 +1368,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
     this.skorTotalOHIS = observations?.skor_total_OHIS?.result?.value;
     this.kondisiGigi = observations?.skor_total_OHIS?.interpretation?.display;
     this.pemeriksaanOdontogram =
-      observations?.pemeriksaan_odontogram.bodySite.display;
+      observations?.pemeriksaan_odontogram?.bodySite?.display;
 
     this.statusPuasa = procedures?.other_endoscopy?.note;
     this.procedureFastingCode = procedures?.other_endoscopy?.code;
@@ -1436,12 +1446,28 @@ export class TulisSatuSehatGigiComponent implements OnInit {
   showLoading() {
     // Swal.fire("Mohon tunggu!");
     // Swal.showLoading();
-    // this.stopLoading(5000);
+    this.isLoading = true;
+    this.stopLoading(3000);
   }
 
   stopLoading(timing: number = 1000) {
     setTimeout(() => {
+      this.isLoading = false;
       Swal.close();
     }, timing);
+  }
+
+  async delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async runWithDelay(promises, delayMs) {
+    const results = [];
+    for (const promiseFunc of promises) {
+      const result = await promiseFunc(); // jalankan promise
+      results.push(result);
+      await this.delay(delayMs); // delay sebelum lanjut ke promise berikutnya
+    }
+    return results;
   }
 }

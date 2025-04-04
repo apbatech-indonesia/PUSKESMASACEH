@@ -76,7 +76,7 @@
           <a ngbNavLink>Data Orang Tua</a>
           <ng-template ngbNavContent>
             <div class="card mb-3">
-              <div class="card-header navy">Data Ibu</div>
+              <div class="card-header navy">Data Orang Tua</div>
               <div class="card-body">
                 <div class="row">
                   <div class="col-6">
@@ -334,7 +334,13 @@
                       (click)="doSubmitRelatedPerson()"
                       class="btn btn-primary mt-3"
                     >
-                      Submit
+                      <span *ngIf="!isLoading"> Submit </span>
+                      <span *ngIf="isLoading">
+                        <span
+                          class="spinner-border spinner-border-sm me-1"
+                        ></span>
+                        Loading...
+                      </span>
                     </button>
                   </div>
                 </div>
@@ -430,7 +436,7 @@
                           </option>
                           <option
                             *ngFor="
-                              let pregnantStatus of ['Pregnant', 'Not Pregnant']
+                              let pregnantStatus of ['Not Pregnant', 'Pregnant']
                             "
                             [value]="pregnantStatus"
                           >
@@ -444,7 +450,13 @@
                           (click)="doSubmitAnamnesis()"
                           class="btn btn-primary mt-3"
                         >
-                          Submit
+                          <span *ngIf="!isLoading"> Submit </span>
+                          <span *ngIf="isLoading">
+                            <span
+                              class="spinner-border spinner-border-sm me-1"
+                            ></span>
+                            Loading...
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -667,7 +679,13 @@
                           (click)="doSubmitPemeriksaanFisik()"
                           class="btn btn-primary mt-3"
                         >
-                          Submit Pemeriksaan Fisik
+                          <span *ngIf="!isLoading"> Submit </span>
+                          <span *ngIf="isLoading">
+                            <span
+                              class="spinner-border spinner-border-sm me-1"
+                            ></span>
+                            Loading...
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -799,19 +817,25 @@
                           placeholder="Masukkan nilai MCV"
                         />
                       </div>
+
+                      <!-- Tombol Submit -->
+                      <div class="col-12">
+                        <button
+                          (click)="doSubmitLaborat()"
+                          class="btn btn-primary mt-3"
+                        >
+                          <span *ngIf="!isLoading"> Submit </span>
+                          <span *ngIf="isLoading">
+                            <span
+                              class="spinner-border spinner-border-sm me-1"
+                            ></span>
+                            Loading...
+                          </span>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <!-- Tombol Submit -->
-              <div class="col-12">
-                <button
-                  (click)="doSubmitLaborat()"
-                  class="btn btn-primary mt-3"
-                >
-                  Submit Pemeriksaan Fisik
-                </button>
               </div>
             </div>
           </ng-template>
@@ -850,7 +874,11 @@
                   (click)="doSubmitEncounterDiagnosa()"
                   class="btn btn-primary mt-3"
                 >
-                  Submit Diagnosa
+                  <span *ngIf="!isLoading"> Submit </span>
+                  <span *ngIf="isLoading">
+                    <span class="spinner-border spinner-border-sm me-1"></span>
+                    Loading...
+                  </span>
                 </button>
               </div>
             </div>
@@ -898,7 +926,13 @@
                           (click)="doSubmitEncounterProcedure()"
                           class="btn btn-primary mt-3"
                         >
-                          Submit Tindakan
+                          <span *ngIf="!isLoading"> Submit </span>
+                          <span *ngIf="isLoading">
+                            <span
+                              class="spinner-border spinner-border-sm me-1"
+                            ></span>
+                            Loading...
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -947,7 +981,13 @@
                           (click)="doSubmitTindakLanjut()"
                           class="btn btn-primary mt-3"
                         >
-                          Submit Tindak Lanjut
+                          <span *ngIf="!isLoading"> Submit </span>
+                          <span *ngIf="isLoading">
+                            <span
+                              class="spinner-border spinner-border-sm me-1"
+                            ></span>
+                            Loading...
+                          </span>
                         </button>
                       </div>
                     </div>
