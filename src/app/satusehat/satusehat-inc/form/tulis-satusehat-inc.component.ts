@@ -35,6 +35,7 @@ export class TulisSatuSehatIncComponent implements OnInit {
   listObservasiKeadaanBayi: any;
   listObservasiFisikBayi: any;
   listProcedureMenyusui: any;
+  listProcedureTindakanIbu: any;
   isDisabledFormInc: boolean = true;
   selectedPemeriksaanLab: { [key: string]: string } = {};
   headers = new HttpHeaders({
@@ -220,6 +221,11 @@ export class TulisSatuSehatIncComponent implements OnInit {
         this.carilistKategoriProcedure();
         await this.cariHistory();
         break;
+      case "prosedur-tindakan-ibu":
+        this.carilistProcedureTindakanIbu();
+        this.carilistKategoriProcedure();
+        await this.cariHistory();
+        break;
       default:
         break;
     }
@@ -261,6 +267,9 @@ export class TulisSatuSehatIncComponent implements OnInit {
         break;
       case "prosedur-menyusui":
         this.doSubmitProcedureMenyusui();
+        break;
+      case "prosedur-tindakan-ibu":
+        this.doSubmitProcedureTindakanIbu();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -355,6 +364,9 @@ export class TulisSatuSehatIncComponent implements OnInit {
           break;
         case "prosedur-menyusui":
           this.handleProcedureMenyusui();
+          break;
+        case "prosedur-tindakan-ibu":
+          this.handleProcedureTindakanIbu();
           break;
         default:
           break;
@@ -503,6 +515,26 @@ export class TulisSatuSehatIncComponent implements OnInit {
     {
     }
   }
+  async carilistProcedureTindakanIbu() {
+    let payload = {
+      terminology_id: "",
+      key_name: `satusehat_category|is_active`,
+      key_operator: "=|=",
+      key_value: `prosedur-melahirkan|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.IncService.getDataTerminologi(payload);
+      this.listProcedureTindakanIbu = [...response.data];
+    } catch (error)
+    {
+    }
+  }
 
 
   // NOTE: handle data history
@@ -533,6 +565,42 @@ export class TulisSatuSehatIncComponent implements OnInit {
         let newItem = {
           ...itemProcedure,
           keterangan: matchedProcedure.data[1].text || "",
+          selectedCategory: matchedCategory || undefined,                // Cocokkan kategori
+          tanggal_waktu_dilakakukan: matchedProcedure.performedDateTime ? this.toDatetimeLocalFormat(matchedProcedure.performedDateTime) : ""
+        };
+
+        return newItem;
+      }
+
+      return itemProcedure;
+    });
+  }
+  handleProcedureTindakanIbu() {
+    if (!this.listHistory?.data?.procedures || !Array.isArray(this.listHistory.data.procedures))
+    {
+
+      return;
+    }
+
+    this.listProcedureTindakanIbu = this.listProcedureTindakanIbu.map(itemProcedure => {
+      let terminologyName = itemProcedure.terminology_name.trim().toLowerCase().replace(/\s+/g, " ");
+
+      //  Cari procedure yang cocok berdasarkan name
+      let matchedProcedure = this.listHistory.data.procedures.find(proc =>
+        proc.name.trim().toLowerCase().replace(/\s+/g, " ") === terminologyName
+      );
+
+      if (matchedProcedure)
+      {
+
+        //  Ambil kategori yang cocok
+        let matchedCategory = this.listKategoriProcedure.find(cat =>
+          cat.terminology_name.trim().toLowerCase().replace(/\s+/g, " ") === matchedProcedure.category?.display?.trim().toLowerCase().replace(/\s+/g, " ")
+        );
+
+        //  Set data ke UI
+        let newItem = {
+          ...itemProcedure,
           selectedCategory: matchedCategory || undefined,                // Cocokkan kategori
           tanggal_waktu_dilakakukan: matchedProcedure.performedDateTime ? this.toDatetimeLocalFormat(matchedProcedure.performedDateTime) : ""
         };
@@ -1071,6 +1139,52 @@ export class TulisSatuSehatIncComponent implements OnInit {
                 },
                 {
                   text: item.keterangan
+                }
+              ],
+              performedDateTime: new Date(item.tanggal_waktu_dilakakukan).toISOString().replace('Z', '+00:00')
+            };
+          })
+      }
+    };
+
+
+    try
+    {
+      let response: any = await this.IncService.craeteProceduresInc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitProcedureTindakanIbu() {
+    const dataProcedureTindakanIbu = this.listProcedureTindakanIbu;
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        procedures: dataProcedureTindakanIbu
+          .filter(item =>
+            item.tanggal_waktu_dilakakukan !== undefined && item.tanggal_waktu_dilakakukan !== null && item.tanggal_waktu_dilakakukan !== ""
+          )
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system :
+                  (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : ""
+              },
+              data: [
+                {
+                  system: item.system ? item.system : (item.source ? item.source.source_url : ""),
+                  code: item.terminology_code,
+                  display: item.terminology_name
                 }
               ],
               performedDateTime: new Date(item.tanggal_waktu_dilakakukan).toISOString().replace('Z', '+00:00')

@@ -103,6 +103,12 @@
                             Prosedur Menyusui
                         </a>
                     </li>
+                    <li class="nav-item border-end">
+                        <a class="nav-link {{ activeTab == 'prosedur-tindakan-ibu' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('prosedur-tindakan-ibu')">
+                            Prosedur Tindakan Terhadap Ibu
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -415,6 +421,40 @@
                                 <!-- Select Kategori -->
                                 <div class="col-3">
                                     <select class="form-select" [(ngModel)]="itemProcedureMenyusui.selectedCategory"
+                                        [name]="'selectedCategory_' + i" title="kategori">
+                                        <option [ngValue]="undefined" selected>Pilih Kategori</option>
+                                        <option *ngFor="let item of listKategoriProcedure" [ngValue]="item">
+                                            {{ item . terminology_name }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card mb-2" *ngIf="activeTab == 'prosedur-tindakan-ibu'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
+                            *ngFor="let itemProcedureTindakanIbu of listProcedureTindakanIbu; let i = index; trackBy: trackByIndex">
+                            <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
+                                [title]="itemProcedureTindakanIbu.description">
+                                {{ itemProcedureTindakanIbu . terminology_name }}
+                                <small>{{ itemProcedureTindakanIbu . description }}</small>
+                            </label>
+                            <div class="d-flex align-items-center gap-2 mt-3">
+                                <label for="tanggal_waktu_dilakukan" class="form-label">Tanggal & Waktu
+                                    Dilakukan</label>
+                                <input type="datetime-local" class="form-control" id="tanggal_waktu_dilakukan"
+                                    [(ngModel)]="itemProcedureTindakanIbu.tanggal_waktu_dilakakukan"
+                                    [name]="'tanggal_waktu_dilakakukan' + i" />
+                                <!-- Select Kategori -->
+                                <div class="col-3">
+                                    <select class="form-select"
+                                        [(ngModel)]="itemProcedureTindakanIbu.selectedCategory"
                                         [name]="'selectedCategory_' + i" title="kategori">
                                         <option [ngValue]="undefined" selected>Pilih Kategori</option>
                                         <option *ngFor="let item of listKategoriProcedure" [ngValue]="item">
