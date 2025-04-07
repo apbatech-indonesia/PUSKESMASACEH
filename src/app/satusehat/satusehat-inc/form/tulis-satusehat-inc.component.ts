@@ -41,6 +41,8 @@ export class TulisSatuSehatIncComponent implements OnInit {
   listProcedureTindakanBayi: any;
   listDiagnosaConditionIbu: any;
   listDiagnosaConditionBayi: any;
+  listConditionLeaveFasyankesIbu: any;
+  selectedCondition: any;
   isDisabledFormInc: boolean = true;
   selectedPemeriksaanLab: { [key: string]: string } = {};
   headers = new HttpHeaders({
@@ -248,6 +250,12 @@ export class TulisSatuSehatIncComponent implements OnInit {
         this.carilistClinicalCondition();
         await this.cariHistory();
         break;
+      case "kondisi-meninggalkan-fasyanker-ibu":
+        this.carilistConditionLeaveFasyankesIbu();
+        this.carilistKategoriCondition();
+        this.carilistClinicalCondition();
+        await this.cariHistory();
+        break;
 
       default:
         break;
@@ -302,6 +310,9 @@ export class TulisSatuSehatIncComponent implements OnInit {
         break;
       case "diagnosa-kondisi-bayi":
         this.doSubmitDiagnosaKondisiBayi();
+        break;
+      case "kondisi-meninggalkan-fasyanker-ibu":
+        this.doSubmitConditionLeaveFasyankesIbu();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -408,6 +419,9 @@ export class TulisSatuSehatIncComponent implements OnInit {
           break;
         case "diagnosa-kondisi-bayi":
           this.handleDiagnosaCondtionBayi();
+          break;
+        case "kondisi-meninggalkan-fasyanker-ibu":
+          this.handleConditionLeaveFasyankesIbu();
           break;
         default:
           break;
@@ -677,9 +691,72 @@ export class TulisSatuSehatIncComponent implements OnInit {
     {
     }
   }
+  async carilistConditionLeaveFasyankesIbu() {
+    let payload = {
+      terminology_id: "",
+      key_name: `satusehat_category|category|is_active`,
+      key_operator: "=|=|=",
+      key_value: `kondisi-pulang|condition-code|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.IncService.getDataTerminologi(payload);
+      this.listConditionLeaveFasyankesIbu = [...response.data];
+    } catch (error)
+    {
+    }
+  }
 
 
   // NOTE: handle data history
+  handleConditionLeaveFasyankesIbu() {
+    if (!this.listHistory?.data?.conditions || !Array.isArray(this.listHistory.data.conditions))
+    {
+      return;
+    }
+
+    //  Cari kondisi yang mengandung "Patient's condition"
+    let matchedCondition = this.listHistory.data.conditions.find(cond =>
+      cond.name.trim().toLowerCase().includes("patient?s condition") // Bisa juga pakai regex kalau perlu
+    );
+
+    if (matchedCondition)
+    {
+
+      //  Ambil SEMUA notes dari matchedCondition
+      let allNotes = (matchedCondition.note || []).map(n => n.text).filter(v => v !== undefined);
+
+      //  Ambil kategori yang cocok
+      let matchedCategory = this.listKategoriCondition.find(cat =>
+        cat.terminology_name.trim().toLowerCase() === matchedCondition.category?.display?.trim().toLowerCase()
+      );
+
+      //  Ambil kondisi klinis yang cocok
+      let matchedClinicalStatus = this.listCondtionClinical.find(status =>
+        status.terminology_name.trim().toLowerCase() === matchedCondition.clinicalStatus?.display?.trim().toLowerCase()
+      );
+
+      //  Setel `selectedCondition` sesuai hasil pencarian
+      this.selectedCondition = this.listConditionLeaveFasyankesIbu.find(item =>
+        item.terminology_name.trim().toLowerCase() === matchedCondition.name.trim().toLowerCase()
+      ) || undefined;
+
+      if (this.selectedCondition)
+      {
+        this.selectedCondition.inputString = allNotes.length > 0 ? allNotes.join(", ") : "";
+        this.selectedCondition.selectedCategory = matchedCategory || undefined;
+        this.selectedCondition.clinicalStatus = matchedClinicalStatus || undefined;
+      }
+    } else
+    {
+      this.selectedCondition = undefined;
+    }
+  }
   handleDiagnosaCondtionBayi() {
     if (!this.listHistory?.data?.conditions || !Array.isArray(this.listHistory.data.conditions))
     {
@@ -1620,6 +1697,59 @@ export class TulisSatuSehatIncComponent implements OnInit {
       }
     };
 
+    try
+    {
+      let response: any = await this.IncService.craeteConditionInc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitConditionLeaveFasyankesIbu() {
+    const dataConditionLeaveFasyankesIbu = this.listConditionLeaveFasyankesIbu;
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        conditions: dataConditionLeaveFasyankesIbu
+          .filter(item => item.inputString !== undefined && item.inputString !== null && item.inputString !== "")
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system :
+                  (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : ""
+              },
+              clinicalStatus: {
+                system: item.clinicalStatus ? item.clinicalStatus.system :
+                  (item.clinicalStatus.source ? item.clinicalStatus.source.source_url : ''),
+                code: item.clinicalStatus ? item.clinicalStatus.terminology_code : "",
+                display: item.clinicalStatus ? item.clinicalStatus.terminology_name : ""
+              },
+              data: [
+                {
+                  system: item.system ? item.system : (item.source ? item.source.source_url : ""),
+                  code: item.terminology_code,
+                  display: item.terminology_name
+                }
+              ],
+              note: [
+                {
+                  text: item.inputString
+                }
+              ],
+              recordedDate: this.dateNow
+            };
+          })
+      }
+    };
     try
     {
       let response: any = await this.IncService.craeteConditionInc(payload);

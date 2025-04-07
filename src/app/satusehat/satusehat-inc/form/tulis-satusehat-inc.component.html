@@ -127,6 +127,12 @@
                             Diagnosa Kondisi Bayi
                         </a>
                     </li>
+                    <li class="nav-item border-end">
+                        <a class="nav-link {{ activeTab == 'kondisi-meninggalkan-fasyanker-ibu' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('kondisi-meninggalkan-fasyanker-ibu')">
+                            Kondisi Meninggalkan Fasyankes - Ibu
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -609,6 +615,55 @@
                                         {{ conditionClinical . terminology_name }}
                                     </option>
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mb-2" *ngIf="activeTab == 'kondisi-meninggalkan-fasyanker-ibu'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-12 p-3 mb-3 border rounded shadow-sm bg-light">
+                            <!-- Pilih Condition -->
+                            <label class="fw-bold text-primary">Pilih Kondisi</label>
+                            <select class="form-select" [(ngModel)]="selectedCondition" name="selectedCondition">
+                                <option [ngValue]="undefined" selected>Pilih Kondisi</option>
+                                <option *ngFor="let item of listConditionLeaveFasyankesIbu" [ngValue]="item">
+                                    {{ item . terminology_name }}
+                                </option>
+                            </select>
+
+                            <!-- Jika condition dipilih, tampilkan opsi lanjutan -->
+                            <div *ngIf="selectedCondition">
+                                <div class="d-flex align-items-center gap-3 mt-3">
+                                    <div class="w-50">
+                                        <label class="fw-bold text-primary">Pilih Kategori</label>
+                                        <select class="form-select" [(ngModel)]="selectedCondition.selectedCategory"
+                                            name="selectedCategory">
+                                            <option [ngValue]="undefined" selected>Pilih Kategori</option>
+                                            <option *ngFor="let item of listKategoriCondition" [ngValue]="item">
+                                                {{ item . terminology_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="w-50">
+                                        <label class="fw-bold text-primary">Pilih Kondisi Klinis</label>
+                                        <select class="form-select" [(ngModel)]="selectedCondition.clinicalStatus"
+                                            name="clinicalStatus">
+                                            <option [ngValue]="undefined" selected>Pilih Kondisi Klinis</option>
+                                            <option *ngFor="let conditionClinical of listCondtionClinical"
+                                                [ngValue]="conditionClinical">
+                                                {{ conditionClinical . terminology_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <label class="fw-bold text-primary mt-3">Keterangan</label>
+                                <textarea class="form-control" [(ngModel)]="selectedCondition.inputString" name="inputString"
+                                    placeholder="Input Keterangan" rows="3"></textarea>
                             </div>
                         </div>
                     </div>
