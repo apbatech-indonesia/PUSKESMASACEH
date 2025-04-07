@@ -109,6 +109,12 @@
                             Prosedur Tindakan Terhadap Ibu
                         </a>
                     </li>
+                    <li class="nav-item border-end">
+                        <a class="nav-link {{ activeTab == 'prosedur-tindakan-bayi' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('prosedur-tindakan-bayi')">
+                            Prosedur Tindakan Terhadap Bayi
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -462,6 +468,54 @@
                                         </option>
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card mb-2" *ngIf="activeTab == 'prosedur-tindakan-bayi'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
+                            *ngFor="let itemProcedureTindakanBayi of listProcedureTindakanBayi; let i = index; trackBy: trackByIndex">
+                            <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
+                                [title]="itemProcedureTindakanBayi.description">
+                                {{ itemProcedureTindakanBayi . terminology_name }}
+                                <small>{{ itemProcedureTindakanBayi . description }}</small>
+                            </label>
+                            <div class="d-flex align-items-center gap-2 mt-3">
+                                <label for="keterangan" class="form-label">
+                                    Keterangan
+                                </label>
+                                <textarea class="form-control" rows="1" [(ngModel)]="itemProcedureTindakanBayi.keterangan"
+                                    [name]="'keterangan_' + i" placeholder="Tulis keterangan prosedur..."></textarea>
+                            </div>
+                            <div class="d-flex align-items-center gap-2 mt-3">
+                                <label for="waktu_mulai_dilakukan" class="form-label">Waktu Mulai - Berakhir</label>
+                                <input type="datetime-local" class="form-control w-50" id="waktu_mulai_dilakukan"
+                                    [(ngModel)]="itemProcedureTindakanBayi.waktu_mulai_dilakukan"
+                                    [name]="'waktu_mulai_dilakukan_' + i" />
+                                <input type="datetime-local" class="form-control w-50" id="waktu_berakhir_dilakukan"
+                                    [(ngModel)]="itemProcedureTindakanBayi.waktu_berakhir_dilakukan"
+                                    [name]="'waktu_berakhir_dilakukan_' + i" />
+                            </div>
+                            <div class="d-flex align-items-center gap-2 mt-3">
+                                <label for="tanggal_waktu_dilakukan" class="form-label">Waktu Mulai Dilakukan</label>
+                                <input type="datetime-local" class="form-control" id="tanggal_waktu_dilakukan"
+                                    [(ngModel)]="itemProcedureTindakanBayi.tanggal_waktu_dilakakukan"
+                                    [name]="'tanggal_waktu_dilakakukan_' + i" />
+                            </div>
+                            <div class="d-flex align-items-center gap-2 mt-3">
+                                <label for="kategori" class="form-label">Kategori</label>
+                                <select class="form-select" [(ngModel)]="itemProcedureTindakanBayi.selectedCategory"
+                                    [name]="'selectedCategory_' + i" title="kategori">
+                                    <option [ngValue]="undefined" selected>Pilih Kategori</option>
+                                    <option *ngFor="let item of listKategoriProcedure" [ngValue]="item">
+                                        {{ item . terminology_name }}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                     </div>
