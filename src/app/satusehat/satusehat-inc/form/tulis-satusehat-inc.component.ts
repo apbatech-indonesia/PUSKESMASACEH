@@ -31,8 +31,10 @@ export class TulisSatuSehatIncComponent implements OnInit {
   listObservasiKehamilan: any;
   listObservasiIbuPascaPersalinan: any;
   listKategoriObservasi: any;
+  listKategoriProcedure: any;
   listObservasiKeadaanBayi: any;
   listObservasiFisikBayi: any;
+  listProcedureMenyusui: any;
   isDisabledFormInc: boolean = true;
   selectedPemeriksaanLab: { [key: string]: string } = {};
   headers = new HttpHeaders({
@@ -213,6 +215,11 @@ export class TulisSatuSehatIncComponent implements OnInit {
         this.getSatuanUnit();
         await this.cariHistory();
         break;
+      case "prosedur-menyusui":
+        this.carilistProcedureMenyusui();
+        this.carilistKategoriProcedure();
+        await this.cariHistory();
+        break;
       default:
         break;
     }
@@ -251,6 +258,9 @@ export class TulisSatuSehatIncComponent implements OnInit {
         break;
       case "observasi-fisik-bayi":
         this.doSubmitObservasiFisikBayi();
+        break;
+      case "prosedur-menyusui":
+        this.doSubmitProcedureMenyusui();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -343,6 +353,9 @@ export class TulisSatuSehatIncComponent implements OnInit {
         case "observasi-fisik-bayi":
           this.handleObservasiFisikBayi();
           break;
+        case "prosedur-menyusui":
+          this.handleProcedureMenyusui();
+          break;
         default:
           break;
       }
@@ -366,6 +379,26 @@ export class TulisSatuSehatIncComponent implements OnInit {
     {
       let response: any = await this.IncService.getDataTerminologi(payload);
       this.listKategoriObservasi = [...response.data];
+    } catch (error)
+    {
+    }
+  }
+  async carilistKategoriProcedure() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `procedure-category|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.IncService.getDataTerminologi(payload);
+      this.listKategoriProcedure = [...response.data];
     } catch (error)
     {
     }
@@ -450,13 +483,68 @@ export class TulisSatuSehatIncComponent implements OnInit {
     {
     }
   }
+  async carilistProcedureMenyusui() {
+    let payload = {
+      terminology_id: "",
+      key_name: `satusehat_category|is_active`,
+      key_operator: "=|=",
+      key_value: `prosedur-menyusui|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.IncService.getDataTerminologi(payload);
+      this.listProcedureMenyusui = [...response.data];
+    } catch (error)
+    {
+    }
+  }
 
 
   // NOTE: handle data history
+  handleProcedureMenyusui() {
+    if (!this.listHistory?.data?.procedures || !Array.isArray(this.listHistory.data.procedures))
+    {
+
+      return;
+    }
+
+    this.listProcedureMenyusui = this.listProcedureMenyusui.map(itemProcedure => {
+      let terminologyName = itemProcedure.terminology_name.trim().toLowerCase().replace(/\s+/g, " ");
+
+      //  Cari procedure yang cocok berdasarkan name
+      let matchedProcedure = this.listHistory.data.procedures.find(proc =>
+        proc.name.trim().toLowerCase().replace(/\s+/g, " ") === terminologyName
+      );
+
+      if (matchedProcedure)
+      {
+
+        //  Ambil kategori yang cocok
+        let matchedCategory = this.listKategoriProcedure.find(cat =>
+          cat.terminology_name.trim().toLowerCase().replace(/\s+/g, " ") === matchedProcedure.category?.display?.trim().toLowerCase().replace(/\s+/g, " ")
+        );
+
+        //  Set data ke UI
+        let newItem = {
+          ...itemProcedure,
+          keterangan: matchedProcedure.data[1].text || "",
+          selectedCategory: matchedCategory || undefined,                // Cocokkan kategori
+          tanggal_waktu_dilakakukan: matchedProcedure.performedDateTime ? this.toDatetimeLocalFormat(matchedProcedure.performedDateTime) : ""
+        };
+
+        return newItem;
+      }
+
+      return itemProcedure;
+    });
+  }
   handleObservasiFisikBayi() {
     if (!this.listHistory?.data?.observations) return;
-
-
     this.listObservasiFisikBayi = this.listObservasiFisikBayi.map(itemFisikBayi => {
       let terminologyName = itemFisikBayi.terminology_name.trim().toLowerCase();
 
@@ -625,9 +713,17 @@ export class TulisSatuSehatIncComponent implements OnInit {
   }
 
   // NOTE: partial func
+
   trackByIndex(index: number, item: any) {
     return index;
   }
+
+  // Tambahin util buat convert waktu
+  toDatetimeLocalFormat(datetime: string): string {
+    const date = new Date(datetime);
+    return date.toISOString().slice(0, 16);
+  }
+
 
   async getSatuanUnit() {
     let payload = {
@@ -937,6 +1033,56 @@ export class TulisSatuSehatIncComponent implements OnInit {
     try
     {
       let response: any = await this.IncService.craeteObservationInc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitProcedureMenyusui() {
+    const dataProcedureMenyusui = this.listProcedureMenyusui;
+
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        procedures: dataProcedureMenyusui
+          .filter(item =>
+            item.tanggal_waktu_dilakakukan !== undefined && item.tanggal_waktu_dilakakukan !== null && item.tanggal_waktu_dilakakukan !== "" &&
+            item.keterangan !== undefined && item.keterangan !== null && item.keterangan !== ""
+          )
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system :
+                  (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : ""
+              },
+              data: [
+                {
+                  system: item.system ? item.system : (item.source ? item.source.source_url : ""),
+                  code: item.terminology_code,
+                  display: item.terminology_name
+                },
+                {
+                  text: item.keterangan
+                }
+              ],
+              performedDateTime: new Date(item.tanggal_waktu_dilakakukan).toISOString().replace('Z', '+00:00')
+            };
+          })
+      }
+    };
+
+
+    try
+    {
+      let response: any = await this.IncService.craeteProceduresInc(payload);
       let msg = response.statusMsg.split(": ");
       Swal.fire("Success", msg.join(", "), "success");
     } catch (err)
