@@ -38,6 +38,9 @@ export class IncService {
   craeteProceduresInc(data: any) {
     return this.request('INC/proceduresCreate', data);
   }
+  craeteConditionInc(data: any) {
+    return this.request('INC/conditionsCreate', data);
+  }
   getUseCaseResponse(data: any) {
     return this.request('master/getUseCase', data);
   }

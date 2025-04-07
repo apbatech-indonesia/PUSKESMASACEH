@@ -32,11 +32,14 @@ export class TulisSatuSehatIncComponent implements OnInit {
   listObservasiIbuPascaPersalinan: any;
   listKategoriObservasi: any;
   listKategoriProcedure: any;
+  listKategoriCondition: any;
+  listCondtionClinical: any;
   listObservasiKeadaanBayi: any;
   listObservasiFisikBayi: any;
   listProcedureMenyusui: any;
   listProcedureTindakanIbu: any;
   listProcedureTindakanBayi: any;
+  listDiagnosaConditionIbu: any;
   isDisabledFormInc: boolean = true;
   selectedPemeriksaanLab: { [key: string]: string } = {};
   headers = new HttpHeaders({
@@ -232,6 +235,13 @@ export class TulisSatuSehatIncComponent implements OnInit {
         this.carilistKategoriProcedure();
         await this.cariHistory();
         break;
+      case "diagnosa-kondisi-ibu":
+        this.carilistDiagnosaConditionIbu();
+        this.carilistKategoriCondition();
+        this.carilistClinicalCondition();
+        await this.cariHistory();
+        break;
+
       default:
         break;
     }
@@ -279,6 +289,9 @@ export class TulisSatuSehatIncComponent implements OnInit {
         break;
       case "prosedur-tindakan-bayi":
         this.doSubmitProcedureTindakanBayi();
+        break;
+      case "diagnosa-kondisi-ibu":
+        this.doSubmitDiagnosaKondisiIbu();
         break;
       default:
         Swal.fire("Error", "Form tidak ditemukan", "error");
@@ -380,6 +393,9 @@ export class TulisSatuSehatIncComponent implements OnInit {
         case "prosedur-tindakan-bayi":
           this.handleProcedureTindakanBayi();
           break;
+        case "diagnosa-kondisi-ibu":
+          this.handleDiagnosaCondtionIbu();
+          break;
         default:
           break;
       }
@@ -423,6 +439,47 @@ export class TulisSatuSehatIncComponent implements OnInit {
     {
       let response: any = await this.IncService.getDataTerminologi(payload);
       this.listKategoriProcedure = [...response.data];
+    } catch (error)
+    {
+    }
+  }
+  async carilistKategoriCondition() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `condition-category|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.IncService.getDataTerminologi(payload);
+      this.listKategoriCondition = [...response.data];
+    } catch (error)
+    {
+    }
+  }
+  async carilistClinicalCondition() {
+    let payload = {
+      terminology_id: "",
+      key_name: `category|is_active`,
+      key_operator: "=|=",
+      key_value: `condition-clinical|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.IncService.getDataTerminologi(payload);
+      this.listCondtionClinical = [...response.data];
+
     } catch (error)
     {
     }
@@ -567,9 +624,72 @@ export class TulisSatuSehatIncComponent implements OnInit {
     {
     }
   }
+  async carilistDiagnosaConditionIbu() {
+    let payload = {
+      terminology_id: "",
+      key_name: `satusehat_category|category|is_active`,
+      key_operator: "=|=|=",
+      key_value: `kondisi-kehamilan|condition-code|1`,
+      show_parent: "yes",
+      show_child: "yes",
+      max_row: 100,
+      order_by: "terminology_name",
+      order_type: "Asc",
+    };
+    try
+    {
+      let response: any = await this.IncService.getDataTerminologi(payload);
+      this.listDiagnosaConditionIbu = [...response.data];
+    } catch (error)
+    {
+    }
+  }
 
 
   // NOTE: handle data history
+  handleDiagnosaCondtionIbu() {
+    if (!this.listHistory?.data?.conditions || !Array.isArray(this.listHistory.data.conditions))
+    {
+      return;
+    }
+    this.listDiagnosaConditionIbu = this.listDiagnosaConditionIbu.map(itemDiagnosaConditionIbu => {
+      let terminologyName = itemDiagnosaConditionIbu.terminology_name.trim().toLowerCase();
+      //  Cari SEMUA kondisi yang cocok
+      let matchedConditions = this.listHistory.data.conditions.filter(cond =>
+        cond.name.trim().toLowerCase() === terminologyName
+      );
+      if (matchedConditions.length > 0)
+      {
+        //  Ambil SEMUA notes dari matchedConditions
+        let allNotes = matchedConditions.flatMap(cond =>
+          (cond.note || []).map(n => n.text).filter(v => v !== undefined)
+        );
+        //  Ambil kategori yang cocok
+        let matchedCategories = matchedConditions.flatMap(cond => {
+          let matchedCat = this.listKategoriCondition.find(cat =>
+            cat.terminology_name.trim().toLowerCase() === cond.category?.display?.trim().toLowerCase()
+          );
+          return matchedCat ? [matchedCat] : [];
+        });
+        //  Ambil kondisi klinis yang cocok
+        let matchedClinicalStatuses = matchedConditions.flatMap(cond => {
+          let matchedStatus = this.listCondtionClinical.find(status =>
+            status.terminology_name.trim().toLowerCase() === cond.clinicalStatus?.display?.trim().toLowerCase()
+          );
+          return matchedStatus ? [matchedStatus] : [];
+        });
+        let newItem = {
+          ...itemDiagnosaConditionIbu,
+          inputString: allNotes.length > 0 ? allNotes.join(", ") : "", //  Gabung semua notes jadi satu string
+          selectedCategory: matchedCategories.length > 0 ? matchedCategories[0] : undefined,
+          clinicalStatus: matchedClinicalStatuses.length > 0 ? matchedClinicalStatuses[0] : undefined
+        };
+        return newItem;
+      }
+
+      return itemDiagnosaConditionIbu;
+    });
+  }
   handleProcedureMenyusui() {
     if (!this.listHistory?.data?.procedures || !Array.isArray(this.listHistory.data.procedures))
     {
@@ -1326,6 +1446,59 @@ export class TulisSatuSehatIncComponent implements OnInit {
     try
     {
       let response: any = await this.IncService.craeteProceduresInc(payload);
+      let msg = response.statusMsg.split(": ");
+      Swal.fire("Success", msg.join(", "), "success");
+    } catch (err)
+    {
+      Swal.fire("Error", "Terjadi kesalahan saat mengirim data", "error");
+    }
+  }
+  async doSubmitDiagnosaKondisiIbu() {
+    const dataDiagnosisCondtionIbu = this.listDiagnosaConditionIbu;
+    const payload = {
+      data: {
+        encounterId: this.encounter_id,
+        useCaseId: this.useCaseId,
+        satusehatId: this.patientData.idsatusehat,
+        rmno: this.notransaksi,
+        conditions: dataDiagnosisCondtionIbu
+          .filter(item => item.inputString !== undefined && item.inputString !== null && item.inputString !== "")
+          .map(item => {
+            return {
+              name: item.terminology_name,
+              category: {
+                system: item.selectedCategory ? item.selectedCategory.system :
+                  (item.selectedCategory.source ? item.selectedCategory.source.source_url : ''),
+                code: item.selectedCategory ? item.selectedCategory.terminology_code : "observation",
+                display: item.selectedCategory ? item.selectedCategory.terminology_name : "Observation"
+              },
+              clinicalStatus: {
+                system: item.clinicalStatus ? item.clinicalStatus.system :
+                  (item.clinicalStatus.source ? item.clinicalStatus.source.source_url : ''),
+                code: item.clinicalStatus ? item.clinicalStatus.terminology_code : "observation",
+                display: item.clinicalStatus ? item.clinicalStatus.terminology_name : "Observation"
+              },
+              data: [
+                {
+                  system: item.system ? item.system : (item.source ? item.source.source_url : ""),
+                  code: item.terminology_code,
+                  display: item.terminology_name
+                }
+              ],
+              note: [
+                {
+                  text: item.inputString
+                }
+              ],
+              recordedDate: this.dateNow
+            };
+          })
+      }
+    };
+
+    try
+    {
+      let response: any = await this.IncService.craeteConditionInc(payload);
       let msg = response.statusMsg.split(": ");
       Swal.fire("Success", msg.join(", "), "success");
     } catch (err)
