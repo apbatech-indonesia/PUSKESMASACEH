@@ -121,6 +121,12 @@
                             Diagnosa Kondisi Ibu
                         </a>
                     </li>
+                    <li class="nav-item border-end">
+                        <a class="nav-link {{ activeTab == 'diagnosa-kondisi-bayi' ? 'active' : '' }}"
+                            href="javascript:;" (click)="openTab('diagnosa-kondisi-bayi')">
+                            Diagnosa Kondisi Bayi
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -555,6 +561,47 @@
 
                                 <!-- 🔥 Select Kondisi Klinis -->
                                 <select class="form-select w-25" [(ngModel)]="itemDiagnosaConditionIbu.clinicalStatus"
+                                    [name]="'clinicalStatus_' + i">
+                                    <option [ngValue]="undefined" selected>Pilih Kondisi Klinis</option>
+                                    <option *ngFor="let conditionClinical of listCondtionClinical"
+                                        [ngValue]="conditionClinical">
+                                        {{ conditionClinical . terminology_name }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card mb-2" *ngIf="activeTab == 'diagnosa-kondisi-bayi'">
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 p-3 mb-3 border rounded shadow-sm bg-light"
+                            *ngFor="let itemDiagnosaConditionBayi of listDiagnosaConditionBayi; let i = index; trackBy: trackByIndex">
+                            <label class="fw-bold text-primary d-flex justify-content-between align-items-center"
+                                [title]="itemDiagnosaConditionBayi.description">
+                                {{ itemDiagnosaConditionBayi . terminology_name }}
+                            </label>
+                            <div class="d-flex align-items-center gap-2 mt-3">
+                                <!-- 🔥 Input Keterangan (inputString) -->
+                                <textarea class="form-control w-50" [(ngModel)]="itemDiagnosaConditionBayi.inputString" [name]="'inputString_' + i"
+                                    placeholder="Input Keterangan" rows="1"></textarea>
+
+                                <!-- 🔥 Select Kategori -->
+                                <select class="form-select w-25"
+                                    [(ngModel)]="itemDiagnosaConditionBayi.selectedCategory"
+                                    [name]="'selectedCategory_' + i" title="kategori">
+                                    <option [ngValue]="undefined" selected>Pilih Kategori</option>
+                                    <option *ngFor="let item of listKategoriCondition" [ngValue]="item">
+                                        {{ item . terminology_name }}
+                                    </option>
+                                </select>
+
+                                <!-- 🔥 Select Kondisi Klinis -->
+                                <select class="form-select w-25"
+                                    [(ngModel)]="itemDiagnosaConditionBayi.clinicalStatus"
                                     [name]="'clinicalStatus_' + i">
                                     <option [ngValue]="undefined" selected>Pilih Kondisi Klinis</option>
                                     <option *ngFor="let conditionClinical of listCondtionClinical"
