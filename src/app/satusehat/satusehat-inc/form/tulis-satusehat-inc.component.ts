@@ -962,8 +962,6 @@ export class TulisSatuSehatIncComponent implements OnInit {
       return;
     }
 
-    console.log(this.listProcedureTindakanBayi);
-    console.log(this.listHistory.data.procedures);
 
     this.listProcedureTindakanBayi = this.listProcedureTindakanBayi.map(itemProcedure => {
       let terminologyName = itemProcedure.terminology_name.trim().toLowerCase().replace(/\s+/g, " ");
@@ -975,8 +973,6 @@ export class TulisSatuSehatIncComponent implements OnInit {
 
       if (matchedProcedure)
       {
-        console.log(matchedProcedure);
-
         //  Ambil kategori yang cocok
         let matchedCategory = this.listKategoriProcedure.find(cat =>
           cat.terminology_name.trim().toLowerCase().replace(/\s+/g, " ") === matchedProcedure.category?.display?.trim().toLowerCase().replace(/\s+/g, " ")
