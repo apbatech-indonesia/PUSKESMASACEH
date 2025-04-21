@@ -1,0 +1,44 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-4">
+    <h5 class="fw-bold">Pemeriksaan Tekanan Darah</h5>
+
+    <!-- Sistolik -->
+    <div class="mb-3">
+      <label class="form-label">Sistolik (mmHg)</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="model.sistolik"
+        name="sistolik"
+        required
+      />
+    </div>
+
+    <!-- Diastolik -->
+    <div class="mb-3">
+      <label class="form-label">Diastolik (mmHg)</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="model.diastolik"
+        name="diastolik"
+        required
+      />
+    </div>
+
+    <!-- Hasil Tekanan Darah -->
+    <div class="mb-3">
+      <label class="form-label">Hasil Tekanan Darah</label>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="model.hasil"
+        name="hasil"
+        placeholder="Contoh: Normal, Hipertensi, dll"
+        required
+      />
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>

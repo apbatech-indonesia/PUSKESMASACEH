@@ -1,0 +1,31 @@
+<form (ngSubmit)="submitFormGinjal()" class="p-4">
+  <div class="mb-3">
+    <h5 class="fw-bold">Pemeriksaan Fungsi Ginjal (HT/DM)</h5>
+
+    <label class="form-label">Ureum:</label>
+    <input
+      type="number"
+      class="form-control mb-2"
+      [(ngModel)]="modelGinjal.ureum"
+      name="ureum"
+    />
+
+    <label class="form-label">Kreatinin:</label>
+    <input
+      type="number"
+      class="form-control mb-2"
+      [(ngModel)]="modelGinjal.kreatinin"
+      name="kreatinin"
+    />
+
+    <label class="form-label">e-LFG (CKD-EPI):</label>
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="modelGinjal.elfg"
+      name="elfg"
+    />
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>

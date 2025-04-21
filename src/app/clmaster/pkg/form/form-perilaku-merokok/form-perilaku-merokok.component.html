@@ -1,0 +1,90 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3">
+    <h3>Perilaku Merokok</h3>
+  </div>
+
+  <!-- Merokok setahun terakhir -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Merokok dalam setahun terakhir?</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="merokokSetahun"
+        value="Ya"
+        [(ngModel)]="model.merokokSetahun"
+        id="merokokSetahun-ya"
+      />
+      <label class="form-check-label" for="merokokSetahun-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="merokokSetahun"
+        value="Tidak"
+        [(ngModel)]="model.merokokSetahun"
+        id="merokokSetahun-tidak"
+      />
+      <label class="form-check-label" for="merokokSetahun-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Pernah merokok -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Pernah merokok sebelumnya?</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="pernahMerokok"
+        value="Ya"
+        [(ngModel)]="model.pernahMerokok"
+        id="pernahMerokok-ya"
+      />
+      <label class="form-check-label" for="pernahMerokok-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="pernahMerokok"
+        value="Tidak"
+        [(ngModel)]="model.pernahMerokok"
+        id="pernahMerokok-tidak"
+      />
+      <label class="form-check-label" for="pernahMerokok-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Terpapar asap rokok -->
+  <div class="mb-4">
+    <label class="form-label fw-bold"
+      >Terpapar asap rokok dalam 1 bulan terakhir?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="asapRokok"
+        value="Ya"
+        [(ngModel)]="model.asapRokok"
+        id="asapRokok-ya"
+      />
+      <label class="form-check-label" for="asapRokok-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="asapRokok"
+        value="Tidak"
+        [(ngModel)]="model.asapRokok"
+        id="asapRokok-tidak"
+      />
+      <label class="form-check-label" for="asapRokok-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>

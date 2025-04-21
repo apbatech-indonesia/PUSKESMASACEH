@@ -1,0 +1,23 @@
+<form (ngSubmit)="submitFormGulaLanjutan()" class="p-4">
+  <div class="mb-3">
+    <h5 class="fw-bold">Gula Darah Lanjutan</h5>
+
+    <label class="form-label">GDP (Gula Darah Puasa):</label>
+    <input
+      type="number"
+      class="form-control mb-2"
+      [(ngModel)]="modelGulaLanjutan.gdp"
+      name="gdp"
+    />
+
+    <label class="form-label">2PP (2 Jam Setelah Makan):</label>
+    <input
+      type="number"
+      class="form-control mb-2"
+      [(ngModel)]="modelGulaLanjutan.pp2"
+      name="pp2"
+    />
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>

@@ -1,0 +1,24 @@
+import { Component, OnInit } from "@angular/core";
+
+@Component({
+  selector: "app-form-demografi-pria",
+  templateUrl: "./form-demografi-pria.component.html",
+  styleUrls: ["./form-demografi-pria.component.sass"],
+})
+export class FormDemografiPriaComponent implements OnInit {
+  model = {
+    status: "",
+    rencana: "",
+    disabilitas: "",
+  };
+
+  statusList = ["Belum Menikah", "Menikah", "Cerai Mati", "Cerai Hidup"];
+
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  submitForm() {
+    console.log("Data form:", this.model);
+  }
+}

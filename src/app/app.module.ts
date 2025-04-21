@@ -166,6 +166,44 @@ import { TulisSatuSehatGiziComponent } from "./satusehat/satusehat-gizi/form/tul
 import { skriningComponent } from "./clmaster/skrining/skrining.component";
 import { NgxYoutubePlayerModule } from "ngx-youtube-player";
 import { TulisSatuSehatGigiComponent } from "./satusehat/satusehat-gigi/form/tulis-satusehat-gigi.component";
+import { pkgComponent } from "./clmaster/pkg/pkg.component";
+import { FormGiziComponent } from "./clmaster/pkg/form/form-gizi/form-gizi.component";
+import { ModalWrapperComponent } from "./clmaster/pkg/components/modal-wrapper/modal-wrapper.component";
+import { FormDemografiPriaComponent } from "./clmaster/pkg/form/form-demografi-pria/form-demografi-pria.component";
+import { FormAbnormalitasJantungComponent } from "./clmaster/pkg/form/form-abnormalitas-jantung/form-abnormalitas-jantung.component";
+import { FormAktivitasFisikComponent } from "./clmaster/pkg/form/form-aktivitas-fisik/form-aktivitas-fisik.component";
+import { FormDemografiWanitaComponent } from "./clmaster/pkg/form/form-demografi-wanita/form-demografi-wanita.component";
+import { FormIvaComponent } from "./clmaster/pkg/form/form-iva/form-iva.component";
+import { FormHpvDnaComponent } from "./clmaster/pkg/form/form-hpv-dna/form-hpv-dna.component";
+import { FormKankerPayudaraComponent } from "./clmaster/pkg/form/form-kanker-payudara/form-kanker-payudara.component";
+import { FormHasilEkgComponent } from "./clmaster/pkg/form/form-hasil-ekg/form-hasil-ekg.component";
+import { FormPeriodontalComponent } from "./clmaster/pkg/form/form-periodontal/form-periodontal.component";
+import { FormKariesGigiHilangComponent } from "./clmaster/pkg/form/form-karies-gigi-hilang/form-karies-gigi-hilang.component";
+import { FormMataTelingaComponent } from "./clmaster/pkg/form/form-mata-telinga/form-mata-telinga.component";
+import { FormRapidTestCapinComponent } from "./clmaster/pkg/form/form-rapid-test-capin/form-rapid-test-capin.component";
+import { FormRisikoJantungStrokeComponent } from "./clmaster/pkg/form/form-risiko-jantung-stroke/form-risiko-jantung-stroke.component";
+import { FormProfilLipidComponent } from "./clmaster/pkg/form/form-profil-lipid/form-profil-lipid.component";
+import { FormHepatitisComponent } from "./clmaster/pkg/form/form-hepatitis/form-hepatitis.component";
+import { FormGulaDarahLanjutanHba1cComponent } from "./clmaster/pkg/form/form-gula-darah-lanjutan-hba1c/form-gula-darah-lanjutan-hba1c.component";
+import { FormGulaDarahLanjutanGdpComponent } from "./clmaster/pkg/form/form-gula-darah-lanjutan-gdp/form-gula-darah-lanjutan-gdp.component";
+import { FormFungsiGinjalComponent } from "./clmaster/pkg/form/form-fungsi-ginjal/form-fungsi-ginjal.component";
+import { FormSirosisHatiComponent } from "./clmaster/pkg/form/form-sirosis-hati/form-sirosis-hati.component";
+import { FormThoraxTbcComponent } from "./clmaster/pkg/form/form-thorax-tbc/form-thorax-tbc.component";
+import { FormSputumTbcComponent } from "./clmaster/pkg/form/form-sputum-tbc/form-sputum-tbc.component";
+import { FormPpokPumaComponent } from "./clmaster/pkg/form/form-ppok-puma/form-ppok-puma.component";
+import { FormTekananDarahComponent } from "./clmaster/pkg/form/form-tekanan-darah/form-tekanan-darah.component";
+import { FormTuberkulosisComponent } from "./clmaster/pkg/form/form-tuberkulosis/form-tuberkulosis.component";
+import { FormTekananGulaComponent } from "./clmaster/pkg/form/form-tekanan-gula/form-tekanan-gula.component";
+import { FormPerilakuMerokokComponent } from "./clmaster/pkg/form/form-perilaku-merokok/form-perilaku-merokok.component";
+import { FormKesehatanJiwaComponent } from "./clmaster/pkg/form/form-kesehatan-jiwa/form-kesehatan-jiwa.component";
+import { FormLeherRahimComponent } from "./clmaster/pkg/form/form-leher-rahim/form-leher-rahim.component";
+import { FormHatiComponent } from "./clmaster/pkg/form/form-hati/form-hati.component";
+import { FormGiziPriaComponent } from "./clmaster/pkg/form/form-gizi-pria/form-gizi-pria.component";
+import { FormGiziWanitaComponent } from "./clmaster/pkg/form/form-gizi-wanita/form-gizi-wanita.component";
+import { FormTekananGulaDarahComponent } from "./clmaster/pkg/form/form-tekanan-gula-darah/form-tekanan-gula-darah.component";
+import { FormKankerUsusComponent } from "./clmaster/pkg/form/form-kanker-usus/form-kanker-usus.component";
+import { FormSkriningGulaDarahComponent } from "./clmaster/pkg/form/form-skrining-gula-darah/form-skrining-gula-darah.component";
+import { FormFotoThoraxComponent } from "./clmaster/pkg/form/form-foto-thorax/form-foto-thorax.component";
 
 @NgModule({
   declarations: [
@@ -241,6 +279,44 @@ import { TulisSatuSehatGigiComponent } from "./satusehat/satusehat-gigi/form/tul
     MasterVaccineComponent,
     FormVaccineComponent,
     skriningComponent,
+    pkgComponent,
+    ModalWrapperComponent,
+    FormAbnormalitasJantungComponent,
+    FormAktivitasFisikComponent,
+    FormGiziComponent,
+    FormGiziPriaComponent,
+    FormGiziWanitaComponent,
+    FormDemografiWanitaComponent,
+    FormKankerUsusComponent,
+    FormDemografiPriaComponent,
+    FormHatiComponent,
+    FormTekananGulaDarahComponent,
+    FormLeherRahimComponent,
+    FormKesehatanJiwaComponent,
+    FormPerilakuMerokokComponent,
+    FormTekananGulaComponent,
+    FormTuberkulosisComponent,
+    FormTekananDarahComponent,
+    FormSkriningGulaDarahComponent,
+    FormPpokPumaComponent,
+    FormSputumTbcComponent,
+    FormThoraxTbcComponent,
+    FormSirosisHatiComponent,
+    FormFungsiGinjalComponent,
+    FormGulaDarahLanjutanGdpComponent,
+    FormGulaDarahLanjutanHba1cComponent,
+    FormHepatitisComponent,
+    FormProfilLipidComponent,
+    FormRisikoJantungStrokeComponent,
+    FormRapidTestCapinComponent,
+    FormMataTelingaComponent,
+    FormKariesGigiHilangComponent,
+    FormPeriodontalComponent,
+    FormHasilEkgComponent,
+    FormFotoThoraxComponent,
+    FormKankerPayudaraComponent,
+    FormHpvDnaComponent,
+    FormIvaComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "serverApp" }),

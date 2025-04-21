@@ -1,0 +1,65 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3">
+    <h3>Tekanan & Gula Darah</h3>
+  </div>
+
+  <!-- Tekanan darah tinggi -->
+  <div class="mb-3">
+    <label class="form-label fw-bold"
+      >Pernah dinyatakan tekanan darah tinggi?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="tekananDarahTinggi"
+        value="Ya"
+        [(ngModel)]="model.tekananDarahTinggi"
+        id="tekanan-ya"
+      />
+      <label class="form-check-label" for="tekanan-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="tekananDarahTinggi"
+        value="Tidak"
+        [(ngModel)]="model.tekananDarahTinggi"
+        id="tekanan-tidak"
+      />
+      <label class="form-check-label" for="tekanan-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Diabetes -->
+  <div class="mb-4">
+    <label class="form-label fw-bold"
+      >Pernah dinyatakan diabetes/kencing manis?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="diabetes"
+        value="Ya"
+        [(ngModel)]="model.diabetes"
+        id="diabetes-ya"
+      />
+      <label class="form-check-label" for="diabetes-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="diabetes"
+        value="Tidak"
+        [(ngModel)]="model.diabetes"
+        id="diabetes-tidak"
+      />
+      <label class="form-check-label" for="diabetes-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>

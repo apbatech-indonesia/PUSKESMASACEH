@@ -1,0 +1,83 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3">
+    <h3>Kesehatan Jiwa (2 minggu terakhir)</h3>
+  </div>
+
+  <!-- Kurang semangat -->
+  <div class="mb-3">
+    <label class="form-label fw-bold"
+      >Kurang semangat dalam aktivitas harian:</label
+    >
+    <div class="form-check" *ngFor="let opsi of opsiJiwa">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="semangat"
+        [value]="opsi"
+        [(ngModel)]="model.semangat"
+        [id]="'semangat-' + opsi"
+      />
+      <label class="form-check-label" [for]="'semangat-' + opsi">{{
+        opsi
+      }}</label>
+    </div>
+  </div>
+
+  <!-- Merasa murung -->
+  <div class="mb-3">
+    <label class="form-label fw-bold"
+      >Merasa murung, tertekan, putus asa:</label
+    >
+    <div class="form-check" *ngFor="let opsi of opsiJiwa">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="murung"
+        [value]="opsi"
+        [(ngModel)]="model.murung"
+        [id]="'murung-' + opsi"
+      />
+      <label class="form-check-label" [for]="'murung-' + opsi">{{
+        opsi
+      }}</label>
+    </div>
+  </div>
+
+  <!-- Merasa cemas -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Merasa cemas, gugup, gelisah:</label>
+    <div class="form-check" *ngFor="let opsi of opsiJiwa">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="cemas"
+        [value]="opsi"
+        [(ngModel)]="model.cemas"
+        [id]="'cemas-' + opsi"
+      />
+      <label class="form-check-label" [for]="'cemas-' + opsi">{{ opsi }}</label>
+    </div>
+  </div>
+
+  <!-- Tidak mampu mengendalikan khawatir -->
+  <div class="mb-4">
+    <label class="form-label fw-bold"
+      >Tidak mampu mengendalikan rasa khawatir:</label
+    >
+    <div class="form-check" *ngFor="let opsi of opsiJiwa">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="khawatir"
+        [value]="opsi"
+        [(ngModel)]="model.khawatir"
+        [id]="'khawatir-' + opsi"
+      />
+      <label class="form-check-label" [for]="'khawatir-' + opsi">{{
+        opsi
+      }}</label>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>

@@ -1,0 +1,221 @@
+<div class="mt-4">
+  <!-- Card 1: Pemeriksaan Mandiri -->
+  <div class="card mb-2">
+    <div
+      class="card-header bg-dark text-white d-flex justify-content-between align-items-center"
+    >
+      <strong>Pemeriksaan Mandiri</strong>
+    </div>
+    <div id="pemeriksaanBody" class="collapse show">
+      <div class="card-body">
+        <ngb-accordion activeIds="panel-1">
+          <ngb-panel id="panel-1">
+            <ng-template ngbPanelHeader let-opened="opened">
+              <div
+                class="d-flex align-items-center justify-content-between w-100 text-capitalize"
+              >
+                <div class="text-dark fw-semi-custom">
+                  Jumlah Pemeriksaan:
+                  <span class="text-success"
+                    >{{ jumlahSelesai }} / {{ daftarPemeriksaan.length }}</span
+                  >
+                </div>
+                <button ngbPanelToggle class="btn btn-link p-0 text-dark me-2">
+                  <i
+                    class="fa"
+                    [class.fa-chevron-up]="opened"
+                    [class.fa-chevron-down]="!opened"
+                  ></i>
+                </button>
+              </div>
+            </ng-template>
+            <ng-template ngbPanelContent>
+              <div class="table-responsive">
+                <table class="table table-borderless table-hover border-top">
+                  <thead class="table-light">
+                    <tr>
+                      <th width="1.5%"></th>
+                      <th>Layanan</th>
+                      <th class="text-center" width="20%">Status</th>
+                      <th class="text-center" width="20%">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class="border-top"
+                      *ngFor="let item of daftarPemeriksaan"
+                    >
+                      <td width="1.5%"></td>
+                      <td>{{ item.nama }}</td>
+                      <td class="text-center" width="20%">
+                        <span
+                          [ngClass]="{
+                            'text-success': item.status === 'Sudah Diperiksa',
+                            'text-danger': item.status === 'Belum Diperiksa'
+                          }"
+                        >
+                          {{ item.status }}
+                        </span>
+                      </td>
+                      <td class="text-center" width="20%">
+                        <!-- Tombol untuk buka modal -->
+                        <button
+                          class="btn btn-primary btn-sm"
+                          (click)="openDynamicModal(item.form)"
+                        >
+                          <i class="bi bi-pencil-square"></i> Input Pemeriksaan
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2: Pelayanan Oleh Nakes (Sudah Diseragamkan) -->
+  <div class="card mb-2">
+    <div
+      class="card-header bg-dark text-white d-flex justify-content-between align-items-center"
+    >
+      <strong>Pelayanan Oleh Nakes</strong>
+    </div>
+    <div id="nakesBody" class="collapse show">
+      <div class="card-body">
+        <ngb-accordion activeIds="panel-1">
+          <ngb-panel id="panel-1">
+            <ng-template ngbPanelHeader let-opened="opened">
+              <div
+                class="d-flex align-items-center justify-content-between w-100 text-capitalize"
+              >
+                <div class="text-dark fw-semi-custom">
+                  Dewasa:
+                  <span class="text-success"
+                    >{{ jumlahSelesai }} / {{ daftarLayanan.length }}</span
+                  >
+                </div>
+                <button ngbPanelToggle class="btn btn-link p-0 text-dark me-2">
+                  <i
+                    class="fa"
+                    [class.fa-chevron-up]="opened"
+                    [class.fa-chevron-down]="!opened"
+                  ></i>
+                </button>
+              </div>
+            </ng-template>
+            <ng-template ngbPanelContent>
+              <div class="table-responsive">
+                <table class="table table-borderless">
+                  <tbody>
+                    <tr class="border-top" *ngFor="let item of daftarLayanan">
+                      <td colspan="4" class="p-0">
+                        <ngb-accordion activeIds="panel-1" [closeOthers]="true">
+                          <ngb-panel id="panel-1">
+                            <ng-template ngbPanelHeader let-opened="opened">
+                              <div
+                                class="d-flex align-items-center justify-content-between w-100 text-capitalize"
+                              >
+                                <div class="text-dark fw-semi-custom">
+                                  <td>{{ item.nama }}</td>
+                                </div>
+                                <button
+                                  ngbPanelToggle
+                                  class="btn btn-link p-0 text-dark me-2"
+                                >
+                                  <i
+                                    class="fa"
+                                    [class.fa-chevron-up]="opened"
+                                    [class.fa-chevron-down]="!opened"
+                                  ></i>
+                                </button>
+                              </div>
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                              <div class="table-responsive">
+                                <table
+                                  class="table table-borderless table-hover"
+                                >
+                                  <thead class="table-light">
+                                    <tr>
+                                      <th width="1.5%"></th>
+                                      <th>Layanan</th>
+                                      <th class="text-center" width="20%">
+                                        Diperiksa
+                                      </th>
+                                      <th class="text-center" width="20%">
+                                        Status
+                                      </th>
+                                      <th class="text-center" width="20%">
+                                        Aksi
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr
+                                      class="border-top"
+                                      *ngFor="let child of item.childs"
+                                    >
+                                      <td width="1.5%"></td>
+                                      <td>{{ child.nama }}</td>
+                                      <td class="text-center" width="20%">
+                                        <div
+                                          class="form-check form-switch d-flex justify-content-center"
+                                        >
+                                          <input
+                                            type="checkbox"
+                                            class="form-check-input"
+                                            [(ngModel)]="child.dipilih"
+                                          />
+                                        </div>
+                                      </td>
+                                      <td class="text-center" width="20%">
+                                        <span
+                                          [ngClass]="{
+                                            'text-success':
+                                              child.status ===
+                                              'Sudah Diperiksa',
+                                            'text-danger':
+                                              child.status === 'Belum Diperiksa'
+                                          }"
+                                        >
+                                          {{ child.status }}
+                                        </span>
+                                      </td>
+                                      <td class="text-center" width="20%">
+                                        <button
+                                          class="btn btn-primary btn-sm"
+                                          [disabled]="!child.dipilih"
+                                          (click)="openDynamicModal(child.form)"
+                                        >
+                                          <i class="bi bi-pencil-square"></i>
+                                          Input Pemeriksaan
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </ng-template>
+                          </ngb-panel>
+                        </ngb-accordion>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center flex-wrap my-3 gap-2">
+      <button class="btn btn-success">Selesai</button>
+      <button class="btn btn-danger">Batal</button>
+    </div>
+  </div>
+</div>

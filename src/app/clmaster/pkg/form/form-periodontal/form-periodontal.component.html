@@ -1,0 +1,57 @@
+<form (ngSubmit)="submitFormPeriodontal()" class="p-4">
+  <div class="mb-3">
+    <h5 class="fw-bold">Skrining Gigi - Dewasa ≥ 25 tahun</h5>
+
+    <!-- Pocket Periodontal -->
+    <label class="form-label">Pocket Periodontal:</label>
+    <div class="form-check">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="pocket"
+        value="Ya"
+        [(ngModel)]="modelPeriodontal.pocket"
+        id="pocket-ya"
+      />
+      <label class="form-check-label" for="pocket-ya">Ya</label>
+    </div>
+    <div class="form-check mb-3">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="pocket"
+        value="Tidak"
+        [(ngModel)]="modelPeriodontal.pocket"
+        id="pocket-tidak"
+      />
+      <label class="form-check-label" for="pocket-tidak">Tidak</label>
+    </div>
+
+    <!-- Gigi Goyang -->
+    <label class="form-label">Gigi Goyang:</label>
+    <div class="form-check">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="gigiGoyang"
+        value="Ya"
+        [(ngModel)]="modelPeriodontal.gigiGoyang"
+        id="goyang-ya"
+      />
+      <label class="form-check-label" for="goyang-ya">Ya</label>
+    </div>
+    <div class="form-check mb-3">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="gigiGoyang"
+        value="Tidak"
+        [(ngModel)]="modelPeriodontal.gigiGoyang"
+        id="goyang-tidak"
+      />
+      <label class="form-check-label" for="goyang-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>

@@ -1,0 +1,159 @@
+<form (ngSubmit)="submitFormProfilLipid()" class="p-4">
+  <div class="mb-3">
+    <h5 class="fw-bold">Profil Lipid (HT/DM)</h5>
+
+    <!-- Kolesterol Total -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Kolesterol Total (mg/dl)</label>
+      <input
+        type="number"
+        class="form-control mb-2"
+        [(ngModel)]="modelProfilLipid.kolesterol"
+        name="kolesterol"
+      />
+      <label class="form-label">Interpretasi:</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="kolesterolInterpretasi"
+          value="Normal"
+          [(ngModel)]="modelProfilLipid.kolesterolInterpretasi"
+          id="kolesterol-normal"
+        />
+        <label class="form-check-label" for="kolesterol-normal"
+          >Normal (&lt; 200 mg/dl)</label
+        >
+      </div>
+      <div class="form-check mb-2">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="kolesterolInterpretasi"
+          value="Tinggi"
+          [(ngModel)]="modelProfilLipid.kolesterolInterpretasi"
+          id="kolesterol-tinggi"
+        />
+        <label class="form-check-label" for="kolesterol-tinggi"
+          >Tinggi (&ge; 200 mg/dl)</label
+        >
+      </div>
+    </div>
+
+    <!-- HDL -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">HDL (mg/dl)</label>
+      <input
+        type="number"
+        class="form-control mb-2"
+        [(ngModel)]="modelProfilLipid.hdl"
+        name="hdl"
+      />
+      <label class="form-label">Interpretasi:</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="hdlInterpretasi"
+          value="Rendah"
+          [(ngModel)]="modelProfilLipid.hdlInterpretasi"
+          id="hdl-rendah"
+        />
+        <label class="form-check-label" for="hdl-rendah"
+          >Rendah (&lt; 60 mg/dl)</label
+        >
+      </div>
+      <div class="form-check mb-2">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="hdlInterpretasi"
+          value="Normal"
+          [(ngModel)]="modelProfilLipid.hdlInterpretasi"
+          id="hdl-normal"
+        />
+        <label class="form-check-label" for="hdl-normal"
+          >Normal (&ge; 60 mg/dl)</label
+        >
+      </div>
+    </div>
+
+    <!-- LDL -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">LDL (mg/dl)</label>
+      <input
+        type="number"
+        class="form-control mb-2"
+        [(ngModel)]="modelProfilLipid.ldl"
+        name="ldl"
+      />
+      <label class="form-label">Interpretasi:</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="ldlInterpretasi"
+          value="Normal"
+          [(ngModel)]="modelProfilLipid.ldlInterpretasi"
+          id="ldl-normal"
+        />
+        <label class="form-check-label" for="ldl-normal"
+          >Normal (&lt; 100 mg/dl)</label
+        >
+      </div>
+      <div class="form-check mb-2">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="ldlInterpretasi"
+          value="Tinggi"
+          [(ngModel)]="modelProfilLipid.ldlInterpretasi"
+          id="ldl-tinggi"
+        />
+        <label class="form-check-label" for="ldl-tinggi"
+          >Tinggi (&ge; 100 mg/dl)</label
+        >
+      </div>
+    </div>
+
+    <!-- Trigliserida -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Trigliserida (mg/dl)</label>
+      <input
+        type="number"
+        class="form-control mb-2"
+        [(ngModel)]="modelProfilLipid.trigliserida"
+        name="trigliserida"
+      />
+      <label class="form-label">Interpretasi:</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="trigliseridaInterpretasi"
+          value="Normal"
+          [(ngModel)]="modelProfilLipid.trigliseridaInterpretasi"
+          id="trigliserida-normal"
+        />
+        <label class="form-check-label" for="trigliserida-normal"
+          >Normal (&lt; 150 mg/dl)</label
+        >
+      </div>
+      <div class="form-check mb-3">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="trigliseridaInterpretasi"
+          value="Tinggi"
+          [(ngModel)]="modelProfilLipid.trigliseridaInterpretasi"
+          id="trigliserida-tinggi"
+        />
+        <label class="form-check-label" for="trigliserida-tinggi"
+          >Tinggi (&ge; 150 mg/dl)</label
+        >
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Submit</button>
+  </div>
+</form>

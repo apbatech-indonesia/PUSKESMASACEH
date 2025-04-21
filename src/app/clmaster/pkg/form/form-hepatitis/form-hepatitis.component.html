@@ -1,0 +1,57 @@
+<form (ngSubmit)="submitFormHepatitis()" class="p-4">
+  <div class="mb-3">
+    <h5 class="fw-bold">Hepatitis</h5>
+
+    <!-- HBsAg -->
+    <label class="form-label">HBsAg:</label>
+    <div class="form-check">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="hbsag"
+        value="Non Reaktif"
+        [(ngModel)]="modelHepatitis.hbsag"
+        id="hbsag-non"
+      />
+      <label class="form-check-label" for="hbsag-non">Non Reaktif</label>
+    </div>
+    <div class="form-check mb-3">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="hbsag"
+        value="Reaktif"
+        [(ngModel)]="modelHepatitis.hbsag"
+        id="hbsag-reaktif"
+      />
+      <label class="form-check-label" for="hbsag-reaktif">Reaktif</label>
+    </div>
+
+    <!-- Anti HCV -->
+    <label class="form-label">Anti HCV:</label>
+    <div class="form-check">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="antihcv"
+        value="Non Reaktif"
+        [(ngModel)]="modelHepatitis.antihcv"
+        id="antihcv-non"
+      />
+      <label class="form-check-label" for="antihcv-non">Non Reaktif</label>
+    </div>
+    <div class="form-check mb-3">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="antihcv"
+        value="Reaktif"
+        [(ngModel)]="modelHepatitis.antihcv"
+        id="antihcv-reaktif"
+      />
+      <label class="form-check-label" for="antihcv-reaktif">Reaktif</label>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>

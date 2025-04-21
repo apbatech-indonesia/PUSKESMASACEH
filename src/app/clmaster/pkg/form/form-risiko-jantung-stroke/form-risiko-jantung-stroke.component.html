@@ -1,0 +1,18 @@
+<form (ngSubmit)="submitFormRisiko()" class="p-4">
+  <div class="mb-3">
+    <h5 class="fw-bold">Prediksi Risiko Jantung & Stroke</h5>
+
+    <label class="form-label"
+      >Persentase Risiko Penyakit Kardiovaskular (WHO Chart)</label
+    >
+    <input
+      type="number"
+      class="form-control"
+      [(ngModel)]="modelRisiko.persentase"
+      name="persentaseRisiko"
+      placeholder="Contoh: 10"
+    />
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>

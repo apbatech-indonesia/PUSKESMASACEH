@@ -1,0 +1,60 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3">
+    <h3>Tingkat Aktivitas Fisik</h3>
+  </div>
+
+  <!-- Rutin olahraga -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Apakah rutin berolahraga?</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="olahraga"
+        value="Ya"
+        [(ngModel)]="model.olahraga"
+        id="olahraga-ya"
+      />
+      <label class="form-check-label" for="olahraga-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="olahraga"
+        value="Tidak"
+        [(ngModel)]="model.olahraga"
+        id="olahraga-tidak"
+      />
+      <label class="form-check-label" for="olahraga-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Frekuensi olahraga -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Berapa kali olahraga per minggu?</label>
+    <input
+      type="number"
+      class="form-control"
+      name="frekuensi"
+      [(ngModel)]="model.frekuensi"
+      min="0"
+      id="frekuensi"
+    />
+  </div>
+
+  <!-- Durasi olahraga -->
+  <div class="mb-4">
+    <label class="form-label fw-bold">Berapa menit tiap sesi olahraga?</label>
+    <input
+      type="number"
+      class="form-control"
+      name="durasi"
+      [(ngModel)]="model.durasi"
+      min="0"
+      id="durasi"
+    />
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>

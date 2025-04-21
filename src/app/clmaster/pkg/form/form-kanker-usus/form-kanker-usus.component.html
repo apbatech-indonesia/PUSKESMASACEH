@@ -1,0 +1,63 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3">
+    <h3>Kanker Usus (usia &gt; 40 tahun)</h3>
+  </div>
+
+  <!-- Riwayat keluarga kanker usus -->
+  <div class="mb-3">
+    <label class="form-label fw-bold"
+      >Ada keluarga menderita kanker usus/kolorektal?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="riwayatKeluargaUsus"
+        value="Ya"
+        [(ngModel)]="model.riwayatKeluargaUsus"
+        id="riwayat-ya"
+      />
+      <label class="form-check-label" for="riwayat-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="riwayatKeluargaUsus"
+        value="Tidak"
+        [(ngModel)]="model.riwayatKeluargaUsus"
+        id="riwayat-tidak"
+      />
+      <label class="form-check-label" for="riwayat-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Merokok -->
+  <div class="mb-4">
+    <label class="form-label fw-bold">Apakah Anda merokok?</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="merokokUsus"
+        value="Ya"
+        [(ngModel)]="model.merokokUsus"
+        id="merokok-ya"
+      />
+      <label class="form-check-label" for="merokok-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="merokokUsus"
+        value="Tidak"
+        [(ngModel)]="model.merokokUsus"
+        id="merokok-tidak"
+      />
+      <label class="form-check-label" for="merokok-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>

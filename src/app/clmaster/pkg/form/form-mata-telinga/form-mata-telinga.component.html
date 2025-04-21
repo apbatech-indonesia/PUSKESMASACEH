@@ -1,0 +1,173 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3">
+    <h5 class="fw-bold">Skrining Telinga dan Mata</h5>
+
+    <!-- Tajam Pendengaran -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Tajam Pendengaran</label>
+      <div class="form-check">
+        <input
+          type="radio"
+          name="tajamPendengaran"
+          value="Normal"
+          [(ngModel)]="model.tajamPendengaran"
+          class="form-check-input"
+          id="pendengaran-normal"
+        />
+        <label class="form-check-label" for="pendengaran-normal">Normal</label>
+      </div>
+      <div class="form-check">
+        <input
+          type="radio"
+          name="tajamPendengaran"
+          value="Gangguan Pendengaran"
+          [(ngModel)]="model.tajamPendengaran"
+          class="form-check-input"
+          id="pendengaran-gangguan"
+        />
+        <label class="form-check-label" for="pendengaran-gangguan"
+          >Gangguan Pendengaran</label
+        >
+      </div>
+    </div>
+
+    <!-- Otoskop/Penala -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Otoskop/Penala</label>
+      <div class="form-check">
+        <input
+          type="radio"
+          name="otoskop"
+          value="Normal"
+          [(ngModel)]="model.otoskop"
+          class="form-check-input"
+          id="otoskop-normal"
+        />
+        <label class="form-check-label" for="otoskop-normal">Normal</label>
+      </div>
+      <div class="form-check">
+        <input
+          type="radio"
+          name="otoskop"
+          value="Gangguan/Kelainan"
+          [(ngModel)]="model.otoskop"
+          class="form-check-input"
+          id="otoskop-gangguan"
+        />
+        <label class="form-check-label" for="otoskop-gangguan"
+          >Gangguan/Kelainan</label
+        >
+      </div>
+    </div>
+
+    <!-- E-Tumblin -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">E-Tumblin</label>
+      <div class="form-check">
+        <input
+          type="radio"
+          name="etumblin"
+          value="6/6 - 6/12"
+          [(ngModel)]="model.etumblin"
+          class="form-check-input"
+          id="etumblin-normal"
+        />
+        <label class="form-check-label" for="etumblin-normal">6/6 - 6/12</label>
+      </div>
+      <div class="form-check">
+        <input
+          type="radio"
+          name="etumblin"
+          value="< 6/12"
+          [(ngModel)]="model.etumblin"
+          class="form-check-input"
+          id="etumblin-buruk"
+        />
+        <label class="form-check-label" for="etumblin-buruk">&lt; 6/12</label>
+      </div>
+    </div>
+
+    <!-- Snellen Chart -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Snellen Chart</label>
+      <div class="form-check">
+        <input
+          type="radio"
+          name="snellen"
+          value="6/6 - 6/12"
+          [(ngModel)]="model.snellen"
+          class="form-check-input"
+          id="snellen-normal"
+        />
+        <label class="form-check-label" for="snellen-normal">6/6 - 6/12</label>
+      </div>
+      <div class="form-check">
+        <input
+          type="radio"
+          name="snellen"
+          value="< 6/12"
+          [(ngModel)]="model.snellen"
+          class="form-check-input"
+          id="snellen-buruk"
+        />
+        <label class="form-check-label" for="snellen-buruk">&lt; 6/12</label>
+      </div>
+    </div>
+
+    <!-- Pinhole -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Pinhole</label>
+      <div class="form-check">
+        <input
+          type="radio"
+          name="pinhole"
+          value="Visus naik"
+          [(ngModel)]="model.pinhole"
+          class="form-check-input"
+          id="pinhole-naik"
+        />
+        <label class="form-check-label" for="pinhole-naik">Visus naik</label>
+      </div>
+      <div class="form-check">
+        <input
+          type="radio"
+          name="pinhole"
+          value="Visus tetap"
+          [(ngModel)]="model.pinhole"
+          class="form-check-input"
+          id="pinhole-tetap"
+        />
+        <label class="form-check-label" for="pinhole-tetap">Visus tetap</label>
+      </div>
+    </div>
+
+    <!-- Pemeriksaan Pupil -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Pemeriksaan Pupil</label>
+      <div class="form-check">
+        <input
+          type="radio"
+          name="pupil"
+          value="Putih/Abu-abu"
+          [(ngModel)]="model.pupil"
+          class="form-check-input"
+          id="pupil-putih"
+        />
+        <label class="form-check-label" for="pupil-putih">Putih/Abu-abu</label>
+      </div>
+      <div class="form-check">
+        <input
+          type="radio"
+          name="pupil"
+          value="Hitam"
+          [(ngModel)]="model.pupil"
+          class="form-check-input"
+          id="pupil-hitam"
+        />
+        <label class="form-check-label" for="pupil-hitam">Hitam</label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Submit</button>
+  </div>
+</form>
