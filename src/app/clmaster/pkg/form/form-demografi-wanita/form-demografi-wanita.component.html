@@ -1,5 +1,5 @@
 <form (ngSubmit)="submitForm()" class="p-4">
-  <div class="mb-3">
+  <div class="mb-3 form-pemeriksaan">
     <h3>Demografi Dewasa Perempuan</h3>
   </div>
 
@@ -36,7 +36,7 @@
         class="form-check-input"
         type="radio"
         name="rencana"
-        value="Ya"
+        value="true"
         [(ngModel)]="model.rencana"
         id="rencana-ya"
       />
@@ -47,7 +47,7 @@
         class="form-check-input"
         type="radio"
         name="rencana"
-        value="Tidak"
+        value="false"
         [(ngModel)]="model.rencana"
         id="rencana-tidak"
       />
@@ -63,7 +63,7 @@
         class="form-check-input"
         type="radio"
         name="hamil"
-        value="Ya"
+        value="true"
         [(ngModel)]="model.hamil"
         id="hamil-ya"
       />
@@ -74,7 +74,7 @@
         class="form-check-input"
         type="radio"
         name="hamil"
-        value="Tidak"
+        value="false"
         [(ngModel)]="model.hamil"
         id="hamil-tidak"
       />
@@ -115,5 +115,11 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary w-100">Submit</button>
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
 </form>

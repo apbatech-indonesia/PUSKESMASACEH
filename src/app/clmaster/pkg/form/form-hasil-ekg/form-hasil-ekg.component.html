@@ -1,33 +1,39 @@
 <form (ngSubmit)="submitFormJantung()" class="p-4">
-    <div class="mb-3">
-      <h5 class="fw-bold">Skrining Jantung (EKG – hanya untuk HIPERTENSI)</h5>
-  
-      <!-- Hasil EKG -->
-      <label class="form-label mt-3">Hasil EKG:</label>
-      <div class="form-check">
-        <input
-          type="radio"
-          class="form-check-input"
-          name="hasilEkg"
-          value="Normal"
-          [(ngModel)]="modelJantung.hasilEkg"
-          id="hasil-normal"
-        />
-        <label class="form-check-label" for="hasil-normal">Normal</label>
-      </div>
-      <div class="form-check mb-3">
-        <input
-          type="radio"
-          class="form-check-input"
-          name="hasilEkg"
-          value="Abnormal"
-          [(ngModel)]="modelJantung.hasilEkg"
-          id="hasil-abnormal"
-        />
-        <label class="form-check-label" for="hasil-abnormal">Abnormal</label>
-      </div>
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Skrining Jantung (EKG - hanya untuk HIPERTENSI)</h5>
+  </div>
+  <div class="mb-3">
+    <!-- Hasil EKG -->
+    <label class="form-label mt-3">Hasil EKG:</label>
+    <div class="form-check">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="hasilEkg"
+        value="Normal"
+        [(ngModel)]="modelJantung.hasilEkg"
+        id="hasil-normal"
+      />
+      <label class="form-check-label" for="hasil-normal">Normal</label>
     </div>
-  
-    <button type="submit" class="btn btn-primary w-100">Submit</button>
-  </form>
-  
+    <div class="form-check mb-3">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="hasilEkg"
+        value="Abnormal"
+        [(ngModel)]="modelJantung.hasilEkg"
+        id="hasil-abnormal"
+      />
+      <label class="form-check-label" for="hasil-abnormal">Abnormal</label>
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

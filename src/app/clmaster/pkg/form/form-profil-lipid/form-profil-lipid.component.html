@@ -1,7 +1,8 @@
 <form (ngSubmit)="submitFormProfilLipid()" class="p-4">
-  <div class="mb-3">
+  <div class="mb-3 form-pemeriksaan">
     <h5 class="fw-bold">Profil Lipid (HT/DM)</h5>
-
+  </div>
+  <div class="mb-3">
     <!-- Kolesterol Total -->
     <div class="mb-3">
       <label class="form-label fw-bold">Kolesterol Total (mg/dl)</label>
@@ -154,6 +155,12 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary w-100">Submit</button>
+    <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+      <span *ngIf="!isLoading"> Submit </span>
+      <span *ngIf="isLoading">
+        <span class="spinner-border spinner-border-sm me-1"></span>
+        Loading...
+      </span>
+    </button>
   </div>
 </form>

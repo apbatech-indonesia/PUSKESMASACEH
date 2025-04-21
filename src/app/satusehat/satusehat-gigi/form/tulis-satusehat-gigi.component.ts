@@ -978,7 +978,7 @@ export class TulisSatuSehatGigiComponent implements OnInit {
           category: [
             new Coding("http://snomed.info/sct", "3457005", "Patient referral"),
           ],
-          patientInstruction: this.patientInstruction,
+          patientInstruction: this.conditionStable,
           status: "active",
           intent: "original-order",
           priority: "routine",

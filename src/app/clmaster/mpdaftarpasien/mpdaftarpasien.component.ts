@@ -105,6 +105,8 @@ export class MpdaftarpasienComponent implements OnInit {
   kelas: string;
   tglp: any;
   tglpp: any;
+  isPeriksaPkg: string = "N";
+  isSameMonthAndYear: boolean = false;
 
   myDate = new Date();
   hostName: string;
@@ -828,6 +830,8 @@ export class MpdaftarpasienComponent implements OnInit {
             this.kdprovider = x.kdprovider;
             this.sudahpcare = x.spcare;
             this.noantrianbpjs = x.noantrianbpjs;
+            this.isPeriksaPkg = x.isPeriksaPkg;
+            this.isSameMonthAndYear = x.isPeriksaPkg === "Y";
           }
         },
         (Error) => {
@@ -841,11 +845,11 @@ export class MpdaftarpasienComponent implements OnInit {
     // this.indetitas=''
     // this.noindetitas=''
     // this.hp='',
-    // // this.kliniks='',
-    // // this.dokter='',
+    // this.kliniks='',
+    // this.dokter='',
 
-    // // this.cusi=''
-    // // this.cusid=''
+    // this.cusi=''
+    // this.cusid=''
     // this.noasuransi='0';
     // this.dash = "";
     this.profileForm.reset();
@@ -1067,6 +1071,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                 stssimpan: "1",
                                                 kdprovider: this.kdprovider,
                                                 idhs: this.idhs,
+                                                isPeriksaPkg: this.isPeriksaPkg,
                                               };
 
                                               this.authService
@@ -1281,6 +1286,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                     stssimpan: "1",
                                     kdprovider: this.kdprovider,
                                     idhs: this.idhs,
+                                    isPeriksaPkg: this.isPeriksaPkg,
                                   };
 
                                   this.authService
@@ -1539,6 +1545,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                           stssimpan: "1",
                                           kdprovider: this.kdprovider,
                                           idhs: this.idhs,
+                                          isPeriksaPkg: this.isPeriksaPkg,
                                         };
 
                                         this.authService
@@ -1768,6 +1775,8 @@ export class MpdaftarpasienComponent implements OnInit {
                                                   stssimpan: "1",
                                                   kdprovider: this.kdprovider,
                                                   idhs: this.idhs,
+                                                  isPeriksaPkg:
+                                                    this.isPeriksaPkg,
                                                 };
 
                                                 this.authService
@@ -1982,6 +1991,7 @@ export class MpdaftarpasienComponent implements OnInit {
                               stssimpan: "1",
                               kdprovider: this.kdprovider,
                               idhs: this.idhs,
+                              isPeriksaPkg: this.isPeriksaPkg,
                             };
 
                             this.authService
@@ -2160,6 +2170,7 @@ export class MpdaftarpasienComponent implements OnInit {
         stssimpan: "1",
         kdprovider: this.kdprovider,
         idhs: this.idhs,
+        isPeriksaPkg: this.isPeriksaPkg,
       };
 
       this.authService.simpandaftarrj(body).subscribe((response) => {
@@ -2555,7 +2566,8 @@ export class MpdaftarpasienComponent implements OnInit {
     aktif,
     pendidikan,
     perkerjaan,
-    idhs
+    idhs,
+    isPeriksaPkg
   ) {
     // this.cusid = "";
     this.noasuransi = "";
@@ -2568,7 +2580,15 @@ export class MpdaftarpasienComponent implements OnInit {
     this.norm = norm;
     this.tgllahir = tgllahir;
     this.idhs = idhs;
+    this.isPeriksaPkg = isPeriksaPkg;
     this.dash = "";
+
+    // Pastikan tanggal dalam format Date yang valid
+    let tgl1 = new Date(this.tglp);
+    let tgl2 = new Date(this.tgllahir);
+
+    // Cek apakah bulan
+    this.isSameMonthAndYear = tgl1.getMonth() === tgl2.getMonth();
 
     const headers = new HttpHeaders({
       "kd-cabang": this.kdcabang,

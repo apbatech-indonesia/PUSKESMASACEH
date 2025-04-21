@@ -1,5 +1,7 @@
 // src/app/models/allergy-intolerance.model.ts
 
+import { Coding } from "./service-request.model";
+
 // Class untuk Clinical Status
 export class ClinicalStatus {
   system: string;
@@ -31,6 +33,7 @@ export class AllergyIntolerance {
   name: string;
   category: string[];
   clinicalStatus: ClinicalStatus;
+  verificationStatus: Coding;
   recordedDate: string;
   data: AllergyData[];
 
@@ -41,6 +44,11 @@ export class AllergyIntolerance {
       "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
       "active",
       "Active"
+    );
+    this.verificationStatus = new Coding(
+      "http://terminology.hl7.org/CodeSystem/allergyintolerance-verification",
+      "confirmed",
+      "Confirmed"
     );
     this.recordedDate = new Date().toISOString();
     this.data = [

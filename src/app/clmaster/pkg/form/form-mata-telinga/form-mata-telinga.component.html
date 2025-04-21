@@ -1,10 +1,13 @@
 <form (ngSubmit)="submitForm()" class="p-4">
-  <div class="mb-3">
+  <div class="mb-3 form-pemeriksaan">
     <h5 class="fw-bold">Skrining Telinga dan Mata</h5>
-
+  </div>
+  <div class="mb-3">
     <!-- Tajam Pendengaran -->
     <div class="mb-3">
-      <label class="form-label fw-bold">Tajam Pendengaran</label>
+      <label class="form-label fw-bold"
+        >Hasil pemeriksaan tajam pendengaran
+      </label>
       <div class="form-check">
         <input
           type="radio"
@@ -33,7 +36,9 @@
 
     <!-- Otoskop/Penala -->
     <div class="mb-3">
-      <label class="form-label fw-bold">Otoskop/Penala</label>
+      <label class="form-label fw-bold"
+        >Pemeriksaan Otoskop dan/atau Penala
+      </label>
       <div class="form-check">
         <input
           type="radio"
@@ -62,7 +67,9 @@
 
     <!-- E-Tumblin -->
     <div class="mb-3">
-      <label class="form-label fw-bold">E-Tumblin</label>
+      <label class="form-label fw-bold"
+        >Pemeriksaan tajam penglihatan (E-Tumbling)</label
+      >
       <div class="form-check">
         <input
           type="radio"
@@ -89,7 +96,9 @@
 
     <!-- Snellen Chart -->
     <div class="mb-3">
-      <label class="form-label fw-bold">Snellen Chart</label>
+      <label class="form-label fw-bold"
+        >Pemeriksaan visus (snellen chart)
+      </label>
       <div class="form-check">
         <input
           type="radio"
@@ -116,7 +125,7 @@
 
     <!-- Pinhole -->
     <div class="mb-3">
-      <label class="form-label fw-bold">Pinhole</label>
+      <label class="form-label fw-bold">Pemeriksaan Pinhole </label>
       <div class="form-check">
         <input
           type="radio"
@@ -168,6 +177,12 @@
       </div>
     </div>
 
-    <button type="submit" class="btn btn-primary w-100">Submit</button>
+    <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+      <span *ngIf="!isLoading"> Submit </span>
+      <span *ngIf="isLoading">
+        <span class="spinner-border spinner-border-sm me-1"></span>
+        Loading...
+      </span>
+    </button>
   </div>
 </form>

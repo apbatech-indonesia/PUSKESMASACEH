@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-form-abnormalitas-jantung",
@@ -6,6 +6,16 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./form-abnormalitas-jantung.component.sass"],
 })
 export class FormAbnormalitasJantungComponent implements OnInit {
+  @Input() useCaseId: any;
+  @Input() encounterId: any;
+  @Input() notransaksi: any;
+  @Input() idpasien: any;
+  @Input() satusehatId: any;
+
+  isLoading: boolean = false;
+
+  static fields = [];
+
   constructor() {}
 
   ngOnInit(): void {}

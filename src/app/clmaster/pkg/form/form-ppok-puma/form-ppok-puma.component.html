@@ -1,7 +1,8 @@
 <form (ngSubmit)="submitForm()" class="p-4">
-  <div class="mb-4">
+  <div class="mb-3 form-pemeriksaan">
     <h5 class="fw-bold">Pemeriksaan PPOK (Skrining PUMA)</h5>
-
+  </div>
+  <div class="mb-4">
     <!-- Merokok -->
     <div class="mb-3">
       <label class="form-label fw-bold"
@@ -12,7 +13,7 @@
           class="form-check-input"
           type="radio"
           name="merokok"
-          value="Ya"
+          value="true"
           [(ngModel)]="model.merokok"
           id="merokok-ya"
         />
@@ -23,7 +24,7 @@
           class="form-check-input"
           type="radio"
           name="merokok"
-          value="Tidak"
+          value="false"
           [(ngModel)]="model.merokok"
           id="merokok-tidak"
         />
@@ -42,7 +43,7 @@
           class="form-check-input"
           type="radio"
           name="napasPendek"
-          value="Ya"
+          value="true"
           [(ngModel)]="model.napasPendek"
           id="napas-ya"
         />
@@ -53,7 +54,7 @@
           class="form-check-input"
           type="radio"
           name="napasPendek"
-          value="Tidak"
+          value="false"
           [(ngModel)]="model.napasPendek"
           id="napas-tidak"
         />
@@ -72,7 +73,7 @@
           class="form-check-input"
           type="radio"
           name="dahak"
-          value="Ya"
+          value="true"
           [(ngModel)]="model.dahak"
           id="dahak-ya"
         />
@@ -83,7 +84,7 @@
           class="form-check-input"
           type="radio"
           name="dahak"
-          value="Tidak"
+          value="false"
           [(ngModel)]="model.dahak"
           id="dahak-tidak"
         />
@@ -101,7 +102,7 @@
           class="form-check-input"
           type="radio"
           name="batuk"
-          value="Ya"
+          value="true"
           [(ngModel)]="model.batuk"
           id="batuk-ya"
         />
@@ -112,7 +113,7 @@
           class="form-check-input"
           type="radio"
           name="batuk"
-          value="Tidak"
+          value="false"
           [(ngModel)]="model.batuk"
           id="batuk-tidak"
         />
@@ -130,7 +131,7 @@
           class="form-check-input"
           type="radio"
           name="tesSpirometri"
-          value="Ya"
+          value="true"
           [(ngModel)]="model.tesSpirometri"
           id="tes-ya"
         />
@@ -141,7 +142,7 @@
           class="form-check-input"
           type="radio"
           name="tesSpirometri"
-          value="Tidak"
+          value="false"
           [(ngModel)]="model.tesSpirometri"
           id="tes-tidak"
         />
@@ -150,5 +151,11 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary w-100">Submit</button>
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
 </form>

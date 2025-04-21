@@ -1,7 +1,8 @@
 <form (ngSubmit)="submitFormGigi()" class="p-4">
-  <div class="mb-3">
+  <div class="mb-3 form-pemeriksaan">
     <h5 class="fw-bold">Skrining Gigi - Dewasa ≥ 25 tahun</h5>
-
+  </div>
+  <div class="mb-3">
     <!-- Gigi Karies -->
     <label class="form-label">Gigi Karies:</label>
     <div class="form-check">
@@ -9,7 +10,7 @@
         type="radio"
         class="form-check-input"
         name="gigiKaries"
-        value="Ya"
+        value="true"
         [(ngModel)]="modelGigi.gigiKaries"
         id="gigi-karies-ya"
       />
@@ -20,7 +21,7 @@
         type="radio"
         class="form-check-input"
         name="gigiKaries"
-        value="Tidak"
+        value="false"
         [(ngModel)]="modelGigi.gigiKaries"
         id="gigi-karies-tidak"
       />
@@ -34,7 +35,7 @@
         type="radio"
         class="form-check-input"
         name="gigiHilang"
-        value="Ya"
+        value="true"
         [(ngModel)]="modelGigi.gigiHilang"
         id="gigi-hilang-ya"
       />
@@ -45,7 +46,7 @@
         type="radio"
         class="form-check-input"
         name="gigiHilang"
-        value="Tidak"
+        value="false"
         [(ngModel)]="modelGigi.gigiHilang"
         id="gigi-hilang-tidak"
       />
@@ -53,5 +54,11 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary w-100">Submit</button>
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
 </form>

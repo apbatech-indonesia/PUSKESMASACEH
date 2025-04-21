@@ -1,7 +1,8 @@
 <form (ngSubmit)="submitFormHbA1C()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Pemeriksaan Gula Darah Lanjutan (HbA1C)</h5>
+  </div>
   <div class="mb-3">
-    <h5 class="fw-bold">HbA1C</h5>
-
     <label class="form-label">HbA1C:</label>
     <input
       type="number"
@@ -12,5 +13,11 @@
     />
   </div>
 
-  <button type="submit" class="btn btn-primary w-100">Submit</button>
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
 </form>

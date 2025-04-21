@@ -1,5 +1,5 @@
 <form (ngSubmit)="submitForm()" class="p-4">
-  <div class="mb-3">
+  <div class="mb-3 form-pemeriksaan">
     <h3>Kanker Leher Rahim</h3>
   </div>
 
@@ -13,7 +13,7 @@
         class="form-check-input"
         type="radio"
         name="hubunganIntimKanker"
-        value="Ya"
+        value="true"
         [(ngModel)]="model.hubunganIntimKanker"
         id="hubunganIntimKanker-ya"
       />
@@ -24,7 +24,7 @@
         class="form-check-input"
         type="radio"
         name="hubunganIntimKanker"
-        value="Tidak"
+        value="false"
         [(ngModel)]="model.hubunganIntimKanker"
         id="hubunganIntimKanker-tidak"
       />
@@ -34,5 +34,11 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary w-100">Submit</button>
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
 </form>

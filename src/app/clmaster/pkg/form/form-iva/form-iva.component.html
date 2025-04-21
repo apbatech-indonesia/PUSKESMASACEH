@@ -1,7 +1,8 @@
 <form (ngSubmit)="submitFormIVA()" class="p-4">
-  <div class="mb-3">
+  <div class="mb-3 form-pemeriksaan">
     <h5 class="fw-bold">Skrining Kanker Leher Rahim - Pemeriksaan IVA</h5>
-
+  </div>
+  <div class="mb-3">
     <!-- Inspekulo -->
     <label class="form-label">Inspekulo:</label>
     <div *ngFor="let item of inspekuloOptions" class="form-check">
@@ -33,5 +34,11 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary w-100">Submit</button>
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
 </form>

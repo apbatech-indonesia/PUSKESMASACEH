@@ -1,7 +1,8 @@
 <form (ngSubmit)="submitForm()" class="p-4">
-  <div class="mb-4">
+  <div class="mb-3 form-pemeriksaan">
     <h5 class="fw-bold">Gizi (BB-TB-Lingkar Perut)</h5>
-
+  </div>
+  <div class="mb-4">
     <!-- Berat Badan -->
     <div class="mb-3">
       <label class="form-label">Berat Badan (KG)</label>
@@ -39,5 +40,11 @@
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary w-100">Submit</button>
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
 </form>

@@ -18,6 +18,20 @@ export class Codeable {
   }
 }
 
+export class ValueQuantity {
+  value: string;
+  unit: string;
+  system: string;
+  code: string;
+
+  constructor(value: string, unit: string, system: string, code: string) {
+    this.value = value;
+    this.unit = unit;
+    this.system = system;
+    this.code = code;
+  }
+}
+
 export class Interpretation {
   coding: Codeable[];
   text: string;
@@ -47,26 +61,30 @@ export class ObservationData {
   result?: Result;
   resultBoolean?: boolean;
   valueInteger?: number;
+  valueQuantity?: ValueQuantity;
   valueCodeableConcept?: Codeable;
 
   constructor({
     code,
-    valueCodeableConcept,
     result,
     resultBoolean,
     valueInteger,
+    valueQuantity,
+    valueCodeableConcept,
   }: {
     code: Codeable;
-    valueCodeableConcept?: Codeable;
     result?: Result;
     resultBoolean?: boolean;
     valueInteger?: number;
+    valueQuantity?: ValueQuantity;
+    valueCodeableConcept?: Codeable;
   }) {
     this.code = code;
-    this.valueCodeableConcept = valueCodeableConcept;
     this.valueInteger = valueInteger;
     this.result = result;
     this.resultBoolean = resultBoolean;
+    this.valueQuantity = valueQuantity;
+    this.valueCodeableConcept = valueCodeableConcept;
   }
 }
 
@@ -85,6 +103,7 @@ export class Observation {
     category?: Codeable;
     code?: Codeable;
     valueCodeableConcept?: Codeable;
+    valueQuantity?: ValueQuantity;
     result?: Result;
     resultBoolean?: boolean;
     valueInteger?: number;
@@ -101,6 +120,7 @@ export class Observation {
       new ObservationData({
         code: params.code,
         valueCodeableConcept: params.valueCodeableConcept,
+        valueQuantity: params.valueQuantity,
         result: params.result,
         resultBoolean: params.resultBoolean,
         valueInteger: params.valueInteger,

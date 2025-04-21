@@ -6,6 +6,8 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./form-kanker-usus.component.sass"],
 })
 export class FormKankerUsusComponent implements OnInit {
+  isLoading: boolean = false;
+
   constructor() {}
 
   ngOnInit(): void {}

@@ -1,4 +1,16 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
+import { ToastrService } from "ngx-toastr";
+import {
+  BodySite,
+  Codeable,
+  Interpretation,
+  Observation,
+  ObservationRequestData,
+  Result,
+} from "src/app/satusehat/satusehat-gigi/data/models/observation-create.model";
+import Swal from "sweetalert2";
+import { PkgService } from "../../pkg.service";
+import { AncService } from "src/app/satusehat/satusehat-anc/services/anc.service";
 
 @Component({
   selector: "app-form-periodontal",
@@ -6,16 +18,179 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./form-periodontal.component.sass"],
 })
 export class FormPeriodontalComponent implements OnInit {
-  constructor() {}
+  @Input() useCaseId: any;
+  @Input() encounterId: any;
+  @Input() notransaksi: any;
+  @Input() idpasien: any;
+  @Input() satusehatId: any;
 
-  ngOnInit(): void {}
+  isLoading: boolean = false;
 
-  modelPeriodontal = {
-    pocket: "",
-    gigiGoyang: "",
+  static fields = ["periodontal_pocket_observation", "gigi_goyang_observation"];
+
+  constructor(
+    private toast: ToastrService,
+    private PkgService: PkgService,
+    private ancService: AncService
+  ) {}
+
+  DELAY = 10;
+
+  model = {
+    pocket: null,
+    gigiGoyang: null,
   };
 
+  ngOnInit(): void {
+    this.getDataPatient();
+  }
+
+  async getDataPatient() {
+    this.showLoading();
+
+    let response: any = await this.ancService.getDataPatient({
+      patientId: this.idpasien,
+      rmno: this.notransaksi,
+      usecase_id: this.useCaseId,
+      type: "PKG-REG",
+      status: "active",
+    });
+
+    this.setData(response.data);
+
+    this.stopLoading();
+  }
+
+  setData(patient: any) {
+    let observations: any = patient?.observations?.reduce((acc, item) => {
+      acc[item.name] = item.data[0];
+      return acc;
+    }, {});
+
+    this.model.pocket =
+      observations?.periodontal_pocket_observation?.result?.value;
+    this.model.gigiGoyang =
+      observations?.gigi_goyang_observation?.result?.value;
+  }
+
   submitFormPeriodontal() {
-    console.log("Data Skrining Periodontal:", this.modelPeriodontal);
+    this.doSubmit();
+  }
+
+  async doSubmit() {
+    let tasksList = [];
+    this.showLoading();
+
+    if (this.model.pocket != null) {
+      tasksList.push(() =>
+        this.doSubmitObservation({
+          name: "periodontal_pocket_observation",
+          category: new Codeable(
+            "http://terminology.hl7.org/CodeSystem/observation-category",
+            "exam",
+            "Exam"
+          ),
+          code: new Codeable(
+            "http://snomed.info/sct",
+            "431314004",
+            "Periodontal pocket depth"
+          ),
+          resultBoolean: this.model.pocket == "true",
+        })
+      );
+    }
+
+    if (this.model.gigiGoyang != null) {
+      tasksList.push(() =>
+        this.doSubmitObservation({
+          name: "gigi_goyang_observation",
+          category: new Codeable(
+            "http://terminology.hl7.org/CodeSystem/observation-category",
+            "exam",
+            "Exam"
+          ),
+          code: new Codeable(
+            "http://snomed.info/sct",
+            "44054006",
+            "Tooth mobility"
+          ),
+          resultBoolean: this.model.gigiGoyang == "true",
+        })
+      );
+    }
+
+    this.runWithDelay(tasksList, this.DELAY)
+      .then((responses: any) => {
+        const allSuccess = responses.every((res) => res.statusCode === "00");
+
+        if (allSuccess) {
+          this.toast.success("Sukses Mengirim Data!");
+        } else {
+          const firstError = responses.find((res) => res.statusCode !== "00");
+          throw new Error(firstError?.statusMsg || "Kesalahan Server");
+        }
+      })
+      .catch((error) => {
+        this.toast.error("Terjadi kesalahan: " + error.message);
+      });
+  }
+
+  private async doSubmitObservation(data: {
+    name: string;
+    category: Codeable;
+    code: Codeable;
+    result?: Result;
+    resultBoolean?: boolean;
+    valueInteger?: number;
+    valueCodeableConcept?: Codeable;
+    interpretation?: Interpretation;
+    bodySite?: BodySite;
+  }) {
+    let request = new ObservationRequestData(
+      this.encounterId,
+      this.useCaseId,
+      this.satusehatId,
+      [
+        new Observation({
+          observationName: data.name,
+          category: data.category,
+          code: data.code,
+          valueCodeableConcept: data.valueCodeableConcept,
+          result: data.result,
+          resultBoolean: data.resultBoolean,
+          valueInteger: data.valueInteger,
+          interpretation: data.interpretation,
+          bodySite: data.bodySite,
+        }),
+      ]
+    );
+
+    return this.PkgService.createObservation(request);
+  }
+
+  async delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async runWithDelay(promises, delayMs) {
+    const results = [];
+    for (const promiseFunc of promises) {
+      const result = await promiseFunc();
+      results.push(result);
+      await this.delay(delayMs);
+    }
+    return results;
+  }
+
+  showLoading() {
+    this.isLoading = true;
+    this.stopLoading(3000);
+  }
+
+  stopLoading(timing: number = 1000) {
+    setTimeout(() => {
+      this.isLoading = false;
+      Swal.close();
+    }, timing);
   }
 }

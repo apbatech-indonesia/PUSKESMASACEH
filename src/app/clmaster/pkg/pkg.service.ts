@@ -1,29 +1,22 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, of, throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
 let satusehatUrl = "https://besatusehat.clenicapp.com/api/";
 
 @Injectable({
   providedIn: "root",
 })
-export class skriningService {
+export class PkgService {
   userData: any = JSON.parse(localStorage.getItem("userDatacl")).userData;
   headers = new HttpHeaders({
     "kd-cabang": this.userData.kdcabang,
   });
-  private httpOptions = {
-    headers: new HttpHeaders({
-      "kd-cabang": this.userData.kdcabang,
-    }),
-  };
 
   constructor(public http: HttpClient) {}
 
-  getGroup(data) {
+  createKunjungan(data: any) {
     return new Promise((resolve) => {
       this.http
-        .post(satusehatUrl + "cluster/getGroup", data, {
+        .post(satusehatUrl + "resource/Encounter/register", data, {
           headers: this.headers,
         })
         .subscribe((data) => {
@@ -32,78 +25,75 @@ export class skriningService {
     });
   }
 
-  register(Objek: Object): Observable<Object> {
-    return this.http
-      .post<Object>(satusehatUrl + "screeningPatient/register", Objek, {
-        headers: this.httpOptions["headers"],
-      })
-      .pipe(
-        catchError(this.handleError("Error Ketika Mendapatkan Data", Objek))
-      );
-  }
-
-  saveScreening(Objek: Object): Observable<Object> {
-    return this.http
-      .post<Object>(satusehatUrl + "screeningPatient/submitData", Objek, {
-        headers: this.httpOptions["headers"],
-      })
-      .pipe(
-        catchError(this.handleError("Error Ketika Mendapatkan Data", Objek))
-      );
-  }
-
-  getData(Objek: Object): Observable<Object> {
-    return this.http
-      .post<Object>(satusehatUrl + "screeningPatient/getData", Objek, {
-        headers: this.httpOptions["headers"],
-      })
-      .pipe(
-        catchError(this.handleError("Error Ketika Mendapatkan Data", Objek))
-      );
-  }
-
-  getDataHistory(Objek: Object): Observable<Object> {
-    return this.http
-      .post<Object>(satusehatUrl + "screeningPatient/getDataHistory", Objek, {
-        headers: this.httpOptions["headers"],
-      })
-      .pipe(
-        catchError(this.handleError("Error Ketika Mendapatkan Data", Objek))
-      );
-  }
-
-  getDataKelurahan(Objek: Object, slug: string): Observable<Object> {
-    // let urlKelurahan = 'https://661709bd6fdb4f6eab29fc9a4dbfdcb9.api.mockbin.io/'
-    let urlKelurahan =
-      "https://emr.clenicapp.com/api/tabaro/satusehat/get-sub-district";
-    return this.http
-      .post<Object>(urlKelurahan, Objek, {
-        headers: this.httpOptions["headers"],
-      })
-      .pipe(
-        catchError(this.handleError("Error Ketika Mendapatkan Data", Objek))
-      );
-  }
-
-  getSkrinigById(data: any) {
-    let urlMock = "https://9e089e6b77014ff0896a007c23de1b2e.api.mockbin.io/";
+  createRelatedPerson(data: any) {
     return new Promise((resolve) => {
       this.http
-        .post(satusehatUrl + "screening/getDetail", data, {
+        .post(satusehatUrl + "resource/RelatedPerson/create", data, {
           headers: this.headers,
         })
         .subscribe((data) => {
-          // this.http.post(urlMock, data, { headers: this.headers }).subscribe((data) => {
           resolve(data);
         });
     });
   }
 
-  private handleError<T>(operation = "operation", result?: T) {
-    return (error: any): Observable<T> => {
-      // console.error(error);
-      // return of(result as T);
-      return throwError(error);
-    };
+  createAllergyIntolerance(data: any) {
+    return new Promise((resolve) => {
+      this.http
+        .post(satusehatUrl + "resource/allergyIntolerances/create", data, {
+          headers: this.headers,
+        })
+        .subscribe((response) => resolve(response));
+    });
+  }
+
+  createSpecimen(data: any) {
+    return new Promise((resolve) => {
+      this.http
+        .post(satusehatUrl + "resource/Specimens/create", data, {
+          headers: this.headers,
+        })
+        .subscribe((response) => resolve(response));
+    });
+  }
+
+  createObservation(data: any) {
+    return new Promise((resolve) => {
+      this.http
+        .post(satusehatUrl + "resource/Observation/create", data, {
+          headers: this.headers,
+        })
+        .subscribe((response) => resolve(response));
+    });
+  }
+
+  createProcedure(data: any) {
+    return new Promise((resolve) => {
+      this.http
+        .post(satusehatUrl + "resource/procedures/create", data, {
+          headers: this.headers,
+        })
+        .subscribe((response) => resolve(response));
+    });
+  }
+
+  createCondition(data: any) {
+    return new Promise((resolve) => {
+      this.http
+        .post(satusehatUrl + "resource/Condition/create", data, {
+          headers: this.headers,
+        })
+        .subscribe((response) => resolve(response));
+    });
+  }
+
+  createServiceRequest(data: any) {
+    return new Promise((resolve) => {
+      this.http
+        .post(satusehatUrl + "resource/ServiceRequest/create", data, {
+          headers: this.headers,
+        })
+        .subscribe((response) => resolve(response));
+    });
   }
 }

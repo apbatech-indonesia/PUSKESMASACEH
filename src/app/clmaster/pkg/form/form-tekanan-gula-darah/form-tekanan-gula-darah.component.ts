@@ -6,6 +6,8 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./form-tekanan-gula-darah.component.sass"],
 })
 export class FormTekananGulaDarahComponent implements OnInit {
+  isLoading: boolean = false;
+
   constructor() {}
 
   ngOnInit(): void {}
