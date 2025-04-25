@@ -128,6 +128,13 @@ export class pkgComponent implements OnInit {
   daftarLayanan = [
     {
       nama: "Skrining Gizi, Tekanan Darah, dan Gula Darah Perempuan ≥ 40 tahun",
+      jenisKelamin: "P",
+      ceklistUsia: {
+        "18-29": true,
+        "30-39": true,
+        "40-59": true,
+        ">=60": true,
+      },
       childs: [
         {
           nama: "Gizi (BB - TB - Lingkar Perut)",
@@ -154,6 +161,13 @@ export class pkgComponent implements OnInit {
     },
     {
       nama: "Pemeriksaan PPOK (Skrining PUMA)",
+      jenisKelamin: "L/P",
+      ceklistUsia: {
+        "18-29": true,
+        "30-39": true,
+        "40-59": true,
+        ">=60": true,
+      },
       childs: [
         {
           nama: "Pemeriksaan PPOK (Skrining PUMA)",
@@ -166,6 +180,13 @@ export class pkgComponent implements OnInit {
     },
     {
       nama: "Pemeriksaan Tuberkulosis",
+      jenisKelamin: "L/P",
+      ceklistUsia: {
+        "18-29": true,
+        "30-39": true,
+        "40-59": true,
+        ">=60": true,
+      },
       childs: [
         {
           nama: "Pemeriksaan Sputum - Tuberkulosis",
@@ -185,6 +206,13 @@ export class pkgComponent implements OnInit {
     },
     {
       nama: "Skrining Laboratorium ≥ 40 tahun Fungsi Ginjal, Hati, Profil Lipid",
+      jenisKelamin: "L/P",
+      ceklistUsia: {
+        "18-29": false,
+        "30-39": false,
+        "40-59": true,
+        ">=60": true,
+      },
       childs: [
         {
           nama: "Pemeriksaan Fibrosis / Sirosis Hati",
@@ -232,6 +260,13 @@ export class pkgComponent implements OnInit {
     },
     {
       nama: "Prediksi Risiko Jantung dan Stroke",
+      jenisKelamin: "L/P",
+      ceklistUsia: {
+        "18-29": false,
+        "30-39": false,
+        "40-59": true,
+        ">=60": true,
+      },
       childs: [
         {
           nama: "Prediksi Risiko Jantung dan Stroke",
@@ -244,6 +279,13 @@ export class pkgComponent implements OnInit {
     },
     {
       nama: "Pemeriksaan Rapid Test Calon Pengantin",
+      jenisKelamin: "L/P",
+      ceklistUsia: {
+        "18-29": true,
+        "30-39": true,
+        "40-59": true,
+        ">=60": true,
+      },
       childs: [
         {
           nama: "Pemeriksaan Rapid Test Calon Pengantin",
@@ -256,6 +298,13 @@ export class pkgComponent implements OnInit {
     },
     {
       nama: "Skrining Telinga dan Mata ≥ 40 tahun",
+      jenisKelamin: "L/P",
+      ceklistUsia: {
+        "18-29": false,
+        "30-39": false,
+        "40-59": true,
+        ">=60": true,
+      },
       childs: [
         {
           nama: "Skrining Mata dan Telinga ≥ 40 tahun",
@@ -268,6 +317,13 @@ export class pkgComponent implements OnInit {
     },
     {
       nama: "Skrining Gigi - Dewasa ≥ 25 tahun",
+      jenisKelamin: "L/P",
+      ceklistUsia: {
+        "18-29": true,
+        "30-39": false,
+        "40-59": false,
+        ">=60": false,
+      },
       childs: [
         {
           nama: "Skrining Karies dan Gigi Hilang",
@@ -275,11 +331,18 @@ export class pkgComponent implements OnInit {
           fields: FormKariesGigiHilangComponent.fields,
           status: "Belum Diperiksa",
           dipilih: false,
-        }
+        },
       ],
     },
     {
       nama: "Skrining Jantung (Pemeriksaan EKG - hanya penyandang Hipertensi)",
+      jenisKelamin: "L/P",
+      ceklistUsia: {
+        "18-29": false,
+        "30-39": false,
+        "40-59": true,
+        ">=60": true,
+      },
       childs: [
         {
           nama: "Detail Abnormalitas - Skrining Jantung",
@@ -299,6 +362,13 @@ export class pkgComponent implements OnInit {
     },
     {
       nama: "Skrining Kanker Payudara",
+      jenisKelamin: "P",
+      ceklistUsia: {
+        "18-29": false,
+        "30-39": true,
+        "40-59": true,
+        ">=60": true,
+      },
       childs: [
         {
           nama: "Skrining Kanker Payudara",
@@ -311,6 +381,13 @@ export class pkgComponent implements OnInit {
     },
     {
       nama: "Skrining Kanker Leher Rahim",
+      jenisKelamin: "P",
+      ceklistUsia: {
+        "18-29": false,
+        "30-39": true,
+        "40-59": true,
+        ">=60": true,
+      },
       childs: [
         {
           nama: "Hasil Pemeriksaan HPV - DNA",
@@ -343,6 +420,9 @@ export class pkgComponent implements OnInit {
   notransaksi: string = this.route.snapshot.paramMap.get("notrans");
   isLoading: boolean;
   golonganDarah: string;
+  rentangUsia = "";
+  usiaPasienFilterLayanan: number = 0;
+  jenisKelaminFilterLayanan: any;
 
   get jumlahPemeriksaanNakes(): number {
     return 0;
@@ -382,10 +462,35 @@ export class pkgComponent implements OnInit {
     this.doCreateKunjungan();
   }
 
+  getRentangUsia(usia: number): string {
+    if (usia >= 18 && usia <= 29) return "18-29";
+    if (usia >= 30 && usia <= 39) return "30-39";
+    if (usia >= 40 && usia <= 59) return "40-59";
+    if (usia >= 60) return ">=60";
+    return "";
+  }
+
+  filterDaftarLayanan() {
+    this.daftarLayanan = this.daftarLayanan.filter((layanan: any) => {
+      const cocokUsia = layanan.ceklistUsia[this.rentangUsia];
+      const cocokJK =
+        layanan.jenisKelamin === "L/P" ||
+        layanan.jenisKelamin === this.jenisKelaminFilterLayanan;
+      return cocokUsia && cocokJK;
+    });
+  }
+
   async doCreateKunjungan() {
     this.showLoading();
     this.patientData = await this.getPasien();
     this.cabangData = await this.getCabang();
+
+    this.usiaPasienFilterLayanan = this.hitungUsia(
+      this.patientData.tgllahir
+    ).tahun;
+    this.jenisKelaminFilterLayanan = this.patientData.jeniskelamin;
+    this.rentangUsia = this.getRentangUsia(this.usiaPasienFilterLayanan);
+    this.filterDaftarLayanan();
 
     if (!this.patientData.idpasien) {
       let idpasien = await this.getPasienSatuSehat();
@@ -436,7 +541,41 @@ export class pkgComponent implements OnInit {
     this.stopLoading();
   }
 
+  hitungUsia(tglLahirStr: string): {
+    tahun: number;
+    bulan: number;
+    hari: number;
+  } {
+    const tglLahir = new Date(tglLahirStr);
+    const hariIni = new Date();
+
+    // Cek apakah tglLahir adalah tanggal yang valid
+    if (isNaN(tglLahir.getTime())) {
+      return { tahun: 0, bulan: 0, hari: 0 };
+    }
+
+    let tahun = hariIni.getFullYear() - tglLahir.getFullYear();
+    let bulan = hariIni.getMonth() - tglLahir.getMonth();
+    let hari = hariIni.getDate() - tglLahir.getDate();
+
+    if (hari < 0) {
+      bulan--;
+      hari += new Date(hariIni.getFullYear(), hariIni.getMonth(), 0).getDate();
+    }
+
+    if (bulan < 0) {
+      tahun--;
+      bulan += 12;
+    }
+
+    return { tahun, bulan, hari };
+  }
+
   perbaruiStatusLayanan(daftarLayanan: any, dataObservasi: any) {
+    if (!Array.isArray(dataObservasi)) {
+      return;
+    }
+
     daftarLayanan.forEach((layanan: any) => {
       layanan.childs.forEach((child: any) => {
         child.fields.forEach((field: any) => {
