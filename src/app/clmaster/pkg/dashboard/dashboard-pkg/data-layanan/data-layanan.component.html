@@ -1,0 +1,273 @@
+<!-- Filter Provinsi, Kabupaten, Kecamatan -->
+<div class="row mb-3">
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="selectedProvinsi"
+      (change)="onFilterChange()"
+    >
+      <option value="">-- Pilih Provinsi --</option>
+      <option *ngFor="let provinsi of provinsiList">
+        {{ provinsi }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="selectedKabupaten"
+      (change)="onFilterChange()"
+    >
+      <option value="">-- Pilih Kabupaten/Kota --</option>
+      <option *ngFor="let kabupaten of kabupatenList">
+        {{ kabupaten }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="selectedKecamatan"
+      (change)="onFilterChange()"
+    >
+      <option value="">-- Kecamatan --</option>
+      <option *ngFor="let kecamatan of kecamatanList">
+        {{ kecamatan }}
+      </option>
+    </select>
+  </div>
+
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="selectedKelurahan"
+      (change)="onFilterChange()"
+    >
+      <option value="">-- Kelurahan --</option>
+      <option *ngFor="let kelurahan of kelurahanList">
+        {{ kelurahan }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<!-- CHARTS -->
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-3">
+      <div class="card-header card-header-custom">Total Pendaftar</div>
+      <div class="card-body">
+        <apx-chart
+          *ngIf="showChartComponent"
+          [series]="[hadirCount, janjiTemuCount]"
+          [chart]="{ type: 'pie', height: 250 }"
+          [labels]="['Hadir', 'Janji Temu']"
+          [colors]="['#28a745', '#ffc107']"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card mb-3">
+      <div class="card-header card-header-custom">Jumlah Pendaftar</div>
+      <div class="card-body">
+        <apx-chart
+          *ngIf="showChartComponent"
+          [series]="trendSeries"
+          [chart]="{ type: 'line', height: 250 }"
+          [xaxis]="{ categories: trendDates }"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PEMERIKSAAN KHUSUS -->
+<div class="card">
+  <div class="card-header card-header-custom text-white">Kardiovaskular</div>
+  <div class="card-body">
+    <div class="row">
+      <!-- Card 1: Tekanan Darah -->
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-header card-header-custom text-white">
+            Tekanan Darah
+          </div>
+          <div class="card-body">
+            <h5>Total Pemeriksaan Khusus</h5>
+            <p><strong>200</strong></p>
+            <p class="text-muted">
+              80,43% dari 620.766 peserta usia ≥ 18 tahun
+            </p>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Normal</span><span>33.33%</span>
+              </div>
+              <div class="progress">
+                <div
+                  class="progress-bar bg-success"
+                  style="width: 33.33%"
+                ></div>
+              </div>
+            </div>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Pre Hipertensi</span><span>33.33%</span>
+              </div>
+              <div class="progress">
+                <div
+                  class="progress-bar bg-warning"
+                  style="width: 33.33%"
+                ></div>
+              </div>
+            </div>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Hipertensi</span><span>33.33%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-danger" style="width: 33.33%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: IMT -->
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-header card-header-custom text-white">
+            Indeks Massa Tubuh
+          </div>
+          <div class="card-body">
+            <h5>Total Pemeriksaan Khusus</h5>
+            <p><strong>200</strong></p>
+            <p class="text-muted">78,9% dari 638.209 peserta usia ≥ 18 tahun</p>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Normal</span><span>25%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-success" style="width: 25%"></div>
+              </div>
+            </div>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Gemuk</span><span>25%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-warning" style="width: 25%"></div>
+              </div>
+            </div>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Kurang</span><span>25%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-info" style="width: 25%"></div>
+              </div>
+            </div>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Obesitas</span><span>25%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-danger" style="width: 25%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: Lingkar Perut -->
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-header card-header-custom text-white">
+            Lingkar Perut
+          </div>
+          <div class="card-body">
+            <h5>Total Pemeriksaan Khusus</h5>
+            <p><strong>200</strong></p>
+            <p class="text-muted">
+              80,43% dari 620.766 peserta usia ≥ 18 tahun
+            </p>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Normal</span><span>50%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-success" style="width: 50%"></div>
+              </div>
+            </div>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Obesitas Central</span><span>50%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-danger" style="width: 50%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 4: Aktivitas Fisik -->
+      <div class="col-md-6 mb-3">
+        <div class="card">
+          <div class="card-header card-header-custom text-white">
+            Aktivitas Fisik
+          </div>
+          <div class="card-body">
+            <h5>Total Pemeriksaan Khusus</h5>
+            <p><strong>200</strong></p>
+            <p class="text-muted">78,9% dari 638.209 peserta usia ≥ 18 tahun</p>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Cukup</span><span>50%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-success" style="width: 50%"></div>
+              </div>
+            </div>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Kurang</span><span>50%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-danger" style="width: 50%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 5: Merokok (col-12) -->
+      <div class="col-12 mb-3">
+        <div class="card">
+          <div class="card-header card-header-custom text-white">Merokok</div>
+          <div class="card-body">
+            <h5>Total Pemeriksaan Khusus</h5>
+            <p><strong>200</strong></p>
+            <p class="text-muted">78,9% dari 638.209 peserta usia ≥ 18 tahun</p>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Tidak Merokok</span><span>50%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-success" style="width: 50%"></div>
+              </div>
+            </div>
+            <div class="mb-2">
+              <div class="d-flex justify-content-between">
+                <span>Merokok</span><span>50%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-danger" style="width: 50%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

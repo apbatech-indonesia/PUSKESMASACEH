@@ -1,0 +1,204 @@
+<form (ngSubmit)="doSubmit()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h3>Tuberkulosis</h3>
+  </div>
+
+  <!-- Kontak dengan penderita TBC -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">
+      Apakah Anda tinggal serumah atau sering bertemu dengan orang yang
+      menderita Tuberkulosis (TBC) atau batuk berkepanjangan?
+    </label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="kontakTBC"
+        [value]="'true'"
+        [(ngModel)]="model.pemeriksaanTbSatuTahunKontakTBC"
+        id="kontak-ya"
+      />
+      <label class="form-check-label" for="kontak-ya">Iya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="kontakTBC"
+        [value]="'false'"
+        [(ngModel)]="model.pemeriksaanTbSatuTahunKontakTBC"
+        id="kontak-tidak"
+      />
+      <label class="form-check-label" for="kontak-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Demam >= 2 pekan -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">
+      Demam yang tidak diketahui penyebabnya >= 2 pekan
+    </label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="demam"
+        [value]="'true'"
+        [(ngModel)]="model.pemeriksaanTbSatuTahunDemam"
+        id="demam-ya"
+      />
+      <label class="form-check-label" for="demam-ya">Iya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="demam"
+        [value]="'false'"
+        [(ngModel)]="model.pemeriksaanTbSatuTahunDemam"
+        id="demam-tidak"
+      />
+      <label class="form-check-label" for="demam-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Pembesaran kelenjar limfe -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">
+      Pembesaran kelenjar limfe kolli, aksila, inguinal
+    </label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="kelenjar"
+        [value]="'≥1 cm, lebih dari 1 kelenjar getah bening, tidak nyeri'"
+        [(ngModel)]="model.pemeriksaanTbSatuTahunKelenjar"
+        id="kelenjar-1"
+      />
+      <label class="form-check-label" for="kelenjar-1">
+        ≥1 cm, lebih dari 1 kelenjar getah bening, tidak nyeri
+      </label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="kelenjar"
+        [value]="'<1 cm, lebih dari 1 kelenjar getah bening, tidak nyeri'"
+        [(ngModel)]="model.pemeriksaanTbSatuTahunKelenjar"
+        id="kelenjar-2"
+      />
+      <label class="form-check-label" for="kelenjar-2">
+        &lt;1 cm, lebih dari 1 kelenjar getah bening, tidak nyeri
+      </label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="kelenjar"
+        [value]="'<1 cm, tidak nyeri'"
+        [(ngModel)]="model.pemeriksaanTbSatuTahunKelenjar"
+        id="kelenjar-3"
+      />
+      <label class="form-check-label" for="kelenjar-3">
+        &lt;1 cm, tidak nyeri
+      </label>
+    </div>
+  </div>
+
+  <!-- Pembengkakan tulang/sendi -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">
+      Pembengkakan tulang/sendi panggul, lutut
+    </label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="pembengkakan"
+        [value]="'true'"
+        [(ngModel)]="model.pemeriksaanTbSatuTahunPembengkakan"
+        id="bengkak-ada"
+      />
+      <label class="form-check-label" for="bengkak-ada">Ada</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="pembengkakan"
+        [value]="'false'"
+        [(ngModel)]="model.pemeriksaanTbSatuTahunPembengkakan"
+        id="bengkak-tidak"
+      />
+      <label class="form-check-label" for="bengkak-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Indurasi Tes Mantoux -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Indurasi Tes Mantoux</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Isi dalam mm"
+      name="indurasi"
+      [(ngModel)]="model.pemeriksaanTbSatuTahunIndurasi"
+    />
+  </div>
+
+  <!-- Hasil Tes Mantoux -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Hasil Tes Mantoux</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hasilMantoux"
+        [value]="'Negatif <10 mm'"
+        [(ngModel)]="model.pemeriksaanTbSatuTahunHasilMantoux"
+        id="mantoux-negatif"
+      />
+      <label class="form-check-label" for="mantoux-negatif">
+        Negatif &lt;10 mm
+      </label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hasilMantoux"
+        [value]="'Positif ≥10 mm'"
+        [(ngModel)]="model.pemeriksaanTbSatuTahunHasilMantoux"
+        id="mantoux-positif"
+      />
+      <label class="form-check-label" for="mantoux-positif">
+        Positif ≥10 mm
+      </label>
+    </div>
+  </div>
+
+  <!-- Hasil Skoring TB Anak -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">
+      Hasil Skoring TB Anak - dengan kontak
+    </label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Isi angka skoring"
+      name="skorTB"
+      [(ngModel)]="model.pemeriksaanTbSatuTahunSkorTB"
+    />
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

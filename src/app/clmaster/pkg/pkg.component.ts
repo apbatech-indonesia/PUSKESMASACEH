@@ -12,41 +12,6 @@ import {
 } from "@angular/material/core";
 import { DatePipe } from "@angular/common";
 import { ModalWrapperComponent } from "./components/modal-wrapper/modal-wrapper.component";
-import { FormGiziComponent } from "./form/form-gizi/form-gizi.component";
-import { FormGiziPriaComponent } from "./form/form-gizi-pria/form-gizi-pria.component";
-import { FormGiziWanitaComponent } from "./form/form-gizi-wanita/form-gizi-wanita.component";
-import { FormDemografiWanitaComponent } from "./form/form-demografi-wanita/form-demografi-wanita.component";
-import { FormDemografiPriaComponent } from "./form/form-demografi-pria/form-demografi-pria.component";
-import { FormHatiComponent } from "./form/form-hati/form-hati.component";
-import { FormLeherRahimComponent } from "./form/form-leher-rahim/form-leher-rahim.component";
-import { FormKesehatanJiwaComponent } from "./form/form-kesehatan-jiwa/form-kesehatan-jiwa.component";
-import { FormAktivitasFisikComponent } from "./form/form-aktivitas-fisik/form-aktivitas-fisik.component";
-import { FormPerilakuMerokokComponent } from "./form/form-perilaku-merokok/form-perilaku-merokok.component";
-import { FormTekananGulaComponent } from "./form/form-tekanan-gula/form-tekanan-gula.component";
-import { FormTuberkulosisComponent } from "./form/form-tuberkulosis/form-tuberkulosis.component";
-import { FormTekananDarahComponent } from "./form/form-tekanan-darah/form-tekanan-darah.component";
-import { FormPpokPumaComponent } from "./form/form-ppok-puma/form-ppok-puma.component";
-import { FormSputumTbcComponent } from "./form/form-sputum-tbc/form-sputum-tbc.component";
-import { FormSirosisHatiComponent } from "./form/form-sirosis-hati/form-sirosis-hati.component";
-import { FormFungsiGinjalComponent } from "./form/form-fungsi-ginjal/form-fungsi-ginjal.component";
-import { FormGulaDarahLanjutanGdpComponent } from "./form/form-gula-darah-lanjutan-gdp/form-gula-darah-lanjutan-gdp.component";
-import { FormGulaDarahLanjutanHba1cComponent } from "./form/form-gula-darah-lanjutan-hba1c/form-gula-darah-lanjutan-hba1c.component";
-import { FormHepatitisComponent } from "./form/form-hepatitis/form-hepatitis.component";
-import { FormProfilLipidComponent } from "./form/form-profil-lipid/form-profil-lipid.component";
-import { FormRisikoJantungStrokeComponent } from "./form/form-risiko-jantung-stroke/form-risiko-jantung-stroke.component";
-import { FormRapidTestCapinComponent } from "./form/form-rapid-test-capin/form-rapid-test-capin.component";
-import { FormMataTelingaComponent } from "./form/form-mata-telinga/form-mata-telinga.component";
-import { FormKariesGigiHilangComponent } from "./form/form-karies-gigi-hilang/form-karies-gigi-hilang.component";
-import { FormPeriodontalComponent } from "./form/form-periodontal/form-periodontal.component";
-import { FormAbnormalitasJantungComponent } from "./form/form-abnormalitas-jantung/form-abnormalitas-jantung.component";
-import { FormHasilEkgComponent } from "./form/form-hasil-ekg/form-hasil-ekg.component";
-import { FormKankerPayudaraComponent } from "./form/form-kanker-payudara/form-kanker-payudara.component";
-import { FormHpvDnaComponent } from "./form/form-hpv-dna/form-hpv-dna.component";
-import { FormIvaComponent } from "./form/form-iva/form-iva.component";
-import { FormTekananGulaDarahComponent } from "./form/form-tekanan-gula-darah/form-tekanan-gula-darah.component";
-import { FormKankerUsusComponent } from "./form/form-kanker-usus/form-kanker-usus.component";
-import { FormSkriningGulaDarahComponent } from "./form/form-skrining-gula-darah/form-skrining-gula-darah.component";
-import { FormFotoThoraxComponent } from "./form/form-foto-thorax/form-foto-thorax.component";
 import { ApiserviceService } from "src/app/apiservice.service";
 import Swal from "sweetalert2";
 import { HttpHeaders } from "@angular/common/http";
@@ -54,7 +19,13 @@ import { ActivatedRoute } from "@angular/router";
 import { AncService } from "src/app/satusehat/satusehat-anc/services/anc.service";
 import { ToastrService } from "ngx-toastr";
 import { PkgService } from "./pkg.service";
-
+import { SkriningMandiriTuberkulosisBayiComponent } from "./form/skrining-mandiri-tumbuh-kembang-tuberkulosis-bayi/skrining-mandiri-tumbuh-kembang-tuberkulosis.component";
+import { SkriningGiziPertumbuhanComponent } from "./form/skrining-gizi-pertumbuhan/skrining-gizi-pertumbuhan.component";
+import { SkriningTumbuhKembangPerkembanganComponent } from "./form/skrining-perkembangan/skrining-tumbuh-kembang-perkembangan.component";
+import { SkriningGigiKariesComponent } from "./form/skrining-gigi-karies/skrining-gigi-karies.component";
+import { SkriningTumbuhKembangMataTelinga } from "./form/skrining-tumbuh-kembang-mata-telinga/skrining-tumbuh-kembang-mata-telinga.component";
+import { SkriningTuberkulosisComponent } from "./form/skrining-tuberkulosis/skrining-tuberkulosis.component";
+import { DashboardPkgService } from "./dashboard/dashboard-pkg/dashboard-pkg-service";
 @Component({
   selector: "app-pkg",
   templateUrl: "./pkg.component.html",
@@ -78,333 +49,462 @@ export class pkgComponent implements OnInit {
 
   daftarPemeriksaanMandiri = [
     {
-      nama: "Demografi Dewasa Laki-Laki",
-      form: FormDemografiPriaComponent,
+      nama: "Skrining Tuberkulosis (Balita umur 1 tahun)",
+      form: SkriningMandiriTuberkulosisBayiComponent,
+      fields: SkriningMandiriTuberkulosisBayiComponent.fields,
+      ceklistUsia: {
+        "18-29": true,
+        "30-39": true,
+        "40-59": true,
+        ">=60": true,
+      },
       status: "Belum Diperiksa",
     },
-    {
-      nama: "Demografi Dewasa Perempuan",
-      form: FormDemografiWanitaComponent,
-      status: "Belum Diperiksa",
-    },
-    { nama: "Hati", form: FormHatiComponent, status: "Belum Diperiksa" },
-    {
-      nama: "Kanker UsusKangker Usus (> 40tahun)",
-      form: FormKankerUsusComponent,
-      status: "Belum Diperiksa",
-    },
-    {
-      nama: "Kanker Leher Rahim",
-      form: FormLeherRahimComponent,
-      status: "Belum Diperiksa",
-    },
-    {
-      nama: "Kesehatan Jiwa",
-      form: FormKesehatanJiwaComponent,
-      status: "Belum Diperiksa",
-    },
-    {
-      nama: "Tingkat Aktivitas Fisik",
-      form: FormAktivitasFisikComponent,
-      status: "Belum Diperiksa",
-    },
-    {
-      nama: "Perilaku Merokok",
-      form: FormPerilakuMerokokComponent,
-      status: "Belum Diperiksa",
-    },
-    {
-      nama: "Tekanan Darah & Gula Darah",
-      form: FormTekananGulaDarahComponent,
-      status: "Belum Diperiksa",
-    },
-    {
-      nama: "Tuberkulosis",
-      form: FormTuberkulosisComponent,
-      status: "Belum Diperiksa",
-    },
+    // {
+    //   nama: "Demografi Dewasa Laki-Laki",
+    //   form: FormDemografiPriaComponent,
+    //   status: "Belum Diperiksa",
+    // },
+    // {
+    //   nama: "Demografi Dewasa Perempuan",
+    //   form: FormDemografiWanitaComponent,
+    //   status: "Belum Diperiksa",
+    // },
+    // { nama: "Hati", form: FormHatiComponent, status: "Belum Diperiksa" },
+    // {
+    //   nama: "Kanker UsusKangker Usus (> 40tahun)",
+    //   form: FormKankerUsusComponent,
+    //   status: "Belum Diperiksa",
+    // },
+    // {
+    //   nama: "Kanker Leher Rahim",
+    //   form: FormLeherRahimComponent,
+    //   status: "Belum Diperiksa",
+    // },
+    // {
+    //   nama: "Kesehatan Jiwa",
+    //   form: FormKesehatanJiwaComponent,
+    //   status: "Belum Diperiksa",
+    // },
+    // {
+    //   nama: "Tingkat Aktivitas Fisik",
+    //   form: FormAktivitasFisikComponent,
+    //   status: "Belum Diperiksa",
+    // },
+    // {
+    //   nama: "Perilaku Merokok",
+    //   form: FormPerilakuMerokokComponent,
+    //   status: "Belum Diperiksa",
+    // },
+    // {
+    //   nama: "Tekanan Darah & Gula Darah",
+    //   form: FormTekananGulaDarahComponent,
+    //   status: "Belum Diperiksa",
+    // },
+    // {
+    //   nama: "Tuberkulosis",
+    //   form: FormTuberkulosisComponent,
+    //   status: "Belum Diperiksa",
+    // },
   ];
 
   daftarLayanan = [
     {
-      nama: "Skrining Gizi, Tekanan Darah, dan Gula Darah Perempuan ≥ 40 tahun",
+      nama: "Skrining Pertumbuhan, Perkembangan, Gigi, Tuberkulosis, Mata dan Telinga (Balita umur 1 tahun)",
       jenisKelamin: "P",
       ceklistUsia: {
-        "18-29": true,
-        "30-39": true,
-        "40-59": true,
-        ">=60": true,
-      },
-      childs: [
-        {
-          nama: "Gizi (BB - TB - Lingkar Perut)",
-          form: FormGiziComponent,
-          fields: FormGiziComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-        {
-          nama: "Pemeriksaan Tekanan Darah",
-          form: FormTekananDarahComponent,
-          fields: FormTekananDarahComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-        {
-          nama: "Skrining Gula Darah",
-          form: FormSkriningGulaDarahComponent,
-          fields: FormSkriningGulaDarahComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-      ],
-    },
-    {
-      nama: "Pemeriksaan PPOK (Skrining PUMA)",
-      jenisKelamin: "L/P",
-      ceklistUsia: {
-        "18-29": true,
-        "30-39": true,
-        "40-59": true,
-        ">=60": true,
-      },
-      childs: [
-        {
-          nama: "Pemeriksaan PPOK (Skrining PUMA)",
-          form: FormPpokPumaComponent,
-          fields: FormPpokPumaComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-      ],
-    },
-    {
-      nama: "Pemeriksaan Tuberkulosis",
-      jenisKelamin: "L/P",
-      ceklistUsia: {
-        "18-29": true,
-        "30-39": true,
-        "40-59": true,
-        ">=60": true,
-      },
-      childs: [
-        {
-          nama: "Pemeriksaan Sputum - Tuberkulosis",
-          form: FormSputumTbcComponent,
-          fields: FormSputumTbcComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-        {
-          nama: "Tindak Lanjut Tuberkulosis - Foto Thorax",
-          form: FormFotoThoraxComponent,
-          fields: FormFotoThoraxComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-      ],
-    },
-    {
-      nama: "Skrining Laboratorium ≥ 40 tahun Fungsi Ginjal, Hati, Profil Lipid",
-      jenisKelamin: "L/P",
-      ceklistUsia: {
+        "0-1": true,
         "18-29": false,
-        "30-39": false,
-        "40-59": true,
-        ">=60": true,
-      },
-      childs: [
-        {
-          nama: "Pemeriksaan Fibrosis / Sirosis Hati",
-          form: FormSirosisHatiComponent,
-          fields: FormSirosisHatiComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-        {
-          nama: "Pemeriksaan Fungsi Ginjal (hanya untuk risiko HT DM)",
-          form: FormFungsiGinjalComponent,
-          fields: FormFungsiGinjalComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-        {
-          nama: "Pemeriksaan Gula Darah Lanjutan (GDP & GD 2 PP)",
-          form: FormGulaDarahLanjutanGdpComponent,
-          fields: FormGulaDarahLanjutanGdpComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-        {
-          nama: "Pemeriksaan Gula Darah Lanjutan (HbA1C)",
-          form: FormGulaDarahLanjutanHba1cComponent,
-          fields: FormGulaDarahLanjutanHba1cComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-        {
-          nama: "Pemeriksaan Hepatitis",
-          form: FormHepatitisComponent,
-          fields: FormHepatitisComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-        {
-          nama: "Profil Lipid (hanya untuk penyandang HT dan/atau DM)",
-          form: FormProfilLipidComponent,
-          fields: FormProfilLipidComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-      ],
-    },
-    {
-      nama: "Prediksi Risiko Jantung dan Stroke",
-      jenisKelamin: "L/P",
-      ceklistUsia: {
-        "18-29": false,
-        "30-39": false,
-        "40-59": true,
-        ">=60": true,
-      },
-      childs: [
-        {
-          nama: "Prediksi Risiko Jantung dan Stroke",
-          form: FormRisikoJantungStrokeComponent,
-          fields: FormRisikoJantungStrokeComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-      ],
-    },
-    {
-      nama: "Pemeriksaan Rapid Test Calon Pengantin",
-      jenisKelamin: "L/P",
-      ceklistUsia: {
-        "18-29": true,
-        "30-39": true,
-        "40-59": true,
-        ">=60": true,
-      },
-      childs: [
-        {
-          nama: "Pemeriksaan Rapid Test Calon Pengantin",
-          form: FormRapidTestCapinComponent,
-          fields: FormRapidTestCapinComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-      ],
-    },
-    {
-      nama: "Skrining Telinga dan Mata ≥ 40 tahun",
-      jenisKelamin: "L/P",
-      ceklistUsia: {
-        "18-29": false,
-        "30-39": false,
-        "40-59": true,
-        ">=60": true,
-      },
-      childs: [
-        {
-          nama: "Skrining Mata dan Telinga ≥ 40 tahun",
-          form: FormMataTelingaComponent,
-          fields: FormMataTelingaComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-      ],
-    },
-    {
-      nama: "Skrining Gigi - Dewasa ≥ 25 tahun",
-      jenisKelamin: "L/P",
-      ceklistUsia: {
-        "18-29": true,
         "30-39": false,
         "40-59": false,
         ">=60": false,
       },
       childs: [
         {
-          nama: "Skrining Karies dan Gigi Hilang",
-          form: FormKariesGigiHilangComponent,
-          fields: FormKariesGigiHilangComponent.fields,
+          nama: "Skrining Pertumbuhan",
+          form: SkriningGiziPertumbuhanComponent,
+          fields: SkriningGiziPertumbuhanComponent.fields,
+          status: "Belum Diperiksa",
+          dipilih: false,
+        },
+        {
+          nama: "Skrining Perkembangan",
+          form: SkriningTumbuhKembangPerkembanganComponent,
+          fields: SkriningTumbuhKembangPerkembanganComponent.fields,
+          status: "Belum Diperiksa",
+          dipilih: false,
+        },
+        {
+          nama: "Skrining Mata dan Telinga",
+          form: SkriningTumbuhKembangMataTelinga,
+          fields: SkriningTumbuhKembangMataTelinga.fields,
+          status: "Belum Diperiksa",
+          dipilih: false,
+        },
+        {
+          nama: "Skrining Gigi",
+          form: SkriningGigiKariesComponent,
+          fields: SkriningGigiKariesComponent.fields,
+          status: "Belum Diperiksa",
+          dipilih: false,
+        },
+        {
+          nama: "Skrining Tuberkulosis",
+          form: SkriningTuberkulosisComponent,
+          fields: SkriningTuberkulosisComponent.fields,
           status: "Belum Diperiksa",
           dipilih: false,
         },
       ],
     },
-    {
-      nama: "Skrining Jantung (Pemeriksaan EKG - hanya penyandang Hipertensi)",
-      jenisKelamin: "L/P",
-      ceklistUsia: {
-        "18-29": false,
-        "30-39": false,
-        "40-59": true,
-        ">=60": true,
-      },
-      childs: [
-        {
-          nama: "Detail Abnormalitas - Skrining Jantung",
-          form: FormAbnormalitasJantungComponent,
-          fields: FormAbnormalitasJantungComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-        {
-          nama: "Hasil Pemeriksaan - Skrining Jantung",
-          form: FormHasilEkgComponent,
-          fields: FormHasilEkgComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-      ],
-    },
-    {
-      nama: "Skrining Kanker Payudara",
-      jenisKelamin: "P",
-      ceklistUsia: {
-        "18-29": false,
-        "30-39": true,
-        "40-59": true,
-        ">=60": true,
-      },
-      childs: [
-        {
-          nama: "Skrining Kanker Payudara",
-          form: FormKankerPayudaraComponent,
-          fields: FormKankerPayudaraComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-      ],
-    },
-    {
-      nama: "Skrining Kanker Leher Rahim",
-      jenisKelamin: "P",
-      ceklistUsia: {
-        "18-29": false,
-        "30-39": true,
-        "40-59": true,
-        ">=60": true,
-      },
-      childs: [
-        {
-          nama: "Hasil Pemeriksaan HPV - DNA",
-          form: FormHpvDnaComponent,
-          fields: FormHpvDnaComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-        {
-          nama: "Hasil Pemeriksaan Inspeksius dan IVA",
-          form: FormIvaComponent,
-          fields: FormIvaComponent.fields,
-          status: "Belum Diperiksa",
-          dipilih: false,
-        },
-      ],
-    },
+    // {
+    //   nama: "Skrining Pertumbuhan, Perkembangan, Gigi, Tuberkulosis, Mata dan Telinga (Balita umur 2 tahun)",
+    //   jenisKelamin: "P",
+    //   ceklistUsia: {
+    //     "0-1": true,
+    //     "18-29": false,
+    //     "30-39": false,
+    //     "40-59": false,
+    //     ">=60": false,
+    //   },
+    //   childs: [
+    //     {
+    //       nama: "Skrining Pertumbuhan",
+    //       form: SkriningGiziPertumbuhanComponent,
+    //       fields: SkriningGiziPertumbuhanComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Skrining Perkembangan",
+    //       form: SkriningTumbuhKembangPerkembanganComponent,
+    //       fields: SkriningTumbuhKembangPerkembanganComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Skrining Mata dan Telinga",
+    //       form: SkriningTumbuhKembangMataTelinga,
+    //       fields: SkriningTumbuhKembangMataTelinga.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Skrining Gigi",
+    //       form: SkriningGigiKariesComponent,
+    //       fields: SkriningGigiKariesComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Skrining Tuberkulosis",
+    //       form: SkriningTuberkulosisComponent,
+    //       fields: SkriningTuberkulosisComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Skrining Gula Darah",
+    //       form: SkriningTuberkulosisComponent,
+    //       fields: SkriningTuberkulosisComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Skrining Talasemia (Rapid Test Hemoglobin)",
+    //       form: SkriningTuberkulosisComponent,
+    //       fields: SkriningTuberkulosisComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Skrining Lanjutan Talasemia",
+    //       form: SkriningTuberkulosisComponent,
+    //       fields: SkriningTuberkulosisComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //   ],
+    // },
+    // {
+    //   nama: "Skrining Gizi, Tekanan Darah, dan Gula Darah Perempuan ≥ 40 tahun",
+    //   jenisKelamin: "P",
+    //   ceklistUsia: {
+    //     "18-29": true,
+    //     "30-39": true,
+    //     "40-59": true,
+    //     ">=60": true,
+    //   },
+    //   childs: [
+    //     {
+    //       nama: "Gizi (BB - TB - Lingkar Perut)",
+    //       form: FormGiziComponent,
+    //       fields: FormGiziComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Pemeriksaan Tekanan Darah",
+    //       form: FormTekananDarahComponent,
+    //       fields: FormTekananDarahComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Skrining Gula Darah",
+    //       form: FormSkriningGulaDarahComponent,
+    //       fields: FormSkriningGulaDarahComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //   ],
+    // },
+    // {
+    //   nama: "Pemeriksaan PPOK (Skrining PUMA)",
+    //   jenisKelamin: "L/P",
+    //   ceklistUsia: {
+    //     "18-29": true,
+    //     "30-39": true,
+    //     "40-59": true,
+    //     ">=60": true,
+    //   },
+    //   childs: [
+    //     {
+    //       nama: "Pemeriksaan PPOK (Skrining PUMA)",
+    //       form: FormPpokPumaComponent,
+    //       fields: FormPpokPumaComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //   ],
+    // },
+    // {
+    //   nama: "Pemeriksaan Tuberkulosis",
+    //   jenisKelamin: "L/P",
+    //   ceklistUsia: {
+    //     "18-29": true,
+    //     "30-39": true,
+    //     "40-59": true,
+    //     ">=60": true,
+    //   },
+    //   childs: [
+    //     {
+    //       nama: "Pemeriksaan Sputum - Tuberkulosis",
+    //       form: FormSputumTbcComponent,
+    //       fields: FormSputumTbcComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Tindak Lanjut Tuberkulosis - Foto Thorax",
+    //       form: FormFotoThoraxComponent,
+    //       fields: FormFotoThoraxComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //   ],
+    // },
+    // {
+    //   nama: "Skrining Laboratorium ≥ 40 tahun Fungsi Ginjal, Hati, Profil Lipid",
+    //   jenisKelamin: "L/P",
+    //   ceklistUsia: {
+    //     "18-29": false,
+    //     "30-39": false,
+    //     "40-59": true,
+    //     ">=60": true,
+    //   },
+    //   childs: [
+    //     {
+    //       nama: "Pemeriksaan Fibrosis / Sirosis Hati",
+    //       form: FormSirosisHatiComponent,
+    //       fields: FormSirosisHatiComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Pemeriksaan Fungsi Ginjal (hanya untuk risiko HT DM)",
+    //       form: FormFungsiGinjalComponent,
+    //       fields: FormFungsiGinjalComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Pemeriksaan Gula Darah Lanjutan (GDP & GD 2 PP)",
+    //       form: FormGulaDarahLanjutanGdpComponent,
+    //       fields: FormGulaDarahLanjutanGdpComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Pemeriksaan Gula Darah Lanjutan (HbA1C)",
+    //       form: FormGulaDarahLanjutanHba1cComponent,
+    //       fields: FormGulaDarahLanjutanHba1cComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Pemeriksaan Hepatitis",
+    //       form: FormHepatitisComponent,
+    //       fields: FormHepatitisComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Profil Lipid (hanya untuk penyandang HT dan/atau DM)",
+    //       form: FormProfilLipidComponent,
+    //       fields: FormProfilLipidComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //   ],
+    // },
+    // {
+    //   nama: "Prediksi Risiko Jantung dan Stroke",
+    //   jenisKelamin: "L/P",
+    //   ceklistUsia: {
+    //     "18-29": false,
+    //     "30-39": false,
+    //     "40-59": true,
+    //     ">=60": true,
+    //   },
+    //   childs: [
+    //     {
+    //       nama: "Prediksi Risiko Jantung dan Stroke",
+    //       form: FormRisikoJantungStrokeComponent,
+    //       fields: FormRisikoJantungStrokeComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //   ],
+    // },
+    // {
+    //   nama: "Pemeriksaan Rapid Test Calon Pengantin",
+    //   jenisKelamin: "L/P",
+    //   ceklistUsia: {
+    //     "18-29": true,
+    //     "30-39": true,
+    //     "40-59": true,
+    //     ">=60": true,
+    //   },
+    //   childs: [
+    //     {
+    //       nama: "Pemeriksaan Rapid Test Calon Pengantin",
+    //       form: FormRapidTestCapinComponent,
+    //       fields: FormRapidTestCapinComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //   ],
+    // },
+    // {
+    //   nama: "Skrining Telinga dan Mata ≥ 40 tahun",
+    //   jenisKelamin: "L/P",
+    //   ceklistUsia: {
+    //     "18-29": false,
+    //     "30-39": false,
+    //     "40-59": true,
+    //     ">=60": true,
+    //   },
+    //   childs: [
+    //     {
+    //       nama: "Skrining Mata dan Telinga ≥ 40 tahun",
+    //       form: FormMataTelingaComponent,
+    //       fields: FormMataTelingaComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //   ],
+    // },
+    // {
+    //   nama: "Skrining Gigi - Dewasa ≥ 25 tahun",
+    //   jenisKelamin: "L/P",
+    //   ceklistUsia: {
+    //     "18-29": true,
+    //     "30-39": true,
+    //     "40-59": true,
+    //     ">=60": true,
+    //   },
+    //   childs: [
+    //     {
+    //       nama: "Skrining Karies dan Gigi Hilang",
+    //       form: FormKariesGigiHilangComponent,
+    //       fields: FormKariesGigiHilangComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //   ],
+    // },
+    // {
+    //   nama: "Skrining Jantung (Pemeriksaan EKG - hanya penyandang Hipertensi)",
+    //   jenisKelamin: "L/P",
+    //   ceklistUsia: {
+    //     "18-29": false,
+    //     "30-39": false,
+    //     "40-59": true,
+    //     ">=60": true,
+    //   },
+    //   childs: [
+    //     {
+    //       nama: "Detail Abnormalitas - Skrining Jantung",
+    //       form: FormAbnormalitasJantungComponent,
+    //       fields: FormAbnormalitasJantungComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Hasil Pemeriksaan - Skrining Jantung",
+    //       form: FormHasilEkgComponent,
+    //       fields: FormHasilEkgComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //   ],
+    // },
+    // {
+    //   nama: "Skrining Kanker Payudara",
+    //   jenisKelamin: "P",
+    //   ceklistUsia: {
+    //     "18-29": false,
+    //     "30-39": true,
+    //     "40-59": true,
+    //     ">=60": true,
+    //   },
+    //   childs: [
+    //     {
+    //       nama: "Skrining Kanker Payudara",
+    //       form: FormKankerPayudaraComponent,
+    //       fields: FormKankerPayudaraComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //   ],
+    // },
+    // {
+    //   nama: "Skrining Kanker Leher Rahim",
+    //   jenisKelamin: "P",
+    //   ceklistUsia: {
+    //     "18-29": false,
+    //     "30-39": true,
+    //     "40-59": true,
+    //     ">=60": true,
+    //   },
+    //   childs: [
+    //     {
+    //       nama: "Hasil Pemeriksaan HPV - DNA",
+    //       form: FormHpvDnaComponent,
+    //       fields: FormHpvDnaComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //     {
+    //       nama: "Hasil Pemeriksaan Inspeksius dan IVA",
+    //       form: FormIvaComponent,
+    //       fields: FormIvaComponent.fields,
+    //       status: "Belum Diperiksa",
+    //       dipilih: false,
+    //     },
+    //   ],
+    // },
   ];
 
   patientData: any;
@@ -418,6 +518,7 @@ export class pkgComponent implements OnInit {
     "kd-cabang": this.userData.kdcabang,
   });
   notransaksi: string = this.route.snapshot.paramMap.get("notrans");
+  norm: string = this.route.snapshot.paramMap.get("norm");
   isLoading: boolean;
   golonganDarah: string;
   rentangUsia = "";
@@ -438,6 +539,7 @@ export class pkgComponent implements OnInit {
     private modalService: NgbModal,
     private api: ApiserviceService,
     private PkgService: PkgService,
+    private dashboardPkgService: DashboardPkgService,
     private toast: ToastrService,
     private ancService: AncService,
     private route: ActivatedRoute
@@ -471,13 +573,13 @@ export class pkgComponent implements OnInit {
   }
 
   filterDaftarLayanan() {
-    this.daftarLayanan = this.daftarLayanan.filter((layanan: any) => {
-      const cocokUsia = layanan.ceklistUsia[this.rentangUsia];
-      const cocokJK =
-        layanan.jenisKelamin === "L/P" ||
-        layanan.jenisKelamin === this.jenisKelaminFilterLayanan;
-      return cocokUsia && cocokJK;
-    });
+    // this.daftarLayanan = this.daftarLayanan.filter((layanan: any) => {
+    //   const cocokUsia = layanan.ceklistUsia[this.rentangUsia];
+    //   const cocokJK =
+    //     layanan.jenisKelamin === "L/P" ||
+    //     layanan.jenisKelamin === this.jenisKelaminFilterLayanan;
+    //   return cocokUsia && cocokJK;
+    // });
   }
 
   async doCreateKunjungan() {
@@ -519,6 +621,23 @@ export class pkgComponent implements OnInit {
         satusehatId: this.patientData.idsatusehat,
       },
     });
+
+    this.dashboardPkgService
+      .createDashboardPkg({
+        norm: this.norm,
+        notransaksi: this.notransaksi,
+        layanan: "Kehadiran Pkg",
+        status: "kehadiran",
+        jenis_kelamin:
+          this.jenisKelaminFilterLayanan === "L" ? "laki-laki" : "perempuan",
+        umur: this.usiaPasienFilterLayanan,
+        provinsi: "-",
+        kota: "-",
+        kecamatan: "-",
+        kelurahan: "-",
+      })
+      .toPromise();
+
     this.useCaseId = response.data.use_case_id;
     this.encounterId = response.data.encounter_id;
     this.getDataPatient();
@@ -533,10 +652,7 @@ export class pkgComponent implements OnInit {
       status: "active",
     });
 
-    this.perbaruiStatusLayanan(
-      this.daftarLayanan,
-      response?.data?.observations
-    );
+    this.perbaruiStatusLayanan(response?.data?.observations);
 
     this.stopLoading();
   }
@@ -571,12 +687,24 @@ export class pkgComponent implements OnInit {
     return { tahun, bulan, hari };
   }
 
-  perbaruiStatusLayanan(daftarLayanan: any, dataObservasi: any) {
+  perbaruiStatusLayanan(dataObservasi: any) {
     if (!Array.isArray(dataObservasi)) {
       return;
     }
 
-    daftarLayanan.forEach((layanan: any) => {
+    this.daftarPemeriksaanMandiri.forEach((layanan: any) => {
+      layanan.fields.forEach((field: any) => {
+        const ditemukan = dataObservasi.some(
+          (observasi: any) => observasi.name === field
+        );
+
+        if (ditemukan) {
+          layanan.status = "Sudah Diperiksa";
+        }
+      });
+    });
+
+    this.daftarLayanan.forEach((layanan: any) => {
       layanan.childs.forEach((child: any) => {
         child.fields.forEach((field: any) => {
           const ditemukan = dataObservasi.some(

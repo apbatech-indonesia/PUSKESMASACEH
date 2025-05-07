@@ -204,6 +204,12 @@ import { FormTekananGulaDarahComponent } from "./clmaster/pkg/form/form-tekanan-
 import { FormKankerUsusComponent } from "./clmaster/pkg/form/form-kanker-usus/form-kanker-usus.component";
 import { FormSkriningGulaDarahComponent } from "./clmaster/pkg/form/form-skrining-gula-darah/form-skrining-gula-darah.component";
 import { FormFotoThoraxComponent } from "./clmaster/pkg/form/form-foto-thorax/form-foto-thorax.component";
+import { SkriningGiziPertumbuhanComponent } from "./clmaster/pkg/form/skrining-gizi-pertumbuhan/skrining-gizi-pertumbuhan.component";
+import { SkriningMandiriTuberkulosisBayiComponent } from "./clmaster/pkg/form/skrining-mandiri-tumbuh-kembang-tuberkulosis-bayi/skrining-mandiri-tumbuh-kembang-tuberkulosis.component";
+import { SkriningTumbuhKembangPerkembanganComponent } from "./clmaster/pkg/form/skrining-perkembangan/skrining-tumbuh-kembang-perkembangan.component";
+import { SkriningGigiKariesComponent } from "./clmaster/pkg/form/skrining-gigi-karies/skrining-gigi-karies.component";
+import { SkriningTumbuhKembangMataTelinga } from "./clmaster/pkg/form/skrining-tumbuh-kembang-mata-telinga/skrining-tumbuh-kembang-mata-telinga.component";
+import { SkriningTuberkulosisComponent } from "./clmaster/pkg/form/skrining-tuberkulosis/skrining-tuberkulosis.component";
 
 @NgModule({
   declarations: [
@@ -317,6 +323,12 @@ import { FormFotoThoraxComponent } from "./clmaster/pkg/form/form-foto-thorax/fo
     FormKankerPayudaraComponent,
     FormHpvDnaComponent,
     FormIvaComponent,
+    SkriningGigiKariesComponent,
+    SkriningGiziPertumbuhanComponent,
+    SkriningMandiriTuberkulosisBayiComponent,
+    SkriningTumbuhKembangPerkembanganComponent,
+    SkriningTumbuhKembangMataTelinga,
+    SkriningTuberkulosisComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "serverApp" }),
@@ -331,7 +343,6 @@ import { FormFotoThoraxComponent } from "./clmaster/pkg/form/form-foto-thorax/fo
     MatProgressSpinnerModule,
 
     // Angular Bootstrap Components
-
     PerfectScrollbarModule,
     NgbModule,
     FontAwesomeModule,

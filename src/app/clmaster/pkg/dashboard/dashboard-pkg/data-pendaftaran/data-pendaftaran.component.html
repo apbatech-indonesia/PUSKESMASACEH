@@ -1,0 +1,295 @@
+<!-- Filter Provinsi, Kabupaten, Kecamatan -->
+<div class="row mb-3">
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="selectedProvinsi"
+      (change)="onFilterChange()"
+    >
+      <option value="">-- Pilih Provinsi --</option>
+      <option *ngFor="let provinsi of provinsiList">
+        {{ provinsi }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="selectedKabupaten"
+      (change)="onFilterChange()"
+    >
+      <option value="">-- Pilih Kabupaten/Kota --</option>
+      <option *ngFor="let kabupaten of kabupatenList">
+        {{ kabupaten }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="selectedKecamatan"
+      (change)="onFilterChange()"
+    >
+      <option value="">-- Kecamatan --</option>
+      <option *ngFor="let kecamatan of kecamatanList">
+        {{ kecamatan }}
+      </option>
+    </select>
+  </div>
+
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="selectedKelurahan"
+      (change)="onFilterChange()"
+    >
+      <option value="">-- Kelurahan --</option>
+      <option *ngFor="let kelurahan of kelurahanList">
+        {{ kelurahan }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<!-- Total Pasien Gender Pie + Trend Pendaftaran -->
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-3" style="height: 400px">
+      <div class="card-header">Total Pasien Berdasarkan Jenis Kelamin</div>
+      <div class="card-body">
+        <apx-chart
+          *ngIf="showChartComponent"
+          [series]="[totalLaki, totalPerempuan]"
+          [chart]="{ type: 'pie', height: 250 }"
+          [labels]="['Laki-laki', 'Perempuan']"
+          [colors]="['#008ffb', '#ff66b2']"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card mb-3" style="height: 400px">
+      <div
+        class="card-header d-flex justify-content-between align-items-center"
+      >
+        Tren Pendaftaran
+      </div>
+      <div class="card-body">
+        <div class="mb-3 row align-items-center">
+          <label class="col-md-4 fw-bold mb-0" style="white-space: nowrap"
+            >Periode Tanggal:</label
+          >
+          <div class="col-md-4 d-flex align-items-center">
+            <label class="me-2 mb-0">Awal</label>
+            <input
+              type="date"
+              [(ngModel)]="trendStartDate"
+              class="form-control"
+              style="width: 120px"
+              (change)="onFilterChange()"
+            />
+          </div>
+          <div class="col-md-4 d-flex align-items-center">
+            <label class="me-2 mb-0">Akhir</label>
+            <input
+              type="date"
+              [(ngModel)]="trendEndDate"
+              class="form-control"
+              style="width: 120px"
+              (change)="onFilterChange()"
+            />
+          </div>
+        </div>
+
+        <apx-chart
+          *ngIf="showChartComponent"
+          [series]="trendSeries"
+          [chart]="{ type: 'line', height: 250 }"
+          [xaxis]="{ categories: trendDates }"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pemeriksaan Khusus -->
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-3" style="height: 400px">
+      <div
+        class="card-header text-white fw-bold"
+        style="background-color: #223c59"
+      >
+        Jumlah Pasien Berdasarkan Kategori Skrining
+      </div>
+      <div class="card-body">
+        <h5>
+          <strong> Total Pemeriksaan Khusus {{ totalPemeriksaan }} </strong>
+        </h5>
+        <br />
+        <ul class="small">
+          <li
+            *ngFor="let pemeriksaan of pemeriksaanList | slice : 0 : 3"
+            class="mb-3"
+          >
+            <strong>{{ pemeriksaan.nama }}</strong
+            ><br />
+            <small class="text-muted">{{ pemeriksaan.deskripsi }}</small
+            ><br />
+            <span class="fw-bold">{{ pemeriksaan.jumlah }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="card-footer d-flex justify-content-center">
+        <button
+          class="btn btn-default text-info"
+          (click)="openDetailModal(detailModal)"
+        >
+          Lihat Detail Skrining
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card mb-3" style="height: 400px">
+      <div
+        class="card-header text-white fw-bold"
+        style="background-color: #223c59"
+      >
+        Jumlah Pasien Berdasarkan Kategori Skrining
+      </div>
+      <div class="card-body">
+        <h5 class="fw-bold mb-0">Total Pemeriksaan Khusus</h5>
+        <h2 class="fw-bold">{{ totalPemeriksaan }}</h2>
+        <h5 class="fw-bold mt-4">Total Pemeriksaan Khusus</h5>
+        <div class="row mt-3">
+          <!-- Anak dan Remaja -->
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li
+                *ngFor="let category of anakRemajaCategories"
+                class="mb-2 d-flex align-items-center"
+              >
+                <span class="me-2" [ngStyle]="{ color: category.color }">
+                  <i class="fa fa-circle"></i>
+                </span>
+                <span class="flex-grow-1">{{ category.name }}</span>
+                <span>{{ category.value }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Dewasa -->
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li
+                *ngFor="let category of dewasaCategories"
+                class="mb-2 d-flex align-items-center"
+              >
+                <span class="me-2" [ngStyle]="{ color: category.color }">
+                  <i class="fa fa-circle"></i>
+                </span>
+                <span class="flex-grow-1">{{ category.name }}</span>
+                <span>{{ category.value }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Progress Bars -->
+        <div class="widget-progress-wrapper mt-4">
+          <div
+            class="progress"
+            style="height: 14px; border-radius: 10px; overflow: hidden"
+          >
+            <div
+              *ngFor="let progress of progressData"
+              class="progress-bar"
+              role="progressbar"
+              [attr.aria-valuenow]="progress.percent"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [style.width.%]="progress.percent"
+              [style.background-color]="progress.color"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabel Pemeriksaan -->
+<div class="card mb-3">
+  <div class="card-body table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th><strong>Provinsi</strong></th>
+          <th><strong>Kabupaten/Kota</strong></th>
+          <th><strong>Kecamatan</strong></th>
+          <th><strong>Kelurahan</strong></th>
+          <th><strong>Total Pendaftar</strong></th>
+          <th><strong>Total Bayi</strong></th>
+          <th><strong>Bayi Perempuan</strong></th>
+          <th><strong>Bayi Laki-laki</strong></th>
+          <th><strong>Anak</strong></th>
+          <th><strong>Anak Perempuan</strong></th>
+          <th><strong>Anak Laki-laki</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="!tableData.length">
+          <td colspan="12" align="center">Data Kosong</td>
+        </tr>
+        <tr *ngFor="let data of tableData">
+          <td>{{ data.provinsi }}</td>
+          <td>{{ data.kabupaten }}</td>
+          <td>{{ data.kecamatan }}</td>
+          <td>{{ data.kelurahan }}</td>
+          <td>{{ data.totalPendaftar }}</td>
+          <td>{{ data.totalBayi }}</td>
+          <td>{{ data.bayiPerempuan }}</td>
+          <td>{{ data.bayiLakiLaki }}</td>
+          <td>{{ data.anak }}</td>
+          <td>{{ data.anakPerempuan }}</td>
+          <td>{{ data.anakLakiLaki }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #detailModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Detail Skrining</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Kategori</th>
+          <th>Deskripsi</th>
+          <th>Jumlah</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of pemeriksaanList; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ item.nama }}</td>
+          <td>{{ item.deskripsi }}</td>
+          <td>{{ item.jumlah }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-template>

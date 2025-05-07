@@ -1,3 +1,16 @@
+.card {
+  border-radius: 12px;
+}
+
+.card-header {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.apexcharts-canvas {
+  margin: 0 auto;
+}
+
 .card-header-custom {
   height: 44px;
   background-color: #1d2d44;
@@ -6,5 +19,4 @@
   font-weight: 600;
   line-height: normal;
   letter-spacing: 0px;
-  font-weight: normal;
 }

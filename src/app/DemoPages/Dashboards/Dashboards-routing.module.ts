@@ -1,73 +1,105 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { LoginGuard } from 'src/app/auth/login.guard';
-
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { LoginGuard } from "src/app/auth/login.guard";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     data: {
-      title: 'Dashboards',
-      status: false
+      title: "Dashboards",
+      status: false,
     },
-   
+
     children: [
       {
-        path: 'analytics',
-        loadChildren: () => import('./analytics/analytics.module').then(m => m.AnalyticsModule)
+        path: "analytics",
+        loadChildren: () =>
+          import("./analytics/analytics.module").then((m) => m.AnalyticsModule),
       },
       {
-        path: 'advertisement',
-        loadChildren: () => import('./advertisement/advertisement.module').then(m => m.AdvertisementModule)
+        path: "advertisement",
+        loadChildren: () =>
+          import("./advertisement/advertisement.module").then(
+            (m) => m.AdvertisementModule
+          ),
       },
       {
-        path: 'management',
-        loadChildren: () => import('./management/management.module').then(m => m.ManagementModule)
+        path: "management",
+        loadChildren: () =>
+          import("./management/management.module").then(
+            (m) => m.ManagementModule
+          ),
       },
       {
-        path : 'skrining-ilp',
-        loadChildren:() => import('./laporanskriningilp/laporanskriningilp.module').then(m => m.laporanskriningilpModule)
+        path: "skrining-ilp",
+        loadChildren: () =>
+          import("./laporanskriningilp/laporanskriningilp.module").then(
+            (m) => m.laporanskriningilpModule
+          ),
       },
       {
-        path : 'dinkes/:dinkesloc',
-        loadChildren:() => import('./dashboard-dinkes/dashboard-dinkes.module').then(m => m.DashboardDinkesModule)
+        path: "dashboard-pkg",
+        loadChildren: () =>
+          import(
+            "../../../app/clmaster/pkg/dashboard/dashboard-pkg/dashboard-pkg.module"
+          ).then((m) => m.DashboardPkgModule),
       },
       {
-        path: 'helpdesk',
-        loadChildren: () => import('./helpdesk/helpdesk.module').then(m => m.HelpdeskModule)
+        path: "dinkes/:dinkesloc",
+        loadChildren: () =>
+          import("./dashboard-dinkes/dashboard-dinkes.module").then(
+            (m) => m.DashboardDinkesModule
+          ),
       },
       {
-        path: 'monitoring',
-        loadChildren: () => import('./monitoring/monitoring.module').then(m => m.MonitoringModule)
+        path: "helpdesk",
+        loadChildren: () =>
+          import("./helpdesk/helpdesk.module").then((m) => m.HelpdeskModule),
       },
       {
-        path: 'dokterri',
-        loadChildren: () => import('./crypto/crypto.module').then(m => m.CryptoModule)
+        path: "monitoring",
+        loadChildren: () =>
+          import("./monitoring/monitoring.module").then(
+            (m) => m.MonitoringModule
+          ),
       },
       {
-        path: 'project-management',
-        loadChildren: () => import('./project-management/project-management.module').then(m => m.ProjectManagementModule)
+        path: "dokterri",
+        loadChildren: () =>
+          import("./crypto/crypto.module").then((m) => m.CryptoModule),
       },
       {
-        path: 'product',
-        loadChildren: () => import('./product/product.module').then(m => m.ProductModule)
+        path: "project-management",
+        loadChildren: () =>
+          import("./project-management/project-management.module").then(
+            (m) => m.ProjectManagementModule
+          ),
       },
       {
-        path: 'statistics',
-        loadChildren: () => import('./statistics/statistics.module').then(m => m.StatisticsModule)
+        path: "product",
+        loadChildren: () =>
+          import("./product/product.module").then((m) => m.ProductModule),
       },
       {
-        path: 'managementlab',
-        loadChildren: () => import('./managementlab/managementlab.module').then(m => m.ManagementlabModule)
+        path: "statistics",
+        loadChildren: () =>
+          import("./statistics/statistics.module").then(
+            (m) => m.StatisticsModule
+          ),
       },
-
-
-    ]
-  }
+      {
+        path: "managementlab",
+        loadChildren: () =>
+          import("./managementlab/managementlab.module").then(
+            (m) => m.ManagementlabModule
+          ),
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class DashboardsRoutingModule { }
+export class DashboardsRoutingModule {}

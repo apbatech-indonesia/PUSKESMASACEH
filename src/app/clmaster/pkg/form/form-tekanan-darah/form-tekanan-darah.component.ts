@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import Swal from "sweetalert2";
-import { PkgService } from "../../pkg.service";
 import { AncService } from "src/app/satusehat/satusehat-anc/services/anc.service";
 import {
   BodySite,
@@ -11,6 +10,7 @@ import {
   ObservationRequestData,
   Result,
 } from "src/app/satusehat/satusehat-gigi/data/models/observation-create.model";
+import { PkgService } from "../../pkg.service";
 
 @Component({
   selector: "app-form-tekanan-darah",

@@ -10,8 +10,8 @@ import {
   ValueQuantity,
 } from "src/app/satusehat/satusehat-gigi/data/models/observation-create.model";
 import Swal from "sweetalert2";
-import { PkgService } from "../../pkg.service";
 import { AncService } from "src/app/satusehat/satusehat-anc/services/anc.service";
+import { PkgService } from "../../pkg.service";
 
 @Component({
   selector: "app-form-skrining-gula-darah",
