@@ -154,8 +154,8 @@ export class SidebarComponent implements OnInit {
     redirectWindow.location;
   }
   kanjungan() {
-    // this.router.navigate(['/anjungan']);
-    alert("Sementara pendaftaran memakai pendaftraan rawat jalan");
+    this.router.navigate(['/anjungan']);
+    // alert("Sementara pendaftaran memakai pendaftraan rawat jalan");
   }
   update() {
     alert("dalam proses update");
