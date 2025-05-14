@@ -370,6 +370,12 @@
                 class="form-control"
                 (keyup.enter)="cekbpjs($event)"
               />
+              <div
+                class="badge bg-pill bg-success my-2"
+                (click)="cekkepesertaanbpjs(content7)"
+              >
+                Cek Kepesertaan BPJS
+              </div>
             </div>
           </div>
 
@@ -942,3 +948,60 @@
     </div>
   </ng-template>
 </div>
+
+<ng-template #content7 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h6 class="modal-title">Data Kepersetaan BPJS</h6>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="position-relative mb-3">
+      <label for="exampleSelect" class="form-label" style="color: black"
+        >Cari</label
+      >
+      <select
+        [(ngModel)]="carinobpjs"
+        id="exampleSelect"
+        class="form-select"
+        (change)="caribynikandno($event.target.value)"
+      >
+        <option value="noka">NOKA</option>
+        <option value="nik">NIK</option>
+      </select>
+    </div>
+
+    <div style="text-align: center" *ngIf="showloading">
+      <div
+        class="loader-wrapper d-flex justify-content-center align-items-center"
+      >
+        <div class="loader">
+          <div class="ball-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>Nama : {{ namabpjs }}</p>
+    <p>Tgl Akhir Berlaku : {{ tglakhirberlaku }}</p>
+    <p>Jenis kelas : {{ jeniskelas }}</p>
+    <p>Peserta : {{ jenispeserta }}</p>
+    <p>Prolanis : {{ pstProl }}</p>
+    <p>Prb : {{ pstPrb }}</p>
+
+    <p>FKTP : {{ kdprovider }} | {{ namaprovider }}</p>
+    <p>Status Kartu : {{ ketaktif }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+      PILIH
+    </button>
+  </div>
+</ng-template>

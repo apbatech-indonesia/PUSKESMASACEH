@@ -140,7 +140,7 @@ export class ApiserviceService {
     cabang: any,
     tandapengenal: string,
     nopengenal: string,
-    noasuransi?: string
+    noasuransi: string = ""
   ) {
     return this.http
       .get(

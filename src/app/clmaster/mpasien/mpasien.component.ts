@@ -107,6 +107,17 @@ export class MpasienComponent implements OnInit {
   usia: any = "";
   noasuransi: string = "";
   tglp: any;
+  showloading: boolean;
+  namabpjs: any;
+  tglakhirberlaku: any;
+  jeniskelas: any;
+  jenispeserta: any;
+  aktif: any;
+  ketaktif: any;
+  kdprovider: any;
+  namaprovider: any;
+  carinobpjs: any = "noka";
+
   constructor(
     public http: HttpClient,
     private datepipe: DatePipe,
@@ -637,7 +648,8 @@ export class MpasienComponent implements OnInit {
           let pasien: any = await this.authService.getPasienByTandaPengenal(
             this.cabangarr[0]?.slug,
             this.indetitas,
-            this.noindetitas
+            this.noindetitas,
+            this.noasuransi
           );
           let normpasien = pasien?.data?.norm;
           if (normpasien != null && normpasien != this.norm) {
@@ -1070,6 +1082,73 @@ export class MpasienComponent implements OnInit {
         console.log(Error);
       }
     );
+  }
+
+  cekkepesertaanbpjs(content) {
+    var noasuransiv;
+    var jumlahkarakter = 13;
+    var hasilkurang: number;
+
+    if (this.noasuransi.length < 13) {
+      hasilkurang = jumlahkarakter - this.noasuransi.length;
+      this.generateZeros(hasilkurang);
+
+      noasuransiv = this.zeros + "" + this.noasuransi;
+      this.noasuransi = noasuransiv;
+    } else if (this.noasuransi.length > 13) {
+      this.toastr.error("nomor BPJS terlalu panjang maksimal 13 angka");
+    } else {
+      noasuransiv = this.noasuransi;
+    }
+
+    if (this.noasuransi.length <= 5) {
+      this.toastr.error("Silahkan Isi No Kartu BPJS", "Eror");
+    } else {
+      this.showloading = true;
+
+      this.modalService.open(content, {});
+
+      this.authService.tmpbpjs(this.noasuransi, this.carinobpjs).subscribe(
+        (data) => {
+          if (data) {
+            if (data.metaData.code == 200) {
+              this.showloading = false;
+
+              this.namabpjs = data.response.nama;
+              this.tglakhirberlaku = data.response.tglAkhirBerlaku;
+              this.jeniskelas = data.response.jnsKelas.nama;
+              this.jenispeserta = data.response.jnsPeserta.nama;
+              this.aktif = data.response.aktif;
+              this.ketaktif = data.response.ketAktif;
+              this.kdprovider = data.response.kdProviderPst.kdProvider;
+              this.namaprovider = data.response.kdProviderPst.nmProvider;
+            } else if (data.metaData.code == 204) {
+              this.toastr.error("Kartu Tidak di temukan", "Eror");
+
+              this.namabpjs = "";
+              this.tglakhirberlaku = "";
+              this.jeniskelas = "";
+              this.jenispeserta = "";
+              this.aktif = "";
+              this.ketaktif = "";
+              this.kdprovider = "";
+              this.namaprovider = "";
+
+              this.showloading = false;
+            } else {
+              this.toastr.error(data.response.message, "Eror");
+              this.showloading = false;
+            }
+          } else {
+            this.toastr.error("Gagal Memuat Data BPJS", "Eror");
+            this.showloading = false;
+          }
+        },
+        (Error) => {
+          console.log(Error);
+        }
+      );
+    }
   }
 
   normbaru: any = "";
