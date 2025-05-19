@@ -1264,6 +1264,8 @@ export class MpasienComponent implements OnInit {
       buttonsStyling: false,
     });
 
+    this.caripas = "2";
+
     swalWithBootstrapButtons
       .fire({
         title: "Ganti Norm?",
