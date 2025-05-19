@@ -683,6 +683,13 @@
               </div>
 
               <div
+                class="badge bg-pill bg-warning btn"
+                (click)="gantinorm(x); shownorm(pindahnorm)"
+              >
+                Ganti Norm
+              </div>
+
+              <div
                 class="badge bg-pill bg-info btn"
                 (click)="
                   riwayatpas(
@@ -792,6 +799,68 @@
       </button>
     </div>
   </ng-template>
+
+  <ng-template #pindahnorm let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h6 class="modal-title">
+        Pindah Nomor Rekam Medik <b> {{ norm }}</b>
+      </h6>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="d('Cross click')"
+      ></button>
+    </div>
+
+    <div class="modal-body">
+      <label for="">Norm Lama</label>
+      <input
+        [(ngModel)]="norm"
+        placeholder="Norm Lama"
+        type="text"
+        class="form-control"
+      />
+    </div>
+    <div class="modal-body">
+      <label for="">Norm Baru</label>
+      <input
+        [(ngModel)]="normbaru"
+        placeholder="Norm Baru"
+        (keyup)="caripas = 3; isShowPasienList = true; caripass($event)"
+        type="text"
+        class="form-control"
+      />
+    </div>
+
+    <div class="modal-body" *ngIf="isShowPasienList">
+      <table class="table table-hover">
+        <tr *ngFor="let x of tpasien">
+          <td style="font-size: 12px; color: black">
+            {{ x.norm }}
+          </td>
+          <td style="font-size: 12px; color: black">
+            {{ x.pasien }}
+            <p style="font-size: 10px">{{ x.alamat }}</p>
+          </td>
+          <td>
+            <div
+              class="badge bg-pill bg-danger btn"
+              (click)="pilihnorm(x.norm)"
+            >
+              Pilih
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button class="mb-2 me-2 btn-pill btn btn-info" (click)="updatenorm()">
+        Ganti
+      </button>
+    </div>
+  </ng-template>
+
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h6 class="modal-title">{{ namalurah }}</h6>

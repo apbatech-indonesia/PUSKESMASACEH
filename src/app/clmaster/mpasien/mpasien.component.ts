@@ -117,6 +117,7 @@ export class MpasienComponent implements OnInit {
   kdprovider: any;
   namaprovider: any;
   carinobpjs: any = "noka";
+  isShowPasienList: boolean;
 
   constructor(
     public http: HttpClient,
@@ -955,6 +956,50 @@ export class MpasienComponent implements OnInit {
       " hari";
   }
 
+  pilihnorm(norm) {
+    this.isShowPasienList = false;
+    this.normbaru = norm;
+  }
+
+  gantinorm(data) {
+    this.norm = data.norm;
+    this.pasien = data.pasien;
+    this.tempatlahir = data.tempatlahir;
+    this.kelamin = data.jeniskelamin;
+    this.alamat = data.alamat;
+    this.alamats = data.alamatsekarang;
+    this.indetitas = data.tandapengenal;
+    this.noindetitas = data.nopengenal;
+    this.nohp = data.hp;
+    this.agama = data.agama;
+    this.marital = data.statusmarital;
+    this.pendidikan = data.pendidikan;
+    this.perkerjaan = data.perkerjaan;
+    this.golda = data.golda;
+    this.tgllahir = data.tgllahir;
+    this.noasuransi = data.noasuransi;
+    this.keluarahanid = data.kdkelurahan;
+    this.keluarahan = data.keluarahan;
+    this.verifsimpan = "0";
+    this.usia = data.usia;
+    this.propinsi = data.prov_name;
+    this.kabupaten = data.city_name;
+    this.kecamatan = data.dis_name;
+    this.an = data.kdpanggil;
+
+    const difference = this.calculateDifferenceInYearsMonthsDays(
+      this.tgllahir,
+      this.tglp
+    );
+    this.usia =
+      difference.years +
+      " tahun " +
+      difference.months +
+      " Bulan " +
+      difference.days +
+      " hari";
+  }
+
   cekbpjsnik() {
     this.authService.tmpbpjs(this.noindetitas, "nik").subscribe(
       (data) => {
@@ -1198,6 +1243,60 @@ export class MpasienComponent implements OnInit {
               this.toastr.error("Simpan  Gagal", "Eror");
             }
           });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+        }
+      });
+  }
+
+  updatenorm() {
+    if (this.normbaru === "") {
+      this.toastr.error("isikan norm baru");
+      return;
+    }
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "Ganti Norm?",
+        text: "Yakin Akan Ganti Norm",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ganti",
+        cancelButtonText: "Batal",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          let body = {
+            from_norm: this.norm,
+            to_norm: this.normbaru,
+          };
+
+          this.authService
+            .updatenorm(body, this.cabangarr[0]?.slug)
+            .subscribe((response) => {
+              if (response) {
+                this.toastr.success("", "Sukses", {
+                  timeOut: 2000,
+                });
+
+                this.norm = this.normbaru;
+                this.tmpantri();
+
+                this.modalService.dismissAll();
+              } else {
+                this.toastr.error("Simpan  Gagal", "Eror");
+              }
+            });
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel

@@ -7,8 +7,8 @@
       (change)="onFilterChange()"
     >
       <option value="">-- Pilih Provinsi --</option>
-      <option *ngFor="let provinsi of provinsiList">
-        {{ provinsi }}
+      <option *ngFor="let provinsi of provinsiList" [ngValue]="provinsi.id">
+        {{ provinsi.name }}
       </option>
     </select>
   </div>
@@ -19,8 +19,8 @@
       (change)="onFilterChange()"
     >
       <option value="">-- Pilih Kabupaten/Kota --</option>
-      <option *ngFor="let kabupaten of kabupatenList">
-        {{ kabupaten }}
+      <option *ngFor="let kabupaten of kabupatenList" [ngValue]="kabupaten.id">
+        {{ kabupaten.name }}
       </option>
     </select>
   </div>
@@ -31,8 +31,8 @@
       (change)="onFilterChange()"
     >
       <option value="">-- Kecamatan --</option>
-      <option *ngFor="let kecamatan of kecamatanList">
-        {{ kecamatan }}
+      <option *ngFor="let kecamatan of kecamatanList" [ngValue]="kecamatan.id">
+        {{ kecamatan.name }}
       </option>
     </select>
   </div>
@@ -44,8 +44,8 @@
       (change)="onFilterChange()"
     >
       <option value="">-- Kelurahan --</option>
-      <option *ngFor="let kelurahan of kelurahanList">
-        {{ kelurahan }}
+      <option *ngFor="let kelurahan of kelurahanList" [ngValue]="kelurahan.id">
+        {{ kelurahan.name }}
       </option>
     </select>
   </div>

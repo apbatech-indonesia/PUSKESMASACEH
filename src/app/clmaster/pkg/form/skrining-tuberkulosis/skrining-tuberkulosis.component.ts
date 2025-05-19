@@ -321,13 +321,7 @@ export class SkriningTuberkulosisComponent implements OnInit {
             norm: "this.norm",
             notransaksi: this.notransaksi,
             layanan: "Skrining Tuberkulosis",
-            status: "layanan",
-            jenis_kelamin: "laki-laki",
-            umur: 12,
-            provinsi: "test",
-            kota: "test",
-            kecamatan: "test",
-            kelurahan: "test",
+            status: "layanan"
           })
           .toPromise();
 

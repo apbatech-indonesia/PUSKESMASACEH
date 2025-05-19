@@ -585,6 +585,7 @@ export class pkgComponent implements OnInit {
   async doCreateKunjungan() {
     this.showLoading();
     this.patientData = await this.getPasien();
+    console.log(this.patientData);
     this.cabangData = await this.getCabang();
 
     this.usiaPasienFilterLayanan = this.hitungUsia(
@@ -628,13 +629,6 @@ export class pkgComponent implements OnInit {
         notransaksi: this.notransaksi,
         layanan: "Kehadiran Pkg",
         status: "kehadiran",
-        jenis_kelamin:
-          this.jenisKelaminFilterLayanan === "L" ? "laki-laki" : "perempuan",
-        umur: this.usiaPasienFilterLayanan,
-        provinsi: "-",
-        kota: "-",
-        kecamatan: "-",
-        kelurahan: "-",
       })
       .toPromise();
 

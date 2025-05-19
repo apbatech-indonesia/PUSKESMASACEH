@@ -1235,6 +1235,12 @@ export class ApiserviceService {
   editnorm(data: any): Observable<any> {
     return this.http.post(apiurx + "master/editnorm.php", data);
   }
+  updatenorm(data: Object, cabang): Observable<any> {
+    return this.http.post(
+      `https://emr.clenicapp.com/api/${cabang}/pasien/update-norm`,
+      data
+    );
+  }
   simpanmtarif(data: any): Observable<any> {
     return this.http.post(apiurx + "master/simpanmtarif.php", data);
   }

@@ -165,8 +165,8 @@ export class DashboardPkgService {
     notransaksi: string;
     layanan: string;
     status: string;
-    jenis_kelamin: string;
-    umur: number;
+    jenis_kelamin?: string;
+    umur?: number;
     provinsi?: string;
     kota?: string;
     kecamatan?: string;

@@ -159,6 +159,9 @@ export class DataPendaftaranComponent implements OnInit {
   }
 
   async fetchDaerahList() {
+    setTimeout(() => {
+      console.log(this.selectedProvinsi);
+    }, 1000);
     try {
       const daerahResponse: any = await this.dashboardPkgService
         .getDaerahList({
