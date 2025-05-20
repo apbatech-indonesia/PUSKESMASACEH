@@ -242,8 +242,7 @@ export class anjungansehatComponent implements OnInit {
     // alert(a);
   }
   hapus() {
-    this.nomorasuransi = "";
-    return;
+    this.nomorasuransi = this.nomorasuransi.slice(0, -1);
   }
 
   depanshow: boolean = true;
@@ -280,7 +279,7 @@ export class anjungansehatComponent implements OnInit {
   kliniks: string = "";
 
   tmppuser() {
-    this.authService.poliByStatussakit(this.kdcabang, '2').subscribe(
+    this.authService.poliByStatussakit(this.kdcabang, "2").subscribe(
       (data) => {
         this.tklinik = data;
 

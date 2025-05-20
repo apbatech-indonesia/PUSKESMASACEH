@@ -240,8 +240,7 @@ export class anjunganComponent implements OnInit {
     // alert(a);
   }
   hapus() {
-    this.nomorasuransi = "";
-    return;
+    this.nomorasuransi = this.nomorasuransi.slice(0, -1);
   }
 
   depanshow: boolean = true;
@@ -606,182 +605,252 @@ export class anjunganComponent implements OnInit {
                           }
                         });
                     } else {
-                      this.toastr.error(
-                        "Pasien / No Kartu belum terdaftar di fakses silahkan daftar melalui daftar rawat jalan"
-                      );
+                      // this.toastr.error(
+                      //   "Pasien / No Kartu belum terdaftar di fakses silahkan daftar melalui daftar rawat jalan"
+                      // );
 
-                      //   let body = {"nama" : this.namabpjs,"tlahir":'-',"jeniskelamin":this.jk,"tanggallahir":this.tgllahir,
-                      //   "alamat":'X',"kodekel":'X',"identitas":'KTP',"noidentitas":this.noindetitas,"nohp":this.nohp,"agama":'TIDAK TAHU',"marital":'TIDAK TAHU',
-                      // "pendidikan":'TIDAK TAHU',"perkerjaan":'TIDAK TAHU',"golda":'Tidak Tahu',"norm":'',"stssimpan":'12',"kdcabang":this.kdcabang,
-                      // "kdklinik":this.kdklinik,"noasuransi":nokartu};
+                      let body = {
+                        nama: this.namabpjs,
+                        tlahir: "-",
+                        jeniskelamin: this.jk,
+                        tanggallahir: this.tgllahir,
+                        alamat: "X",
+                        kodekel: "X",
+                        identitas: "KTP",
+                        noidentitas: this.noindetitas,
+                        nohp: this.nohp,
+                        agama: "TIDAK TAHU",
+                        marital: "TIDAK TAHU",
+                        pendidikan: "TIDAK TAHU",
+                        perkerjaan: "TIDAK TAHU",
+                        golda: "Tidak Tahu",
+                        norm: "",
+                        stssimpan: "12",
+                        kdcabang: this.kdcabang,
+                        kdklinik: this.kdklinik,
+                        noasuransi: nokartu,
+                      };
 
-                      // this.authService.simpanpasbaru(body)
-                      // .subscribe(response => {
+                      this.authService
+                        .simpanpasbaru(body)
+                        .subscribe((response) => {
+                          if (response) {
+                            this.toastr.success("Berhasil", "Sukses", {
+                              timeOut: 2000,
+                            });
 
-                      //   if(response ){
-                      //     this.toastr.success('Berhasil', 'Sukses', {
-                      //       timeOut: 2000,
-                      //     });
+                            this.norm = response.norm;
+                            this.kdasuransi = response.kdasuransi;
+                            this.kdkostumer = response.kdkostumer;
 
-                      // this.norm = response.norm;
-                      // this.kdasuransi = response.kdasuransi;
-                      // this.kdkostumer = response.kdkostumer;
+                            let body = {
+                              norm: this.norm,
+                              pasien: this.namabpjs,
+                              indetitas: "KTP",
+                              noindetitas: this.noindetitas,
+                              kduser: "ANJUNGAN",
+                              hp: this.nohp,
+                              kdpoli: this.kdpoli,
+                              kddokter: this.kddokter,
+                              kelas: "1",
+                              tgldaftar: this.tgllahir,
+                              kostumer: this.kdkostumer,
+                              kdkostumer: this.kdasuransi,
+                              noasuransi: nokartu,
+                              kdcabang: this.kdcabang,
+                              kdklinik: this.kdklinik,
+                              stssimpan: "12",
+                              kdprovider: this.kdprovider,
+                            };
 
-                      // let body ={
-                      //   "norm": this.norm,"pasien":this.namabpjs,"indetitas":'KTP',"noindetitas":this.noindetitas,"kduser":'ANJUNGAN',
-                      //   "hp":this.nohp,"kdpoli":this.kdpoli,"kddokter":this.kddokter,"kelas":'1',
-                      //      "tgldaftar":this.tgllahir,"kostumer":this.kdkostumer,"kdkostumer":this.kdasuransi,"noasuransi":nokartu,
-                      //      "kdcabang":this.kdcabang,"kdklinik":this.kdklinik,"stssimpan":'12',
-                      //      "kdprovider":this.kdprovider
+                            this.authService
+                              .simpandaftarrj(body)
+                              .subscribe((response) => {
+                                if (response) {
+                                  if (response.kode === 201) {
+                                    this.toastr.error(
+                                      response.keterangan,
+                                      "Eror"
+                                    );
+                                  } else {
+                                    this.showantrian = true;
 
-                      //  }
+                                    this.notransaksi = response.notrans;
 
-                      //  this.authService.simpandaftarrj(body)
-                      //  .subscribe(response => {
+                                    this.authService
+                                      .pasienantrian(
+                                        this.kdcabang,
+                                        "2",
+                                        this.notransaksi,
+                                        "",
+                                        ""
+                                      )
+                                      .subscribe(
+                                        (data) => {
+                                          this.tantrian = data;
 
-                      //    if(response ){
+                                          if (data.length) {
+                                            for (let x of data) {
+                                              this.kdpolibpjs = x.kdpolibpjs;
+                                            }
+                                          }
+                                          setTimeout(() => {
+                                            let bodyAddFktp = {
+                                              nomorkartu: nokartu,
+                                              nik: this.tantrian[0].nopengenal,
+                                              nohp: "086786655899",
+                                              kodepoli: this.kdpolibpjs,
+                                              namapoli:
+                                                this.tantrian[0].nampoli,
+                                              norm: this.tantrian[0].norm,
+                                              tanggalperiksa:
+                                                this.tantrian[0].tglpriksa,
+                                              kodedokter: parseInt(
+                                                this.tantrian[0].kddokterbpjs
+                                              ),
+                                              namadokter:
+                                                this.tantrian[0].namdokter,
+                                              jampraktek: this.jadwal,
+                                              nomorantrean:
+                                                this.tantrian[0].kodeantrian +
+                                                "-" +
+                                                this.tantrian[0].noantrian,
+                                              angkaantrean: parseInt(
+                                                this.tantrian[0].noantrian
+                                              ),
+                                              keterangan: "daftar",
+                                            };
 
-                      //     if(response.kode === 201){
-                      //       this.toastr.error(response.keterangan, 'Eror');
+                                            console.log(bodyAddFktp);
+                                            this.authService
+                                              .addBpjsAntrian(
+                                                bodyAddFktp,
+                                                this.slug
+                                              )
+                                              .subscribe((Response) => {
+                                                if (Response) {
+                                                  if (
+                                                    Response.data.code == 200
+                                                  ) {
+                                                    this.toastr.success(
+                                                      Response.data.message,
+                                                      "Sukses",
+                                                      {
+                                                        timeOut: 2000,
+                                                      }
+                                                    );
 
-                      //     }else{
+                                                    this.toastr.success(
+                                                      "Silahakn menuju NS untuk di TTV",
+                                                      "Sukses",
+                                                      {
+                                                        timeOut: 2000,
+                                                      }
+                                                    );
 
-                      //                             this.showantrian= true;
+                                                    let body = {
+                                                      data: {
+                                                        kdProviderPeserta:
+                                                          this.kdprovider,
+                                                        tglDaftar: this.minbpjs,
+                                                        noKartu: nokartu,
+                                                        kdPoli: this.kdpolibpjs,
+                                                        keluhan: "sakit",
+                                                        kunjSakit: true,
+                                                        sistole: 0,
+                                                        diastole: 0,
+                                                        beratBadan: 0,
+                                                        tinggiBadan: 0,
+                                                        respRate: 0,
+                                                        lingkarPerut: 0,
+                                                        heartRate: 0,
+                                                        rujukBalik: 0,
+                                                        kdTkp: "10",
+                                                      },
+                                                    };
 
-                      //                             this.notransaksi = response.notrans;
+                                                    this.authService
+                                                      .simpanpcaredaftar(body)
+                                                      .subscribe((response) => {
+                                                        if (response) {
+                                                          if (
+                                                            response.metaData
+                                                              .code == 201
+                                                          ) {
+                                                            let body = {
+                                                              notransaksi:
+                                                                this
+                                                                  .notransaksi,
+                                                              stssimpan: "1",
+                                                              noantrian:
+                                                                response
+                                                                  .response
+                                                                  .message,
+                                                            };
 
-                      //                             this.authService.pasienantrian(this.kdcabang,'2',this.notransaksi,'','')
-                      //                             .subscribe(
-                      //                               data => {
+                                                            this.authService
+                                                              .updatepcare(body)
+                                                              .subscribe(
+                                                                (response) => {}
+                                                              );
 
-                      //                                 this.tantrian = data;
+                                                            this.nomorasuransi =
+                                                              "";
 
-                      //                                 if(data.length){
+                                                            this.showloading =
+                                                              false;
+                                                          } else if (
+                                                            response.metaData
+                                                              .code == 412
+                                                          ) {
+                                                            this.toastr.error(
+                                                              "Gagal terkirim kode provider tidak ada",
+                                                              "Eror"
+                                                            );
 
-                      //                                   for(let x of data){
+                                                            this.showloading =
+                                                              false;
+                                                          }
+                                                        } else {
+                                                          this.toastr.error(
+                                                            "Simpan  Gagal",
+                                                            "Eror"
+                                                          );
+                                                        }
+                                                      });
+                                                  } else {
+                                                    this.toastr.error(
+                                                      Response.data.message,
+                                                      "Error"
+                                                    );
+                                                  }
+                                                }
+                                              });
 
-                      //                                     this.kdpolibpjs = x.kdpolibpjs;
-                      //                                   }
+                                            this.nomorasuransi = "";
+                                          }, 100);
+                                        },
+                                        (Error) => {
+                                          console.log(Error);
+                                        }
+                                      );
 
-                      //                                 }    setTimeout(() => {
-
-                      //                                   let bodyAddFktp = {
-                      //                                     "nomorkartu":nokartu,
-                      //                                     "nik": this.tantrian[0].nopengenal,
-                      //                                     "nohp": '086786655899',
-                      //                                     "kodepoli": this.kdpolibpjs,
-                      //                                     "namapoli": this.tantrian[0].nampoli,
-                      //                                     "norm": this.tantrian[0].norm,
-                      //                                     "tanggalperiksa": this.tantrian[0].tglpriksa,
-                      //                                     "kodedokter": parseInt(this.tantrian[0].kddokterbpjs),
-                      //                                     "namadokter": this.tantrian[0].namdokter,
-                      //                                     "jampraktek": this.jadwal,
-                      //                                     "nomorantrean": this.tantrian[0].kodeantrian+'-'+this.tantrian[0].noantrian,
-                      //                                     "angkaantrean": parseInt(this.tantrian[0].noantrian),
-                      //                                     "keterangan": "daftar",
-                      //                                     }
-
-                      //                                     console.log(bodyAddFktp)
-                      //                                     this.authService.addBpjsAntrian(bodyAddFktp,this.slug)
-                      //                                     .subscribe(Response => {
-                      //                                     if (Response) {
-
-                      //                                       if(Response.data.code == 200){
-
-                      //                                         this.toastr.success(Response.data.message, 'Sukses', {
-                      //                                           timeOut: 2000,
-                      //                                         });
-
-                      //                                         this.toastr.success("Silahakn menuju NS untuk di TTV", 'Sukses', {
-                      //                                           timeOut: 2000,
-                      //                                         });
-
-                      //                                     let body={"data" :{
-                      //                                       "kdProviderPeserta": this.kdprovider,
-                      //                                       "tglDaftar":this.minbpjs,
-                      //                                       "noKartu": nokartu,
-                      //                                       "kdPoli": this.kdpolibpjs,
-                      //                                       "keluhan": 'sakit',
-                      //                                       "kunjSakit": true,
-                      //                                       "sistole": 0,
-                      //                                       "diastole": 0,
-                      //                                       "beratBadan": 0,
-                      //                                       "tinggiBadan": 0,
-                      //                                       "respRate": 0,
-                      //                                       "lingkarPerut": 0,
-                      //                                       "heartRate": 0,
-                      //                                       "rujukBalik": 0,
-                      //                                       "kdTkp": '10' }}
-
-                      //                                       this.authService.simpanpcaredaftar(body).subscribe(response => {
-                      //                                         if(response ){
-
-                      //                                           if(response.metaData.code == 201){
-
-                      //                                             let body={
-                      //                                               "notransaksi":this.notransaksi,"stssimpan":'1',"noantrian":response.response.message
-                      //                                             }
-
-                      //                                                this.authService.updatepcare(body)
-                      //                                                .subscribe(response => {
-
-                      //                                                })
-
-                      //                                             this.nomorasuransi=''
-
-                      //                                             this.showloading = false;
-
-                      //                                           }else if(response.metaData.code == 412){
-
-                      //                                             this.toastr.error('Gagal terkirim kode provider tidak ada', 'Eror');
-
-                      //                                             this.showloading = false;
-                      //                                           }
-                      //                                         }else{
-                      //                                           this.toastr.error('Simpan  Gagal', 'Eror');
-
-                      //                                          }
-
-                      //                                         })
-
-                      //                                       }else{
-                      //                                         this.toastr.error(Response.data.message, 'Error');
-
-                      //                                       }
-
-                      //                                     }
-                      //                                     })
-
-                      //                                     this.nomorasuransi ='';
-
-                      //                                         }, 100);
-
-                      //                             },
-                      //                               Error => {
-
-                      //                                console.log(Error)
-                      //                               }
-                      //                             )
-
-                      //    this.toastr.success(response.notrans+response.keterangan, 'Sukses', {
-                      //        timeOut: 2000,
-                      //      });
-
-                      //     }
-
-                      //     }else{
-                      //      this.toastr.error('Simpan  Gagal', 'Eror');
-
-                      //     }
-
-                      //  })
-
-                      //    }else{
-                      //     this.toastr.error('Simpan  Gagal', 'Eror');
-
-                      //    }
-
-                      // })
+                                    this.toastr.success(
+                                      response.notrans + response.keterangan,
+                                      "Sukses",
+                                      {
+                                        timeOut: 2000,
+                                      }
+                                    );
+                                  }
+                                } else {
+                                  this.toastr.error("Simpan  Gagal", "Eror");
+                                }
+                              });
+                          } else {
+                            this.toastr.error("Simpan  Gagal", "Eror");
+                          }
+                        });
                     }
                   },
                   (Error) => {
