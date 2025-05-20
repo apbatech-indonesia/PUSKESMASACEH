@@ -239,8 +239,9 @@ export class anjunganComponent implements OnInit {
 
     // alert(a);
   }
+
   hapus() {
-    this.nomorasuransi = "";
+    this.nomorasuransi = this.nomorasuransi.slice(0, -1);
     return;
   }
 

@@ -146,7 +146,6 @@ export class MpasienComponent implements OnInit {
     kelamin: ["", Validators.required],
     tempatlahir: ["", Validators.required],
     alamat: ["", Validators.required],
-
     keluarahan: ["", Validators.required],
     indetitas: ["", Validators.required],
     // noindetitas: ['',Validators.required],
@@ -159,6 +158,7 @@ export class MpasienComponent implements OnInit {
   });
   tgolonganlab: any;
   ngOnInit() {
+    console.log(this.propinsi);
     this.klinik();
     // this.tmppuser()
     this.tmpantri();
@@ -804,6 +804,15 @@ export class MpasienComponent implements OnInit {
   }
 
   res: any;
+  
+  test() {
+    Object.keys(this.profileForm.controls).forEach((field) => {
+      const control = this.profileForm.get(field);
+      if (control && control.invalid) {
+        console.log("Field tidak valid:", field, control.errors);
+      }
+    });
+  }
 
   datax = [];
   Batal() {
