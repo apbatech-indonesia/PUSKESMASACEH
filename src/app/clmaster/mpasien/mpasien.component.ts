@@ -804,7 +804,7 @@ export class MpasienComponent implements OnInit {
   }
 
   res: any;
-  
+
   test() {
     Object.keys(this.profileForm.controls).forEach((field) => {
       const control = this.profileForm.get(field);
@@ -963,6 +963,8 @@ export class MpasienComponent implements OnInit {
       " Bulan " +
       difference.days +
       " hari";
+
+    this.profileForm.get("keluarahan")?.setValue(x.kdkelurahan);
   }
 
   pilihnorm(norm) {
