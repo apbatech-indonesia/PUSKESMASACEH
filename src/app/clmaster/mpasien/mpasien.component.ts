@@ -129,6 +129,7 @@ export class MpasienComponent implements OnInit {
     this.tgllahir = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
     this.tglp = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
   }
+  showtombolpasien: boolean = true;
   profileForm = this.fb.group({
     pasien: ["", Validators.required],
     kelamin: ["", Validators.required],
@@ -817,6 +818,7 @@ export class MpasienComponent implements OnInit {
     this.keluarahan = "";
     this.keluarahanid = "";
     this.tgllahir = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
+    this.showtombolpasien = true;
 
     //     this.authService.tmpbpjs()
     //     .subscribe(
@@ -926,6 +928,7 @@ export class MpasienComponent implements OnInit {
     this.propinsi = x.prov_name;
     this.kabupaten = x.city_name;
     this.kecamatan = x.dis_name;
+    this.showtombolpasien = false;
 
     this.an = kdpanggil;
 

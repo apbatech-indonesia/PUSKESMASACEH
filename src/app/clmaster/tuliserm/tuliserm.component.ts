@@ -2592,7 +2592,7 @@ export class tulisermComponent implements OnInit {
     }, 400);
   }
   showloading: boolean;
-  lingkarperut: number = 0;
+  lingkarperut: any = 0;
   kirimpcaredaftar() {
     if (this.akses === "Perawat") {
       // let body={"data":{
@@ -3388,7 +3388,7 @@ export class tulisermComponent implements OnInit {
         tinggiBadan: parseInt(this.tb),
         respRate: parseInt(this.rr),
         heartRate: parseInt(this.hr),
-        lingkarPerut: 0,
+        lingkarPerut: parseInt(this.lingkarperut),
 
         kdStatusPulang: this.stspulang,
         tglPulang: this.pipe.transform(this.myDate, "dd-MM-yyyy"),
@@ -3607,7 +3607,7 @@ export class tulisermComponent implements OnInit {
         tinggiBadan: parseInt(this.tb),
         respRate: parseInt(this.rr),
         heartRate: parseInt(this.hr),
-        lingkarPerut: 0,
+        lingkarPerut: parseInt(this.lingkarperut),
 
         kdStatusPulang: this.stspulang,
         tglPulang: this.pipe.transform(this.myDate, "dd-MM-yyyy"),
@@ -3836,7 +3836,7 @@ export class tulisermComponent implements OnInit {
         tinggiBadan: parseInt(this.tb),
         respRate: parseInt(this.rr),
         heartRate: parseInt(this.hr),
-        lingkarPerut: 0,
+        lingkarPerut: parseInt(this.lingkarperut),
 
         kdStatusPulang: this.stspulang,
         tglPulang: this.pipe.transform(this.myDate, "dd-MM-yyyy"),
@@ -4036,7 +4036,7 @@ export class tulisermComponent implements OnInit {
         tinggiBadan: parseInt(this.tb),
         respRate: parseInt(this.rr),
         heartRate: parseInt(this.hr),
-        lingkarPerut: 0,
+        lingkarPerut: parseInt(this.lingkarperut),
 
         kdStatusPulang: this.stspulang,
         tglPulang: this.pipe.transform(this.myDate, "dd-MM-yyyy"),
@@ -4248,7 +4248,7 @@ export class tulisermComponent implements OnInit {
           tinggiBadan: parseInt(this.tb),
           respRate: parseInt(this.rr),
           heartRate: parseInt(this.hr),
-          lingkarPerut: 0,
+          lingkarPerut: parseInt(this.lingkarperut),
 
           kdStatusPulang: this.stspulang,
           tglPulang: this.pipe.transform(this.myDate, "dd-MM-yyyy"),
@@ -4382,7 +4382,7 @@ export class tulisermComponent implements OnInit {
           tinggiBadan: parseInt(this.tb),
           respRate: parseInt(this.rr),
           heartRate: parseInt(this.hr),
-          lingkarPerut: 0,
+          lingkarPerut: parseInt(this.lingkarperut),
 
           kdStatusPulang: this.stspulang,
           tglPulang: this.pipe.transform(this.myDate, "dd-MM-yyyy"),
@@ -4516,7 +4516,7 @@ export class tulisermComponent implements OnInit {
           tinggiBadan: parseInt(this.tb),
           respRate: parseInt(this.rr),
           heartRate: parseInt(this.hr),
-          lingkarPerut: 0,
+          lingkarPerut: parseInt(this.lingkarperut),
 
           kdStatusPulang: this.stspulang,
           tglPulang: this.pipe.transform(this.myDate, "dd-MM-yyyy"),
@@ -4729,7 +4729,7 @@ export class tulisermComponent implements OnInit {
           tinggiBadan: parseInt(this.tb),
           respRate: parseInt(this.rr),
           heartRate: parseInt(this.hr),
-          lingkarPerut: 0,
+          lingkarPerut: parseInt(this.lingkarperut),
 
           kdStatusPulang: this.stspulang,
           tglPulang: this.pipe.transform(this.myDate, "dd-MM-yyyy"),
@@ -4866,7 +4866,7 @@ export class tulisermComponent implements OnInit {
           tinggiBadan: parseInt(this.tb),
           respRate: parseInt(this.rr),
           heartRate: parseInt(this.hr),
-          lingkarPerut: 0,
+          lingkarPerut: parseInt(this.lingkarperut),
 
           kdStatusPulang: this.stspulang,
           tglPulang: this.pipe.transform(this.myDate, "dd-MM-yyyy"),
@@ -5003,7 +5003,7 @@ export class tulisermComponent implements OnInit {
           tinggiBadan: parseInt(this.tb),
           respRate: parseInt(this.rr),
           heartRate: parseInt(this.hr),
-          lingkarPerut: 0,
+          lingkarPerut: parseInt(this.lingkarperut),
 
           kdStatusPulang: this.stspulang,
           tglPulang: this.pipe.transform(this.myDate, "dd-MM-yyyy"),
@@ -9853,7 +9853,7 @@ export class tulisermComponent implements OnInit {
     let body = {
       data: {
         param: this.noasuransi,
-        kddokter: this.kddokter
+        kddokter: this.kddokter,
       },
     };
     this.authService.icare(body).subscribe((response) => {

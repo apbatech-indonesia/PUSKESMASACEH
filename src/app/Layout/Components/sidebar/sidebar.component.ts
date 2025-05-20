@@ -44,7 +44,7 @@ export class SidebarComponent implements OnInit {
     this.akses = this.userDetails.hakakses;
     this.kdklinik = this.userDetails.kdklinik;
     this.kdcabang = this.userDetails.kdcabang;
-    this.isDinkes = this.akses.includes("Dinkes")
+    this.isDinkes = this.akses.includes("Dinkes");
     if (this.isDinkes) {
       this.slugCity = this.akses.split("Dinkes ")[1];
       this.slugCity = this.slugCity.toLowerCase().replace(/\s+/g, "-");
@@ -154,8 +154,8 @@ export class SidebarComponent implements OnInit {
     redirectWindow.location;
   }
   kanjungan() {
-    // this.router.navigate(['/anjungan']);
-    alert("Sementara pendaftaran memakai pendaftraan rawat jalan");
+    this.router.navigate(["/anjungan"]);
+    // alert("Sementara pendaftaran memakai pendaftraan rawat jalan");
   }
   update() {
     alert("dalam proses update");

@@ -1382,4 +1382,37 @@ export class mpdaftarpasienriComponent implements OnInit {
       });
     }
   }
+
+  cetakkartu(a) {
+    Swal.fire({
+      title: "Masukan Berapa lembar",
+      input: "number",
+      customClass: {
+        validationMessage: "my-validation-message",
+      },
+      showLoaderOnConfirm: true,
+      preConfirm: (value) => {
+        if (!value) {
+          Swal.showValidationMessage(
+            '<i class="fa fa-info-circle"></i> Qty Lembar di isi'
+          );
+        } else {
+          var redirectWindow = window.open(
+            this.URLINVOICE +
+              "clenic/report/kartupasien.php?norm=" +
+              a +
+              "&cetak=" +
+              value,
+            "_blank",
+            "location=no,toolbar=no,height=" +
+              screen.height +
+              ",width=" +
+              screen.width +
+              ",scrollbars=yes,status=yes"
+          );
+          redirectWindow.location;
+        }
+      },
+    });
+  }
 }
