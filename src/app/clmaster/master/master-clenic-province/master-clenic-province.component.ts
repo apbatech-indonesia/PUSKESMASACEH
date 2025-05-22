@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from "@angular/core";
 import { ApiserviceService } from "src/app/apiservice.service";
 
 @Component({
@@ -6,35 +13,35 @@ import { ApiserviceService } from "src/app/apiservice.service";
   templateUrl: "./master-clenic-province.component.html",
   styleUrls: ["./master-clenic-province.component.sass"],
 })
-export class MasterClenicProvinceComponent implements OnInit {
+export class MasterClenicProvinceComponent implements OnInit, OnChanges {
+  @Input() id: string = "";
+  @Input() keyword: string = "";
   @Output() selectedItem = new EventEmitter();
-  @Input() id: string;
-  @Input() searchText: string = "";
-  @Input() title: string = "";
-  @Input() isShowCode: boolean = true;
-  @Input() isDisabled: boolean = false;
-
   placeholder = "Provinsi";
   list: any = [];
 
   constructor(private api: ApiserviceService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cari(this.keyword);
+  }
 
-  async cari() {
-    let data: any = await this.api.propinsi(this.searchText).toPromise();
+  ngOnChanges(): void {
+    this.cari(this.keyword);
+  }
 
-    this.list = data.map((item: any) => {
-      return {
+  async cari(dataSearch: string = "") {
+    let data: any = await this.api.propinsi(dataSearch).toPromise();
+
+    this.list = [
+      ...data.map((item: any) => ({
         code: item.prov_id,
         name: item.prov_name,
-      };
-    });
+      })),
+    ];
   }
 
   pilih(data: any) {
-    this.list = [];
     this.selectedItem.emit(data);
-    this.searchText = data.name;
   }
 }

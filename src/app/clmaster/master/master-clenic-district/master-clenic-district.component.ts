@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+} from "@angular/core";
 import { ApiserviceService } from "src/app/apiservice.service";
 
 @Component({
@@ -6,39 +12,35 @@ import { ApiserviceService } from "src/app/apiservice.service";
   templateUrl: "./master-clenic-district.component.html",
   styleUrls: ["./master-clenic-district.component.sass"],
 })
-export class MasterClenicDistrictComponent implements OnInit {
+export class MasterClenicDistrictComponent implements OnChanges {
+  @Input() id: string = "";
+  @Input() keyword: string = "";
+  @Input() parentId: string = "";
   @Output() selectedItem = new EventEmitter();
-  @Input() id: string;
-  @Input() parentId: string;
-  @Input() searchText: string = "";
-  @Input() title: string = "";
-  @Input() isShowCode: boolean = true;
-  @Input() isDisabled: boolean = false;
 
   placeholder = "Kecamatan";
-  searchDistrictBy: any = 1;
   list: any = [];
 
   constructor(private api: ApiserviceService) {}
 
-  ngOnInit(): void {}
+  ngOnChanges(): void {
+    this.cari(this.keyword);
+  }
 
-  async cari() {
+  async cari(dataSearch: string = "") {
     let data: any = await this.api
-      .kecamatan(this.parentId, this.searchText)
+      .kecamatan(this.parentId, dataSearch)
       .toPromise();
 
-    this.list = data.map((item: any) => {
-      return {
+    this.list = [
+      ...data.map((item: any) => ({
         code: item.dis_id,
         name: item.dis_name,
-      };
-    });
+      })),
+    ];
   }
 
   pilih(data: any) {
-    this.list = [];
     this.selectedItem.emit(data);
-    this.searchText = data.name;
   }
 }

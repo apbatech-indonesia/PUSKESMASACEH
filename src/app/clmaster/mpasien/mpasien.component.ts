@@ -158,7 +158,6 @@ export class MpasienComponent implements OnInit {
   });
   tgolonganlab: any;
   ngOnInit() {
-    console.log(this.propinsi);
     this.klinik();
     // this.tmppuser()
     this.tmpantri();
@@ -941,13 +940,28 @@ export class MpasienComponent implements OnInit {
     this.tgllahir = tgllahir;
     this.noasuransi = noasuransi;
 
-    this.keluarahanid = kdkelurahan;
-    this.keluarahan = keluarahan;
     this.verifsimpan = "0";
     this.usia = usia;
     this.propinsi = x.prov_name;
     this.kabupaten = x.city_name;
     this.kecamatan = x.dis_name;
+    this.keluarahan = keluarahan;
+
+    this.propinsiid = x.prov_id;
+    this.kabupatenid = x.city_id;
+    this.kecamatanid = x.dis_id;
+    this.keluarahanid = x.subdis_id;
+
+    console.log({
+      propinsi: this.propinsi,
+      kabupaten: this.kabupaten,
+      kecamatan: this.kecamatan,
+      keluarahan: this.keluarahan,
+      propinsiid: this.propinsiid,
+      kabupatenid: this.kabupatenid,
+      kecamatanid: this.kecamatanid,
+      keluarahanid: this.keluarahanid,
+    });
 
     this.an = kdpanggil;
 

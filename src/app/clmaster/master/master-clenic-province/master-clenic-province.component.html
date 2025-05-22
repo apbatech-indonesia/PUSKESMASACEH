@@ -1,31 +1,15 @@
 <div class="row">
   <div class="col-12">
-    <label for="cari" *ngIf="title">
-      <b>{{ title }}</b>
-    </label>
-    <div class="input-group">
-      <input
-        id="cari"
-        type="text"
-        class="form-control"
-        [(ngModel)]="searchText"
-        (ngModelChange)="cari()"
-        (keyup.enter)="cari()"
-        disabled="{{ isDisabled }}"
-        placeholder="{{ placeholder }}"
-        autocomplete="new-password"
-      />
-    </div>
-    <select
-      multiple
-      class="form-control"
-      id="exampleFormControlSelect2"
-      *ngIf="list.length > 0"
-      width="100%"
+    <ng-select
+      [items]="list"
+      bindLabel="name"
+      bindValue="code"
+      [(ngModel)]="id"
+      [placeholder]="placeholder"
+      [searchable]="true"
+      (change)="pilih($event)"
+      (search)="cari($event.term)"
     >
-      <option *ngFor="let item of list" (click)="pilih(item)">
-        <span *ngIf="isShowCode">{{ item.code }} :</span> {{ item.name }}
-      </option>
-    </select>
+    </ng-select>
   </div>
 </div>

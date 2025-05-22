@@ -220,8 +220,8 @@
                 >Propinsi</label
               >
               <app-master-clenic-province
-                [isShowCode]="false"
-                [searchText]="propinsi"
+                [id]="propinsiid"
+                [keyword]="propinsi"
                 (selectedItem)="
                   propinsiid = $event.code; propinsi = $event.name
                 "
@@ -236,9 +236,9 @@
                 >Kabupaten</label
               >
               <app-master-clenic-city
-                [isShowCode]="false"
+                [id]="kabupatenid"
                 [parentId]="propinsiid"
-                [searchText]="kabupaten"
+                [keyword]="kabupaten"
                 (selectedItem)="
                   kabupatenid = $event.code; kabupaten = $event.name
                 "
@@ -253,9 +253,9 @@
                 >Kecamatan</label
               >
               <app-master-clenic-district
-                [isShowCode]="false"
+                [id]="kecamatanid"
                 [parentId]="kabupatenid"
-                [searchText]="kecamatan"
+                [keyword]="kecamatan"
                 (selectedItem)="
                   kecamatanid = $event.code; kecamatan = $event.name
                 "
@@ -274,9 +274,9 @@
                   >Kelurahan</label
                 >
                 <app-master-clenic-subdistrict
-                  [isShowCode]="false"
+                  [id]="keluarahanid"
                   [parentId]="kecamatanid"
-                  [searchText]="keluarahan"
+                  [keyword]="keluarahan"
                   (selectedItem)="
                     keluarahanid = $event.code;
                     keluarahan = $event.name;
