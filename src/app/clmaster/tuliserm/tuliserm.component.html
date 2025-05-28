@@ -47,6 +47,8 @@
                 <div style="font-size: 14px">{{ alamat }}</div>
                 <div style="font-size: 14px">Prolanis : {{ pstProl }}</div>
                 <div style="font-size: 14px">Prb : {{ pstPrb }}</div>
+                <div style="font-size: 14px">Nomor {{ costumer }} : {{ noasuransi }}</div>
+
 
                 <!-- <div class="btn-group" ngbDropdown *ngIf="talergishow">
 
@@ -425,9 +427,6 @@
                       <span *ngIf="showbb" style="font-size: 9px; color: red"
                         >Refrensi BB adalah : (2 sd 300Kg)</span
                       >
-
-                      <!-- <input  [(ngModel)]="bb"    type="number" class="form-control"  (keyup)="cbb($event)" >
-                  -->
                     </div>
                   </div>
                   <div class="col-md-2">
@@ -484,8 +483,45 @@
                       </ng-template>
                     </ng-select>
                   </div>
-                </div>
 
+                  
+                  <div class="col-md-2">
+                    <div class="position-relative mb-3">
+                      <label for="exampleState" class="form-label">Lingkar Kepala (LK)</label>
+
+                      <div class="input-group">
+                        <input
+                          [(ngModel)]="lingkarkepala"
+                          type="number"
+                          class="form-control"
+                        />
+                        <div class="input-group-text">
+                          <span class="">CM</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="position-relative mb-3">
+                      <label for="exampleState" class="form-label">Lingkar Lengan Atas (LILA)</label>
+
+                      <div class="input-group">
+                        <input
+                          [(ngModel)]="lingkarlenganatas"
+                          type="number"
+                          class="form-control"
+                        />
+                        <div class="input-group-text">
+                          <span class="">CM</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <br>  
+                
                 <div class="row">
                   <div class="col-md-3">
                     <label for="exampleEmail" class="form-label"

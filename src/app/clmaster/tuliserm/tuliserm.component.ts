@@ -1686,6 +1686,8 @@ export class tulisermComponent implements OnInit {
   showdatacppt: boolean;
   gmburl: string;
   hr: any = "";
+  lingkarkepala: any = "";
+  lingkarlenganatas: any = "";
   tdd: any = "";
   ksehatxl() {
     this.toastr.error("Form terkunci Karena Belum Langganan", "Eror");
@@ -1694,7 +1696,7 @@ export class tulisermComponent implements OnInit {
     this.authService.tampilcppt(this.kdcabang, this.notrans).subscribe(
       (data) => {
         // this.tmpcpptt = data;
-
+        console.log(`data cppt ${data}`);
         if (data.length) {
           this.showdatacppt = true;
           for (let x of data) {
@@ -1719,6 +1721,8 @@ export class tulisermComponent implements OnInit {
             this.imt = x.imt;
             this.riwayatdahulu = x.riwayatdahulu;
             this.riwayatkeluarga = x.riwayatkeluarga;
+            this.lingkarkepala = x.lingkarkepala;
+            this.lingkarlenganatas = x.lingkarlenganatas;
             (this.stspulang = x.stspulang),
               (this.alergiudara = x.alergiudara),
               (this.alergiobat = x.alergiobat),
@@ -3224,6 +3228,8 @@ export class tulisermComponent implements OnInit {
       rwytp: this.rwtp,
       gigi: this.gigi,
       tb: this.tb,
+      lingkarkepala: this.lingkarkepala,
+      lingkarlenganatas: this.lingkarlenganatas,
       hakakses: this.akses,
       tglkontrol: this.myDatekon,
       rencanatindakan: this.plankon,

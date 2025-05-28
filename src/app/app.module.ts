@@ -133,7 +133,6 @@ import { AccordionModule } from "primeng/accordion";
 import { ermdisplayComponent } from "./cllogin/ermdisplay/ermdisplay.component";
 import { TreeModule } from "primeng/tree";
 import { ButtonModule } from "primeng/button";
-import { tulisermComponent } from "./clmaster/tuliserm/tuliserm.component";
 import { BukuKontrasepsiComponent } from "./clmaster/Kebidanan/BukuKontrasepsi/BukuKontrasepsi.component";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { CatatanImunisasiComponent } from "./clmaster/Kebidanan/CatatanImunisasi/CatatanImunisasi.component";
@@ -210,6 +209,7 @@ import { SkriningTumbuhKembangPerkembanganComponent } from "./clmaster/pkg/form/
 import { SkriningGigiKariesComponent } from "./clmaster/pkg/form/skrining-gigi-karies/skrining-gigi-karies.component";
 import { SkriningTumbuhKembangMataTelinga } from "./clmaster/pkg/form/skrining-tumbuh-kembang-mata-telinga/skrining-tumbuh-kembang-mata-telinga.component";
 import { SkriningTuberkulosisComponent } from "./clmaster/pkg/form/skrining-tuberkulosis/skrining-tuberkulosis.component";
+import { tulisermModule } from "./clmaster/tuliserm/tuliserm.module";
 
 @NgModule({
   declarations: [
@@ -259,7 +259,6 @@ import { SkriningTuberkulosisComponent } from "./clmaster/pkg/form/skrining-tube
     KosongComponent,
     anjunganComponent,
     anjungansehatComponent,
-    tulisermComponent,
     BukuKontrasepsiComponent,
     CatatanImunisasiComponent,
     KunjunganBumilComponent,
@@ -396,6 +395,8 @@ import { SkriningTuberkulosisComponent } from "./clmaster/pkg/form/skrining-tube
     MatDatepickerModule,
     MatFormFieldModule,
     NgxYoutubePlayerModule,
+
+    tulisermModule,
   ],
   providers: [
     {
