@@ -44,6 +44,7 @@ export class MdokterComponent implements OnInit {
   options: FormGroup;
   public userDetails: any;
   nik: string = "";
+  nip: string = "";
   nama: any;
   akses: any;
 
@@ -68,6 +69,7 @@ export class MdokterComponent implements OnInit {
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.nik = data.nik;
+    this.nip = data.nip;
     this.userDetails = data.userData;
     this.nama = this.userDetails.nama;
     this.akses = this.userDetails.hakakses;
@@ -128,6 +130,7 @@ export class MdokterComponent implements OnInit {
     this.authService
       .simpandokter(
         this.nik,
+        this.nip,
         this.kdklinik,
         this.kdcabang,
         this.namadokter,
@@ -149,6 +152,7 @@ export class MdokterComponent implements OnInit {
           this.kddokter = "";
           this.namadokter = "";
           this.nik = "0";
+          this.nip = "0";
           this.kddokterbpjs = "";
 
           this.batal();
@@ -187,6 +191,7 @@ export class MdokterComponent implements OnInit {
     this.online = data.statusonline;
     this.aktif = data.aktif;
     this.nik = data.nik;
+    this.nip = data.nip;
     this.kddokterbpjs = data.kddokterbpjs;
     this.sn = data.status;
     this.usericare = data.usericare;
@@ -202,6 +207,7 @@ export class MdokterComponent implements OnInit {
     this.online = "";
     this.aktif = "";
     this.nik = "";
+    this.nip = "";
     this.kddokterbpjs = "";
     this.sn = "";
     this.usericare = "";
@@ -212,6 +218,7 @@ export class MdokterComponent implements OnInit {
     this.authService
       .simpandokter(
         this.nik,
+        this.nip,
         this.kdklinik,
         this.kdcabang,
         this.namadokter,
@@ -235,6 +242,7 @@ export class MdokterComponent implements OnInit {
           this.kddokter = "";
           this.namadokter = "";
           this.nik = "0";
+          this.nip = "0";
           this.kddokterbpjs = "";
 
           this.batal();
@@ -362,6 +370,7 @@ export class MdokterComponent implements OnInit {
     this.authService
       .simpandokter(
         this.nik,
+        this.nip,
         this.kdklinik,
         this.kdcabang,
         this.namadokter,
@@ -407,6 +416,7 @@ export class MdokterComponent implements OnInit {
     aktif: ["", Validators.required],
     sn: ["", Validators.required],
     nik: ["", Validators.required],
+    nip: ["", Validators.nullValidator],
   });
 
   sn: "";

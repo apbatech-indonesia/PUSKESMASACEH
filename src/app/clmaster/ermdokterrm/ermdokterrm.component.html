@@ -114,18 +114,35 @@
         </h5>
       </div>
       <div class="btn-actions-pane-right">
-        <div class="input-group">
-          <div class="input-group-text">
-            <div class="">
-              <fa-icon [icon]="faSearch"></fa-icon>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="input-group">
+              <select
+                [(ngModel)]="sortValue"
+                (change)="onSortChange()"
+                class="form-select"
+              >
+                <option [ngValue]="null">-- Urutkan --</option>
+                <option value="c.status:asc">Belum Selesai</option>
+                <option value="c.status:desc">Selesai</option>
+              </select>
             </div>
           </div>
-          <input
-            placeholder="Search..."
-            type="text"
-            class="form-control"
-            (keyup)="cpasien($event)"
-          />
+          <div class="col-md-8">
+            <div class="input-group">
+              <div class="input-group-text">
+                <div class="">
+                  <fa-icon [icon]="faSearch"></fa-icon>
+                </div>
+              </div>
+              <input
+                placeholder="Search..."
+                type="text"
+                class="form-control"
+                (keyup)="cpasien($event)"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -288,7 +305,7 @@
               </div>
               <!-- <div class="badge rounded-pill ps-2 pe-2 bg-danger"  *ngIf="x.statusantrian ==='null'">-</div> -->
             </td>
-            
+
             <td class="text-center">
               <button
                 type="button"

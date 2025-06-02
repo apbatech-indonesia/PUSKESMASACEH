@@ -318,7 +318,7 @@ batal(){
 this.showedit = false;
 }
  edituser(){
-  this.authService.simpandokter("", this.kdklinik,this.kdcabang,this.namadokter,this.online,this.kddokter,'2',this.aktif,'','', '','').then(data =>{
+  this.authService.simpandokter("", "", this.kdklinik,this.kdcabang,this.namadokter,this.online,this.kddokter,'2',this.aktif,'','', '','').then(data =>{
     this.dafatrdokter()
 
 if(data ){

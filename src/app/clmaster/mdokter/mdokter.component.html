@@ -16,6 +16,17 @@
           </div>
 
           <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">NIP</label>
+            <input
+              formControlName="nip"
+              [(ngModel)]="nip"
+              placeholder="NIP"
+              type="number"
+              class="form-control"
+            />
+          </div>
+
+          <div class="position-relative mb-3">
             <label for="exampleEmail" class="form-label">Nama Dokter</label>
             <input
               formControlName="namadokter"
