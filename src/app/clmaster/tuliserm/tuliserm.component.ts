@@ -1688,6 +1688,7 @@ export class tulisermComponent implements OnInit {
   hr: any = "";
   lingkarkepala: any = "";
   lingkarlenganatas: any = "";
+  lingkarbetis: any = "";
   tdd: any = "";
   ksehatxl() {
     this.toastr.error("Form terkunci Karena Belum Langganan", "Eror");
@@ -1723,6 +1724,7 @@ export class tulisermComponent implements OnInit {
             this.riwayatkeluarga = x.riwayatkeluarga;
             this.lingkarkepala = x.lingkarkepala;
             this.lingkarlenganatas = x.lingkarlenganatas;
+            this.lingkarbetis = x.lingkarbetis;
             (this.stspulang = x.stspulang),
               (this.alergiudara = x.alergiudara),
               (this.alergiobat = x.alergiobat),
@@ -3230,6 +3232,7 @@ export class tulisermComponent implements OnInit {
       tb: this.tb,
       lingkarkepala: this.lingkarkepala,
       lingkarlenganatas: this.lingkarlenganatas,
+      lingkarbetis: this.lingkarbetis,
       hakakses: this.akses,
       tglkontrol: this.myDatekon,
       rencanatindakan: this.plankon,
