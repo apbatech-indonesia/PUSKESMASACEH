@@ -6027,17 +6027,7 @@ export class tulisermComponent implements OnInit {
         );
 
         this.tmplistintruksilab();
-
-        //  this.chatService.sendMessage([
-        //   {
-        //     antrian:'0',
-        //     kddokter:'Laborat',
-        //     namadokter:'Laborat',
-        //     kdantrian:'L',
-        //     kdcabang :this.kdcabang
-        //   }
-
-        // ]);
+        this.doNotifPermintaanLab();
 
         this.modalService.dismissAll();
       } else {
@@ -6073,6 +6063,30 @@ export class tulisermComponent implements OnInit {
         console.log(Error);
       }
     );
+  }
+
+  doNotifPermintaanLab() {
+    this.chatService.sendMessage([
+      {
+        antrian: "0",
+        kddokter: "Laborat",
+        namadokter: "Laborat",
+        kdantrian: "L",
+        kdcabang: this.kdcabang,
+      },
+    ]);
+  }
+
+  doNotifHasilLab() {
+    this.chatService.sendMessage([
+      {
+        antrian: "0",
+        kddokter: "Hasil Laborat",
+        namadokter: "Hasil Laborat",
+        kdantrian: "L",
+        kdcabang: this.kdcabang,
+      },
+    ]);
   }
 
   nmobat: any;

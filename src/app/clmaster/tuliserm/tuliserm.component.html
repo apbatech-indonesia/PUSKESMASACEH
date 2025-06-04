@@ -47,8 +47,9 @@
                 <div style="font-size: 14px">{{ alamat }}</div>
                 <div style="font-size: 14px">Prolanis : {{ pstProl }}</div>
                 <div style="font-size: 14px">Prb : {{ pstPrb }}</div>
-                <div style="font-size: 14px">Nomor {{ costumer }} : {{ noasuransi }}</div>
-
+                <div style="font-size: 14px">
+                  Nomor {{ costumer }} : {{ noasuransi }}
+                </div>
 
                 <!-- <div class="btn-group" ngbDropdown *ngIf="talergishow">
 
@@ -484,10 +485,11 @@
                     </ng-select>
                   </div>
 
-                  
                   <div class="col-md-2">
                     <div class="position-relative mb-3">
-                      <label for="exampleState" class="form-label">Lingkar Kepala (LK)</label>
+                      <label for="exampleState" class="form-label"
+                        >Lingkar Kepala (LK)</label
+                      >
 
                       <div class="input-group">
                         <input
@@ -504,7 +506,9 @@
 
                   <div class="col-md-2">
                     <div class="position-relative mb-3">
-                      <label for="exampleState" class="form-label">Lingkar Lengan Atas (LILA)</label>
+                      <label for="exampleState" class="form-label"
+                        >Lingkar Lengan Atas (LILA)</label
+                      >
 
                       <div class="input-group">
                         <input
@@ -519,9 +523,9 @@
                     </div>
                   </div>
                 </div>
-                
-                <br>  
-                
+
+                <br />
+
                 <div class="row">
                   <div class="col-md-3">
                     <label for="exampleEmail" class="form-label"
@@ -2907,8 +2911,8 @@ Normal: teraba jelas
               class="mb-2 mr-2 btn-pill btn btn-dashed btn-outline-primary"
             >
               SKRINING
-            </button></a
-          >
+            </button>
+          </a>
           <ng-template ngbNavContent>
             <app-skrining
               [norm]="norm"
@@ -2928,11 +2932,7 @@ Normal: teraba jelas
             </button></a
           >
           <ng-template ngbNavContent>
-            <app-pkg
-              [norm]="norm"
-              [notrans]="notrans"
-              [idpasien]="idpasien"
-            >
+            <app-pkg [norm]="norm" [notrans]="notrans" [idpasien]="idpasien">
             </app-pkg>
           </ng-template>
         </li>
@@ -5843,11 +5843,7 @@ Normal: teraba jelas
                   </i>
                 </button>
               </td>
-              <td>
-                <!-- <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-danger"
-            (click)="hapusrujukan1()"><i style="font-size:15px ;" class="pe-7s-trash btn-icon-wrapper">
-            </i></button> -->
-              </td>
+              <td></td>
             </tr>
           </tbody>
         </table>

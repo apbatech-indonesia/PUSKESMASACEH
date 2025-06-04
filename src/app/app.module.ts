@@ -162,7 +162,6 @@ import { MasterVaccineComponent } from "./satusehat/satusehat-master/master-vacc
 import { FormVaccineComponent } from "./satusehat/satusehat-imunisasi/form/form-vaccine/form-vaccine.component";
 import { MasterSpecimenModule } from "./satusehat/satusehat-master/master-specimen/master-specimen.module";
 import { TulisSatuSehatGiziComponent } from "./satusehat/satusehat-gizi/form/tulis-satusehat-gizi.component";
-import { skriningComponent } from "./clmaster/skrining/skrining.component";
 import { NgxYoutubePlayerModule } from "ngx-youtube-player";
 import { TulisSatuSehatGigiComponent } from "./satusehat/satusehat-gigi/form/tulis-satusehat-gigi.component";
 import { pkgComponent } from "./clmaster/pkg/pkg.component";
@@ -283,7 +282,6 @@ import { tulisermModule } from "./clmaster/tuliserm/tuliserm.module";
     MasterTindakanComponent,
     MasterVaccineComponent,
     FormVaccineComponent,
-    skriningComponent,
     pkgComponent,
     ModalWrapperComponent,
     FormAbnormalitasJantungComponent,
