@@ -209,6 +209,7 @@ import { SkriningGigiKariesComponent } from "./clmaster/pkg/form/skrining-gigi-k
 import { SkriningTumbuhKembangMataTelinga } from "./clmaster/pkg/form/skrining-tumbuh-kembang-mata-telinga/skrining-tumbuh-kembang-mata-telinga.component";
 import { SkriningTuberkulosisComponent } from "./clmaster/pkg/form/skrining-tuberkulosis/skrining-tuberkulosis.component";
 import { tulisermModule } from "./clmaster/tuliserm/tuliserm.module";
+import { skriningModule } from "./clmaster/skrining/skrining.module";
 
 @NgModule({
   declarations: [
@@ -338,6 +339,7 @@ import { tulisermModule } from "./clmaster/tuliserm/tuliserm.module";
     AngularSignaturePadModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    skriningModule,
 
     // Angular Bootstrap Components
     PerfectScrollbarModule,
