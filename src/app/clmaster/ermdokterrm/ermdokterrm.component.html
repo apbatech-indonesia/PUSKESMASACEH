@@ -118,6 +118,20 @@
           <div class="col-md-4">
             <div class="input-group">
               <select
+                [(ngModel)]="filterPoli"
+                (change)="onFilterPoli()"
+                class="form-select"
+              >
+                <option [ngValue]="null">-- poliklinik --</option>
+                <option *ngFor="let poli of tklinik" [value]="poli.kdpoli">
+                  {{ poli.nampoli }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <select
                 [(ngModel)]="sortValue"
                 (change)="onSortChange()"
                 class="form-select"
@@ -128,7 +142,7 @@
               </select>
             </div>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-4">
             <div class="input-group">
               <div class="input-group-text">
                 <div class="">

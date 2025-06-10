@@ -139,6 +139,9 @@ export class ermdokterrmComponent implements OnInit {
   kodeorg: any = "";
   tglss: any;
   sortValue: any = null;
+  filterPoli: any = null;
+  tklinik: any;
+
   constructor(
     public FarmasijualService: FarmasijualService,
     private router: Router,
@@ -168,6 +171,7 @@ export class ermdokterrmComponent implements OnInit {
   slug: any;
 
   ngOnInit() {
+    this.tmppuser();
     this.tmptotal();
 
     this.authService.cabangper(this.kdklinik).subscribe(
@@ -447,5 +451,53 @@ export class ermdokterrmComponent implements OnInit {
           }
         );
     }
+  }
+
+  onFilterPoli(): void {
+    if (this.filterPoli) {
+      this.authService
+        .pasienrm(
+          this.kdcabang,
+          "1",
+          "",
+          "2",
+          this.tglpx,
+          this.tglpxs,
+          "",
+          "",
+          this.filterPoli
+        )
+        .subscribe(
+          (data) => {
+            this.tampilpas = data;
+          },
+          (Error) => {
+            console.log(Error);
+          }
+        );
+    } else {
+      this.authService
+        .pasienrm(this.kdcabang, "1", "", "2", this.tglpx, this.tglpxs)
+        .subscribe(
+          (data) => {
+            this.tampilpas = data;
+          },
+          (Error) => {
+            console.log(Error);
+          }
+        );
+    }
+  }
+
+  tmppuser() {
+    this.authService.poliByStatussakit(this.kdcabang).subscribe(
+      (data) => {
+        this.tklinik = data;
+        console.log(this.tklinik);
+      },
+      (Error) => {
+        console.log(Error);
+      }
+    );
   }
 }

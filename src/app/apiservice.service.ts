@@ -2212,36 +2212,46 @@ export class ApiserviceService {
   // }
 
   pasienrm(
-  a: string,           // kdcabang
-  b: string,           // sts
-  c: string,           // nama
-  d: string,           // stss
-  e: string,           // tgl
-  tgls: string,        // tgls
-  orderby?: string,    // opsional
-  order?: string       // opsional
-): Observable<any> {
-  let url =
-    apiurx +
-    "transaksi/pasienrm.php?" +
-    "kdcabang=" + a +
-    "&sts=" + b +
-    "&nama=" + encodeURIComponent(c) +
-    "&stss=" + d +
-    "&tgl=" + e +
-    "&tgls=" + tgls;
+    a: string, // kdcabang
+    b: string, // sts
+    c: string, // nama
+    d: string, // stss
+    e: string, // tgl
+    tgls: string, // tgls
+    orderby?: string, // opsional
+    order?: string, // opsional
+    kdpoli?: string // opsional
+  ): Observable<any> {
+    let url =
+      apiurx +
+      "transaksi/pasienrm.php?" +
+      "kdcabang=" +
+      a +
+      "&sts=" +
+      b +
+      "&nama=" +
+      encodeURIComponent(c) +
+      "&stss=" +
+      d +
+      "&tgl=" +
+      e +
+      "&tgls=" +
+      tgls;
 
-  if (orderby) {
-    url += "&orderby=" + encodeURIComponent(orderby);
+    if (orderby) {
+      url += "&orderby=" + encodeURIComponent(orderby);
+    }
+
+    if (order) {
+      url += "&order=" + encodeURIComponent(order);
+    }
+
+    if (kdpoli) {
+      url += "&kdpoli=" + encodeURIComponent(kdpoli);
+    }
+
+    return this.http.get(url);
   }
-
-  if (order) {
-    url += "&order=" + encodeURIComponent(order);
-  }
-
-  return this.http.get(url);
-}
-
 
   trxfgudang(a, b, c): Observable<any> {
     return this.http.get(
