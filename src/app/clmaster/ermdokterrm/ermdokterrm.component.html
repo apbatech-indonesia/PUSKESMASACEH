@@ -122,7 +122,7 @@
                 (change)="onFilterPoli()"
                 class="form-select"
               >
-                <option [ngValue]="null">-- poliklinik --</option>
+                <option [ngValue]="null">-- POLIKLINIK --</option>
                 <option *ngFor="let poli of tklinik" [value]="poli.kdpoli">
                   {{ poli.nampoli }}
                 </option>
@@ -136,7 +136,7 @@
                 (change)="onSortChange()"
                 class="form-select"
               >
-                <option [ngValue]="null">-- Urutkan --</option>
+                <option [ngValue]="null">-- URUTKAN --</option>
                 <option value="c.status:asc">Belum Selesai</option>
                 <option value="c.status:desc">Selesai</option>
               </select>
