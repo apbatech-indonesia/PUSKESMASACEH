@@ -728,7 +728,8 @@ export class ApiserviceService {
     sn,
     kddokterbpjs,
     usericare,
-    passicare
+    passicare,
+    signature
   ) {
     let url = apiurx + "master/simpandokter.php";
     let param = {
@@ -745,6 +746,7 @@ export class ApiserviceService {
       sn: sn,
       nik: nik,
       nip: nip,
+      signature: signature,
     };
     let request = this.http.post(url, param);
     return request.toPromise();
@@ -3432,5 +3434,11 @@ export class ApiserviceService {
   }
   editpoli(): Observable<any> {
     return this.http.get(apiurx + "pcare/editpoli.php");
+  }
+
+  getCpptByNorm(slugCabang, norm) {
+    return this.http.get(
+      `https://emr.clenicapp.com/api/${slugCabang}/cppt?norm=${norm}`
+    );
   }
 }
