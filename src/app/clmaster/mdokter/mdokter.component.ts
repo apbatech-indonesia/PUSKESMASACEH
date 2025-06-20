@@ -59,6 +59,8 @@ export class MdokterComponent implements OnInit {
   kddokter = "";
   public usericare: any;
   public passicare: any;
+  signature: any;
+  clearTrigger: any;
 
   constructor(
     public FarmasijualService: FarmasijualService,
@@ -141,7 +143,8 @@ export class MdokterComponent implements OnInit {
         this.sn,
         this.kddokterbpjs,
         this.usericare,
-        this.passicare
+        this.passicare,
+        this.signature
       )
       .then((data) => {
         this.dafatrdokter();
@@ -186,6 +189,8 @@ export class MdokterComponent implements OnInit {
   }
 
   edit(data: any) {
+    this.clearTrigger = new Date().getTime(); // Trigger untuk membersihkan signature pad
+
     this.kddokter = data.kddokter;
     this.namadokter = data.namdokter;
     this.online = data.statusonline;
@@ -196,6 +201,7 @@ export class MdokterComponent implements OnInit {
     this.sn = data.status;
     this.usericare = data.usericare;
     this.passicare = data.passicare;
+    this.signature = data.signature;
     this.showedit = true;
   }
 
@@ -212,7 +218,9 @@ export class MdokterComponent implements OnInit {
     this.sn = "";
     this.usericare = "";
     this.passicare = "";
+    this.signature = "";
     this.showedit = false;
+    this.clearTrigger = new Date().getTime(); // Trigger untuk membersihkan signature pad
   }
   edituser() {
     this.authService
@@ -229,7 +237,8 @@ export class MdokterComponent implements OnInit {
         this.sn,
         this.kddokterbpjs,
         this.usericare,
-        this.passicare
+        this.passicare,
+        this.signature
       )
       .then((data) => {
         this.dafatrdokter();
@@ -381,7 +390,8 @@ export class MdokterComponent implements OnInit {
         this.kodeihs,
         this.kddokterbpjs,
         this.usericare,
-        this.passicare
+        this.passicare,
+        this.signature
       )
       .then((data) => {
         this.dafatrdokter();
