@@ -416,6 +416,8 @@ export class tulisermComponent implements OnInit {
   kdtkp: any = "";
   jeniskun: any = "";
   isPeriksaPkg: any = false;
+  cpptList: any;
+  selectedCppt: any = "";
 
   constructor(
     public FarmasijualService: FarmasijualService,
@@ -1338,6 +1340,7 @@ export class tulisermComponent implements OnInit {
         for (let x of data) {
           this.slug = x.slug;
           this.kdorg = x.kodeorg;
+          this.getCppt();
         }
       },
       (Error) => {
@@ -1473,6 +1476,38 @@ export class tulisermComponent implements OnInit {
       this.klikrwo();
       this.statuspulangt();
     }, 500);
+  }
+
+  async getCppt() {
+    let data: any = await this.authService
+      .getCpptByNorm(this.slug, this.norm)
+      .toPromise();
+
+    this.cpptList = data;
+    this.cpptList = this.cpptList.map((item) => ({
+      ...item,
+      customLabel: `${item.notrans} : ${item.norm}`,
+    }));
+  }
+
+  pilihCppt(cppt: any) {
+    this.hr = cppt.hr;
+    this.nadi = cppt.nadi;
+    this.suhu = cppt.suhu;
+    this.rr = cppt.rr;
+    this.spo = cppt.spo;
+    this.lingkarperut = cppt.lp;
+    this.td = cppt.td;
+    this.tdd = cppt.tdd;
+    this.tb = cppt.tb;
+    this.bb = cppt.bb;
+    this.imt = cppt.imt;
+    this.skalanyeri = cppt.skalanyeri;
+    this.lingkarkepala = cppt.lingkarkepala;
+    this.lingkarlenganatas = cppt.lingkarlenganatas;
+    this.lingkarbetis = cppt.lingkarbetis;
+    this.subjek = cppt.subjek;
+    this.subjekp = cppt.subjekp;
   }
 
   slug: any;
@@ -9542,6 +9577,28 @@ export class tulisermComponent implements OnInit {
                   this.modalService.dismissAll();
                 });
 
+                this.authService.updateCppt(this.slug, {
+                  norm: this.norm,
+                  notrans: this.notransresponse,
+                  hr: this.hr,
+                  nadi: this.nadi,
+                  suhu: this.suhu,
+                  rr: this.rr,
+                  spo: this.spo,
+                  lp: this.lingkarperut,
+                  td: this.td,
+                  tdd: this.tdd,
+                  tb: this.tb,
+                  bb: this.bb,
+                  imt: this.imt,
+                  skalanyeri: this.skalanyeri,
+                  lingkarkepala: this.lingkarkepala,
+                  lingkarlenganatas: this.lingkarlenganatas,
+                  lingkarbetis: this.lingkarbetis,
+                  subjek: this.subjek,
+                  subjekp: this.subjekp,
+                });
+
                 this.simpan();
               } else {
                 this.toastr.error("Simpan  Gagal", "Eror");
@@ -10183,19 +10240,4 @@ export class tulisermComponent implements OnInit {
     );
     redirectWindow.location;
   }
-
-  // https://stackblitz.com/edit/angular-t5dfp7?file=app%2Fservice-component.ts unutk modal beda page dan send parameter
-
-  // export class ModalContentComponent implements OnInit {
-  //   title: string;
-  //   closeBtnName: string;
-  //   list: any[] = [];
-  //   // @ViewChild('div') div: ElementRef;
-
-  //   constructor() {}
-
-  //   ngOnInit() {
-
-  //   }
-  // }
 }

@@ -50,6 +50,7 @@
                 <div style="font-size: 14px">
                   Nomor {{ costumer }} : {{ noasuransi }}
                 </div>
+                <div style="font-size: 14px">NIK : {{ nopengenal }}</div>
 
                 <!-- <div class="btn-group" ngbDropdown *ngIf="talergishow">
 
@@ -137,8 +138,8 @@
           <ng-template ngbNavContent>
             <div class="card main-card mb-3">
               <div class="card-header">
-                <b
-                  >Catatan Perkembangan Pasien Terintegrasi
+                <b>
+                  Catatan Perkembangan Pasien Terintegrasi
                   <i
                     *ngIf="showdatacppt"
                     (click)="cetakresume()"
@@ -177,6 +178,19 @@
                     </tr>
                   </tbody>
                 </table>
+
+                <div class="position-relative mb-3">
+                  <label for="exampleEmail" class="form-label">
+                    <b>Riwayat CPPT</b>
+                  </label>
+                  <ng-select
+                    [items]="cpptList"
+                    bindLabel="notrans"
+                    [searchable]="true"
+                    (change)="pilihCppt($event)"
+                  >
+                  </ng-select>
+                </div>
 
                 <div
                   class="position-relative mb-3"

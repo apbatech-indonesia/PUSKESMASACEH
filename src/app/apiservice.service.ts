@@ -3441,4 +3441,11 @@ export class ApiserviceService {
       `https://emr.clenicapp.com/api/${slugCabang}/cppt?norm=${norm}`
     );
   }
+
+  updateCppt(slugCabang, data: any) {
+    return this.http.post(
+      `https://emr.clenicapp.com/api/${slugCabang}/cppt/update`,
+      data
+    );
+  }
 }

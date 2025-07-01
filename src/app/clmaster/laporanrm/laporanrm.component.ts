@@ -56,6 +56,7 @@ export class laporanrmComponent implements OnInit {
 
   cariuser: any;
   kdcabang: any;
+  filterMjkn: string = 'mjkn';
 
   gudang = "";
   kdgudang = "";
@@ -175,6 +176,8 @@ export class laporanrmComponent implements OnInit {
 
     if (a === "Buku Register Pendaftaran RJ") {
       this.tmp();
+    } else if (a === "Laporan Pasien MJKN") {
+      this.tmp();
     } else if (a === "Laporan Diagnosa Periode") {
       this.tmp();
     } else if (a === "Laporan 10 Besar Penyakit") {
@@ -253,6 +256,38 @@ export class laporanrmComponent implements OnInit {
         this.tglsampai +
         "&status=" +
         this.kdklinik,
+      "_blank",
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+    );
+    redirectWindow.location;
+  }
+
+  lihatmjkn(filter: string) {
+    var redirectWindow = window.open(
+      this.URLINVOICE +
+        "clenic/report/pasienmjkn.php?tgldari=" +
+        this.tgldari +
+        "&kdcabang=" +
+        this.kdcabang +
+        "&tglsampai=" +
+        this.tglsampai +
+        `&filter=${filter}`,
+      "_blank",
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+    );
+    redirectWindow.location;
+  }
+
+  lihatmjknex(filter: string) {
+    var redirectWindow = window.open(
+      this.URLINVOICE +
+        "clenic/report/pasienmjknex.php?tgldari=" +
+        this.tgldari +
+        "&kdcabang=" +
+        this.kdcabang +
+        "&tglsampai=" +
+        this.tglsampai +
+        `&filter=${filter}`,
       "_blank",
       "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
     );
