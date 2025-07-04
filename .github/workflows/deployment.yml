@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-build
-          path: ./dist/app-pkm/browser/
+          path: ./dist/clenicappdemo/browser/
 
   deploy:
     needs: [build, generate-matrix]
@@ -57,7 +57,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: app-build
-          path: ./dist/app-pkm/browser/
+          path: ./dist/clenicappdemo/browser/
 
       - name: FTP Deploy to ${{ matrix.folder }}
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
