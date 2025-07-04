@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-build
-          path: ./dist/clenicappdemo/browser/
+          path: ./dist/clenicappdemo/
 
   deploy:
     needs: [build, generate-matrix]
@@ -57,7 +57,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: app-build
-          path: ./dist/clenicappdemo/browser/
+          path: ./dist/clenicappdemo/
 
       - name: FTP Deploy to ${{ matrix.folder }}
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -66,5 +66,5 @@ jobs:
           port: ${{ secrets.FTP_PORT }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/clenicappdemo/browser/
+          local-dir: ./dist/clenicappdemo/
           server-dir: ./${{ matrix.folder }}.clenicapp.com/v1-test/
