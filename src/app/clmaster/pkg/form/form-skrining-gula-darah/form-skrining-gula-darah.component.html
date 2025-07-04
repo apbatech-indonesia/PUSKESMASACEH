@@ -1,0 +1,36 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Skrining Gula Darah</h5>
+  </div>
+  <div class="mb-4">
+    <!-- Gula Darah Sewaktu -->
+    <div class="mb-3">
+      <label class="form-label">Gula Darah Sewaktu (GDS) (mg/dL)</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="model.gds"
+        name="gds"
+      />
+    </div>
+
+    <!-- Gula Darah Puasa -->
+    <div class="mb-3">
+      <label class="form-label">Gula Darah Puasa (GDP) (mg/dL)</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="model.gdp"
+        name="gdp"
+      />
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

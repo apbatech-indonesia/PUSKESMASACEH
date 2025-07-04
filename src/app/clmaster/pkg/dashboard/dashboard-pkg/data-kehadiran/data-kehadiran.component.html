@@ -1,0 +1,216 @@
+<!-- Filter Provinsi, Kabupaten, Kecamatan -->
+<div class="row mb-3">
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="selectedProvinsi"
+      (change)="onFilterChange()"
+    >
+      <option value="">-- Pilih Provinsi --</option>
+      <option *ngFor="let provinsi of provinsiList" [ngValue]="provinsi.id">
+        {{ provinsi.name }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="selectedKabupaten"
+      (change)="onFilterChange()"
+    >
+      <option value="">-- Pilih Kabupaten/Kota --</option>
+      <option *ngFor="let kabupaten of kabupatenList" [ngValue]="kabupaten.id">
+        {{ kabupaten.name }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="selectedKecamatan"
+      (change)="onFilterChange()"
+    >
+      <option value="">-- Kecamatan --</option>
+      <option *ngFor="let kecamatan of kecamatanList" [ngValue]="kecamatan.id">
+        {{ kecamatan.name }}
+      </option>
+    </select>
+  </div>
+
+  <div class="col-md-3">
+    <select
+      class="form-control"
+      [(ngModel)]="selectedKelurahan"
+      (change)="onFilterChange()"
+    >
+      <option value="">-- Kelurahan --</option>
+      <option *ngFor="let kelurahan of kelurahanList" [ngValue]="kelurahan.id">
+        {{ kelurahan.name }}
+      </option>
+    </select>
+  </div>
+</div>
+
+<!-- CHARTS AREA -->
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-3" style="height: 400px">
+      <div class="card-header">Total Pendaftar</div>
+      <div class="card-body">
+        <apx-chart
+          *ngIf="showChartComponent"
+          [series]="[hadirCount, janjiTemuCount]"
+          [chart]="{ type: 'pie', height: 250 }"
+          [labels]="['Hadir', 'Janji Temu']"
+          [colors]="['#28a745', '#ffc107']"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card mb-3" style="height: 400px">
+      <div class="card-header">Jumlah Pendaftar</div>
+      <div class="card-body">
+        <div class="mb-3 row align-items-center">
+          <label class="col-md-4 fw-bold mb-0" style="white-space: nowrap"
+            >Periode Tanggal:</label
+          >
+          <div class="col-md-4 d-flex align-items-center">
+            <label class="me-2 mb-0">Awal</label>
+            <input
+              type="date"
+              [(ngModel)]="trendStartDate"
+              class="form-control"
+              style="width: 120px"
+              (change)="onFilterChange()"
+            />
+          </div>
+          <div class="col-md-4 d-flex align-items-center">
+            <label class="me-2 mb-0">Akhir</label>
+            <input
+              type="date"
+              [(ngModel)]="trendEndDate"
+              class="form-control"
+              style="width: 120px"
+              (change)="onFilterChange()"
+            />
+          </div>
+        </div>
+
+        <apx-chart
+          *ngIf="showChartComponent"
+          [series]="trendSeries"
+          [chart]="{ type: 'line', height: 250 }"
+          [xaxis]="{ categories: trendDates }"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KEHADIRAN PER KATEGORI -->
+<div class="card mb-3">
+  <div class="card-header card-header-custom">
+    Detail Kehadiran Cek Kesehatan Gratis
+  </div>
+  <div class="card-body">
+    <div class="mb-3 row align-items-center">
+      <label class="col-md-6 fw-bold mb-0" style="white-space: nowrap"
+        >Periode Tanggal:</label
+      >
+      <div class="row col-md-6 pe-0">
+        <div class="col-md-6 mb-2 d-flex pe-0 align-items-center">
+          <label class="me-2">Periode Awal</label>
+          <input
+            type="date"
+            [(ngModel)]="periodeKehadiranAwal"
+            class="form-control"
+            (change)="onFilterChange()"
+          />
+        </div>
+        <div class="col-md-6 mb-2 d-flex pe-0 align-items-center">
+          <label class="me-2">Periode Akhir</label>
+          <input
+            type="date"
+            [(ngModel)]="periodeKehadiranAkhir"
+            class="form-control"
+            (change)="onFilterChange()"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div *ngFor="let anak of anakRemajaCategories" class="mb-2">
+          <div class="d-flex justify-content-between">
+            <span>{{ anak.name }}</span>
+            <span>{{ anak.percentage }}%</span>
+          </div>
+          <div class="progress">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              [style.width.%]="anak.percentage"
+              [style.backgroundColor]="anak.color"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div *ngFor="let dewasa of dewasaCategories" class="mb-2">
+          <div class="d-flex justify-content-between">
+            <span>{{ dewasa.name }}</span>
+            <span>{{ dewasa.percentage }}%</span>
+          </div>
+          <div class="progress">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              [style.width.%]="dewasa.percentage"
+              [style.backgroundColor]="dewasa.color"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TABEL KEHADIRAN -->
+<div class="card mb-3">
+  <div class="card-body table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Provinsi</th>
+          <th>Kabupaten/Kota</th>
+          <th>Kecamatan</th>
+          <th>Kelurahan</th>
+          <th>Total Kehadiran</th>
+          <th>Total Bayi</th>
+          <th>Bayi Perempuan</th>
+          <th>Bayi Laki-laki</th>
+          <th>Total Anak</th>
+          <th>Anak Perempuan</th>
+          <th>Anak Laki-laki</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of tableData">
+          <td>{{ item.provinsi }}</td>
+          <td>{{ item.kabupaten }}</td>
+          <td>{{ item.kecamatan }}</td>
+          <td>{{ item.kelurahan }}</td>
+          <td>{{ item.totalPendaftar }}</td>
+          <td>{{ item.totalBayi }}</td>
+          <td>{{ item.bayiPerempuan }}</td>
+          <td>{{ item.bayiLakiLaki }}</td>
+          <td>{{ item.totalAnak }}</td>
+          <td>{{ item.anakPerempuan }}</td>
+          <td>{{ item.anakLakiLaki }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

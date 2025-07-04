@@ -32,6 +32,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { MasterSpecimenModule } from 'src/app/satusehat/satusehat-master/master-specimen/master-specimen.module';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     MatChipsModule,
     MatIconModule,
     PageTitleModule,
+    MasterSpecimenModule,
      NgbModule, PerfectScrollbarModule, FormsModule, ReactiveFormsModule
     
 

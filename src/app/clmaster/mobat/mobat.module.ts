@@ -25,6 +25,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { MobatRoutingModule } from './mobat-routing.module';
+import { MasterKfaModule } from 'src/app/satusehat/satusehat-master/master-kfa/master-kfa.module';
 
 
 @NgModule({
@@ -51,6 +52,7 @@ import { MobatRoutingModule } from './mobat-routing.module';
     MatChipsModule,
     MatIconModule,
     PageTitleModule,
+    MasterKfaModule,
   ],
   declarations: [MobatComponent]
 })

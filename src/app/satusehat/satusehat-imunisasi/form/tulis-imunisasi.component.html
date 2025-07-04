@@ -1,0 +1,398 @@
+<div>
+    <div class="app-inner-layout" style="margin: 0 auto; padding:20px">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-3">
+            <div class="card-header navy">
+              Data Pasien
+            </div>
+            <div class="card-body">
+              <div align="right">
+                <button class="btn btn-primary btn-icon" routerLink="/master/satusehat-imunisasi">
+                  <span class="pe-2 opacity-7">
+                    <fa-icon [icon]="faArrowLeft"></fa-icon>
+                  </span>
+                  Kembali
+                </button>
+              </div>
+              <!-- header body -->
+              <div class="row">
+                <div class="col-lg-3 col-6">
+                  <strong>No Rm</strong>
+                  <br>
+                  {{patientData.norm}}
+                </div>
+                <div class="col-lg-3 col-6">
+                  <strong>Nama Pasien</strong>
+                  <br>
+                  {{patientData.pasien}}
+                </div>
+                <div class="col-lg-3 col-6">
+                  <strong>Tanggal Lahir</strong>
+                  <br>
+                  {{ patientData.tgllahir }}
+                </div>
+                <div class="col-lg-3 col-6">
+                  <strong>Umur</strong>
+                  <br>
+                  {{ patientData.umur }}
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-lg-3 col-6">
+                  <strong>Jenis Kelamin</strong>
+                  <br>
+                  {{ patientData.jeniskelamin == 'L' ? 'Laki laki' : 'Perempuan' }}
+                </div>
+                <div class="col-lg-3 col-6">
+                  <strong>Poli</strong>
+                  <br>
+                  {{ patientData.nampoli }}
+                </div>
+                <div class="col-lg-3 col-6">
+                  <strong>Jenis Pesien</strong>
+                  <br>
+                  {{ patientData.costumer }}
+                </div>
+                <div class="col-lg-3 col-6">
+                  <strong>Alamat</strong>
+                  <br>
+                  {{ patientData.alamat }}
+                </div>
+              </div>
+              <!-- header body -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3">
+        <div class="card-header navy">
+          Form Imunisasi
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <!-- header body -->
+            <div class="mb-3 col-12">
+              <div class="card">
+                <div class="card-header navy">
+                  Form Observasi
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formObservation">
+                    <!-- Observasi -->
+                    <div class="row">
+                      <div class="col-12 my-3">
+                        <h3>Observasi</h3>
+                      </div>
+                      <div class="col-6">
+                        <div class="position-relative mb-3">
+                          <label for="berat_badan" class="form-label">Status Kehamilan</label>
+                        </div>
+                        <div class="position-relative mb-3">
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="hamil" value="pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA15173-0');">
+                            <label class="form-check-label" for="hamil">Hamil</label>
+                          </div>
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="tidakHamil" value="not pregnant" formControlName="status_pregnant_display" (click)="formObservation.controls['status_pregnant_code'].setValue('LA26683-5');">
+                            <label class="form-check-label" for="tidakHamil">Tidak Hamil</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="position-relative mb-3">
+                          <label for="status_pregnant_display" class="form-label">Status Sekolah</label>
+                        </div>
+                        <div class="position-relative mb-3">
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="sekolah" value="sekolah" formControlName="status_sekolah_display">
+                            <label class="form-check-label" for="sekolah">Sekolah</label>
+                          </div>
+                          <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" id="tidaksekolah" value="tidak sekolah" formControlName="status_sekolah_display">
+                            <label class="form-check-label" for="tidaksekolah">Tidak Sekolah</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-xl-6 col-md-12">
+              <div class="card">
+                <div class="card-header navy">
+                  Form Diagnosa
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formDiagnosa">
+                    <app-master-diagnosa
+                      [searchDiagnosaText]="formDiagnosa.value.diagnosa_display"
+                      (selectedItem)=" 
+                      formDiagnosa.controls['diagnosa_code'].setValue($event.kddiagnosa);
+                      formDiagnosa.controls['diagnosa_display'].setValue($event.diagnosa);
+                      ">
+                    </app-master-diagnosa>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-xl-6 col-md-12">
+              <div class="card">
+                <div class="card-header navy">
+                  Form Tindakan
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formTindakan">
+                    <app-master-tindakan
+                      [searchTindakanText]="formTindakan.value.procedure_display"
+                      (selectedItem)="
+                      formTindakan.controls['procedure_code'].setValue($event.kdtindakan);
+                      formTindakan.controls['procedure_display'].setValue($event.tindakan);
+                      ">
+                    </app-master-tindakan>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+
+            <!-- header body -->
+            <div class="mb-3 col-12">
+              <div class="card">
+                <div class="card-header navy">
+                  Form Imunisasi
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formPelaporanImunisasi">
+        
+                    <!-- Section 01 - Imunisasi Dilakukan oleh Nakes -->
+                    <div class="row">
+                      <div class="col-xl-6 col-md-12 my-3">
+                        <app-form-vaccine
+                          [title]="'Imunisasi Dilakukan oleh Nakes'"
+                          [list]="reportImunisasi?.imunisasi_by_nakes"
+                          (onSelected)="onSelectedVaccine(formPelaporanImunisasi.controls['imunisasi_by_nakes'], $event)">
+                        </app-form-vaccine>
+                      </div>
+  
+                      <div class="col-xl-6 col-md-12 my-3">
+                        <app-form-vaccine
+                          [title]="'Imunisasi Dilaporkan oleh Kader'"
+                          [list]="reportImunisasi?.imunisasi_by_kader"
+                          (onSelected)="onSelectedVaccine(formPelaporanImunisasi.controls['imunisasi_by_kader'], $event)">
+                        </app-form-vaccine>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- header body -->
+  
+                  <!-- header body -->
+                  <div class="card mb-3 col-12">
+                    <div class="card-header navy">
+                      Imunisasi Disertai dengan KIPI
+                    </div>
+                    <div class="card-body">
+                      <!-- header body -->
+                      <div class="row">
+                        <div class="col-12 my-3">
+                          <h3>Imunisasi Disertai dengan KIPI</h3>
+                        </div>
+                        
+                        <!-- KIPI oleh Nakes -->
+                        <div class="col-xl-6 col-md-12 mb-3">
+                          <app-form-vaccine
+                            [title]="'KIPI oleh Nakes'"
+                            [list]="reportImunisasi?.imunisasi_kipi_by_nakes"
+                            (onSelected)="onSelectedVaccine(formPelaporanImunisasi.controls['imunisasi_kipi_by_nakes'], $event)">
+                          </app-form-vaccine>
+                        </div>
+  
+                        <!-- KIPI oleh Pasien -->
+                        <div class="col-xl-6 col-md-12 mb-3">
+                          <app-form-vaccine
+                            [title]="'KIPI oleh Pasien'"
+                            [list]="reportImunisasi?.imunisasi_kipi_by_pasien"
+                            (onSelected)="onSelectedVaccine(formPelaporanImunisasi.controls['imunisasi_kipi_by_pasien'], $event)">
+                          </app-form-vaccine>
+                        </div>
+                      </div>
+                      <!-- header body -->
+                       
+                    </div>
+                  </div>
+                  <!-- header body -->
+
+                  <!-- header body -->
+                  <div class="card mb-3 col-12">
+                    <div class="card-header navy">
+                      Imunisasi Tidak Disetujui
+                    </div>
+                    <div class="card-body">
+                      <!-- header body -->
+                      <div class="row">
+                        <div class="col-12 my-3">
+                          <h3>Imunisasi Tidak Disetujui</h3>
+                        </div>
+                        
+                        <!-- KIPI oleh Nakes -->
+                        <div class="col-xl-6 col-md-12 my-3">
+                          <app-form-vaccine
+                            [title]="'Imunisasi Tidak Disetujui'"
+                            [list]="reportImunisasi?.imunisasi_tidak_disetujui"
+                            (onSelected)="onSelectedVaccine(formPelaporanImunisasi.controls['imunisasi_tidak_disetujui'], $event, 'not-done')">
+                          </app-form-vaccine>
+                        </div>
+                      </div>
+                      <!-- header body -->
+                       
+                    </div>
+                  </div>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+
+            <!-- header body -->
+            <div class="mb-3 col-12">
+              <div class="card">
+                <div class="card-header navy">
+                  Informasi Rujukan
+                </div>
+                <div class="card-body">
+                  <!-- header body -->
+                  <form [formGroup]="formUpdateKunjungan">
+                    <div class="row">
+                      <div class="col-12 my-3">
+                        <h3>Informasi Kunjungan</h3>
+                      </div>
+        
+                      <div class="col-6">
+                        <div class="position-relative mb-3">
+                          <label for="start_period" class="form-label">Start Period</label>
+                          <input type="date" class="form-control" id="start_period" formControlName="start_period">
+                        </div>
+                      </div>
+        
+                      <div class="col-6">
+                        <div class="position-relative mb-3">
+                          <label for="end_period" class="form-label">End Period</label>
+                          <input type="date" class="form-control" id="end_period" formControlName="end_period">
+                        </div>
+                      </div>
+        
+                      <div class="col-12">
+                        <div class="position-relative mb-3">
+                          <label for="end_period" class="form-label">Catatan</label>
+                          <textarea class="form-control" formControlName="diagnosis_display"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- header body -->
+                </div>
+              </div>
+            </div>
+            <!-- header body -->
+          </div>
+
+          <div class="col-12" align="center">
+            <button class="btn btn-success mx-1" (click)="simpan()" [disabled]="isDisabledFormAnc">
+              SIMPAN
+            </button>
+            <button class="btn btn-danger btn-danger" routerLink="/master/satusehat-imunisasi">
+              KEMBALI
+            </button>
+          </div>
+        </div>
+      </div>
+</div>
+  
+
+<style scoped>
+  /* Styling untuk card-header navy */
+.card-header navy {
+    background-color: #343a40; /* Warna gelap */
+    color: white; /* Warna teks putih */
+    font-weight: bold;
+}
+
+/* Styling untuk tombol */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: #a71d2a;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Styling untuk form control */
+.form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+}
+
+/* Spacing untuk elemen dalam form */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Styling tambahan untuk input radio */
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Styling untuk card body */
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Margin tambahan untuk elemen di dalam card */
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
+/* Styling container */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+</style>
+  

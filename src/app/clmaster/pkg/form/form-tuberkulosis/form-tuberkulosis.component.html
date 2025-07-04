@@ -1,0 +1,71 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h3>Tuberkulosis</h3>
+  </div>
+
+  <!-- Batuk lebih dari 2 minggu -->
+  <div class="mb-3">
+    <label class="form-label fw-bold"
+      >Pernah batuk &gt; 2 minggu tanpa sembuh?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="batukLama"
+        value="true"
+        [(ngModel)]="model.batukLama"
+        id="batuk-ya"
+      />
+      <label class="form-check-label" for="batuk-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="batukLama"
+        value="false"
+        [(ngModel)]="model.batukLama"
+        id="batuk-tidak"
+      />
+      <label class="form-check-label" for="batuk-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Kontak dengan penderita TBC -->
+  <div class="mb-4">
+    <label class="form-label fw-bold"
+      >Serumah/sering kontak dengan penderita TBC?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="kontakTBC"
+        value="true"
+        [(ngModel)]="model.kontakTBC"
+        id="kontak-ya"
+      />
+      <label class="form-check-label" for="kontak-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="kontakTBC"
+        value="false"
+        [(ngModel)]="model.kontakTBC"
+        id="kontak-tidak"
+      />
+      <label class="form-check-label" for="kontak-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

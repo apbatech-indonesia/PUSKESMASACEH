@@ -1,0 +1,98 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h3>Demografi Dewasa Laki-Laki</h3>
+  </div>
+
+  <!-- Status Perkawinan -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Status Perkawinan</label>
+    <div class="form-check" *ngFor="let s of statusList">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="status"
+        [value]="s"
+        [(ngModel)]="model.status"
+        id="status-{{ s }}"
+      />
+      <label class="form-check-label" [for]="'status-' + s">{{ s }}</label>
+    </div>
+  </div>
+
+  <!-- Rencana Menikah -->
+  <div
+    class="mb-3"
+    *ngIf="
+      model.status === 'Belum Menikah' ||
+      model.status === 'Cerai Mati' ||
+      model.status === 'Cerai Hidup'
+    "
+  >
+    <label class="form-label fw-bold">
+      Apakah ada rencana menikah dalam 1 tahun ke depan?
+    </label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="rencana"
+        value="true"
+        [(ngModel)]="model.rencana"
+        id="rencana-ya"
+      />
+      <label class="form-check-label" for="rencana-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="rencana"
+        value="false"
+        [(ngModel)]="model.rencana"
+        id="rencana-tidak"
+      />
+      <label class="form-check-label" for="rencana-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Disabilitas -->
+  <div class="mb-4">
+    <label class="form-label fw-bold"
+      >Apakah Anda penyandang disabilitas?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="disabilitas"
+        value="Non disabilitas"
+        [(ngModel)]="model.disabilitas"
+        id="disabilitas-non"
+      />
+      <label class="form-check-label" for="disabilitas-non"
+        >Non disabilitas</label
+      >
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="disabilitas"
+        value="Penyandang disabilitas"
+        [(ngModel)]="model.disabilitas"
+        id="disabilitas-penyandang"
+      />
+      <label class="form-check-label" for="disabilitas-penyandang"
+        >Penyandang disabilitas</label
+      >
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

@@ -1,0 +1,142 @@
+<form (ngSubmit)="doSubmit()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h3>Skrining Pertumbuhan</h3>
+  </div>
+
+  <!-- Berat Badan -->
+  <div class="mb-3">
+    <label for="beratBadan" class="form-label fw-bold">Berat Badan (kg)</label>
+    <input
+      type="number"
+      class="form-control"
+      id="beratBadan"
+      name="beratBadan"
+      [(ngModel)]="model.beratBadan"
+      min="4"
+      max="50"
+      required
+    />
+    <small class="text-muted">Masukkan berat badan anak dalam ukuran kg.</small>
+  </div>
+
+  <!-- Tinggi Badan -->
+  <div class="mb-3">
+    <label for="tinggiBadan" class="form-label fw-bold"
+      >Tinggi Badan (cm)</label
+    >
+    <input
+      type="number"
+      class="form-control"
+      id="tinggiBadan"
+      name="tinggiBadan"
+      [(ngModel)]="model.tinggiBadan"
+      min="10"
+      max="200"
+      required
+    />
+    <small class="text-muted"
+      >Masukkan tinggi badan anak dalam ukuran cm.</small
+    >
+  </div>
+
+  <!-- BB/U -->
+  <div class="mb-3">
+    <label class="form-label fw-bold"
+      >Berat Badan berdasarkan Umur (BB/U)</label
+    >
+    <div *ngFor="let option of bbuOptions">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="bbu"
+          [value]="option.code"
+          [(ngModel)]="model.bbu"
+          required
+          [id]="'bbu-' + option.code"
+        />
+        <label class="form-check-label" [for]="'bbu-' + option.code">
+          {{ option.label }} (Kode: {{ option.code }})
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- PB/U atau TB/U -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">
+      Panjang Badan/Tinggi Badan berdasarkan Umur (PB/U atau TB/U)
+    </label>
+    <div *ngFor="let option of pbtuOptions">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="pbtu"
+          [value]="option.code"
+          [(ngModel)]="model.pbtu"
+          required
+          [id]="'pbtu-' + option.code"
+        />
+        <label class="form-check-label" [for]="'pbtu-' + option.code">
+          {{ option.label }} (Kode: {{ option.code }})
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- BB/PB atau BB/TB -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">
+      Berat Badan berdasarkan Panjang/Tinggi Badan (BB/PB atau BB/TB)
+    </label>
+    <div *ngFor="let option of bbpbOptions">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="bbpb"
+          [value]="option.code"
+          [(ngModel)]="model.bbpb"
+          required
+          [id]="'bbpb-' + option.code"
+        />
+        <label class="form-check-label" [for]="'bbpb-' + option.code">
+          {{ option.label }} (Kode: {{ option.code }})
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lingkar Kepala -->
+  <div class="mb-4">
+    <label class="form-label fw-bold">Lingkar Kepala</label>
+    <div *ngFor="let option of lingkarKepalaOptions">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="lingkarKepala"
+          [value]="option.code"
+          [(ngModel)]="model.lingkarKepala"
+          required
+          [id]="'lk-' + option.code"
+        />
+        <label class="form-check-label" [for]="'lk-' + option.code">
+          {{ option.label }} (Kode: {{ option.code }})
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <button
+    class="btn btn-primary mt-3 form-pemeriksaan-pkg"
+    [disabled]="isLoading"
+  >
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

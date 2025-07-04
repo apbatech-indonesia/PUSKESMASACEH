@@ -1,0 +1,47 @@
+.card-header-custom {
+  height: 44px;
+  background-color: #1D2D44;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 0px;
+}
+
+.fw-semi-custom {
+  font-weight: 600;
+}
+
+.text-primary-custom {
+  color: #0D128B;
+}
+.text-success-custom {
+  color: #29A259;
+}
+.text-danger-custom {
+  color: #CD1818;
+}
+
+.bg-pb-blue-custom {
+  background-color: #0D128B;
+}
+
+.bg-pb-orange-custom {
+  background-color: #FF5959;
+}
+
+.bg-pb-green-custom {
+  background-color: #29A259;
+}
+
+.bg-pb-brown-custom {
+  background-color: #A58D5E;
+}
+
+.bg-pb-bluesky-custom {
+  background-color: #00C3F9;
+}
+
+.bg-pb-yellow-custom {
+  background-color: #F6DE07;
+}

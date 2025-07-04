@@ -3,16 +3,27 @@
     <div class="card-header-tab card-header">
       <div class="card-header-title font-size-lg text-capitalize fw-normal">
         <i class="header-icon lnr-charts icon-gradient bg-happy-green"> </i>
-        <b style="font-size:18px;color:rgb(75, 75, 75)">DASHBOARD REKAM MEDIK</b>
+        <b style="font-size: 18px; color: rgb(75, 75, 75)"
+          >DASHBOARD REKAM MEDIK</b
+        >
       </div>
       <div class="btn-actions-pane-right text-capitalize">
-       
         <div class="position-relative mb-3">
-          <input style="border-radius: 5px;border:solid 1px #ccc;height: 2em; " type="date" [(ngModel)]="tglpx" (change)="ktglrad()"  >
-            
-          <input style="border-radius: 5px;border:solid 1px #ccc;height: 2em " type="date" [(ngModel)]="tglpxs" (change)="ktglrad()" >
-            
-<!--         
+          <input
+            style="border-radius: 5px; border: solid 1px #ccc; height: 2em"
+            type="date"
+            [(ngModel)]="tglpx"
+            (change)="ktglrad()"
+          />
+
+          <input
+            style="border-radius: 5px; border: solid 1px #ccc; height: 2em"
+            type="date"
+            [(ngModel)]="tglpxs"
+            (change)="ktglrad()"
+          />
+
+          <!--         
           <mat-form-field>
             <input matInput [matDatepicker]="dp1" [(ngModel)]="tglpx" (dateChange)="addEvent('change', $event)"  >
             <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
@@ -24,15 +35,11 @@
             <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
             <mat-datepicker #dp1></mat-datepicker>
           </mat-form-field> -->
-  
         </div>
-
       </div>
     </div>
 
-
     <div class="g-0 row">
-      
       <div class="col-md-12 col-lg-4">
         <ul class="list-group list-group-flush">
           <li class="bg-transparent list-group-item">
@@ -44,13 +51,14 @@
                     <div class="widget-subheading">Hari Ini</div>
                   </div>
                   <div class="widget-content-right">
-                    <div class="widget-numbers text-success">{{totalpass}}</div>
+                    <div class="widget-numbers text-success">
+                      {{ totalpass }}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </li>
-       
         </ul>
       </div>
       <div class="col-md-12 col-lg-4">
@@ -64,13 +72,14 @@
                     <div class="widget-subheading">Hari Ini</div>
                   </div>
                   <div class="widget-content-right">
-                    <div class="widget-numbers text-danger">{{totalpassbelum}}</div>
+                    <div class="widget-numbers text-danger">
+                      {{ totalpassbelum }}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </li>
-         
         </ul>
       </div>
       <div class="col-md-12 col-lg-4">
@@ -80,52 +89,89 @@
               <div class="widget-content-outer">
                 <div class="widget-content-wrapper">
                   <div class="widget-content-left">
-                    <div class="widget-heading">Pasien Sudah Di Cek </div>
+                    <div class="widget-heading">Pasien Sudah Di Cek</div>
                     <div class="widget-subheading">Hari Ini</div>
                   </div>
                   <div class="widget-content-right">
-                    <div class="widget-numbers text-primary">{{totalpasssudah}}</div>
+                    <div class="widget-numbers text-primary">
+                      {{ totalpasssudah }}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </li>
-          
         </ul>
       </div>
     </div>
   </div>
 
-
-
-
   <div class="main-card mb-3 card">
     <div class="card-header">
       <div>
-        <h5 class="menu-header-title text-capitalize" style="color:black">Pasien</h5>
+        <h5 class="menu-header-title text-capitalize" style="color: black">
+          Pasien
+        </h5>
       </div>
       <div class="btn-actions-pane-right">
-        <div class="input-group">
-          <div class="input-group-text">
-            <div class="">
-              <fa-icon [icon]="faSearch" ></fa-icon>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="input-group">
+              <select
+                [(ngModel)]="filterPoli"
+                (change)="onFilterPoli()"
+                class="form-select"
+              >
+                <option [ngValue]="null">-- POLIKLINIK --</option>
+                <option *ngFor="let poli of tklinik" [value]="poli.kdpoli">
+                  {{ poli.nampoli }}
+                </option>
+              </select>
             </div>
           </div>
-          <input placeholder="Search..." type="text" class="form-control" (keyup)="cpasien($event)">
+          <div class="col-md-4">
+            <div class="input-group">
+              <select
+                [(ngModel)]="sortValue"
+                (change)="onSortChange()"
+                class="form-select"
+              >
+                <option [ngValue]="null">-- URUTKAN --</option>
+                <option value="c.status:asc">Belum Selesai</option>
+                <option value="c.status:desc">Selesai</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <div class="input-group-text">
+                <div class="">
+                  <fa-icon [icon]="faSearch"></fa-icon>
+                </div>
+              </div>
+              <input
+                placeholder="Search..."
+                type="text"
+                class="form-control"
+                (keyup)="cpasien($event)"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-
     <div class="table-responsive tableFixHeadx">
-      <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+      <table
+        class="align-middle mb-0 table table-borderless table-striped table-hover"
+      >
         <thead>
           <tr>
             <th class="text-center">No Antrian</th>
-           
+
             <th>Pasien</th>
             <th>Satu Sehat</th>
-            
+
             <th class="text-center">Status PCARE</th>
             <th class="text-center">Antrol</th>
             <th class="text-center">Actions</th>
@@ -134,14 +180,46 @@
         </thead>
         <tbody>
           <tr *ngFor="let x of tampilpas">
-            <td class="text-center text-muted"  style="width: 78px;">
-              <div class="badge rounded-pill ps-2 pe-2 bg-warning" >{{x.noantrian}}</div>
-              <div class="badge rounded-pill ps-2 pe-2 bg-success" *ngIf="x.status === 'SELESAI'">{{x.status}}</div>
-              <div class="badge rounded-pill ps-2 pe-2 bg-danger" *ngIf="x.status === 'ANTRI'">BELUM</div>
-              <div class="badge rounded-pill ps-2 pe-2 bg-primary" *ngIf="x.status === 'SIAP'">SIAP!</div>
+            <td class="text-center text-muted" style="width: 78px">
+              <div class="badge rounded-pill ps-2 pe-2 bg-warning">
+                {{ x.noantrian }}
+              </div>
+              <div
+                class="badge rounded-pill ps-2 pe-2 bg-success"
+                *ngIf="x.status === 'SELESAI'"
+              >
+                {{ x.status }}
+              </div>
+              <div
+                class="badge rounded-pill ps-2 pe-2 bg-danger"
+                *ngIf="x.status === 'ANTRI'"
+              >
+                BELUM
+              </div>
+              <div
+                class="badge rounded-pill ps-2 pe-2 bg-primary"
+                *ngIf="x.status === 'SIAP'"
+              >
+                SIAP!
+              </div>
             </td>
-         
-            <td (click)="panggil(x.noantrian,x.kddokter,x.namdokter,x.kodeantrian,x.notransaksi,x.kdpolibpjs,x.noasuransi,x.tglpriksa,x.pasien,x.nampoli)">
+
+            <td
+              (click)="
+                panggil(
+                  x.noantrian,
+                  x.kddokter,
+                  x.namdokter,
+                  x.kodeantrian,
+                  x.notransaksi,
+                  x.kdpolibpjs,
+                  x.noasuransi,
+                  x.tglpriksa,
+                  x.pasien,
+                  x.nampoli
+                )
+              "
+            >
               <div class="widget-content p-0">
                 <div class="widget-content-wrapper">
                   <!-- <div class="widget-content-left me-3">
@@ -149,36 +227,51 @@
                       <img width="32" class="rounded" src="./assets/images/flowx.png" alt="">
                     </div>
                   </div> -->
-                  <div class="widget-content-left flex2" style="font-size:13px ;">
-                    <div class="widget-heading">{{x.pasien}}</div>
-                    <div class="widget-subheading">{{x.norm}} | <span class="text-success">{{x.costumer}}</span></div>
-                    <div class="widget-subheading">{{x.nampoli}}</div>
+                  <div
+                    class="widget-content-left flex2"
+                    style="font-size: 13px"
+                  >
+                    <div class="widget-heading">{{ x.pasien }}</div>
+                    <div class="widget-subheading">
+                      {{ x.norm }} |
+                      <span class="text-success">{{ x.costumer }}</span>
+                    </div>
+                    <div class="widget-subheading">{{ x.nampoli }}</div>
 
                     <div *ngIf="x.dash === 'BPJS'">
-                      <span *ngIf="x.spcare === 'TERDAFTAR DI PCARE'" class="text-success">{{x.spcare}}</span>
-                      <span *ngIf="x.spcare === null" class="text-danger">BELUM TERDAFTAR PCARE</span>
-                      <span *ngIf="x.spcare === 'SUDAH KIRIM KUNJUNGAN'" class="text-primary">{{x.spcare}}</span>
+                      <span
+                        *ngIf="x.spcare === 'TERDAFTAR DI PCARE'"
+                        class="text-success"
+                        >{{ x.spcare }}</span
+                      >
+                      <span *ngIf="x.spcare === null" class="text-danger"
+                        >BELUM TERDAFTAR PCARE</span
+                      >
+                      <span
+                        *ngIf="x.spcare === 'SUDAH KIRIM KUNJUNGAN'"
+                        class="text-primary"
+                        >{{ x.spcare }}</span
+                      >
                     </div>
-
-                   
                   </div>
-
-
                 </div>
               </div>
             </td>
             <td>
-
-
-
-                    <div  *ngIf="x.idsatusehat.length > 1" class="badge rounded-pill ps-2 pe-2 bg-success" >Terkirim</div>
-              <div *ngIf="x.idsatusehat.length < 1" class="badge rounded-pill ps-2 pe-2 bg-danger" >Belum</div>
-
-
+              <div
+                *ngIf="x.idsatusehat.length > 1"
+                class="badge rounded-pill ps-2 pe-2 bg-success"
+              >
+                Terkirim
+              </div>
+              <div
+                *ngIf="x.idsatusehat.length < 1"
+                class="badge rounded-pill ps-2 pe-2 bg-danger"
+              >
+                Belum
+              </div>
             </td>
-        
-           
-           
+
             <td class="text-center">
               <!-- <div class="badge rounded-pill ps-2 pe-2 bg-danger" *ngIf="x.koreksirmakhir ==='0'">In Progress</div>
               <div class="badge rounded-pill ps-2 pe-2 bg-success"  *ngIf="x.koreksirmakhir ==='1'">Completed</div>
@@ -187,60 +280,84 @@
               <div *ngIf="x.dash === 'BPJS'">
                 <!-- <span class="text-success">{{x.spcare}}
                 </span> -->
-                  <div   *ngIf="x.spcare === 'TERDAFTAR DI PCARE'" 
-                  class="badge rounded-pill ps-2 pe-2 bg-primary" >{{x.spcare}}</div>
+                <div
+                  *ngIf="x.spcare === 'TERDAFTAR DI PCARE'"
+                  class="badge rounded-pill ps-2 pe-2 bg-primary"
+                >
+                  {{ x.spcare }}
+                </div>
 
-                  <div    *ngIf="x.spcare === null"
-                  class="badge rounded-pill ps-2 pe-2 bg-primary" >BELUM TERDAFTAR PCARE</div>
+                <div
+                  *ngIf="x.spcare === null"
+                  class="badge rounded-pill ps-2 pe-2 bg-primary"
+                >
+                  BELUM TERDAFTAR PCARE
+                </div>
 
-                  <div   *ngIf="x.spcare === 'SUDAH KIRIM KUNJUNGAN'"
-                  class="badge rounded-pill ps-2 pe-2 bg-success" >{{x.spcare}}</div>
-
-           
+                <div
+                  *ngIf="x.spcare === 'SUDAH KIRIM KUNJUNGAN'"
+                  class="badge rounded-pill ps-2 pe-2 bg-success"
+                >
+                  {{ x.spcare }}
+                </div>
               </div>
-
-
             </td>
             <td class="text-center">
               <!-- {{x.statusantrian}} -->
 
-
-              <div class="badge rounded-pill ps-2 pe-2 bg-success" *ngIf="x.statusantrian ==='TERKIRIM'">    {{x.statusantrian}}</div>
-              <div class="badge rounded-pill ps-2 pe-2 bg-success" *ngIf="x.statusantrian ==='HADIR'">    {{x.statusantrian}}</div>
+              <div
+                class="badge rounded-pill ps-2 pe-2 bg-success"
+                *ngIf="x.statusantrian === 'TERKIRIM'"
+              >
+                {{ x.statusantrian }}
+              </div>
+              <div
+                class="badge rounded-pill ps-2 pe-2 bg-success"
+                *ngIf="x.statusantrian === 'HADIR'"
+              >
+                {{ x.statusantrian }}
+              </div>
               <!-- <div class="badge rounded-pill ps-2 pe-2 bg-danger"  *ngIf="x.statusantrian ==='null'">-</div> -->
-              
+            </td>
 
+            <td class="text-center">
+              <button
+                type="button"
+                class="btn-icon btn-icon-only btn btn-light btn-sm"
+              >
+                <a
+                  [routerLink]="[
+                    '/emrform/tuliserm',
+                    x.notransaksi,
+                    x.kddokter,
+                    'all',
+                    x.norm
+                  ]"
+                  target="_blank"
+                >
+                  View New Tab</a
+                >
+              </button>
+            </td>
 
-              </td>
-              <td  class="text-center">
-                <button type="button" class="btn-icon btn-icon-only btn btn-light btn-sm"  >
-  
-                  <a   [routerLink]="['/emrform/tuliserm', x.notransaksi,x.kddokter,'all',x.norm]"
-                  target="_blank" >  
-                  View New Tab</a>
-  
-                
-                </button>
-              </td>
-
-              
-              <td class="text-center">
-
-         
-
-              
-                <button type="button" class="btn-icon btn-icon-only btn btn-light btn-sm" [routerLink]="['/emrform/tuliserm', x.notransaksi,x.kddokter,'all',x.norm]"  >
-                 <b> View/Lihat</b>
-                </button>
-              </td>
+            <td class="text-center">
+              <button
+                type="button"
+                class="btn-icon btn-icon-only btn btn-light btn-sm"
+                [routerLink]="[
+                  '/emrform/tuliserm',
+                  x.notransaksi,
+                  x.kddokter,
+                  'all',
+                  x.norm
+                ]"
+              >
+                <b> View/Lihat</b>
+              </button>
+            </td>
           </tr>
-
         </tbody>
       </table>
     </div>
-</div>
-
-
-
-  
+  </div>
 </div>

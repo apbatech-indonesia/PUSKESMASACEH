@@ -1,0 +1,469 @@
+<div class="row">
+  <div class="col-12">
+      <nav>
+          <ul ngbNav #nav="ngbNav" [(activeId)]="activeNavId" class="nav-tabs">
+              <li ngbNavItem [ngbNavItem]="'pasien'">
+                  <a ngbNavLink class="nav-custom text-dark fw-semi-custom" [class.nav-active-custom]="activeNavId === 'pasien'">
+                      Laporan Skrining Pasien
+                  </a>
+                  <ng-template ngbNavContent>
+                      <ng-container *ngTemplateOutlet="pasienTemplate"></ng-container>
+                  </ng-template>
+              </li>
+              <li ngbNavItem [ngbNavItem]="'jumlah'">
+                  <a ngbNavLink class="nav-custom text-dark fw-semi-custom" [class.nav-active-custom]="activeNavId === 'jumlah'">
+                      Laporan Jumlah Skrining Daerah
+                  </a>
+                  <ng-template ngbNavContent>
+                      <ng-container *ngTemplateOutlet="jumlahTemplate"></ng-container>
+                  </ng-template>
+              </li>
+              <li ngbNavItem [ngbNavItem]="'skrining'">
+                  <a ngbNavLink class="nav-custom text-dark fw-semi-custom" [class.nav-active-custom]="activeNavId === 'skrining'">
+                      Laporan Jumlah Skrining Pasien
+                  </a>
+                  <ng-template ngbNavContent>
+                      <ng-container *ngTemplateOutlet="skriningTemplate"></ng-container>
+                  </ng-template>
+              </li>
+          </ul>
+      </nav>
+      <div [ngbNavOutlet]="nav"></div>
+  </div>
+</div>
+
+<ng-template #pasienTemplate>
+    <div class="card">
+        <div class="card-header card-header-custom text-white fw-normal text-capitalize">
+            Laporan Skrining Pasien
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="row d-flex justify-content-end">
+                        <!-- <div class="col-auto px-1">
+                            <select class="form-select">
+                                <option value="10">10</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="150">150</option>
+                                <option value="200">200</option>
+                            </select>
+                        </div> -->
+                        <div class="col-auto px-1">
+                            <button (click)="cetakPage('pagePasien')" type="button" class="print-button-custom"><i class="fa fa-print pe-1"></i>Cetak</button>
+                        </div>
+                        <div class="col-auto px-1">
+                            <button (click)="exportToExcelFromTable('pagePasien')" type="button" class="excel-button-custom"><i class="fa fa-file-excel-o pe-1"></i>Export Excel</button>
+                        </div>
+                        <div class="col-auto ps-1">
+                            <div ngbDropdown #myDrop="ngbDropdown">
+                                <button type="button" class="filter-button-custom" id="filterHisIr" ngbDropdownToggle>
+                                    <i class="fa fa-filter pe-1"></i>Filter
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="filterHisIr" style="width: 60vw;">
+                                    <div class="row mx-2 my-1">
+                                        <div class="col-12 mb-3">
+                                            <span class="fw-semi-custom">Tanggal Skrining</span>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Dari</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <input [(ngModel)]="startDatePasien" type="date" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Sampai</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <input [(ngModel)]="endDatePasien" type="date" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold text-nowrap">No RM</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <input [(ngModel)]="noRmPasien" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Nama Pasien</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <input [(ngModel)]="namePasien" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Daerah</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <p-autoComplete 
+                                                    [suggestions]="filteredVillagePasien" 
+                                                    (completeMethod)="filterVillagePasien($event)"
+                                                    (onSelect)="onSelectPasien($event)"
+                                                    field="village_name" 
+                                                    [dropdown]="true"
+                                                    [minLength]="1"
+                                                    [style]="{'height': '35px'}"  
+                                                    [dropdownIcon]="'fa fa-caret-down'"
+                                                    size="32">
+                                                </p-autoComplete>
+                                                <!-- <select class="form-select" [(ngModel)]="villagePasien">
+                                                    <option value="">-pilih-</option>
+                                                    <option *ngFor="let vil of arrVillage" value="{{vil.village_id}}">{{vil.village_name??''}}</option>
+                                                </select> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Klaster</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <select [(ngModel)]="groupPasien" class="form-select" (change)="filterKlasterByGroup()">
+                                                    <option value="">-pilih-</option>
+                                                    <option value="Klaster 2 - Ibu dan Anak">Klaster 2 - Ibu dan Anak</option>
+                                                    <option value="Klaster 3 - Usia Dewasa dan Lanjut Usia">Klaster 3 - Usia Dewasa dan Lanjut Usia</option>
+                                                    <option value="Klaster 4 - Penanggulangan Penyakit Menular">Klaster 4 - Penanggulangan Penyakit Menular</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Kategori</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <select class="form-select" [(ngModel)]="klasterPasien" (change)="getSkriningByIdPasien()">
+                                                    <option value="">-pilih-</option>
+                                                    <option *ngFor="let clust of ftrArrCluster" value="{{clust.id}}">{{clust.name??''}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Skrining</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <select class="form-select" [(ngModel)]="skriningPasien">
+                                                    <option value="">-pilih-</option>
+                                                    <option *ngFor="let skr of arrSkriningNamePasien" value="{{skr.id}}">{{skr.name??''}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 text-center">
+                                            <button (click)="filterPagePasien()" (click)="$event.stopPropagation(); myDrop.close()" class="filter-button-custom me-3">Terapkan</button>
+                                            <button (click)="dafaultPagePasien()" (click)="$event.stopPropagation(); myDrop.close()" class="cancel-button-custom">Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="pagePasien">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr class="align-middle">
+                            <th class="fw-semi-custom">Tanggal</th>
+                            <th class="fw-semi-custom">No RM</th>
+                            <th class="fw-semi-custom">Nama</th>
+                            <th class="fw-semi-custom">Daerah</th>
+                            <th class="fw-semi-custom">Klaster</th>
+                            <th class="fw-semi-custom">Kategori</th>
+                            <th class="fw-semi-custom">Skrining</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of arrSkriningPasien">
+                            <td class="text-nowrap">{{row.tgl | date: 'dd-MM-yyyy'}}</td>
+                            <td>{{row.rm_no??''}}</td>
+                            <td>{{row.nama??''}}</td>
+                            <td>{{row.village_name??''}}</td>
+                            <td>{{row.group_klaster??''}}</td>
+                            <td>{{row.klaster??''}}</td>
+                            <td>{{row.screening??''}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- <div class="row px-2 pt-2">
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="pagination">
+                        <span class="page-item pointer">
+                            <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        </span>
+                        <span class="pointer">1</span>
+                        <span class="pointer">2</span>
+                        <span class="pointer">3</span>
+                        <span class="page-item pointer">
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>     -->
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #jumlahTemplate>
+    <div class="card">
+        <div class="card-header card-header-custom text-white fw-normal text-capitalize">
+            Laporan Jumlah Skrining Daerah
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="row d-flex justify-content-end">
+                        <!-- <div class="col-auto px-1">
+                            <select class="form-select">
+                                <option value="10">10</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="150">150</option>
+                                <option value="200">200</option>
+                            </select>
+                        </div> -->
+                        <div class="col-auto px-1">
+                            <button type="button" (click)="cetakPage('pageJumlah')" class="print-button-custom"><i class="fa fa-print pe-1"></i>Cetak</button>
+                        </div>
+                        <div class="col-auto px-1">
+                            <button type="button" (click)="exportToExcelFromTable('pageJumlah')" class="excel-button-custom"><i class="fa fa-file-excel-o pe-1"></i>Export Excel</button>
+                        </div>
+                        <div class="col-auto ps-1">
+                            <div ngbDropdown #myDropJ="ngbDropdown">
+                                <button type="button" class="filter-button-custom" id="filterHisIr" ngbDropdownToggle>
+                                    <i class="fa fa-filter pe-1"></i>Filter
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="filterHisIr" style="width: 60vw;">
+                                    <div class="row mx-2 my-1">
+                                        <div class="col-12 mb-3">
+                                            <span class="fw-semi-custom">Periode Tanggal</span>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Dari</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <input [(ngModel)]="startDateJumlah" type="date" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Sampai</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <input [(ngModel)]="endDateJumlah" type="date" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold text-nowrap">Nama Daerah</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <p-autoComplete 
+                                                    [suggestions]="filteredVillageJumlah" 
+                                                    (completeMethod)="filterVillageJumlah($event)"
+                                                    (onSelect)="onSelectJumlah($event)"
+                                                    field="village_name" 
+                                                    [dropdown]="true"
+                                                    [minLength]="1" 
+                                                    [style]="{'height': '35px'}"
+                                                    [dropdownIcon]="'fa fa-caret-down'"
+                                                    size="32">
+                                                </p-autoComplete>
+                                                <!-- <select class="form-select" [(ngModel)]="villageJumlah">
+                                                    <option value="">-pilih-</option>
+                                                    <option *ngFor="let vil of arrVillage" value="{{vil.village_id}}">{{vil.village_name??''}}</option>
+                                                </select> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-12 text-center">
+                                            <button (click)="filterPageJumlah()" (click)="$event.stopPropagation(); myDropJ.close()" class="filter-button-custom me-3">Terapkan</button>
+                                            <button (click)="defaultPageJumlah()" (click)="$event.stopPropagation(); myDropJ.close()" class="cancel-button-custom">Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="pageJumlah">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr class="align-middle">
+                        <th class="fw-semi-custom">Daerah</th>
+                        <th class="fw-semi-custom">Klaster 2</th>
+                        <th class="fw-semi-custom">Klaster 3</th>
+                        <th class="fw-semi-custom">Klaster 4</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of arrSkriningJumlah">
+                            <td>{{row.village_name??''}}</td>
+                            <td>{{row.klaster2}}</td>
+                            <td>{{row.klaster3}}</td>
+                            <td>{{row.klaster4}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- <div class="row px-2 pt-2">
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="pagination">
+                        <span class="page-item pointer">
+                            <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        </span>
+                        <span class="pointer">1</span>
+                        <span class="pointer">2</span>
+                        <span class="pointer">3</span>
+                        <span class="page-item pointer">
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>     -->
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #skriningTemplate>
+    <div class="card">
+        <div class="card-header card-header-custom text-white fw-normal text-capitalize">
+            Laporan Jumlah Skrining Pasien
+        </div>
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="row d-flex justify-content-end">
+                        <div class="col-auto px-1">
+                            <select class="form-select" [(ngModel)]="maxRow">
+                                <option value="10">10</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="150">150</option>
+                                <option value="200">200</option>
+                                <option value="250">250</option>
+                                <option value="300">300</option>
+                                <option value="350">350</option>
+                                <option value="400">400</option>
+                                <option value="450">450</option>
+                                <option value="500">500</option>
+                            </select>
+                        </div>
+                        <div class="col-auto px-1">
+                            <button type="button" (click)="cetakPage('pageSkrining')" class="print-button-custom"><i class="fa fa-print pe-1"></i>Cetak</button>
+                        </div>
+                        <div class="col-auto px-1">
+                            <button type="button" (click)="exportToExcelFromTable('pageSkrining')" class="excel-button-custom"><i class="fa fa-file-excel-o pe-1"></i>Export Excel</button>
+                        </div>
+                        <div class="col-auto ps-1">
+                            <div ngbDropdown #myDropS="ngbDropdown">
+                                <button type="button" class="filter-button-custom" id="filterHisIr" ngbDropdownToggle>
+                                    <i class="fa fa-filter pe-1"></i>Filter
+                                </button>
+                                <div ngbDropdownMenu aria-labelledby="filterHisIr" style="width: 60vw;">
+                                    <div class="row mx-2 my-1">
+                                        <div class="col-12 mb-3 d-flex justify-content-start">
+                                            <span class="fw-semi-custom">Periode Tanggal</span>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Dari</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <input [(ngModel)]="startDateSkrining" type="date" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Sampai</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <input [(ngModel)]="endDateSkrining" type="date" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Klaster</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <select [(ngModel)]="groupSkrining" class="form-select" (change)="filterKlasterByGroupSkr()">
+                                                    <option value="">-pilih-</option>
+                                                    <option value="Klaster 2 - Ibu dan Anak">Klaster 2 - Ibu dan Anak</option>
+                                                    <option value="Klaster 3 - Usia Dewasa dan Lanjut Usia">Klaster 3 - Usia Dewasa dan Lanjut Usia</option>
+                                                    <option value="Klaster 4 - Penanggulangan Penyakit Menular">Klaster 4 - Penanggulangan Penyakit Menular</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold">Kategori</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <select class="form-select" [(ngModel)]="klasterSkrining" (change)="getSkriningByIdPasienSkr()">
+                                                    <option value="">-pilih-</option>
+                                                    <option *ngFor="let clust of ftrArrClusterSkr" value="{{clust.id}}">{{clust.name??''}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 mb-3 d-flex justify-content-start">
+                                            <label class="col-3 col-form-label fw-bold text-nowrap">Nama Skrining</label>
+                                            <label class="col-1 col-form-label text-center">:</label>
+                                            <div class="col-8">
+                                                <select class="form-select" [(ngModel)]="skriningSkr">
+                                                    <option value="">-pilih-</option>
+                                                    <option *ngFor="let skr of arrSkriningNameSkr" value="{{skr.id}}">{{skr.name??''}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 text-center">
+                                            <button (click)="filterPageSkrining()" (click)="$event.stopPropagation(); myDropS.close()" class="filter-button-custom me-3">Terapkan</button>
+                                            <button (click)="defaultPageSkrining()" (click)="$event.stopPropagation(); myDropS.close()" class="cancel-button-custom">Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="pageSkrining">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr class="align-middle">
+                            <th class="fw-semi-custom">Nama Skrining</th>
+                            <th class="fw-semi-custom">Klaster</th>
+                            <th class="fw-semi-custom">Kategori</th>
+                            <th class="fw-semi-custom text-nowrap">Jumlah Skrining</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let row of arrPageSkrining">
+                            <td>{{row.screening_name??''}}</td>
+                            <td>{{row.group_name??''}}</td>
+                            <td>{{row.cluster_name??''}}</td>
+                            <td>{{row.patient_count??''}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row px-2 pt-2">
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="pagination">
+                        <span 
+                            (click)="changePage(currentPage - 1)" 
+                            [disabled]="currentPage === 1" 
+                            [class.disabled]="currentPage === 1" 
+                            class="page-item pointer">
+                            <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        </span>
+                        <span 
+                            *ngFor="let page of [].constructor(totalPages); let i = index" 
+                            class="pointer"
+                            (click)="changePage(i + 1)"
+                            [class.active]="currentPage === i + 1"
+                        >{{ i + 1 }}</span>
+                        <span (click)="changePage(currentPage + 1)" 
+                            [disabled]="currentPage === totalPages" 
+                            [class.disabled]="currentPage === totalPages" 
+                            class="page-item pointer">
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </div>
+</ng-template>

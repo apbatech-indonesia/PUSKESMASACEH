@@ -806,7 +806,7 @@ interface MCU {
 		
 		  .btn-container {
 			display: flex;
-			justify-content: end;
+			justify-content: flex-end;
 			column-gap: 16px;
 		  }
 

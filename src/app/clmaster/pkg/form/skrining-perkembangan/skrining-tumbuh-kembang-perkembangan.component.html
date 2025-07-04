@@ -1,0 +1,37 @@
+<form (ngSubmit)="doSubmit()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h3>Skrining Perkembangan</h3>
+  </div>
+
+  <!-- Hasil Pemeriksaan KPSP -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Hasil Pemeriksaan KPSP</label>
+    <div *ngFor="let option of hasilKpspOptions">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="hasilKpsp"
+          [value]="option.code"
+          [(ngModel)]="model.hasilKpsp"
+          required
+          [id]="'kpsp-' + option.code"
+        />
+        <label class="form-check-label" [for]="'kpsp-' + option.code">
+          {{ option.label }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <button
+    class="btn btn-primary mt-3 form-pemeriksaan-pkg"
+    [disabled]="isLoading"
+  >
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

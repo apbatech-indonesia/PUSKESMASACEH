@@ -1,4 +1,3 @@
-
 <!-- <div class="app-page-title">
   <div class="page-title-wrapper">
     <div class="page-title-heading">
@@ -18,785 +17,882 @@
   </div>
 </div> -->
 
-
-
 <div class="row">
-
   <div class="col-md-7">
-    <div class="card main-card mb-3" style="border: 0.5px solid #dbdbdb;box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;">
-      <div class="card-header" style="background-color: #ececec;color:#000000" >
-       Tambah Pasien Baru
-       <i  style="font-size:20px ;"   class="font-icon-wrapper pe-7s-print"> </i>
-            
-
+    <div
+      class="card main-card mb-3"
+      style="
+        border: 0.5px solid #dbdbdb;
+        box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+          rgba(17, 17, 26, 0.1) 0px 8px 24px,
+          rgba(17, 17, 26, 0.1) 0px 16px 56px;
+      "
+    >
+      <div
+        class="card-header"
+        style="background-color: #ececec; color: #000000"
+      >
+        Tambah Pasien Baru
+        <i style="font-size: 20px" class="font-icon-wrapper pe-7s-print"> </i>
       </div>
- 
+
       <div class="card-body">
-     
-          <div  class="row">
-            <div class="col-md-3">
-              <!-- <div class="position-relative mb-3">
+        <div class="row">
+          <div class="col-md-3">
+            <!-- <div class="position-relative mb-3">
                 <label for="exampleEmail" class="form-label" style="color:black;">Nomor RM</label>
               
               </div> -->
 
+            <div class="position-relative mb-3">
+              <label for="exampleEmail" class="form-label" style="color: black"
+                >Nomor RM</label
+              >
 
-
-              <div class="position-relative mb-3">
-                <label for="exampleEmail" class="form-label" style="color:black;">Nomor RM</label>
-
-                      <div class="input-group">
-
-
-
-                        <input [(ngModel)]="norm"   placeholder="Norm" type="text" class="form-control">
-                        <div class="input-group-text">
-                          <i class="fa fa-pencil btn" (click)="shownorm(contentnorm)" aria-hidden="true"></i>
-                        </div>
-                      </div>
-
-                    </div>
-
-
-  
+              <div class="input-group">
+                <input
+                  [(ngModel)]="norm"
+                  placeholder="Norm"
+                  type="text"
+                  class="form-control"
+                />
+                <div class="input-group-text">
+                  <i
+                    class="fa fa-pencil btn"
+                    (click)="shownorm(contentnorm)"
+                    aria-hidden="true"
+                  ></i>
+                </div>
               </div>
-
-              <div class="col-md-2">
-                <div class="position-relative mb-3">
-                  <label for="exampleSelect" class="form-label" style="color:black;">Panggil</label>
-                  <select [(ngModel)]="an" id="exampleSelect" class="form-select">
-                    <option value="">-PILIH-</option>
-                    <option value="An">An</option>
-                    <option value="Tn">Tn</option>
-                    <option value="Ny">Ny</option>
-                    <option value="Nn">Nn</option>
-                  </select>
-                </div>
-    
-                </div>
-                
-              <div class="col-md-7">
-                <form [formGroup]="profileForm" >
-                <div class="position-relative mb-3">
-                  <label for="exampleEmail" class="form-label" style="color:black;">Nama Pasien</label>
-                  
-                  <input  formControlName="pasien" [(ngModel)]="pasien"   placeholder="Pasien" type="text" class="form-control">
-                
-                </div>
-              </form>
-              </div>
-          
+            </div>
           </div>
 
+          <div class="col-md-2">
+            <div class="position-relative mb-3">
+              <label for="exampleSelect" class="form-label" style="color: black"
+                >Panggil</label
+              >
+              <select [(ngModel)]="an" id="exampleSelect" class="form-select">
+                <option value="">-PILIH-</option>
+                <option value="An">An</option>
+                <option value="Tn">Tn</option>
+                <option value="Ny">Ny</option>
+                <option value="Nn">Nn</option>
+              </select>
+            </div>
+          </div>
 
-
-          <div  class="row">
-            <div class="col-md-3">
-              <form [formGroup]="profileForm" >
+          <div class="col-md-7">
+            <form [formGroup]="profileForm">
               <div class="position-relative mb-3">
-                <label for="exampleSelect" class="form-label" style="color:black;">Kelamin</label>
-                <select  formControlName="kelamin" [(ngModel)]="kelamin"  id="exampleSelect" class="form-select">
-                  <option value="">-PILIH-</option>
-                  <option value="L" >Laki-Laki</option>
-                  <option value="P" >Perempuan</option>
-                  
+                <label
+                  for="exampleEmail"
+                  class="form-label"
+                  style="color: black"
+                  >Nama Pasien</label
+                >
 
+                <input
+                  formControlName="pasien"
+                  [(ngModel)]="pasien"
+                  placeholder="Pasien"
+                  type="text"
+                  class="form-control"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <form [formGroup]="profileForm">
+              <div class="position-relative mb-3">
+                <label
+                  for="exampleSelect"
+                  class="form-label"
+                  style="color: black"
+                  >Kelamin</label
+                >
+                <select
+                  formControlName="kelamin"
+                  [(ngModel)]="kelamin"
+                  id="exampleSelect"
+                  class="form-select"
+                >
+                  <option value="">-PILIH-</option>
+                  <option value="L">Laki-Laki</option>
+                  <option value="P">Perempuan</option>
                 </select>
               </div>
-        </form>
-              </div>
+            </form>
+          </div>
 
-              <div class="col-md-3">
-                <form [formGroup]="profileForm" >
-                <div class="position-relative mb-3">
-                  <label for="exampleEmail" class="form-label" style="color:black;">Tempat Lahir</label>
-                  <input maxlength="50" formControlName="tempatlahir" [(ngModel)]="tempatlahir"   placeholder="Pasien" type="text" class="form-control">
-                </div>
-    </form>
+          <div class="col-md-3">
+            <form [formGroup]="profileForm">
+              <div class="position-relative mb-3">
+                <label
+                  for="exampleEmail"
+                  class="form-label"
+                  style="color: black"
+                  >Tempat Lahir</label
+                >
+                <input
+                  maxlength="50"
+                  formControlName="tempatlahir"
+                  [(ngModel)]="tempatlahir"
+                  placeholder="Pasien"
+                  type="text"
+                  class="form-control"
+                />
               </div>
-              <div class="col-md-3">
-             
-                <div class="position-relative mb-3">
-                  <label for="exampleEmail" class="form-label" style="color:black;">Tanggal Lahir</label>
-                  <input [(ngModel)]="tgllahir"  
-                   placeholder="Pasien" type="date" 
-                   class="form-control"
-                   (change)="ktgl()"
-                   >
+            </form>
+          </div>
+          <div class="col-md-3">
+            <div class="position-relative mb-3">
+              <label for="exampleEmail" class="form-label" style="color: black"
+                >Tanggal Lahir</label
+              >
+              <input
+                [(ngModel)]="tgllahir"
+                placeholder="Pasien"
+                type="date"
+                class="form-control"
+                (change)="ktgl()"
+              />
 
-                  <!-- <mat-form-field>
+              <!-- <mat-form-field>
                     <input matInput [matDatepicker]="dp1" [(ngModel)]="tgllahir"  >
                     <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
                     <mat-datepicker #dp1></mat-datepicker>
                   </mat-form-field> -->
-
-
-                </div>
-                </div>
-         
-                <div class="col-md-3">
-             
-                  <div class="position-relative mb-3">
-                    <label for="exampleEmail" class="form-label" style="color:black;">Usia</label>
-                    <input [(ngModel)]="usia"   placeholder="usia" type="text" class="form-control">
-                    <!-- {{usiadeal}} -->
-                 
-  
-  
-                  </div>
-                  </div>
-           
-         
-         
-          </div>
-        
-
-          
-        
-
-          <div class="row">
-            <div class="col-md-6">
-              <form [formGroup]="profileForm" >
-              <div class="position-relative mb-3">
-                <label for="exampleCity" class="form-label" style="color:black;">Alamat KTP</label>
-                <textarea   maxlength="200" formControlName="alamat" [(ngModel)]="alamat" id="exampleText" class="form-control"></textarea>
-              </div>
-              </form>
             </div>
-            <div class="col-md-6">
-           
-              <!-- <form [formGroup]="profileForm" >
+          </div>
+
+          <div class="col-md-3">
+            <div class="position-relative mb-3">
+              <label for="exampleEmail" class="form-label" style="color: black"
+                >Usia</label
+              >
+              <input
+                [(ngModel)]="usia"
+                placeholder="usia"
+                type="text"
+                class="form-control"
+              />
+              <!-- {{usiadeal}} -->
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <form [formGroup]="profileForm">
+              <div class="position-relative mb-3">
+                <label for="exampleCity" class="form-label" style="color: black"
+                  >Alamat KTP</label
+                >
+                <textarea
+                  maxlength="200"
+                  formControlName="alamat"
+                  [(ngModel)]="alamat"
+                  id="exampleText"
+                  class="form-control"
+                ></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <!-- <form [formGroup]="profileForm" >
               <div class="position-relative mb-3">
                 
                 <label for="exampleText" class="form-label" style="color:black;">Alamat Sekarang</label>
                 <textarea  maxlength="200"  formControlName="alamats" [(ngModel)]="alamats" id="exampleText" class="form-control"></textarea>
               </div>
             </form> -->
-
-            </div>
-      
           </div>
+        </div>
 
-          <div class="row">
-            <div class="col-md-3">
-        
-
-              <div class="position-relative mb-3">
-                <label for="exampleSelect" class="form-label" style="color:black;">Propinsi</label>
-                <div class="badge bg-pill bg-success" (click)="open(content,'1')"> + </div>
-                <input  [(ngModel)]="propinsi"   placeholder="Propinsi" type="text" class="form-control">
-            
-              </div>
-
-
-            </div>
-
-          
-
-
-            <div class="col-md-3">
-            
-          
-              <div class="position-relative mb-3">
-                <label for="exampleSelect" class="form-label" style="color:black;">Kabupaten</label>
-                <div class="badge bg-pill bg-success" (click)="open(content,'2')"> + </div>
-                <input [(ngModel)]="kabupaten"   placeholder="kabupaten" type="text" class="form-control">
-
-                <!-- <select class="form-select" [(ngModel)]="kabupaten"  (click)="pilihkab()">
-                  <option *ngFor="let x of tkab" value="{{x.KD_KABUPATEN}}" >{{x.KABUPATEN}}</option>
-                
-                </select> -->
-              </div>
-
-            </div>
-
-
-            <div class="col-md-3">
-              
-
-              <div class="position-relative mb-3">
-                <label for="exampleSelect" class="form-label" style="color:black;">Kecamatan</label>
-
-                <div class="badge bg-pill bg-success" (click)="open(content,'3')"> + </div>
-                <input [(ngModel)]="kecamatan"   placeholder="kecamatan" type="text" class="form-control">
-
-
-
-                <!-- <select class="form-select" [(ngModel)]="kecamatan"  (click)="pilihkec()">
-                  <option *ngFor="let x of tkec" value="{{x.KD_KECAMATAN}}" >{{x.KECAMATAN}}</option>
-                
-                </select> -->
-              </div>
-
-
-            </div>
-
-
-            <div class="col-md-3">
-                
-              <form [formGroup]="profileForm" >
-              <div class="position-relative mb-3">
-                <label for="exampleSelect" class="form-label" style="color:black;">Kelurahan</label>
-                <div class="badge bg-pill bg-success" (click)="open(content,'4')"> + </div>
-                <input  formControlName="keluarahan"  [(ngModel)]="keluarahan"   placeholder="Kelurahan" type="text" class="form-control">
-
-
-                <!-- <select class="form-select" [(ngModel)]="keluarahan"  >
-                  <option *ngFor="let x of tkelurahan" value="{{x.KD_KELURAHAN}}" >{{x.KELURAHAN}}</option>
-                
-                </select> -->
-              </div>
-              </form>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="position-relative mb-3">
+              <label for="exampleSelect" class="form-label" style="color: black"
+                >Propinsi</label
+              >
+              <app-master-clenic-province
+                [id]="propinsiid"
+                [keyword]="propinsi"
+                (selectedItem)="
+                  propinsiid = $event.code; propinsi = $event.name
+                "
+              >
+              </app-master-clenic-province>
             </div>
           </div>
 
-          <div class="row">
-            <div class="col-md-2">
-              <form [formGroup]="profileForm" >
+          <div class="col-md-3">
+            <div class="position-relative mb-3">
+              <label for="exampleSelect" class="form-label" style="color: black"
+                >Kabupaten</label
+              >
+              <app-master-clenic-city
+                [id]="kabupatenid"
+                [parentId]="propinsiid"
+                [keyword]="kabupaten"
+                (selectedItem)="
+                  kabupatenid = $event.code; kabupaten = $event.name
+                "
+              >
+              </app-master-clenic-city>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="position-relative mb-3">
+              <label for="exampleSelect" class="form-label" style="color: black"
+                >Kecamatan</label
+              >
+              <app-master-clenic-district
+                [id]="kecamatanid"
+                [parentId]="kabupatenid"
+                [keyword]="kecamatan"
+                (selectedItem)="
+                  kecamatanid = $event.code; kecamatan = $event.name
+                "
+              >
+              </app-master-clenic-district>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <form [formGroup]="profileForm">
               <div class="position-relative mb-3">
-                <label for="exampleSelect" class="form-label" style="color:black;">Identitas</label>
-                <select   formControlName="indetitas" [(ngModel)]="indetitas" id="exampleSelect" class="form-select">
+                <label
+                  for="exampleSelect"
+                  class="form-label"
+                  style="color: black"
+                  >Kelurahan</label
+                >
+                <app-master-clenic-subdistrict
+                  [id]="keluarahanid"
+                  [parentId]="kecamatanid"
+                  [keyword]="keluarahan"
+                  (selectedItem)="
+                    keluarahanid = $event.code;
+                    keluarahan = $event.name;
+                    profileForm.get('keluarahan')?.setValue($event.name)
+                  "
+                >
+                </app-master-clenic-subdistrict>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2">
+            <form [formGroup]="profileForm">
+              <div class="position-relative mb-3">
+                <label
+                  for="exampleSelect"
+                  class="form-label"
+                  style="color: black"
+                  >Identitas</label
+                >
+                <select
+                  formControlName="indetitas"
+                  [(ngModel)]="indetitas"
+                  id="exampleSelect"
+                  class="form-select"
+                >
                   <option value="">-PILIH-</option>
-                  <option value="KTP" >KTP</option>
-                  <option value="SIM" >SIM</option>
-                  <option value="KIA" >KIA</option>
-                  
-
+                  <option value="KTP">KTP</option>
+                  <option value="SIM">SIM</option>
+                  <option value="KIA">KIA</option>
                 </select>
               </div>
-  </form>
+            </form>
+          </div>
 
+          <div class="col-md-4">
+            <div class="position-relative mb-3">
+              <label for="exampleCity" class="form-label" style="color: black"
+                >No Identitas</label
+              >
+              <input
+                maxlength="25"
+                [(ngModel)]="noindetitas"
+                id="exampleCity"
+                type="text"
+                class="form-control"
+                (keyup.enter)="cekbpjsnik()"
+              />
             </div>
-
-            <div class="col-md-4">
-             
-              <div class="position-relative mb-3">
-                <label for="exampleCity" class="form-label" style="color:black;">No Identitas</label>
-                <input maxlength="25"   [(ngModel)]="noindetitas" id="exampleCity" type="text" class="form-control" (keyup.enter)="cekbpjsnik()">
+          </div>
+          <div class="col-md-3">
+            <div class="position-relative mb-3">
+              <label for="exampleCity" class="form-label" style="color: black"
+                >No Asuransi</label
+              >
+              <input
+                maxlength="25"
+                [(ngModel)]="noasuransi"
+                id="exampleCity"
+                type="text"
+                class="form-control"
+                (keyup.enter)="cekbpjs($event)"
+              />
+              <div
+                class="badge bg-pill bg-success my-2"
+                (click)="cekkepesertaanbpjs(content7)"
+              >
+                Cek Kepesertaan BPJS
               </div>
-            
             </div>
-            <div class="col-md-3">
-             
+          </div>
+
+          <div class="col-md-3">
+            <div class="position-relative mb-3">
+              <label for="exampleCity" class="form-label" style="color: black"
+                >No Hp</label
+              >
+              <input
+                [(ngModel)]="nohp"
+                id="exampleCity"
+                type="text"
+                class="form-control"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2">
+            <form [formGroup]="profileForm">
               <div class="position-relative mb-3">
-                <label for="exampleCity" class="form-label" style="color:black;">No Asuransi</label>
-                <input maxlength="25"   [(ngModel)]="noasuransi" id="exampleCity" type="text" class="form-control"  (keyup.enter)="cekbpjs($event)">
-              </div>
-            
-            </div>
-
-            <div class="col-md-3">
-             
-              <div class="position-relative mb-3">
-                <label for="exampleCity" class="form-label" style="color:black;">No Hp</label>
-                <input    [(ngModel)]="nohp" id="exampleCity" type="text" class="form-control">
-              </div>
-           
-            </div>
-            </div>
-
-       
-
-
-
-
-<div class="row">
-
-  <div class="col-md-2">
-    <form [formGroup]="profileForm" >
-    <div class="position-relative mb-3">
-      <label for="exampleSelect" class="form-label" style="color:black;">Agama</label>
-      <select  formControlName="agama" [(ngModel)]="agama"  id="exampleSelect" class="form-select">
-        <option value="">-PILIH-</option>
-        <option value="ISLAM" >ISLAM</option>
-        <option value="KRISTEN" >KRISTEN</option>
-        <option value="HINDU" >HINDU</option>
-        <option value="BUDHA" >BUDHA</option>
-        <option value="KATOLIK" >KATOLIK</option>
-        <option value="TIDAK TAHU" >TIDAK TAHU</option>
-        <!-- <option value="2" >KONGHUCU</option>
+                <label
+                  for="exampleSelect"
+                  class="form-label"
+                  style="color: black"
+                  >Agama</label
+                >
+                <select
+                  formControlName="agama"
+                  [(ngModel)]="agama"
+                  id="exampleSelect"
+                  class="form-select"
+                >
+                  <option value="">-PILIH-</option>
+                  <option value="ISLAM">ISLAM</option>
+                  <option value="KRISTEN">KRISTEN</option>
+                  <option value="HINDU">HINDU</option>
+                  <option value="BUDHA">BUDHA</option>
+                  <option value="KATOLIK">KATOLIK</option>
+                  <option value="TIDAK TAHU">TIDAK TAHU</option>
+                  <!-- <option value="2" >KONGHUCU</option>
       
         <option value="2" >KEPERCAYAAN</option>
          -->
-
-      </select>
-    </div>
-</form>
-
-  </div>
-
-
-  <div class="col-md-2">
-    <form [formGroup]="profileForm" >    
-    <div class="position-relative mb-3">
-      <label for="exampleSelect" class="form-label" style="color:black;">Marital</label>
-      <select   formControlName="marital" [(ngModel)]="marital"  id="exampleSelect" class="form-select">
-        <option value="">-PILIH-</option>
-        <option value="KAWIN" >KAWIN</option>
-        <option value="PERNAH KAWIN" >PERNAH KAWIN</option>
-        <option value="TIDAK KAWIN" >TIDAK KAWIN</option>
-        <option value="TIDAK TAHU" >TIDAK TAHU</option>
-        
-
-      </select>
-    </div>
-</form>
-
-  </div>
-
-
-  <div class="col-md-2">
-    <form [formGroup]="profileForm" >
-    <div class="position-relative mb-3">
-      <label for="exampleSelect" class="form-label" style="color:black;">Pendidikan</label>
-      <select  formControlName="pendidikan" [(ngModel)]="pendidikan"  id="exampleSelect" class="form-select">
-        <option value="">-PILIH-</option>
-        <option value="SD" >SD</option>
-        <option value="SMP" >SMP</option>
-        <option value="SMA" >SMA</option>
-        <option value="S1" >S1</option>
-        <option value="S2" >S2</option>
-        <option value="S3" >S3</option>
-        <option value="TIDAK TAHU" >TIDAK TAHU</option>
-      </select>
-    </div>
-</form>
-
-  </div>
-
-
-  <div class="col-md-3">
-    <form [formGroup]="profileForm" > 
-    <div class="position-relative mb-3">
-      <label for="exampleSelect" class="form-label" style="color:black;">Pekerjaan</label>
-      <select  formControlName="perkerjaan" [(ngModel)]="perkerjaan"  id="exampleSelect" class="form-select">
-        <option value="">-PILIH-</option>
-        <option value="WIRAUSAHA" >WIRAUSAHA</option>
-        <option value="PEGAWAI NEGERI" >PEGAWAI NEGERI</option>
-        <option value="PEGAWAI SWASTA" >PEGAWAI SWASTA</option>
-        <option value="PENSIUNAN" >PENSIUNAN</option>
-        <option value="IRT" >IRT</option>
-        <option value="PELAJAR" >PELAJAR</option>
-        <option value="PENGAJAR" >PENGAJAR</option>
-
-        <option value="DOKTER" >DOKTER</option>
-        <option value="TNI" >TNI</option>
-        <option value="POLISI" >POLISI</option>
-        <option value="TIDAK TAHU" >TIDAK TAHU</option>
-      </select>
-    </div>
-</form>
-
-  </div>
-  <div class="col-md-3">
-    <form [formGroup]="profileForm" >
-    <div class="position-relative mb-3">
-      <label for="exampleSelect" class="form-label" style="color:black;">Golongan darah</label>
-      <select formControlName="golda" [(ngModel)]="golda" id="exampleSelect" class="form-select">
-        <option value="">-PILIH-</option>
-        <option value="A" >A</option>
-        <option value="B" >B</option>
-        <option value="O" >O</option>
-        <option value="AB" >AB</option>
-        <option value="Tidak Tahu" >Tidak Tahu</option>
-      </select>
-    </div>
-</form>
-
-  </div>
-
-
-
-
-</div>
-
-<div class="row">
-              <div class="col-md-2">
-                <div class="d-grid gap-2">
-                <button class="mb-2 me-2 btn-pill btn btn-danger" [disabled]="!profileForm.valid" (click)="Hapus()">Hapus
-                </button>
+                </select>
               </div>
-              </div>
-
-              <div class="col-md-2">
-                <div class="d-grid gap-2">
-                <button class="mb-2 me-2 btn-pill btn btn-warning" (click)="Batal()">Batal
-                </button>
-              </div>
-            </div>
-
-              <div class="col-md-3">
-                <div class="d-grid gap-2">
-                <button class="mb-2 me-2 btn-pill btn btn-focus"  [disabled]="!profileForm.valid" (click)="edituser()">Edit
-                </button>
-              </div>
-              </div>
-              <div class="col-md-5">
-                <div class="d-grid gap-2">
-                <button class="mb-2 me-2 btn-pill btn btn-info"  [disabled]="!profileForm.valid" (click)="simpan()">Simpan
-                </button>
-              </div>
-              </div>
-             
+            </form>
           </div>
-         
-         
-        
-    
-       
 
+          <div class="col-md-2">
+            <form [formGroup]="profileForm">
+              <div class="position-relative mb-3">
+                <label
+                  for="exampleSelect"
+                  class="form-label"
+                  style="color: black"
+                  >Marital</label
+                >
+                <select
+                  formControlName="marital"
+                  [(ngModel)]="marital"
+                  id="exampleSelect"
+                  class="form-select"
+                >
+                  <option value="">-PILIH-</option>
+                  <option value="KAWIN">KAWIN</option>
+                  <option value="PERNAH KAWIN">PERNAH KAWIN</option>
+                  <option value="TIDAK KAWIN">TIDAK KAWIN</option>
+                  <option value="TIDAK TAHU">TIDAK TAHU</option>
+                  <option value="CERAI">CERAI</option>
+                  <option value="CERAI MATI">CERAI MATI</option>
+                </select>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-md-2">
+            <form [formGroup]="profileForm">
+              <div class="position-relative mb-3">
+                <label
+                  for="exampleSelect"
+                  class="form-label"
+                  style="color: black"
+                  >Pendidikan</label
+                >
+                <select
+                  formControlName="pendidikan"
+                  [(ngModel)]="pendidikan"
+                  id="exampleSelect"
+                  class="form-select"
+                >
+                  <option value="">-PILIH-</option>
+                  <option value="SD">SD</option>
+                  <option value="SMP">SMP</option>
+                  <option value="SMA">SMA</option>
+                  <option value="D3">D3</option>
+                  <option value="S1">S1</option>
+                  <option value="S2">S2</option>
+                  <option value="S3">S3</option>
+                  <option value="TIDAK TAHU">TIDAK TAHU</option>
+                </select>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-md-3">
+            <form [formGroup]="profileForm">
+              <div class="position-relative mb-3">
+                <label
+                  for="exampleSelect"
+                  class="form-label"
+                  style="color: black"
+                  >Pekerjaan</label
+                >
+                <select
+                  formControlName="perkerjaan"
+                  [(ngModel)]="perkerjaan"
+                  id="exampleSelect"
+                  class="form-select"
+                >
+                  <option value="">-PILIH-</option>
+                  <option *ngFor="let x of tgolonganlab" value="{{ x.metode }}">
+                    {{ x.metode }}
+                  </option>
+                  <option value="WIRAUSAHA">WIRAUSAHA</option>
+                  <option value="PEGAWAI NEGERI">PEGAWAI NEGERI</option>
+                  <option value="PEGAWAI SWASTA">PEGAWAI SWASTA</option>
+                  <option value="PENSIUNAN">PENSIUNAN</option>
+                  <option value="IRT">IRT</option>
+                  <option value="PELAJAR">PELAJAR</option>
+                  <option value="PENGAJAR">PENGAJAR</option>
+                  <option value="PETANI">PETANI</option>
+                  <option value="BURUH HARIAN LEPAS">BURUH HARIAN LEPAS</option>
+                  <option value="PEDAGANG">PEDAGANG</option>
+                  <option value="DOKTER">DOKTER</option>
+                  <option value="TNI">TNI</option>
+                  <option value="POLISI">POLISI</option>
+                  <option value="TIDAK TAHU">TIDAK TAHU</option>
+                </select>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-3">
+            <form [formGroup]="profileForm">
+              <div class="position-relative mb-3">
+                <label
+                  for="exampleSelect"
+                  class="form-label"
+                  style="color: black"
+                  >Golongan darah</label
+                >
+                <select
+                  formControlName="golda"
+                  [(ngModel)]="golda"
+                  id="exampleSelect"
+                  class="form-select"
+                >
+                  <option value="">-PILIH-</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="O">O</option>
+                  <option value="AB">AB</option>
+                  <option value="Tidak Tahu">Tidak Tahu</option>
+                </select>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2">
+            <div class="d-grid gap-2">
+              <button
+                class="mb-2 me-2 btn-pill btn btn-danger"
+                [disabled]="!profileForm.valid"
+                (click)="Hapus()"
+              >
+                Hapus
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-2">
+            <div class="d-grid gap-2">
+              <button
+                class="mb-2 me-2 btn-pill btn btn-warning"
+                (click)="Batal()"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="d-grid gap-2">
+              <button
+                class="mb-2 me-2 btn-pill btn btn-focus"
+                [disabled]="!profileForm.valid"
+                (click)="edituser()"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="d-grid gap-2">
+              <button
+                class="mb-2 me-2 btn-pill btn btn-info"
+                [disabled]="!profileForm.valid"
+                (click)="simpan()"
+              >
+                Simpan
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- <button type="button" class="btn btn-info btn-lg"  routerLink="/dashboards/management">SIMPAN</button> -->
-  
-      
     </div>
- 
-
   </div>
 
-
-
-
   <div class="col-md-5">
-    <br>
-    
-    <div class="card main-card mb-3"  style="height: 650px;
-    overflow-y: scroll;">
+    <br />
+
+    <div class="card main-card mb-3" style="height: 650px; overflow-y: scroll">
       <div class="card-header">
-      <span style="color: #e83e8c;">Cari Pasien</span>
-      <br>
+        <span style="color: #e83e8c">Cari Pasien</span>
+        <br />
 
-      <div class="row">
-        <div class="col-md-6">
-          
-          <input type="text" class="form-control ms-2"  (keyup)="caripass($event)" >
-         
+        <div class="row">
+          <div class="col-md-6">
+            <input
+              type="text"
+              class="form-control ms-2"
+              (keyup)="caripass($event)"
+            />
+          </div>
+          <div class="col-md-4">
+            <select
+              [(ngModel)]="caripas"
+              style="font-size: 12px"
+              class="form-select"
+              (change)="onChange($event.target.value)"
+            >
+              <option value="2">Nama</option>
+              <option value="3">Norm</option>
+              <option value="4">Nik</option>
+              <option value="5">NoHp</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <b style="color: black">{{ totalpasien }}</b>
+          </div>
         </div>
-        <div class="col-md-4">
-          <select [(ngModel)]="caripas" style="font-size:12px;" class="form-select" (change)="onChange($event.target.value)">
-            <option value="2" >Nama</option>
-            <option value="3" >Norm</option>
-            <option value="4" >Nik</option>
-            <option value="5" >NoHp</option>
-          </select>
-        </div>
-        <div class="col-md-2">
+      </div>
 
-        <b style="color: black;">{{totalpasien}}</b></div>
-       </div>
-       </div>
-
-      
-    
-      <table class="table"  >
-
+      <table class="table">
         <thead>
           <tr>
-           
             <th scope="col">Norm</th>
-            <th scope="col" >Pasien</th>
-            <th scope="col" >Act</th>
+            <th scope="col">Pasien</th>
+            <th scope="col">Act</th>
           </tr>
         </thead>
-     
-        <tbody >
-          
+
+        <tbody>
           <tr *ngFor="let x of tpasien">
-         
-            <td style="font-size: 12px;color: black;">
-              
-{{x.norm}} 
+            <td style="font-size: 12px; color: black">
+              {{ x.norm }}
             </td>
-            <td  style="font-size: 12px;color: black;">
-              {{x.pasien}}
-             <p style="font-size: 10px;">{{x.alamat}}</p>
+            <td style="font-size: 12px; color: black">
+              {{ x.pasien }}
+              <p style="font-size: 10px">{{ x.alamat }}</p>
             </td>
             <td>
-               <div class="badge bg-pill bg-danger btn" (click)="pilihpasien(x.norm,
-               x.kdkelurahan,
-               x.pasien,
-               x.tgllahir,
-               x.jeniskelamin,
-               x.statusmarital,
-               x.agama,
-               x.alamat,
-               x.alamatsekarang,
-               x.hp,
-               x.kdasuransi,
-               x.noasuransi,
-               x.tandapengenal,
-               x.nopengenal,
-               x.tempatlahir,
-               x.golda, x.aktif,x.pendidikan,x.perkerjaan,x.subdis_name,x.kdpanggil,x.usia)">PILIH</div>
-             
-               <div class="badge bg-pill bg-info btn" (click)="riwayatpas(x.norm,
-               x.kdkelurahan,
-               x.pasien,
-               x.tgllahir,
-               x.jeniskelamin,
-               x.statusmarital,
-               x.agama,
-               x.alamat,
-               x.alamatsekarang,
-               x.hp,
-               x.kdasuransi,
-               x.noasuransi,
-               x.tandapengenal,
-               x.nopengenal,
-               x.tempatlahir,
-               x.golda, x.aktif,x.pendidikan,x.perkerjaan,x.subdis_name,content2)">RIWAYAT</div>
+              <div
+                class="badge bg-pill bg-danger btn"
+                (click)="
+                  pilihpasien(
+                    x.norm,
+                    x.kdkelurahan,
+                    x.pasien,
+                    x.tgllahir,
+                    x.jeniskelamin,
+                    x.statusmarital,
+                    x.agama,
+                    x.alamat,
+                    x.alamatsekarang,
+                    x.hp,
+                    x.kdasuransi,
+                    x.noasuransi,
+                    x.tandapengenal,
+                    x.nopengenal,
+                    x.tempatlahir,
+                    x.golda,
+                    x.aktif,
+                    x.pendidikan,
+                    x.perkerjaan,
+                    x.subdis_name,
+                    x.kdpanggil,
+                    x.usia,
+                    x
+                  )
+                "
+              >
+                PILIH
+              </div>
 
-               <button class=" badge btn btn-success" style="font-size: 10px; padding:5px 8px 5px 8px;" (click)="kycPasien(x)" [disabled]="x.tandapengenal != 'KTP' || x.nopengenal.length != 16">KYC Satu Sehat</button>
+              <div
+                class="badge bg-pill bg-warning btn"
+                (click)="gantinorm(x); shownorm(pindahnorm)"
+              >
+                Ganti Norm
+              </div>
 
+              <div
+                class="badge bg-pill bg-info btn"
+                (click)="
+                  riwayatpas(
+                    x.norm,
+                    x.kdkelurahan,
+                    x.pasien,
+                    x.tgllahir,
+                    x.jeniskelamin,
+                    x.statusmarital,
+                    x.agama,
+                    x.alamat,
+                    x.alamatsekarang,
+                    x.hp,
+                    x.kdasuransi,
+                    x.noasuransi,
+                    x.tandapengenal,
+                    x.nopengenal,
+                    x.tempatlahir,
+                    x.golda,
+                    x.aktif,
+                    x.pendidikan,
+                    x.perkerjaan,
+                    x.subdis_name,
+                    content2
+                  )
+                "
+              >
+                RIWAYAT
+              </div>
 
-                        
-          
-
-
-
-
+              <button
+                class="badge btn btn-success"
+                style="font-size: 10px; padding: 5px 8px 5px 8px"
+                (click)="kycPasien(x)"
+                [disabled]="
+                  x.tandapengenal != 'KTP' || x.nopengenal.length != 16
+                "
+              >
+                KYC Satu Sehat
+              </button>
             </td>
           </tr>
-
-        
-          
         </tbody>
       </table>
     </div>
-  
-    
   </div>
-  
+
   <ng-template #content2 let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h6 class="modal-title">Riwayat Periksa</h6>
-      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
-      </button>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="d('Cross click')"
+      ></button>
     </div>
-    <div  class="modal-body">
-
-
-      <table  class="align-middle mb-0 table table-borderless table-striped table-hover">
+    <div class="modal-body">
+      <table
+        class="align-middle mb-0 table table-borderless table-striped table-hover"
+      >
         <thead>
           <tr>
-         
             <th><b>Tgl Priksa</b></th>
-          
-            <th ><b>Poliklinik</b></th>
+
+            <th><b>Poliklinik</b></th>
           </tr>
         </thead>
         <tbody>
-       
-          <tr  *ngFor="let x of triwayat">
- 
-            <td style="font-size: 12px;color:black">
-      
-             {{x.tglpriksa}}
+          <tr *ngFor="let x of triwayat">
+            <td style="font-size: 12px; color: black">
+              {{ x.tglpriksa }}
             </td>
-         
-       
-            <td style="font-size: 12px;color:black">
-      
-              {{x.nampoli}}
-             </td>
-          
+
+            <td style="font-size: 12px; color: black">
+              {{ x.nampoli }}
+            </td>
           </tr>
-
-
-         
         </tbody>
       </table>
-
-
     </div>
   </ng-template>
   <ng-template #contentnorm let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h6 class="modal-title">Edit Nomor Rekam Medik <b> {{norm}}</b></h6>
-      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
-      </button>
-    
+      <h6 class="modal-title">
+        Edit Nomor Rekam Medik <b> {{ norm }}</b>
+      </h6>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="d('Cross click')"
+      ></button>
     </div>
 
-    <div  class="modal-body">
-   
-      <input [(ngModel)]="normbaru"   placeholder="Norm Baru" type="text" class="form-control">
-     
+    <div class="modal-body">
+      <input
+        [(ngModel)]="normbaru"
+        placeholder="Norm Baru"
+        type="text"
+        class="form-control"
+      />
     </div>
     <div class="modal-footer">
-      <button class="mb-2 me-2 btn-pill btn btn-info"  (click)="ganti()">Ganti
+      <button class="mb-2 me-2 btn-pill btn btn-info" (click)="ganti()">
+        Ganti
       </button>
     </div>
   </ng-template>
-  <ng-template #content let-c="close" let-d="dismiss">
+
+  <ng-template #pindahnorm let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h6 class="modal-title">{{namalurah}}</h6>
-      <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
+      <h6 class="modal-title">
+        Pindah Nomor Rekam Medik <b> {{ norm }}</b>
+      </h6>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="d('Cross click')"
+      ></button>
+    </div>
+
+    <div class="modal-body">
+      <label for="">Norm Lama</label>
+      <input
+        [(ngModel)]="norm"
+        placeholder="Norm Lama"
+        type="text"
+        class="form-control"
+      />
+    </div>
+    <div class="modal-body">
+      <label for="">Norm Baru</label>
+      <input
+        [(ngModel)]="normbaru"
+        placeholder="Norm Baru"
+        (keyup)="caripas = 3; isShowPasienList = true; caripass($event)"
+        type="text"
+        class="form-control"
+      />
+    </div>
+
+    <div class="modal-body" *ngIf="isShowPasienList">
+      <table class="table table-hover">
+        <tr *ngFor="let x of tpasien">
+          <td style="font-size: 12px; color: black">
+            {{ x.norm }}
+          </td>
+          <td style="font-size: 12px; color: black">
+            {{ x.nopengenal }}
+          </td>
+          <td style="font-size: 12px; color: black">
+            {{ x.pasien }}
+            <p style="font-size: 10px">{{ x.alamat }}</p>
+          </td>
+          <td>
+            <div
+              class="badge bg-pill bg-danger btn"
+              (click)="pilihnorm(x.norm)"
+            >
+              Pilih
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button class="mb-2 me-2 btn-pill btn btn-info" (click)="updatenorm()">
+        Ganti
       </button>
     </div>
-    <div  *ngIf="namalurah === 'Propinsi'" class="modal-body">
-         <div class="position-relative mb-3">
-            <label for="exampleEmail" class="form-label">Cari Propinsi</label>
-            <input [(ngModel)]="caripro"   type="text" class="form-control" (keyup)="cariprox($event)">
-          </div>
+  </ng-template>
+</div>
 
-          <table  class="align-middle mb-0 table table-borderless table-striped table-hover">
-            <thead>
-              <tr>
-             
-                <th>Propinsi</th>
-              
-                <th class="text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-           
-              <tr  *ngFor="let x of tpropinsi">
-     
-                <td style="font-size: 12px;color:black">
-          
-                 {{x.prov_name}}
-                </td>
-             
-           
-                <td class="text-center">
-         
-                  <div class="badge bg-pill bg-warning"  (click)="pilihpro(x.prov_id,x.prov_name)"  >P</div>             
-                  
-                </td>
-              </tr>
-
-
-             
-            </tbody>
-          </table>
+<ng-template #content7 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h6 class="modal-title">Data Kepersetaan BPJS</h6>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="position-relative mb-3">
+      <label for="exampleSelect" class="form-label" style="color: black"
+        >Cari</label
+      >
+      <select
+        [(ngModel)]="carinobpjs"
+        id="exampleSelect"
+        class="form-select"
+        (change)="caribynikandno($event.target.value)"
+      >
+        <option value="noka">NOKA</option>
+        <option value="nik">NIK</option>
+      </select>
     </div>
 
+    <div style="text-align: center" *ngIf="showloading">
+      <div
+        class="loader-wrapper d-flex justify-content-center align-items-center"
+      >
+        <div class="loader">
+          <div class="ball-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <p>Nama : {{ namabpjs }}</p>
+    <p>Tgl Akhir Berlaku : {{ tglakhirberlaku }}</p>
+    <p>Jenis kelas : {{ jeniskelas }}</p>
+    <p>Peserta : {{ jenispeserta }}</p>
+    <p>Prolanis : {{ pstProl }}</p>
+    <p>Prb : {{ pstPrb }}</p>
 
-    <div  *ngIf="namalurah === 'Kabupaten'" class="modal-body">
-      <div class="position-relative mb-3">
-         <label for="exampleEmail" class="form-label">Cari Kabupaten</label>
-         <input    type="text" class="form-control" (keyup)="carikab($event)">
-       </div>
-
-       <table  class="align-middle mb-0 table table-borderless table-striped table-hover">
-         <thead>
-           <tr>
-          
-             <th>Kabupaten</th>
-           
-             <th class="text-center">Actions</th>
-           </tr>
-         </thead>
-         <tbody>
-        
-           <tr  *ngFor="let x of tkab">
-  
-             <td style="font-size: 12px;color:black">
-       
-              {{x.city_name}}
-             </td>
-          
-        
-             <td class="text-center">
-      
-               <div class="badge bg-pill bg-warning"  (click)="pilihkab(x.city_id,x.city_name)"  >P</div>             
-               
-             </td>
-           </tr>
-
-
-          
-         </tbody>
-       </table>
- </div>
-
-
-   
-
- <div  *ngIf="namalurah === 'kecamatan'" class="modal-body">
-  <div class="position-relative mb-3">
-     <label for="exampleEmail" class="form-label">Cari kecamatan</label>
-     <input    type="text" class="form-control" (keyup)="carikec($event)">
-   </div>
-
-   <table  class="align-middle mb-0 table table-borderless table-striped table-hover">
-     <thead>
-       <tr>
-      
-         <th>kecamatan</th>
-       
-         <th class="text-center">Actions</th>
-       </tr>
-     </thead>
-     <tbody>
-    
-       <tr  *ngFor="let x of tkec">
-
-         <td style="font-size: 12px;color:black">
-   
-          {{x.dis_name}}
-         </td>
-      
-    
-         <td class="text-center">
-  
-           <div class="badge bg-pill bg-warning"  (click)="pilihkec(x.dis_id,x.dis_name)"  >P</div>             
-           
-         </td>
-       </tr>
-
-
-      
-     </tbody>
-   </table>
-</div>
-
-
-
-
-
-<div  *ngIf="namalurah === 'Kelurahan'" class="modal-body">
-  <div class="position-relative mb-3">
-     <label for="exampleEmail" class="form-label">Cari Kelurahan</label>
-     <input    type="text" class="form-control" (keyup)="carikel($event)">
-   </div>
-
-   <table  class="align-middle mb-0 table table-borderless table-striped table-hover">
-     <thead>
-       <tr>
-      
-         <th>Kelurahan</th>
-       
-         <th class="text-center">Actions</th>
-       </tr>
-     </thead>
-     <tbody>
-    
-       <tr  *ngFor="let x of tkelurahan">
-
-         <td style="font-size: 12px;color:black">
-   
-          {{x.subdis_name}}
-         </td>
-      
-    
-         <td class="text-center">
-  
-           <div class="badge bg-pill bg-warning"  (click)="pilihkel(x.subdis_id,x.subdis_name)"  >P</div>             
-           
-         </td>
-       </tr>
-
-
-      
-     </tbody>
-   </table>
-</div>
-
-
-  </ng-template>
-
-
-</div>
+    <p>FKTP : {{ kdprovider }} | {{ namaprovider }}</p>
+    <p>Status Kartu : {{ ketaktif }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+      PILIH
+    </button>
+  </div>
+</ng-template>

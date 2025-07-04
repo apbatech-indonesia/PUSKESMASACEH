@@ -1,0 +1,163 @@
+<form (ngSubmit)="doSubmit()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h3>Skrining Mandiri Tuberkulosis Bayi</h3>
+  </div>
+
+  <!-- Pertanyaan 1 -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">
+      Apakah anak Anda pernah atau sedang mengalami batuk yang tidak
+      sembuh-sembuh selama lebih dari 2 minggu?
+    </label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="batukLebih2Minggu"
+        [value]="'true'"
+        [(ngModel)]="model.batukLebih2Minggu"
+        id="batuk-ya"
+      />
+      <label class="form-check-label" for="batuk-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="batukLebih2Minggu"
+        [value]="'false'"
+        [(ngModel)]="model.batukLebih2Minggu"
+        id="batuk-tidak"
+      />
+      <label class="form-check-label" for="batuk-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Pertanyaan 2 -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">
+      Apakah berat badan anak Anda turun tanpa alasan yang jelas?
+    </label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="beratBadanTurun"
+        [value]="'true'"
+        [(ngModel)]="model.beratBadanTurun"
+        id="turun-ya"
+      />
+      <label class="form-check-label" for="turun-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="beratBadanTurun"
+        [value]="'false'"
+        [(ngModel)]="model.beratBadanTurun"
+        id="turun-tidak"
+      />
+      <label class="form-check-label" for="turun-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Pertanyaan 3 -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">
+      Apakah berat badan anak Anda tidak naik dalam dua bulan terakhir?
+    </label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="beratBadanTidakNaik"
+        [value]="'true'"
+        [(ngModel)]="model.beratBadanTidakNaik"
+        id="tidak-naik-ya"
+      />
+      <label class="form-check-label" for="tidak-naik-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="beratBadanTidakNaik"
+        [value]="'false'"
+        [(ngModel)]="model.beratBadanTidakNaik"
+        id="tidak-naik-tidak"
+      />
+      <label class="form-check-label" for="tidak-naik-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Pertanyaan 4 -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">
+      Apakah anak Anda tidak atau berkurang nafsu makan?
+    </label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="nafsuMakanBerkurang"
+        [value]="'true'"
+        [(ngModel)]="model.nafsuMakanBerkurang"
+        id="nafsu-ya"
+      />
+      <label class="form-check-label" for="nafsu-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="nafsuMakanBerkurang"
+        [value]="'false'"
+        [(ngModel)]="model.nafsuMakanBerkurang"
+        id="nafsu-tidak"
+      />
+      <label class="form-check-label" for="nafsu-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Pertanyaan 5 -->
+  <div class="mb-4">
+    <label class="form-label fw-bold">
+      Apakah Anda tinggal serumah atau sering bertemu dengan orang yang
+      menderita Tuberkulosis (TBC) atau batuk berkepanjangan?
+    </label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="kontakTBC"
+        [value]="'true'"
+        [(ngModel)]="model.kontakTBC"
+        id="kontak-ya"
+      />
+      <label class="form-check-label" for="kontak-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="kontakTBC"
+        [value]="'false'"
+        [(ngModel)]="model.kontakTBC"
+        id="kontak-tidak"
+      />
+      <label class="form-check-label" for="kontak-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <button
+    class="btn btn-primary mt-3 form-pemeriksaan-pkg"
+    [disabled]="isLoading"
+  >
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

@@ -1,29 +1,29 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatCardModule } from '@angular/material/card';
-import { MatStepperModule } from '@angular/material/stepper';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
-import { PageTitleModule } from 'src/app/Layout/Components/page-title/page-title.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatButtonModule } from "@angular/material/button";
+import { MatInputModule } from "@angular/material/input";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatSelectModule } from "@angular/material/select";
+import { MatSliderModule } from "@angular/material/slider";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatCardModule } from "@angular/material/card";
+import { MatStepperModule } from "@angular/material/stepper";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatIconModule } from "@angular/material/icon";
+import { PageTitleModule } from "src/app/Layout/Components/page-title/page-title.module";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
-import { KebidananComponent } from './Kebidanan.component';
-import { KebidananRoutingModule } from './Kebidanan-routing.module';
+import { KebidananComponent } from "./Kebidanan.component";
+import { KebidananRoutingModule } from "./Kebidanan-routing.module";
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgSelectModule } from "@ng-select/ng-select";
+import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
+import { MatDatepickerModule } from "@angular/material/datepicker";
 
 @NgModule({
   imports: [
@@ -34,7 +34,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     NgMultiSelectDropDownModule.forRoot(),
     FontAwesomeModule,
     KebidananRoutingModule,
-    FormsModule, ReactiveFormsModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatCheckboxModule,
     MatCheckboxModule,
     MatButtonModule,
@@ -51,7 +52,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatIconModule,
     PageTitleModule,
   ],
-  declarations: [KebidananComponent]
+  declarations: [KebidananComponent],
+  exports: [KebidananComponent],
 })
-
-export class KebidananModule { }
+export class KebidananModule {}

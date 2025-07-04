@@ -29,6 +29,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {TreeModule} from 'primeng/tree'
 import {ButtonModule} from 'primeng/button';
+import { MasterSpecimenModule } from 'src/app/satusehat/satusehat-master/master-specimen/master-specimen.module';
 
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ import {ButtonModule} from 'primeng/button';
     PageTitleModule,
     TreeModule,
     ButtonModule,
+    MasterSpecimenModule
   ],
   declarations: [kasirlabComponent]
 })

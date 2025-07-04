@@ -1,54 +1,78 @@
-
-
-
 <div class="row">
   <div class="col-md-4">
     <div class="card main-card mb-3">
-      <div class="card-header">
-      Overview Laporan Rekam Medik
-      </div>
+      <div class="card-header">Overview Laporan Rekam Medik</div>
       <div class="card-body">
-     
         <div class="d-inline-block" ngbDropdown>
-
-      
-    
-           <div ngbDropdownMenu class="dropdown-menu-rounded">
-      
-            <button class="dropdown-item" (click)="laprj('Buku Register Pendaftaran RJ')">Buku Register Pendaftaran RJ</button>
-            <button class="dropdown-item" (click)="laprj('Laporan Diagnosa Periode')">Laporan Diagnosa Periode</button>
-
+          <div ngbDropdownMenu class="dropdown-menu-rounded">
+            <button
+              class="dropdown-item"
+              (click)="laprj('Buku Register Pendaftaran RJ')"
+            >
+              Buku Register Pendaftaran RJ
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="laprj('Laporan Pasien MJKN')"
+            >
+              Laporan Pasien MJKN
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="laprj('Laporan Diagnosa Periode')"
+            >
+              Laporan Diagnosa Periode
+            </button>
+            <button class="dropdown-item" (click)="laprj('Rekap')">
+              Laporan Rekap Periode
+            </button>
             <div class="dropdown-divider"></div>
-            <button class="dropdown-item"  (click)="laprj('Laporan 10 Besar Penyakit')">Laporan 10 Besar Penyakit</button>
-            <button class="dropdown-item"  (click)="laprj('Laporan 10 Besar Tindakan')">Laporan 10 Besar Tindakan</button>
-            <button class="dropdown-item"   (click)="laprj('Laporan Pasien Baru')">Laporan Pasien Baru</button>
-          </div>
-          </div>
+            <button
+              class="dropdown-item"
+              (click)="laprj('Laporan 10 Besar Penyakit')"
+            >
+              Laporan 10 Besar Penyakit
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="laprj('Laporan 10 Besar Tindakan')"
+            >
+              Laporan 10 Besar Tindakan
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="laprj('Laporan Obat Terbanyak')"
+            >
+              Laporan Obat Terbanyak
+            </button>
 
+            <button
+              class="dropdown-item"
+              (click)="laprj('Laporan Pasien Baru')"
+            >
+              Laporan Pasien Baru
+            </button>
+          </div>
+        </div>
       </div>
-    
-      
     </div>
- 
-   
   </div>
   <div class="col-md-8">
     <div class="card main-card mb-3">
       <div class="card-header">
-      {{judul}}
+        {{ judul }}
       </div>
-    
 
       <div class="card-body">
         <div class="position-relative mb-3">
           <label for="exampleEmail" class="form-label">Tgl Dari</label>
-          <input [(ngModel)]="tgldari"  type="date" class="form-control">
+          <input [(ngModel)]="tgldari" type="date" class="form-control" />
         </div>
         <div class="position-relative mb-3">
           <label for="exampleEmail" class="form-label">Tgl Sampai</label>
-          <input [(ngModel)]="tglsampai"  type="date" class="form-control">
+          <input [(ngModel)]="tglsampai" type="date" class="form-control" />
         </div>
-      
+
         <!-- <div *ngIf="judul ==='Pendapatan RJ/Konsumen'  || judul ==='Kunjungan Rawat Jalan' || judul ==='Pendapatan Rawat Jalan' || judul ==='Jasa Dokter' || judul === 'Per Komponen'  ">
         <div class="position-relative mb-3">
           <label for="exampleSelect" class="form-label"  style="color:black">Poliklinik</label>
@@ -71,8 +95,7 @@
 
       </div> -->
 
-
-      <!-- <div *ngIf="judul ==='Jasa Dokter' ">
+        <!-- <div *ngIf="judul ==='Jasa Dokter' ">
 
          
         <div class="position-relative mb-3">
@@ -85,49 +108,119 @@
 
       </div> -->
 
+        <div *ngIf="judul === 'Buku Register Pendaftaran RJ'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatkunjungan()"
+          >
+            Lihat Register RJ
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatkunjunganexcel()"
+          >
+            Export Excel Register
+          </button>
+        </div>
 
-     
+        <div *ngIf="judul === 'Laporan Pasien MJKN'">
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Sumber</label>
+            <select [(ngModel)]="filterMjkn" class="form-control">
+              <option value="mjkn">MJKN</option>
+              <option value="non-mjkn">Non MJKN</option>
+            </select>
+          </div>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-success"
+            (click)="lihatmjkn(filterMjkn)"
+          >
+            Laporan
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatmjknex(filterMjkn)"
+          >
+            Export Laporan
+          </button>
+        </div>
 
-      <div *ngIf="judul ==='Buku Register Pendaftaran RJ' ">
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatkunjungan()">Lihat Register RJ
-        </button>
-        <button class="mb-2 me-2 btn-pill btn btn-info"  (click)="lihatkunjunganexcel()">Export Excel Register
-        </button>
+        <div *ngIf="judul === 'Laporan Diagnosa Periode'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatdiagp()"
+          >
+            Lihat Diagnosa RJ
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatdiagpex()"
+          >
+            Export Excel Diagnosa RJ
+          </button>
+        </div>
+        <div *ngIf="judul === 'Laporan 10 Besar Penyakit'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatdiagp10()"
+          >
+            Lihat 10 Besar Penyakit
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatdiagp10ex()"
+          >
+            Export Excel
+          </button>
+        </div>
+
+        <div *ngIf="judul === 'Laporan 10 Besar Tindakan'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihattindak10()"
+          >
+            Lihat 10 Besar Tindakan
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihattindak10ex()"
+          >
+            Export Excel
+          </button>
+        </div>
+        <div *ngIf="judul === 'Laporan Pasien Baru'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatpasienbaru()"
+          >
+            Lihat Pasien Baru
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatpasienbaruex()"
+          >
+            Export Excel
+          </button>
+        </div>
+
+        <div *ngIf="judul === 'Rekap'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatrekap()"
+          >
+            Lihat Rekap
+          </button>
+        </div>
+
+        <div *ngIf="judul === 'Laporan Obat Terbanyak'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatrekapo()"
+          >
+            Laporan Obat Terbanyak
+          </button>
+        </div>
       </div>
-   
-      <div *ngIf="judul ==='Laporan Diagnosa Periode' ">
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatdiagp()">Lihat Diagnosa RJ
-        </button>
-        <button class="mb-2 me-2 btn-pill btn btn-info"  (click)="lihatdiagpex()">Export Excel Diagnosa RJ
-        </button>
-      </div>
-      <div *ngIf="judul ==='Laporan 10 Besar Penyakit' ">
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatdiagp10()">Lihat 10 Besar Penyakit
-        </button>
-        <button class="mb-2 me-2 btn-pill btn btn-info"  (click)="lihatdiagp10ex()">Export Excel 
-        </button>
-      </div>
-      
-      <div *ngIf="judul ==='Laporan 10 Besar Tindakan' ">
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihattindak10()">Lihat 10 Besar Tindakan
-        </button>
-        <button class="mb-2 me-2 btn-pill btn btn-info"  (click)="lihattindak10ex()">Export Excel 
-        </button>
-      </div>
-      <div *ngIf="judul ==='Laporan Pasien Baru' ">
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatpasienbaru()">Lihat Pasien Baru
-        </button>
-        <button class="mb-2 me-2 btn-pill btn btn-info"  (click)="lihatpasienbaruex()">Export Excel 
-        </button>
-      </div>
-      </div>
-    
     </div>
-  
-    
   </div>
-
-
-
-  
 </div>

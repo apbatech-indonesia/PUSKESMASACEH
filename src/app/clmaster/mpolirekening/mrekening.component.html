@@ -1,163 +1,239 @@
-<!-- 
-<div class="app-page-title">
-  <div class="page-title-wrapper">
-    <div class="page-title-heading">
-      <div class="page-title-icon">
-        <i class="icon {{icon}}"></i>
-      </div>
-      <div>
-        {{heading}}
-        <div class="page-title-subheading">
-          {{subheading}}
-        </div>
-      </div>
-    </div>
-    <div class="page-title-actions">
-  
-    </div>
-  </div>
-</div> -->
-
-
-
 <div class="row">
   <div class="col-md-6">
     <div class="card main-card mb-3">
-      <div class="card-header">
-       Master Rekening COA
+      <div class="card-header">Master Perkerjaan</div>
+      <div class="card-body">
+        <div class="position-relative mb-3">
+          <label for="exampleEmail" class="form-label">Nama Perkerjaan</label>
+          <input
+            [(ngModel)]="np"
+            placeholder="Nama Perkerjaan"
+            type="text"
+            class="form-control"
+          />
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="d-grid gap-2">
+              <button
+                class="mb-2 me-2 btn-pill btn btn-danger"
+                (click)="batalx()"
+              >
+                Batal
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="d-grid gap-2">
+              <button
+                class="mb-2 me-2 btn-pill btn btn-info"
+                (click)="simpanj()"
+              >
+                Simpan
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Nama</th>
+
+          <th scope="col">Act</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of tgolonganlab">
+          <td style="font-size: 11px; color: black; font-weight: bold">
+            {{ x.metode }}
+          </td>
+
+          <td>
+            <div
+              class="badge bg-pill bg-warning"
+              (click)="pilihsubjek(x.kdmetode, x.metode)"
+            >
+              E
+            </div>
+
+            <div
+              class="badge bg-pill bg-danger"
+              (click)="deletesubjekx(x.kdmetode, x.metode)"
+            >
+              X
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- <div class="row">
+  <div class="col-md-6">
+    <div class="card main-card mb-3">
+      <div class="card-header">Master Rekening COA</div>
       <div class="card-body">
         <form [formGroup]="rekeningform">
           <div class="position-relative mb-3">
             <label for="exampleEmail" class="form-label">Nama Rekening</label>
-            <input formControlName="namarekening"  [(ngModel)]="namarekening"   placeholder="Nama Rekening" type="text" class="form-control">
+            <input
+              formControlName="namarekening"
+              [(ngModel)]="namarekening"
+              placeholder="Nama Rekening"
+              type="text"
+              class="form-control"
+            />
           </div>
           <div class="position-relative mb-3">
             <label for="exampleEmail" class="form-label">No Rekening</label>
-            <input formControlName="norekening"  [(ngModel)]="norekening"   placeholder="No Rekening" type="text" class="form-control">
+            <input
+              formControlName="norekening"
+              [(ngModel)]="norekening"
+              placeholder="No Rekening"
+              type="text"
+              class="form-control"
+            />
           </div>
-        
+
           <div class="position-relative mb-3">
             <label for="exampleSelect" class="form-label">COA Rekening</label>
-            <select  formControlName="kdcoarek"  [(ngModel)]="kdcoarek" id="exampleSelect" class="form-select">
-              <option value="" >-PILIH-</option>
-              
-              <option *ngFor="let x of coadetail" value="{{x.kdakun}}" >{{x.akun}}</option>
-              
+            <select
+              formControlName="kdcoarek"
+              [(ngModel)]="kdcoarek"
+              id="exampleSelect"
+              class="form-select"
+            >
+              <option value="">-PILIH-</option>
+
+              <option *ngFor="let x of coadetail" value="{{ x.kdakun }}">
+                {{ x.akun }}
+              </option>
             </select>
           </div>
-</form>
-       
-        
-       
-         
-       
-            <div class="row">
-              <div class="col-md-4">
-                <div class="d-grid gap-2">
-                <button class="mb-2 me-2 btn-pill btn btn-danger"   (click)="batal()">Batal
-                </button>
-              </div>
-              </div>
+        </form>
 
-              <div class="col-md-4">
-                <div class="d-grid gap-2">
-                <button class="mb-2 me-2 btn-pill btn btn-info"  [disabled]="!rekeningform.valid" *ngIf="!showedit" (click)="simpan()">Simpan
-                </button>
-              </div>
-              </div>
-              <div class="col-md-4">
-                <div class="d-grid gap-2">
-                <button class="mb-2 me-2 btn-pill btn btn-focus"  [disabled]="!rekeningform.valid"  *ngIf="showedit" (click)="edituser()">Edit
-                </button>
-              </div>
-              </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="d-grid gap-2">
+              <button
+                class="mb-2 me-2 btn-pill btn btn-danger"
+                (click)="batal()"
+              >
+                Batal
+              </button>
+            </div>
           </div>
-         
-         
-        <!-- </form> -->
-       
 
-       
+          <div class="col-md-4">
+            <div class="d-grid gap-2">
+              <button
+                class="mb-2 me-2 btn-pill btn btn-info"
+                [disabled]="!rekeningform.valid"
+                *ngIf="!showedit"
+                (click)="simpan()"
+              >
+                Simpan
+              </button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="d-grid gap-2">
+              <button
+                class="mb-2 me-2 btn-pill btn btn-focus"
+                [disabled]="!rekeningform.valid"
+                *ngIf="showedit"
+                (click)="edituser()"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+        </div>
 
-      </div>
-      <!-- <button type="button" class="btn btn-info btn-lg"  routerLink="/dashboards/management">SIMPAN</button> -->
-   
       
+      </div>
+    
     </div>
- 
-   
   </div>
   <div class="col-md-6">
     <div class="card main-card mb-3">
-      <div class="card-header">
-        Data Rekening
-      </div>
+      <div class="card-header">Data Rekening</div>
       <div class="p-2">
         <div class="row">
-          <label for="staticEmail" class="col-auto col-form-label">Cari Nama:</label>
+          <label for="staticEmail" class="col-auto col-form-label"
+            >Cari Nama:</label
+          >
           <div class="col-auto">
-            <input type="text" class="form-control ms-2" [(ngModel)]="cariuser" (keyup)="cariuserx($event)" >
-           
+            <input
+              type="text"
+              class="form-control ms-2"
+              [(ngModel)]="cariuser"
+              (keyup)="cariuserx($event)"
+            />
           </div>
         </div>
       </div>
 
       <div class="card-body">
         <div class="example-container">
-          
-
           <div class="main-card mb-3 card">
-            
             <div class="table-responsive">
-              <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+              <table
+                class="align-middle mb-0 table table-borderless table-striped table-hover"
+              >
                 <thead>
                   <tr>
-                 
                     <th>Rekening</th>
                     <th>No Rekening</th>
                     <th>COA</th>
-                  
+
                     <th class="text-center">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-
                   <tr *ngFor="let a of trek">
-         
-                    <td style="font-size: 12px;color:black">
-                      {{a.namarekening}}
-                     
+                    <td style="font-size: 12px; color: black">
+                      {{ a.namarekening }}
                     </td>
-                    <td >
-                      {{a.norekening}}
+                    <td>
+                      {{ a.norekening }}
                     </td>
-                    <td style="font-size: 12px;color:black">
-                      {{a.akun}}
+                    <td style="font-size: 12px; color: black">
+                      {{ a.akun }}
                     </td>
-                  
+
                     <td class="text-center">
-                      <div class="badge bg-pill bg-warning" (click)="edit(a.norekening,a.namarekening,a.kdcoa,a.akun)">E</div>
-                      <div class="badge bg-pill bg-danger" (click)="delet(a.norekening,a.namarekening,a.kdcoa,a.akun)">X</div>
+                      <div
+                        class="badge bg-pill bg-warning"
+                        (click)="
+                          edit(a.norekening, a.namarekening, a.kdcoa, a.akun)
+                        "
+                      >
+                        E
+                      </div>
+                      <div
+                        class="badge bg-pill bg-danger"
+                        (click)="
+                          delet(a.norekening, a.namarekening, a.kdcoa, a.akun)
+                        "
+                      >
+                        X
+                      </div>
                     </td>
                   </tr>
-
-
-                 
                 </tbody>
               </table>
             </div>
-           
           </div>
-
-
         </div>
       </div>
-    
     </div>
-  
-    
   </div>
-
-  
-</div>
+</div> -->

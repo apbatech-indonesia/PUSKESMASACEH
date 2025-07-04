@@ -1,12 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { tulisermComponent } from './tuliserm/tuliserm.component';
-import { BukuKontrasepsiComponent } from './Kebidanan/BukuKontrasepsi/BukuKontrasepsi.component';
 import { tulisermriComponent } from './tulisermri/tulisermri.component';
 import { kajianperawatComponent } from './Assesment/kajianperawat/kajianperawat.component';
-import { TulisAncComponent } from '../tulis-anc/tulis-anc.component';
-import { TulisMtbmComponent } from '../tulis-mtbm/tulis-mtbm.component';
-import { TulisMtbsComponent } from '../tulis-mtbs/tulis-mtbs.component';
+import { satusehatAncModule } from '../satusehat/satusehat-anc/satusehat-anc.module';
+import { satusehatMtbsModule } from '../satusehat/satusehat-mtbs/satusehat-mtbs.module';
+import { satusehatMtbmModule } from '../satusehat/satusehat-mtbm/satusehat-mtbm.module';
+import { satusehatImunisasiModule } from '../satusehat/satusehat-imunisasi/satusehat-imunisasi.module';
+import { TulisAncComponent } from '../satusehat/satusehat-anc/form/tulis-anc.component';
+import { TulisMtbmComponent } from '../satusehat/satusehat-mtbm/form/tulis-mtbm.component';
+import { TulisMtbsComponent } from '../satusehat/satusehat-mtbs/form/tulis-mtbs.component';
+import { TulisImunisasiComponent } from '../satusehat/satusehat-imunisasi/form/tulis-imunisasi.component';
+import { satusehatSkriningPtmModule } from '../satusehat/satusehat-skrining-ptm/satusehat-skrining-ptm.module';
+import { TulisSkriningPtmComponent } from '../satusehat/satusehat-skrining-ptm/form/tulis-skrining-ptm.component';
+import { satusehatGiziModule } from '../satusehat/satusehat-gizi/satusehat-gizi.module';
+import { TulisSatuSehatGiziComponent } from '../satusehat/satusehat-gizi/form/tulis-satusehat-gizi.component';
+import { TulisSatuSehatGigiComponent } from '../satusehat/satusehat-gigi/form/tulis-satusehat-gigi.component';
+import { satusehatGigiModule } from '../satusehat/satusehat-gigi/satusehat-gigi.module';
 
 const routes: Routes = [
   {path:'tuliserm/:notrans/:kddokter/:dariklik/:norm',component:tulisermComponent},
@@ -15,6 +25,10 @@ const routes: Routes = [
   {path:'tulis-anc/:notrans/:kddokter/:dariklik/:norm',component:TulisAncComponent},
   {path:'tulis-mtbm/:notrans/:kddokter/:dariklik/:norm',component:TulisMtbmComponent},
   {path:'tulis-mtbs/:notrans/:kddokter/:dariklik/:norm',component:TulisMtbsComponent},
+  {path:'tulis-imunisasi/:notrans/:kddokter/:dariklik/:norm',component:TulisImunisasiComponent},
+  {path:'tulis-skrining-ptm/:notrans/:kddokter/:dariklik/:norm',component:TulisSkriningPtmComponent},
+  {path:'tulis-gizi/:notrans/:kddokter/:dariklik/:norm',component:TulisSatuSehatGiziComponent},
+  {path:'tulis-gigi/:notrans/:kddokter/:dariklik/:norm',component:TulisSatuSehatGigiComponent},
   { 
     path: 'Kebidanan/BukuKontrasepsi/:tanggal_mulai/:tanggal_akhir', 
     loadChildren:() => import('./Kebidanan/BukuKontrasepsi/Cetak/Cetak.module').then(m => m.CetakModule )
@@ -207,15 +221,31 @@ const routes: Routes = [
     },
     {
       path : 'satusehat-anc',
-      loadChildren:() => import('./satusehat-anc/ermdokterrm.module').then(m => m.ermdokterrmModule )
+      loadChildren:() => satusehatAncModule
     },
     {
       path : 'satusehat-mtbs',
-      loadChildren:() => import('./satusehat-mtbs/ermdokterrm.module').then(m => m.ermdokterrmModule )
+      loadChildren:() => satusehatMtbsModule
     },
     {
       path : 'satusehat-mtbm',
-      loadChildren:() => import('./satusehat-mtbs/ermdokterrm.module').then(m => m.ermdokterrmModule )
+      loadChildren:() => satusehatMtbmModule
+    },
+    {
+      path : 'satusehat-imunisasi',
+      loadChildren:() => satusehatImunisasiModule
+    },
+    {
+      path : 'satusehat-skrining-ptm',
+      loadChildren:() => satusehatSkriningPtmModule
+    },
+    {
+      path: 'satusehat-gizi',
+      loadChildren: () => satusehatGiziModule
+    },
+    {
+      path: 'satusehat-gigi',
+      loadChildren: () => satusehatGigiModule
     },
     {
       path : 'kasirfarmasibelir',
@@ -253,11 +283,14 @@ const routes: Routes = [
     {
       path : 'laporanfarmasi',
       loadChildren:() => import('./laporanfarmasi/laporanfarmasi.module').then(m => m.laporanfarmasiModule )
-    }
-    ,
+    },
     {
       path : 'laporanrm',
       loadChildren:() => import('./laporanrm/laporanrm.module').then(m => m.laporanrmModule )
+    },
+    {
+      path : 'laporanantrol',
+      loadChildren:() => import('./laporanantrol/laporanantrol.module').then(m => m.laporanantrolModule )
     },
     {
       path:'bayarpiutangrj',
@@ -355,6 +388,10 @@ loadChildren:() => import ('./adjustobat/adjustobat.module').then(m => m.adjusto
       {
         path:'laporanri',
         loadChildren:() => import ('./laporanri/laporanri.module').then(m => m.llaporanriModule)
+      },
+      {
+        path : 'laporanskrining',
+        loadChildren:() => import('./skrininglaporan/skrininglaporan.module').then(m => m.skrininglaporanModule )
       }
   ]
 }

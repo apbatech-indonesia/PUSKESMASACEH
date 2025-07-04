@@ -1,306 +1,552 @@
-
-
-
 <div class="row">
   <div class="col-md-4">
     <div class="card main-card mb-3">
-      <div class="card-header">
-      Overview Farmasi Laborat
-      </div>
+      <div class="card-header">Overview Farmasi Laborat</div>
       <div class="card-body">
-
-        
         <div class="d-inline-block" ngbDropdown>
+          <button
+            class="btn-wide me-md-2 btn btn-outline-focus btn-sm"
+            type="button"
+            ngbDropdownToggle
+          >
+            Laporan Stok
+          </button>
+          <div ngbDropdownMenu class="dropdown-menu-rounded">
+            <button
+              class="dropdown-item"
+              (click)="pilih('Laporan Posisi Stok')"
+            >
+              Posisi Stok & Stok Opname
+            </button>
+            <button class="dropdown-item" (click)="pilih('Laporan Kartu Stok')">
+              Laporan Kartu Stok
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Laporan Stok Expried')"
+            >
+              Laporan Stok Expired
+            </button>
 
-      
-          <button class="btn-wide me-md-2 btn btn-outline-focus btn-sm"
-            type="button" ngbDropdownToggle> Laporan Stok</button>
-           <div ngbDropdownMenu class="dropdown-menu-rounded">
-          
-            <button class="dropdown-item"  (click)="pilih('Laporan Posisi Stok')"> Posisi Stok & Stok Opname</button>
-            <button class="dropdown-item"  (click)="pilih('Laporan Kartu Stok')" >Laporan Kartu Stok</button>
-            <button class="dropdown-item"  (click)="pilih('Laporan Stok Expried')" >Laporan Stok Expired</button>
-
-            <button class="dropdown-item" (click)="pilih('Laporan Stok Opname')" >Laporan Stok Opname</button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Laporan Stok Opname')"
+            >
+              Laporan Stok Opname
+            </button>
           </div>
+        </div>
+
+        <hr />
+        <div class="d-inline-block" ngbDropdown>
+          <button
+            class="btn-wide me-md-2 btn btn-outline-focus btn-sm"
+            type="button"
+            ngbDropdownToggle
+          >
+            Laporan Pembelian/Hutang
+          </button>
+          <div ngbDropdownMenu class="dropdown-menu-rounded">
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pembelian By Suplier')"
+            >
+              Pembelian By Suplier
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pembelian By Suplier Detail')"
+            >
+              Pembelian By Suplier Detail
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pembelian By Barang')"
+            >
+              Pembelian By Barang
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pembelian By Barang Detail')"
+            >
+              Pembelian By Barang Detail
+            </button>
+
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pembelian Hutang/Jatuh Tempo')"
+            >
+              Pembelian Hutang/Jatuh Tempo
+            </button>
           </div>
+        </div>
 
-<hr>
-          <div class="d-inline-block" ngbDropdown>
-
-      
-            <button class="btn-wide  me-md-2 btn btn-outline-focus btn-sm"
-              type="button" ngbDropdownToggle> Laporan Pembelian/Hutang</button>
-             <div ngbDropdownMenu class="dropdown-menu-rounded">
-            
-              <button class="dropdown-item"  (click)="pilih('Pembelian By Suplier')" >Pembelian By Suplier</button>
-              <button class="dropdown-item"  (click)="pilih('Pembelian By Suplier Detail')" >Pembelian By Suplier Detail</button>
-              <button class="dropdown-item"  (click)="pilih('Pembelian By Barang')">Pembelian By Barang</button>
-              <button class="dropdown-item" (click)="pilih('Pembelian By Barang Detail')">Pembelian By Barang Detail</button>
-         
-              <button class="dropdown-item" (click)="pilih('Pembelian Hutang/Jatuh Tempo')">Pembelian Hutang/Jatuh Tempo</button>
-            </div>
-            </div>
-       
-            <hr>
-            <div class="d-inline-block" ngbDropdown>
-  
-        
-              <button class="btn-wide  me-md-2 btn btn-outline-focus btn-sm"
-                type="button" ngbDropdownToggle> Laporan Penjualan</button>
-               <div ngbDropdownMenu class="dropdown-menu-rounded">
-              
-                <button class="dropdown-item" (click)="pilih('Penjualan By Pasien')">Penjualan By Pasien</button>
-                <button class="dropdown-item" (click)="pilih('Penjualan By Obat')">Penjualan By Obat</button>
-                <button class="dropdown-item" (click)="pilih('Penjualan By Dokter')">Penjualan By Dokter</button>
-                <button class="dropdown-item" (click)="pilih('Laba Rugi Farmasi')">Laba Rugi Farmasi</button>
-           
-              
-              </div>
-              </div>
-              <hr>
-              <div class="d-inline-block" ngbDropdown>
-    
-          
-                <button class="btn-wide  me-md-2 btn btn-outline-focus btn-sm"
-                  type="button" ngbDropdownToggle> Laporan Retur</button>
-                 <div ngbDropdownMenu class="dropdown-menu-rounded">
-                
-                  <button class="dropdown-item" (click)="pilih('Laporan Retur Pembelian')">Laporan Retur Pembelian</button>
-                  <button class="dropdown-item" (click)="pilih('Laporan Retur Penjualan')">Laporan Retur Penjualan</button>
-               
-             
-                
-                </div>
-                </div>
+        <hr />
+        <div class="d-inline-block" ngbDropdown>
+          <button
+            class="btn-wide me-md-2 btn btn-outline-focus btn-sm"
+            type="button"
+            ngbDropdownToggle
+          >
+            Laporan Pemakaian Obat
+          </button>
+          <div ngbDropdownMenu class="dropdown-menu-rounded">
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pemakaian Obat By Pasien')"
+            >
+              Pemakaian Obat By Pasien
+            </button>
+            <button class="dropdown-item" (click)="pilih('Pemakaian Obat By Obat')">
+              Pemakaian Obat By Obat
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pemakaian Obat By Dokter')"
+            >
+              Pemakaian Obat By Dokter
+            </button>
+            <button class="dropdown-item" (click)="pilih('Laba Rugi Farmasi')">
+              Laba Rugi Farmasi
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pemakaian Obat Terbanyak')"
+            >
+              Pemakaian Obat Terbanyak
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pemakaian Obat ISPA-Pneumonia')"
+            >
+              Pemakaian Obat ISPA-Pneumonia
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pemakaian Obat ISPA-Pneumonia Antibiotik')"
+            >
+              Pemakaian Obat ISPA-Pneumonia Antibiotik
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Pemakaian Obat Diare Non-Spesifik')"
+            >
+              Pemakaian Obat Diare Non-Spesifik
+            </button>
+          </div>
+        </div>
+        <hr />
+        <div class="d-inline-block" ngbDropdown>
+          <button
+            class="btn-wide me-md-2 btn btn-outline-focus btn-sm"
+            type="button"
+            ngbDropdownToggle
+          >
+            Laporan Retur
+          </button>
+          <div ngbDropdownMenu class="dropdown-menu-rounded">
+            <button
+              class="dropdown-item"
+              (click)="pilih('Laporan Retur Pembelian')"
+            >
+              Laporan Retur Pembelian
+            </button>
+            <button
+              class="dropdown-item"
+              (click)="pilih('Laporan Retur Pemakaian Obat')"
+            >
+              Laporan Retur Pemakaian Obat
+            </button>
+          </div>
+        </div>
       </div>
-    
-      
     </div>
- 
-   
   </div>
   <div class="col-md-8">
     <div class="card main-card mb-3">
       <div class="card-header">
-      {{judul}}
+        {{ judul }}
       </div>
-    
 
       <div class="card-body">
-        <div *ngIf="judul === 'Laporan Kartu Stok' || judul === 'Laporan Stok Expried' 
-        || judul === 'Pembelian By Suplier' || judul === 'Pembelian By Suplier Detail' 
-        || judul === 'Pembelian By Barang' || judul === 'Pembelian By Barang Detail' 
-        || judul === 'Pembelian Hutang/Jatuh Tempo' || judul === 'Laporan Retur Pembelian'
-        || judul === 'Laporan Retur Penjualan' || judul === 'Penjualan By Pasien' ||
-         judul === 'Penjualan By Obat' || judul === 'Penjualan By Dokter' || judul === 'Laba Rugi Farmasi'">
-
-        <div class="position-relative mb-3">
-          <label for="exampleEmail" class="form-label">Tgl Dari</label>
-          <input [(ngModel)]="tgldari"  type="date" class="form-control">
-        </div>
-        <div class="position-relative mb-3">
-          <label for="exampleEmail" class="form-label">Tgl Sampai</label>
-          <input [(ngModel)]="tglsampai"  type="date" class="form-control">
-        </div>
-      
-        </div>
-
-       
-   
-
-        <div *ngIf="judul === 'Laporan Kartu Stok'  ">
-
-
-        <div class="position-relative mb-3">
-          <label for="exampleSelect" class="form-label"  style="color:black">Obat</label>
-          <ng-select     style="border-radius: 5px;"  [items]="tobat" bindLabel="obatx"  bindValue="kdobat" 
-          placeholder="Obat" [(ngModel)]="nmobat" (keyup)="cariobat($event)"  >
-          </ng-select>
-        </div>
-
-      </div>
-      
-        <div class="position-relative mb-3"  *ngIf="judul !=='Laporan Retur Penjualan' && judul !=='Laporan Retur Pembelian' && judul !=='Penjualan By Pasien' && judul !=='Penjualan By Obat' && judul !=='Penjualan By Dokter' && judul !=='Laba Rugi Farmasi'">
-          <label for="exampleSelect" class="form-label"  style="color:black">Gudang</label>
-          <select [(ngModel)]="kdgudang" id="exampleSelect" class="form-select" >
-            <option  value="1" ><b >SEMUA</b></option>
-            <option  *ngFor="let x of tgudang" value="{{x.kdgudang}}" ><b  >{{x.gudang}}</b></option>
-           </select>
-        </div>
-
-        <div  *ngIf="judul === 'Pembelian By Suplier' || judul ===  'Pembelian By Suplier Detail' || judul === 'Pembelian Hutang/Jatuh Tempo'  ">
-        <div class="position-relative mb-3">
-          <label for="exampleSelect" class="form-label"  style="color:black">Suplier</label>
-          <ng-select     style="border-radius: 5px;"  [items]="tsup" bindLabel="nama"  bindValue="kdsup" 
-          placeholder="Obat" [(ngModel)]="kdsup" (keyup)="carisup($event)"  >
-          </ng-select>
-        </div>
-
-
-        <form>
-       
-          <div class="position-relative form-check" >
-            <label class="form-label form-check-label">
-              <input type="checkbox"  [checked]="myVar1" (change)="myVar1 = !myVar1"   class="form-check-input">
-              Filter Suplier    
-            </label>
+        <div
+          *ngIf="
+            judul === 'Laporan Kartu Stok' ||
+            judul === 'Laporan Stok Expried' ||
+            judul === 'Pembelian By Suplier' ||
+            judul === 'Pembelian By Suplier Detail' ||
+            judul === 'Pembelian By Barang' ||
+            judul === 'Pembelian By Barang Detail' ||
+            judul === 'Pembelian Hutang/Jatuh Tempo' ||
+            judul === 'Laporan Retur Pembelian' ||
+            judul === 'Laporan Retur Pemakaian Obat' ||
+            judul === 'Pemakaian Obat By Pasien' ||
+            judul === 'Pemakaian Obat By Obat' ||
+            judul === 'Pemakaian Obat By Dokter' ||
+            judul === 'Laba Rugi Farmasi' ||
+            judul === 'Pemakaian Obat Terbanyak' ||
+            judul === 'Pemakaian Obat ISPA-Pneumonia' ||
+            judul === 'Pemakaian Obat ISPA-Pneumonia Antibiotik' ||
+            judul === 'Pemakaian Obat Diare Non-Spesifik'
+          "
+        >
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Tgl Dari</label>
+            <input [(ngModel)]="tgldari" type="date" class="form-control" />
           </div>
-        </form>
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Tgl Sampai</label>
+            <input [(ngModel)]="tglsampai" type="date" class="form-control" />
+          </div>
+        </div>
 
-   
+        <div *ngIf="judul === 'Laporan Kartu Stok'">
+          <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label" style="color: black"
+              >Obat</label
+            >
+            <ng-select
+              style="border-radius: 5px"
+              [items]="tobat"
+              bindLabel="obatx"
+              bindValue="kdobat"
+              placeholder="Obat"
+              [(ngModel)]="nmobat"
+              (keyup)="cariobat($event)"
+            >
+            </ng-select>
+          </div>
+        </div>
 
+        <div
+          class="position-relative mb-3"
+          *ngIf="
+            judul !== 'Laporan Retur Pemakaian Obat' &&
+            judul !== 'Laporan Retur Pembelian' &&
+            judul !== 'Pemakaian Obat By Pasien' &&
+            judul !== 'Pemakaian Obat By Obat' &&
+            judul !== 'Pemakaian Obat By Dokter' &&
+            judul !== 'Laba Rugi Farmasi' &&
+            judul !== 'Pemakaian Obat Terbanyak' &&
+            judul !== 'Pemakaian Obat ISPA-Pneumonia' &&
+            judul !== 'Pemakaian Obat ISPA-Pneumonia Antibiotik' &&
+            judul !== 'Pemakaian Obat Diare Non-Spesifik'
+          "
+        >
+          <label for="exampleSelect" class="form-label" style="color: black"
+            >Gudang</label
+          >
+          <select [(ngModel)]="kdgudang" id="exampleSelect" class="form-select">
+            <option value="1"><b>SEMUA</b></option>
+            <option *ngFor="let x of tgudang" value="{{ x.kdgudang }}">
+              <b>{{ x.gudang }}</b>
+            </option>
+          </select>
+        </div>
 
-        <!-- <input
+        <div
+          *ngIf="
+            judul === 'Pembelian By Suplier' ||
+            judul === 'Pembelian By Suplier Detail' ||
+            judul === 'Pembelian Hutang/Jatuh Tempo'
+          "
+        >
+          <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label" style="color: black"
+              >Suplier</label
+            >
+            <ng-select
+              style="border-radius: 5px"
+              [items]="tsup"
+              bindLabel="nama"
+              bindValue="kdsup"
+              placeholder="Obat"
+              [(ngModel)]="kdsup"
+              (keyup)="carisup($event)"
+            >
+            </ng-select>
+          </div>
+
+          <form>
+            <div class="position-relative form-check">
+              <label class="form-label form-check-label">
+                <input
+                  type="checkbox"
+                  [checked]="myVar1"
+                  (change)="myVar1 = !myVar1"
+                  class="form-check-input"
+                />
+                Filter Suplier
+              </label>
+            </div>
+          </form>
+
+          <!-- <input
   type="checkbox"
   [checked]="saveUsername"
   (change)="saveUsername = !saveUsername"/>
    -->
-      </div>
-      
-
-      <form>
-       
-        <div class="position-relative form-check"  *ngIf="judul === 'Penjualan By Pasien'">
-          <label class="form-label form-check-label">
-            <input type="checkbox"  [checked]="myVar2" (change)="myVar2 = !myVar2"   class="form-check-input">
-            Detail
-          </label>
         </div>
-      </form>
 
+        <form>
+          <div
+            class="position-relative form-check"
+            *ngIf="judul === 'Pemakaian Obat By Pasien'"
+          >
+            <label class="form-label form-check-label">
+              <input
+                type="checkbox"
+                [checked]="myVar2"
+                (change)="myVar2 = !myVar2"
+                class="form-check-input"
+              />
+              Detail
+            </label>
+          </div>
+        </form>
 
+        <div *ngIf="judul === 'Laporan Posisi Stok'">
+          <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatstok()">
+            Lihat Stok
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatstokex()"
+          >
+            Export Excel Stok
+          </button>
 
-
-      <div *ngIf="judul ==='Laporan Posisi Stok' ">
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatstok()">Lihat Stok
-        </button>
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatstokex()">Export Excel Stok
-        </button>
-
-        <!-- <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatstokexpried()">Lihat Stok Opname
+          <!-- <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatstokexpried()">Lihat Stok Opname
         </button>
         <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatstokexpriedex()">Export Excel Stok Opname
         </button> -->
-
-
-      </div>
-
-      <div *ngIf="judul ==='Laporan Kartu Stok' ">
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatkartustok()">Lihat Kartu Stok
-        </button>
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatkartustokex()">Export Excel kartu Stok
-        </button>
-      </div>
- 
-      <div *ngIf="judul ==='Laporan Stok Expried' ">
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatstokexpried()">Lihat Stok Expried
-        </button>
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatstokexpriedex()">Export Excel Stok Expried
-        </button>
-      </div>
-
-      <div *ngIf="judul ==='Laporan Stok Opname' ">
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatstokopname()">Lihat Stok Opname
-        </button>
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="lihatstokopnameex()">Export Excel Stok Opname
-        </button>
-      </div>
-
-      <div  *ngIf="judul === 'Pembelian By Suplier'  ">
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="belibysup()">Pembelian by Suplier
-        </button>
-        <button class="mb-2 me-2 btn-pill btn btn-info" (click)="belibysupex()">Export Excel Pembelian by Suplier
-        </button>
-
         </div>
 
-        <div  *ngIf="judul === 'Pembelian By Suplier Detail'  ">
-          <button class="mb-2 me-2 btn-pill btn btn-info" (click)="belibysupd()">Pembelian by Suplier Detail
+        <div *ngIf="judul === 'Laporan Kartu Stok'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatkartustok()"
+          >
+            Lihat Kartu Stok
           </button>
-          <button class="mb-2 me-2 btn-pill btn btn-info" (click)="belibysupdex()">Export Excel Pembelian by Suplier Detail
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatkartustokex()"
+          >
+            Export Excel kartu Stok
           </button>
-  
-          </div>
+        </div>
 
-          <div  *ngIf="judul === 'Pembelian By Barang'  ">
-            <button class="mb-2 me-2 btn-pill btn btn-info" (click)="belibybarang()">Pembelian by Barang 
-            </button>
-            <button class="mb-2 me-2 btn-pill btn btn-info" (click)="belibybarangex()">Export Excel Pembelian by Barang 
-            </button>
-    
-            </div>
+        <div *ngIf="judul === 'Laporan Stok Expried'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatstokexpried()"
+          >
+            Lihat Stok Expried
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatstokexpriedex()"
+          >
+            Export Excel Stok Expried
+          </button>
+        </div>
 
+        <div *ngIf="judul === 'Laporan Stok Opname'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatstokopname()"
+          >
+            Lihat Stok Opname
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatstokopnameex()"
+          >
+            Export Excel Stok Opname
+          </button>
+        </div>
 
-            <div  *ngIf="judul === 'Pembelian By Barang Detail'  ">
-              <button class="mb-2 me-2 btn-pill btn btn-info" (click)="belibybarangd()">Pembelian by Barang Detail
-              </button>
-              <button class="mb-2 me-2 btn-pill btn btn-info" (click)="belibybarangdex()">Export Excel Pembelian by Barang Detail
-              </button>
-      
-              </div>
+        <div *ngIf="judul === 'Pembelian By Suplier'">
+          <button class="mb-2 me-2 btn-pill btn btn-info" (click)="belibysup()">
+            Pembelian by Suplier
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="belibysupex()"
+          >
+            Export Excel Pembelian by Suplier
+          </button>
+        </div>
 
-              <div  *ngIf="judul === 'Pembelian Hutang/Jatuh Tempo'  ">
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="belibybarangdt()">Hutang Jatuh Tempo
-                </button>
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="belibybarangdtex()">Export Excel Hutang Jatuh Tempo
-                </button>
+        <div *ngIf="judul === 'Pembelian By Suplier Detail'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="belibysupd()"
+          >
+            Pembelian by Suplier Detail
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="belibysupdex()"
+          >
+            Export Excel Pembelian by Suplier Detail
+          </button>
+        </div>
+
+        <div *ngIf="judul === 'Pembelian By Barang'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="belibybarang()"
+          >
+            Pembelian by Barang
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="belibybarangex()"
+          >
+            Export Excel Pembelian by Barang
+          </button>
+        </div>
+
+        <div *ngIf="judul === 'Pembelian By Barang Detail'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="belibybarangd()"
+          >
+            Pembelian by Barang Detail
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="belibybarangdex()"
+          >
+            Export Excel Pembelian by Barang Detail
+          </button>
+        </div>
+
+        <div *ngIf="judul === 'Pembelian Hutang/Jatuh Tempo'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="belibybarangdt()"
+          >
+            Hutang Jatuh Tempo
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="belibybarangdtex()"
+          >
+            Export Excel Hutang Jatuh Tempo
+          </button>
+        </div>
+
+        <div *ngIf="judul === 'Laporan Retur Pembelian'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="returpembelian()"
+          >
+            Retur Pembelian
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="returpembelianex()"
+          >
+            Export Excel Retur Pembelian
+          </button>
+        </div>
+
+        <div *ngIf="judul === 'Laporan Retur Pemakaian Obat'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="returpenjualan()"
+          >
+            Retur Penjualan
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="returpenjualanex()"
+          >
+            Export Excel Retur Penjualan
+          </button>
+        </div>
+
+        <div *ngIf="judul === 'Pemakaian Obat By Pasien'">
+          <button class="mb-2 me-2 btn-pill btn btn-info" (click)="penjualan()">
+            Laporan Pemakaian Obat
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="penjualanex()"
+          >
+            Export Excel Laporan Pemakaian Obat
+          </button>
+        </div>
         
-                </div>
+        <div *ngIf="['Pemakaian Obat ISPA-Pneumonia','Pemakaian Obat ISPA-Pneumonia Antibiotik', 'Pemakaian Obat Diare Non-Spesifik'].includes(judul) ">
+          <button class="mb-2 me-2 btn-pill btn btn-info" (click)="laporanobat(judul)">
+            {{ judul }}
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="laporanobat(judul, true)"
+          >
+            Export Excel {{ judul }}
+          </button>
+        </div>
 
+        <div *ngIf="judul === 'Pemakaian Obat By Obat'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="penjualanobat()"
+          >
+            Laporan Pemakaian Obat By Obat
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="penjualanobatex()"
+          >
+            Export Excel Laporan Pemakaian Obat By Obat
+          </button>
+        </div>
 
-                
-              <div  *ngIf="judul === 'Laporan Retur Pembelian'  ">
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="returpembelian()">Retur Pembelian
-                </button>
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="returpembelianex()">Export Excel Retur Pembelian
-                </button>
-              </div>
+        <div *ngIf="judul === 'Pemakaian Obat By Dokter'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="penjualandokter()"
+          >
+            Laporan Pemakaian Obat By Dokter
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="penjualandokterex()"
+          >
+            Export Excel Laporan Pemakaian Obat By Dokter
+          </button>
+        </div>
 
-              <div  *ngIf="judul === 'Laporan Retur Penjualan'  ">
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="returpenjualan()">Retur Penjualan
-                </button>
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="returpenjualanex()">Export Excel Retur Penjualan
-                </button>
-              </div>
+        <div *ngIf="judul === 'Laba Rugi Farmasi'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="labarugiobat()"
+          >
+            Laporan Laba Rugi Farmasi
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="labarugiobatex()"
+          >
+            Export Excel Laba Rugi Farmasi
+          </button>
+        </div>
 
-              <div  *ngIf="judul === 'Penjualan By Pasien'  ">
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="penjualan()">Laporan Penjualan
-                </button>
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="penjualanex()">Export Excel Laporan Penjualan
-                </button>
-              </div>
-
-
-              <div  *ngIf="judul === 'Penjualan By Obat'  ">
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="penjualanobat()">Laporan Penjualan By Obat
-                </button>
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="penjualanobatex()">Export Excel Laporan Penjualan By Obat
-                </button>
-              </div>
-
-              
-              <div  *ngIf="judul === 'Penjualan By Dokter'  ">
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="penjualandokter()">Laporan Penjualan By Dokter
-                </button>
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="penjualandokterex()">Export Excel Laporan Penjualan By Dokter
-                </button>
-              </div>
-
-              <div  *ngIf="judul === 'Laba Rugi Farmasi'  ">
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="labarugiobat()">Laporan Laba Rugi Farmasi
-                </button>
-                <button class="mb-2 me-2 btn-pill btn btn-info" (click)="labarugiobatex()">Export Excel Laba Rugi Farmasi
-                </button>
-              </div>
+        <div *ngIf="judul === 'Pemakaian Obat Terbanyak'">
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatrekapo()"
+          >
+            Pemakaian Obat Terbanyak
+          </button>
+        </div>
       </div>
-    
     </div>
-  
-    
   </div>
-
-
-
-  
 </div>

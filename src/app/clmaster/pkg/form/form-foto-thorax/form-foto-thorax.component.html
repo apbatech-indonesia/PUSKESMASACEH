@@ -1,0 +1,21 @@
+<form (ngSubmit)="submitFormFotoThorax()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Pemeriksaan Foto Thorax</h5>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Hasil Foto Thorax:</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="modelFotoThorax.hasil"
+      name="hasilFotoThorax"
+    />
+  </div>
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

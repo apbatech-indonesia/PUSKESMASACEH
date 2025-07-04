@@ -1,0 +1,44 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h3>Kanker Leher Rahim</h3>
+  </div>
+
+  <!-- Hubungan Intim -->
+  <div class="mb-4">
+    <label class="form-label fw-bold"
+      >Pernah melakukan hubungan intim/seksual?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hubunganIntimKanker"
+        value="true"
+        [(ngModel)]="model.hubunganIntimKanker"
+        id="hubunganIntimKanker-ya"
+      />
+      <label class="form-check-label" for="hubunganIntimKanker-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hubunganIntimKanker"
+        value="false"
+        [(ngModel)]="model.hubunganIntimKanker"
+        id="hubunganIntimKanker-tidak"
+      />
+      <label class="form-check-label" for="hubunganIntimKanker-tidak"
+        >Tidak</label
+      >
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

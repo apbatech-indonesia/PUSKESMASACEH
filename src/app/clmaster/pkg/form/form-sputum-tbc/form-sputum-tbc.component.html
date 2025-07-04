@@ -1,0 +1,65 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Pemeriksaan Tuberkulosis</h5>
+  </div>
+  <div class="mb-4">
+    <!-- Metode Pemeriksaan -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Metode Pemeriksaan:</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="metode-tcm"
+          [(ngModel)]="model.metodePemeriksaan.tcm"
+          name="metodeTCM"
+        />
+        <label class="form-check-label" for="metode-tcm">TCM</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="metode-bta"
+          [(ngModel)]="model.metodePemeriksaan.bta"
+          name="metodeBTA"
+        />
+        <label class="form-check-label" for="metode-bta">BTA</label>
+      </div>
+    </div>
+
+    <!-- Hasil Pemeriksaan TCM -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Hasil Pemeriksaan TCM:</label>
+      <select class="form-select" [(ngModel)]="model.hasilTCM" name="hasilTCM">
+        <option value="">-- Pilih --</option>
+        <option value="Mtb not detected">Mtb not detected (Neg)</option>
+        <option value="Mtb detected, Rif Sen">Mtb detected, Rif Sen</option>
+        <option value="Mtb detected, Rif Res">Mtb detected, Rif Res</option>
+        <option value="Mtb detected, Rif Indet">Mtb detected, Rif Indet</option>
+        <option value="MTB Trace">MTB Trace</option>
+        <option value="Invalid">Invalid</option>
+        <option value="Error">Error</option>
+        <option value="No Result">No Result</option>
+      </select>
+    </div>
+
+    <!-- Hasil Pemeriksaan BTA -->
+    <div class="mb-3">
+      <label class="form-label fw-bold">Hasil Pemeriksaan BTA:</label>
+      <select class="form-select" [(ngModel)]="model.hasilBTA" name="hasilBTA">
+        <option value="">-- Pilih --</option>
+        <option value="Negatif">Negatif</option>
+        <option value="Positif">Positif</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

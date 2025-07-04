@@ -1,71 +1,62 @@
-
-
-
-
-
 <div class="app-inner-layout">
- 
-
-
-
-  <div class="main-card mb-3 card"  style="height: 1000px;">
-    <div class="card-header" style="background-color: #007bff;text-align: center;">
+  <div class="main-card mb-3 card" style="height: 1000px">
+    <div
+      class="card-header"
+      style="background-color: #007bff; text-align: center"
+    >
       <div>
-        <b class="menu-header-title text-capitalize" style="color:black;font-size: 35px;">ANTREAN  {{subheading}}</b>
+        <b
+          class="menu-header-title text-capitalize"
+          style="color: black; font-size: 35px"
+          >ANTREAN {{ subheading }}</b
+        >
       </div>
-   
     </div>
 
-
     <div class="table-responsive tableFixHeadx">
-      <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-      
+      <table
+        class="align-middle mb-0 table table-borderless table-striped table-hover"
+      >
         <tbody>
           <tr>
             <td>
+              <div
+                class="main-card mb-3 card"
+                style="height: 400px; width: 700px; border: 5px grey solid"
+              >
+                <div style="text-align: center">
+                  <b style="font-size: 25px">{{ namadoker }}</b
+                  ><br />
+                  <b style="font-size: 25px">{{ nampoli }}</b
+                  ><br />
+                  <b style="font-size: 150px; color: black"
+                    >{{ kdantrian }} {{ Nomor }}</b
+                  ><br />
 
-              <div class="main-card mb-3 card" style="height: 400px;width: 700px;border: 5px grey solid;">
-                <div style="text-align: center;">
-                  <b style="font-size: 25px;">{{namadoker}}</b><br>
-                  <b style="font-size: 25px;">{{nampoli}}</b><br>
-                  <b style="font-size: 150px;color:black">{{kdantrian}} {{Nomor}}</b><br>
-
-                  <hr style="border: 2px grey solid;">
-                  <b style="font-size: 25px;">PASIEN : {{nampasien}}</b>
-             
-                 
+                  <hr style="border: 2px grey solid" />
+                  <b style="font-size: 25px">PASIEN : {{ nampasien }}</b>
                 </div>
-              
-                </div>
-
-            </td>
-
-            <td>
-              <div class="main-card mb-3 card" style="height: 400px;border: 5px grey solid;">
-          
-                <video id="my_video_1" class="video-js vjs-default-skin" width="700px" height="400px" controls preload="none" autoplay loop
-                poster="https://dokar.kendalkab.go.id/upload/berita/1658038600Aplikasi%20JKN.jpg"
-                data-setup='{ "aspectRatio":"700:370", "playbackRates": [1, 1.5, 2] }'>
-                <source src="https://tabaro.clenicapp.com/clenic/sound/bhina.mp4" type='video/mp4' />
-               
-              </video>
-
-              
               </div>
             </td>
 
-
-
+            <td>
+              <div
+                class="main-card mb-3 card"
+                style="height: 400px; border: 5px grey solid"
+              >
+                <youtube-player
+                  [videoId]="vidioid"
+                  [playerVars]="playerVars"
+                  [height]="400"
+                  [width]="600"
+                >
+                </youtube-player>
+              </div>
+            </td>
           </tr>
-        
-      
-
         </tbody>
       </table>
     </div>
-
-
-
 
     <!-- <table>
   
@@ -248,13 +239,5 @@
       </tr>
 
       </table> -->
-
-
-
-
-</div>
-
-
-
-  
+  </div>
 </div>

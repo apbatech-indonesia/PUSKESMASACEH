@@ -1,7 +1,5 @@
-
 <div class="row">
-  
-    <!-- <div class="card main-card mb-3">
+  <!-- <div class="card main-card mb-3">
       <div class="card-header" >
        Master User
       </div>
@@ -149,372 +147,505 @@
     
   </div> -->
 
-
   <div class="card main-card mb-3">
-    <div class="card-header" >
-     Jadwal Dokter
-    </div>
+    <div class="card-header">Jadwal Dokter</div>
     <div class="card-body">
       <form [formGroup]="profileForm">
-      <div class="position-relative mb-3">
-        <label for="exampleSelect" class="form-label">Poliklinik*</label>
-        <select   formControlName="poli"    [(ngModel)]="poli" id="exampleSelect" class="form-select"
-        (change)="pilihklinik($event.target.value)"
-        >
-          <option value="">--PILIH--</option>
-          <option  *ngFor="let x of tklinik" value="{{x.kdpoli}}" >{{x.nampoli}}</option>
-        </select>
-      </div>
-      <div class="position-relative mb-3">
-        <label for="exampleSelect" class="form-label">Dokter*</label>
-        <select   formControlName="kddokter"     [(ngModel)]="kddokter" id="exampleSelect" class="form-select">
-          <option value="">--PILIH--</option>
-          <option   *ngFor="let x of tdokter" value="{{x.kddokter}}" >{{x.namdokter}}</option>
-      
-        </select>
-      </div>
+        <div class="position-relative mb-3">
+          <label for="exampleSelect" class="form-label">Poliklinik*</label>
+          <select
+            formControlName="poli"
+            [(ngModel)]="poli"
+            id="exampleSelect"
+            class="form-select"
+            (change)="pilihklinik($event.target.value)"
+          >
+            <option value="">--PILIH--</option>
+            <option *ngFor="let x of tklinik" value="{{ x.kdpoli }}">
+              {{ x.nampoli }}
+            </option>
+          </select>
+        </div>
+        <div class="position-relative mb-3">
+          <label for="exampleSelect" class="form-label">Dokter*</label>
+          <select
+            formControlName="kddokter"
+            [(ngModel)]="kddokter"
+            id="exampleSelect"
+            class="form-select"
+          >
+            <option value="">--PILIH--</option>
+            <option *ngFor="let x of tdokter" value="{{ x.kddokter }}">
+              {{ x.namdokter }}
+            </option>
+          </select>
+        </div>
       </form>
-        <div class="position-relative mb-3">
-          <label for="exampleEmail" class="form-label">Senin</label>
-          <div class="row">
-            <div class="col-md-6">
-              <input   [(ngModel)]="senin"   placeholder="Time" type="text" class="form-control">
-              <div *ngIf="hariku === 'senin'">
-              <div *ngFor="let x of jjbpjs" class="badge bg-pill bg-primary btn" (click)="pilihjj('senin',x.jampraktek)">{{x.namadokter}} {{x.jampraktek}}</div>
-            </div>
-            </div>
-            <div class="col-md-6">
-              <input type="date" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tglp"
-              (change)="non($event,'senin')"
+      <div class="position-relative mb-3">
+        <label for="exampleEmail" class="form-label">Senin</label>
+        <div class="row">
+          <div class="col-md-6">
+            <input
+              [(ngModel)]="senin"
+              placeholder="Time"
+              type="text"
+              class="form-control"
+            />
+            <div *ngIf="hariku === 'senin'">
+              <div
+                *ngFor="let x of jjbpjs"
+                class="badge bg-pill bg-primary btn"
+                (click)="pilihjj('senin', x.jampraktek)"
               >
+                {{ x.namadokter }} {{ x.jampraktek }}
+              </div>
             </div>
-
           </div>
-        
+          <div class="col-md-6">
+            <input
+              type="date"
+              style="
+                border-radius: 5px;
+                border: solid 1px #ccc;
+                width: 11.5em;
+                height: 33px;
+              "
+              [(ngModel)]="tglp"
+              (change)="non($event, 'senin')"
+            />
+          </div>
         </div>
-        <div class="position-relative mb-3">
-          <label for="exampleEmail" class="form-label">Selasa</label>
-          <div class="row">
-            <div class="col-md-6">
-              <input   [(ngModel)]="selasa"   placeholder="Time" type="text" class="form-control">
+      </div>
+      <div class="position-relative mb-3">
+        <label for="exampleEmail" class="form-label">Selasa</label>
+        <div class="row">
+          <div class="col-md-6">
+            <input
+              [(ngModel)]="selasa"
+              placeholder="Time"
+              type="text"
+              class="form-control"
+            />
 
-              <div *ngIf="hariku === 'selasa'"> 
-              <div *ngFor="let x of jjbpjs" class="badge bg-pill bg-primary btn" (click)="pilihjj('selasa',x.jampraktek)">{{x.namadokter}} {{x.jampraktek}}</div>
-            </div>
+            <div *ngIf="hariku === 'selasa'">
+              <div
+                *ngFor="let x of jjbpjs"
+                class="badge bg-pill bg-primary btn"
+                (click)="pilihjj('selasa', x.jampraktek)"
+              >
+                {{ x.namadokter }} {{ x.jampraktek }}
               </div>
-              <div class="col-md-6">
-                <input type="date" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tglp"
-                (change)="non($event,'selasa')"
-                >
-              </div>
             </div>
-     
-         
+          </div>
+          <div class="col-md-6">
+            <input
+              type="date"
+              style="
+                border-radius: 5px;
+                border: solid 1px #ccc;
+                width: 11.5em;
+                height: 33px;
+              "
+              [(ngModel)]="tglp"
+              (change)="non($event, 'selasa')"
+            />
+          </div>
         </div>
-        <div class="position-relative mb-3">
-          <label for="exampleEmail" class="form-label">Rabu</label>
-          <div class="row">
-            <div class="col-md-6">
-              <input   [(ngModel)]="rabu"   placeholder="Time" type="text" class="form-control">
+      </div>
+      <div class="position-relative mb-3">
+        <label for="exampleEmail" class="form-label">Rabu</label>
+        <div class="row">
+          <div class="col-md-6">
+            <input
+              [(ngModel)]="rabu"
+              placeholder="Time"
+              type="text"
+              class="form-control"
+            />
 
-              <div *ngIf="hariku === 'rabu'"> 
-              <div *ngFor="let x of jjbpjs" class="badge bg-pill bg-primary btn" (click)="pilihjj('rabu',x.jampraktek)">{{x.namadokter}} {{x.jampraktek}}</div>
-            </div>
+            <div *ngIf="hariku === 'rabu'">
+              <div
+                *ngFor="let x of jjbpjs"
+                class="badge bg-pill bg-primary btn"
+                (click)="pilihjj('rabu', x.jampraktek)"
+              >
+                {{ x.namadokter }} {{ x.jampraktek }}
               </div>
-              <div class="col-md-6">
-                <input type="date" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tglp"
-                (change)="non($event,'rabu')"
-                >
-              </div>
             </div>
+          </div>
+          <div class="col-md-6">
+            <input
+              type="date"
+              style="
+                border-radius: 5px;
+                border: solid 1px #ccc;
+                width: 11.5em;
+                height: 33px;
+              "
+              [(ngModel)]="tglp"
+              (change)="non($event, 'rabu')"
+            />
+          </div>
         </div>
-        <div class="position-relative mb-3">
-          <label for="exampleEmail" class="form-label">Kamis</label>
-          <div class="row">
-            <div class="col-md-6">
-              <input   [(ngModel)]="kamis"   placeholder="Time" type="text" class="form-control">
+      </div>
+      <div class="position-relative mb-3">
+        <label for="exampleEmail" class="form-label">Kamis</label>
+        <div class="row">
+          <div class="col-md-6">
+            <input
+              [(ngModel)]="kamis"
+              placeholder="Time"
+              type="text"
+              class="form-control"
+            />
 
-              <div *ngIf="hariku === 'kamis'"> 
-              <div *ngFor="let x of jjbpjs" class="badge bg-pill bg-primary btn" (click)="pilihjj('kamis',x.jampraktek)">{{x.namadokter}} {{x.jampraktek}}</div>
-            </div>
+            <div *ngIf="hariku === 'kamis'">
+              <div
+                *ngFor="let x of jjbpjs"
+                class="badge bg-pill bg-primary btn"
+                (click)="pilihjj('kamis', x.jampraktek)"
+              >
+                {{ x.namadokter }} {{ x.jampraktek }}
               </div>
-              <div class="col-md-6">
-                <input type="date" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tglp"
-                (change)="non($event,'kamis')"
-                >
-              </div>
             </div>
+          </div>
+          <div class="col-md-6">
+            <input
+              type="date"
+              style="
+                border-radius: 5px;
+                border: solid 1px #ccc;
+                width: 11.5em;
+                height: 33px;
+              "
+              [(ngModel)]="tglp"
+              (change)="non($event, 'kamis')"
+            />
+          </div>
         </div>
-        <div class="position-relative mb-3">
-          <label for="exampleEmail" class="form-label">Jumat</label>
-          <div class="row">
-            <div class="col-md-6">
-              <input   [(ngModel)]="jumat"   placeholder="Time" type="text" class="form-control">
+      </div>
+      <div class="position-relative mb-3">
+        <label for="exampleEmail" class="form-label">Jumat</label>
+        <div class="row">
+          <div class="col-md-6">
+            <input
+              [(ngModel)]="jumat"
+              placeholder="Time"
+              type="text"
+              class="form-control"
+            />
 
-              <div *ngIf="hariku === 'jumat'"> 
-              <div *ngFor="let x of jjbpjs" class="badge bg-pill bg-primary btn" (click)="pilihjj('jumat',x.jampraktek)">{{x.namadokter}} {{x.jampraktek}}</div>
-            </div>
+            <div *ngIf="hariku === 'jumat'">
+              <div
+                *ngFor="let x of jjbpjs"
+                class="badge bg-pill bg-primary btn"
+                (click)="pilihjj('jumat', x.jampraktek)"
+              >
+                {{ x.namadokter }} {{ x.jampraktek }}
               </div>
-              <div class="col-md-6">
-                <input type="date" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tglp"
-                (change)="non($event,'jumat')"
-                >
-              </div>
             </div>
+          </div>
+          <div class="col-md-6">
+            <input
+              type="date"
+              style="
+                border-radius: 5px;
+                border: solid 1px #ccc;
+                width: 11.5em;
+                height: 33px;
+              "
+              [(ngModel)]="tglp"
+              (change)="non($event, 'jumat')"
+            />
+          </div>
         </div>
-        <div class="position-relative mb-3">
-          <label for="exampleEmail" class="form-label">Sabtu</label>
-          <div class="row">
-            <div class="col-md-6">
-              <input   [(ngModel)]="sabtu"   placeholder="Time" type="text" class="form-control">
+      </div>
+      <div class="position-relative mb-3">
+        <label for="exampleEmail" class="form-label">Sabtu</label>
+        <div class="row">
+          <div class="col-md-6">
+            <input
+              [(ngModel)]="sabtu"
+              placeholder="Time"
+              type="text"
+              class="form-control"
+            />
 
-              <div *ngIf="hariku === 'sabtu'"> 
-              <div *ngFor="let x of jjbpjs" class="badge bg-pill bg-primary btn" (click)="pilihjj('sabtu',x.jampraktek)">{{x.namadokter}} {{x.jampraktek}}</div>
-            </div>
+            <div *ngIf="hariku === 'sabtu'">
+              <div
+                *ngFor="let x of jjbpjs"
+                class="badge bg-pill bg-primary btn"
+                (click)="pilihjj('sabtu', x.jampraktek)"
+              >
+                {{ x.namadokter }} {{ x.jampraktek }}
               </div>
-              <div class="col-md-6">
-                <input type="date" style="border-radius: 5px;border:solid 1px #ccc; width: 11.5em;height: 33px;"  [(ngModel)]="tglp"
-                (change)="non($event,'sabtu')"
-                >
-              </div>
             </div>
+          </div>
+          <div class="col-md-6">
+            <input
+              type="date"
+              style="
+                border-radius: 5px;
+                border: solid 1px #ccc;
+                width: 11.5em;
+                height: 33px;
+              "
+              [(ngModel)]="tglp"
+              (change)="non($event, 'sabtu')"
+            />
+          </div>
         </div>
-        <div class="position-relative mb-3">
-          <label for="exampleEmail" class="form-label">Minggu</label>
-          <input   [(ngModel)]="minggu"   placeholder="Time" type="text" class="form-control">
-        </div>
-        <form [formGroup]="profileForm">
+      </div>
+      <div class="position-relative mb-3">
+        <label for="exampleEmail" class="form-label">Minggu</label>
+        <input
+          [(ngModel)]="minggu"
+          placeholder="Time"
+          type="text"
+          class="form-control"
+        />
+      </div>
+      <form [formGroup]="profileForm">
         <div class="position-relative mb-3">
           <label for="exampleEmail" class="form-label">Kuota</label>
-          <input   formControlName="kuota"    [(ngModel)]="kuota"   placeholder="Kuota" type="number" class="form-control">
+          <input
+            formControlName="kuota"
+            [(ngModel)]="kuota"
+            placeholder="Kuota"
+            type="number"
+            class="form-control"
+          />
         </div>
-        </form>
-        <div class="position-relative mb-3">
-          <label for="exampleEmail" class="form-label">Kode Antrian</label>
-         
-        
-          <select   [(ngModel)]="kdantrian" id="exampleSelect" class="form-select">
-            <option value="">--KD Antrian--</option>
-            <option  value="A">A | UMUM</option>
-            <option  value="B">B | GIGI</option>
-            <option  value="C">C | KIA</option>
+      </form>
+      <div class="position-relative mb-3">
+        <label for="exampleEmail" class="form-label">Kode Antrian</label>
 
-            <option  value="D">D </option>
-            <option  value="E">E</option>
-            <option  value="F">F</option>
+        <select [(ngModel)]="kdantrian" id="exampleSelect" class="form-select">
+          <option value="">--KD Antrian--</option>
+          <option value="A">A | UMUM</option>
+          <option value="B">B | GIGI</option>
+          <option value="C">C | KIA</option>
 
-            <option  value="G">G</option>
-            <option  value="H">H</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
 
-            <option  value="I">I</option>
-            <option  value="J">J</option>
+          <option value="G">G</option>
+          <option value="H">H</option>
 
-          </select>
+          <option value="I">I</option>
+          <option value="J">J</option>
+          <option value="J">K | Lansia</option>
+        </select>
+      </div>
 
-        </div>
+      <div class="table-responsive" style="font-size: 11px">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <!-- <th scope="col"><input type="checkbox" [checked]="isAllCheckBoxChecked()" (change)="checkAllCheckBox($event)"></th> -->
+              <th scope="col">DOKTER</th>
+              <th scope="col">POLI</th>
+              <th scope="col">SENIN</th>
+              <th scope="col">SELASA</th>
+              <th scope="col">RABU</th>
+              <th scope="col">KAMIS</th>
+              <th scope="col">JUMAT</th>
+              <th scope="col">SABTU</th>
+              <th scope="col">MINGGU</th>
+              <th scope="col">KUOTA</th>
+              <th scope="col">KD ANTRIAN</th>
+              <th scope="col">ACT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of tlisthutang; let i = index">
+              <td style="font-size: 11px; color: black">
+                {{ x.namdokter }}
+              </td>
+              <td style="font-size: 11px; color: black">
+                {{ x.nampoli }}
+              </td>
+              <td style="font-size: 11px; color: black">
+                {{ x.senin }}
+              </td>
+              <td style="font-size: 11px; color: black">
+                {{ x.selasa }}
+              </td>
 
-       
-     
-   
-     
-           
-    <div class="table-responsive" style="font-size: 11px;">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-           <!-- <th scope="col"><input type="checkbox" [checked]="isAllCheckBoxChecked()" (change)="checkAllCheckBox($event)"></th> -->
-            <th scope="col">DOKTER</th>
-            <th scope="col" >POLI </th>
-           <th scope="col" >SENIN</th>
-            <th scope="col" >SELASA</th>
-            <th scope="col" >RABU</th>
-            <th scope="col" >KAMIS</th>
-            <th scope="col" >JUMAT</th>
-            <th scope="col" >SABTU</th>
-            <th scope="col" >MINGGU</th>
-            <th scope="col" >KUOTA</th>
-            <th scope="col" >KD ANTRIAN</th>
-            <th scope="col" >ACT</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr  *ngFor="let x of tlisthutang;let i=index;">
-         
-          
-           
-            <td  style="font-size: 11px;color: black;">
-           {{x.namdokter}}
-        
-            </td>
-            <td  style="font-size: 11px;color: black;">
-        
-              {{x.nampoli}}
-            </td>
-            <td  style="font-size: 11px;color: black;">
-           
-              {{x.senin}}
-            </td>
-            <td  style="font-size: 11px;color: black;">
-              {{x.selasa}}
-       
-            </td>
-         
-          
-            <td>
-              {{x.rabu}}
-            </td>
-            <td>
-              {{x.kamis}}
-            </td>
-            <td>
-              {{x.jumat}}
-            </td>
-            <td>
-              {{x.sabtu}}
-            </td>
-            <td>
-              {{x.minggu}}
+              <td>
+                {{ x.rabu }}
               </td>
               <td>
-                {{x.kuota}}
-                </td>
+                {{ x.kamis }}
+              </td>
+              <td>
+                {{ x.jumat }}
+              </td>
+              <td>
+                {{ x.sabtu }}
+              </td>
+              <td>
+                {{ x.minggu }}
+              </td>
+              <td>
+                {{ x.kuota }}
+              </td>
 
-                <td>
-                  {{x.kdantrian}}
-                  </td>
+              <td>
+                {{ x.kdantrian }}
+              </td>
 
-                <td>
-                 
+              <td>
+                <div
+                  class="badge bg-pill bg-info"
+                  (click)="
+                    pilihobat(
+                      x.kddokter,
+                      x.kdpoli,
+                      x.senin,
+                      x.selasa,
+                      x.rabu,
+                      x.kamis,
+                      x.jumat,
+                      x.sabtu,
+                      x.minggu,
+                      x.kuota,
+                      x.nampoli,
+                      x.namdokter,
+                      x.kdantrian,
+                      x.id
+                    )
+                  "
+                >
+                  P
+                </div>
+                <div
+                  class="badge bg-pill bg-danger"
+                  (click)="
+                    hapus(
+                      x.kddokter,
+                      x.kdpoli,
+                      x.senin,
+                      x.selasa,
+                      x.rabu,
+                      x.kamis,
+                      x.jumat,
+                      x.sabtu,
+                      x.minggu,
+                      x.kuota,
+                      x.nampoli,
+                      x.namdokter,
+                      x.id
+                    )
+                  "
+                >
+                  X
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-   
-
-              <div class="badge bg-pill bg-info" (click)="pilihobat(x.kddokter,x.kdpoli,x.senin,x.selasa,x.rabu,x.kamis,x.jumat,x.sabtu,x.minggu,x.kuota,x.nampoli,x.namdokter,x.kdantrian)">P</div>
-              <div class="badge bg-pill bg-danger" (click)="hapus(x.kddokter,x.kdpoli,x.senin,x.selasa,x.rabu,x.kamis,x.jumat,x.sabtu,x.minggu,x.kuota,x.nampoli,x.namdokter)">X</div>
-                  </td>
-          </tr>
-    
-    
-          
-        
-          
-        </tbody>
-      </table>
-    </div>  
-
-
-     
-          <div class="row">
-            <div class="col-md-5">
-              <div class="d-grid gap-2">
-              <button class="mb-2 me-2 btn-pill btn btn-info"  [disabled]="!profileForm.valid"  *ngIf="!showedit" (click)="simpan()">Simpan
-              </button>
-            </div>
-            </div>
-            <div class="col-md-5">
-              <div class="d-grid gap-2">
-              <button class="mb-2 me-2 btn-pill btn btn-focus" [disabled]="!profileForm.valid"  *ngIf="showedit" (click)="edituser()">Edit
-              </button>
-            </div>
-            </div>
-            <div class="col-md-2">
-              <div class="d-grid gap-2">
-              <button class="mb-2 me-2 btn-pill btn btn-danger" (click)="batal()">Batal
-              </button>
-            </div>
-            </div>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="d-grid gap-2">
+            <button
+              class="mb-2 me-2 btn-pill btn btn-info"
+              [disabled]="!profileForm.valid"
+              *ngIf="!showedit"
+              (click)="simpan()"
+            >
+              Simpan
+            </button>
+          </div>
         </div>
-       
-       
-   
-
-     
-
+        <div class="col-md-5">
+          <div class="d-grid gap-2">
+            <button
+              class="mb-2 me-2 btn-pill btn btn-focus"
+              [disabled]="!profileForm.valid"
+              *ngIf="showedit"
+              (click)="edituser()"
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="d-grid gap-2">
+            <button class="mb-2 me-2 btn-pill btn btn-danger" (click)="batal()">
+              Batal
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
- 
-    
   </div>
-
-
-
-
-
-
-
-
-
 
   <div class="card-body">
     <ng-template #content6 let-c="close" let-d="dismiss">
       <div class="modal-header">
         <h6 class="modal-title">List Dokter</h6>
-        <button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')">
-        </button>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="d('Cross click')"
+        ></button>
       </div>
       <div class="modal-body">
-
         <div class="input-group">
-          <div class="input-group-text" >
+          <div class="input-group-text">
             <div class="">
-              
-              <fa-icon [icon]="faSearch" ></fa-icon>
+              <fa-icon [icon]="faSearch"></fa-icon>
             </div>
           </div>
-          <input placeholder="Search..."  (keyup)="caripass($event)" type="text" class="form-control">
+          <input
+            placeholder="Search..."
+            (keyup)="caripass($event)"
+            type="text"
+            class="form-control"
+          />
         </div>
-      
-              
-              <div class="table-responsive">
-                <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                  <thead>
-                    <tr>
-                   
-                      <th>Dokter</th>
-                      <th>Online</th>
-                     
-                      <th class="text-center">Actions</th>
-                    </tr>
-                  </thead>
-                 
-  
-  
-                  
-  
-                   <tbody>
-  
-                    <tr *ngFor="let a of tdokter">
-           
-                      <td style="font-size: 12px;color:black">
-                        {{a.namdokter}}
-                       
-                      </td>
-                      <td >
-                        {{a.statusonline}}
-                      </td>
-                 
-                      <td class="text-center">
-                        <div class="badge bg-pill bg-info"   (click)="setting(a.kddokter,'',a.kdcabang)">P</div>
-                     
-                      </td>
-                    </tr>
-  
-  
-                   
-                  </tbody>
-                </table>
-              </div>
-             
-        
 
+        <div class="table-responsive">
+          <table
+            class="align-middle mb-0 table table-borderless table-striped table-hover"
+          >
+            <thead>
+              <tr>
+                <th>Dokter</th>
+                <th>Online</th>
 
-     
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let a of tdokter">
+                <td style="font-size: 12px; color: black">
+                  {{ a.namdokter }}
+                </td>
+                <td>
+                  {{ a.statusonline }}
+                </td>
+
+                <td class="text-center">
+                  <div
+                    class="badge bg-pill bg-info"
+                    (click)="setting(a.kddokter, '', a.kdcabang)"
+                  >
+                    P
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="modal-footer">
-      
-      </div>
+      <div class="modal-footer"></div>
     </ng-template>
-   
   </div>
-
-
-  
 </div>
