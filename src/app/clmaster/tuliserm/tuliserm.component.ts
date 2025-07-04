@@ -9577,27 +9577,33 @@ export class tulisermComponent implements OnInit {
                   this.modalService.dismissAll();
                 });
 
-                this.authService.updateCppt(this.slug, {
-                  norm: this.norm,
-                  notrans: this.notransresponse,
-                  hr: this.hr,
-                  nadi: this.nadi,
-                  suhu: this.suhu,
-                  rr: this.rr,
-                  spo: this.spo,
-                  lp: this.lingkarperut,
-                  td: this.td,
-                  tdd: this.tdd,
-                  tb: this.tb,
-                  bb: this.bb,
-                  imt: this.imt,
-                  skalanyeri: this.skalanyeri,
-                  lingkarkepala: this.lingkarkepala,
-                  lingkarlenganatas: this.lingkarlenganatas,
-                  lingkarbetis: this.lingkarbetis,
-                  subjek: this.subjek,
-                  subjekp: this.subjekp,
-                });
+                this.authService
+                  .updateCppt(this.slug, {
+                    norm: this.norm,
+                    notrans: this.notransresponse,
+                    kdcabang: this.kdcabang,
+                    kduser: this.kduser,
+                    kdpoli: this.politunjang,
+                    kddokter: this.doktunjang,
+                    hr: this.hr,
+                    nadi: this.nadi,
+                    suhu: this.suhu,
+                    rr: this.rr,
+                    spo: this.spo,
+                    lp: this.lingkarperut,
+                    td: this.td,
+                    tdd: this.tdd,
+                    tb: this.tb,
+                    bb: this.bb,
+                    imt: this.imt,
+                    skalanyeri: this.skalanyeri,
+                    lingkarkepala: this.lingkarkepala,
+                    lingkarlenganatas: this.lingkarlenganatas,
+                    lingkarbetis: this.lingkarbetis,
+                    subjek: this.subjek,
+                    subjekp: this.subjekp,
+                  })
+                  .subscribe();
 
                 this.simpan();
               } else {

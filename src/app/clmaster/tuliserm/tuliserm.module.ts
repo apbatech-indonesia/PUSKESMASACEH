@@ -38,6 +38,14 @@ import { TreeModule } from "primeng/tree";
 import { ButtonModule } from "primeng/button";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { skriningModule } from "../skrining/skrining.module";
+import { KebidananModule } from "../Assesment/Kebidanan/Kebidanan.module";
+import { PartografModule } from "../Assesment/Partograf/Partograf.module";
+import { KajianperawatModule } from "../Assesment/kajianperawat/kajianperawat.module";
+import { PersetujuanTindakanMedisModule } from "../Assesment/Medis/PersetujuanTindakanMedis.module";
+import { KunjunganBumilModule } from "../Kebidanan/KunjunganBumil/KunjunganBumil.module";
+import { CatatanImunisasiModule } from "../Kebidanan/CatatanImunisasi/CatatanImunisasi.module";
+import { BukuKontrasepsiModule } from "../Kebidanan/BukuKontrasepsi/BukuKontrasepsi.module";
+import { FormBalitaSakitModule } from "../Assesment/form-balita-sakit/form-balita-sakit.module";
 
 @NgModule({
   imports: [
@@ -76,6 +84,14 @@ import { skriningModule } from "../skrining/skrining.module";
     ButtonModule,
     NgApexchartsModule,
     skriningModule,
+    KebidananModule,
+    PartografModule,
+    KajianperawatModule,
+    PersetujuanTindakanMedisModule,
+    KunjunganBumilModule,
+    CatatanImunisasiModule,
+    BukuKontrasepsiModule,
+    FormBalitaSakitModule,
   ],
   declarations: [tulisermComponent],
 })

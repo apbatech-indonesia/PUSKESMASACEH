@@ -19,6 +19,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     NgMultiSelectDropDownModule,
     MatPaginatorModule,
   ],
-  declarations: [CatatanImunisasiComponent]
+  declarations: [CatatanImunisasiComponent],
+  exports: [CatatanImunisasiComponent]
 })
 export class CatatanImunisasiModule { }

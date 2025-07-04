@@ -133,18 +133,11 @@ import { AccordionModule } from "primeng/accordion";
 import { ermdisplayComponent } from "./cllogin/ermdisplay/ermdisplay.component";
 import { TreeModule } from "primeng/tree";
 import { ButtonModule } from "primeng/button";
-import { BukuKontrasepsiComponent } from "./clmaster/Kebidanan/BukuKontrasepsi/BukuKontrasepsi.component";
 import { MatPaginatorModule } from "@angular/material/paginator";
-import { CatatanImunisasiComponent } from "./clmaster/Kebidanan/CatatanImunisasi/CatatanImunisasi.component";
-import { KunjunganBumilComponent } from "./clmaster/Kebidanan/KunjunganBumil/KunjunganBumil.component";
-import { KebidananComponent } from "./clmaster/Assesment/Kebidanan/Kebidanan.component";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatFormFieldModule } from "@angular/material/form-field";
-import { PartografComponent } from "./clmaster/Assesment/Partograf/Partograf.component";
 import { tulisermriComponent } from "./clmaster/tulisermri/tulisermri.component";
 import { AngularSignaturePadModule } from "@almothafar/angular-signature-pad";
-import { PersetujuanTindakanMedisComponent } from "./clmaster/Assesment/Medis/PersetujuanTindakanMedis.component";
-import { kajianperawatComponent } from "./clmaster/Assesment/kajianperawat/kajianperawat.component";
 import { riwayatkunjunganComponent } from "./clmaster/Assesment/riwayatkunjungan/riwayatkunjungan.component";
 import { anjungansehatComponent } from "./cllogin/anjungansehat/anjungansehat.component";
 import { TulisAncComponent } from "./satusehat/satusehat-anc/form/tulis-anc.component";
@@ -160,7 +153,6 @@ import { MasterDiagnosaComponent } from "./satusehat/satusehat-master/master-dia
 import { MasterTindakanComponent } from "./satusehat/satusehat-master/master-tindakan/master-tindakan.component";
 import { MasterVaccineComponent } from "./satusehat/satusehat-master/master-vaccine/master-vaccine.component";
 import { FormVaccineComponent } from "./satusehat/satusehat-imunisasi/form/form-vaccine/form-vaccine.component";
-import { MasterSpecimenModule } from "./satusehat/satusehat-master/master-specimen/master-specimen.module";
 import { TulisSatuSehatGiziComponent } from "./satusehat/satusehat-gizi/form/tulis-satusehat-gizi.component";
 import { NgxYoutubePlayerModule } from "ngx-youtube-player";
 import { TulisSatuSehatGigiComponent } from "./satusehat/satusehat-gigi/form/tulis-satusehat-gigi.component";
@@ -259,14 +251,7 @@ import { skriningModule } from "./clmaster/skrining/skrining.module";
     KosongComponent,
     anjunganComponent,
     anjungansehatComponent,
-    BukuKontrasepsiComponent,
-    CatatanImunisasiComponent,
-    KunjunganBumilComponent,
-    KebidananComponent,
-    PartografComponent,
     tulisermriComponent,
-    PersetujuanTindakanMedisComponent,
-    kajianperawatComponent,
     riwayatkunjunganComponent,
     TulisAncComponent,
     TulisMtbmComponent,

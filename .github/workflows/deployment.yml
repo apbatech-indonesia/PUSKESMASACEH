@@ -1,0 +1,70 @@
+name: Build & Deploy workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Ambil list branches dari API & generate matrix
+        id: set-matrix
+        run: |
+          echo "Fetching branches…"
+          json=$(curl -s https://emr.clenicapp.com/api/get-branches)
+          matrix=$(echo "$json" | jq -c '.data')
+          echo "Matrix: $matrix"
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build app
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-build
+          path: ./dist/app-pkm/browser/
+
+  deploy:
+    needs: [build, generate-matrix]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: "${{ fromJson(needs.generate-matrix.outputs.matrix) }}"
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build
+          path: ./dist/app-pkm/browser/
+
+      - name: FTP Deploy to ${{ matrix.folder }}
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          port: ${{ secrets.FTP_PORT }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/app-pkm/browser/
+          server-dir: ./${{ matrix.folder }}.clenicapp.com/v1-test/

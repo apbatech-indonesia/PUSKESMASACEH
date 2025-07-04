@@ -4142,9 +4142,12 @@ Normal: teraba jelas
                     <app-kajianperawat></app-kajianperawat>
                   </div>
 
-                  <!-- <div *ngIf="halaman === '8'">
-                          <app-asesmenper></app-asesmenper>
-                      </div> -->
+                  <div *ngIf="halaman === '8'">
+                    <app-form-balita-sakit
+                      [kdCabang]="kdcabang"
+                      [slugCabang]="slug"
+                    ></app-form-balita-sakit>
+                  </div>
                 </div>
               </div>
 
@@ -4209,6 +4212,12 @@ Normal: teraba jelas
                     <a class="nav-link" (click)="lihatbid('3')">
                       <i class="nav-link-icon pe-7s-angle-right"></i
                       ><span>Buku Konstrasepsi</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" (click)="lihatbid('8')">
+                      <i class="nav-link-icon pe-7s-angle-right"></i
+                      ><span>Form Balita Sakit</span>
                     </a>
                   </li>
                 </ul>
