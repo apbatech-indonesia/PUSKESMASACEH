@@ -416,7 +416,6 @@ export class tulisermComponent implements OnInit {
   kdtkp: any = "";
   jeniskun: any = "";
   isPeriksaPkg: any = false;
-  cpptList: any;
   selectedCppt: any = "";
 
   constructor(
@@ -1340,7 +1339,6 @@ export class tulisermComponent implements OnInit {
         for (let x of data) {
           this.slug = x.slug;
           this.kdorg = x.kodeorg;
-          this.getCppt();
         }
       },
       (Error) => {
@@ -1476,38 +1474,6 @@ export class tulisermComponent implements OnInit {
       this.klikrwo();
       this.statuspulangt();
     }, 500);
-  }
-
-  async getCppt() {
-    let data: any = await this.authService
-      .getCpptByNorm(this.slug, this.norm)
-      .toPromise();
-
-    this.cpptList = data;
-    this.cpptList = this.cpptList.map((item) => ({
-      ...item,
-      customLabel: `${item.notrans} : ${item.norm}`,
-    }));
-  }
-
-  pilihCppt(cppt: any) {
-    this.hr = cppt.hr;
-    this.nadi = cppt.nadi;
-    this.suhu = cppt.suhu;
-    this.rr = cppt.rr;
-    this.spo = cppt.spo;
-    this.lingkarperut = cppt.lp;
-    this.td = cppt.td;
-    this.tdd = cppt.tdd;
-    this.tb = cppt.tb;
-    this.bb = cppt.bb;
-    this.imt = cppt.imt;
-    this.skalanyeri = cppt.skalanyeri;
-    this.lingkarkepala = cppt.lingkarkepala;
-    this.lingkarlenganatas = cppt.lingkarlenganatas;
-    this.lingkarbetis = cppt.lingkarbetis;
-    this.subjek = cppt.subjek;
-    this.subjekp = cppt.subjekp;
   }
 
   slug: any;

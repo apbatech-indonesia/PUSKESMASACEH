@@ -179,19 +179,6 @@
                   </tbody>
                 </table>
 
-                <div class="position-relative mb-3">
-                  <label for="exampleEmail" class="form-label">
-                    <b>Riwayat CPPT</b>
-                  </label>
-                  <ng-select
-                    [items]="cpptList"
-                    bindLabel="notrans"
-                    [searchable]="true"
-                    (change)="pilihCppt($event)"
-                  >
-                  </ng-select>
-                </div>
-
                 <div
                   class="position-relative mb-3"
                   *ngIf="
