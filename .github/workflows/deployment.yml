@@ -75,4 +75,4 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/clenicappdemo/
-          server-dir: ./${{ matrix.folder }}.clenicapp.com/v1/
+          server-dir: ./${{ matrix.folder }}.clenicapp.com/v1-test/
