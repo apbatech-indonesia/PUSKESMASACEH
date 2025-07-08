@@ -67,7 +67,7 @@ jobs:
           name: app-build
           path: ./dist/clenicappdemo/
 
-      - name: SFTP Deploy to tabaro
+      - name: SFTP Deploy to ${{ matrix.folder }}
         uses: easingthemes/ssh-deploy@v5.0.0
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -75,5 +75,5 @@ jobs:
           REMOTE_USER: ${{ secrets.SSH_USER }}
           REMOTE_PORT: ${{ secrets.SSH_PORT }} # default 22 jika tidak diisi
           SOURCE: "./dist/clenicappdemo/"
-          TARGET: "/home/clenicapp.com/public_html/tabaro.clenicapp.com/v1-test/"
+          TARGET: "/home/clenicapp.com/public_html/${{ matrix.folder }}.clenicapp.com/v1-test/"
           ARGS: "-avz --delete"
