@@ -75,5 +75,5 @@ jobs:
           REMOTE_USER: ${{ secrets.SSH_USER }}
           REMOTE_PORT: ${{ secrets.SSH_PORT }} # default 22 jika tidak diisi
           SOURCE: "./dist/clenicappdemo/"
-          TARGET: "/home/clenicapp.com/public_html/${{ matrix.folder }}.clenicapp.com/v1-test/"
+          TARGET: "/home/clenicapp.com/public_html/${{ matrix.folder }}.clenicapp.com/v1/"
           ARGS: "-avz --delete --no-times"
