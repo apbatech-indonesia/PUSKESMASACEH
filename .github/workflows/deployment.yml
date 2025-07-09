@@ -77,3 +77,26 @@ jobs:
           SOURCE: "./dist/clenicappdemo/"
           TARGET: "/home/clenicapp.com/public_html/${{ matrix.folder }}.clenicapp.com/v1-new/"
           ARGS: "-avz --delete --no-times"
+
+      - name: Cleanup and Swap Versions on Server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            echo "Navigating to target folder..."
+            cd /home/clenicapp.com/public_html/${{ matrix.folder }}.clenicapp.com
+
+            echo "Removing v1-old if exists..."
+            rm -rf v1-old
+
+            echo "Renaming v1-test to v1-old..."
+            mv v1-test v1-old
+
+            echo "Renaming v1-new to v1-test..."
+            mv v1-new v1-test
+
+            echo "Cleanup and swap completed successfully."
+
