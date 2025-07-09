@@ -89,19 +89,22 @@ jobs:
             echo "Navigating to target folder..."
             cd /home/clenicapp.com/public_html/${{ matrix.folder }}.clenicapp.com
 
-            echo "Checking if v1-test-new exists..."
-            if [ ! -d v1-test-new ]; then
-              echo "ERROR: v1-test-new does not exist. Deployment aborted."
+            echo "Checking if v1-new exists..."
+            if [ ! -d v1-new ]; then
+              echo "ERROR: v1-new does not exist. Deployment aborted."
               exit 1
             fi
 
-            echo "Removing v1-test-old if exists..."
-            rm -rf v1-test-old
+            echo "Removing v1-old if exists..."
+            rm -rf v1-old
 
-            echo "Renaming v1-test to v1-test-old if exists..."
-            [ -d v1-test ] && mv v1-test v1-test-old
+            echo "Renaming v1-test to v1-old if exists..."
+            [ -d v1-test ] && mv v1-test v1-old
 
-            echo "Renaming v1-test-new to v1-test..."
-            mv v1-test-new v1-test
+            echo "Renaming v1-new to v1-test..."
+            mv v1-new v1-test
 
+            echo "Removing v1-new if exists..."
+            rm -rf v1-new
+            
             echo "Cleanup and swap completed successfully."
