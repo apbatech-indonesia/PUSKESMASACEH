@@ -106,5 +106,5 @@ jobs:
 
             echo "Removing v1-new if exists..."
             rm -rf v1-new
-            
+
             echo "Cleanup and swap completed successfully."
