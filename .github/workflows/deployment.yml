@@ -76,7 +76,7 @@ jobs:
           REMOTE_PORT: ${{ secrets.SSH_PORT }} # default 22 jika tidak diisi
           SOURCE: "./dist/clenicappdemo/"
           TARGET: "/home/clenicapp.com/public_html/${{ matrix.folder }}.clenicapp.com/v1-new/"
-          ARGS: "-avz --delete --no-times"
+          ARGS: "-avz --delete --no-times --chown=deploy:deploy"
 
       - name: Cleanup and Swap Versions on Server
         uses: appleboy/ssh-action@v1.0.0
@@ -98,11 +98,11 @@ jobs:
             echo "Removing v1-old if exists..."
             rm -rf v1-old
 
-            echo "Renaming v1-test to v1-old if exists..."
-            [ -d v1-test ] && mv v1-test v1-old
+            echo "Renaming v1 to v1-old if exists..."
+            [ -d v1 ] && mv v1 v1-old
 
-            echo "Renaming v1-new to v1-test..."
-            mv v1-new v1-test
+            echo "Renaming v1-new to v1..."
+            mv v1-new v1
 
             echo "Removing v1-new if exists..."
             rm -rf v1-new
