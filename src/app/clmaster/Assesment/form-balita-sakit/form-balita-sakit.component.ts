@@ -248,8 +248,8 @@ export class FormBalitaSakitComponent implements OnInit {
   isEdit = false;
   id: number;
 
-  norm = this.route.snapshot.paramMap.get("notrans");
-  notransaksi = this.route.snapshot.paramMap.get("norm");
+  norm = this.route.snapshot.paramMap.get("norm");
+  notransaksi = this.route.snapshot.paramMap.get("notrans");
 
   @Input() kdCabang: string = "";
   @Input() slugCabang: string = "";
