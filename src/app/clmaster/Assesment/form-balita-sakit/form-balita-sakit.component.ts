@@ -253,6 +253,7 @@ export class FormBalitaSakitComponent implements OnInit {
 
   @Input() kdCabang: string = "";
   @Input() slugCabang: string = "";
+  loadingDownload: boolean;
 
   constructor(
     private toastr: ToastrService,
@@ -338,6 +339,28 @@ export class FormBalitaSakitComponent implements OnInit {
         error: (err) => {
           console.error("Gagal mengupdate data:", err);
           this.toastr.error("Gagal mengupdate data", "Error");
+        },
+      });
+  }
+
+  downloadPdf() {
+    this.loadingDownload = true;
+    this.formBalitaSakitService
+      .downloadPdf(this.slugCabang, this.norm, this.notransaksi)
+      .subscribe({
+        next: (blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `balita_sakit_${this.norm}_${this.notransaksi}.pdf`;
+          a.click();
+          window.URL.revokeObjectURL(url);
+          this.loadingDownload = false;
+        },
+        error: (err) => {
+          console.error(err);
+          this.toastr.error("Gagal download PDF", "Error");
+          this.loadingDownload = false;
         },
       });
   }

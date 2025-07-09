@@ -2509,7 +2509,10 @@
                       value="sangat_pucat"
                       [(ngModel)]="payload.anemia.kepucatan"
                     />
-                    <label class="form-check-label" for="sangat_pucat_tangan_kaki">
+                    <label
+                      class="form-check-label"
+                      for="sangat_pucat_tangan_kaki"
+                    >
                       Sangat Pucat
                     </label>
                   </div>
@@ -2523,7 +2526,9 @@
                       value="pucat"
                       [(ngModel)]="payload.anemia.kepucatan"
                     />
-                    <label class="form-check-label" for="pucat_tangan_kaki">Pucat</label>
+                    <label class="form-check-label" for="pucat_tangan_kaki"
+                      >Pucat</label
+                    >
                   </div>
 
                   <div class="form-check mb-2">
@@ -2535,7 +2540,10 @@
                       value="tidak_pucat"
                       [(ngModel)]="payload.anemia.kepucatan"
                     />
-                    <label class="form-check-label" for="tidak_pucat_tangan_kaki">
+                    <label
+                      class="form-check-label"
+                      for="tidak_pucat_tangan_kaki"
+                    >
                       Tidak Pucat
                     </label>
                   </div>
@@ -3636,6 +3644,15 @@
               [class]="isEdit ? 'btn-info' : 'btn-success '"
             >
               {{ isEdit ? "Update" : "Simpan" }}
+            </button>
+            <button
+              *ngIf="isEdit"
+              (click)="downloadPdf()"
+              [disabled]="loadingDownload"
+              class="btn btn-danger btn-lg ms-2"
+            >
+              <i class="fa fa-file-pdf"></i>
+              {{ loadingDownload ? "Mengunduh..." : "Download PDF" }}
             </button>
           </div>
         </div>

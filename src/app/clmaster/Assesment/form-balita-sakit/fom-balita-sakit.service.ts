@@ -55,4 +55,17 @@ export class FormBalitaSakitService {
 
     return this.http.get(`${this.baseUrl}/${slugCabang}/form-mtbs`, { params });
   }
+
+  downloadPdf(
+    slugCabang: string,
+    norm: string,
+    notransaksi: string
+  ): Observable<Blob> {
+    const url = `${this.baseUrl}/${slugCabang}/form-mtbs/generate-pdf`;
+    const params = new HttpParams()
+      .set("norm", norm)
+      .set("notransaksi", notransaksi);
+
+    return this.http.get(url, { responseType: "blob", params: params });
+  }
 }
