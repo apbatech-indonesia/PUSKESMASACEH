@@ -98,11 +98,11 @@ jobs:
             echo "Removing v1-old if exists..."
             rm -rf v1-old
 
-            echo "Renaming v1 to v1-old if exists..."
-            [ -d v1 ] && mv v1 v1-old
+            echo "Renaming v1-test to v1-old if exists..."
+            [ -d v1-test ] && mv v1-test v1-old
 
-            echo "Renaming v1-new to v1..."
-            mv v1-new v1
+            echo "Renaming v1-new to v1-test..."
+            mv v1-new v1-test
 
             echo "Removing v1-new if exists..."
             rm -rf v1-new
