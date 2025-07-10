@@ -4,6 +4,7 @@ import { FormBalitaSakitService } from "./fom-balita-sakit.service";
 import { ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { ApiserviceService } from "src/app/apiservice.service";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "app-form-balita-sakit",
@@ -256,7 +257,7 @@ export class FormBalitaSakitComponent implements OnInit {
   @Input() kdCabang: string = "";
   @Input() slugCabang: string = "";
   loadingDownload: boolean;
-  namaPemeriksaList: any[];
+  namaPemeriksaList: any;
 
   constructor(
     private toastr: ToastrService,
@@ -271,6 +272,8 @@ export class FormBalitaSakitComponent implements OnInit {
 
   loadData(): void {
     this.isLoading = false;
+
+    this.namaPemeriksaList = this.apiservice.tampiluser(this.kdCabang);
 
     this.formBalitaSakitService
       .getByNormAndTransaksi(this.slugCabang, this.norm, this.notransaksi)
@@ -294,17 +297,6 @@ export class FormBalitaSakitComponent implements OnInit {
           // TODO: Tambahkan toastr jika ingin
         },
       });
-
-    this.apiservice.tampiluser(this.kdCabang).subscribe({
-      next: (res) => {
-        this.namaPemeriksaList = res.map((item: any) => {
-          return `${item.nama}`;
-        });
-      },
-      error: (err) => {
-        console.error("Gagal load nama pemeriksa:", err);
-      },
-    });
   }
 
   submit(): void {

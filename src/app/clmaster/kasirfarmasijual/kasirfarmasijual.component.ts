@@ -3370,6 +3370,7 @@ export class kasirfarmasijualComponent implements OnInit {
   ket8c: string = "-";
   ket9c: string = "-";
   analis: string = "-";
+  konseling: string = "-";
 
   simpankajian() {
     let body = {
@@ -3460,6 +3461,7 @@ export class kasirfarmasijualComponent implements OnInit {
       ket8c: this.ket8c,
       ket9c: this.ket9c,
       analis: this.analis,
+      konseling: this.konseling,
 
       stssimpan: "3",
     };
@@ -3543,6 +3545,7 @@ export class kasirfarmasijualComponent implements OnInit {
             this.ket8c = x.ket8c;
             this.ket9c = x.ket9c;
             this.analis = x.analis;
+            this.konseling = x.konseling;
           }
         }
       },

@@ -3624,16 +3624,18 @@
           <label for="nama_pemeriksa" class="form-label"
             >Nama Pemeriksa {{ payload.follow_up.nama_pemeriksa }}</label
           >
-          <select
-            id="nama_pemeriksa"
-            class="form-control"
-            [(ngModel)]="payload.follow_up.nama_pemeriksa"
-            name="nama_pemeriksa"
-          >
-            <option *ngFor="let nama of namaPemeriksaList" [value]="nama">
-              {{ nama }}
-            </option>
-          </select>
+          <div *ngIf="namaPemeriksaList | async as list">
+            <select
+              id="nama_pemeriksa"
+              class="form-control"
+              [(ngModel)]="payload.follow_up.nama_pemeriksa"
+              name="nama_pemeriksa"
+            >
+              <option *ngFor="let item of list" [value]="item.nama">
+                {{ item.nama }}
+              </option>
+            </select>
+          </div>
         </div>
       </div>
       <!-- END FORM KUNJUNGAN -->
