@@ -4,7 +4,6 @@ import { FormBalitaSakitService } from "./fom-balita-sakit.service";
 import { ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { ApiserviceService } from "src/app/apiservice.service";
-import { Observable } from "rxjs";
 
 @Component({
   selector: "app-form-balita-sakit",

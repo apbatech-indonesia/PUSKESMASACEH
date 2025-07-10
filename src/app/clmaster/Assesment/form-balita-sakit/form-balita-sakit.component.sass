@@ -1,31 +1,51 @@
 
-body 
-    font-family: Arial, sans-serif
-    padding: 20px
+body
+  font-family: 'Segoe UI', Arial, sans-serif
+  background: #f8fafc
 
-.container 
-    display: flex
-    justify-content: space-between
-    flex-wrap: wrap
-    gap: 20px
+.form-balita-sakit-wrapper
+  background: #f8fafc
 
-.box 
-    flex: 1 1 250px
-    border-radius: 8px
-    padding: 16px
+.form-balita-sakit-card
+  border-radius: 18px
+  box-shadow: 0 4px 24px 0 rgba(0,0,0,0.07)
+  border: none
 
-.box h3 
-    margin-top: 0
-    font-size: 16px
+.form-section
+  margin-bottom: 2.5rem
+  background: #fff
+  border-radius: 14px
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.04)
+  padding-bottom: 1.5rem
 
-.triangle 
-    text-align: center
-    margin-top: 30px
+.form-section-title
+  font-size: 1.15rem
+  letter-spacing: 0.5px
+  background: linear-gradient(90deg, #e3f2fd 0%, #f8fafc 100%)
+  border-radius: 14px 14px 0 0
+  padding: 0.75rem 1.25rem
+  margin-bottom: 0.5rem
+  display: flex
+  align-items: center
 
-.triangle pre 
-    font-size: 14px
-    line-height: 1
+.form-btn
+  min-width: 160px
+  font-size: 1.1rem
+  font-weight: 500
+  border-radius: 8px
+  transition: background 0.2s, box-shadow 0.2s
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,0.07)
+  &:hover, &:focus
+    filter: brightness(0.97)
+    box-shadow: 0 4px 16px 0 rgba(0,0,0,0.10)
 
+.form-control, .form-select
+  border-radius: 8px
+  border: 1px solid #e0e0e0
+  box-shadow: none
+  transition: border 0.2s
+  &:focus
+    border-color: #90caf9
 
 .skeleton-select
   width: 100%
@@ -38,5 +58,7 @@ body
 @keyframes loading-skeleton
   0%
     background-position: 200% 0
+  100%
+    background-position: -200% 0
   100%
     background-position: -200% 0
