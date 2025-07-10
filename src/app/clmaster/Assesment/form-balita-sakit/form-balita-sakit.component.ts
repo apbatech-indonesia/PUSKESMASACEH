@@ -257,7 +257,7 @@ export class FormBalitaSakitComponent implements OnInit {
   @Input() kdCabang: string = "";
   @Input() slugCabang: string = "";
   loadingDownload: boolean;
-  namaPemeriksaList: any;
+  namaPemeriksaList$: any;
 
   constructor(
     private toastr: ToastrService,
@@ -273,7 +273,7 @@ export class FormBalitaSakitComponent implements OnInit {
   loadData(): void {
     this.isLoading = false;
 
-    this.namaPemeriksaList = this.apiservice.tampiluser(this.kdCabang);
+    this.namaPemeriksaList$ = this.apiservice.tampiluser(this.kdCabang);
 
     this.formBalitaSakitService
       .getByNormAndTransaksi(this.slugCabang, this.norm, this.notransaksi)
