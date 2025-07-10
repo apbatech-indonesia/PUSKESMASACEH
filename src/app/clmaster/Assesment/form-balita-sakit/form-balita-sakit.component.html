@@ -3621,15 +3621,19 @@
             placeholder="Contoh: Jika anak sesak napas, muntah terus-menerus, demam tinggi, atau lemas."
             [(ngModel)]="payload.follow_up.nasihat_kapan_kembali"
           ></textarea>
-          <label for="nama_pemeriksa" class="form-label">Nama pemeriksa</label>
-          <input
-            type="text"
-            class="form-control"
+          <label for="nama_pemeriksa" class="form-label"
+            >Nama Pemeriksa {{ payload.follow_up.nama_pemeriksa }}</label
+          >
+          <select
             id="nama_pemeriksa"
-            name="nama_pemeriksa"
-            placeholder="Contoh: dr. Rina Puskesmas"
+            class="form-control"
             [(ngModel)]="payload.follow_up.nama_pemeriksa"
-          />
+            name="nama_pemeriksa"
+          >
+            <option *ngFor="let nama of namaPemeriksaList" [value]="nama">
+              {{ nama }}
+            </option>
+          </select>
         </div>
       </div>
       <!-- END FORM KUNJUNGAN -->

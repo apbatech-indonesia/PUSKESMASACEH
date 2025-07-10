@@ -3,6 +3,7 @@ import { finalize } from "rxjs/operators";
 import { FormBalitaSakitService } from "./fom-balita-sakit.service";
 import { ActivatedRoute } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
+import { ApiserviceService } from "src/app/apiservice.service";
 
 @Component({
   selector: "app-form-balita-sakit",
@@ -250,14 +251,17 @@ export class FormBalitaSakitComponent implements OnInit {
 
   norm = this.route.snapshot.paramMap.get("norm");
   notransaksi = this.route.snapshot.paramMap.get("notrans");
+  user = JSON.parse(localStorage.getItem("userDatacl"));
 
   @Input() kdCabang: string = "";
   @Input() slugCabang: string = "";
   loadingDownload: boolean;
+  namaPemeriksaList: any[];
 
   constructor(
     private toastr: ToastrService,
     private formBalitaSakitService: FormBalitaSakitService,
+    private apiservice: ApiserviceService,
     private route: ActivatedRoute
   ) {}
 
@@ -276,8 +280,13 @@ export class FormBalitaSakitComponent implements OnInit {
           if (res && res.payload) {
             this.id = res.id;
             this.payload = res.payload;
+
+            // Set nama pemeriksa default user login jika belum ada
+            if (!this.payload.follow_up.nama_pemeriksa) {
+              this.payload.follow_up.nama_pemeriksa = this.user.userData.nama;
+            }
+
             this.isEdit = true;
-            console.log("Data loaded:", res);
           }
         },
         error: (err) => {
@@ -285,6 +294,17 @@ export class FormBalitaSakitComponent implements OnInit {
           // TODO: Tambahkan toastr jika ingin
         },
       });
+
+    this.apiservice.tampiluser(this.kdCabang).subscribe({
+      next: (res) => {
+        this.namaPemeriksaList = res.map((item: any) => {
+          return `${item.nama}`;
+        });
+      },
+      error: (err) => {
+        console.error("Gagal load nama pemeriksa:", err);
+      },
+    });
   }
 
   submit(): void {
