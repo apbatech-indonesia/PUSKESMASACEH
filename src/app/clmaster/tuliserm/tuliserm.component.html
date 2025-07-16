@@ -3212,6 +3212,7 @@ Normal: teraba jelas
                 >
                   <th scope="col">Tgl</th>
                   <th scope="col">No</th>
+                  <th scope="col">RS Rujukan</th>
                   <th scope="col">Poli</th>
                   <th scope="col">Dokter</th>
                   <th scope="col">Keluhan</th>
@@ -3233,7 +3234,9 @@ Normal: teraba jelas
                   <td>
                     {{ x.noKunjungan }}
                   </td>
-
+                  <td>
+                    {{ x.providerRujukLanjut.nmProvider ?? '-' }}
+                  </td>
                   <td>
                     {{ x.poli.nmPoli }}
                   </td>
