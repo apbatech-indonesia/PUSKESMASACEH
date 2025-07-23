@@ -1,0 +1,44 @@
+<form (ngSubmit)="submitFormIVA()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Skrining Kanker Leher Rahim - Pemeriksaan IVA</h5>
+  </div>
+  <div class="mb-3">
+    <!-- Inspekulo -->
+    <label class="form-label">Inspekulo:</label>
+    <div *ngFor="let item of inspekuloOptions" class="form-check">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="inspekulo"
+        [value]="item"
+        [(ngModel)]="modelIVA.inspekulo"
+        [id]="'inspekulo-' + item"
+      />
+      <label class="form-check-label" [for]="'inspekulo-' + item">{{
+        item
+      }}</label>
+    </div>
+
+    <!-- IVA -->
+    <label class="form-label mt-3">IVA:</label>
+    <div *ngFor="let item of ivaOptions" class="form-check">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="iva"
+        [value]="item"
+        [(ngModel)]="modelIVA.iva"
+        [id]="'iva-' + item"
+      />
+      <label class="form-check-label" [for]="'iva-' + item">{{ item }}</label>
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

@@ -1,0 +1,50 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Gizi (BB-TB-Lingkar Perut)</h5>
+  </div>
+  <div class="mb-4">
+    <!-- Berat Badan -->
+    <div class="mb-3">
+      <label class="form-label">Berat Badan (KG)</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="model.beratBadan"
+        name="beratBadan"
+        required
+      />
+    </div>
+
+    <!-- Tinggi Badan -->
+    <div class="mb-3">
+      <label class="form-label">Tinggi Badan (CM)</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="model.tinggiBadan"
+        name="tinggiBadan"
+        required
+      />
+    </div>
+
+    <!-- Lingkar Perut -->
+    <div class="mb-3">
+      <label class="form-label">Lingkar Perut (CM)</label>
+      <input
+        type="number"
+        class="form-control"
+        [(ngModel)]="model.lingkarPerut"
+        name="lingkarPerut"
+        required
+      />
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

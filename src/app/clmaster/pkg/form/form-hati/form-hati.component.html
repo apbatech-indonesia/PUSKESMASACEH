@@ -1,0 +1,272 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3">
+    <h3>Hati</h3>
+  </div>
+
+  <!-- Hepatitis B Positif -->
+  <div class="mb-3">
+    <label class="form-label fw-bold"
+      >Pernah tes Hepatitis B dan hasilnya positif?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hepBPositif"
+        value="true"
+        [(ngModel)]="model.hepBPositif"
+        id="hepBPositif-ya"
+      />
+      <label class="form-check-label" for="hepBPositif-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hepBPositif"
+        value="false"
+        [(ngModel)]="model.hepBPositif"
+        id="hepBPositif-tidak"
+      />
+      <label class="form-check-label" for="hepBPositif-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Keluarga Hepatitis B -->
+  <div class="mb-3">
+    <label class="form-label fw-bold"
+      >Memiliki ibu/saudara kandung dengan Hepatitis B?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="keluargaHepB"
+        value="true"
+        [(ngModel)]="model.keluargaHepB"
+        id="keluargaHepB-ya"
+      />
+      <label class="form-check-label" for="keluargaHepB-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="keluargaHepB"
+        value="false"
+        [(ngModel)]="model.keluargaHepB"
+        id="keluargaHepB-tidak"
+      />
+      <label class="form-check-label" for="keluargaHepB-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Hubungan Intim -->
+  <div class="mb-3">
+    <label class="form-label fw-bold"
+      >Pernah melakukan hubungan intim dengan non-pasangan resmi?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hubunganNonPasangan"
+        value="true"
+        [(ngModel)]="model.hubunganNonPasangan"
+        id="hubunganNonPasangan-ya"
+      />
+      <label class="form-check-label" for="hubunganNonPasangan-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hubunganNonPasangan"
+        value="false"
+        [(ngModel)]="model.hubunganNonPasangan"
+        id="hubunganNonPasangan-tidak"
+      />
+      <label class="form-check-label" for="hubunganNonPasangan-tidak"
+        >Tidak</label
+      >
+    </div>
+  </div>
+
+  <!-- Transfusi Darah -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Pernah menerima transfusi darah?</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="transfusi"
+        value="true"
+        [(ngModel)]="model.transfusi"
+        id="transfusi-ya"
+      />
+      <label class="form-check-label" for="transfusi-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="transfusi"
+        value="false"
+        [(ngModel)]="model.transfusi"
+        id="transfusi-tidak"
+      />
+      <label class="form-check-label" for="transfusi-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Cuci Darah -->
+  <div class="mb-3">
+    <label class="form-label fw-bold"
+      >Pernah menjalani cuci darah (hemodialisis)?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hemodialisis"
+        value="true"
+        [(ngModel)]="model.hemodialisis"
+        id="hemodialisis-ya"
+      />
+      <label class="form-check-label" for="hemodialisis-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hemodialisis"
+        value="false"
+        [(ngModel)]="model.hemodialisis"
+        id="hemodialisis-tidak"
+      />
+      <label class="form-check-label" for="hemodialisis-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Narkoba Suntik -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Pernah menggunakan narkoba suntik?</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="narkoba"
+        value="true"
+        [(ngModel)]="model.narkoba"
+        id="narkoba-ya"
+      />
+      <label class="form-check-label" for="narkoba-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="narkoba"
+        value="false"
+        [(ngModel)]="model.narkoba"
+        id="narkoba-tidak"
+      />
+      <label class="form-check-label" for="narkoba-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- ODHIV -->
+  <div class="mb-3">
+    <label class="form-label fw-bold"
+      >Apakah Anda ODHIV (Orang Dengan HIV)?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="odhiv"
+        value="true"
+        [(ngModel)]="model.odhiv"
+        id="odhiv-ya"
+      />
+      <label class="form-check-label" for="odhiv-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="odhiv"
+        value="false"
+        [(ngModel)]="model.odhiv"
+        id="odhiv-tidak"
+      />
+      <label class="form-check-label" for="odhiv-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Hepatitis C Tidak Sembuh -->
+  <div class="mb-3">
+    <label class="form-label fw-bold"
+      >Pernah diobati Hepatitis C tapi tidak sembuh?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hepC"
+        value="true"
+        [(ngModel)]="model.hepC"
+        id="hepC-ya"
+      />
+      <label class="form-check-label" for="hepC-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hepC"
+        value="false"
+        [(ngModel)]="model.hepC"
+        id="hepC-tidak"
+      />
+      <label class="form-check-label" for="hepC-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Kolesterol Tinggi -->
+  <div class="mb-4">
+    <label class="form-label fw-bold"
+      >Pernah didiagnosa kolesterol tinggi?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="kolesterol"
+        value="true"
+        [(ngModel)]="model.kolesterol"
+        id="kolesterol-ya"
+      />
+      <label class="form-check-label" for="kolesterol-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="kolesterol"
+        value="false"
+        [(ngModel)]="model.kolesterol"
+        id="kolesterol-tidak"
+      />
+      <label class="form-check-label" for="kolesterol-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

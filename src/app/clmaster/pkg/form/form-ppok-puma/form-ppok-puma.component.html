@@ -1,0 +1,161 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Pemeriksaan PPOK (Skrining PUMA)</h5>
+  </div>
+  <div class="mb-4">
+    <!-- Merokok -->
+    <div class="mb-3">
+      <label class="form-label fw-bold"
+        >Apakah Anda sedang/mempunyai riwayat merokok?</label
+      >
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="merokok"
+          value="true"
+          [(ngModel)]="model.merokok"
+          id="merokok-ya"
+        />
+        <label class="form-check-label" for="merokok-ya">Ya</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="merokok"
+          value="false"
+          [(ngModel)]="model.merokok"
+          id="merokok-tidak"
+        />
+        <label class="form-check-label" for="merokok-tidak">Tidak</label>
+      </div>
+    </div>
+
+    <!-- Napas Pendek -->
+    <div class="mb-3">
+      <label class="form-label fw-bold"
+        >Apakah Anda merasa napas pendek saat berjalan cepat atau di
+        tanjakan?</label
+      >
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="napasPendek"
+          value="true"
+          [(ngModel)]="model.napasPendek"
+          id="napas-ya"
+        />
+        <label class="form-check-label" for="napas-ya">Ya</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="napasPendek"
+          value="false"
+          [(ngModel)]="model.napasPendek"
+          id="napas-tidak"
+        />
+        <label class="form-check-label" for="napas-tidak">Tidak</label>
+      </div>
+    </div>
+
+    <!-- Dahak -->
+    <div class="mb-3">
+      <label class="form-label fw-bold"
+        >Apakah Anda punya dahak atau kesulitan mengeluarkannya saat tidak
+        flu?</label
+      >
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="dahak"
+          value="true"
+          [(ngModel)]="model.dahak"
+          id="dahak-ya"
+        />
+        <label class="form-check-label" for="dahak-ya">Ya</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="dahak"
+          value="false"
+          [(ngModel)]="model.dahak"
+          id="dahak-tidak"
+        />
+        <label class="form-check-label" for="dahak-tidak">Tidak</label>
+      </div>
+    </div>
+
+    <!-- Batuk -->
+    <div class="mb-3">
+      <label class="form-label fw-bold"
+        >Apakah Anda batuk saat tidak flu?</label
+      >
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="batuk"
+          value="true"
+          [(ngModel)]="model.batuk"
+          id="batuk-ya"
+        />
+        <label class="form-check-label" for="batuk-ya">Ya</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="batuk"
+          value="false"
+          [(ngModel)]="model.batuk"
+          id="batuk-tidak"
+        />
+        <label class="form-check-label" for="batuk-tidak">Tidak</label>
+      </div>
+    </div>
+
+    <!-- Tes Spirometri -->
+    <div class="mb-3">
+      <label class="form-label fw-bold"
+        >Pernah diminta tes spirometri atau peak flow meter?</label
+      >
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="tesSpirometri"
+          value="true"
+          [(ngModel)]="model.tesSpirometri"
+          id="tes-ya"
+        />
+        <label class="form-check-label" for="tes-ya">Ya</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="tesSpirometri"
+          value="false"
+          [(ngModel)]="model.tesSpirometri"
+          id="tes-tidak"
+        />
+        <label class="form-check-label" for="tes-tidak">Tidak</label>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

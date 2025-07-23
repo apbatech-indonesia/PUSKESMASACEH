@@ -1,0 +1,1114 @@
+<div>
+  <div class="app-inner-layout" style="margin: 0 auto; padding: 20px">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-2">
+          <div class="card-header navy">Data Pasien</div>
+          <div class="card-body">
+            <div align="right">
+              <button
+                class="btn btn-primary btn-icon"
+                routerLink="/master/satusehat-gigi"
+              >
+                <span class="pe-2 opacity-7">
+                  <fa-icon [icon]="faArrowLeft"></fa-icon>
+                </span>
+                Kembali
+              </button>
+            </div>
+            <!-- header body -->
+            <div class="row">
+              <div class="col-lg-3 col-6">
+                <strong>No Rm</strong>
+                <br />
+                {{ patientData.norm }}
+              </div>
+              <div class="col-lg-3 col-6">
+                <strong>Nama Pasien</strong>
+                <br />
+                {{ patientData.pasien }}
+              </div>
+              <div class="col-lg-3 col-6">
+                <strong>Tanggal Lahir</strong>
+                <br />
+                {{ patientData.tgllahir }}
+              </div>
+              <div class="col-lg-3 col-6">
+                <strong>Umur</strong>
+                <br />
+                {{ patientData.umur }}
+              </div>
+            </div>
+            <br />
+            <div class="row">
+              <div class="col-lg-3 col-6">
+                <strong>Jenis Kelamin</strong>
+                <br />
+                {{
+                  patientData.jeniskelamin == "L" ? "Laki laki" : "Perempuan"
+                }}
+              </div>
+              <div class="col-lg-3 col-6">
+                <strong>Poli</strong>
+                <br />
+                {{ patientData.nampoli }}
+              </div>
+              <div class="col-lg-3 col-6">
+                <strong>Jenis Pesien</strong>
+                <br />
+                {{ patientData.costumer }}
+              </div>
+              <div class="col-lg-3 col-6">
+                <strong>Alamat</strong>
+                <br />
+                {{ patientData.alamat }}
+              </div>
+            </div>
+            <!-- header body -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <ul ngbNav #nav="ngbNav" class="nav-tabs">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>Data Orang Tua</a>
+          <ng-template ngbNavContent>
+            <div class="card mb-3">
+              <div class="card-header navy">Data Orang Tua</div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="card mb-3">
+                      <div class="card-header navy">Data Ibu</div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-6 mb-2">
+                            <label>Nama Ibu:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="relatedPerson.nama_ibu"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <label>NIK Ibu:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="relatedPerson.nik_ibu"
+                              class="form-control"
+                              minlength="16"
+                              maxlength="16"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <label>Tanggal Lahir:</label>
+                            <input
+                              type="date"
+                              [(ngModel)]="relatedPerson.tl_ibu"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <label>No. HP:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="relatedPerson.hp_ibu"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-12 mb-2">
+                            <label>Alamat Jalan:</label>
+                            <textarea
+                              type="text"
+                              [(ngModel)]="relatedPerson.alamat_jalan_ibu"
+                              class="form-control"
+                              required
+                            ></textarea>
+                          </div>
+                          <div class="col-md-3 mb-2">
+                            <label>Provinsi:</label>
+                            <app-master-province
+                              [provinceId]="relatedPerson.province_id_ibu"
+                              (provinceOutput)="
+                                relatedPerson.province_id_ibu = $event
+                              "
+                            >
+                            </app-master-province>
+                          </div>
+                          <div class="col-md-3 mb-2">
+                            <label>Kota/Kabupaten:</label>
+                            <app-master-city
+                              [cityId]="relatedPerson.city_id_ibu"
+                              [provinceId]="relatedPerson.province_id_ibu"
+                              (cityOutput)="relatedPerson.city_id_ibu = $event"
+                            >
+                            </app-master-city>
+                          </div>
+                          <div class="col-md-3 mb-2">
+                            <label>Kecamatan:</label>
+                            <app-master-district
+                              [districtId]="relatedPerson.district_id_ibu"
+                              [cityId]="relatedPerson.city_id_ibu"
+                              (districtOutput)="
+                                relatedPerson.district_id_ibu = $event
+                              "
+                            >
+                            </app-master-district>
+                          </div>
+                          <div class="col-md-3 mb-2">
+                            <label>Kelurahan:</label>
+                            <app-master-sub-district
+                              [subdistrictId]="relatedPerson.village_id_ibu"
+                              [districtId]="relatedPerson.district_id_ibu"
+                              (subDistrictOutput)="
+                                relatedPerson.village_id_ibu = $event
+                              "
+                            >
+                            </app-master-sub-district>
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label>Kode Pos:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="relatedPerson.postal_code_ibu"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-2 mb-2">
+                            <label>RT:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="relatedPerson.rt_ibu"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-2 mb-2">
+                            <label>RW:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="relatedPerson.rw_ibu"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <div class="card mb-3">
+                      <div class="card-header navy">Data Ayah</div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-md-6 mb-2">
+                            <label>Nama Ayah:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="relatedPerson.nama_ayah"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <label>NIK Ayah:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="relatedPerson.nik_ayah"
+                              class="form-control"
+                              minlength="16"
+                              maxlength="16"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <label>Tanggal Lahir:</label>
+                            <input
+                              type="date"
+                              [(ngModel)]="relatedPerson.tl_ayah"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-6 mb-2">
+                            <label>No. HP:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="relatedPerson.hp_ayah"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-12 mb-2">
+                            <label>Alamat Jalan:</label>
+                            <textarea
+                              type="text"
+                              [(ngModel)]="relatedPerson.alamat_jalan_ayah"
+                              class="form-control"
+                              required
+                            ></textarea>
+                          </div>
+                          <div class="col-md-3 mb-2">
+                            <label>Provinsi:</label>
+                            <app-master-province
+                              [provinceId]="relatedPerson.province_id_ayah"
+                              (provinceOutput)="
+                                relatedPerson.province_id_ayah = $event
+                              "
+                            >
+                            </app-master-province>
+                          </div>
+                          <div class="col-md-3 mb-2">
+                            <label>Kota/Kabupaten:</label>
+                            <app-master-city
+                              [cityId]="relatedPerson.city_id_ayah"
+                              [provinceId]="relatedPerson.province_id_ayah"
+                              (cityOutput)="relatedPerson.city_id_ayah = $event"
+                            >
+                            </app-master-city>
+                          </div>
+                          <div class="col-md-3 mb-2">
+                            <label>Kecamatan:</label>
+                            <app-master-district
+                              [districtId]="relatedPerson.district_id_ayah"
+                              [cityId]="relatedPerson.city_id_ayah"
+                              (districtOutput)="
+                                relatedPerson.district_id_ayah = $event
+                              "
+                            >
+                            </app-master-district>
+                          </div>
+                          <div class="col-md-3 mb-2">
+                            <label>Kelurahan:</label>
+                            <app-master-sub-district
+                              [subdistrictId]="relatedPerson.village_id_ayah"
+                              [districtId]="relatedPerson.district_id_ayah"
+                              (subDistrictOutput)="
+                                relatedPerson.village_id_ayah = $event
+                              "
+                            >
+                            </app-master-sub-district>
+                          </div>
+                          <div class="col-md-4 mb-2">
+                            <label>Kode Pos:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="relatedPerson.postal_code_ayah"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-2 mb-2">
+                            <label>RT:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="relatedPerson.rt_ayah"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                          <div class="col-md-2 mb-2">
+                            <label>RW:</label>
+                            <input
+                              type="text"
+                              [(ngModel)]="relatedPerson.rw_ayah"
+                              class="form-control"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <button
+                      (click)="doSubmitRelatedPerson()"
+                      class="btn btn-primary mt-3"
+                    >
+                      <span *ngIf="!isLoading"> Submit </span>
+                      <span *ngIf="isLoading">
+                        <span
+                          class="spinner-border spinner-border-sm me-1"
+                        ></span>
+                        Loading...
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>Anamnesis</a>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <div class="col-12">
+                <div class="card mb-3">
+                  <div class="card-header navy">Data Anamnesis</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-12 mb-3">
+                        <label>Keluhan Utama:</label>
+                        <textarea
+                          [(ngModel)]="keluhanUtama"
+                          class="form-control"
+                          required
+                        ></textarea>
+                      </div>
+                      <div class="col-6 mb-3">
+                        <label for="golonganDarah">Golongan Darah:</label>
+                        <select
+                          id="golonganDarah"
+                          [(ngModel)]="golonganDarah"
+                          class="form-control"
+                          required
+                        >
+                          <option value="" disabled selected>
+                            -- Pilih Golongan Darah --
+                          </option>
+                          <option
+                            *ngFor="
+                              let darah of ['Group A', 'Group B', 'Group O']
+                            "
+                            [value]="darah"
+                          >
+                            {{ darah }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-6 mb-3">
+                        <label for="rhesus">Rhesus:</label>
+                        <select
+                          id="rhesus"
+                          [(ngModel)]="rhesus"
+                          class="form-control"
+                          required
+                        >
+                          <option value="" disabled selected>
+                            -- Pilih Status Rhesus --
+                          </option>
+                          <option
+                            *ngFor="let darah of ['Positive', 'Negative']"
+                            [value]="darah"
+                          >
+                            {{ darah }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="col-12 mb-3">
+                        <label>Riwayat Alergi:</label>
+                        <textarea
+                          [(ngModel)]="riwayatAlergi"
+                          class="form-control"
+                          required
+                        ></textarea>
+                      </div>
+                      <div class="col-12 mb-3">
+                        <label>Riwayat Penyakit:</label>
+                        <textarea
+                          [(ngModel)]="riwayatPenyakit"
+                          class="form-control"
+                          required
+                        ></textarea>
+                      </div>
+
+                      <div class="col-12 mb-3">
+                        <label>Status Kehamilan:</label>
+                        <select
+                          id="Status Kehamilan"
+                          [(ngModel)]="statusKehamilan"
+                          class="form-control"
+                          required
+                        >
+                          <option value="" disabled selected>
+                            -- Pilih Status Kehamilan --
+                          </option>
+                          <option
+                            *ngFor="
+                              let pregnantStatus of ['Not Pregnant', 'Pregnant']
+                            "
+                            [value]="pregnantStatus"
+                          >
+                            {{ pregnantStatus }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <div class="col-12">
+                        <button
+                          (click)="doSubmitAnamnesis()"
+                          class="btn btn-primary mt-3"
+                        >
+                          <span *ngIf="!isLoading"> Submit </span>
+                          <span *ngIf="isLoading">
+                            <span
+                              class="spinner-border spinner-border-sm me-1"
+                            ></span>
+                            Loading...
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="3">
+          <a ngbNavLink>Pemeriksaan Fisik</a>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <div class="col-12">
+                <div class="card mb-3">
+                  <div class="card-header navy">Data Pemeriksaan Fisik</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="card mb-3">
+                          <div class="card-header navy">Tanda Vital</div>
+                          <div class="card-body">
+                            <div class="row">
+                              <!-- Sistole -->
+                              <div class="col-md-6 mb-3">
+                                <label for="sistole">Sistole (mmHg):</label>
+                                <input
+                                  type="number"
+                                  id="sistole"
+                                  [(ngModel)]="sistole"
+                                  class="form-control"
+                                  required
+                                  placeholder="Masukkan nilai sistole"
+                                />
+                              </div>
+
+                              <!-- Diastole -->
+                              <div class="col-md-6 mb-3">
+                                <label for="diastole">Diastole (mmHg):</label>
+                                <input
+                                  type="number"
+                                  id="diastole"
+                                  [(ngModel)]="diastole"
+                                  class="form-control"
+                                  required
+                                  placeholder="Masukkan nilai diastole"
+                                />
+                              </div>
+
+                              <!-- hearth Rate -->
+                              <div class="col-md-6 mb-3">
+                                <label for="hearth Rate">
+                                  Hearth Rate (beats/minute):
+                                </label>
+                                <input
+                                  type="number"
+                                  id="hearth Rate"
+                                  [(ngModel)]="heartRate"
+                                  class="form-control"
+                                  required
+                                  placeholder="Masukkan nilai hearth Rate"
+                                />
+                              </div>
+
+                              <!-- Body Temperature -->
+                              <div class="col-md-6 mb-3">
+                                <label for="bodyTemperature"
+                                  >Suhu Tubuh (°C):</label
+                                >
+                                <input
+                                  type="number"
+                                  id="bodyTemperature"
+                                  [(ngModel)]="bodyTemperature"
+                                  class="form-control"
+                                  step="0.1"
+                                  required
+                                  placeholder="Masukkan suhu tubuh"
+                                />
+                              </div>
+
+                              <!-- Respiratory Rate -->
+                              <div class="col-md-6 mb-3">
+                                <label for="respiratoryRate"
+                                  >Laju Pernapasan (bpm):</label
+                                >
+                                <input
+                                  type="number"
+                                  id="respiratoryRate"
+                                  [(ngModel)]="respiratoryRate"
+                                  class="form-control"
+                                  required
+                                  placeholder="Masukkan laju pernapasan"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="card mb-3">
+                          <div class="card-header navy">
+                            Indeks Kebersihan Gigi
+                          </div>
+                          <div class="card-body">
+                            <div class="row">
+                              <!-- Debris Indeks -->
+                              <div class="col-md-4 mb-3">
+                                <label for="debrisIndeks">Debris Indeks:</label>
+                                <input
+                                  type="number"
+                                  id="debrisIndeks"
+                                  [(ngModel)]="debrisIndeks"
+                                  class="form-control"
+                                  required
+                                  placeholder="Masukkan nilai Debris Indeks"
+                                />
+                              </div>
+
+                              <!-- Kalkulus Indeks -->
+                              <div class="col-md-4 mb-3">
+                                <label for="kalkulusIndeks"
+                                  >Kalkulus Indeks:</label
+                                >
+                                <input
+                                  type="number"
+                                  id="kalkulusIndeks"
+                                  [(ngModel)]="kalkulusIndeks"
+                                  class="form-control"
+                                  required
+                                  placeholder="Masukkan nilai Kalkulus Indeks"
+                                />
+                              </div>
+
+                              <!-- Skor Total Kalkulus Indeks -->
+                              <div class="col-md-4 mb-3">
+                                <label for="skorTotalKalkulusIndeks"
+                                  >Skor Total Kalkulus Indeks:</label
+                                >
+                                <input
+                                  type="number"
+                                  id="skorTotalKalkulusIndeks"
+                                  [(ngModel)]="skorTotalKalkulusIndeks"
+                                  class="form-control"
+                                  required
+                                  placeholder="Masukkan Skor Total Kalkulus Indeks"
+                                />
+                              </div>
+
+                              <!-- Skor Total OHIS -->
+                              <div class="col-md-12 mb-3">
+                                <label for="skorTotalOHIS"
+                                  >Skor Total OHIS:</label
+                                >
+                                <input
+                                  type="number"
+                                  id="skorTotalOHIS"
+                                  [(ngModel)]="skorTotalOHIS"
+                                  class="form-control"
+                                  required
+                                  placeholder="Masukkan Skor Total OHIS"
+                                />
+                              </div>
+
+                              <!-- Kondisi Gigi -->
+                              <div class="col-md-12 mb-3">
+                                <label for="kondisiGigi">Kondisi Gigi:</label>
+                                <textarea
+                                  type="number"
+                                  id="kondisiGigi"
+                                  [(ngModel)]="kondisiGigi"
+                                  class="form-control"
+                                  required
+                                  placeholder="Masukkan Kondisi Gigi"
+                                ></textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="card mb-3">
+                          <div class="card-header navy">
+                            Pemeriksaan Odontogram
+                          </div>
+                          <div class="card-body">
+                            <div class="row">
+                              <!-- Pilihan Pemeriksaan Odontogram  -->
+                              <div class="col-md-12 mb-3">
+                                <label for="pemeriksaanOdontogram"
+                                  >Pemeriksaan Odontogram :</label
+                                >
+                                <select
+                                  id="pemeriksaanOdontogram"
+                                  [(ngModel)]="pemeriksaanOdontogram"
+                                  class="form-control"
+                                  required
+                                >
+                                  <option value="" disabled selected>
+                                    -- Pilih Bagian Gigi --
+                                  </option>
+                                  <option
+                                    *ngFor="let statusPuasa of daftarBagianGigi"
+                                    [value]="statusPuasa.display"
+                                  >
+                                    {{ statusPuasa.display }}
+                                  </option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- Tombol Submit -->
+                      <div class="col-12">
+                        <button
+                          (click)="doSubmitPemeriksaanFisik()"
+                          class="btn btn-primary mt-3"
+                        >
+                          <span *ngIf="!isLoading"> Submit </span>
+                          <span *ngIf="isLoading">
+                            <span
+                              class="spinner-border spinner-border-sm me-1"
+                            ></span>
+                            Loading...
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="4">
+          <a ngbNavLink>Laboratorium</a>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <div class="col-12">
+                <div class="card mb-3">
+                  <div class="card-header navy">Data Lab</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <!-- Status Puasa -->
+                      <div class="col-md-6 mb-3">
+                        <label for="cari_tindakan" class="form-label"
+                          >Status Puasa:</label
+                        >
+                        <select
+                          id="statusPuasa"
+                          [(ngModel)]="statusPuasa"
+                          class="form-control"
+                          required
+                        >
+                          <option value="" disabled selected>
+                            -- Pilih Status Puasa --
+                          </option>
+                          <option
+                            *ngFor="let statusPuasa of ['Puasa', 'Tidak Puasa']"
+                            [value]="statusPuasa"
+                          >
+                            {{ statusPuasa }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <!-- Diagnosa -->
+                      <div class="col-md-6 mb-3">
+                        <app-master-diagnosa
+                          [isShowCode]="false"
+                          [title]="'Diangosa:'"
+                          (selectedItem)="
+                            procedureFastingCode = $event.kddiagnosa;
+                            procedureFastingDisplay = $event.diagnosa
+                          "
+                        >
+                        </app-master-diagnosa>
+                      </div>
+
+                      <!-- Laboratory Procedure -->
+                      <div class="col-md-6 mb-3">
+                        <label for="cari_tindakan" class="form-label"
+                          >Laboratory Procedure:</label
+                        >
+                        <textarea
+                          type="text"
+                          [(ngModel)]="serviceRequestName"
+                          class="form-control"
+                          required
+                        ></textarea>
+                      </div>
+
+                      <!-- Laboratory Specimen -->
+                      <div class="col-md-6 mb-3">
+                        <label for="cari_tindakan" class="form-label"
+                          >Laboratory Specimen:</label
+                        >
+                        <select
+                          id="specimenName"
+                          [(ngModel)]="specimenName"
+                          class="form-control"
+                          required
+                        >
+                          <option value="" disabled selected>
+                            -- Pilih Laboratory Specimen --
+                          </option>
+                          <option
+                            *ngFor="
+                              let labSpecimen of [
+                                'Blood specimen',
+                                'Urine specimen',
+                                'Tissue specimen',
+                                'Sputum specimen',
+                                'Cerebrospinal fluid specimen',
+                                'Feces specimen',
+                                'Pleural fluid specimen',
+                                'Peritoneal fluid specimen',
+                                'Synovial fluid specimen',
+                                'Nasopharyngeal swab'
+                              ]
+                            "
+                            [value]="labSpecimen"
+                          >
+                            {{ labSpecimen }}
+                          </option>
+                        </select>
+                      </div>
+
+                      <!-- Hemoglobin -->
+                      <div class="col-md-6 mb-3">
+                        <label for="hemoglobin" class="form-label"
+                          >Hemoglobin (g/dL):</label
+                        >
+                        <input
+                          type="number"
+                          id="hemoglobin"
+                          [(ngModel)]="hemoglobinValue"
+                          class="form-control"
+                          required
+                          placeholder="Masukkan nilai Hemoglobin"
+                        />
+                      </div>
+
+                      <!-- MCV -->
+                      <div class="col-md-6 mb-3">
+                        <label for="mcv" class="form-label">MCV (fL):</label>
+                        <input
+                          type="number"
+                          id="mcv"
+                          [(ngModel)]="mcvValue"
+                          class="form-control"
+                          required
+                          placeholder="Masukkan nilai MCV"
+                        />
+                      </div>
+
+                      <!-- Tombol Submit -->
+                      <div class="col-12">
+                        <button
+                          (click)="doSubmitLaborat()"
+                          class="btn btn-primary mt-3"
+                        >
+                          <span *ngIf="!isLoading"> Submit </span>
+                          <span *ngIf="isLoading">
+                            <span
+                              class="spinner-border spinner-border-sm me-1"
+                            ></span>
+                            Loading...
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="5">
+          <a ngbNavLink>Diagnosa</a>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <div class="col-12">
+                <div class="card mb-3">
+                  <div class="card-header navy">Diagnosa</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <!-- Diagnosa -->
+                      <div class="col-md-6 mb-3">
+                        <app-master-diagnosa
+                          [isShowCode]="false"
+                          [title]="'Diagosa:'"
+                          [searchDiagnosaText]="encounterDiagnosisDisplay"
+                          (selectedItem)="
+                            encounterDiagnosisCode = $event.kddiagnosa;
+                            encounterDiagnosisDisplay = $event.diagnosa
+                          "
+                        >
+                        </app-master-diagnosa>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tombol Submit -->
+              <div class="col-12">
+                <button
+                  (click)="doSubmitEncounterDiagnosa()"
+                  class="btn btn-primary mt-3"
+                >
+                  <span *ngIf="!isLoading"> Submit </span>
+                  <span *ngIf="isLoading">
+                    <span class="spinner-border spinner-border-sm me-1"></span>
+                    Loading...
+                  </span>
+                </button>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="6">
+          <a ngbNavLink>Tindakan</a>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <div class="col-12">
+                <div class="card mb-3">
+                  <div class="card-header navy">Tindakan</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <!-- tindakan -->
+                      <div class="col-md-6 mb-3">
+                        <app-master-tindakan
+                          [isShowCode]="false"
+                          [title]="'Tindakan:'"
+                          [searchTindakanText]="encounterProcedureDisplay"
+                          (selectedItem)="
+                            encounterProcedureCode = $event.kdtindakan;
+                            encounterProcedureDisplay = $event.tindakan
+                          "
+                        >
+                        </app-master-tindakan>
+                      </div>
+
+                      <div class="col-12">
+                        <label for="encounter_note" class="form-label"
+                          >Note:</label
+                        >
+                        <textarea
+                          type="text"
+                          [(ngModel)]="encounterProcedureNote"
+                          class="form-control"
+                          required
+                        ></textarea>
+                      </div>
+
+                      <!-- Tombol Submit -->
+                      <div class="col-12">
+                        <button
+                          (click)="doSubmitEncounterProcedure()"
+                          class="btn btn-primary mt-3"
+                        >
+                          <span *ngIf="!isLoading"> Submit </span>
+                          <span *ngIf="isLoading">
+                            <span
+                              class="spinner-border spinner-border-sm me-1"
+                            ></span>
+                            Loading...
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="7">
+          <a ngbNavLink>Tindak Lanjut</a>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <div class="col-12">
+                <div class="card mb-3">
+                  <div class="card-header navy">Tindak Lanjut</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-12">
+                        <label for="patient_instruction" class="form-label"
+                          >Patient Instruction:</label
+                        >
+                        <textarea
+                          type="text"
+                          [(ngModel)]="tindakLanjutPatientInstrruction"
+                          class="form-control"
+                          required
+                        ></textarea>
+                      </div>
+                      <div class="col-12">
+                        <label for="tindakLanjutText" class="form-label"
+                          >Note:</label
+                        >
+                        <textarea
+                          type="text"
+                          [(ngModel)]="tindakLanjutText"
+                          class="form-control"
+                          required
+                        ></textarea>
+                      </div>
+
+                      <!-- Tombol Submit -->
+                      <div class="col-12">
+                        <button
+                          (click)="doSubmitTindakLanjut()"
+                          class="btn btn-primary mt-3"
+                        >
+                          <span *ngIf="!isLoading"> Submit </span>
+                          <span *ngIf="isLoading">
+                            <span
+                              class="spinner-border spinner-border-sm me-1"
+                            ></span>
+                            Loading...
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+
+        <li [ngbNavItem]="8">
+          <a ngbNavLink>Keluar Faskes</a>
+          <ng-template ngbNavContent>
+            <div class="row">
+              <div class="col-12">
+                <div class="card mb-3">
+                  <div class="card-header navy">Keluar Faskes</div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-12">
+                        <label for="conditionStable" class="form-label"
+                          >Note:</label
+                        >
+                        <textarea
+                          type="text"
+                          [(ngModel)]="conditionStable"
+                          class="form-control"
+                          placeholder="Patient's condition stable"
+                          required
+                        ></textarea>
+                      </div>
+
+                      <!-- Tombol Submit -->
+                      <div class="col-12">
+                        <button
+                          (click)="doKeluarFaskes()"
+                          class="btn btn-primary mt-3"
+                        >
+                          Keluar Faskes
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav"></div>
+    </div>
+  </div>
+</div>
+
+<style scoped>
+  /* Styling untuk card-header navy */
+  .card-header navy {
+    background-color: #343a40;
+    /* Warna gelap */
+    color: white;
+    /* Warna teks putih */
+    font-weight: bold;
+  }
+
+  /* Styling untuk tombol */
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    border: none;
+  }
+
+  .btn-danger:hover {
+    background-color: #a71d2a;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    border: none;
+  }
+
+  .btn-success:hover {
+    background-color: #218838;
+  }
+
+  /* Styling untuk form control */
+  .form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+  }
+
+  /* Spacing untuk elemen dalam form */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Styling tambahan untuk input radio */
+  input[type="radio"] {
+    margin-right: 5px;
+  }
+
+  /* Styling untuk card body */
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  /* Margin tambahan untuk elemen di dalam card */
+  .mt-2 {
+    margin-top: 0.5rem;
+  }
+
+  /* Styling container */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+</style>

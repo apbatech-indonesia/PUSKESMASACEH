@@ -1,0 +1,28 @@
+<form (ngSubmit)="submitFormHPVDNA()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Skrining Kanker Leher Rahim</h5>
+  </div>
+  <div class="mb-3">
+    <!-- HPV DNA -->
+    <label class="form-label">HPV DNA:</label>
+    <div *ngFor="let item of hpvDnaOptions" class="form-check">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="hpvDna"
+        [value]="item"
+        [(ngModel)]="modelHPVDNA.hpvDna"
+        [id]="item"
+      />
+      <label class="form-check-label" [for]="item">{{ item }}</label>
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

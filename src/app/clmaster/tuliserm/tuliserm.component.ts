@@ -415,6 +415,7 @@ export class tulisermComponent implements OnInit {
   riwayatkeluarga: any = "";
   kdtkp: any = "";
   jeniskun: any = "";
+  isPeriksaPkg: any = false;
 
   constructor(
     public FarmasijualService: FarmasijualService,
@@ -1598,6 +1599,7 @@ export class tulisermComponent implements OnInit {
           this.noantrianbpjs = x.noantrianbpjs;
           this.kddoktersatusehat = x.idhis;
           this.locationid = x.locationid;
+          this.isPeriksaPkg = x.isPeriksaPkg == "Y";
 
           this.authService.tmpbpjs(this.noasuransi, "noka").subscribe(
             (data) => {

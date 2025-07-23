@@ -107,6 +107,18 @@ export class MpasienComponent implements OnInit {
   usia: any = "";
   noasuransi: string = "";
   tglp: any;
+  showloading: boolean;
+  namabpjs: any;
+  tglakhirberlaku: any;
+  jeniskelas: any;
+  jenispeserta: any;
+  aktif: any;
+  ketaktif: any;
+  kdprovider: any;
+  namaprovider: any;
+  carinobpjs: any = "noka";
+  isShowPasienList: boolean;
+
   constructor(
     public http: HttpClient,
     private datepipe: DatePipe,
@@ -135,7 +147,6 @@ export class MpasienComponent implements OnInit {
     kelamin: ["", Validators.required],
     tempatlahir: ["", Validators.required],
     alamat: ["", Validators.required],
-
     keluarahan: ["", Validators.required],
     indetitas: ["", Validators.required],
     // noindetitas: ['',Validators.required],
@@ -148,6 +159,7 @@ export class MpasienComponent implements OnInit {
   });
   tgolonganlab: any;
   ngOnInit() {
+    console.log(this.propinsi);
     this.klinik();
     // this.tmppuser()
     this.tmpantri();
@@ -638,7 +650,8 @@ export class MpasienComponent implements OnInit {
           let pasien: any = await this.authService.getPasienByTandaPengenal(
             this.cabangarr[0]?.slug,
             this.indetitas,
-            this.noindetitas
+            this.noindetitas,
+            this.noasuransi
           );
           let normpasien = pasien?.data?.norm;
           if (normpasien != null && normpasien != this.norm) {
@@ -792,6 +805,15 @@ export class MpasienComponent implements OnInit {
   }
 
   res: any;
+  
+  test() {
+    Object.keys(this.profileForm.controls).forEach((field) => {
+      const control = this.profileForm.get(field);
+      if (control && control.invalid) {
+        console.log("Field tidak valid:", field, control.errors);
+      }
+    });
+  }
 
   datax = [];
   Batal() {
@@ -946,6 +968,50 @@ export class MpasienComponent implements OnInit {
       " hari";
   }
 
+  pilihnorm(norm) {
+    this.isShowPasienList = false;
+    this.normbaru = norm;
+  }
+
+  gantinorm(data) {
+    this.norm = data.norm;
+    this.pasien = data.pasien;
+    this.tempatlahir = data.tempatlahir;
+    this.kelamin = data.jeniskelamin;
+    this.alamat = data.alamat;
+    this.alamats = data.alamatsekarang;
+    this.indetitas = data.tandapengenal;
+    this.noindetitas = data.nopengenal;
+    this.nohp = data.hp;
+    this.agama = data.agama;
+    this.marital = data.statusmarital;
+    this.pendidikan = data.pendidikan;
+    this.perkerjaan = data.perkerjaan;
+    this.golda = data.golda;
+    this.tgllahir = data.tgllahir;
+    this.noasuransi = data.noasuransi;
+    this.keluarahanid = data.kdkelurahan;
+    this.keluarahan = data.keluarahan;
+    this.verifsimpan = "0";
+    this.usia = data.usia;
+    this.propinsi = data.prov_name;
+    this.kabupaten = data.city_name;
+    this.kecamatan = data.dis_name;
+    this.an = data.kdpanggil;
+
+    const difference = this.calculateDifferenceInYearsMonthsDays(
+      this.tgllahir,
+      this.tglp
+    );
+    this.usia =
+      difference.years +
+      " tahun " +
+      difference.months +
+      " Bulan " +
+      difference.days +
+      " hari";
+  }
+
   cekbpjsnik() {
     this.authService.tmpbpjs(this.noindetitas, "nik").subscribe(
       (data) => {
@@ -1075,6 +1141,73 @@ export class MpasienComponent implements OnInit {
     );
   }
 
+  cekkepesertaanbpjs(content) {
+    var noasuransiv;
+    var jumlahkarakter = 13;
+    var hasilkurang: number;
+
+    if (this.noasuransi.length < 13) {
+      hasilkurang = jumlahkarakter - this.noasuransi.length;
+      this.generateZeros(hasilkurang);
+
+      noasuransiv = this.zeros + "" + this.noasuransi;
+      this.noasuransi = noasuransiv;
+    } else if (this.noasuransi.length > 13) {
+      this.toastr.error("nomor BPJS terlalu panjang maksimal 13 angka");
+    } else {
+      noasuransiv = this.noasuransi;
+    }
+
+    if (this.noasuransi.length <= 5) {
+      this.toastr.error("Silahkan Isi No Kartu BPJS", "Eror");
+    } else {
+      this.showloading = true;
+
+      this.modalService.open(content, {});
+
+      this.authService.tmpbpjs(this.noasuransi, this.carinobpjs).subscribe(
+        (data) => {
+          if (data) {
+            if (data.metaData.code == 200) {
+              this.showloading = false;
+
+              this.namabpjs = data.response.nama;
+              this.tglakhirberlaku = data.response.tglAkhirBerlaku;
+              this.jeniskelas = data.response.jnsKelas.nama;
+              this.jenispeserta = data.response.jnsPeserta.nama;
+              this.aktif = data.response.aktif;
+              this.ketaktif = data.response.ketAktif;
+              this.kdprovider = data.response.kdProviderPst.kdProvider;
+              this.namaprovider = data.response.kdProviderPst.nmProvider;
+            } else if (data.metaData.code == 204) {
+              this.toastr.error("Kartu Tidak di temukan", "Eror");
+
+              this.namabpjs = "";
+              this.tglakhirberlaku = "";
+              this.jeniskelas = "";
+              this.jenispeserta = "";
+              this.aktif = "";
+              this.ketaktif = "";
+              this.kdprovider = "";
+              this.namaprovider = "";
+
+              this.showloading = false;
+            } else {
+              this.toastr.error(data.response.message, "Eror");
+              this.showloading = false;
+            }
+          } else {
+            this.toastr.error("Gagal Memuat Data BPJS", "Eror");
+            this.showloading = false;
+          }
+        },
+        (Error) => {
+          console.log(Error);
+        }
+      );
+    }
+  }
+
   normbaru: any = "";
 
   ganti() {
@@ -1122,6 +1255,62 @@ export class MpasienComponent implements OnInit {
               this.toastr.error("Simpan  Gagal", "Eror");
             }
           });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+        }
+      });
+  }
+
+  updatenorm() {
+    if (this.normbaru === "") {
+      this.toastr.error("isikan norm baru");
+      return;
+    }
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+
+    this.caripas = "2";
+
+    swalWithBootstrapButtons
+      .fire({
+        title: "Ganti Norm?",
+        text: "Yakin Akan Ganti Norm",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Ganti",
+        cancelButtonText: "Batal",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          let body = {
+            from_norm: this.norm,
+            to_norm: this.normbaru,
+          };
+
+          this.authService
+            .updatenorm(body, this.cabangarr[0]?.slug)
+            .subscribe((response) => {
+              if (response) {
+                this.toastr.success("", "Sukses", {
+                  timeOut: 2000,
+                });
+
+                this.norm = this.normbaru;
+                this.tmpantri();
+
+                this.modalService.dismissAll();
+              } else {
+                this.toastr.error("Simpan  Gagal", "Eror");
+              }
+            });
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel

@@ -15,6 +15,8 @@ import { satusehatSkriningPtmModule } from '../satusehat/satusehat-skrining-ptm/
 import { TulisSkriningPtmComponent } from '../satusehat/satusehat-skrining-ptm/form/tulis-skrining-ptm.component';
 import { satusehatGiziModule } from '../satusehat/satusehat-gizi/satusehat-gizi.module';
 import { TulisSatuSehatGiziComponent } from '../satusehat/satusehat-gizi/form/tulis-satusehat-gizi.component';
+import { TulisSatuSehatGigiComponent } from '../satusehat/satusehat-gigi/form/tulis-satusehat-gigi.component';
+import { satusehatGigiModule } from '../satusehat/satusehat-gigi/satusehat-gigi.module';
 
 const routes: Routes = [
   {path:'tuliserm/:notrans/:kddokter/:dariklik/:norm',component:tulisermComponent},
@@ -26,6 +28,7 @@ const routes: Routes = [
   {path:'tulis-imunisasi/:notrans/:kddokter/:dariklik/:norm',component:TulisImunisasiComponent},
   {path:'tulis-skrining-ptm/:notrans/:kddokter/:dariklik/:norm',component:TulisSkriningPtmComponent},
   {path:'tulis-gizi/:notrans/:kddokter/:dariklik/:norm',component:TulisSatuSehatGiziComponent},
+  {path:'tulis-gigi/:notrans/:kddokter/:dariklik/:norm',component:TulisSatuSehatGigiComponent},
   { 
     path: 'Kebidanan/BukuKontrasepsi/:tanggal_mulai/:tanggal_akhir', 
     loadChildren:() => import('./Kebidanan/BukuKontrasepsi/Cetak/Cetak.module').then(m => m.CetakModule )
@@ -239,6 +242,10 @@ const routes: Routes = [
     {
       path: 'satusehat-gizi',
       loadChildren: () => satusehatGiziModule
+    },
+    {
+      path: 'satusehat-gigi',
+      loadChildren: () => satusehatGigiModule
     },
     {
       path : 'kasirfarmasibelir',

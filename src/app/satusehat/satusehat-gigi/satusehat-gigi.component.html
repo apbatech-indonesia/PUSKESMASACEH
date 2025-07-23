@@ -1,0 +1,184 @@
+<div class="app-inner-layout">
+  <div class="card mb-3">
+    <div class="card-header-tab card-header">
+      <div class="card-header-title font-size-lg text-capitalize fw-normal">
+        <i class="header-icon lnr-charts icon-gradient bg-happy-green"> </i>
+        <b style="font-size: 18px; color: rgb(75, 75, 75)"
+          >DASHBOARD REKAM MEDIK</b
+        >
+      </div>
+      <div class="btn-actions-pane-right text-capitalize">
+        <div class="position-relative mb-3">
+          <input
+            style="border-radius: 5px; border: solid 1px #ccc; height: 2em"
+            type="date"
+            [(ngModel)]="tglpx"
+            (change)="ktglrad()"
+          />
+
+          <input
+            style="border-radius: 5px; border: solid 1px #ccc; height: 2em"
+            type="date"
+            [(ngModel)]="tglpxs"
+            (change)="ktglrad()"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-card mb-3 card">
+    <div class="card-header">
+      <div>
+        <h5 class="menu-header-title text-capitalize" style="color: black">
+          Pasien
+        </h5>
+      </div>
+      <div class="btn-actions-pane-right">
+        <div class="input-group">
+          <div class="input-group-text">
+            <div class="">
+              <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+          </div>
+          <input
+            placeholder="Search..."
+            type="text"
+            class="form-control"
+            (keyup)="cpasien($event)"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive tableFixHeadx">
+      <table
+        class="align-middle mb-0 table table-borderless table-striped table-hover"
+      >
+        <thead>
+          <tr>
+            <th class="text-center">No Antrian</th>
+
+            <th>Pasien</th>
+            <th>Satu Sehat</th>
+            <th class="text-center">Actions</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Antrol</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of tampilpas">
+            <td class="text-center text-muted" style="width: 78px">
+              <div class="badge rounded-pill ps-2 pe-2 bg-warning">
+                {{ x.noantrian }}
+              </div>
+              <div
+                class="badge rounded-pill ps-2 pe-2 bg-success"
+                *ngIf="x.status === 'SELESAI'"
+              >
+                {{ x.status }}
+              </div>
+              <div
+                class="badge rounded-pill ps-2 pe-2 bg-danger"
+                *ngIf="x.status === 'ANTRI'"
+              >
+                BELUM
+              </div>
+              <div
+                class="badge rounded-pill ps-2 pe-2 bg-primary"
+                *ngIf="x.status === 'SIAP'"
+              >
+                SIAP!
+              </div>
+            </td>
+
+            <td
+              (click)="
+                panggil(
+                  x.noantrian,
+                  x.kddokter,
+                  x.namdokter,
+                  x.kodeantrian,
+                  x.notransaksi,
+                  x.kdpolibpjs,
+                  x.noasuransi,
+                  x.tglpriksa,
+                  x.pasien,
+                  x.nampoli
+                )
+              "
+            >
+              <div class="widget-content p-0">
+                <div class="widget-content-wrapper">
+                  <div
+                    class="widget-content-left flex2"
+                    style="font-size: 13px"
+                  >
+                    <div class="widget-heading">{{ x.pasien }}</div>
+                    <div class="widget-subheading">
+                      {{ x.norm }} |
+                      <span class="text-success">{{ x.costumer }}</span>
+                    </div>
+                    <div class="widget-subheading">{{ x.nampoli }}</div>
+                    <div *ngIf="x.dash === 'BPJS'">
+                      <span
+                        *ngIf="x.spcare === 'TERDAFTAR DI PCARE'"
+                        class="text-success"
+                        >{{ x.spcare }}</span
+                      >
+                      <span *ngIf="x.spcare === null" class="text-danger"
+                        >BELUM TERDAFTAR PCARE</span
+                      >
+                      <span
+                        *ngIf="x.spcare === 'SUDAH KIRIM KUNJUNGAN'"
+                        class="text-primary"
+                        >{{ x.spcare }}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <b *ngIf="x.idsatusehat.length > 1">Terkirim</b>
+              <b *ngIf="x.idsatusehat.length < 1" style="color: red">Belum</b>
+            </td>
+
+            <td class="text-center">
+              <button
+                type="button"
+                class="btn-icon btn-icon-only btn btn-success btn-sm m-2"
+                [routerLink]="[
+                  '/emrform/tulis-gigi',
+                  x.notransaksi,
+                  x.kddokter,
+                  'all',
+                  x.norm
+                ]"
+              >
+                Gigi
+              </button>
+            </td>
+            <td class="text-center">
+              <div
+                class="badge rounded-pill ps-2 pe-2 bg-danger"
+                *ngIf="x.koreksirmakhir === '0'"
+              >
+                In Progress
+              </div>
+              <div
+                class="badge rounded-pill ps-2 pe-2 bg-success"
+                *ngIf="x.koreksirmakhir === '1'"
+              >
+                Completed
+              </div>
+            </td>
+            <td class="text-center">
+              {{ x.statusantrian }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

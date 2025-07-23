@@ -219,18 +219,14 @@
               <label for="exampleSelect" class="form-label" style="color: black"
                 >Propinsi</label
               >
-              <div
-                class="badge bg-pill bg-success"
-                (click)="open(content, '1')"
+              <app-master-clenic-province
+                [isShowCode]="false"
+                [searchText]="propinsi"
+                (selectedItem)="
+                  propinsiid = $event.code; propinsi = $event.name
+                "
               >
-                +
-              </div>
-              <input
-                [(ngModel)]="propinsi"
-                placeholder="Propinsi"
-                type="text"
-                class="form-control"
-              />
+              </app-master-clenic-province>
             </div>
           </div>
 
@@ -239,23 +235,15 @@
               <label for="exampleSelect" class="form-label" style="color: black"
                 >Kabupaten</label
               >
-              <div
-                class="badge bg-pill bg-success"
-                (click)="open(content, '2')"
+              <app-master-clenic-city
+                [isShowCode]="false"
+                [parentId]="propinsiid"
+                [searchText]="kabupaten"
+                (selectedItem)="
+                  kabupatenid = $event.code; kabupaten = $event.name
+                "
               >
-                +
-              </div>
-              <input
-                [(ngModel)]="kabupaten"
-                placeholder="kabupaten"
-                type="text"
-                class="form-control"
-              />
-
-              <!-- <select class="form-select" [(ngModel)]="kabupaten"  (click)="pilihkab()">
-                  <option *ngFor="let x of tkab" value="{{x.KD_KABUPATEN}}" >{{x.KABUPATEN}}</option>
-                
-                </select> -->
+              </app-master-clenic-city>
             </div>
           </div>
 
@@ -264,24 +252,15 @@
               <label for="exampleSelect" class="form-label" style="color: black"
                 >Kecamatan</label
               >
-
-              <div
-                class="badge bg-pill bg-success"
-                (click)="open(content, '3')"
+              <app-master-clenic-district
+                [isShowCode]="false"
+                [parentId]="kabupatenid"
+                [searchText]="kecamatan"
+                (selectedItem)="
+                  kecamatanid = $event.code; kecamatan = $event.name
+                "
               >
-                +
-              </div>
-              <input
-                [(ngModel)]="kecamatan"
-                placeholder="kecamatan"
-                type="text"
-                class="form-control"
-              />
-
-              <!-- <select class="form-select" [(ngModel)]="kecamatan"  (click)="pilihkec()">
-                  <option *ngFor="let x of tkec" value="{{x.KD_KECAMATAN}}" >{{x.KECAMATAN}}</option>
-                
-                </select> -->
+              </app-master-clenic-district>
             </div>
           </div>
 
@@ -294,24 +273,17 @@
                   style="color: black"
                   >Kelurahan</label
                 >
-                <div
-                  class="badge bg-pill bg-success"
-                  (click)="open(content, '4')"
+                <app-master-clenic-subdistrict
+                  [isShowCode]="false"
+                  [parentId]="kecamatanid"
+                  [searchText]="keluarahan"
+                  (selectedItem)="
+                    keluarahanid = $event.code;
+                    keluarahan = $event.name;
+                    profileForm.get('keluarahan')?.setValue($event.name)
+                  "
                 >
-                  +
-                </div>
-                <input
-                  formControlName="keluarahan"
-                  [(ngModel)]="keluarahan"
-                  placeholder="Kelurahan"
-                  type="text"
-                  class="form-control"
-                />
-
-                <!-- <select class="form-select" [(ngModel)]="keluarahan"  >
-                  <option *ngFor="let x of tkelurahan" value="{{x.KD_KELURAHAN}}" >{{x.KELURAHAN}}</option>
-                
-                </select> -->
+                </app-master-clenic-subdistrict>
               </div>
             </form>
           </div>
@@ -370,6 +342,12 @@
                 class="form-control"
                 (keyup.enter)="cekbpjs($event)"
               />
+              <div
+                class="badge bg-pill bg-success my-2"
+                (click)="cekkepesertaanbpjs(content7)"
+              >
+                Cek Kepesertaan BPJS
+              </div>
             </div>
           </div>
 
@@ -679,6 +657,13 @@
               </div>
 
               <div
+                class="badge bg-pill bg-warning btn"
+                (click)="gantinorm(x); shownorm(pindahnorm)"
+              >
+                Ganti Norm
+              </div>
+
+              <div
                 class="badge bg-pill bg-info btn"
                 (click)="
                   riwayatpas(
@@ -788,9 +773,12 @@
       </button>
     </div>
   </ng-template>
-  <ng-template #content let-c="close" let-d="dismiss">
+
+  <ng-template #pindahnorm let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h6 class="modal-title">{{ namalurah }}</h6>
+      <h6 class="modal-title">
+        Pindah Nomor Rekam Medik <b> {{ norm }}</b>
+      </h6>
       <button
         type="button"
         class="btn-close"
@@ -798,149 +786,112 @@
         (click)="d('Cross click')"
       ></button>
     </div>
-    <div *ngIf="namalurah === 'Propinsi'" class="modal-body">
-      <div class="position-relative mb-3">
-        <label for="exampleEmail" class="form-label">Cari Propinsi</label>
-        <input
-          [(ngModel)]="caripro"
-          type="text"
-          class="form-control"
-          (keyup)="cariprox($event)"
-        />
-      </div>
 
-      <table
-        class="align-middle mb-0 table table-borderless table-striped table-hover"
-      >
-        <thead>
-          <tr>
-            <th>Propinsi</th>
-
-            <th class="text-center">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of tpropinsi">
-            <td style="font-size: 12px; color: black">
-              {{ x.prov_name }}
-            </td>
-
-            <td class="text-center">
-              <div
-                class="badge bg-pill bg-warning"
-                (click)="pilihpro(x.prov_id, x.prov_name)"
-              >
-                P
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="modal-body">
+      <label for="">Norm Lama</label>
+      <input
+        [(ngModel)]="norm"
+        placeholder="Norm Lama"
+        type="text"
+        class="form-control"
+      />
+    </div>
+    <div class="modal-body">
+      <label for="">Norm Baru</label>
+      <input
+        [(ngModel)]="normbaru"
+        placeholder="Norm Baru"
+        (keyup)="caripas = 3; isShowPasienList = true; caripass($event)"
+        type="text"
+        class="form-control"
+      />
     </div>
 
-    <div *ngIf="namalurah === 'Kabupaten'" class="modal-body">
-      <div class="position-relative mb-3">
-        <label for="exampleEmail" class="form-label">Cari Kabupaten</label>
-        <input type="text" class="form-control" (keyup)="carikab($event)" />
-      </div>
-
-      <table
-        class="align-middle mb-0 table table-borderless table-striped table-hover"
-      >
-        <thead>
-          <tr>
-            <th>Kabupaten</th>
-
-            <th class="text-center">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of tkab">
-            <td style="font-size: 12px; color: black">
-              {{ x.city_name }}
-            </td>
-
-            <td class="text-center">
-              <div
-                class="badge bg-pill bg-warning"
-                (click)="pilihkab(x.city_id, x.city_name)"
-              >
-                P
-              </div>
-            </td>
-          </tr>
-        </tbody>
+    <div class="modal-body" *ngIf="isShowPasienList">
+      <table class="table table-hover">
+        <tr *ngFor="let x of tpasien">
+          <td style="font-size: 12px; color: black">
+            {{ x.norm }}
+          </td>
+          <td style="font-size: 12px; color: black">
+            {{ x.nopengenal }}
+          </td>
+          <td style="font-size: 12px; color: black">
+            {{ x.pasien }}
+            <p style="font-size: 10px">{{ x.alamat }}</p>
+          </td>
+          <td>
+            <div
+              class="badge bg-pill bg-danger btn"
+              (click)="pilihnorm(x.norm)"
+            >
+              Pilih
+            </div>
+          </td>
+        </tr>
       </table>
     </div>
-
-    <div *ngIf="namalurah === 'kecamatan'" class="modal-body">
-      <div class="position-relative mb-3">
-        <label for="exampleEmail" class="form-label">Cari kecamatan</label>
-        <input type="text" class="form-control" (keyup)="carikec($event)" />
-      </div>
-
-      <table
-        class="align-middle mb-0 table table-borderless table-striped table-hover"
-      >
-        <thead>
-          <tr>
-            <th>kecamatan</th>
-
-            <th class="text-center">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of tkec">
-            <td style="font-size: 12px; color: black">
-              {{ x.dis_name }}
-            </td>
-
-            <td class="text-center">
-              <div
-                class="badge bg-pill bg-warning"
-                (click)="pilihkec(x.dis_id, x.dis_name)"
-              >
-                P
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div *ngIf="namalurah === 'Kelurahan'" class="modal-body">
-      <div class="position-relative mb-3">
-        <label for="exampleEmail" class="form-label">Cari Kelurahan</label>
-        <input type="text" class="form-control" (keyup)="carikel($event)" />
-      </div>
-
-      <table
-        class="align-middle mb-0 table table-borderless table-striped table-hover"
-      >
-        <thead>
-          <tr>
-            <th>Kelurahan</th>
-
-            <th class="text-center">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let x of tkelurahan">
-            <td style="font-size: 12px; color: black">
-              {{ x.subdis_name }}
-            </td>
-
-            <td class="text-center">
-              <div
-                class="badge bg-pill bg-warning"
-                (click)="pilihkel(x.subdis_id, x.subdis_name)"
-              >
-                P
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="modal-footer">
+      <button class="mb-2 me-2 btn-pill btn btn-info" (click)="updatenorm()">
+        Ganti
+      </button>
     </div>
   </ng-template>
 </div>
+
+<ng-template #content7 let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h6 class="modal-title">Data Kepersetaan BPJS</h6>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="d('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="position-relative mb-3">
+      <label for="exampleSelect" class="form-label" style="color: black"
+        >Cari</label
+      >
+      <select
+        [(ngModel)]="carinobpjs"
+        id="exampleSelect"
+        class="form-select"
+        (change)="caribynikandno($event.target.value)"
+      >
+        <option value="noka">NOKA</option>
+        <option value="nik">NIK</option>
+      </select>
+    </div>
+
+    <div style="text-align: center" *ngIf="showloading">
+      <div
+        class="loader-wrapper d-flex justify-content-center align-items-center"
+      >
+        <div class="loader">
+          <div class="ball-pulse">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p>Nama : {{ namabpjs }}</p>
+    <p>Tgl Akhir Berlaku : {{ tglakhirberlaku }}</p>
+    <p>Jenis kelas : {{ jeniskelas }}</p>
+    <p>Peserta : {{ jenispeserta }}</p>
+    <p>Prolanis : {{ pstProl }}</p>
+    <p>Prb : {{ pstPrb }}</p>
+
+    <p>FKTP : {{ kdprovider }} | {{ namaprovider }}</p>
+    <p>Status Kartu : {{ ketaktif }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="c('Close click')">
+      PILIH
+    </button>
+  </div>
+</ng-template>

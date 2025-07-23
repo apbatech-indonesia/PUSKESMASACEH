@@ -1,0 +1,99 @@
+<form (ngSubmit)="submitFormRapid()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Rapid Test Calon Pengantin</h5>
+  </div>
+  <div class="mb-3">
+    <!-- Hb Dewasa -->
+    <label class="form-label">Hb Dewasa (gr/dL)</label>
+    <input
+      type="number"
+      class="form-control mb-3"
+      [(ngModel)]="modelRapid.hb"
+      name="hb"
+      placeholder="Contoh: 13.5"
+    />
+
+    <!-- Rapid Test Sifilis -->
+    <label class="form-label fw-bold">Rapid Test Sifilis</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="sifilis"
+        value="Reaktif"
+        [(ngModel)]="modelRapid.sifilis"
+        id="sifilis-reaktif"
+      />
+      <label class="form-check-label" for="sifilis-reaktif">Reaktif</label>
+    </div>
+    <div class="form-check mb-3">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="sifilis"
+        value="Non Reaktif"
+        [(ngModel)]="modelRapid.sifilis"
+        id="sifilis-non"
+      />
+      <label class="form-check-label" for="sifilis-non">Non Reaktif</label>
+    </div>
+
+    <!-- Rapid Test HIB -->
+    <label class="form-label fw-bold">Rapid Test HIB</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hib"
+        value="Reaktif"
+        [(ngModel)]="modelRapid.hib"
+        id="hib-reaktif"
+      />
+      <label class="form-check-label" for="hib-reaktif">Reaktif</label>
+    </div>
+    <div class="form-check mb-3">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="hib"
+        value="Non Reaktif"
+        [(ngModel)]="modelRapid.hib"
+        id="hib-non"
+      />
+      <label class="form-check-label" for="hib-non">Non Reaktif</label>
+    </div>
+
+    <!-- Anemia -->
+    <label class="form-label fw-bold">Anemia</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="anemia"
+        value="true"
+        [(ngModel)]="modelRapid.anemia"
+        id="anemia-ya"
+      />
+      <label class="form-check-label" for="anemia-ya">Ya</label>
+    </div>
+    <div class="form-check mb-3">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="anemia"
+        value="false"
+        [(ngModel)]="modelRapid.anemia"
+        id="anemia-tidak"
+      />
+      <label class="form-check-label" for="anemia-tidak">Tidak</label>
+    </div>
+
+    <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+      <span *ngIf="!isLoading"> Submit </span>
+      <span *ngIf="isLoading">
+        <span class="spinner-border spinner-border-sm me-1"></span>
+        Loading...
+      </span>
+    </button>
+  </div>
+</form>

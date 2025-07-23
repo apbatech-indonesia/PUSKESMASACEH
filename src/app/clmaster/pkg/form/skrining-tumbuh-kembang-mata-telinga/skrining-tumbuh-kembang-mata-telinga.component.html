@@ -1,0 +1,55 @@
+<form (ngSubmit)="doSubmit()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Skrining Telinga dan Mata</h5>
+  </div>
+
+  <!-- Hasil Tes Daya Dengar -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Hasil Tes Daya Dengar</label>
+    <div
+      class="form-check"
+      *ngFor="let option of hasilTesDayaDengarOptions; let i = index"
+    >
+      <input
+        type="radio"
+        [id]="'hasilTesDayaDengar-' + i"
+        name="hasilTesDayaDengar"
+        [value]="option.code"
+        [(ngModel)]="model.hasilTesDayaDengar"
+        class="form-check-input"
+      />
+      <label class="form-check-label" [for]="'hasilTesDayaDengar-' + i">
+        {{ option.label }}
+      </label>
+    </div>
+  </div>
+
+  <!-- Pemeriksaan Pupil Putih -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Pemeriksaan Pupil Putih</label>
+    <div
+      class="form-check"
+      *ngFor="let option of pemeriksaanPupilPutihOptions; let i = index"
+    >
+      <input
+        type="radio"
+        [id]="'pemeriksaanPupilPutih-' + i"
+        name="pemeriksaanPupilPutih"
+        [value]="option.code"
+        [(ngModel)]="model.pemeriksaanPupilPutih"
+        class="form-check-input"
+      />
+      <label class="form-check-label" [for]="'pemeriksaanPupilPutih-' + i">
+        {{ option.label }}
+      </label>
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

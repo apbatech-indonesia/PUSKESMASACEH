@@ -360,25 +360,25 @@ export class skriningComponent implements OnInit {
   }
 
   cekKelurahan() {
-    if(!this.patientData?.kdkelurahan){
+    if (!this.patientData?.kdkelurahan) {
       Swal.fire({
         icon: "error",
         title: "Error!",
-        text: "Pasien Belum Melengkapi Data Alamat"
+        text: "Pasien Belum Melengkapi Data Alamat",
       });
-    }else{
-      const slug = this.cabangData?.slug??''
+    } else {
+      const slug = this.cabangData?.slug ?? "";
       const body = {
         villageId: this.patientData.kdkelurahan,
-      }
+      };
       this.serviceUrl.getDataKelurahan(body, slug).subscribe(
         (data: any) => {
-          console.log('kelurahan')
-          console.log(data)
-          if(data.data.subdistrict_id) {
+          console.log("kelurahan");
+          console.log(data);
+          if (data.data.subdistrict_id) {
             let dataKelurahan = data.data.subdistrict_id;
-            this.registerAndSave(dataKelurahan)
-          }else{
+            this.registerAndSave(dataKelurahan);
+          } else {
             Swal.fire({
               icon: "error",
               title: "Error!",
@@ -397,7 +397,7 @@ export class skriningComponent implements OnInit {
     }
   }
 
-  registerAndSave(dataKelurahan){
+  registerAndSave(dataKelurahan) {
     const bodyReg = {
       data: {
         rmno: this.norm,
@@ -419,27 +419,28 @@ export class skriningComponent implements OnInit {
         if (data.statusCode == "00") {
           this.screeningPatientId = data.data.screening_patient_id;
           this.screeningPatientData = data.data;
-          this.toastr.success('Berhasil Mendaftar Skrining', 'Sukses', {
+          this.toastr.success("Berhasil Mendaftar Skrining", "Sukses", {
             timeOut: 3000,
           });
           setTimeout(() => {
             this.saveDataScreening();
           }, 500);
-        } else if(data.statusCode == "02"){
+        } else if (data.statusCode == "02") {
           const errVilage = data?.data || {}; // Pastikan data.data ada
-          const message = "data.villageId" in errVilage
-            ? "Pasien tidak memiliki data Kelurahan"
-            : "Data Pasien Belum Lengkap, Silakan Periksa Kembali.";
+          const message =
+            "data.villageId" in errVilage
+              ? "Pasien tidak memiliki data Kelurahan"
+              : "Data Pasien Belum Lengkap, Silakan Periksa Kembali.";
           Swal.fire({
             icon: "error",
             title: "Error!",
-            text: message
+            text: message,
           });
         } else {
           Swal.fire({
             icon: "error",
             title: "Error!",
-            text: "Data Pasien Belum Lengkap, Silakan Periksa Kembali."
+            text: "Data Pasien Belum Lengkap, Silakan Periksa Kembali.",
           });
         }
       },
@@ -563,7 +564,7 @@ export class skriningComponent implements OnInit {
           //   showConfirmButton: false,
           //   timer: 3000,
           // });
-          this.toastr.success('Data Skrining Berhasil Di Simpan', 'Sukses', {
+          this.toastr.success("Data Skrining Berhasil Di Simpan", "Sukses", {
             timeOut: 3000,
           });
           document.getElementById("closeModal").click();
@@ -638,7 +639,7 @@ export class skriningComponent implements OnInit {
         this.dataHistory = filteredData;
       },
       (error: any) => {
-        console.log(error.error.statusMsg)
+        console.log(error.error.statusMsg);
       }
     );
   }

@@ -241,6 +241,7 @@ export class anjungansehatComponent implements OnInit {
 
     // alert(a);
   }
+
   hapus() {
     this.nomorasuransi = this.nomorasuransi.slice(0, -1);
   }

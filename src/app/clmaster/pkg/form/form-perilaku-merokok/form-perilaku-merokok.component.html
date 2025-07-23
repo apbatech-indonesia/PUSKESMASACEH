@@ -1,0 +1,96 @@
+<form (ngSubmit)="submitForm()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h3>Perilaku Merokok</h3>
+  </div>
+
+  <!-- Merokok setahun terakhir -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Merokok dalam setahun terakhir?</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="merokokSetahun"
+        value="true"
+        [(ngModel)]="model.merokokSetahun"
+        id="merokokSetahun-ya"
+      />
+      <label class="form-check-label" for="merokokSetahun-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="merokokSetahun"
+        value="false"
+        [(ngModel)]="model.merokokSetahun"
+        id="merokokSetahun-tidak"
+      />
+      <label class="form-check-label" for="merokokSetahun-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Pernah merokok -->
+  <div class="mb-3">
+    <label class="form-label fw-bold">Pernah merokok sebelumnya?</label>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="pernahMerokok"
+        value="true"
+        [(ngModel)]="model.pernahMerokok"
+        id="pernahMerokok-ya"
+      />
+      <label class="form-check-label" for="pernahMerokok-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="pernahMerokok"
+        value="false"
+        [(ngModel)]="model.pernahMerokok"
+        id="pernahMerokok-tidak"
+      />
+      <label class="form-check-label" for="pernahMerokok-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <!-- Terpapar asap rokok -->
+  <div class="mb-4">
+    <label class="form-label fw-bold"
+      >Terpapar asap rokok dalam 1 bulan terakhir?</label
+    >
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="asapRokok"
+        value="true"
+        [(ngModel)]="model.asapRokok"
+        id="asapRokok-ya"
+      />
+      <label class="form-check-label" for="asapRokok-ya">Ya</label>
+    </div>
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="radio"
+        name="asapRokok"
+        value="false"
+        [(ngModel)]="model.asapRokok"
+        id="asapRokok-tidak"
+      />
+      <label class="form-check-label" for="asapRokok-tidak">Tidak</label>
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

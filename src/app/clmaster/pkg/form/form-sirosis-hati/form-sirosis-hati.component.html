@@ -1,0 +1,38 @@
+<form (ngSubmit)="submitFormHati()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Pemeriksaan Fungsi Hati (Fibrosis/Sirosis)</h5>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">SGOT:</label>
+    <input
+      type="number"
+      class="form-control mb-2"
+      [(ngModel)]="modelHati.sgot"
+      name="sgot"
+    />
+
+    <label class="form-label">Trombosit:</label>
+    <input
+      type="number"
+      class="form-control mb-2"
+      [(ngModel)]="modelHati.trombosit"
+      name="trombosit"
+    />
+
+    <label class="form-label">ASPRI Score:</label>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="modelHati.aspri"
+      name="aspri"
+    />
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>

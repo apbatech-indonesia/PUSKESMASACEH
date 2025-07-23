@@ -1,0 +1,69 @@
+<form (ngSubmit)="submitFormPayudara()" class="p-4">
+  <div class="mb-3 form-pemeriksaan">
+    <h5 class="fw-bold">Skrining Kanker Payudara</h5>
+  </div>
+  <div class="mb-3">
+    <!-- Pemeriksaan -->
+    <label class="form-label">Pemeriksaan:</label>
+    <div class="form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [(ngModel)]="modelPayudara.pemeriksaan.sadanis"
+        name="sadanis"
+        id="sadanis"
+      />
+      <label class="form-check-label" for="sadanis">SADANIS</label>
+    </div>
+    <div class="form-check mb-3">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        [(ngModel)]="modelPayudara.pemeriksaan.usg"
+        name="usg"
+        id="usg"
+      />
+      <label class="form-check-label" for="usg">USG Payudara</label>
+    </div>
+
+    <!-- Hasil SADANIS -->
+    <label class="form-label">Hasil SADANIS:</label>
+    <div *ngFor="let item of hasilSadanisOptions">
+      <div class="form-check">
+        <input
+          type="radio"
+          class="form-check-input"
+          name="hasilSadanis"
+          [value]="item"
+          [(ngModel)]="modelPayudara.hasilSadanis"
+          [id]="item"
+        />
+        <label class="form-check-label" [for]="item">{{ item }}</label>
+      </div>
+    </div>
+
+    <!-- Hasil USG -->
+    <label class="form-label mt-3">Hasil USG:</label>
+    <div *ngFor="let item of hasilUsgOptions">
+      <div class="form-check">
+        <input
+          type="radio"
+          class="form-check-input"
+          name="hasilUsg"
+          [value]="item"
+          [(ngModel)]="modelPayudara.hasilUsg"
+          [id]="item"
+        />
+        <label class="form-check-label" [for]="item">{{ item }}</label>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary mt-3 form-pemeriksaan-pkg">
+    <span *ngIf="!isLoading"> Submit </span>
+    <span *ngIf="isLoading">
+      <span class="spinner-border spinner-border-sm me-1"></span>
+      Loading...
+    </span>
+  </button>
+</form>
