@@ -59,6 +59,7 @@ export class laporanrjComponent implements OnInit {
 
   gudang = "";
   kdgudang = "";
+  jk: any = "";
 
   hakakses: any;
   tgldari = "2013-12-12";
@@ -469,7 +470,9 @@ export class laporanrjComponent implements OnInit {
         "&tgldari=" +
         this.tgldari +
         "&tglsampai=" +
-        this.tglsampai,
+        this.tglsampai +
+        "&jk=" +
+        this.jk,
       "_blank",
       "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes"
     );

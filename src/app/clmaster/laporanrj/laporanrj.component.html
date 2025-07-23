@@ -139,6 +139,19 @@
           </div>
         </div>
 
+        <div *ngIf="judul === 'Kunjungan Rawat Jalans'">
+          <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label" style="color: black"
+              >JK</label
+            >
+            <select [(ngModel)]="jk" id="exampleSelect" class="form-select">
+              <option value=""><b>Semua</b></option>
+              <option value="P"><b>P</b></option>
+              <option value="L"><b>L</b></option>
+            </select>
+          </div>
+        </div>
+
         <div *ngIf="judul === 'Kunjungan Rawat Jalan'">
           <button
             class="mb-2 me-2 btn-pill btn btn-info"
@@ -179,7 +192,6 @@
             Export Excel RJ/Konsumen
           </button>
         </div>
-
         <div *ngIf="judul === 'Jasa Dokter'">
           <button
             class="mb-2 me-2 btn-pill btn btn-info"

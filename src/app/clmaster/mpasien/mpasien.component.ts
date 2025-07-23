@@ -141,6 +141,7 @@ export class MpasienComponent implements OnInit {
     this.tgllahir = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
     this.tglp = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
   }
+  showtombolpasien: boolean = true;
   profileForm = this.fb.group({
     pasien: ["", Validators.required],
     kelamin: ["", Validators.required],
@@ -838,6 +839,7 @@ export class MpasienComponent implements OnInit {
     this.keluarahan = "";
     this.keluarahanid = "";
     this.tgllahir = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
+    this.showtombolpasien = true;
 
     //     this.authService.tmpbpjs()
     //     .subscribe(
@@ -946,22 +948,7 @@ export class MpasienComponent implements OnInit {
     this.kabupaten = x.city_name;
     this.kecamatan = x.dis_name;
     this.keluarahan = keluarahan;
-
-    this.propinsiid = x.prov_id;
-    this.kabupatenid = x.city_id;
-    this.kecamatanid = x.dis_id;
-    this.keluarahanid = x.subdis_id;
-
-    console.log({
-      propinsi: this.propinsi,
-      kabupaten: this.kabupaten,
-      kecamatan: this.kecamatan,
-      keluarahan: this.keluarahan,
-      propinsiid: this.propinsiid,
-      kabupatenid: this.kabupatenid,
-      kecamatanid: this.kecamatanid,
-      keluarahanid: this.keluarahanid,
-    });
+    this.showtombolpasien = false;
 
     this.an = kdpanggil;
 

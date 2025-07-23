@@ -244,7 +244,6 @@ export class anjungansehatComponent implements OnInit {
 
   hapus() {
     this.nomorasuransi = this.nomorasuransi.slice(0, -1);
-    return;
   }
 
   depanshow: boolean = true;
@@ -494,6 +493,7 @@ export class anjungansehatComponent implements OnInit {
                                 kdpolibpjs: this.kdpolibpjs,
                                 tgl: this.tglp,
                                 nomor: response.response.message,
+                                jk: this.jk,
                               };
 
                               this.authService
@@ -938,6 +938,7 @@ export class anjungansehatComponent implements OnInit {
                           kdpolibpjs: this.kdpolibpjs,
                           tgl: this.tglp,
                           nomor: response.response.message,
+                          jk: this.jk,
                         };
 
                         this.authService
