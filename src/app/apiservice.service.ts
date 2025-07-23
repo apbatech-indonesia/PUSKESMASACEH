@@ -3448,4 +3448,30 @@ export class ApiserviceService {
       data
     );
   }
+
+  storeProlanisPrb(slugCabang, payload) {
+    return this.http.post(
+      `https://emr.clenicapp.com/api/${slugCabang}/prolanis-prb`,
+      payload
+    );
+  }
+
+  downloadProlanisPrbReport(slugCabang, params = {}) {
+    // Gunakan emrUrl dari environment instead of hardcoded URL
+    const url = `https://emr.clenicapp.com/api/${slugCabang}/prolanis-prb/laporan`;
+
+    console.log("Calling prolanis API:", url, "with params:", params);
+
+    const headers = {
+      Accept: "application/pdf, application/octet-stream, */*",
+      "Content-Type": "application/json",
+    };
+
+    return this.http.get(url, {
+      params: params,
+      headers: headers,
+      responseType: "blob", // Remove 'as json' karena kita memang expect blob
+      observe: "response", // Untuk mendapatkan full response termasuk headers
+    });
+  }
 }
