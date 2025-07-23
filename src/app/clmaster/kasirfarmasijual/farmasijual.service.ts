@@ -91,4 +91,25 @@ export class FarmasijualService {
       apiurx + "transaksi/cekjadwal.php?kddokter=" + a + "&kodepoliasli=" + b
     );
   }
+
+  simpanPersyaratanObat(kdcabang: string, data: any): Observable<any> {
+    const url = `https://emr.clenicapp.com/api/${kdcabang}/form-persyaratan-obat`;
+    return this.http.post(url, data);
+  }
+  updatePersyaratanObat(kdcabang: string, data: any): Observable<any> {
+    // endpoint should be like '/tambah/{id}'
+    // kdcabang is extracted from the url pattern used in simpanPersyaratanObat
+    const url = `https://emr.clenicapp.com/api/${kdcabang}/form-persyaratan-obat/${data.id}`;
+    return this.http.put(url, data);
+  }
+  getPersyaratanObat(
+    kdcabang: any,
+    norm: string,
+    notransaksi: any
+  ): Observable<any> {
+    // endpoint should be like '/tambah/{id}'
+    // kdcabang is extracted from the url pattern used in simpanPersyaratanObat
+    const url = `https://emr.clenicapp.com/api/${kdcabang}/form-persyaratan-obat/by-notransaksi?norm=${norm}&notransaksi=${notransaksi}`;
+    return this.http.get(url);
+  }
 }

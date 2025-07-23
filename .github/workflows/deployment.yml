@@ -1,0 +1,110 @@
+name: Build & Deploy workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Ambil list branches dari API & generate matrix
+        id: set-matrix
+        run: |
+          echo "Fetching branches…"
+          json=$(curl -s https://emr.clenicapp.com/api/get-branches)
+          matrix=$(echo "$json" | jq -c '.data')
+          echo "Matrix: $matrix"
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "12"
+
+      - name: Cache NPM
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build app
+        run: npm run build -- --configuration production
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-build
+          path: ./dist/clenicappdemo/
+
+  deploy:
+    needs: [build, generate-matrix]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: "${{ fromJson(needs.generate-matrix.outputs.matrix) }}"
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: app-build
+          path: ./dist/clenicappdemo/
+
+      - name: SFTP Deploy to ${{ matrix.folder }}
+        uses: easingthemes/ssh-deploy@v5.0.0
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          REMOTE_PORT: ${{ secrets.SSH_PORT }} # default 22 jika tidak diisi
+          SOURCE: "./dist/clenicappdemo/"
+          TARGET: "/home/clenicapp.com/public_html/${{ matrix.folder }}.clenicapp.com/v1-new/"
+          ARGS: "-avz --delete --no-times --chown=cleni3473:cleni3473"
+
+      - name: Cleanup and Swap Versions on Server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            echo "Navigating to target folder..."
+            cd /home/clenicapp.com/public_html/${{ matrix.folder }}.clenicapp.com
+
+            echo "Checking if v1-new exists..."
+            if [ ! -d v1-new ]; then
+              echo "ERROR: v1-new does not exist. Deployment aborted."
+              exit 1
+            fi
+
+            echo "Removing v1-old if exists..."
+            rm -rf v1-old
+
+            echo "Renaming v1 to v1-old if exists..."
+            [ -d v1 ] && mv v1 v1-old
+
+            echo "Renaming v1-new to v1..."
+            mv v1-new v1
+
+            echo "Removing v1-new if exists..."
+            rm -rf v1-new
+
+            echo "Cleanup and swap completed successfully."

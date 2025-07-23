@@ -44,6 +44,7 @@ export class MdokterComponent implements OnInit {
   options: FormGroup;
   public userDetails: any;
   nik: string = "";
+  nip: string = "";
   nama: any;
   akses: any;
 
@@ -58,6 +59,8 @@ export class MdokterComponent implements OnInit {
   kddokter = "";
   public usericare: any;
   public passicare: any;
+  signature: any;
+  clearTrigger: any;
 
   constructor(
     public FarmasijualService: FarmasijualService,
@@ -68,6 +71,7 @@ export class MdokterComponent implements OnInit {
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.nik = data.nik;
+    this.nip = data.nip;
     this.userDetails = data.userData;
     this.nama = this.userDetails.nama;
     this.akses = this.userDetails.hakakses;
@@ -128,6 +132,7 @@ export class MdokterComponent implements OnInit {
     this.authService
       .simpandokter(
         this.nik,
+        this.nip,
         this.kdklinik,
         this.kdcabang,
         this.namadokter,
@@ -138,7 +143,8 @@ export class MdokterComponent implements OnInit {
         this.sn,
         this.kddokterbpjs,
         this.usericare,
-        this.passicare
+        this.passicare,
+        this.signature
       )
       .then((data) => {
         this.dafatrdokter();
@@ -149,6 +155,7 @@ export class MdokterComponent implements OnInit {
           this.kddokter = "";
           this.namadokter = "";
           this.nik = "0";
+          this.nip = "0";
           this.kddokterbpjs = "";
 
           this.batal();
@@ -182,15 +189,19 @@ export class MdokterComponent implements OnInit {
   }
 
   edit(data: any) {
+    this.clearTrigger = new Date().getTime(); // Trigger untuk membersihkan signature pad
+
     this.kddokter = data.kddokter;
     this.namadokter = data.namdokter;
     this.online = data.statusonline;
     this.aktif = data.aktif;
     this.nik = data.nik;
+    this.nip = data.nip;
     this.kddokterbpjs = data.kddokterbpjs;
     this.sn = data.status;
     this.usericare = data.usericare;
     this.passicare = data.passicare;
+    this.signature = data.signature;
     this.showedit = true;
   }
 
@@ -202,16 +213,20 @@ export class MdokterComponent implements OnInit {
     this.online = "";
     this.aktif = "";
     this.nik = "";
+    this.nip = "";
     this.kddokterbpjs = "";
     this.sn = "";
     this.usericare = "";
     this.passicare = "";
+    this.signature = "";
     this.showedit = false;
+    this.clearTrigger = new Date().getTime(); // Trigger untuk membersihkan signature pad
   }
   edituser() {
     this.authService
       .simpandokter(
         this.nik,
+        this.nip,
         this.kdklinik,
         this.kdcabang,
         this.namadokter,
@@ -222,7 +237,8 @@ export class MdokterComponent implements OnInit {
         this.sn,
         this.kddokterbpjs,
         this.usericare,
-        this.passicare
+        this.passicare,
+        this.signature
       )
       .then((data) => {
         this.dafatrdokter();
@@ -235,6 +251,7 @@ export class MdokterComponent implements OnInit {
           this.kddokter = "";
           this.namadokter = "";
           this.nik = "0";
+          this.nip = "0";
           this.kddokterbpjs = "";
 
           this.batal();
@@ -362,6 +379,7 @@ export class MdokterComponent implements OnInit {
     this.authService
       .simpandokter(
         this.nik,
+        this.nip,
         this.kdklinik,
         this.kdcabang,
         this.namadokter,
@@ -372,7 +390,8 @@ export class MdokterComponent implements OnInit {
         this.kodeihs,
         this.kddokterbpjs,
         this.usericare,
-        this.passicare
+        this.passicare,
+        this.signature
       )
       .then((data) => {
         this.dafatrdokter();
@@ -407,6 +426,7 @@ export class MdokterComponent implements OnInit {
     aktif: ["", Validators.required],
     sn: ["", Validators.required],
     nik: ["", Validators.required],
+    nip: ["", Validators.nullValidator],
   });
 
   sn: "";

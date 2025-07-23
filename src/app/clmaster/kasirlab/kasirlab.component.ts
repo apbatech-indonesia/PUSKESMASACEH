@@ -32,6 +32,7 @@ import { TreeNode } from "primeng/api";
 import { io } from "socket.io-client";
 import { GlobalComponent } from "src/app/clmaster/Globals/global.component";
 import { HttpHeaders } from "@angular/common/http";
+import { ChatService } from "src/app/chat.service";
 
 @Component({
   selector: "app-kasirlab",
@@ -94,7 +95,8 @@ export class kasirlabComponent implements OnInit {
     private modalService: NgbModal,
     public toastr: ToastrService,
     private authService: ApiserviceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public chatService: ChatService
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -110,13 +112,12 @@ export class kasirlabComponent implements OnInit {
       "kd-cabang": this.kdcabang,
     });
 
-    this.socketx = io("https://socketpkm.clenic.id/");
+    this.socketx = io("https://socketpkm.apbatech.com/");
   }
   profileForm = this.fb.group({
     jbayari: ["", Validators.required],
   });
   thasillab: any;
-  resepbaru: any = "";
 
   ngOnInit() {
     this.URLINVOICE = localStorage.getItem("baseUrx");
@@ -140,28 +141,34 @@ export class kasirlabComponent implements OnInit {
         kdcabang = x.kdcabang;
       }
       if (kdcabangasli === kdcabang) {
-        if (kddokter === "Laborat") {
-          this.resepbaru = "Ada Resep Baru";
-          this.toastr.success("Permintaan baru");
-          let audiox = new Audio();
-          audiox.src = "https://knm.clenicapp.com/clenic/sound/notify.wav";
-          audiox.play();
-
-          var indexl = 1;
-          audiox.onended = function () {
-            if (indexl < 2) {
-              audiox.src = "https://knm.clenicapp.com/clenic/sound/notify.wav";
-              audiox.play();
-              indexl++;
-            }
-          };
-        }
+        this.notifcenter(kddokter);
       }
     });
 
     this.hostName = this.hots.getHostname();
 
     // this.tmptarif()
+  }
+
+  notifcenter(kddokter) {
+    let audio1 = new Audio("https://knm.clenicapp.com/clenic/sound/notify.wav");
+    let audio2 = new Audio();
+
+    if (kddokter === "Laborat") {
+      this.toastr.success("Permintaan Laborat Baru");
+      audio2.src = "https://knm.clenicapp.com/clenic/sound/permintaan-lab.wav";
+    }
+
+    if (kddokter === "Hasil Laborat") {
+      this.toastr.success("Hasil Laborat Baru");
+      audio2.src = "https://knm.clenicapp.com/clenic/sound/hasil-lab.wav";
+    }
+
+    audio1.onended = function () {
+      audio2.play();
+    };
+
+    audio1.play();
   }
 
   ttarif: any;
@@ -2051,9 +2058,11 @@ export class kasirlabComponent implements OnInit {
 
       this.authService.simpanhasilalbx(body).subscribe((response) => {
         if (response) {
-          this.toastr.success("" + response, "Sukses", {
+          this.toastr.success(response, "Sukses", {
             timeOut: 2000,
           });
+
+          this.doNotifHasilLab();
         } else {
           this.toastr.error("Simpan  Gagal", "Eror");
         }
@@ -2106,6 +2115,18 @@ export class kasirlabComponent implements OnInit {
     setTimeout(() => {
       this.lihathasil();
     }, 3000);
+  }
+
+  doNotifHasilLab() {
+    this.chatService.sendMessage([
+      {
+        antrian: "0",
+        kddokter: "Hasil Laborat",
+        namadokter: "Hasil Laborat",
+        kdantrian: "L",
+        kdcabang: this.kdcabang,
+      },
+    ]);
   }
   cariteslab(a) {
     this.authService

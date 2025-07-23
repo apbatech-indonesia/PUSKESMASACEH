@@ -416,6 +416,7 @@ export class tulisermComponent implements OnInit {
   kdtkp: any = "";
   jeniskun: any = "";
   isPeriksaPkg: any = false;
+  selectedCppt: any = "";
 
   constructor(
     public FarmasijualService: FarmasijualService,
@@ -1686,6 +1687,9 @@ export class tulisermComponent implements OnInit {
   showdatacppt: boolean;
   gmburl: string;
   hr: any = "";
+  lingkarkepala: any = "";
+  lingkarlenganatas: any = "";
+  lingkarbetis: any = "";
   tdd: any = "";
   ksehatxl() {
     this.toastr.error("Form terkunci Karena Belum Langganan", "Eror");
@@ -1694,7 +1698,7 @@ export class tulisermComponent implements OnInit {
     this.authService.tampilcppt(this.kdcabang, this.notrans).subscribe(
       (data) => {
         // this.tmpcpptt = data;
-
+        console.log(`data cppt ${data}`);
         if (data.length) {
           this.showdatacppt = true;
           for (let x of data) {
@@ -1719,6 +1723,9 @@ export class tulisermComponent implements OnInit {
             this.imt = x.imt;
             this.riwayatdahulu = x.riwayatdahulu;
             this.riwayatkeluarga = x.riwayatkeluarga;
+            this.lingkarkepala = x.lingkarkepala;
+            this.lingkarlenganatas = x.lingkarlenganatas;
+            this.lingkarbetis = x.lingkarbetis;
             (this.stspulang = x.stspulang),
               (this.alergiudara = x.alergiudara),
               (this.alergiobat = x.alergiobat),
@@ -3224,6 +3231,9 @@ export class tulisermComponent implements OnInit {
       rwytp: this.rwtp,
       gigi: this.gigi,
       tb: this.tb,
+      lingkarkepala: this.lingkarkepala,
+      lingkarlenganatas: this.lingkarlenganatas,
+      lingkarbetis: this.lingkarbetis,
       hakakses: this.akses,
       tglkontrol: this.myDatekon,
       rencanatindakan: this.plankon,
@@ -6021,17 +6031,7 @@ export class tulisermComponent implements OnInit {
         );
 
         this.tmplistintruksilab();
-
-        //  this.chatService.sendMessage([
-        //   {
-        //     antrian:'0',
-        //     kddokter:'Laborat',
-        //     namadokter:'Laborat',
-        //     kdantrian:'L',
-        //     kdcabang :this.kdcabang
-        //   }
-
-        // ]);
+        this.doNotifPermintaanLab();
 
         this.modalService.dismissAll();
       } else {
@@ -6067,6 +6067,30 @@ export class tulisermComponent implements OnInit {
         console.log(Error);
       }
     );
+  }
+
+  doNotifPermintaanLab() {
+    this.chatService.sendMessage([
+      {
+        antrian: "0",
+        kddokter: "Laborat",
+        namadokter: "Laborat",
+        kdantrian: "L",
+        kdcabang: this.kdcabang,
+      },
+    ]);
+  }
+
+  doNotifHasilLab() {
+    this.chatService.sendMessage([
+      {
+        antrian: "0",
+        kddokter: "Hasil Laborat",
+        namadokter: "Hasil Laborat",
+        kdantrian: "L",
+        kdcabang: this.kdcabang,
+      },
+    ]);
   }
 
   nmobat: any;
@@ -9519,6 +9543,34 @@ export class tulisermComponent implements OnInit {
                   this.modalService.dismissAll();
                 });
 
+                this.authService
+                  .updateCppt(this.slug, {
+                    norm: this.norm,
+                    notrans: this.notransresponse,
+                    kdcabang: this.kdcabang,
+                    kduser: this.kduser,
+                    kdpoli: this.politunjang,
+                    kddokter: this.doktunjang,
+                    hr: this.hr,
+                    nadi: this.nadi,
+                    suhu: this.suhu,
+                    rr: this.rr,
+                    spo: this.spo,
+                    lp: this.lingkarperut,
+                    td: this.td,
+                    tdd: this.tdd,
+                    tb: this.tb,
+                    bb: this.bb,
+                    imt: this.imt,
+                    skalanyeri: this.skalanyeri,
+                    lingkarkepala: this.lingkarkepala,
+                    lingkarlenganatas: this.lingkarlenganatas,
+                    lingkarbetis: this.lingkarbetis,
+                    subjek: this.subjek,
+                    subjekp: this.subjekp,
+                  })
+                  .subscribe();
+
                 this.simpan();
               } else {
                 this.toastr.error("Simpan  Gagal", "Eror");
@@ -10160,19 +10212,4 @@ export class tulisermComponent implements OnInit {
     );
     redirectWindow.location;
   }
-
-  // https://stackblitz.com/edit/angular-t5dfp7?file=app%2Fservice-component.ts unutk modal beda page dan send parameter
-
-  // export class ModalContentComponent implements OnInit {
-  //   title: string;
-  //   closeBtnName: string;
-  //   list: any[] = [];
-  //   // @ViewChild('div') div: ElementRef;
-
-  //   constructor() {}
-
-  //   ngOnInit() {
-
-  //   }
-  // }
 }

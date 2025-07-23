@@ -1,0 +1,3674 @@
+<div class="container-xl form-balita-sakit-wrapper py-4">
+  <div class="card shadow rounded form-balita-sakit-card">
+    <div class="card-header bg-happy-fisher text-success-emphasis text-center fs-4 fw-bold border-0 rounded-top form-section-title">
+      FORMULIR PENCATATAN BALITA SAKIT UMUR 2 BULAN SAMPAI 5 TAHUN
+    </div>
+
+    <!-- FORM PENCATATAN BALITA SAKIT -->
+    <div class="card mb-3 shadow-sm form-section">
+      <div class="card-header bg-info-subtle fw-semibold">
+        <i class="fa fa-clipboard-list me-2 text-info"></i> Data Pencatatan Awal
+      </div>
+      <div class="card-body">
+        <div class="mb-2">
+          <label class="form-label">Daerah Endemis Malaria</label><br />
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              [(ngModel)]="payload.kajianawal.daerah_endemis_malaria"
+              name="endemis_malaria"
+              value="Ya"
+              id="daerah_endemis_ya"
+            />
+            <label class="form-check-label" for="daerah_endemis_ya">Ya</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              [(ngModel)]="payload.kajianawal.daerah_endemis_malaria"
+              name="endemis_malaria"
+              value="Tidak"
+              id="daerah_endemis_tidak"
+            />
+            <label class="form-check-label" for="daerah_endemis_tidak"
+              >Tidak</label
+            >
+          </div>
+
+          <div class="col-md-4">
+            <label class="form-label">Nama Ibu</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="payload.kajianawal.nama_ibu"
+              name="nama_ibu"
+            />
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Jika Ya, RDT Malaria</label><br />
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              [(ngModel)]="payload.kajianawal.rdt_malaria"
+              name="rdt_malaria"
+              value="Positif"
+              id="rdt_malaria_positif"
+            />
+            <label class="form-check-label" for="rdt_malaria_positif"
+              >(+)</label
+            >
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              [(ngModel)]="payload.kajianawal.rdt_malaria"
+              name="rdt_malaria"
+              value="Negatif"
+              id="rdt_malaria_negatif"
+            />
+            <label class="form-check-label" for="rdt_malaria_negatif"
+              >(-)</label
+            >
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label class="form-label">Jenis Kunjungan</label><br />
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              [(ngModel)]="payload.kajianawal.kunjungan"
+              name="kunjungan"
+              value="Pertama"
+              id="kunjunganpertama"
+            />
+            <label class="form-check-label" for="kunjunganpertama"
+              >Kunjungan Pertama</label
+            >
+          </div>
+          <br />
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              [(ngModel)]="payload.kajianawal.kunjungan"
+              name="kunjungan"
+              value="Ulang"
+              id="kunjunganulang"
+            />
+            <label class="form-check-label" for="kunjunganulang"
+              >Kunjungan Ulang</label
+            >
+            <input
+              type="number"
+              class="form-control ms-2"
+              style="width: 80px"
+              [(ngModel)]="payload.kajianawal.kunjungan_ulang_ke"
+              name="kunjungan_ulang_ke"
+              placeholder="Ke-"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM PENCATATAN BALITA SAKIT -->
+
+    <!-- FORM SAGA -->
+    <div class="card-body">
+      <div class="card">
+        <div class="card-header bg-happy-fisher">
+          MEMERIKSA TANDA BAHAYA UMUM DENGAN SEGITIGA ASESMEN GAWAT ANAK (SAGA)
+        </div>
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-12">
+              <div class="container">
+                <!-- Tanda Bahaya Umum -->
+                <div class="box mb-3">
+                  <h3 class="mb-2">Tanda Bahaya Umum</h3>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="tidakBisaMinum"
+                      [(ngModel)]="payload.saga.tidak_bisa_minum"
+                      class="form-check-input"
+                    />
+                    <label for="tidakBisaMinum" class="form-check-label">
+                      Apakah tidak bisa minum atau menyusu?
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="muntahSemua"
+                      [(ngModel)]="payload.saga.muntah_semua"
+                      class="form-check-input"
+                    />
+                    <label for="muntahSemua" class="form-check-label">
+                      Apakah memuntahkan semua makanan dan minuman?
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="pernahKejang"
+                      [(ngModel)]="payload.saga.pernah_kejang"
+                      class="form-check-input"
+                    />
+                    <label for="pernahKejang" class="form-check-label">
+                      Apakah pernah kejang selama sakit ini?
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Penampilan -->
+                <div class="box mb-3">
+                  <h3 class="mb-2">Penampilan, tentukan:</h3>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="kejang"
+                      [(ngModel)]="payload.saga.kejang"
+                      class="form-check-input"
+                    />
+                    <label for="kejang" class="form-check-label">Kejang</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="tidakInteraksi"
+                      [(ngModel)]="payload.saga.tidak_interaksi_tidak_sadar"
+                      class="form-check-input"
+                    />
+                    <label for="tidakInteraksi" class="form-check-label">
+                      Tidak dapat berinteraksi dengan lingkungan atau tidak
+                      sadar
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="gelisahRewel"
+                      [(ngModel)]="payload.saga.gelisah_rewel"
+                      class="form-check-input"
+                    />
+                    <label for="gelisahRewel" class="form-check-label">
+                      Gelisah, rewel, dan tidak dapat ditenangkan
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="pandanganKosong"
+                      [(ngModel)]="payload.saga.pandangan_kosong"
+                      class="form-check-input"
+                    />
+                    <label for="pandanganKosong" class="form-check-label">
+                      Pandangan kosong atau mata tidak membuka
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="menangisMelengking"
+                      [(ngModel)]="payload.saga.menangis_melengking"
+                      class="form-check-input"
+                    />
+                    <label for="menangisMelengking" class="form-check-label">
+                      Tidak bersuara atau justru menangis melengking
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Usaha Napas -->
+                <div class="box mb-3">
+                  <h3 class="mb-2">Usaha Napas, tentukan:</h3>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="tarikanDada"
+                      [(ngModel)]="payload.saga.tarikan_dada"
+                      class="form-check-input"
+                    />
+                    <label for="tarikanDada" class="form-check-label">
+                      Tarikan dinding dada ke dalam
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="stridor"
+                      [(ngModel)]="payload.saga.stridor"
+                      class="form-check-input"
+                    />
+                    <label for="stridor" class="form-check-label"
+                      >Stridor</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="napasCuping"
+                      [(ngModel)]="payload.saga.napas_cuping_hidung"
+                      class="form-check-input"
+                    />
+                    <label for="napasCuping" class="form-check-label">
+                      Napas cuping hidung
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="posisiNyaman"
+                      [(ngModel)]="payload.saga.posisi_nyaman_menolak_berbaring"
+                      class="form-check-input"
+                    />
+                    <label for="posisiNyaman" class="form-check-label">
+                      Mencari posisi paling nyaman dan menolak berbaring
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Sirkulasi -->
+                <div class="box mb-3">
+                  <h3 class="mb-2">Sirkulasi, tentukan:</h3>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="pucat"
+                      [(ngModel)]="payload.saga.pucat"
+                      class="form-check-input"
+                    />
+                    <label for="pucat" class="form-check-label">Pucat</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="sianosis"
+                      [(ngModel)]="payload.saga.sianosis"
+                      class="form-check-input"
+                    />
+                    <label for="sianosis" class="form-check-label">
+                      Tampak biru (sianosis)
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="kutisMarmorata"
+                      [(ngModel)]="payload.saga.kutis_marmorata"
+                      class="form-check-input"
+                    />
+                    <label for="kutisMarmorata" class="form-check-label">
+                      Gambaran kutis marmorata (kulit seperti marmer)
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Klasifikasi -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    [(ngModel)]="payload.saga.klasifikasi"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tindakan / Pengobatan -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    [(ngModel)]="payload.saga.tindakan"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM SAGA -->
+
+    <hr />
+
+    <!-- FORM BATUK / SUKAR BERNAPAS -->
+    <div class="card-body">
+      <div class="card">
+        <div
+          class="card-header bg-happy-fisher d-flex justify-content-between align-items-center flex-wrap"
+        >
+          <div>APAKAH ANAK BATUK DAN/ATAU SUKAR BERNAPAS?</div>
+          <div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="batukYa"
+                [(ngModel)]="payload.batuk_sukar_bernapas.status"
+                [value]="true"
+                name="batuk_sukar_bernapas_status"
+              />
+              <label class="form-check-label" for="batukYa">Ya</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="batukTidak"
+                [(ngModel)]="payload.batuk_sukar_bernapas.status"
+                [value]="false"
+                name="batuk_sukar_bernapas_status"
+              />
+              <label class="form-check-label" for="batukTidak">Tidak</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-12">
+              <div class="container">
+                <div class="box mb-3">
+                  <div class="mb-2">
+                    <label for="lamaBatuk" class="form-label"
+                      >Berapa lama?</label
+                    >
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="lamaBatuk"
+                        placeholder="0"
+                        [(ngModel)]="payload.batuk_sukar_bernapas.lama_batuk"
+                        name="lama_batuk"
+                      />
+                      <span class="input-group-text">hari</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="box mb-3">
+                  <div class="mb-2">
+                    <label for="napasPerMenit" class="form-label"
+                      >Hitung napas dalam 1 menit</label
+                    >
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="napasPerMenit"
+                        placeholder="0"
+                        [(ngModel)]="
+                          payload.batuk_sukar_bernapas.napas_per_menit
+                        "
+                        name="napas_per_menit"
+                      />
+                      <span class="input-group-text">kali/menit</span>
+                    </div>
+                  </div>
+
+                  <h3>Napas cepat?</h3>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="nafas_cepat_tarikan_dada"
+                      [(ngModel)]="payload.batuk_sukar_bernapas.tarikan_dada"
+                      name="napas_cepat_tarikan_dada"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="nafas_cepat_tarikan_dada"
+                    >
+                      Ada tarikan dinding dada ke dalam
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="nafas_cepat_wheezing"
+                      [(ngModel)]="payload.batuk_sukar_bernapas.wheezing"
+                      name="napas_cepat_wheezing"
+                    />
+                    <label class="form-check-label" for="nafas_cepat_wheezing">
+                      Ada wheezing
+                    </label>
+                  </div>
+
+                  <div class="mt-2">
+                    <label for="saturasi_oksigen" class="form-label"
+                      >Saturasi oksigen</label
+                    >
+                    <div class="input-group">
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="saturasi_oksigen"
+                        placeholder="0"
+                        [(ngModel)]="
+                          payload.batuk_sukar_bernapas.saturasi_oksigen
+                        "
+                        name="saturasi_oksigen"
+                      />
+                      <span class="input-group-text">%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Klasifikasi -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                    [(ngModel)]="payload.batuk_sukar_bernapas.klasifikasi"
+                    name="klasifikasi_batuk"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tindakan / Pengobatan -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                    [(ngModel)]="payload.batuk_sukar_bernapas.tindakan"
+                    name="tindakan_batuk"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM BATUK / SUKAR BERNAPAS -->
+
+    <hr />
+
+    <!-- FORM DIARE -->
+    <div class="card-body">
+      <div class="card">
+        <div
+          class="card-header bg-happy-fisher d-flex justify-content-between align-items-center flex-wrap"
+        >
+          <div>APAKAH ANAK DIARE?</div>
+          <div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="diare"
+                [(ngModel)]="payload.diare.status"
+                [value]="true"
+              />
+              <label class="form-check-label">Ya</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="diare"
+                [(ngModel)]="payload.diare.status"
+                [value]="false"
+              />
+              <label class="form-check-label">Tidak</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-12">
+              <div class="container">
+                <div class="mb-3">
+                  <label class="form-label">Berapa lama?</label>
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      [(ngModel)]="payload.diare.lama_diare"
+                      placeholder="0"
+                    />
+                    <span class="input-group-text">hari</span>
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  <h6>Adakah darah dalam tinja?</h6>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="darah_tinja"
+                      [(ngModel)]="payload.diare.darah_tinja"
+                      [value]="true"
+                      id="darah_tinja_ya"
+                    />
+                    <label class="form-check-label" for="darah_tinja_ya"
+                      >Ya</label
+                    >
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="darah_tinja"
+                      [(ngModel)]="payload.diare.darah_tinja"
+                      [value]="false"
+                      id="darah_tinja_tidak"
+                    />
+                    <label class="form-check-label" for="darah_tinja_tidak"
+                      >Tidak</label
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  <h6>Keadaan Umum Anak:</h6>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      [(ngModel)]="
+                        payload.diare.keadaan_umum_letargis_tidak_sadar
+                      "
+                      id="keadaan_umum_letargis_tidak_sadar"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="keadaan_umum_letargis_tidak_sadar"
+                      >Letargis atau tidak sadar</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      [(ngModel)]="payload.diare.keadaan_umum_rewel_mudah_marah"
+                      id="keadaan_umum_rewel_mudah_marah"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="keadaan_umum_rewel_mudah_marah"
+                      >Rewel / mudah marah</label
+                    >
+                  </div>
+                  <div class="form-check mt-2">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      [(ngModel)]="payload.diare.mata_cekung"
+                      id="mata_cekung"
+                    />
+                    <label class="form-check-label" for="mata_cekung"
+                      >Mata cekung</label
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  <h6>Beri Anak Minum:</h6>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      [(ngModel)]="
+                        payload.diare.pemberian_minum_tidak_bisa_minum
+                      "
+                      id="pemberian_minum_tidak_bisa_minum"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="pemberian_minum_tidak_bisa_minum"
+                      >Tidak bisa minum atau malas minum</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      [(ngModel)]="
+                        payload.diare.pemberian_minum_haus_minum_lahap
+                      "
+                      id="pemberian_minum_haus_minum_lahap"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="pemberian_minum_haus_minum_lahap"
+                      >Haus, minum dengan lahap</label
+                    >
+                  </div>
+                </div>
+
+                <div class="mt-3">
+                  <h6>Cubit Kulit Perut:</h6>
+                  <div class="form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      name="cubit_kulit"
+                      [(ngModel)]="payload.diare.cubit_kulit"
+                      [value]="'lambat'"
+                      id="lambat"
+                    />
+                    <label class="form-check-label" for="lambat">
+                      Lambat (masih sempat terlihat lipatan kulit)
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      name="cubit_kulit"
+                      [(ngModel)]="payload.diare.cubit_kulit"
+                      [value]="'sangat_lambat'"
+                      id="sangat_lambat"
+                    />
+                    <label class="form-check-label" for="sangat_lambat">
+                      Sangat lambat (&gt; 2 detik)
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Klasifikasi -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    [(ngModel)]="payload.diare.klasifikasi"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tindakan -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    [(ngModel)]="payload.diare.tindakan"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM DIARE -->
+
+    <hr />
+
+    <!-- FORM PEMERIKSAAN DEMAM -->
+    <div class="card-body">
+      <div class="card">
+        <div
+          class="card-header bg-happy-fisher d-flex justify-content-between align-items-center flex-wrap"
+        >
+          <div>APAKAH ANAK DEMAM?</div>
+          <div>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                id="demamYa"
+                [value]="true"
+                [(ngModel)]="payload.demam.status"
+                name="demam"
+              />
+              <label class="form-check-label" for="demamYa">Ya</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                id="demamTidak"
+                [value]="false"
+                [(ngModel)]="payload.demam.status"
+                name="demam"
+              />
+              <label class="form-check-label" for="demamTidak">Tidak</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <!-- Daerah Endemis Malaria -->
+          <div class="box mb-3">
+            <h6>Tentukan Daerah Endemis Malaria:</h6>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                id="endemisTinggi"
+                value="tinggi"
+                [(ngModel)]="payload.demam.daerah_endemis"
+                name="daerah_endemis"
+              />
+              <label class="form-check-label" for="endemisTinggi">Tinggi</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                id="endemisRendah"
+                value="rendah"
+                [(ngModel)]="payload.demam.daerah_endemis"
+                name="daerah_endemis"
+              />
+              <label class="form-check-label" for="endemisRendah">Rendah</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                id="nonEndemis"
+                value="non_endemis"
+                [(ngModel)]="payload.demam.daerah_endemis"
+                name="daerah_endemis"
+              />
+              <label class="form-check-label" for="nonEndemis"
+                >Non Endemis</label
+              >
+            </div>
+            <small class="text-muted d-block mt-2">
+              Jika Non Endemis, tanyakan riwayat bepergian ke daerah endemis
+              malaria dalam 2 minggu terakhir dan tentukan daerah endemis sesuai
+              tempat yang dikunjungi.
+            </small>
+          </div>
+
+          <!-- Lama Demam -->
+          <div class="box mb-3">
+            <h6>Durasi Demam</h6>
+            <div class="input-group mb-2">
+              <input
+                type="number"
+                class="form-control"
+                [(ngModel)]="payload.demam.lama_demam"
+                placeholder="0"
+                name="lama_demam"
+              />
+              <span class="input-group-text">hari</span>
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="demamSetiapHari"
+                [(ngModel)]="payload.demam.demam_setiap_hari"
+                name="demam_setiap_hari"
+              />
+              <label class="form-check-label" for="demamSetiapHari"
+                >Jika lebih dari 7 hari, apakah demam terjadi setiap
+                hari?</label
+              >
+            </div>
+          </div>
+
+          <!-- Riwayat Penyakit -->
+          <div class="box mb-3">
+            <h6>Riwayat Penyakit</h6>
+            <div class="form-check mb-2">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="riwayatMalaria"
+                [(ngModel)]="payload.demam.riwayat_malaria"
+                name="riwayat_malaria"
+              />
+              <label class="form-check-label" for="riwayatMalaria"
+                >Apakah pernah sakit malaria atau minum obat anti
+                malaria?</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="riwayatCampak"
+                [(ngModel)]="payload.demam.riwayat_campak"
+                name="riwayat_campak"
+              />
+              <label class="form-check-label" for="riwayatCampak"
+                >Apakah anak sakit campak dalam 3 bulan terakhir?</label
+              >
+            </div>
+          </div>
+
+          <!-- Pemeriksaan Fisik -->
+          <div class="box mb-3">
+            <h6>Pemeriksaan Fisik</h6>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="kakuKuduk"
+                [(ngModel)]="payload.demam.kaku_kuduk"
+                name="kaku_kuduk"
+              />
+              <label class="form-check-label" for="kakuKuduk"
+                >Lihat dan periksa adanya kaku kuduk</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="penyebabLain"
+                [(ngModel)]="payload.demam.penyebab_lain"
+                name="penyebab_lain"
+              />
+              <label class="form-check-label" for="penyebabLain"
+                >Lihat adanya penyebab lain dari demam</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="tandaCampak"
+                [(ngModel)]="payload.demam.tanda_campak"
+                name="tanda_campak"
+              />
+              <label class="form-check-label" for="tandaCampak"
+                >Lihat adanya tanda-tanda campak (ruam kemerahan +
+                batuk/pilek/mata merah)</label
+              >
+            </div>
+          </div>
+
+          <!-- Catatan Tes Malaria -->
+          <div class="alert alert-info">
+            <strong>Catatan:</strong> LAKUKAN TES MALARIA jika tidak ada
+            klasifikasi penyakit berat:
+            <ul class="mb-0">
+              <li>
+                Pada semua kasus balita sakit di daerah endemis tinggi malaria
+              </li>
+              <li>
+                Jika tidak ditemukan penyebab pasti demam di daerah endemis
+                rendah malaria
+              </li>
+            </ul>
+          </div>
+
+          <!-- Klasifikasi & Tindakan -->
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <div class="box mb-3">
+                <h6>Lakukan Tes Malaria, hasil:</h6>
+                <div class="input-group mb-2">
+                  <span class="input-group-text">RDT</span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payload.demam.hasil_rdt"
+                    placeholder="+ / -"
+                    name="hasil_rdt"
+                  />
+                </div>
+                <div class="input-group">
+                  <span class="input-group-text">Mikroskopis</span>
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="payload.demam.hasil_mikroskopis"
+                    placeholder="Tulis hasil"
+                    name="hasil_mikroskopis"
+                  />
+                </div>
+                <small class="text-muted d-block mt-2"
+                  >(Anamnesis ATAU teraba panas ATAU suhu > 37,5°C)</small
+                >
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    [(ngModel)]="payload.demam.klasifikasi_demam"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                    name="klasifikasi_demam"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    [(ngModel)]="payload.demam.tindakan_demam"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                    name="tindakan_demam"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM PEMERIKSAAN DEMAM -->
+
+    <hr />
+
+    <!-- FORM PEMERIKSAAN CAMPAK -->
+    <div class="card-body shadow-sm rounded mb-3">
+      <div class="card">
+        <div
+          class="card-header bg-happy-fisher fw-semibold text-success-emphasis"
+        >
+          JIKA ANAK SAKIT CAMPAK SAAT INI ATAU DALAM 3 BULAN TERAKHIR:
+        </div>
+        <div class="card-body">
+          <!-- Luka Mulut -->
+          <div class="mb-3">
+            <div class="form-check mb-2">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="lukaMulut"
+                [(ngModel)]="payload.pemeriksaan_campak.gejala_luka_mulut"
+                name="gejala_luka_mulut"
+                (change)="
+                  showDetailLukaMulut =
+                    payload.pemeriksaan_campak.gejala_luka_mulut
+                "
+              />
+              <label class="form-check-label" for="lukaMulut">
+                Lihat adanya luka di mulut. Jika ”ada”, apakah dalam atau luas?
+              </label>
+            </div>
+            <div *ngIf="showDetailLukaMulut" class="ms-3 mb-3">
+              <label class="form-label"
+                >Jika ada, apakah dalam atau luas?</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="payload.pemeriksaan_campak.detail_luka_mulut"
+                name="detail_luka_mulut"
+                placeholder="Contoh: dalam, luas, terbatas"
+              />
+            </div>
+          </div>
+
+          <!-- Nanah di Mata -->
+          <div class="mb-3">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="nanahMata"
+                [(ngModel)]="payload.pemeriksaan_campak.gejala_nanah_mata"
+                name="gejala_nanah_mata"
+              />
+              <label class="form-check-label" for="nanahMata">
+                Lihat adanya nanah di mata
+              </label>
+            </div>
+          </div>
+
+          <!-- Kekeruhan Kornea -->
+          <div class="mb-3">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="kekeruhanKornea"
+                [(ngModel)]="payload.pemeriksaan_campak.gejala_kekeruhan_kornea"
+                name="gejala_kekeruhan_kornea"
+              />
+              <label class="form-check-label" for="kekeruhanKornea">
+                Lihat adanya kekeruhan di kornea
+              </label>
+            </div>
+          </div>
+
+          <!-- Syok -->
+          <div class="mb-3">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="syok"
+                [(ngModel)]="payload.pemeriksaan_campak.syok"
+                name="syok"
+              />
+              <label class="form-check-label" for="syok">
+                Apakah terdapat tanda syok?
+              </label>
+            </div>
+          </div>
+
+          <!-- Tanda Lain -->
+          <div class="mb-3">
+            <label class="form-label">Tanda Lain</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="payload.pemeriksaan_campak.tanda_lain"
+              name="tanda_lain"
+              placeholder="Tulis tanda lain jika ada"
+            />
+          </div>
+
+          <!-- Tambahan -->
+          <div class="mb-3">
+            <label class="form-label">Tambahan</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="payload.pemeriksaan_campak.tambahan"
+              name="tambahan"
+              placeholder="Catatan tambahan"
+            />
+          </div>
+
+          <!-- Pembesaran Hepar -->
+          <div class="mb-3">
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="pembesaranHepar"
+                [(ngModel)]="payload.pemeriksaan_campak.pembesaran_hepar"
+                name="pembesaran_hepar"
+              />
+              <label class="form-check-label" for="pembesaranHepar">
+                Apakah terdapat pembesaran hepar?
+              </label>
+            </div>
+          </div>
+
+          <!-- Pemeriksaan Laboratorium -->
+          <div class="mb-3">
+            <label class="form-label">Uji Tourniquet</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="payload.pemeriksaan_campak.uji_tourniquet"
+              name="uji_tourniquet"
+              placeholder="Hasil uji tourniquet"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Hemoglobin</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="payload.pemeriksaan_campak.hemoglobin"
+              name="hemoglobin"
+              placeholder="Nilai hemoglobin"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Hematokrit</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="payload.pemeriksaan_campak.hematokrit"
+              name="hematokrit"
+              placeholder="Nilai hematokrit"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Leukosit</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="payload.pemeriksaan_campak.leukosit"
+              name="leukosit"
+              placeholder="Nilai leukosit"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Trombosit</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="payload.pemeriksaan_campak.trombosit"
+              name="trombosit"
+              placeholder="Nilai trombosit"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">NS1</label>
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="payload.pemeriksaan_campak.ns1"
+              name="ns1"
+              placeholder="Hasil NS1"
+            />
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    [(ngModel)]="payload.pemeriksaan_campak.klasifikasi"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                    name="klasifikasi_pemeriksaan_campak"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    [(ngModel)]="payload.pemeriksaan_campak.tindakan"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                    name="tindakan_pemeriksaan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM PEMERIKSAAN CAMPAK -->
+
+    <hr />
+
+    <!-- FORM PEMERIKSAAN DEMAM 2-7 HARI -->
+    <div class="card-body shadow-sm rounded mb-3">
+      <div class="card">
+        <div
+          class="card-header bg-happy-fisher fw-semibold text-success-emphasis"
+        >
+          JIKA DEMAM 2 HARI SAMPAI DENGAN 7 HARI, TANYA DAN PERIKSA:
+        </div>
+        <div class="card-body">
+          <!-- GEJALA YANG DITANYAKAN -->
+          <div class="box mb-3">
+            <h6>Gejala yang Ditanyakan</h6>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="demamTinggi"
+                [(ngModel)]="payload.demam_lebih_dua_hari.demam_tinggi"
+                name="demam_tinggi"
+              />
+              <label class="form-check-label" for="demamTinggi"
+                >Apakah demam mendadak tinggi dan terus menerus?</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="badanDingin"
+                [(ngModel)]="payload.demam_lebih_dua_hari.badan_dingin"
+                name="badan_dingin"
+              />
+              <label class="form-check-label" for="badanDingin"
+                >Apakah badan teraba dingin?</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="lemasGelisah"
+                [(ngModel)]="payload.demam_lebih_dua_hari.lemas_gelisah"
+                name="lemas_gelisah"
+              />
+              <label class="form-check-label" for="lemasGelisah"
+                >Apakah anak lemas/gelisah?</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="mual"
+                [(ngModel)]="payload.demam_lebih_dua_hari.mual"
+                name="mual"
+              />
+              <label class="form-check-label" for="mual">Adakah mual?</label>
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="muntah"
+                [(ngModel)]="payload.demam_lebih_dua_hari.muntah"
+                name="muntah"
+              />
+              <label class="form-check-label" for="muntah"
+                >Adakah muntah? Jika ya, apakah terus menerus?</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="nyeriPerut"
+                [(ngModel)]="payload.demam_lebih_dua_hari.nyeri_perut"
+                name="nyeri_perut"
+              />
+              <label class="form-check-label" for="nyeriPerut"
+                >Adakah nyeri perut?</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="perdarahan"
+                [(ngModel)]="payload.demam_lebih_dua_hari.perdarahan"
+                name="perdarahan"
+              />
+              <label class="form-check-label" for="perdarahan"
+                >Adakah perdarahan (mimisan, muntah darah, BAB hitam)?</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="ruam"
+                [(ngModel)]="payload.demam_lebih_dua_hari.ruam"
+                name="ruam"
+              />
+              <label class="form-check-label" for="ruam"
+                >Apakah muncul ruam?</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="nyeriBadan"
+                [(ngModel)]="payload.demam_lebih_dua_hari.nyeri_badan"
+                name="nyeri_badan"
+              />
+              <label class="form-check-label" for="nyeriBadan"
+                >Apakah ada rasa sakit dan nyeri badan?</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="bakLebih6jam"
+                [(ngModel)]="payload.demam_lebih_dua_hari.bak_lebih_6jam"
+                name="bak_lebih_6jam"
+              />
+              <label class="form-check-label" for="bakLebih6jam"
+                >Apakah BAK terakhir ≥ 6 jam?</label
+              >
+            </div>
+          </div>
+
+          <!-- PEMERIKSAAN TANDA SYOK -->
+          <div class="box mb-3">
+            <h6>Pemeriksaan Tanda Syok (CCTVR)</h6>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="kaki_tangan_pucat"
+                [(ngModel)]="payload.demam_lebih_dua_hari.kaki_tangan_pucat"
+                name="kaki_tangan_pucat"
+              />
+              <label class="form-check-label" for="kaki_tangan_pucat"
+                >Kaki/tangan tampak pucat</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="crtLebih2detik"
+                [(ngModel)]="payload.demam_lebih_dua_hari.crt_lebih_2detik"
+                name="crt_lebih_2detik"
+              />
+              <label class="form-check-label" for="crtLebih2detik"
+                >Waktu pengisian kapiler > 2 detik</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="dingin"
+                [(ngModel)]="payload.demam_lebih_dua_hari.dingin"
+                name="dingin"
+              />
+              <label class="form-check-label" for="dingin"
+                >Kaki/tangan teraba dingin</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="nadiLemah"
+                [(ngModel)]="payload.demam_lebih_dua_hari.nadi_lemah"
+                name="nadi_lemah"
+              />
+              <label class="form-check-label" for="nadiLemah"
+                >Nadi lemah atau tidak teraba</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="nadiCepat"
+                [(ngModel)]="payload.demam_lebih_dua_hari.nadi_cepat"
+                name="nadi_cepat"
+              />
+              <label class="form-check-label" for="nadiCepat">Nadi cepat</label>
+            </div>
+          </div>
+
+          <!-- PEMERIKSAAN TAMBAHAN -->
+          <div class="box mb-3">
+            <h6>Pemeriksaan Tambahan</h6>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="nyeriTekanPerut"
+                [(ngModel)]="payload.demam_lebih_dua_hari.nyeri_tekan_perut"
+                name="nyeri_tekan_perut"
+              />
+              <label class="form-check-label" for="nyeriTekanPerut"
+                >Periksa nyeri perut dan nyeri tekan perut kanan atas</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="akumulasiCairan"
+                [(ngModel)]="payload.demam_lebih_dua_hari.akumulasi_cairan"
+                name="akumulasi_cairan"
+              />
+              <label class="form-check-label" for="akumulasiCairan"
+                >Periksa adanya klinis akumulasi cairan</label
+              >
+            </div>
+          </div>
+
+          <!-- PEMERIKSAAN TANDA LAIN -->
+          <div class="box mb-3">
+            <h6>Pemeriksaan Tanda Lain</h6>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="perdarahanKulit"
+                [(ngModel)]="payload.demam_lebih_dua_hari.perdarahan_kulit"
+                name="perdarahan_kulit"
+              />
+              <label class="form-check-label" for="perdarahanKulit"
+                >Perdarahan kulit (petekie), perdarahan hidung (mimisan)</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="ikterik"
+                [(ngModel)]="payload.demam_lebih_dua_hari.ikterik"
+                name="ikterik"
+              />
+              <label class="form-check-label" for="ikterik">Ikterik</label>
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="letargiGelisah"
+                [(ngModel)]="payload.demam_lebih_dua_hari.letargi_gelisah"
+                name="letargi_gelisah"
+              />
+              <label class="form-check-label" for="letargiGelisah"
+                >Letargi, gelisah</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="sesakNapas"
+                [(ngModel)]="payload.demam_lebih_dua_hari.sesak_napas"
+                name="sesak_napas"
+              />
+              <label class="form-check-label" for="sesakNapas"
+                >Sesak napas, napas cepat</label
+              >
+            </div>
+          </div>
+
+          <!-- PEMERIKSAAN HEPAR -->
+          <div class="box mb-3">
+            <h6>Pemeriksaan Hepar</h6>
+            <div class="input-group">
+              <span class="input-group-text">Pembesaran Hepar</span>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="payload.demam_lebih_dua_hari.pembesaran_hepar"
+                name="pembesaran_hepar"
+                placeholder="cm"
+              />
+            </div>
+          </div>
+
+          <!-- UJI TOURNIQUET -->
+          <div class="box mb-3">
+            <h6>Hasil Uji Tourniquet</h6>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                id="tourniquetPositif"
+                [(ngModel)]="payload.demam_lebih_dua_hari.uji_tourniquet"
+                name="uji_tourniquet"
+                [value]="true"
+              />
+              <label class="form-check-label" for="tourniquetPositif"
+                >Positif</label
+              >
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                id="tourniquetNegatif"
+                [(ngModel)]="payload.demam_lebih_dua_hari.uji_tourniquet"
+                name="uji_tourniquet"
+                [value]="false"
+              />
+              <label class="form-check-label" for="tourniquetNegatif"
+                >Negatif</label
+              >
+            </div>
+          </div>
+
+          <!-- PEMERIKSAAN DARAH -->
+          <div class="box mb-3">
+            <h6>Pemeriksaan Darah</h6>
+            <div class="row g-2">
+              <div class="col-md-4">
+                <label class="form-label">Hemoglobin</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payload.demam_lebih_dua_hari.hemoglobin"
+                  name="hemoglobin"
+                  placeholder="g/dL"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Hematokrit</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payload.demam_lebih_dua_hari.hematokrit"
+                  name="hematokrit"
+                  placeholder="%"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Leukosit</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payload.demam_lebih_dua_hari.leukosit"
+                  name="leukosit"
+                  placeholder="/µL"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Trombosit</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payload.demam_lebih_dua_hari.trombosit"
+                  name="trombosit"
+                  placeholder="/µL"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">NS-1</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="payload.demam_lebih_dua_hari.ns1"
+                  name="ns1"
+                  placeholder="Positif / Negatif"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Klasifikasi -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    [(ngModel)]="payload.demam_lebih_dua_hari.klasifikasi"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    [(ngModel)]="payload.demam_lebih_dua_hari.tindakan"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Klasifikasi -->
+        </div>
+      </div>
+    </div>
+    <!-- END FORM PEMERIKSAAN DEMAM 2-7 HARI -->
+
+    <hr />
+
+    <!-- FORM MASALAH TELINGA -->
+    <div class="card-body">
+      <div class="card">
+        <div
+          class="card-header bg-happy-fisher d-flex justify-content-between align-items-center flex-wrap"
+        >
+          <div>APAKAH ANAK MEMPUNYAI MASALAH TELINGA?</div>
+          <div>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                id="telingaYa"
+                [(ngModel)]="payload.masalah_telinga.masalah_telinga"
+                name="masalah_telinga"
+                [value]="true"
+              />
+              <label class="form-check-label" for="telingaYa">Ya</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                type="radio"
+                class="form-check-input"
+                id="telingaTidak"
+                [(ngModel)]="payload.masalah_telinga.masalah_telinga"
+                name="masalah_telinga"
+                [value]="false"
+              />
+              <label class="form-check-label" for="telingaTidak">Tidak</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-12">
+              <div class="container">
+                <!-- Anamnesis -->
+                <div class="box mb-3">
+                  <h3 class="mb-2">Anamnesis</h3>
+                  <div class="form-check mb-2">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="nyeriTelinga"
+                      [(ngModel)]="payload.masalah_telinga.nyeri_telinga"
+                      name="nyeri_telinga"
+                    />
+                    <label class="form-check-label" for="nyeriTelinga"
+                      >Apakah ada nyeri telinga?</label
+                    >
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="rasaPenuhTelinga"
+                      [(ngModel)]="payload.masalah_telinga.rasa_penuh_telinga"
+                      name="rasa_penuh_telinga"
+                    />
+                    <label class="form-check-label" for="rasaPenuhTelinga"
+                      >Adakah rasa penuh di telinga?</label
+                    >
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="cairanKeluarTelinga"
+                      [(ngModel)]="
+                        payload.masalah_telinga.cairan_keluar_telinga
+                      "
+                      name="cairan_keluar_telinga"
+                    />
+                    <label class="form-check-label" for="cairanKeluarTelinga"
+                      >Adakah cairan/nanah keluar dari telinga?</label
+                    >
+                  </div>
+                  <div class="input-group mt-2">
+                    <span class="input-group-text">Jika Ya, berapa hari?</span>
+                    <input
+                      type="number"
+                      class="form-control"
+                      [(ngModel)]="
+                        payload.masalah_telinga.durasi_cairan_telinga
+                      "
+                      name="durasi_cairan_telinga"
+                      placeholder="0"
+                    />
+                    <span class="input-group-text">hari</span>
+                  </div>
+                </div>
+
+                <!-- Pemeriksaan Fisik -->
+                <div class="box mb-3">
+                  <h3 class="mb-2">Pemeriksaan Fisik</h3>
+                  <div class="form-check mb-2">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="lihatCairanTelinga"
+                      [(ngModel)]="payload.masalah_telinga.lihat_cairan_keluar"
+                      name="lihat_cairan_keluar"
+                    />
+                    <label class="form-check-label" for="lihatCairanTelinga"
+                      >Lihat adanya cairan atau nanah keluar dari telinga</label
+                    >
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="pembengkakanBelakangTelinga"
+                      [(ngModel)]="
+                        payload.masalah_telinga.pembengkakan_belakang_telinga
+                      "
+                      name="pembengkakan_belakang_telinga"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="pembengkakanBelakangTelinga"
+                      >Raba adanya pembengkakan yang nyeri di belakang
+                      telinga</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Klasifikasi -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    [(ngModel)]="payload.masalah_telinga.klasifikasi"
+                    name="klasifikasi"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tindakan / Pengobatan -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    [(ngModel)]="payload.masalah_telinga.tindakan"
+                    name="tindakan"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM MASALAH TELINGA -->
+
+    <hr />
+
+    <!-- FORM STATUS GIZI DAN PERTUMBUHAN -->
+    <div class="card-body">
+      <div class="card">
+        <div class="card-header bg-happy-fisher">
+          MEMERIKSA STATUS GIZI DAN STATUS PERTUMBUHAN
+        </div>
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-12">
+              <div class="container">
+                <!-- Pertanyaan Awal -->
+                <div class="box mb-3">
+                  <h6>Pertanyaan Awal</h6>
+                  <div class="form-check mb-2">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="bbKurang4kg"
+                      [(ngModel)]="payload.status_gizi.bb_kurang_4kg"
+                      name="bb_kurang_4kg"
+                    />
+                    <label class="form-check-label" for="bbKurang4kg"
+                      >Jika anak berusia > 6 bulan, apakah BB anak &lt; 4
+                      kg?</label
+                    >
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="edemaBilateral"
+                      [(ngModel)]="payload.status_gizi.edema_bilateral"
+                      name="edema_bilateral"
+                    />
+                    <label class="form-check-label" for="edemaBilateral"
+                      >Lihat dan raba adanya edema bilateral yang bersifat
+                      pitting</label
+                    >
+                  </div>
+                </div>
+
+                <!-- BB/PB (TB) -->
+                <div class="box mb-3">
+                  <h6>
+                    Berat Badan (BB) menurut Panjang Badan (PB) / Tinggi Badan
+                    (TB)
+                  </h6>
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="bbpb_1"
+                      name="bb_pb_tb"
+                      value="< -3 SD"
+                      [(ngModel)]="payload.status_gizi.bb_pb_tb"
+                    />
+                    <label class="form-check-label" for="bbpb_1"
+                      >&lt; -3 SD</label
+                    >
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="bbpb_2"
+                      name="bb_pb_tb"
+                      value="-3 SD sampai < -2 SD"
+                      [(ngModel)]="payload.status_gizi.bb_pb_tb"
+                    />
+                    <label class="form-check-label" for="bbpb_2"
+                      >-3 SD sampai &lt; -2 SD</label
+                    >
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="bbpb_3"
+                      name="bb_pb_tb"
+                      value="-2 SD sampai +1 SD"
+                      [(ngModel)]="payload.status_gizi.bb_pb_tb"
+                    />
+                    <label class="form-check-label" for="bbpb_3"
+                      >-2 SD sampai +1 SD</label
+                    >
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="bbpb_4"
+                      name="bb_pb_tb"
+                      value="> +1 SD sampai +2 SD"
+                      [(ngModel)]="payload.status_gizi.bb_pb_tb"
+                    />
+                    <label class="form-check-label" for="bbpb_4"
+                      >&gt; +1 SD sampai +2 SD</label
+                    >
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="bbpb_5"
+                      name="bb_pb_tb"
+                      value="> +2 SD sampai +3 SD"
+                      [(ngModel)]="payload.status_gizi.bb_pb_tb"
+                    />
+                    <label class="form-check-label" for="bbpb_5"
+                      >&gt; +2 SD sampai +3 SD</label
+                    >
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="bbpb_6"
+                      name="bb_pb_tb"
+                      value="> +3 SD"
+                      [(ngModel)]="payload.status_gizi.bb_pb_tb"
+                    />
+                    <label class="form-check-label" for="bbpb_6"
+                      >&gt; +3 SD</label
+                    >
+                  </div>
+                </div>
+
+                <!-- LiLA -->
+                <div class="box mb-3">
+                  <h6>
+                    Lingkar Lengan Atas (LiLA) untuk umur 6 bulan atau lebih
+                  </h6>
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="lila_1"
+                      name="lila"
+                      value="< 11,5 cm"
+                      [(ngModel)]="payload.status_gizi.lila"
+                    />
+                    <label class="form-check-label" for="lila_1"
+                      >LiLA &lt; 11,5 cm</label
+                    >
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="lila_2"
+                      name="lila"
+                      value="11,5 cm sampai < 12,5 cm"
+                      [(ngModel)]="payload.status_gizi.lila"
+                    />
+                    <label class="form-check-label" for="lila_2"
+                      >LiLA 11,5 cm sampai &lt; 12,5 cm</label
+                    >
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="lila_3"
+                      name="lila"
+                      value=">= 12,5 cm"
+                      [(ngModel)]="payload.status_gizi.lila"
+                    />
+                    <label class="form-check-label" for="lila_3"
+                      >LiLA ≥ 12,5 cm</label
+                    >
+                  </div>
+                </div>
+
+                <!-- Komplikasi Medis -->
+                <div class="box mb-3">
+                  <h6>
+                    Periksa Komplikasi Medis jika BB/PB (TB) &lt; -3 SD ATAU
+                    LiLA &lt; 11,5 cm
+                  </h6>
+                  <div class="form-check mb-1">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="anoreksia"
+                      [(ngModel)]="payload.status_gizi.anoreksia"
+                      name="anoreksia"
+                    />
+                    <label class="form-check-label" for="anoreksia"
+                      >Anoreksia</label
+                    >
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="dehidrasi"
+                      [(ngModel)]="payload.status_gizi.dehidrasi_berat"
+                      name="dehidrasi_berat"
+                    />
+                    <label class="form-check-label" for="dehidrasi"
+                      >Dehidrasi berat (muntah terus menerus, diare)</label
+                    >
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="letargi"
+                      [(ngModel)]="
+                        payload.status_gizi.letargi_penurunan_kesadaran
+                      "
+                      name="letargi_penurunan_kesadaran"
+                    />
+                    <label class="form-check-label" for="letargi"
+                      >Letargi atau penurunan kesadaran</label
+                    >
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="gizi_demam_tinggi"
+                      [(ngModel)]="payload.status_gizi.demam_tinggi"
+                      name="demam_tinggi"
+                    />
+                    <label class="form-check-label" for="gizi_demam_tinggi"
+                      >Demam tinggi</label
+                    >
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="pneumonia"
+                      [(ngModel)]="payload.status_gizi.pneumonia_berat"
+                      name="pneumonia_berat"
+                    />
+                    <label class="form-check-label" for="pneumonia"
+                      >Pneumonia berat (sulit bernafas/nafas cepat)</label
+                    >
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="anemia"
+                      [(ngModel)]="payload.status_gizi.anemia_berat"
+                      name="anemia_berat"
+                    />
+                    <label class="form-check-label" for="anemia"
+                      >Anemia berat</label
+                    >
+                  </div>
+                </div>
+
+                <!-- Periksa Anak < 6 Bulan -->
+                <div class="box mb-3">
+                  <h6>
+                    Jika tidak ada komplikasi medis, pada anak umur &lt; 6 bulan
+                    periksa:
+                  </h6>
+                  <div class="form-check mb-1">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="lemahMenyusu"
+                      [(ngModel)]="payload.status_gizi.terlalu_lemah_menyusu"
+                      name="terlalu_lemah_menyusu"
+                    />
+                    <label class="form-check-label" for="lemahMenyusu"
+                      >Terlalu lemah untuk menyusu</label
+                    >
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="bbTurun"
+                      [(ngModel)]="payload.status_gizi.bb_turun_tidak_naik"
+                      name="bb_turun_tidak_naik"
+                    />
+                    <label class="form-check-label" for="bbTurun"
+                      >Berat badan tidak naik atau turun</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Klasifikasi -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    [(ngModel)]="payload.status_gizi.klasifikasi"
+                    name="klasifikasi"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tindakan / Pengobatan -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    [(ngModel)]="payload.status_gizi.tindakan"
+                    name="tindakan"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM STATUS GIZI DAN PERTUMBUHAN -->
+
+    <hr />
+
+    <!-- FORM PERIKSA STUNTING -->
+    <div class="card-body">
+      <div class="card">
+        <div class="card-header bg-happy-fisher">
+          PERIKSA ADA/TIDAK STUNTING
+        </div>
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-12">
+              <div class="container">
+                <!-- Umur Anak -->
+                <div class="box mb-3">
+                  <h6>Umur Anak</h6>
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="umur_kurang_2"
+                      name="umur_stunting"
+                      value="< 2 tahun"
+                      [(ngModel)]="payload.stunting.umur_stunting"
+                    />
+                    <label class="form-check-label" for="umur_kurang_2">
+                      Umur &lt; 2 tahun
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="umur_lebih_2"
+                      name="umur_stunting"
+                      value=">= 2 tahun"
+                      [(ngModel)]="payload.stunting.umur_stunting"
+                    />
+                    <label class="form-check-label" for="umur_lebih_2">
+                      Umur ≥ 2 tahun
+                    </label>
+                  </div>
+                </div>
+
+                <!-- PB/U atau TB/U -->
+                <div class="box mb-3">
+                  <h6>
+                    Panjang Badan (PB) atau Tinggi Badan (TB) Menurut Umur
+                  </h6>
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="pb_tb_u_1"
+                      name="pb_tb_u"
+                      value="< -3 SD"
+                      [(ngModel)]="payload.stunting.pb_tb_u"
+                    />
+                    <label class="form-check-label" for="pb_tb_u_1">
+                      PB/U atau TB/U &lt; -3 SD
+                    </label>
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="pb_tb_u_2"
+                      name="pb_tb_u"
+                      value="< -2 SD sampai -3 SD"
+                      [(ngModel)]="payload.stunting.pb_tb_u"
+                    />
+                    <label class="form-check-label" for="pb_tb_u_2">
+                      PB/U atau TB/U &lt; -2 SD sampai -3 SD
+                    </label>
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="pb_tb_u_3"
+                      name="pb_tb_u"
+                      value="-2 SD sampai +3 SD"
+                      [(ngModel)]="payload.stunting.pb_tb_u"
+                    />
+                    <label class="form-check-label" for="pb_tb_u_3">
+                      PB/U atau TB/U -2 SD sampai +3 SD
+                    </label>
+                  </div>
+                  <div class="form-check mb-2">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="pb_tb_u_4"
+                      name="pb_tb_u"
+                      value="> +3 SD"
+                      [(ngModel)]="payload.stunting.pb_tb_u"
+                    />
+                    <label class="form-check-label" for="pb_tb_u_4">
+                      PB/U atau TB/U &gt; +3 SD
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Klasifikasi -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                    [(ngModel)]="payload.stunting.klasifikasi"
+                    name="klasifikasi_stunting"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tindakan / Pengobatan -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                    [(ngModel)]="payload.stunting.tindakan"
+                    name="tindakan_stunting"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM PERIKSA STUNTING -->
+
+    <hr />
+
+    <!-- FORM PERIKSA LINGKAR KEPALA -->
+    <div class="card-body">
+      <div class="card">
+        <div class="card-header bg-happy-fisher">PERIKSA LINGKAR KEPALA</div>
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-12">
+              <div class="container">
+                <!-- Lingkar Kepala Menurut Umur -->
+                <div class="box mb-3">
+                  <h6>Lingkar Kepala Menurut Umur (LK/U)</h6>
+
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="lk_u_lebih_2sd"
+                      name="lk_u"
+                      value="> +2 SD"
+                      [(ngModel)]="payload.lingkar_kepala.lk_u"
+                    />
+                    <label class="form-check-label" for="lk_u_lebih_2sd">
+                      LK/U &gt; +2 SD
+                    </label>
+                  </div>
+
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="lk_u_normal"
+                      name="lk_u"
+                      value="-2 SD s.d +2 SD"
+                      [(ngModel)]="payload.lingkar_kepala.lk_u"
+                    />
+                    <label class="form-check-label" for="lk_u_normal">
+                      LK/U -2 SD s.d +2 SD
+                    </label>
+                  </div>
+
+                  <div class="form-check mb-2">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="lk_u_kurang_2sd"
+                      name="lk_u"
+                      value="< -2 SD"
+                      [(ngModel)]="payload.lingkar_kepala.lk_u"
+                    />
+                    <label class="form-check-label" for="lk_u_kurang_2sd">
+                      LK/U &lt; -2 SD
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Klasifikasi -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                    [(ngModel)]="payload.lingkar_kepala.klasifikasi"
+                    name="klasifikasi_lk"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tindakan / Pengobatan -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                    [(ngModel)]="payload.lingkar_kepala.tindakan"
+                    name="tindakan_lk"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM PERIKSA LINGKAR KEPALA -->
+
+    <hr />
+
+    <!-- FORM PEMERIKSAAN ANEMIA -->
+    <div class="card-body">
+      <div class="card">
+        <div class="card-header bg-happy-fisher">MEMERIKSA ANEMIA</div>
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-12">
+              <div class="container">
+                <!-- Pemeriksaan Hb -->
+                <div class="box mb-3">
+                  <h6>Pemeriksaan Hb (jika tersedia)</h6>
+                  <div class="input-group mb-2">
+                    <span class="input-group-text">Hemoglobin (Hb)</span>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Isi hasil Hb (g/dL)"
+                      [(ngModel)]="payload.anemia.hb"
+                      name="hb"
+                    />
+                  </div>
+                </div>
+
+                <!-- Pemeriksaan Kepucatan -->
+                <div class="box mb-3">
+                  <h6>Periksa Kepucatan pada:</h6>
+                  <ul class="mb-2">
+                    <li>Telapak tangan</li>
+                    <li>Konjungtiva</li>
+                    <li>Bibir</li>
+                    <li>Lidah</li>
+                    <li>Bantalan kuku</li>
+                  </ul>
+
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="sangat_pucat_tangan_kaki"
+                      name="kepucatan"
+                      value="sangat_pucat"
+                      [(ngModel)]="payload.anemia.kepucatan"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="sangat_pucat_tangan_kaki"
+                    >
+                      Sangat Pucat
+                    </label>
+                  </div>
+
+                  <div class="form-check mb-1">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="pucat_tangan_kaki"
+                      name="kepucatan"
+                      value="pucat"
+                      [(ngModel)]="payload.anemia.kepucatan"
+                    />
+                    <label class="form-check-label" for="pucat_tangan_kaki"
+                      >Pucat</label
+                    >
+                  </div>
+
+                  <div class="form-check mb-2">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="tidak_pucat_tangan_kaki"
+                      name="kepucatan"
+                      value="tidak_pucat"
+                      [(ngModel)]="payload.anemia.kepucatan"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="tidak_pucat_tangan_kaki"
+                    >
+                      Tidak Pucat
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Klasifikasi -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                    [(ngModel)]="payload.anemia.klasifikasi"
+                    name="klasifikasi_anemia"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tindakan / Pengobatan -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                    [(ngModel)]="payload.anemia.tindakan"
+                    name="tindakan_anemia"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM PEMERIKSAAN ANEMIA -->
+
+    <hr />
+
+    <!-- FORM PEMERIKSAAN STATUS HIV -->
+    <div class="card-body">
+      <div class="card">
+        <div class="card-header bg-happy-fisher">MEMERIKSA STATUS HIV</div>
+        <div class="card-body">
+          <div class="row g-4">
+            <div class="col-md-12">
+              <div class="container">
+                <!-- Tes HIV sebelumnya -->
+                <div class="box mb-3">
+                  <h6>Apakah ibu atau anak pernah dites HIV?</h6>
+                  <div class="form-check form-check-inline">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="pernahTesYa"
+                      name="pernah_tes_hiv"
+                      [value]="true"
+                      [(ngModel)]="payload.hiv.pernah_tes_hiv"
+                    />
+                    <label class="form-check-label" for="pernahTesYa">Ya</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      type="radio"
+                      class="form-check-input"
+                      id="pernahTesTidak"
+                      name="pernah_tes_hiv"
+                      [value]="false"
+                      [(ngModel)]="payload.hiv.pernah_tes_hiv"
+                    />
+                    <label class="form-check-label" for="pernahTesTidak"
+                      >Tidak</label
+                    >
+                  </div>
+                </div>
+
+                <!-- Status HIV jika YA -->
+                <div class="box mb-3">
+                  <h6>Tentukan Status HIV:</h6>
+                  <div class="mb-2">
+                    <label class="form-label">Ibu</label><br />
+                    <div class="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="ibuPositif"
+                        name="status_hiv_ibu"
+                        value="positif"
+                        [(ngModel)]="payload.hiv.status_hiv_ibu"
+                      />
+                      <label class="form-check-label" for="ibuPositif"
+                        >Positif</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="ibuNegatif"
+                        name="status_hiv_ibu"
+                        value="negatif"
+                        [(ngModel)]="payload.hiv.status_hiv_ibu"
+                      />
+                      <label class="form-check-label" for="ibuNegatif"
+                        >Negatif</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="mb-2">
+                    <label class="form-label">Anak - Tes Virologi</label><br />
+                    <div class="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="virologiPositif"
+                        name="status_virologi_anak"
+                        value="positif"
+                        [(ngModel)]="payload.hiv.status_virologi_anak"
+                      />
+                      <label class="form-check-label" for="virologiPositif"
+                        >Positif</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="virologiNegatif"
+                        name="status_virologi_anak"
+                        value="negatif"
+                        [(ngModel)]="payload.hiv.status_virologi_anak"
+                      />
+                      <label class="form-check-label" for="virologiNegatif"
+                        >Negatif</label
+                      >
+                    </div>
+                  </div>
+
+                  <div class="mb-2">
+                    <label class="form-label">Anak - Tes Serologi</label><br />
+                    <div class="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="serologiPositif"
+                        name="status_serologi_anak"
+                        value="positif"
+                        [(ngModel)]="payload.hiv.status_serologi_anak"
+                      />
+                      <label class="form-check-label" for="serologiPositif"
+                        >Positif</label
+                      >
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input
+                        type="radio"
+                        class="form-check-input"
+                        id="serologiNegatif"
+                        name="status_serologi_anak"
+                        value="negatif"
+                        [(ngModel)]="payload.hiv.status_serologi_anak"
+                      />
+                      <label class="form-check-label" for="serologiNegatif"
+                        >Negatif</label
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Pertanyaan Tambahan jika ibu POSITIF dan anak NEGATIF/tidak diketahui -->
+                <div class="box mb-3">
+                  <h6>
+                    Pertanyaan Tambahan jika ibu POSITIF dan anak NEGATIF/tidak
+                    diketahui:
+                  </h6>
+                  <div class="form-check mb-1">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="asi_saat_tes"
+                      [(ngModel)]="payload.hiv.asi_saat_tes"
+                      name="asi_saat_tes"
+                    />
+                    <label class="form-check-label" for="asi_saat_tes">
+                      Apakah anak sedang mendapat ASI pada saat tes HIV atau 6
+                      minggu sebelum tes HIV?
+                    </label>
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="asi_saat_ini"
+                      [(ngModel)]="payload.hiv.asi_saat_ini"
+                      name="asi_saat_ini"
+                    />
+                    <label class="form-check-label" for="asi_saat_ini">
+                      Apakah anak saat ini sedang mendapat ASI?
+                    </label>
+                  </div>
+                  <div class="form-check mb-1">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="arv_profilaksis"
+                      [(ngModel)]="payload.hiv.arv_profilaksis"
+                      name="arv_profilaksis"
+                    />
+                    <label class="form-check-label" for="arv_profilaksis">
+                      Jika mendapat ASI, apakah ibu dan anak saat ini mendapat
+                      ARV profilaksis?
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Catatan jika belum pernah tes -->
+                <div class="alert alert-info">
+                  <strong>Catatan:</strong> Lakukan tes HIV terutama jika
+                  dijumpai:
+                  <ul class="mb-0">
+                    <li>Pneumonia berulang</li>
+                    <li>Diare persisten berulang</li>
+                    <li>Bercak putih rongga mulut berulang</li>
+                    <li>Infeksi berat berulang (butuh rawat inap)</li>
+                    <li>
+                      Gizi kurang/buruk yang tidak membaik dengan penanganan
+                      gizi
+                    </li>
+                  </ul>
+                  <p class="mb-0 mt-2">
+                    Jika status HIV ibu dan anak tidak diketahui:
+                    <strong>tes ibu</strong> <br />
+                    Jika status HIV ibu positif dan anak tidak diketahui:
+                    <strong>tes anak</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Klasifikasi -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                    [(ngModel)]="payload.hiv.klasifikasi"
+                    name="klasifikasi_hiv"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tindakan / Pengobatan -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                    [(ngModel)]="payload.hiv.tindakan"
+                    name="tindakan_hiv"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM PEMERIKSAAN STATUS HIV -->
+
+    <hr />
+
+    <!-- FORM PEMERIKSAAN STATUS IMUNISASI -->
+    <div class="card-body">
+      <div class="card">
+        <div class="card-header bg-happy-fisher">
+          MEMERIKSA STATUS IMUNISASI
+        </div>
+        <div class="card-body">
+          <!-- Imunisasi yang diberikan hari ini -->
+          <div class="box mb-3">
+            <h6>Imunisasi yang diberikan hari ini:</h6>
+            <input
+              type="text"
+              class="form-control mb-2"
+              placeholder="Contoh: DPT-HB-Hib 1, PCV 1"
+              [(ngModel)]="payload.imunisasi.diberikan_hari_ini"
+              name="diberikan_hari_ini"
+            />
+          </div>
+
+          <!-- Lingkari imunisasi yang dibutuhkan hari ini -->
+          <div class="box mb-3">
+            <h6>
+              Lingkari imunisasi yang dibutuhkan hari ini (beri tanda 'V' jika
+              sudah diberikan):
+            </h6>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="hb0"
+                    [(ngModel)]="payload.imunisasi.hb0"
+                    name="hb0"
+                  />
+                  <label class="form-check-label" for="hb0">HB 0</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="bcg"
+                    [(ngModel)]="payload.imunisasi.bcg"
+                    name="bcg"
+                  />
+                  <label class="form-check-label" for="bcg">BCG</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="opv0"
+                    [(ngModel)]="payload.imunisasi.opv0"
+                    name="opv0"
+                  />
+                  <label class="form-check-label" for="opv0">OPV 0</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="opv1"
+                    [(ngModel)]="payload.imunisasi.opv1"
+                    name="opv1"
+                  />
+                  <label class="form-check-label" for="opv1">OPV 1</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="opv2"
+                    [(ngModel)]="payload.imunisasi.opv2"
+                    name="opv2"
+                  />
+                  <label class="form-check-label" for="opv2">OPV 2</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="opv3ipv"
+                    [(ngModel)]="payload.imunisasi.opv3ipv"
+                    name="opv3ipv"
+                  />
+                  <label class="form-check-label" for="opv3ipv"
+                    >OPV 3 / IPV</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="rv1"
+                    [(ngModel)]="payload.imunisasi.rv1"
+                    name="rv1"
+                  />
+                  <label class="form-check-label" for="rv1">RV 1</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="rv2"
+                    [(ngModel)]="payload.imunisasi.rv2"
+                    name="rv2"
+                  />
+                  <label class="form-check-label" for="rv2">RV 2</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="rv3"
+                    [(ngModel)]="payload.imunisasi.rv3"
+                    name="rv3"
+                  />
+                  <label class="form-check-label" for="rv3">RV 3</label>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="dpt1"
+                    [(ngModel)]="payload.imunisasi.dpt1"
+                    name="dpt1"
+                  />
+                  <label class="form-check-label" for="dpt1"
+                    >DPT-HB-HIB 1</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="dpt2"
+                    [(ngModel)]="payload.imunisasi.dpt2"
+                    name="dpt2"
+                  />
+                  <label class="form-check-label" for="dpt2"
+                    >DPT-HB-HIB 2</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="dpt3"
+                    [(ngModel)]="payload.imunisasi.dpt3"
+                    name="dpt3"
+                  />
+                  <label class="form-check-label" for="dpt3"
+                    >DPT-HB-HIB 3</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="pcv1"
+                    [(ngModel)]="payload.imunisasi.pcv1"
+                    name="pcv1"
+                  />
+                  <label class="form-check-label" for="pcv1">PCV 1</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="pcv2"
+                    [(ngModel)]="payload.imunisasi.pcv2"
+                    name="pcv2"
+                  />
+                  <label class="form-check-label" for="pcv2">PCV 2</label>
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="pcv3"
+                    [(ngModel)]="payload.imunisasi.pcv3"
+                    name="pcv3"
+                  />
+                  <label class="form-check-label" for="pcv3"
+                    >PCV 3 (lanjutan)</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="campakRubella"
+                    [(ngModel)]="payload.imunisasi.campakRubella"
+                    name="campakRubella"
+                  />
+                  <label class="form-check-label" for="campakRubella"
+                    >Campak Rubella</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="je"
+                    [(ngModel)]="payload.imunisasi.je"
+                    name="je"
+                  />
+                  <label class="form-check-label" for="je"
+                    >Japanese Encephalitis (lanjutan)</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="dptLanjutan"
+                    [(ngModel)]="payload.imunisasi.dptLanjutan"
+                    name="dptLanjutan"
+                  />
+                  <label class="form-check-label" for="dptLanjutan"
+                    >DPT-HB-HIB (lanjutan)</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="campakRubellaLanjutan"
+                    [(ngModel)]="payload.imunisasi.campakRubellaLanjutan"
+                    name="campakRubellaLanjutan"
+                  />
+                  <label class="form-check-label" for="campakRubellaLanjutan"
+                    >Campak Rubella (lanjutan)</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Keterangan tambahan -->
+          <div class="box mb-3">
+            <label for="keterangan_imunisasi" class="form-label"
+              >Catatan Tambahan (Opsional)</label
+            >
+            <textarea
+              class="form-control"
+              id="keterangan_imunisasi"
+              rows="3"
+              placeholder="Contoh: Anak demam ringan sebelum imunisasi, edukasi telah diberikan"
+              [(ngModel)]="payload.imunisasi.keterangan_imunisasi"
+              name="keterangan_imunisasi"
+            ></textarea>
+          </div>
+
+          <div class="row">
+            <!-- Klasifikasi -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                    [(ngModel)]="payload.imunisasi.klasifikasi"
+                    name="klasifikasi"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tindakan / Pengobatan -->
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                    [(ngModel)]="payload.imunisasi.tindakan"
+                    name="tindakan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END FORM PEMERIKSAAN STATUS IMUNISASI -->
+
+    <hr />
+
+    <!-- FORM PEMERIKSAAN PEMBERIAN VITAMIN A -->
+    <div class="card-body">
+      <div class="card">
+        <div class="card-header bg-happy-fisher">
+          MEMERIKSA PEMBERIAN VITAMIN A
+        </div>
+        <div class="card-body">
+          <div>
+            <!-- Dibutuhkan suplemen vitamin A -->
+            <div class="box mb-3">
+              <h6>Dibutuhkan suplemen vitamin A:</h6>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="butuhVitAYa"
+                  name="butuh_vitamin_a"
+                  [value]="true"
+                  [(ngModel)]="payload.vitamin_a.butuh_vitamin_a"
+                />
+                <label class="form-check-label" for="butuhVitAYa">Ya</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="butuhVitATidak"
+                  name="butuh_vitamin_a"
+                  [value]="false"
+                  [(ngModel)]="payload.vitamin_a.butuh_vitamin_a"
+                />
+                <label class="form-check-label" for="butuhVitATidak"
+                  >Tidak</label
+                >
+              </div>
+            </div>
+
+            <!-- Diberikan vitamin A hari ini -->
+            <div class="box mb-3">
+              <h6>Diberikan vitamin A hari ini:</h6>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="diberiVitAYa"
+                  name="diberikan_vitamin_a"
+                  [value]="true"
+                  [(ngModel)]="payload.vitamin_a.diberikan_vitamin_a"
+                />
+                <label class="form-check-label" for="diberiVitAYa">Ya</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="diberiVitATidak"
+                  name="diberikan_vitamin_a"
+                  [value]="false"
+                  [(ngModel)]="payload.vitamin_a.diberikan_vitamin_a"
+                />
+                <label class="form-check-label" for="diberiVitATidak"
+                  >Tidak</label
+                >
+              </div>
+            </div>
+
+            <!-- Catatan Tambahan -->
+            <div class="box mb-3">
+              <label for="catatan_vitamin_a" class="form-label">
+                Catatan Tambahan (Opsional)
+              </label>
+              <textarea
+                class="form-control"
+                id="catatan_vitamin_a"
+                name="catatan_vitamin_a"
+                rows="3"
+                placeholder="Contoh: Anak belum mendapat vitamin A sebelumnya, edukasi ibu telah dilakukan"
+                [(ngModel)]="payload.vitamin_a.catatan_vitamin_a"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Klasifikasi -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    [(ngModel)]="payload.vitamin_a.klasifikasi"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    [(ngModel)]="payload.vitamin_a.tindakan"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Klasifikasi -->
+        </div>
+      </div>
+    </div>
+    <!-- END FORM PEMERIKSAAN PEMBERIAN VITAMIN A -->
+
+    <hr />
+
+    <!-- FORM MENILAI MASALAH ATAU KELUHAN LAIN -->
+    <div class="card-body">
+      <div class="card">
+        <div class="card-header bg-happy-fisher">
+          MENILAI MASALAH ATAU KELUHAN LAIN
+        </div>
+        <div class="card-body">
+          <!-- Klasifikasi -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Klasifikasi
+                </div>
+                <div class="card-body">
+                  <textarea
+                    [(ngModel)]="payload.keluhan_lain.klasifikasi"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi klasifikasi berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="card shadow-sm rounded">
+                <div
+                  class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                >
+                  Tindakan / Pengobatan
+                </div>
+                <div class="card-body">
+                  <textarea
+                    [(ngModel)]="payload.keluhan_lain.tindakan"
+                    class="form-control"
+                    rows="4"
+                    placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Klasifikasi -->
+        </div>
+      </div>
+    </div>
+    <!-- END FORM MENILAI MASALAH ATAU KELUHAN LAIN -->
+
+    <hr />
+
+    <!-- FORM PENILAIAN PEMBERIAN MAKAN -->
+    <div class="card-body">
+      <div class="card">
+        <div class="card-header bg-happy-fisher">
+          LAKUKAN PENILAIAN PEMBERIAN MAKAN
+        </div>
+        <div class="card-body">
+          <div>
+            <!-- Apakah ibu menyusui -->
+            <div class="box mb-3">
+              <h6>Apakah ibu menyusui anak ini?</h6>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="menyusuiYa"
+                  name="menyusui"
+                  [value]="true"
+                  [(ngModel)]="payload.pola_makan.menyusui"
+                />
+                <label class="form-check-label" for="menyusuiYa">Ya</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="menyusuiTidak"
+                  name="menyusui"
+                  [value]="false"
+                  [(ngModel)]="payload.pola_makan.menyusui"
+                />
+                <label class="form-check-label" for="menyusuiTidak"
+                  >Tidak</label
+                >
+              </div>
+              <div class="mt-2">
+                <label for="frekuensi_menyusui" class="form-label"
+                  >Jika "Ya", berapa kali sehari?</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="frekuensi_menyusui"
+                  name="frekuensi_menyusui"
+                  placeholder="0"
+                  [(ngModel)]="payload.pola_makan.frekuensi_menyusui"
+                />
+              </div>
+              <div class="form-check mt-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="menyusuiMalam"
+                  name="menyusui_malam"
+                  [value]="true"
+                  [(ngModel)]="payload.pola_makan.menyusui_malam"
+                />
+                <label class="form-check-label" for="menyusuiMalam"
+                  >Apakah menyusui juga di malam hari?</label
+                >
+              </div>
+            </div>
+
+            <!-- Makanan/Minuman lain -->
+            <div class="box mb-3">
+              <h6>Apakah anak mendapat makanan atau minuman lain?</h6>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="makananLainYa"
+                  name="makanan_lain"
+                  [value]="true"
+                  [(ngModel)]="payload.pola_makan.makanan_lain"
+                />
+                <label class="form-check-label" for="makananLainYa">Ya</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="makananLainTidak"
+                  name="makanan_lain"
+                  [value]="false"
+                  [(ngModel)]="payload.pola_makan.makanan_lain"
+                />
+                <label class="form-check-label" for="makananLainTidak"
+                  >Tidak</label
+                >
+              </div>
+              <div class="mt-2">
+                <label for="jenis_makanan_lain" class="form-label"
+                  >Jika "Ya", makanan atau minuman apa?</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="jenis_makanan_lain"
+                  name="jenis_makanan_lain"
+                  placeholder="Contoh: bubur, susu formula"
+                  [(ngModel)]="payload.pola_makan.jenis_makanan_lain"
+                />
+              </div>
+              <div class="mt-2">
+                <label for="frekuensi_makanan_lain" class="form-label"
+                  >Berapa kali sehari?</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="frekuensi_makanan_lain"
+                  name="frekuensi_makanan_lain"
+                  placeholder="0"
+                  [(ngModel)]="payload.pola_makan.frekuensi_makanan_lain"
+                />
+              </div>
+              <div class="mt-2">
+                <label for="alat_minum" class="form-label"
+                  >Alat apa yang digunakan untuk memberi minuman anak?</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="alat_minum"
+                  name="alat_minum"
+                  placeholder="Contoh: sendok, botol"
+                  [(ngModel)]="payload.pola_makan.alat_minum"
+                />
+              </div>
+            </div>
+
+            <!-- Penilaian jika Gizi Kurang/Buruk -->
+            <div class="box mb-3">
+              <h6>Jika anak GIZI KURANG atau GIZI BURUK tanpa komplikasi:</h6>
+              <label for="jumlah_makanan" class="form-label"
+                >Berapa banyak makanan atau minuman yang diberikan pada
+                anak?</label
+              >
+              <input
+                type="text"
+                class="form-control mb-2"
+                id="jumlah_makanan"
+                name="jumlah_makanan"
+                placeholder="Contoh: 100 ml setiap kali makan"
+                [(ngModel)]="payload.pola_makan.jumlah_makanan"
+              />
+              <div class="form-check mb-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="makanan_tersendiri"
+                  name="makanan_tersendiri"
+                  [value]="true"
+                  [(ngModel)]="payload.pola_makan.makanan_tersendiri"
+                />
+                <label class="form-check-label" for="makanan_tersendiri"
+                  >Apakah anak mendapat makanan tersendiri?</label
+                >
+              </div>
+              <label for="pemberi_makan" class="form-label"
+                >Siapa yang memberi makan dan bagaimana caranya?</label
+              >
+              <textarea
+                class="form-control"
+                id="pemberi_makan"
+                name="pemberi_makan"
+                rows="2"
+                [(ngModel)]="payload.pola_makan.pemberi_makan"
+              ></textarea>
+            </div>
+
+            <!-- Perubahan selama sakit -->
+            <div class="box mb-3">
+              <h6>Selama sakit ini, apakah ada perubahan pemberian makan?</h6>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="perubahanMakanYa"
+                  name="perubahan_makan"
+                  [value]="true"
+                  [(ngModel)]="payload.pola_makan.perubahan_makan"
+                />
+                <label class="form-check-label" for="perubahanMakanYa"
+                  >Ya</label
+                >
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  id="perubahanMakanTidak"
+                  name="perubahan_makan"
+                  [value]="false"
+                  [(ngModel)]="payload.pola_makan.perubahan_makan"
+                />
+                <label class="form-check-label" for="perubahanMakanTidak"
+                  >Tidak</label
+                >
+              </div>
+              <div class="mt-2">
+                <label for="detail_perubahan_makan" class="form-label"
+                  >Jika "Ya", bagaimana?</label
+                >
+                <textarea
+                  class="form-control"
+                  id="detail_perubahan_makan"
+                  name="detail_perubahan_makan"
+                  rows="2"
+                  [(ngModel)]="payload.pola_makan.detail_perubahan_makan"
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Klasifikasi -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card shadow-sm rounded">
+                  <div
+                    class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                  >
+                    Klasifikasi
+                  </div>
+                  <div class="card-body">
+                    <textarea
+                      [(ngModel)]="payload.pola_makan.klasifikasi"
+                      class="form-control"
+                      rows="4"
+                      placeholder="Isi klasifikasi berdasarkan temuan"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="card shadow-sm rounded">
+                  <div
+                    class="card-header bg-happy-fisher text-success-emphasis fw-semibold"
+                  >
+                    Tindakan / Pengobatan
+                  </div>
+                  <div class="card-body">
+                    <textarea
+                      [(ngModel)]="payload.pola_makan.tindakan"
+                      class="form-control"
+                      rows="4"
+                      placeholder="Isi tindakan atau pengobatan berdasarkan temuan"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Klasifikasi -->
+          </div>
+        </div>
+      </div>
+      <!-- END FORM PENILAIAN PEMBERIAN MAKAN -->
+    </div>
+
+    <hr />
+
+    <!-- FORM KUNJUNGAN -->
+    <div class="card-body">
+      <div class="card">
+        <div class="card-header bg-happy-fisher">LAKUKAN KUNJUNGAN</div>
+        <div class="card-body">
+          <label for="kunjungan_ulang_hari" class="form-label"
+            >Kunjungan Ulang (dalam ... hari)</label
+          >
+          <input
+            type="number"
+            class="form-control mb-2"
+            id="kunjungan_ulang_hari"
+            name="kunjungan_ulang_hari"
+            placeholder="Contoh: 7"
+            [(ngModel)]="payload.follow_up.kunjungan_ulang_hari"
+          />
+          <label for="nasihat_kapan_kembali" class="form-label"
+            >Nasihati kapan kembali segera</label
+          >
+          <textarea
+            class="form-control mb-2"
+            id="nasihat_kapan_kembali"
+            name="nasihat_kapan_kembali"
+            rows="2"
+            placeholder="Contoh: Jika anak sesak napas, muntah terus-menerus, demam tinggi, atau lemas."
+            [(ngModel)]="payload.follow_up.nasihat_kapan_kembali"
+          ></textarea>
+          <label for="nama_pemeriksa" class="form-label"
+            >Nama Pemeriksa {{ payload.follow_up.nama_pemeriksa }}</label
+          >
+          <div *ngIf="namaPemeriksaList$ | async as list; else loading">
+            <select
+              id="nama_pemeriksa"
+              class="form-control"
+              [(ngModel)]="payload.follow_up.nama_pemeriksa"
+              name="nama_pemeriksa"
+            >
+              <option [ngValue]="null" disabled selected>
+                Pilih nama pemeriksa
+              </option>
+              <option *ngFor="let item of list" [ngValue]="item.nama">
+                {{ item.nama }}
+              </option>
+            </select>
+          </div>
+
+          <ng-template #loading>
+            <div class="skeleton skeleton-select"></div>
+          </ng-template>
+        </div>
+      </div>
+      <!-- END FORM KUNJUNGAN -->
+
+      <!-- Tombol Simpan -->
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <button
+              (click)="submit()"
+              class="btn btn-lg"
+              [class]="isEdit ? 'btn-info' : 'btn-success '"
+            >
+              {{ isEdit ? "Update" : "Simpan" }}
+            </button>
+            <button
+              *ngIf="isEdit"
+              (click)="downloadPdf()"
+              [disabled]="loadingDownload"
+              class="btn btn-danger btn-lg ms-2"
+            >
+              <i class="fa fa-file-pdf"></i>
+              {{ loadingDownload ? "Mengunduh..." : "Download PDF" }}
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Tombol Simpan -->
+    </div>
+  </div>
+</div>

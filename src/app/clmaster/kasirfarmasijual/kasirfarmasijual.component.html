@@ -1408,27 +1408,7 @@
                 <td>
                   <div
                     class="badge bg-pill bg-danger btn"
-                    (click)="
-                      pilihpasien(
-                        x.nofaktur,
-                        x.tgl,
-                        x.pasien,
-                        x.kdpoli,
-                        x.nampoli,
-                        x.kdkostumerd,
-                        x.nama,
-                        x.kddokter,
-                        x.namdokter,
-                        x.notransaksi,
-                        x.sts,
-                        x.norm,
-                        x.statuslunas,
-                        x.bayar,
-                        x.ri,
-                        x.age,
-                        x.alamat
-                      )
-                    "
+                    (click)="pilihpasien(x)"
                   >
                     P
                   </div>
@@ -2192,14 +2172,14 @@
                   <p>Nama pasien</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z1a">
+                  <mat-radio-group [(ngModel)]="nama_pasien">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket1a"
+                    [(ngModel)]="nama_pasien_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2212,14 +2192,14 @@
                   <p>Alamat pasien</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z2a">
+                  <mat-radio-group [(ngModel)]="alamat_pasien">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket2a"
+                    [(ngModel)]="alamat_pasien_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2232,14 +2212,14 @@
                   <p>Umur</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z3a">
+                  <mat-radio-group [(ngModel)]="umur_pasien">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket3a"
+                    [(ngModel)]="umur_pasien_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2252,14 +2232,14 @@
                   <p>Berat badan</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z4a">
+                  <mat-radio-group [(ngModel)]="berat_badan">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket4a"
+                    [(ngModel)]="berat_badan_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2272,14 +2252,14 @@
                   <p>Jenis kelamin</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z5a">
+                  <mat-radio-group [(ngModel)]="jenis_kelamin">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket5a"
+                    [(ngModel)]="jenis_kelamin_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2292,14 +2272,14 @@
                   <p>Nama dokter</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z6a">
+                  <mat-radio-group [(ngModel)]="nama_dokter">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket6a"
+                    [(ngModel)]="nama_dokter_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2312,14 +2292,14 @@
                   <p>Nomor ijin (SIP)</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z7a">
+                  <mat-radio-group [(ngModel)]="nomor_ijin">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket7a"
+                    [(ngModel)]="nomor_ijin_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2332,14 +2312,14 @@
                   <p>Alamat dokter/no tlp</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z8a">
+                  <mat-radio-group [(ngModel)]="alamat_dokter">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket8a"
+                    [(ngModel)]="alamat_dokter_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2352,14 +2332,14 @@
                   <p>Paraf/tanda tangan dokter</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z9a">
+                  <mat-radio-group [(ngModel)]="tanda_tangan_dokter">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket9a"
+                    [(ngModel)]="tanda_tangan_dokter_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2372,14 +2352,14 @@
                   <p>Tempat dan tanggal penulisan resep</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z10a">
+                  <mat-radio-group [(ngModel)]="tempat_tanggal_resep">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket10a"
+                    [(ngModel)]="tempat_tanggal_resep_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2400,14 +2380,14 @@
                   <p>Nama obat</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z1b">
+                  <mat-radio-group [(ngModel)]="nama_obat">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket1b"
+                    [(ngModel)]="nama_obat_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2420,14 +2400,14 @@
                   <p>Bentuk sediaan</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z2b">
+                  <mat-radio-group [(ngModel)]="bentuk_sediaan">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket2b"
+                    [(ngModel)]="bentuk_sediaan_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2440,14 +2420,14 @@
                   <p>Kekuatan sediaan obat</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z3b">
+                  <mat-radio-group [(ngModel)]="kekuatan_sediaan_obat">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket3b"
+                    [(ngModel)]="kekuatan_sediaan_obat_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2460,14 +2440,14 @@
                   <p>Jumlah obat</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z4b">
+                  <mat-radio-group [(ngModel)]="jumlah_obat">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket4b"
+                    [(ngModel)]="jumlah_obat_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2480,14 +2460,14 @@
                   <p>Stabilitas dan inkompabilitas</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z5b">
+                  <mat-radio-group [(ngModel)]="stabilitas_dan_inkompabilitas">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket5b"
+                    [(ngModel)]="stabilitas_dan_inkompabilitas_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2500,14 +2480,14 @@
                   <p>Aturan dan cara penggunaan obat</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z6b">
+                  <mat-radio-group [(ngModel)]="aturan_dan_cara_penggunaan_obat">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket6b"
+                    [(ngModel)]="aturan_dan_cara_penggunaan_obat_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2527,14 +2507,14 @@
                   <p>Ketidaktepatan seleksi obat</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z1c">
+                  <mat-radio-group [(ngModel)]="ketidaktepatan_seleksi_obat">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket1c"
+                    [(ngModel)]="ketidaktepatan_seleksi_obat_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2547,14 +2527,14 @@
                   <p>Dosis kurang</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z2c">
+                  <mat-radio-group [(ngModel)]="dosis_kurang">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket2c"
+                    [(ngModel)]="dosis_kurang_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2567,14 +2547,14 @@
                   <p>Dosis lebih</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z3c">
+                  <mat-radio-group [(ngModel)]="dosis_lebih">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket3c"
+                    [(ngModel)]="dosis_lebih_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2587,14 +2567,14 @@
                   <p>Duplikasi</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z4c">
+                  <mat-radio-group [(ngModel)]="duplikasi">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket4c"
+                    [(ngModel)]="duplikasi_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2607,14 +2587,14 @@
                   <p>Obat tanpa indiksi</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z5c">
+                  <mat-radio-group [(ngModel)]="obat_tanpa_indikasi">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket5c"
+                    [(ngModel)]="obat_tanpa_indikasi_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2627,14 +2607,14 @@
                   <p>Indikasi tidak diobati</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z6c">
+                  <mat-radio-group [(ngModel)]="indikasi_tidak_diobati">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket6c"
+                    [(ngModel)]="indikasi_tidak_diobati_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2647,14 +2627,14 @@
                   <p>Interaksi obat</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z7c">
+                  <mat-radio-group [(ngModel)]="interaksi_obat">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket7c"
+                    [(ngModel)]="interaksi_obat_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2666,14 +2646,14 @@
                   <p>Reaksi obat merugikan (ROM)</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z8c">
+                  <mat-radio-group [(ngModel)]="reaksi_obat_merugikan">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket8c"
+                    [(ngModel)]="reaksi_obat_merugikan_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2685,14 +2665,14 @@
                   <p>Gagal menerima obat</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="z9c">
+                  <mat-radio-group [(ngModel)]="gagal_menerima_obat">
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
                 </td>
                 <td>
                   <input
-                    [(ngModel)]="ket9c"
+                    [(ngModel)]="gagal_menerima_obat_ket"
                     style="border-radius: 5px; border: solid 1px #ccc"
                     placeholder="keterangan..."
                     type="text"
@@ -2703,9 +2683,19 @@
                 <b>Analis</b>
                 <td colspan="3">
                   <textarea
-                    [(ngModel)]="analis"
+                    [(ngModel)]="analisa"
                     style="width: 100%"
                     placeholder="Analis"
+                  ></textarea>
+                </td>
+              </tr>
+              <tr>
+                <b>Konseling</b>
+                <td colspan="3">
+                  <textarea
+                    [(ngModel)]="konseling"
+                    style="width: 100%"
+                    placeholder="Konseling"
                   ></textarea>
                 </td>
               </tr>
@@ -2716,10 +2706,18 @@
 
       <div class="modal-footer">
         <button
+          *ngIf="!tomboledit"
           class="btn-pill btn-shadow btn btn-primary"
           (click)="simpankajian()"
         >
           SIMPAN
+        </button>
+        <button
+          *ngIf="tomboledit"
+          class="btn-pill btn-shadow btn btn-success"
+          (click)="updatekajian()"
+        >
+          UBAH
         </button>
         <button
           class="btn-pill btn-shadow btn btn-secondary"

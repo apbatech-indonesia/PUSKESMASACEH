@@ -19,7 +19,6 @@ import { PageTitleModule } from "src/app/Layout/Components/page-title/page-title
 import { MpasienComponent } from "./mpasien.component";
 import { MpasienRoutingModule } from "./mpasien-routing.module";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { MasterClenicProvinceComponent } from "../master/master-clenic-province/master-clenic-province.component";
 import { MasterClenicProvinceModule } from "../master/master-clenic-province/master-clenic-province.module";
 import { MasterClenicCityModule } from "../master/master-clenic-city/master-clenic-city.module";
 import { MasterClenicDistrictModule } from "../master/master-clenic-district/master-clenic-district.module";

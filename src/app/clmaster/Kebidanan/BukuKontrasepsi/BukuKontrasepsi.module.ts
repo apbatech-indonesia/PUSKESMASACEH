@@ -19,6 +19,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     NgMultiSelectDropDownModule,
     MatPaginatorModule,
   ],
-  declarations: [BukuKontrasepsiComponent]
+  declarations: [BukuKontrasepsiComponent],
+  exports: [BukuKontrasepsiComponent]
 })
 export class BukuKontrasepsiModule { }

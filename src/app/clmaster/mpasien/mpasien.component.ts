@@ -159,7 +159,6 @@ export class MpasienComponent implements OnInit {
   });
   tgolonganlab: any;
   ngOnInit() {
-    console.log(this.propinsi);
     this.klinik();
     // this.tmppuser()
     this.tmpantri();
@@ -805,7 +804,7 @@ export class MpasienComponent implements OnInit {
   }
 
   res: any;
-  
+
   test() {
     Object.keys(this.profileForm.controls).forEach((field) => {
       const control = this.profileForm.get(field);
@@ -943,13 +942,12 @@ export class MpasienComponent implements OnInit {
     this.tgllahir = tgllahir;
     this.noasuransi = noasuransi;
 
-    this.keluarahanid = kdkelurahan;
-    this.keluarahan = keluarahan;
     this.verifsimpan = "0";
     this.usia = usia;
     this.propinsi = x.prov_name;
     this.kabupaten = x.city_name;
     this.kecamatan = x.dis_name;
+    this.keluarahan = keluarahan;
     this.showtombolpasien = false;
 
     this.an = kdpanggil;
@@ -966,6 +964,8 @@ export class MpasienComponent implements OnInit {
       " Bulan " +
       difference.days +
       " hari";
+
+    this.profileForm.get("keluarahan")?.setValue(x.kdkelurahan);
   }
 
   pilihnorm(norm) {

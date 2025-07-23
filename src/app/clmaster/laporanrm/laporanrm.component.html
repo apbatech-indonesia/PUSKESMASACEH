@@ -13,6 +13,12 @@
             </button>
             <button
               class="dropdown-item"
+              (click)="laprj('Laporan Pasien MJKN')"
+            >
+              Laporan Pasien MJKN
+            </button>
+            <button
+              class="dropdown-item"
               (click)="laprj('Laporan Diagnosa Periode')"
             >
               Laporan Diagnosa Periode
@@ -114,6 +120,28 @@
             (click)="lihatkunjunganexcel()"
           >
             Export Excel Register
+          </button>
+        </div>
+
+        <div *ngIf="judul === 'Laporan Pasien MJKN'">
+          <div class="position-relative mb-3">
+            <label for="exampleEmail" class="form-label">Sumber</label>
+            <select [(ngModel)]="filterMjkn" class="form-control">
+              <option value="mjkn">MJKN</option>
+              <option value="non-mjkn">Non MJKN</option>
+            </select>
+          </div>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-success"
+            (click)="lihatmjkn(filterMjkn)"
+          >
+            Laporan
+          </button>
+          <button
+            class="mb-2 me-2 btn-pill btn btn-info"
+            (click)="lihatmjknex(filterMjkn)"
+          >
+            Export Laporan
           </button>
         </div>
 

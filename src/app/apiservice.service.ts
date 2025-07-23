@@ -717,6 +717,7 @@ export class ApiserviceService {
 
   simpandokter(
     nik,
+    nip,
     kdklinik,
     kdcabang,
     namadokter,
@@ -727,7 +728,8 @@ export class ApiserviceService {
     sn,
     kddokterbpjs,
     usericare,
-    passicare
+    passicare,
+    signature
   ) {
     let url = apiurx + "master/simpandokter.php";
     let param = {
@@ -743,6 +745,8 @@ export class ApiserviceService {
       aktif: aktif,
       sn: sn,
       nik: nik,
+      nip: nip,
+      signature: signature,
     };
     let request = this.http.post(url, param);
     return request.toPromise();
@@ -2209,23 +2213,46 @@ export class ApiserviceService {
   //   return this.http.get(apiurx + 'transaksi/pasienrm.php?kdcabang=' + a + '&sts=' + b + '&nama=' + c + '&stss=' + d + '&tgl=' + e + '&tgls=' + tgls)
   // }
 
-  pasienrm(a, b, c, d, e, tgls): Observable<any> {
-    // kdcabang=002&sts=0&nama=&stss=1&tgl=
-    return this.http.get(
+  pasienrm(
+    a: string, // kdcabang
+    b: string, // sts
+    c: string, // nama
+    d: string, // stss
+    e: string, // tgl
+    tgls: string, // tgls
+    orderby?: string, // opsional
+    order?: string, // opsional
+    kdpoli?: string // opsional
+  ): Observable<any> {
+    let url =
       apiurx +
-        "transaksi/pasienrm.php?kdcabang=" +
-        a +
-        "&sts=" +
-        b +
-        "&nama=" +
-        c +
-        "&stss=" +
-        d +
-        "&tgl=" +
-        e +
-        "&tgls=" +
-        tgls
-    );
+      "transaksi/pasienrm.php?" +
+      "kdcabang=" +
+      a +
+      "&sts=" +
+      b +
+      "&nama=" +
+      encodeURIComponent(c) +
+      "&stss=" +
+      d +
+      "&tgl=" +
+      e +
+      "&tgls=" +
+      tgls;
+
+    if (orderby) {
+      url += "&orderby=" + encodeURIComponent(orderby);
+    }
+
+    if (order) {
+      url += "&order=" + encodeURIComponent(order);
+    }
+
+    if (kdpoli) {
+      url += "&kdpoli=" + encodeURIComponent(kdpoli);
+    }
+
+    return this.http.get(url);
   }
 
   trxfgudang(a, b, c): Observable<any> {
@@ -3407,5 +3434,18 @@ export class ApiserviceService {
   }
   editpoli(): Observable<any> {
     return this.http.get(apiurx + "pcare/editpoli.php");
+  }
+
+  getCpptByNorm(slugCabang, norm) {
+    return this.http.get(
+      `https://emr.clenicapp.com/api/${slugCabang}/cppt?norm=${norm}`
+    );
+  }
+
+  updateCppt(slugCabang, data: any) {
+    return this.http.post(
+      `https://emr.clenicapp.com/api/${slugCabang}/cppt/update`,
+      data
+    );
   }
 }

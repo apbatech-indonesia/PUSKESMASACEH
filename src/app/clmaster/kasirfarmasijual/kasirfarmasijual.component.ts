@@ -1,3 +1,4 @@
+// ...import dan deklarasi class yang sudah ada, hapus duplikasi ini...
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import {
   FormBuilder,
@@ -62,6 +63,45 @@ import { FarmasijualService } from "./farmasijual.service";
   ],
 })
 export class kasirfarmasijualComponent implements OnInit {
+  kajianId: string = "";
+  ketidaktepatan_seleksi_obat_ket: string = "";
+  dosis_kurang_ket: string = "";
+  dosis_lebih_ket: string = "";
+  duplikasi_ket: string = "";
+  obat_tanpa_indikasi_ket: string = "";
+  indikasi_tidak_diobati_ket: string = "";
+  interaksi_obat_ket: string = "";
+  reaksi_obat_merugikan_ket: string = "";
+  gagal_menerima_obat_ket: string = "";
+  // Deklarasi variabel untuk payload simpankajian baru
+  norm: string = "";
+  nama_pasien: string = "Ada";
+  alamat_pasien: string = "Ada";
+  umur: number | string = "";
+  berat_badan: string = "Tidak";
+  jenis_kelamin: string = "Ada";
+  nama_dokter: string = "Ada";
+  nomor_sip: string = "";
+  alamat_dokter: string = "Tidak";
+  paraf_dokter: string = "";
+  tempat_tanggal_resep: string = "Tidak";
+  nama_obat: string = "Ada";
+  bentuk_sediaan: string = "Ada";
+  kekuatan_sediaan: string = "";
+  jumlah_obat: string = "Ada";
+  stabilitas: string = "";
+  aturan_penggunaan: string = "";
+  ketidaktepatan_seleksi_obat: string = "Tidak";
+  dosis_kurang: string = "Tidak";
+  dosis_lebih: string = "Tidak";
+  duplikasi: string = "Tidak";
+  obat_tanpa_indikasi: string = "Tidak";
+  indikasi_tidak_diobati: string = "Tidak";
+  interaksi_obat: string = "Tidak";
+  reaksi_obat_merugikan: string = "Tidak";
+  gagal_menerima_obat: string = "Tidak";
+  analisa: string = "";
+  konseling: string = "";
   toggleMobileSidebar: any;
   faStar = faStar;
   faPlus = faPlus;
@@ -176,6 +216,34 @@ export class kasirfarmasijualComponent implements OnInit {
   URLINVOICE: string;
   private socketx: any;
   private baseUrl = GlobalComponent.urlsocketv;
+  slug: any;
+  nama_pasien_ket: any;
+  umur_pasien: string = "Ada";
+  umur_pasien_ket: string;
+  berat_badan_ket: string = "Konfirmasi Dokter";
+  jenis_kelamin_ket: string;
+  nama_dokter_ket: string;
+  alamat_dokter_ket: string = "Konfirmasi Dokter";
+  nomor_sip_ket: string;
+  tempat_tanggal_resep_ket: string = "Konfirmasi Dokter";
+  paraf_dokter_ket: string;
+  nama_obat_ket: string;
+  bentuk_sediaan_ket: string;
+  kekuatan_sediaan_ket: string;
+  jumlah_obat_ket: string;
+  stabilitas_ket: string;
+  alamat_pasien_ket: string;
+  nomor_ijin: string = "Tidak";
+  nomor_ijin_ket: string = "Konfirmasi Dokter";
+  tanda_tangan_dokter: string = "Ada";
+  tanda_tangan_dokter_ket: string;
+  kekuatan_sediaan_obat: string = "Ada";
+  kekuatan_sediaan_obat_ket: string;
+  stabilitas_dan_inkompabilitas: string = "Tidak";
+  stabilitas_dan_inkompabilitas_ket: string;
+  aturan_dan_cara_penggunaan_obat: string = "Ada";
+  aturan_dan_cara_penggunaan_obat_ket: string;
+
   constructor(
     public hots: SampleService,
     public FarmasijualService: FarmasijualService,
@@ -206,6 +274,12 @@ export class kasirfarmasijualComponent implements OnInit {
     this.socketx = io("https://socketpkm.apbatech.com/");
   }
 
+  // Method untuk tombol Kajian Resep
+  kresep(content: any) {
+    // Contoh: buka modal kajian resep, atau logika lain sesuai kebutuhan
+    this.modalService.open(content, { size: "lg" });
+  }
+
   tambahmodal(a) {
     this.tombolsimpan = true;
     this.tombolhapus = true;
@@ -213,19 +287,11 @@ export class kasirfarmasijualComponent implements OnInit {
     this.showlunas = false;
     this.statuslunas = 0;
 
-    // this.showtransaksi = true;
     this.tombolbatal = false;
-    // this.nofakturbeli='';
-    // this.kdsuplier='';
-    // this.suplier ='';
-    // this.nofakturpajak = '';
-    // this.nolpb = '';
     this.tglpx = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
     this.tglpxx = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
     this.keterangan = "";
-    // this.adm=0
 
-    // this.trxpbeli()
     this.ttsatuan = "";
     this.hna = "";
     this.qty = "";
@@ -667,6 +733,7 @@ export class kasirfarmasijualComponent implements OnInit {
       (data) => {
         for (let x of data) {
           this.ppnobat = x.ppnobat;
+          this.slug = x.slug;
         }
       },
       (Error) => {
@@ -1672,7 +1739,7 @@ export class kasirfarmasijualComponent implements OnInit {
   // penjualan
   notransaksi: any;
   pasien: any;
-  norm: any;
+  // duplikat, sudah ada norm: string di atas
   kdgudang: any;
   dokter: any;
   kddokter: any;
@@ -1698,45 +1765,9 @@ export class kasirfarmasijualComponent implements OnInit {
   stsbayar: any;
   ri: string;
   alamat: any = "";
-  umur: any = "";
+  // duplikat, sudah ada umur: number | string di atas
 
-  pilihpasien(
-    nofaktur,
-    tgl,
-    pasien,
-    kdpoli,
-    nampoli,
-    kdkostumerd,
-    nama,
-    kddokter,
-    namdokter,
-    notransaksi,
-    sts,
-    norm,
-    statuslunas,
-    bayar,
-    ri,
-    age,
-    alamat
-  ) {
-    console.log(
-      nofaktur,
-      tgl,
-      pasien,
-      kdpoli,
-      nampoli,
-      kdkostumerd,
-      nama,
-      kddokter,
-      namdokter,
-      notransaksi,
-      sts,
-      norm,
-      statuslunas,
-      bayar,
-      ri
-    );
-
+  pilihpasien(data: any) {
     this.nettoblm = 0;
     this.admresepblm = 0;
     this.tuslahresepblm = 0;
@@ -1755,24 +1786,27 @@ export class kasirfarmasijualComponent implements OnInit {
     this.disc = "";
     this.discrp = "";
     this.total = 0;
-    this.umur = age;
-    this.alamat = alamat;
-    this.notransaksi = notransaksi;
-    this.pasien = pasien;
-    this.nofaktur = nofaktur;
-    this.norm = norm;
-    this.dokter = namdokter;
-    this.kddokter = kddokter;
-    this.kdkostumer = kdkostumerd;
-    this.kostumer = nama;
-    this.kdpoli = kdpoli;
-    this.poli = nampoli;
-    this.tglpx = tgl;
-    this.sts = sts;
-    this.statuslunas = statuslunas;
-    this.stsbayar = bayar;
-    this.ri = ri;
-    if (sts === "0") {
+    this.umur = data.age;
+    this.alamat = data.alamat;
+    this.notransaksi = data.notransaksi;
+    this.pasien = data.pasien;
+    this.nofaktur = data.nofaktur;
+    this.norm = data.norm;
+    this.dokter = data.namdokter;
+    this.kddokter = data.kddokter;
+    this.kdkostumer = data.kdkostumerd;
+    this.kostumer = data.nama;
+    this.kdpoli = data.kdpoli;
+    this.poli = data.nampoli;
+    this.tglpx = data.tgl;
+    this.sts = data.sts;
+    this.statuslunas = data.statuslunas;
+    this.stsbayar = data.bayar;
+    this.ri = data.ri;
+
+    this.setKajianResep(data);
+
+    if (data.sts === "0") {
       this.stssimpan = "0";
       this.showobt = false;
 
@@ -1874,6 +1908,144 @@ export class kasirfarmasijualComponent implements OnInit {
     //         }
 
     this.modalService.dismissAll();
+  }
+
+  setKajianResep(data: any) {
+    this.nama_pasien_ket = data.pasien;
+    const norm = data.norm;
+    const notransaksi = data.nofaktur;
+
+    this.FarmasijualService.getPersyaratanObat(
+      this.slug,
+      norm,
+      notransaksi
+    ).subscribe((res: any) => {
+      if (res) {
+        this.tomboledit = true;
+        this.kajianId = res.id;
+        this.norm = res.norm;
+        this.notransaksi = res.notransaksi;
+        this.nama_pasien = res.nama_pasien ? "Ada" : "Tidak";
+        this.nama_pasien_ket = res.nama_pasien_ket;
+        this.alamat_pasien = res.alamat_pasien ? "Ada" : "Tidak";
+        this.alamat_pasien_ket = res.alamat_pasien_ket;
+        this.umur_pasien = res.umur_pasien ? "Ada" : "Tidak";
+        this.umur_pasien_ket = res.umur_pasien_ket;
+        this.berat_badan = res.berat_badan ? "Ada" : "Tidak";
+        this.berat_badan_ket = res.berat_badan_ket;
+        this.jenis_kelamin = res.jenis_kelamin ? "Ada" : "Tidak";
+        this.jenis_kelamin_ket = res.jenis_kelamin_ket;
+        this.nama_dokter = res.nama_dokter ? "Ada" : "Tidak";
+        this.nama_dokter_ket = res.nama_dokter_ket;
+        this.nomor_ijin = res.nomor_ijin ? "Ada" : "Tidak";
+        this.nomor_ijin_ket = res.nomor_ijin_ket;
+        this.alamat_dokter = res.alamat_dokter ? "Ada" : "Tidak";
+        this.alamat_dokter_ket = res.alamat_dokter_ket;
+        this.tanda_tangan_dokter = res.tanda_tangan_dokter ? "Ada" : "Tidak";
+        this.tanda_tangan_dokter_ket = res.tanda_tangan_dokter_ket;
+        this.tempat_tanggal_resep = res.tempat_tanggal_resep ? "Ada" : "Tidak";
+        this.tempat_tanggal_resep_ket = res.tempat_tanggal_resep_ket;
+        this.nama_obat = res.nama_obat ? "Ada" : "Tidak";
+        this.nama_obat_ket = res.nama_obat_ket;
+        this.bentuk_sediaan = res.bentuk_sediaan ? "Ada" : "Tidak";
+        this.bentuk_sediaan_ket = res.bentuk_sediaan_ket;
+        this.kekuatan_sediaan_obat = res.kekuatan_sediaan_obat
+          ? "Ada"
+          : "Tidak";
+        this.kekuatan_sediaan_obat_ket = res.kekuatan_sediaan_obat_ket;
+        this.jumlah_obat = res.jumlah_obat ? "Ada" : "Tidak";
+        this.jumlah_obat_ket = res.jumlah_obat_ket;
+        this.stabilitas_dan_inkompabilitas = res.stabilitas_dan_inkompabilitas
+          ? "Ada"
+          : "Tidak";
+        this.stabilitas_dan_inkompabilitas_ket =
+          res.stabilitas_dan_inkompabilitas_ket;
+        this.aturan_dan_cara_penggunaan_obat =
+          res.aturan_dan_cara_penggunaan_obat ? "Ada" : "Tidak";
+        this.aturan_dan_cara_penggunaan_obat_ket =
+          res.aturan_dan_cara_penggunaan_obat_ket;
+        this.ketidaktepatan_seleksi_obat = res.ketidaktepatan_seleksi_obat
+          ? "Ada"
+          : "Tidak";
+        this.ketidaktepatan_seleksi_obat_ket =
+          res.ketidaktepatan_seleksi_obat_ket;
+        this.dosis_kurang = res.dosis_kurang ? "Ada" : "Tidak";
+        this.dosis_kurang_ket = res.dosis_kurang_ket;
+        this.dosis_lebih = res.dosis_lebih ? "Ada" : "Tidak";
+        this.dosis_lebih_ket = res.dosis_lebih_ket;
+        this.duplikasi = res.duplikasi ? "Ada" : "Tidak";
+        this.duplikasi_ket = res.duplikasi_ket;
+        this.obat_tanpa_indikasi = res.obat_tanpa_indikasi ? "Ada" : "Tidak";
+        this.obat_tanpa_indikasi_ket = res.obat_tanpa_indikasi_ket;
+        this.indikasi_tidak_diobati = res.indikasi_tidak_diobati
+          ? "Ada"
+          : "Tidak";
+        this.indikasi_tidak_diobati_ket = res.indikasi_tidak_diobati_ket;
+        this.interaksi_obat = res.interaksi_obat ? "Ada" : "Tidak";
+        this.interaksi_obat_ket = res.interaksi_obat_ket;
+        this.reaksi_obat_merugikan = res.reaksi_obat_merugikan
+          ? "Ada"
+          : "Tidak";
+        this.reaksi_obat_merugikan_ket = res.reaksi_obat_merugikan_ket;
+        this.gagal_menerima_obat = res.gagal_menerima_obat ? "Ada" : "Tidak";
+        this.gagal_menerima_obat_ket = res.gagal_menerima_obat_ket;
+        this.analisa = res.analisa;
+        this.konseling = res.konseling;
+      } else {
+        this.nama_pasien = "Ada";
+        this.nama_pasien_ket = "";
+        this.alamat_pasien = "Ada";
+        this.alamat_pasien_ket = "";
+        this.umur_pasien = "Ada";
+        this.umur_pasien_ket = "";
+        this.berat_badan = "Tidak";
+        this.berat_badan_ket = "Konfirmasi Dokter";
+        this.jenis_kelamin = "Ada";
+        this.jenis_kelamin_ket = "";
+        this.nama_dokter = "Ada";
+        this.nama_dokter_ket = "";
+        this.nomor_ijin = "Tidak";
+        this.nomor_ijin_ket = "Konfirmasi Dokter";
+        this.alamat_dokter = "Tidak";
+        this.alamat_dokter_ket = "Konfirmasi Dokter";
+        this.tanda_tangan_dokter = "Ada";
+        this.tanda_tangan_dokter_ket = "";
+        this.tempat_tanggal_resep = "Tidak";
+        this.tempat_tanggal_resep_ket = "Konfirmasi Dokter";
+        this.nama_obat = "Ada";
+        this.nama_obat_ket = "";
+        this.bentuk_sediaan = "Ada";
+        this.bentuk_sediaan_ket = "";
+        this.kekuatan_sediaan_obat = "Ada";
+        this.kekuatan_sediaan_obat_ket = "";
+        this.jumlah_obat = "Ada";
+        this.jumlah_obat_ket = "";
+        this.stabilitas_dan_inkompabilitas = "Tidak";
+        this.stabilitas_dan_inkompabilitas_ket = "";
+        this.aturan_dan_cara_penggunaan_obat = "Ada";
+        this.aturan_dan_cara_penggunaan_obat_ket = "";
+        this.ketidaktepatan_seleksi_obat = "Tidak";
+        this.ketidaktepatan_seleksi_obat_ket = "";
+        this.dosis_kurang = "Tidak";
+        this.dosis_kurang_ket = "";
+        this.dosis_lebih = "Tidak";
+        this.dosis_lebih_ket = "";
+        this.duplikasi = "Tidak";
+        this.duplikasi_ket = "";
+        this.obat_tanpa_indikasi = "Tidak";
+        this.obat_tanpa_indikasi_ket = "";
+        this.indikasi_tidak_diobati = "Tidak";
+        this.indikasi_tidak_diobati_ket = "";
+        this.interaksi_obat = "Tidak";
+        this.interaksi_obat_ket = "";
+        this.reaksi_obat_merugikan = "Tidak";
+        this.reaksi_obat_merugikan_ket = "";
+        this.gagal_menerima_obat = "Tidak";
+        this.gagal_menerima_obat_ket = "";
+        this.analisa = "";
+        this.konseling = "";
+      }
+    });
   }
 
   lunas: string;
@@ -3372,182 +3544,186 @@ export class kasirfarmasijualComponent implements OnInit {
   analis: string = "-";
 
   simpankajian() {
-    let body = {
-      notrans: this.notransaksi,
-      noresep: this.noresep,
-      z1a: this.z1a,
-      z2a: this.z2a,
-      z3a: this.z3a,
-      z4a: this.z4a,
-      z5a: this.z5a,
-      z6a: this.z6a,
-      z7a: this.z7a,
-      z8a: this.z8a,
-      z9a: this.z9a,
-      z10a: this.z10a,
-      ket1a: this.ket1a,
-      ket2a: this.ket2a,
-      ket3a: this.ket3a,
-      ket4a: this.ket4a,
-      ket5a: this.ket5a,
-      ket6a: this.ket6a,
-      ket7a: this.ket7a,
-      ket8a: this.ket8a,
-      ket9a: this.ket9a,
-      ket10a: this.ket10a,
-      stssimpan: "1",
+    let payload = {
+      norm: this.norm || "",
+      notransaksi: this.nofaktur || "",
+      nama_pasien: this.nama_pasien === "Ada",
+      nama_pasien_ket: this.nama_pasien_ket || "",
+      alamat_pasien: this.alamat_pasien === "Ada",
+      alamat_pasien_ket: this.alamat_pasien_ket || "",
+      umur_pasien: this.umur_pasien === "Ada",
+      umur_pasien_ket: this.umur_pasien_ket || "",
+      berat_badan: this.berat_badan === "Ada",
+      berat_badan_ket: this.berat_badan_ket || "",
+      jenis_kelamin: this.jenis_kelamin === "Ada",
+      jenis_kelamin_ket: this.jenis_kelamin_ket || "",
+      nama_dokter: this.nama_dokter === "Ada",
+      nama_dokter_ket: this.nama_dokter_ket || "",
+      nomor_ijin: this.nomor_ijin === "Ada",
+      nomor_ijin_ket: this.nomor_ijin_ket || "",
+      alamat_dokter: this.alamat_dokter === "Ada",
+      alamat_dokter_ket: this.alamat_dokter_ket || "",
+      tanda_tangan_dokter: this.tanda_tangan_dokter === "Ada",
+      tanda_tangan_dokter_ket: this.tanda_tangan_dokter_ket || "",
+      tempat_tanggal_resep: this.tempat_tanggal_resep === "Ada",
+      tempat_tanggal_resep_ket: this.tempat_tanggal_resep_ket || "",
+      nama_obat: this.nama_obat === "Ada",
+      nama_obat_ket: this.nama_obat_ket || "",
+      bentuk_sediaan: this.bentuk_sediaan === "Ada",
+      bentuk_sediaan_ket: this.bentuk_sediaan_ket || "",
+      kekuatan_sediaan_obat: this.kekuatan_sediaan_obat === "Ada",
+      kekuatan_sediaan_obat_ket: this.kekuatan_sediaan_obat_ket || "",
+      jumlah_obat: this.jumlah_obat === "Ada",
+      jumlah_obat_ket: this.jumlah_obat_ket || "",
+      stabilitas_dan_inkompabilitas:
+        this.stabilitas_dan_inkompabilitas === "Ada",
+      stabilitas_dan_inkompabilitas_ket:
+        this.stabilitas_dan_inkompabilitas_ket || "",
+      aturan_dan_cara_penggunaan_obat:
+        this.aturan_dan_cara_penggunaan_obat === "Ada",
+      aturan_dan_cara_penggunaan_obat_ket:
+        this.aturan_dan_cara_penggunaan_obat_ket || "",
+      ketidaktepatan_seleksi_obat: this.ketidaktepatan_seleksi_obat === "Ada",
+      ketidaktepatan_seleksi_obat_ket:
+        this.ketidaktepatan_seleksi_obat_ket || "",
+      dosis_kurang: this.dosis_kurang === "Ada",
+      dosis_kurang_ket: this.dosis_kurang_ket || "",
+      dosis_lebih: this.dosis_lebih === "Ada",
+      dosis_lebih_ket: this.dosis_lebih_ket || "",
+      duplikasi: this.duplikasi === "Ada",
+      duplikasi_ket: this.duplikasi_ket || "",
+      obat_tanpa_indikasi: this.obat_tanpa_indikasi === "Ada",
+      obat_tanpa_indikasi_ket: this.obat_tanpa_indikasi_ket || "",
+      indikasi_tidak_diobati: this.indikasi_tidak_diobati === "Ada",
+      indikasi_tidak_diobati_ket: this.indikasi_tidak_diobati_ket || "",
+      interaksi_obat: this.interaksi_obat === "Ada",
+      interaksi_obat_ket: this.interaksi_obat_ket || "",
+      reaksi_obat_merugikan: this.reaksi_obat_merugikan === "Ada",
+      reaksi_obat_merugikan_ket: this.reaksi_obat_merugikan_ket || "",
+      gagal_menerima_obat: this.gagal_menerima_obat === "Ada",
+      gagal_menerima_obat_ket: this.gagal_menerima_obat_ket || "",
+      analisa: this.analisa || "",
+      konseling: this.konseling || "",
     };
 
-    this.authService.kajianrsesepa(body).subscribe((response) => {
-      if (response) {
-        this.toastr.success("" + response, "Sukses", {
-          timeOut: 2000,
-        });
-      } else {
-        this.toastr.error("Simpan  Gagal", "error");
-      }
-    });
-
-    let bodyx = {
-      notrans: this.notransaksi,
-      noresep: this.noresep,
-      z1b: this.z1b,
-      z2b: this.z2b,
-      z3b: this.z3b,
-      z4b: this.z4b,
-      z5b: this.z5b,
-      z6b: this.z6b,
-
-      ket1b: this.ket1b,
-      ket2b: this.ket2b,
-      ket3b: this.ket3b,
-      ket4b: this.ket4b,
-      ket5b: this.ket5b,
-      ket6b: this.ket6b,
-      stssimpan: "2",
-    };
-
-    this.authService.kajianrsesepa(bodyx).subscribe((response) => {
-      if (response) {
-        this.toastr.success("" + response, "Sukses", {
-          timeOut: 2000,
-        });
-      } else {
-        this.toastr.error("Simpan  Gagal", "error");
-      }
-    });
-
-    let bodyxx = {
-      notrans: this.notransaksi,
-      noresep: this.noresep,
-      z1c: this.z1c,
-      z2c: this.z2c,
-      z3c: this.z3c,
-      z4c: this.z4c,
-      z5c: this.z5c,
-      z6c: this.z6c,
-      z7c: this.z4c,
-      z8c: this.z5c,
-      z9c: this.z6c,
-
-      ket1c: this.ket1c,
-      ket2c: this.ket2c,
-      ket3c: this.ket3c,
-      ket4c: this.ket4c,
-      ket5c: this.ket5c,
-      ket6c: this.ket6c,
-      ket7c: this.ket7c,
-      ket8c: this.ket8c,
-      ket9c: this.ket9c,
-      analis: this.analis,
-
-      stssimpan: "3",
-    };
-
-    this.authService.kajianrsesepa(bodyxx).subscribe((response) => {
-      if (response) {
-        this.toastr.success("" + response, "Sukses", {
-          timeOut: 2000,
-        });
-      } else {
-        this.toastr.error("Simpan  Gagal", "error");
-      }
-    });
-  }
-
-  kresep(content) {
-    this.tmpkajianresep();
-
-    setTimeout(() => {
-      this.modalService.open(content, {
-        size: "lg",
-      });
-    }, 250);
-  }
-  tmpkajianresep() {
-    this.authService.tampilkajianresep(this.noresep).subscribe(
-      (data) => {
-        if (data.length) {
-          for (let x of data) {
-            this.z1a = x.a1a;
-            this.z2a = x.a2a;
-            this.z3a = x.a3a;
-            this.z4a = x.a4a;
-            this.z5a = x.a5a;
-            this.z6a = x.a6a;
-            this.z7a = x.a7a;
-            this.z8a = x.a8a;
-            this.z9a = x.a9a;
-            this.z10a = x.a10a;
-            this.ket1a = x.ket1a;
-            this.ket2a = x.ket2a;
-            this.ket3a = x.ket3a;
-            this.ket4a = x.ket4a;
-            this.ket5a = x.ket5a;
-            this.ket6a = x.ket6a;
-            this.ket7a = x.ket7a;
-            this.ket8a = x.ket8a;
-            this.ket9a = x.ket9a;
-            this.ket10a = x.ket10a;
-            this.z1b = x.z1b;
-            this.z2b = x.z2b;
-            this.z3b = x.z3b;
-            this.z4b = x.z4b;
-            this.z5b = x.z5b;
-            this.z6b = x.z6b;
-            this.ket1b = x.ket1b;
-            this.ket2b = x.ket2b;
-            this.ket3b = x.ket3b;
-            this.ket4b = x.ket4b;
-            this.ket5b = x.ket5b;
-            this.ket6b = x.ket6b;
-            this.z1c = x.z1c;
-            this.z2c = x.z2c;
-            this.z3c = x.z3c;
-            this.z4c = x.z4c;
-            this.z5c = x.z5c;
-            this.z6c = x.z6c;
-
-            this.z7c = x.z7c;
-            this.z8c = x.z8c;
-            this.z9c = x.z69c;
-
-            this.ket1c = x.ket1c;
-            this.ket2c = x.ket2c;
-            this.ket3c = x.ket3c;
-            this.ket4c = x.ket4c;
-            this.ket5c = x.ket5c;
-            this.ket6c = x.ket6c;
-
-            this.ket7c = x.ket7c;
-            this.ket8c = x.ket8c;
-            this.ket9c = x.ket9c;
-            this.analis = x.analis;
-          }
+    this.FarmasijualService.simpanPersyaratanObat(this.slug, payload).subscribe(
+      (res) => {
+        if (res && res.error) {
+          this.toastr.error(res.error, "Gagal");
+          return;
         }
+        this.toastr.success("Data kajian resep berhasil disimpan", "Sukses");
+        if (res && res.id) {
+          this.kajianId = res.id;
+        }
+        this.tomboledit = true;
       },
-      (Error) => {
-        console.log(Error);
+      (error) => {
+        if (error && error.error && error.error.errors) {
+          const errors = error.error.errors;
+          Object.keys(errors).forEach((key) => {
+            const messages = errors[key];
+            if (Array.isArray(messages)) {
+              messages.forEach((msg) =>
+                this.toastr.error(msg, "Validasi Gagal")
+              );
+            } else {
+              this.toastr.error(messages, "Validasi Gagal");
+            }
+          });
+        } else {
+          this.toastr.error("Terjadi kesalahan saat menyimpan data", "Error");
+          console.log(error);
+        }
+      }
+    );
+  }
+
+  updatekajian() {
+    let payload = {
+      id: this.kajianId || "",
+      norm: this.norm || "",
+      notransaksi: this.nofaktur || "",
+      nama_pasien: this.nama_pasien === "Ada",
+      nama_pasien_ket: this.nama_pasien_ket || "",
+      alamat_pasien: this.alamat_pasien === "Ada",
+      alamat_pasien_ket: this.alamat_pasien_ket || "",
+      umur_pasien: this.umur_pasien === "Ada",
+      umur_pasien_ket: this.umur_pasien_ket || "",
+      berat_badan: this.berat_badan === "Ada",
+      berat_badan_ket: this.berat_badan_ket || "",
+      jenis_kelamin: this.jenis_kelamin === "Ada",
+      jenis_kelamin_ket: this.jenis_kelamin_ket || "",
+      nama_dokter: this.nama_dokter === "Ada",
+      nama_dokter_ket: this.nama_dokter_ket || "",
+      nomor_ijin: this.nomor_ijin === "Ada",
+      nomor_ijin_ket: this.nomor_ijin_ket || "",
+      alamat_dokter: this.alamat_dokter === "Ada",
+      alamat_dokter_ket: this.alamat_dokter_ket || "",
+      tanda_tangan_dokter: this.tanda_tangan_dokter === "Ada",
+      tanda_tangan_dokter_ket: this.tanda_tangan_dokter_ket || "",
+      tempat_tanggal_resep: this.tempat_tanggal_resep === "Ada",
+      tempat_tanggal_resep_ket: this.tempat_tanggal_resep_ket || "",
+      nama_obat: this.nama_obat === "Ada",
+      nama_obat_ket: this.nama_obat_ket || "",
+      bentuk_sediaan: this.bentuk_sediaan === "Ada",
+      bentuk_sediaan_ket: this.bentuk_sediaan_ket || "",
+      kekuatan_sediaan_obat: this.kekuatan_sediaan_obat === "Ada",
+      kekuatan_sediaan_obat_ket: this.kekuatan_sediaan_obat_ket || "",
+      jumlah_obat: this.jumlah_obat === "Ada",
+      jumlah_obat_ket: this.jumlah_obat_ket || "",
+      stabilitas_dan_inkompabilitas:
+        this.stabilitas_dan_inkompabilitas === "Ada",
+      stabilitas_dan_inkompabilitas_ket:
+        this.stabilitas_dan_inkompabilitas_ket || "",
+      aturan_dan_cara_penggunaan_obat:
+        this.aturan_dan_cara_penggunaan_obat === "Ada",
+      aturan_dan_cara_penggunaan_obat_ket:
+        this.aturan_dan_cara_penggunaan_obat_ket || "",
+      ketidaktepatan_seleksi_obat: this.ketidaktepatan_seleksi_obat === "Ada",
+      ketidaktepatan_seleksi_obat_ket:
+        this.ketidaktepatan_seleksi_obat_ket || "",
+      dosis_kurang: this.dosis_kurang === "Ada",
+      dosis_kurang_ket: this.dosis_kurang_ket || "",
+      dosis_lebih: this.dosis_lebih === "Ada",
+      dosis_lebih_ket: this.dosis_lebih_ket || "",
+      duplikasi: this.duplikasi === "Ada",
+      duplikasi_ket: this.duplikasi_ket || "",
+      obat_tanpa_indikasi: this.obat_tanpa_indikasi === "Ada",
+      obat_tanpa_indikasi_ket: this.obat_tanpa_indikasi_ket || "",
+      indikasi_tidak_diobati: this.indikasi_tidak_diobati === "Ada",
+      indikasi_tidak_diobati_ket: this.indikasi_tidak_diobati_ket || "",
+      interaksi_obat: this.interaksi_obat === "Ada",
+      interaksi_obat_ket: this.interaksi_obat_ket || "",
+      reaksi_obat_merugikan: this.reaksi_obat_merugikan === "Ada",
+      reaksi_obat_merugikan_ket: this.reaksi_obat_merugikan_ket || "",
+      gagal_menerima_obat: this.gagal_menerima_obat === "Ada",
+      gagal_menerima_obat_ket: this.gagal_menerima_obat_ket || "",
+      analisa: this.analisa || "",
+      konseling: this.konseling || "",
+    };
+
+    this.FarmasijualService.updatePersyaratanObat(this.slug, payload).subscribe(
+      (res) => {
+        this.toastr.success("Data kajian resep berhasil diedit", "Sukses");
+      },
+      (error) => {
+        if (error && error.error && error.error.errors) {
+          const errors = error.error.errors;
+          Object.keys(errors).forEach((key) => {
+            const messages = errors[key];
+            if (Array.isArray(messages)) {
+              messages.forEach((msg) =>
+                this.toastr.error(msg, "Validasi Gagal")
+              );
+            } else {
+              this.toastr.error(messages, "Validasi Gagal");
+            }
+          });
+        } else {
+          this.toastr.error("Terjadi kesalahan saat mengedit data", "Error");
+          console.log(error);
+        }
       }
     );
   }
