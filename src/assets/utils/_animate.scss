@@ -191,8 +191,52 @@ $use-lightSpeedOut: true;
 //@import "../../../../node_modules/animate-sass/animations/flippers/flipOutY";
 
 // LIGHTSPEED
-@import "../../../node_modules/animate-sass/animations/lightspeed/lightSpeedIn";
-@import "../../../node_modules/animate-sass/animations/lightspeed/lightSpeedOut";
+// @import "../../../node_modules/animate-sass/animations/lightspeed/lightSpeedIn";
+// @import "../../../node_modules/animate-sass/animations/lightspeed/lightSpeedOut";
+
+// Manual lightspeed animations to avoid SASS division deprecation warnings
+@keyframes lightSpeedIn {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0) skewX(-30deg);
+  }
+  
+  60% {
+    opacity: 1;
+    transform: skewX(20deg);
+  }
+  
+  80% {
+    opacity: 1;
+    transform: skewX(-5deg);
+  }
+  
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.lightSpeedIn {
+  animation-timing-function: ease-out;
+  animation-name: lightSpeedIn;
+}
+
+@keyframes lightSpeedOut {
+  from {
+    opacity: 1;
+  }
+  
+  to {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0) skewX(30deg);
+  }
+}
+
+.lightSpeedOut {
+  animation-timing-function: ease-in;
+  animation-name: lightSpeedOut;
+}
 
 // ROTATE
 //@import "../../../../node_modules/animate-sass/animations/rotate-enter/rotateIn";
