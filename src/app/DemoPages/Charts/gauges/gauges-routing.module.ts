@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { GaugesComponent } from './gauges.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { GaugesComponent } from "./gauges.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: GaugesComponent,
     data: {
-      title: 'Gauges'
-    }
-  }
+      title: "Gauges",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class GaugesRoutingModule { }
+export class GaugesRoutingModule {}

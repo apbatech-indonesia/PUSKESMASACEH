@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: TimelineComponent,
     data: {
-      title: 'Timeline'
-    }
-  }
+      title: 'Timeline',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class TimelineRoutingModule { }
+
+
+
+

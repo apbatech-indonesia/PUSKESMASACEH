@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
@@ -26,11 +26,12 @@ const routes: Routes = [
         loadChildren: () => import('./sticky-headers/sticky-headers.module').then(m => m.StickyHeadersModule)
       }
     ]
-  }
-];
+  }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class FormElementRoutingModule { }
+
+

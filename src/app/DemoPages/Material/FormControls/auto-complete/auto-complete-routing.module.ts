@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AutoCompleteComponent } from './auto-complete.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { AutoCompleteComponent } from "./auto-complete.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: AutoCompleteComponent,
     data: {
-      title: 'AutoComplete'
-    }
-  }
+      title: "AutoComplete",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AutoCompleteRoutingModule { }
+export class AutoCompleteRoutingModule {}

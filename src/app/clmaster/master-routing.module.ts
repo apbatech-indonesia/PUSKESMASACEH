@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { tulisermComponent } from './tuliserm/tuliserm.component';
 import { tulisermriComponent } from './tulisermri/tulisermri.component';
@@ -394,12 +394,12 @@ loadChildren:() => import ('./adjustobat/adjustobat.module').then(m => m.adjusto
         loadChildren:() => import('./skrininglaporan/skrininglaporan.module').then(m => m.skrininglaporanModule )
       }
   ]
-}
-
-];
+}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class MasterRoutingModule { }
+
+

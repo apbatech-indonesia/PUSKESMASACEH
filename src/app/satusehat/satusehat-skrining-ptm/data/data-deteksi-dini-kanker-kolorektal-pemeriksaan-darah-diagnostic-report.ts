@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core"
+﻿import { Injectable } from "@angular/core"
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class DataDeteksiDiniKankerKolorektalPemeriksaanDarahDiagnosticReport {
               result: {
                 reference: "Observation/{{Observation_USGMammae}}"
               }
-            }
+          }
           ],
           effectiveDateTime: this.dateNow,
           specimen: [
@@ -58,3 +58,9 @@ export class DataDeteksiDiniKankerKolorektalPemeriksaanDarahDiagnosticReport {
     }
   }
 }
+
+
+
+
+
+

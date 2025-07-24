@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { RadioComponent } from './radio.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { RadioComponent } from "./radio.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: RadioComponent,
     data: {
-      title: 'Radio'
-    }
-  }
+      title: "Radio",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class RadioRoutingModule { }
+export class RadioRoutingModule {}

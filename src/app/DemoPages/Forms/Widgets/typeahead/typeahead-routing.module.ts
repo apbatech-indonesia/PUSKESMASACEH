@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TypeaheadComponent } from './typeahead.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { TypeaheadComponent } from "./typeahead.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: TypeaheadComponent,
     data: {
-      title: 'Typeahead'
-    }
-  }
+      title: "Typeahead",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TypeaheadRoutingModule { }
+export class TypeaheadRoutingModule {}

@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: ScatterChartComponent,
     data: {
-      title: 'Scatter-Chart'
-    }
-  }
+      title: 'Scatter-Chart',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class ScatterChartRoutingModule { }
+
+
+
+

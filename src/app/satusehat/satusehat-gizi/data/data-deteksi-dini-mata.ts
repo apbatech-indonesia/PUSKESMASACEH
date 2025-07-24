@@ -48,9 +48,7 @@ export class DataDeteksiDiniMata {
                     system: "http://unitsofmeasure.org",
                     code: "m"
                   }
-                }
-              }
-            ]
+                }]
           }
         },
         {
@@ -86,13 +84,10 @@ export class DataDeteksiDiniMata {
                     system: "http://unitsofmeasure.org",
                     code: "m"
                   }
-                }
-              }
-            ]
-          }
-        }
-      ]
+                }]
+          }]
     }
 
   }
 }
+

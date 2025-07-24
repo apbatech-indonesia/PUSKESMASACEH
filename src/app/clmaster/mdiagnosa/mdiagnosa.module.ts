@@ -20,16 +20,7 @@ import {  MdiagnosaComponent } from './mdiagnosa.component';
 import { MdiagnosaRoutingModule } from './mdiagnosa.routing.module';
 
 
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
-};
-
 
 @NgModule({
   imports: [
@@ -51,20 +42,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatChipsModule,
     MatIconModule,
     PageTitleModule,
-     NgbModule, PerfectScrollbarModule, FormsModule, ReactiveFormsModule
+     NgbModule, FormsModule, ReactiveFormsModule
     
 
   ],
-  declarations: [MdiagnosaComponent],
-  providers: [
-    {
-      provide:
-        PERFECT_SCROLLBAR_CONFIG,
-      // DROPZONE_CONFIG,
-      useValue:
-        DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-      // DEFAULT_DROPZONE_CONFIG,
-    }
-  ],
+  declarations: [MdiagnosaComponent]
 })
 export class MdiagnosaModule { }
+
+

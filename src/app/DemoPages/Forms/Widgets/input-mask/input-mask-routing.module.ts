@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: InputMaskComponent,
     data: {
-      title: 'InputMask'
-    }
-  }
+      title: 'InputMask',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class InputMaskRoutingModule { }
+
+
+
+

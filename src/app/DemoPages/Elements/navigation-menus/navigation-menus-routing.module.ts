@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: NavigationMenusComponent,
     data: {
-      title: 'NavigationMenus'
-    }
-  }
+      title: 'NavigationMenus',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class NavigationMenusRoutingModule { }
+
+
+
+

@@ -7,13 +7,17 @@ const routes: Routes = [
     path: '',
     component: perminobatriComponent,
     data: {
-      title: 'perminobatri'
-    }
-  }
+      title: 'perminobatri',
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class  perminobatriRoutingModule { }
+export class perminobatriRoutingModule { }
+
+
+
+

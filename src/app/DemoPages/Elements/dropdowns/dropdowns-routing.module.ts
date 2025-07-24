@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { DropdownsComponent } from './dropdowns.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { DropdownsComponent } from "./dropdowns.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: DropdownsComponent,
     data: {
-      title: 'Dropdowns'
-    }
-  }
+      title: "Dropdowns",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class DropdownsRoutingModule { }
+export class DropdownsRoutingModule {}

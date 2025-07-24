@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ButtonToggleComponent } from './button-toggle.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ButtonToggleComponent } from "./button-toggle.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: ButtonToggleComponent,
     data: {
-      title: 'ButtonToggle'
-    }
-  }
+      title: "ButtonToggle",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ButtonToggleRoutingModule { }
+export class ButtonToggleRoutingModule {}

@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: skriningComponent,
     data: {
-      title: 'skrining'
-    }
-  }
+      title: 'skrining',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class skriningRoutingModule { }
+
+
+
+

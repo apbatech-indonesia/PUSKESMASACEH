@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core"
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class DataDeteksiDiniHipertensi {
-  // questioner 
-  sistole: any
-  diastole: any
+  // questioner
+  sistole: any;
+  diastole: any;
 
   getdata() {
     return {
@@ -14,82 +14,85 @@ export class DataDeteksiDiniHipertensi {
         {
           name: "sistolik_observation",
           category: {
-            system: "http://terminology.hl7.org/CodeSystem/observation-category",
+            system:
+              "http://terminology.hl7.org/CodeSystem/observation-category",
             code: "vital-signs",
-            display: "Vital Signs"
+            display: "Vital Signs",
           },
           data: [
             {
               code: {
                 system: "http://loinc.org",
                 code: "8480-6",
-                display: "Systolic blood pressure"
+                display: "Systolic blood pressure",
               },
               result: {
                 value: this.sistole,
                 unit: "mmHg",
                 system: "http://unitsofmeasure.org",
-                code: "mm[Hg]"
-              }
-            }
-          ]
+                code: "mm[Hg]",
+              },
+            },
+          ],
         },
         {
           name: "diastolik_observation",
           category: {
-            system: "http://terminology.hl7.org/CodeSystem/observation-category",
+            system:
+              "http://terminology.hl7.org/CodeSystem/observation-category",
             code: "vital-signs",
-            display: "Vital Signs"
+            display: "Vital Signs",
           },
           data: [
             {
               code: {
                 system: "http://loinc.org",
                 code: "8462-4",
-                display: "Diastolic blood pressure"
+                display: "Diastolic blood pressure",
               },
               result: {
                 value: this.diastole,
                 unit: "mmHg",
                 system: "http://unitsofmeasure.org",
-                code: "mm[Hg]"
-              }
-            }
-          ]
+                code: "mm[Hg]",
+              },
+            },
+          ],
         },
         {
           name: "hipertensi_observation",
           category: {
-            system: "http://terminology.hl7.org/CodeSystem/observation-category",
+            system:
+              "http://terminology.hl7.org/CodeSystem/observation-category",
             code: "vital-signs",
-            display: "Vital Signs"
+            display: "Vital Signs",
           },
           data: [
             {
               code: {
                 system: "http://snomed.info/sct",
                 code: "268607006",
-                display: "Hypertension risk level"
+                display: "Hypertension risk level",
               },
               result: {
                 value: "IMT_calc",
                 unit: "kg/m^2",
                 system: "http://unitsofmeasure.org",
-                code: "kg/m2"
+                code: "kg/m2",
               },
               valueRatio: {
                 numerator: {
                   value: "TD_Systolic",
                   unit: "mmHg",
                   system: "http://unitsofmeasure.org",
-                  code: "mm[Hg]"
+                  code: "mm[Hg]",
                 },
                 denominator: {
                   value: "TD_Diastolic",
                   unit: "mmHg",
                   system: "http://unitsofmeasure.org",
-                  code: "mm[Hg]"
-                }
+                  code: "mm[Hg]",
+                },
               },
               interpretation: [
                 {
@@ -97,10 +100,10 @@ export class DataDeteksiDiniHipertensi {
                     {
                       system: "http://snomed.info/sct",
                       code: "248342006",
-                      display: "Underweight"
-                    }
-                  ]
-                }
+                      display: "Underweight",
+                    },
+                  ],
+                },
               ],
               referenceRange: [
                 {
@@ -108,79 +111,79 @@ export class DataDeteksiDiniHipertensi {
                     value: 16.9,
                     unit: "kg/m^2",
                     system: "http://unitsofmeasure.org",
-                    code: "kg/m2"
+                    code: "kg/m2",
                   },
-                  text: "Sangat Kurus"
+                  text: "Sangat Kurus",
                 },
                 {
                   low: {
                     value: 17,
                     unit: "kg/m^2",
                     system: "http://unitsofmeasure.org",
-                    code: "kg/m2"
+                    code: "kg/m2",
                   },
                   high: {
                     value: 18.4,
                     unit: "kg/m^2",
                     system: "http://unitsofmeasure.org",
-                    code: "kg/m2"
+                    code: "kg/m2",
                   },
-                  text: "Kurus"
+                  text: "Kurus",
                 },
                 {
                   low: {
                     value: 18.5,
                     unit: "kg/m^2",
                     system: "http://unitsofmeasure.org",
-                    code: "kg/m2"
+                    code: "kg/m2",
                   },
                   high: {
                     value: 25,
                     unit: "kg/m^2",
                     system: "http://unitsofmeasure.org",
-                    code: "kg/m2"
+                    code: "kg/m2",
                   },
-                  text: "Normal"
+                  text: "Normal",
                 },
                 {
                   low: {
                     value: 25.1,
                     unit: "kg/m^2",
                     system: "http://unitsofmeasure.org",
-                    code: "kg/m2"
+                    code: "kg/m2",
                   },
                   high: {
                     value: 27,
                     unit: "kg/m^2",
                     system: "http://unitsofmeasure.org",
-                    code: "kg/m2"
+                    code: "kg/m2",
                   },
-                  text: "Gemuk (Overweight)"
+                  text: "Gemuk (Overweight)",
                 },
                 {
                   low: {
                     value: 27.1,
                     unit: "kg/m^2",
                     system: "http://unitsofmeasure.org",
-                    code: "kg/m2"
+                    code: "kg/m2",
                   },
-                  text: "Obese"
-                }
+                  text: "Obese",
+                },
               ],
               derivedFrom: [
                 {
                   reference: "Observation/{{Observation_TB}}",
-                  display: "Body Height"
+                  display: "Body Height",
                 },
                 {
                   reference: "Observation/{{Observation_BB}}",
-                  display: "Body Weight"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
+                  display: "Body Weight",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    };
   }
 }

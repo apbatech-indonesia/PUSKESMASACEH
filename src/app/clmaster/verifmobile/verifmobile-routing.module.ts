@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {   verifmobileComponent } from './verifmobile.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { verifmobileComponent } from "./verifmobile.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: verifmobileComponent,
     data: {
-      title: 'verifmobile'
-    }
-  }
+      title: "verifmobile",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class  verifmobileRoutingModule { }
+export class verifmobileRoutingModule {}

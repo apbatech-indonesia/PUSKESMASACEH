@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { McustumerComponent } from './mcustumer.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { McustumerComponent } from "./mcustumer.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: McustumerComponent,
     data: {
-      title: 'mcustomer'
-    }
-  }
+      title: "mcustomer",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class  McustumerRoutingModule { }
+export class McustumerRoutingModule {}

@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-carousel',
-  templateUrl: './carousel.component.html',
-})
+  templateUrl: './carousel.component.html'})
 export class CarouselComponent {
 
   heading = 'Carousels & Slideshows';
@@ -20,13 +19,10 @@ export class CarouselComponent {
     { img: '5' },
     { img: '6' },
     { img: '7' },
-    { img: '8' },
-
-  ];
+    { img: '8' }];
   slideConfig = {
     slidesToShow: 1,
-    dots: true,
-  };
+    dots: true};
 
   slideConfig2 = {
     className: 'center',
@@ -35,8 +31,7 @@ export class CarouselComponent {
     centerPadding: '60px',
     slidesToShow: 3,
     speed: 500,
-    dots: true,
-  };
+    dots: true};
 
   slideConfig3 = {
     dots: true,
@@ -68,15 +63,12 @@ export class CarouselComponent {
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1
-        }
-      }
-    ]
+        }]
   };
 
   slideConfig4 = {
     slidesToShow: 3,
-    dots: true,
-  };
+    dots: true};
 
   slideConfig5 = {
     className: 'slider variable-width',
@@ -94,7 +86,7 @@ export class CarouselComponent {
     slidesToShow: 1,
     speed: 500,
     adaptiveHeight: true,
-    dots: true,
-  };
+    dots: true};
 
 }
+

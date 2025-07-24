@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: RangeSliderComponent,
     data: {
-      title: 'RangeSlider'
-    }
-  }
+      title: 'RangeSlider',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class RangeSliderRoutingModule { }
+
+
+
+

@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {  ermdisplayComponent } from './ermdisplay.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ermdisplayComponent } from "./ermdisplay.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: ermdisplayComponent,
     data: {
-      title: 'ermdisplay'
-    }
-  }
+      title: "ermdisplay",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class  ermdisplayRoutingModule { }
+export class ermdisplayRoutingModule {}

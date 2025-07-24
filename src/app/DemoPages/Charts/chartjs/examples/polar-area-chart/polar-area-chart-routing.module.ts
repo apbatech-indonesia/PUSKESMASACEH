@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { PolarAreaChartComponent } from './polar-area-chart.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { PolarAreaChartComponent } from "./polar-area-chart.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: PolarAreaChartComponent,
     data: {
-      title: 'Polar-AreaChart'
-    }
-  }
+      title: "Polar-AreaChart",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PolarAreaChartRoutingModule { }
+export class PolarAreaChartRoutingModule {}

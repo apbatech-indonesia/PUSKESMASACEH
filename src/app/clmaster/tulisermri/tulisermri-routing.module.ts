@@ -7,13 +7,17 @@ const routes: Routes = [
     path: '',
     component: tulisermriComponent,
     data: {
-      title: 'tulisermri'
-    }
-  }
+      title: 'tulisermri',
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class  tulisermriRoutingModule { }
+export class tulisermriRoutingModule { }
+
+
+
+

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core"
+﻿import { Injectable } from "@angular/core"
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +36,7 @@ export class DataDeteksiDiniPendengaran {
                 code: "164854000",
                 display: "Electrocardiogram normal"
               }
-            }
+          }
           ],
           effectiveDateTime: this.dateNow,
           issued: this.dateNow
@@ -66,7 +66,7 @@ export class DataDeteksiDiniPendengaran {
                 code: "164854000",
                 display: "Electrocardiogram normal"
               }
-            }
+          }
           ],
           effectiveDateTime: this.dateNow,
           issued: this.dateNow
@@ -80,3 +80,9 @@ class DiagnosaPendengaran {
   code: any = "OC000150"
   display: any = "Suspek tuli kongenital"
 }
+
+
+
+
+
+

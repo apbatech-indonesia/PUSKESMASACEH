@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TimepickerComponent } from './timepicker.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { TimepickerComponent } from "./timepicker.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: TimepickerComponent,
     data: {
-      title: 'Timepicker'
-    }
-  }
+      title: "Timepicker",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TimepickerRoutingModule { }
+export class TimepickerRoutingModule {}

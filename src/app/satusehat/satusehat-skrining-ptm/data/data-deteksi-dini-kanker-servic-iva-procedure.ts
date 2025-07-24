@@ -31,3 +31,4 @@ export class DataDeteksiDiniKankerServicIvaProcedure {
     }
   }
 }
+

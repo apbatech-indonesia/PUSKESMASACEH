@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TooltipComponent } from './tooltip.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { TooltipComponent } from "./tooltip.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: TooltipComponent,
     data: {
-      title: 'Tooltip'
-    }
-  }
+      title: "Tooltip",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TooltipRoutingModule { }
+export class TooltipRoutingModule {}

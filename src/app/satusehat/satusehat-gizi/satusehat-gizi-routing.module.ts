@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { satusehatGiziComponent } from './satusehat-gizi.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { satusehatGiziComponent } from "./satusehat-gizi.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: satusehatGiziComponent,
     data: {
-      title: 'ermdokterrm'
-    }
-  }
+      title: "ermdokterrm",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class  satusehatGiziRoutingModule { }
+export class satusehatGiziRoutingModule {}

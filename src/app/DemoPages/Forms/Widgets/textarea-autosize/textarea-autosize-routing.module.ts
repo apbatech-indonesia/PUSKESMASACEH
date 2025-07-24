@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TextareaAutosizeComponent } from './textarea-autosize.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { TextareaAutosizeComponent } from "./textarea-autosize.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: TextareaAutosizeComponent,
     data: {
-      title: 'TextareaAutosize'
-    }
-  }
+      title: "TextareaAutosize",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TextareaAutosizeRoutingModule { }
+export class TextareaAutosizeRoutingModule {}

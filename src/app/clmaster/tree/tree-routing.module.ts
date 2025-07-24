@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TreeComponent } from './tree.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { TreeComponent } from "./tree.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: TreeComponent,
     data: {
-      title: 'Tree'
-    }
-  }
+      title: "Tree",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class TreeRoutingModule { }
+export class TreeRoutingModule {}

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { satusehatSkriningPtmComponent } from './satusehat-skrining-ptm.component';
 
@@ -16,4 +16,7 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class  satusehatSkriningPtmRoutingModule { }
+export class satusehatSkriningPtmRoutingModule { }
+
+
+

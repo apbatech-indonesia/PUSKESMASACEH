@@ -30,9 +30,7 @@ export class DataDeteksiDiniHipertensi {
                   unit: "mmHg",
                   system: "http://unitsofmeasure.org",
                   code: "mm[Hg]"
-                }
-              }
-            ]
+                }]
           }
         },
         {
@@ -54,9 +52,7 @@ export class DataDeteksiDiniHipertensi {
                   unit: "mmHg",
                   system: "http://unitsofmeasure.org",
                   code: "mm[Hg]"
-                }
-              }
-            ]
+                }]
           }
         },
         {
@@ -181,10 +177,9 @@ export class DataDeteksiDiniHipertensi {
                 ]
               }
             ]
-          }
-        }
-      ]
+          }]
     }
 
   }
 }
+

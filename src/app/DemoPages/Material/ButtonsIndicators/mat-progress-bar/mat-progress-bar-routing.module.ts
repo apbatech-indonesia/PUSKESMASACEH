@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { MatProgressBarComponent } from './mat-progress-bar.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { MatProgressBarComponent } from "./mat-progress-bar.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: MatProgressBarComponent,
     data: {
-      title: 'MatProgressBar'
-    }
-  }
+      title: "MatProgressBar",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MatProgressBarRoutingModule { }
+export class MatProgressBarRoutingModule {}

@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: ProfileBoxesComponent,
     data: {
-      title: 'ProfileBoxes'
-    }
-  }
+      title: 'ProfileBoxes',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class ProfileBoxesRoutingModule { }
+
+
+
+

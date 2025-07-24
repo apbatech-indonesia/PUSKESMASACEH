@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { MatButtonsComponent } from './mat-buttons.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { MatButtonsComponent } from "./mat-buttons.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: MatButtonsComponent,
     data: {
-      title: 'MatButtons'
-    }
-  }
+      title: "MatButtons",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MatButtonsRoutingModule { }
+export class MatButtonsRoutingModule {}

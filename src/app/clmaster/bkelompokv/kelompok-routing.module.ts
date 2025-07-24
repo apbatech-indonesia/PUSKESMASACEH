@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { kelompokComponent } from './kelompok.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { kelompokComponent } from "./kelompok.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: kelompokComponent,
     data: {
-      title: 'berita'
-    }
-  }
+      title: "berita",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class kelompokRoutingModule { }
+export class kelompokRoutingModule {}

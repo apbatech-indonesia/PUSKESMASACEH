@@ -12,8 +12,7 @@ import { LoadingBarRouterModule } from "@ngx-loading-bar/router";
 import {
   CommonModule,
   HashLocationStrategy,
-  LocationStrategy,
-} from "@angular/common";
+  LocationStrategy} from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { AppComponent } from "./app.component";
 
@@ -21,9 +20,6 @@ import { AppComponent } from "./app.component";
 
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
-import { PERFECT_SCROLLBAR_CONFIG } from "ngx-perfect-scrollbar";
-import { PerfectScrollbarConfigInterface } from "ngx-perfect-scrollbar";
 import { LaddaModule } from "angular2-ladda";
 import { NgxLoadingModule } from "ngx-loading";
 import { RoundProgressModule } from "angular-svg-round-progressbar";
@@ -117,9 +113,6 @@ import { KosongComponent } from "./cllogin/kosong/kosong.component";
 import { LoginGuard } from "./auth/login.guard";
 import { WINDOW_PROVIDERS } from "./window.providers";
 import { SampleService } from "./services";
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true,
-};
 
 import { anjunganComponent } from "./cllogin/anjungan/anjungan.component";
 
@@ -127,8 +120,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
   url: "https://httpbin.org/post",
   maxFilesize: 50,
-  acceptedFiles: "image/*",
-};
+  acceptedFiles: "image/*"};
 import { AccordionModule } from "primeng/accordion";
 import { ermdisplayComponent } from "./cllogin/ermdisplay/ermdisplay.component";
 import { TreeModule } from "primeng/tree";
@@ -311,8 +303,7 @@ import { skriningModule } from "./clmaster/skrining/skrining.module";
     SkriningMandiriTuberkulosisBayiComponent,
     SkriningTumbuhKembangPerkembanganComponent,
     SkriningTumbuhKembangMataTelinga,
-    SkriningTuberkulosisComponent,
-  ],
+    SkriningTuberkulosisComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: "serverApp" }),
     AppRoutingModule,
@@ -327,7 +318,6 @@ import { skriningModule } from "./clmaster/skrining/skrining.module";
     skriningModule,
 
     // Angular Bootstrap Components
-    PerfectScrollbarModule,
     NgbModule,
     FontAwesomeModule,
     LaddaModule,
@@ -341,8 +331,7 @@ import { skriningModule } from "./clmaster/skrining/skrining.module";
     SlickCarouselModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
+      useFactory: adapterFactory}),
     // CountUpModule,
     GoogleMapsModule,
     ImageCropperModule,
@@ -377,26 +366,24 @@ import { skriningModule } from "./clmaster/skrining/skrining.module";
     MatFormFieldModule,
     NgxYoutubePlayerModule,
 
-    tulisermModule,
-  ],
+    tulisermModule],
   providers: [
     {
       provide: LocationStrategy,
-      useClass: HashLocationStrategy,
-      // PERFECT_SCROLLBAR_CONFIG,
-
-      // useValue:DEFAULT_PERFECT_SCROLLBAR_CONFIG,
+      useClass: HashLocationStrategy
     },
-
+    {
+      provide: DROPZONE_CONFIG,
+      useValue: DEFAULT_DROPZONE_CONFIG
+    },
     ConfigActions,
     ThemeOptions,
     ApiserviceService,
     LoginGuard,
     WINDOW_PROVIDERS,
-    SampleService,
+    SampleService
   ],
-  bootstrap: [AppComponent],
-})
+  bootstrap: [AppComponent]})
 export class AppModule {
   constructor(
     private ngRedux: NgRedux<ArchitectUIState>,

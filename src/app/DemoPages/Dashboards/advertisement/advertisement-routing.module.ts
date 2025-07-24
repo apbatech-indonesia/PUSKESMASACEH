@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: AdvertisementComponent,
     data: {
-      title: 'CAdvertisementhat'
-    }
-  }
+      title: 'CAdvertisementhat',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AdvertisementRoutingModule { }
+
+
+
+

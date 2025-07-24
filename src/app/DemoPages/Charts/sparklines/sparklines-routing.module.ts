@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { SparklinesComponent } from './sparklines.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { SparklinesComponent } from "./sparklines.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: SparklinesComponent,
     data: {
-      title: 'Sparklines'
-    }
-  }
+      title: "Sparklines",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SparklinestRoutingModule { }
+export class SparklinestRoutingModule {}

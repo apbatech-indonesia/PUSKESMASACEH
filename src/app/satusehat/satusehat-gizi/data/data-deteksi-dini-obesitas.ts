@@ -32,9 +32,7 @@ export class DataDeteksiDiniObesitas {
                   unit: "kg",
                   system: "http://unitsofmeasure.org",
                   code: "kg"
-                }
-              }
-            ]
+                }]
           }
         },
         {
@@ -56,9 +54,7 @@ export class DataDeteksiDiniObesitas {
                   unit: "cm",
                   system: "http://unitsofmeasure.org",
                   code: "cm"
-                }
-              }
-            ]
+                }]
           }
         },
         {
@@ -199,9 +195,7 @@ export class DataDeteksiDiniObesitas {
                   unit: "cm",
                   system: "http://unitsofmeasure.org",
                   code: "cm"
-                }
-              }
-            ],
+                }],
             interpretation: [
               {
                 coding: [
@@ -242,9 +236,8 @@ export class DataDeteksiDiniObesitas {
                 text: "Central Obesity"
               }
             ]
-          }
-        }
-      ]
+          }]
     }
   }
 }
+

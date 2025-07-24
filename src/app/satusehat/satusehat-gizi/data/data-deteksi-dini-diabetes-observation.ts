@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core"
+﻿import { Injectable } from "@angular/core"
 
 @Injectable({
     providedIn: 'root'
@@ -39,7 +39,6 @@ export class DataDeteksiDiniDiabetesObservation {
                             },
                             valueCodeableConcept: {
                             }
-                        }
                     ],
                     effectiveDateTime: "2024-04-24T00:23:30+00:00",
                     issued: "2024-04-24T00:23:30+00:00"
@@ -68,7 +67,6 @@ export class DataDeteksiDiniDiabetesObservation {
                             },
                             valueCodeableConcept: {
                             }
-                        }
                     ],
                     effectiveDateTime: "2024-04-24T00:23:30+00:00",
                     issued: "2024-04-24T00:23:30+00:00"
@@ -99,7 +97,6 @@ export class DataDeteksiDiniDiabetesObservation {
                             },
                             valueCodeableConcept: {
                             }
-                        }
                     ],
                     effectiveDateTime: "2024-04-24T00:23:30+00:00",
                     issued: "2024-04-24T00:23:30+00:00"
@@ -130,7 +127,6 @@ export class DataDeteksiDiniDiabetesObservation {
                             },
                             valueCodeableConcept: {
                             }
-                        }
                     ],
                     effectiveDateTime: "2024-04-24T00:23:30+00:00",
                     issued: "2024-04-24T00:23:30+00:00"
@@ -140,3 +136,5 @@ export class DataDeteksiDiniDiabetesObservation {
 
     }
 }
+
+

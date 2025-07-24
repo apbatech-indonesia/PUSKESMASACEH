@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: MobatComponent,
     data: {
-      title: 'mobat'
-    }
-  }
+      title: 'mobat',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class MobatRoutingModule { }
+
+
+
+

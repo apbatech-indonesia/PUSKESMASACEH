@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: PaginationComponent,
     data: {
-      title: 'Pagination'
-    }
-  }
+      title: 'Pagination',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class PaginationRoutingModule { }
+
+
+
+

@@ -1,15 +1,15 @@
-import { Injectable } from "@angular/core"
+﻿import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class DataDeteksiDiniObesitas {
-  // questioner 
-  beratBadan: any
-  tinggiBadan: any
-  indexMasaTubuh: any
-  lingkarPinggang: any
-  dateNow: any = new Date().toISOString()
+  // questioner
+  beratBadan: any;
+  tinggiBadan: any;
+  indexMasaTubuh: any;
+  lingkarPinggang: any;
+  dateNow: any = new Date().toISOString();
 
   getdata() {
     return {
@@ -17,134 +17,139 @@ export class DataDeteksiDiniObesitas {
         {
           name: "body_weight",
           category: {
-            system: "http://terminology.hl7.org/CodeSystem/observation-category",
+            system:
+              "http://terminology.hl7.org/CodeSystem/observation-category",
             code: "vital-signs",
-            display: "Vital Signs"
+            display: "Vital Signs",
           },
           data: [
             {
               code: {
                 system: "http://loinc.org",
                 code: "29463-7",
-                display: "Body weight"
+                display: "Body weight",
               },
               result: {
                 value: this.beratBadan,
                 unit: "kg",
                 system: "http://unitsofmeasure.org",
-                code: "kg"
-              }
-            }
+                code: "kg",
+              },
+            },
           ],
           effectiveDateTime: this.dateNow,
-          issued: this.dateNow
+          issued: this.dateNow,
         },
         {
           name: "body_height",
           category: {
-            system: "http://terminology.hl7.org/CodeSystem/observation-category",
+            system:
+              "http://terminology.hl7.org/CodeSystem/observation-category",
             code: "vital-signs",
-            display: "Vital Signs"
+            display: "Vital Signs",
           },
           data: [
             {
               code: {
                 system: "http://loinc.org",
                 code: "8302-2",
-                display: "Body height"
+                display: "Body height",
               },
               result: {
                 value: this.tinggiBadan,
                 unit: "cm",
                 system: "http://unitsofmeasure.org",
-                code: "cm"
-              }
-            }
+                code: "cm",
+              },
+            },
           ],
           effectiveDateTime: this.dateNow,
-          issued: this.dateNow
+          issued: this.dateNow,
         },
         {
           name: "bmi",
           category: {
-            system: "http://terminology.hl7.org/CodeSystem/observation-category",
+            system:
+              "http://terminology.hl7.org/CodeSystem/observation-category",
             code: "exam",
-            display: "Exam"
+            display: "Exam",
           },
           data: [
             {
               code: {
                 system: "http://loinc.org",
                 code: "39156-5",
-                display: "Body mass index (BMI) [Ratio]"
+                display: "Body mass index (BMI) [Ratio]",
               },
               result: {
                 value: "{{IMT_calc}}",
                 unit: "kg/m^2",
                 system: "http://unitsofmeasure.org",
-                code: "kg/m2"
-              }
-            }
+                code: "kg/m2",
+              },
+            },
           ],
           derivedFrom: [
             {
               reference: "Observation/{{Observation_TB}}",
-              display: "Body Height"
+              display: "Body Height",
             },
             {
               reference: "Observation/{{Observation_BB}}",
-              display: "Body Weight"
-            }
+              display: "Body Weight",
+            },
           ],
           effectiveDateTime: this.dateNow,
           issued: this.dateNow,
           interpretation: {
             system: "http://snomed.info/sct",
             code: "248342006",
-            display: "Underweight"
+            display: "Underweight",
           },
         },
         {
           name: "waist_circumference",
           category: {
-            system: "http://terminology.hl7.org/CodeSystem/observation-category",
+            system:
+              "http://terminology.hl7.org/CodeSystem/observation-category",
             code: "exam",
-            display: "Exam"
+            display: "Exam",
           },
           data: [
             {
               code: {
                 system: "http://snomed.info/sct",
                 code: "276361009",
-                display: "Waist circumference"
+                display: "Waist circumference",
               },
               result: {
                 value: this.lingkarPinggang,
                 unit: "cm",
                 system: "http://unitsofmeasure.org",
-                code: "cm"
-              }
-            }
+                code: "cm",
+              },
+            },
           ],
           derivedFrom: [
             {
               reference: "Observation/{{Observation_TB}}",
-              display: "Body Height"
+              display: "Body Height",
             },
             {
               reference: "Observation/{{Observation_BB}}",
-              display: "Body Weight"
-            }
+              display: "Body Weight",
+            },
           ],
           effectiveDateTime: this.dateNow,
           issued: this.dateNow,
           interpretation: {
-            system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+            system:
+              "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
             code: "N",
-            display: "Normal"
-          }
-        }
-      ]
-    }
+            display: "Normal",
+          },
+        },
+      ],
+    };
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core"
+﻿import { Injectable } from "@angular/core"
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +29,7 @@ export class DataDeteksiStrokeReport {
                                 code: "N",
                                 display: "Normal"
                             }
-                        }
+                    }
                     ],
                     effectiveDateTime: this.dateNow
                 },
@@ -54,7 +54,7 @@ export class DataDeteksiStrokeReport {
                                 code: "N",
                                 display: "Normal"
                             }
-                        }
+                    }
                     ],
                     effectiveDateTime: this.dateNow
                 },
@@ -79,7 +79,7 @@ export class DataDeteksiStrokeReport {
                                 code: "N",
                                 display: "Normal"
                             }
-                        }
+                    }
                     ],
                     effectiveDateTime: this.dateNow
                 },
@@ -105,7 +105,7 @@ export class DataDeteksiStrokeReport {
                                 code: "N",
                                 display: "Normal"
                             }
-                        }
+                    }
                     ],
                     effectiveDateTime: this.dateNow
                 }
@@ -114,3 +114,9 @@ export class DataDeteksiStrokeReport {
 
     }
 }
+
+
+
+
+
+

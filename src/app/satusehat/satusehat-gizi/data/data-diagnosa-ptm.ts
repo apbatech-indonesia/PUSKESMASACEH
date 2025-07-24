@@ -56,8 +56,7 @@ export class DataDiagnosaPtm {
             condition_item: {
               system: "http://hl7.org/fhir/sid/icd-10",
               code: this.diagnosaPresbyopiaCode,
-              display: this.diagnosaPresbyopiaDisplay,
-            },
+              display: this.diagnosaPresbyopiaDisplay},
             onset_date_time: this.dateNow,
             recorded_date: this.dateNow
           }
@@ -77,8 +76,7 @@ export class DataDiagnosaPtm {
             condition_item: {
               system: "http://hl7.org/fhir/sid/icd-10",
               code: this.diagnosaCervixCode,
-              display: this.diagnosaCervixDisplay,
-            },
+              display: this.diagnosaCervixDisplay},
             onset_date_time: this.dateNow,
             recorded_date: this.dateNow
           }
@@ -98,8 +96,7 @@ export class DataDiagnosaPtm {
             condition_item: {
               system: "http://hl7.org/fhir/sid/icd-10",
               code: this.diagnosaDiabetesCode,
-              display: this.diagnosaDiabetesDisplay,
-            },
+              display: this.diagnosaDiabetesDisplay},
             onset_date_time: this.dateNow,
             recorded_date: this.dateNow
           }
@@ -119,13 +116,11 @@ export class DataDiagnosaPtm {
             condition_item: {
               system: "http://hl7.org/fhir/sid/icd-10",
               code: this.diagnosaJantungCode,
-              display: this.diagnosaJantungDisplay,
-            },
+              display: this.diagnosaJantungDisplay},
             onset_date_time: this.dateNow,
             recorded_date: this.dateNow
-          }
-        }
-      ]
+          }]
     }
   }
 }
+

@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { MgudangComponent } from './mgudang.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { MgudangComponent } from "./mgudang.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: MgudangComponent,
     data: {
-      title: 'Mgudang'
-    }
-  }
+      title: "Mgudang",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MgudangRoutingModule { }
+export class MgudangRoutingModule {}

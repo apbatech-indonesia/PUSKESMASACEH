@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
@@ -66,11 +66,12 @@ const routes: Routes = [
         loadChildren: () => import('./image-crop/image-crop.module').then(m => m.ImageCropModule)
       },
     ]
-  }
-];
+  }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class ComponentsRoutingModule { }
+
+

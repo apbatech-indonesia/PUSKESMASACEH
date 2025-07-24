@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CarouselComponent } from './carousel.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { CarouselComponent } from "./carousel.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: CarouselComponent,
     data: {
-      title: 'Carousel'
-    }
-  }
+      title: "Carousel",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class CarouselRoutingModule { }
+export class CarouselRoutingModule {}

@@ -28,13 +28,7 @@
   </div>
   <div class="app-sidebar-content">
     <div class="app-sidebar-scroll">
-      <perfect-scrollbar
-        [autoPropagation]="true"
-        class="scroll-container"
-        [config]="config"
-        [scrollIndicators]="true"
-        style="max-width: 600px; max-height: 690px"
-      >
+      <div style="max-height: 650px; overflow-y: auto;">
         <div class="v-sidebar-menu vsm-default">
           <div class="vsm-list">
             <ngb-accordion
@@ -1441,7 +1435,9 @@
             </ngb-accordion>
           </div>
         </div>
-      </perfect-scrollbar>
+      </div>
     </div>
   </div>
 </div>
+
+

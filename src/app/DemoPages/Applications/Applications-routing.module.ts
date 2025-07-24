@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 
@@ -23,8 +23,7 @@ const routes: Routes = [
         loadChildren: () => import('./material-tabs/material-tabs.module').then(m => m.MaterialTabsModule)
       }
     ]
-  }
-];
+  }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
@@ -32,3 +31,5 @@ const routes: Routes = [
 })
 export class ApplicationRoutingModule {
 }
+
+

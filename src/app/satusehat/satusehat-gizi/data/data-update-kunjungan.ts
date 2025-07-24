@@ -46,10 +46,9 @@ export class DataUpdateKunjungan {
             period: {
               start: this.dateNow,
               end: this.dateNow
-            }
-          }
-        ]
+            }]
       }
     }
   }
 }
+

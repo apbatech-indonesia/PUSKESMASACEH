@@ -1,27 +1,20 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
-import { PersetujuanTindakanMedisCetakComponent } from './PersetujuanTindakanMedisCetak.component';
+import { PersetujuanTindakanMedisCetakComponent } from "./PersetujuanTindakanMedisCetak.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: PersetujuanTindakanMedisCetakComponent,
     data: {
-      title: 'Cetak Resume Medis Rawat Inap Cetak'
-    }
-  }
+      title: "Cetak Resume Medis Rawat Inap Cetak",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
-export class PersetujuanTindakanMedisCetakRoutingModule { }
-
-
-
-
-
-
+export class PersetujuanTindakanMedisCetakRoutingModule {}

@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: ChartBoxes1Component,
     data: {
-      title: 'ChartBoxes1'
-    }
-  }
+      title: 'ChartBoxes1',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class ChartBoxes1RoutingModule { }
+
+
+
+

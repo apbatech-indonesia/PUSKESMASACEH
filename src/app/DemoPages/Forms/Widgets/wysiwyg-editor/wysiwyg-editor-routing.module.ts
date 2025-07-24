@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { WysiwygEditorComponent } from './wysiwyg-editor.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { WysiwygEditorComponent } from "./wysiwyg-editor.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: WysiwygEditorComponent,
     data: {
-      title: 'WysiwygEditor'
-    }
-  }
+      title: "WysiwygEditor",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class WysiwygEditorRoutingModule { }
+export class WysiwygEditorRoutingModule {}

@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { RipplesComponent } from './ripples.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { RipplesComponent } from "./ripples.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: RipplesComponent,
     data: {
-      title: 'Ripples'
-    }
-  }
+      title: "Ripples",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class RipplesRoutingModule { }
+export class RipplesRoutingModule {}

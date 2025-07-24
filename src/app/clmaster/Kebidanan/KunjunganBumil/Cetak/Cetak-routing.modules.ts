@@ -1,26 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CetakComponent } from './Cetak.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { CetakComponent } from "./Cetak.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: CetakComponent,
     data: {
-      title: 'MnjObat Cetak ObatMinta'
-    }
-  }
+      title: "MnjObat Cetak ObatMinta",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
-export class CetakRoutingModule { }
-
-
-
-
-
-
+export class CetakRoutingModule {}

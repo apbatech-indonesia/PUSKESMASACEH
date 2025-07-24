@@ -22,19 +22,14 @@ export class LineChartComponent implements OnInit {
       yAxes: [
         {
           id: 'y-axis-0',
-          position: 'left',
-        },
+          position: 'left'},
         {
           id: 'y-axis-1',
           position: 'right',
           gridLines: {
-            color: 'rgba(255,0,0,0.3)',
-          },
+            color: 'rgba(255,0,0,0.3)'},
           ticks: {
-            fontColor: 'red',
-          }
-        }
-      ]
+            fontColor: 'red'}]
     },
     annotation: {
       annotations: [
@@ -50,10 +45,7 @@ export class LineChartComponent implements OnInit {
             fontColor: 'orange',
             content: 'LineAnno'
           }
-        },
-      ],
-    },
-  };
+        }]}};
   public lineChartColors: Color[] = [
     { // grey
       backgroundColor: 'rgba(148,159,177,0.2)',
@@ -137,3 +129,4 @@ export class LineChartComponent implements OnInit {
     // this.chart.update();
   }
 }
+

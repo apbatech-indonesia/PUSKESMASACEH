@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {glminiComponent } from './glmini.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { glminiComponent } from "./glmini.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: glminiComponent,
     data: {
-      title: 'glmini'
-    }
-  }
+      title: "glmini",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class  glminiRoutingModule { }
+export class glminiRoutingModule {}

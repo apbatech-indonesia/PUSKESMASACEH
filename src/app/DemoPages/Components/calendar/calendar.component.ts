@@ -42,8 +42,7 @@ const colors: any = {
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
+  changeDetection: ChangeDetectionStrategy.OnPush})
 
 export class CalendarComponent {
 
@@ -76,9 +75,7 @@ export class CalendarComponent {
       onClick: ({ event }: { event: CalendarEvent }): void => {
         this.events = this.events.filter(iEvent => iEvent !== event);
         this.handleEvent('Deleted', event);
-      }
-    }
-  ];
+      }];
 
   refresh: Subject<any> = new Subject();
 
@@ -177,9 +174,7 @@ export class CalendarComponent {
         resizable: {
           beforeStart: true,
           afterEnd: true
-        }
-      }
-    ];
+        }];
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
@@ -194,3 +189,4 @@ export class CalendarComponent {
     this.activeDayIsOpen = false;
   }
 }
+

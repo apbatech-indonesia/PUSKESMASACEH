@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { BubbleChartComponent } from './bubble-chart.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { BubbleChartComponent } from "./bubble-chart.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: BubbleChartComponent,
     data: {
-      title: 'Bubble Chart'
-    }
-  }
+      title: "Bubble Chart",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class BubbleChartRoutingModule { }
+export class BubbleChartRoutingModule {}

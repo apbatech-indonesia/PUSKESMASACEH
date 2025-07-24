@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: MpasienComponent,
     data: {
-      title: 'mpasien'
-    }
-  }
+      title: 'mpasien',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class MpasienRoutingModule { }
+
+
+
+

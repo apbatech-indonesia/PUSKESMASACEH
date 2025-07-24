@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
@@ -46,8 +46,7 @@ const routes: Routes = [
         loadChildren: () => import('./slider-toggle/slider-toggle.module').then(m => m.SliderToggleModule)
       }
     ]
-  }
-];
+  }];
 
 
 @NgModule({
@@ -55,3 +54,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class MaterialFormControlRoutingModule { }
+
+

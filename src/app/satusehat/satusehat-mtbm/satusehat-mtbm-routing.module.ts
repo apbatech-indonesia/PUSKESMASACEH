@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { satusehatMtbmComponent } from './satusehat-mtbm.component';
 
@@ -16,4 +16,8 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class  satusehatMtbmRoutingModule { }
+export class satusehatMtbmRoutingModule { }
+
+
+
+

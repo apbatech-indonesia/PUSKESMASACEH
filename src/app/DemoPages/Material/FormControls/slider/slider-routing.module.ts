@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { SliderComponent } from './slider.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { SliderComponent } from "./slider.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: SliderComponent,
     data: {
-      title: 'Slider'
-    }
-  }
+      title: "Slider",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SliderRoutingModule { }
+export class SliderRoutingModule {}

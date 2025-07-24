@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core"
+﻿import { Injectable } from "@angular/core"
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class DataDeteksiDiniAsamUrat {
                 system: "http://unitsofmeasure.org",
                 code: "mg/dL",
                 display: this.result
-              },
+              }
             }
           ],
           interpretation: [
@@ -78,3 +78,9 @@ export class DataDeteksiDiniAsamUrat {
     }
   }
 }
+
+
+
+
+
+

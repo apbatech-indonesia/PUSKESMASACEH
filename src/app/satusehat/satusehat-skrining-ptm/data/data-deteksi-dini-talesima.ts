@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core"
+﻿import { Injectable } from "@angular/core"
 
 @Injectable({
   providedIn: 'root'
@@ -37,40 +37,43 @@ export class DataDeteksiTalesima {
             }
           ],
           effectiveDateTime: this.dateNow,
-          issued: this.dateNow
-        }
-      ],
-      interpretation: [
-        {
-          coding: [
+          issued: this.dateNow,
+          interpretation: [
             {
-              system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
-              code: "N",
-              display: this.display
+              coding: [
+                {
+                  system: "http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation",
+                  code: "N",
+                  display: this.display
+                }
+              ]
+            }
+          ],
+          referenceRange: [
+            {
+              high: {
+                value: 10.9,
+                unit: "g/dL",
+                system: "http://unitsofmeasure.org",
+                code: "g/dL"
+              },
+              text: "Dibawah Normal"
+            },
+            {
+              low: {
+                value: 11.0,
+                unit: "g/dL",
+                system: "http://unitsofmeasure.org",
+                code: "g/dL"
+              },
+              text: "Normal"
             }
           ]
-        }
-      ],
-      referenceRange: [
-        {
-          high: {
-            value: 10.9,
-            unit: "g/dL",
-            system: "http://unitsofmeasure.org",
-            code: "g/dL"
-          },
-          text: "Dibawah Normal"
-        },
-        {
-          low: {
-            value: 11.0,
-            unit: "g/dL",
-            system: "http://unitsofmeasure.org",
-            code: "g/dL"
-          },
-          text: "Normal"
         }
       ]
     }
   }
 }
+
+
+

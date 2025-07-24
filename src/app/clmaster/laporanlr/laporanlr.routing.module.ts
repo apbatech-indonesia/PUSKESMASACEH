@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { laporanlrComponent } from './laporanlr.component';
+﻿import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { laporanlrComponent } from "./laporanlr.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: laporanlrComponent,
     data: {
-      title: 'laporanlr'
-    }
-  }
+      title: "laporanlr",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class laporanlrRoutingModule { }
+export class laporanlrRoutingModule {}

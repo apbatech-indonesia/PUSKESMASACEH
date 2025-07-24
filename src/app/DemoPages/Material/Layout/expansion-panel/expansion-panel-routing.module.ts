@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: ExpansionPanelComponent,
     data: {
-      title: 'ExpansionPanel'
-    }
-  }
+      title: 'ExpansionPanel',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class ExpansionPanelRoutingModule { }
+
+
+
+

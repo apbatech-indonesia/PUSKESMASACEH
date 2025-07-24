@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ToggleSwitchComponent } from './toggle-switch.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ToggleSwitchComponent } from "./toggle-switch.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: ToggleSwitchComponent,
     data: {
-      title: 'ToggleSwitch'
-    }
-  }
+      title: "ToggleSwitch",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ToggleSwitchRoutingModule { }
+export class ToggleSwitchRoutingModule {}

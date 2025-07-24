@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: MpoliComponent,
     data: {
-      title: 'Mpoli'
-    }
-  }
+      title: 'Mpoli',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class MpoliRoutingModule { }
+
+
+
+

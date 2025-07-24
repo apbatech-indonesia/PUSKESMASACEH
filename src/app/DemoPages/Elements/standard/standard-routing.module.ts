@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { StandardComponent } from './standard.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { StandardComponent } from "./standard.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: StandardComponent,
     data: {
-      title: 'Chat'
-    }
-  }
+      title: "Chat",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class StandardRoutingModule { }
+export class StandardRoutingModule {}

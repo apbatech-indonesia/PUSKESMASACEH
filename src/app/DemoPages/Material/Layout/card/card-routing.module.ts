@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: CardMatComponent,
     data: {
-      title: 'CardMat'
-    }
-  }
+      title: 'CardMat',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class CardMatRoutingModule { }
+
+
+
+

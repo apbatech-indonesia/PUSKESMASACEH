@@ -4,17 +4,10 @@ import { select } from "@angular-redux/store";
 import { Observable } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
-
-import {
-  PerfectScrollbarConfigInterface,
-  PerfectScrollbarComponent,
-  PerfectScrollbarDirective,
-} from "ngx-perfect-scrollbar";
 import { ApiserviceService } from "src/app/apiservice.service";
 @Component({
   selector: "app-sidebar",
-  templateUrl: "./sidebar.component.html",
-})
+  templateUrl: "./sidebar.component.html"})
 export class SidebarComponent implements OnInit {
   public extraParameter: any;
   public userDetails: any;
@@ -53,7 +46,7 @@ export class SidebarComponent implements OnInit {
 
   @select("config") public config$: Observable<any>;
 
-  public config: PerfectScrollbarConfigInterface = {};
+  public config: any = {};
   private newInnerWidth: number;
   private innerWidth: number;
   activeId = "dashboards";

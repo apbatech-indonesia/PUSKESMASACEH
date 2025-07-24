@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { IconsComponent } from './icons.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { IconsComponent } from "./icons.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: IconsComponent,
     data: {
-      title: 'Icons'
-    }
-  }
+      title: "Icons",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class IconsRoutingModule { }
+export class IconsRoutingModule {}

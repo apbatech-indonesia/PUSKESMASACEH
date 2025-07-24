@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ManagementlabComponent } from './managementlab.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ManagementlabComponent } from "./managementlab.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: ManagementlabComponent,
     data: {
-      title: 'Managementlab'
-    }
-  }
+      title: "Managementlab",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ManagementlabRoutingModule { }
+export class ManagementlabRoutingModule {}

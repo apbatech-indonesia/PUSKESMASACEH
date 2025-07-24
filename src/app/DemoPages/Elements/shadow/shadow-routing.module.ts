@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ShadowComponent } from './shadow.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ShadowComponent } from "./shadow.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: ShadowComponent,
     data: {
-      title: 'Shadow'
-    }
-  }
+      title: "Shadow",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ShadowRoutingModule { }
+export class ShadowRoutingModule {}

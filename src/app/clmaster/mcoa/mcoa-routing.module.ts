@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { McoaComponent } from './mcoa.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { McoaComponent } from "./mcoa.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: McoaComponent,
     data: {
-      title: 'mcoa'
-    }
-  }
+      title: "mcoa",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class McoaRoutingModule { }
+export class McoaRoutingModule {}

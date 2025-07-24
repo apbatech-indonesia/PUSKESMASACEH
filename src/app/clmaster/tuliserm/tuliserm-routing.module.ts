@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {  tulisermComponent } from './tuliserm.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { tulisermComponent } from "./tuliserm.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: tulisermComponent,
     data: {
-      title: 'tuliserm'
-    }
-  }
+      title: "tuliserm",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class  tulisermRoutingModule { }
+export class tulisermRoutingModule {}

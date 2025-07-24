@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { kasirlabComponent } from './kasirlab.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { kasirlabComponent } from "./kasirlab.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: kasirlabComponent,
     data: {
-      title: 'kasirlab'
-    }
-  }
+      title: "kasirlab",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class  kasirlabRoutingModule { }
+export class kasirlabRoutingModule {}

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core"
+﻿import { Injectable } from "@angular/core"
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class DataDeteksiDiniKankerServicIvaObservation {
                 code: "300557001",
                 display: this.result
               }
-            }
+          }
           ],
           effectiveDateTime: this.dateNow,
           issued: this.dateNow
@@ -43,3 +43,9 @@ export class DataDeteksiDiniKankerServicIvaObservation {
     }
   }
 }
+
+
+
+
+
+

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
@@ -19,8 +19,7 @@ const routes: Routes = [
         loadChildren: () => import('./Datatable/paginator/paginator.module').then(m => m.PaginatorModule)
       },
     ]
-  }
-];
+  }];
 
 
 @NgModule({
@@ -28,3 +27,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class MaterialRoutingModule { }
+
+

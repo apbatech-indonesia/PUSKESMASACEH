@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ListMatComponent } from './list.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ListMatComponent } from "./list.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: ListMatComponent,
     data: {
-      title: 'ListMat'
-    }
-  }
+      title: "ListMat",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ListMatRoutingModule { }
+export class ListMatRoutingModule {}

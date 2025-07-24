@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { RadarChartComponent } from './radar-chart.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { RadarChartComponent } from "./radar-chart.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: RadarChartComponent,
     data: {
-      title: 'Radar-Chart'
-    }
-  }
+      title: "Radar-Chart",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class RadarChartRoutingModule { }
+export class RadarChartRoutingModule {}

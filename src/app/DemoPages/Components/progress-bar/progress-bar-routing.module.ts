@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: ProgressBarComponent,
     data: {
-      title: 'ProgressBar'
-    }
-  }
+      title: 'ProgressBar',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class ProgressBarRoutingModule { }
+
+
+
+

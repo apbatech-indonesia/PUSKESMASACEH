@@ -7,13 +7,17 @@ const routes: Routes = [
     path: '',
     component: pemanggilanadmisiComponent,
     data: {
-      title: 'pemanggilanadmisi'
-    }
-  }
+      title: 'pemanggilanadmisi',
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class  pemanggilanadmisiRoutingModule { }
+export class pemanggilanadmisiRoutingModule { }
+
+
+
+

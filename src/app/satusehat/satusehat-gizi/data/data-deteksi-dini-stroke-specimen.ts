@@ -23,9 +23,8 @@ export class DataDeteksiStrokeSpecimen {
               display: "Collection of blood specimen for laboratory"
             },
             collectedDateTime: "2024-04-24T02:32:15+00:00"
-          }
-        }
-      ]
+          }]
     }
   }
 }
+

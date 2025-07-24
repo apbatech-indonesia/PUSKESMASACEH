@@ -20,16 +20,8 @@ import {  MtamplatelabComponent } from './mtamplatelab.component';
 import {MtamplatelabRoutingModule } from './mtamplatelab.routing.module';
 
 
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
-};
-
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MasterSpecimenModule } from 'src/app/satusehat/satusehat-master/master-specimen/master-specimen.module';
@@ -58,20 +50,12 @@ import { MasterSpecimenModule } from 'src/app/satusehat/satusehat-master/master-
     MatIconModule,
     PageTitleModule,
     MasterSpecimenModule,
-     NgbModule, PerfectScrollbarModule, FormsModule, ReactiveFormsModule
+     NgbModule, FormsModule, ReactiveFormsModule
     
 
   ],
-  declarations: [MtamplatelabComponent],
-  providers: [
-    {
-      provide:
-        PERFECT_SCROLLBAR_CONFIG,
-      // DROPZONE_CONFIG,
-      useValue:
-        DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-      // DEFAULT_DROPZONE_CONFIG,
-    }
-  ],
+  declarations: [MtamplatelabComponent]
 })
 export class MtamplatelabModule { }
+
+

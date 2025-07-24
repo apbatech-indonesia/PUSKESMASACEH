@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: MuserComponent,
     data: {
-      title: 'Muser'
-    }
-  }
+      title: 'Muser',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class MuserRoutingModule { }
+
+
+
+

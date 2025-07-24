@@ -32,9 +32,8 @@ export class AdvertisementComponent implements OnInit {
       label: 'My First dataset',
       data: [65, 59, 80, 81, 46, 55, 38, 59, 80],
       datalabels: {
-        display: false,
-      },
-
+        display: false
+      }
     }
   ];
 
@@ -43,9 +42,8 @@ export class AdvertisementComponent implements OnInit {
       label: 'My First dataset',
       data: [46, 55, 59, 80, 81, 38, 65, 59, 80],
       datalabels: {
-        display: false,
-      },
-
+        display: false
+      }
     }
   ];
 
@@ -54,9 +52,8 @@ export class AdvertisementComponent implements OnInit {
       label: 'My First dataset',
       data: [65, 59, 80, 81, 55, 38, 59, 80, 46],
       datalabels: {
-        display: false,
-      },
-
+        display: false
+      }
     }
   ];
   public lineChartColors: Color[] = [
@@ -76,9 +73,7 @@ export class AdvertisementComponent implements OnInit {
       pointHoverRadius: 8,
       pointHitRadius: 10,
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: '#f7b924',
-    },
-  ];
+      pointHoverBorderColor: '#f7b924'}];
 
   public lineChartColors2: Color[] = [
     { // dark grey
@@ -97,9 +92,7 @@ export class AdvertisementComponent implements OnInit {
       pointHoverRadius: 8,
       pointHitRadius: 10,
       pointHoverBackgroundColor: '#ffffff',
-      pointHoverBorderColor: '#30b1ff',
-    },
-  ];
+      pointHoverBorderColor: '#30b1ff'}];
 
   public lineChartColors3: Color[] = [
     { // dark grey
@@ -118,9 +111,7 @@ export class AdvertisementComponent implements OnInit {
       pointHoverRadius: 8,
       pointHitRadius: 10,
       pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: '#56c479',
-    },
-  ];
+      pointHoverBorderColor: '#56c479'}];
 
   public labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'];
 
@@ -166,3 +157,4 @@ export class AdvertisementComponent implements OnInit {
   }
 
 }
+

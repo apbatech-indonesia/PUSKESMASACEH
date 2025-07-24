@@ -25,21 +25,11 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
-};
-
-
 
 @NgModule({
   imports: [
-    NgbModule, PerfectScrollbarModule, FormsModule, ReactiveFormsModule,
+    NgbModule, FormsModule, ReactiveFormsModule,
     
     CommonModule,
     mpdaftarpasienriRoutingModule,
@@ -61,9 +51,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatButtonToggleModule,
     MatChipsModule,
     MatIconModule,
-    PageTitleModule,
-    
-  ],
+    PageTitleModule],
   declarations: [mpdaftarpasienriComponent]
 })
 export class mpdaftarpasienriModule { }
+
+

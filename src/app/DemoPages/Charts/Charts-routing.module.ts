@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 
@@ -27,8 +27,7 @@ const routes: Routes = [
         loadChildren: () => import('./sparklines/sparklines.module').then(m => m.SparklinesModule)
       }
     ]
-  }
-];
+  }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
@@ -36,3 +35,5 @@ const routes: Routes = [
 })
 export class ChartRoutingModule {
 }
+
+

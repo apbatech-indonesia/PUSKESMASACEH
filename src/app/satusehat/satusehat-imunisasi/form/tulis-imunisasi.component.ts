@@ -73,8 +73,7 @@ export class TulisImunisasiComponent implements OnInit {
 
     this.formTindakan = this.fb.group({
       procedure_code: [''],
-      procedure_display: [''],
-    })
+      procedure_display: ['']})
 
     this.formPelaporanImunisasi = this.fb.group({
       imunisasi_tidak_disetujui: [''],
@@ -332,7 +331,7 @@ export class TulisImunisasiComponent implements OnInit {
       response5.statusCode == '00'
     ) {
       Swal.fire(response1.statusMsg.split(': ')[0], response1.statusMsg.split(': ')[1], 'success')
-    } 
+    }
   }
 
   async setIdPasien() {
@@ -368,8 +367,7 @@ export class TulisImunisasiComponent implements OnInit {
           status_pregnant_code: patient?.observations[0]?.pregnancy_observation?.question_answers[0]?.answer.code,
           status_pregnant_display: patient?.observations[0]?.pregnancy_observation?.question_answers[0]?.answer.display,
           status_sekolah_code: patient?.observations[1]?.education_observation?.question_answers[0]?.answer.code,
-          status_sekolah_display: patient?.observations[1]?.education_observation?.question_answers[0]?.answer.display,
-        })
+          status_sekolah_display: patient?.observations[1]?.education_observation?.question_answers[0]?.answer.display})
       }
 
       if (patient?.conditions) {
@@ -479,3 +477,4 @@ export class TulisImunisasiComponent implements OnInit {
     return obj;
   }
 }
+

@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: CryptoComponent,
     data: {
-      title: 'dokterri'
-    }
-  }
+      title: 'dokterri',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class CryptoRoutingModule { }
+
+
+
+

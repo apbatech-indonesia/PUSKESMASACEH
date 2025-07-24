@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: PieChartComponent,
     data: {
-      title: 'Pie-Chart'
-    }
-  }
+      title: 'Pie-Chart',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class PieChartRoutingModule { }
+
+
+
+

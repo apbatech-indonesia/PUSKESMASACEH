@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { MdiagnosaComponent } from './mdiagnosa.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { MdiagnosaComponent } from "./mdiagnosa.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: MdiagnosaComponent,
     data: {
-      title: 'Mdiagnosa'
-    }
-  }
+      title: "Mdiagnosa",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MdiagnosaRoutingModule { }
+export class MdiagnosaRoutingModule {}

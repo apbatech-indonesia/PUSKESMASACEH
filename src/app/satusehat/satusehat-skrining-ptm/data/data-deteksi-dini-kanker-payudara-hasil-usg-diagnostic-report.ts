@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core"
+﻿import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class DataDeteksiDiniKankerPayudaraHasilUsgDiagnosticReport {
-  display: any
-  dateNow = new Date().toISOString()
-  
+  display: any;
+  dateNow = new Date().toISOString();
+
   getdata() {
     return {
       diagnosticReports: [
@@ -20,34 +20,32 @@ export class DataDeteksiDiniKankerPayudaraHasilUsgDiagnosticReport {
               code: {
                 code: "24601-7",
                 display: "US Breast",
-                system: "http://loinc.org"
+                system: "http://loinc.org",
               },
               result: {
-                reference: "Observation/{{Observation_USGMammae}}"
-              }
-            }
+                reference: "Observation/{{Observation_USGMammae}}",
+              },
+            },
           ],
           effectiveDateTime: this.dateNow,
           specimen: [],
           basedOn: [
             {
-              reference: "ServiceRequest/{{ServiceRequest_USGMammae}}"
-
-            }
+              reference: "ServiceRequest/{{ServiceRequest_USGMammae}}",
+            },
           ],
           imagingStudy: [
             {
-              reference: "ImagingStudy/{{ImagingStudy_USG}}"
-            }
+              reference: "ImagingStudy/{{ImagingStudy_USG}}",
+            },
           ],
-          conclusionCode:
-          {
+          conclusionCode: {
             system: "http://snomed.info/sct",
             code: "290084006",
-            display: this.display
-          }
-        }
-      ]
-    }
+            display: this.display,
+          },
+        },
+      ],
+    };
   }
 }

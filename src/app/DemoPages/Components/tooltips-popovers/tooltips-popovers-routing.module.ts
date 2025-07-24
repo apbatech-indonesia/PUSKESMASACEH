@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: TooltipsPopoversComponent,
     data: {
-      title: 'TooltipsPopovers'
-    }
-  }
+      title: 'TooltipsPopovers',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class TooltipsPopoversRoutingModule { }
+
+
+
+

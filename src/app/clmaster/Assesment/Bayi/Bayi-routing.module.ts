@@ -1,27 +1,20 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
-import { BayiComponent } from './Bayi.component';
+import { BayiComponent } from "./Bayi.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: BayiComponent,
     data: {
-      title: 'Bayi'
-    }
-  }
+      title: "Bayi",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
-export class BayiRoutingModule { }
-
-
-
-
-
-
+export class BayiRoutingModule {}

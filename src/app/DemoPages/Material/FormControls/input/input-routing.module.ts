@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { InputComponent } from './input.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { InputComponent } from "./input.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: InputComponent,
     data: {
-      title: 'Input'
-    }
-  }
+      title: "Input",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class InputRoutingModule { }
+export class InputRoutingModule {}

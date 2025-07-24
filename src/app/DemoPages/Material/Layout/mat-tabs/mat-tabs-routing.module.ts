@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { MatTabsComponent } from './mat-tabs.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { MatTabsComponent } from "./mat-tabs.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: MatTabsComponent,
     data: {
-      title: 'MatTabs'
-    }
-  }
+      title: "MatTabs",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MatTabsRoutingModule { }
+export class MatTabsRoutingModule {}

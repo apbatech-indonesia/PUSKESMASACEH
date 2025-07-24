@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { KunjunganBumilComponent } from './KunjunganBumil.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { KunjunganBumilComponent } from "./KunjunganBumil.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: KunjunganBumilComponent,
     data: {
-      title: 'KunjunganBumil'
-    }
-  }
+      title: "KunjunganBumil",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class KunjunganBumilRoutingModule { }
+export class KunjunganBumilRoutingModule {}

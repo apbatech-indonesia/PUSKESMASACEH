@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {beritaComponent } from './berita.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { beritaComponent } from "./berita.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: beritaComponent,
     data: {
-      title: 'berita'
-    }
-  }
+      title: "berita",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class beritaRoutingModule { }
+export class beritaRoutingModule {}

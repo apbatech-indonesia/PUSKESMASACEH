@@ -39,12 +39,8 @@ export class DataFaktorResiko {
                   system: "http://snomed.info/sct",
                   code: "8392000",
                   display: "Non-smoker"
-                }
-              }
-            ]
-          }
-        }
-      ],
+                }]
+          }],
       QuestionnaireResponse: [
         {
           ptm_question: {
@@ -83,9 +79,7 @@ export class DataFaktorResiko {
                           unit: "years",
                           system: "http://unitsofmeasure.org",
                           code: "a"
-                        }
-                      }
-                    ]
+                        }]
                   },
                   {
                     linkId: "1.4",
@@ -94,9 +88,7 @@ export class DataFaktorResiko {
                       {
                         valueReference: {
                           reference: "Observation/{{Observation_statusMerokok}}"
-                        }
-                      }
-                    ]
+                        }]
                   },
                   {
                     linkId: "1.5",
@@ -107,9 +99,7 @@ export class DataFaktorResiko {
                           system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                           code: "QRI000015",
                           display: this.terpaparAsapRoko
-                        }
-                      }
-                    ]
+                        }]
                   },
                   {
                     linkId: "1.6",
@@ -120,9 +110,7 @@ export class DataFaktorResiko {
                           system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                           code: "QRI000016",
                           display: this.gulaMakanan
-                        }
-                      }
-                    ]
+                        }]
                   },
                   {
                     linkId: "1.7",
@@ -133,9 +121,7 @@ export class DataFaktorResiko {
                           system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                           code: "QRI000014",
                           display: this.garamMakanan
-                        }
-                      }
-                    ]
+                        }]
                   },
                   {
                     linkId: "1.8",
@@ -146,9 +132,7 @@ export class DataFaktorResiko {
                           system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                           code: "QRI000015",
                           display: this.minyakMakanan
-                        }
-                      }
-                    ]
+                        }]
                   },
                   {
                     linkId: "1.9",
@@ -159,9 +143,7 @@ export class DataFaktorResiko {
                           system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                           code: "QRI000026",
                           display: this.sayurBuahMakanan
-                        }
-                      }
-                    ]
+                        }]
                   },
                   {
                     linkId: "1.10",
@@ -172,9 +154,7 @@ export class DataFaktorResiko {
                           system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                           code: "QRI000016",
                           display: this.aktivitasFisik
-                        }
-                      }
-                    ]
+                        }]
                   },
                   {
                     linkId: "1.11",
@@ -185,16 +165,13 @@ export class DataFaktorResiko {
                           system: "http://terminology.kemkes.go.id/CodeSystem/clinical-term",
                           code: "QRI000014",
                           display: this.konsumsiAlkohol
-                        }
-                      }
-                    ]
+                        }]
                   }
                 ]
               }
             ]
-          }
-        }
-      ]
+          }]
     }
   }
 }
+

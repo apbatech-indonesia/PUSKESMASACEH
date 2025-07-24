@@ -20,17 +20,9 @@ import {  mtamplatebhpComponent } from './mtamplatebhp.component';
 import {mtamplatebhpRoutingModule } from './mtamplatebhp.routing.module';
 
 
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { TextareaAutosizeModule } from 'ngx-textarea-autosize';
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
-};
 // import { nl2brPipe } from '../../pipes/nl2br.pipe';
-
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
@@ -57,20 +49,12 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     MatChipsModule,
     MatIconModule,
     PageTitleModule,
-     NgbModule, PerfectScrollbarModule, FormsModule, ReactiveFormsModule
+     NgbModule, FormsModule, ReactiveFormsModule
     
 
   ],
-  declarations: [mtamplatebhpComponent],
-  providers: [
-    {
-      provide:
-        PERFECT_SCROLLBAR_CONFIG,
-      // DROPZONE_CONFIG,
-      useValue:
-        DEFAULT_PERFECT_SCROLLBAR_CONFIG,
-      // DEFAULT_DROPZONE_CONFIG,
-    }
-  ],
+  declarations: [mtamplatebhpComponent]
 })
 export class mtamplatebhpModule { }
+
+

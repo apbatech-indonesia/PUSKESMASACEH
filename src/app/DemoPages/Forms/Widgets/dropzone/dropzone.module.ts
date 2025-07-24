@@ -19,12 +19,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     CommonModule, DropzoneModule,
     DropzoneRoutingModule, PageTitleModule
   ],
-  declarations: [DropzoneComponent],
-  providers: [
-    {
-      provide: DROPZONE_CONFIG,
-      useValue: DEFAULT_DROPZONE_CONFIG
-    }
-  ]
+  declarations: [DropzoneComponent]
 })
 export class DropzoneModules { }
+

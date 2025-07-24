@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CheckboxComponent } from './checkbox.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { CheckboxComponent } from "./checkbox.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: CheckboxComponent,
     data: {
-      title: 'Checkbox'
-    }
-  }
+      title: "Checkbox",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class CheckboxRoutingModule { }
+export class CheckboxRoutingModule {}

@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { DynamicChartComponent } from './dynamic-chart.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { DynamicChartComponent } from "./dynamic-chart.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: DynamicChartComponent,
     data: {
-      title: 'Dynamic-Chart'
-    }
-  }
+      title: "Dynamic-Chart",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class DynamicChartRoutingModule { }
+export class DynamicChartRoutingModule {}

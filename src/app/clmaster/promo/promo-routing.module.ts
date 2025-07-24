@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: promoComponent,
     data: {
-      title: 'promo'
-    }
-  }
+      title: 'promo',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class promoRoutingModule { }
+
+
+
+

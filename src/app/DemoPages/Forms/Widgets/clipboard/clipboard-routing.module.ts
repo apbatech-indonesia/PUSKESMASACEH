@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: ClipboardComponent,
     data: {
-      title: 'Clipboard'
-    }
-  }
+      title: 'Clipboard',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class ClipboardRoutingModule { }
+
+
+
+

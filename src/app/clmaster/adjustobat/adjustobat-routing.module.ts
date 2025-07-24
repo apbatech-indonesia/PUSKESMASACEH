@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {  adjustobatComponent } from './adjustobat.component';
+import { adjustobatComponent } from './adjustobat.component';
 
 const routes: Routes = [
   {
@@ -16,4 +16,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class  adjustobatRoutingModule { }
+export class adjustobatRoutingModule { }
+
+

@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { MenuMatComponent } from './menu.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { MenuMatComponent } from "./menu.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: MenuMatComponent,
     data: {
-      title: 'MenuMat'
-    }
-  }
+      title: "MenuMat",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class MenuMatRoutingModule { }
+export class MenuMatRoutingModule {}

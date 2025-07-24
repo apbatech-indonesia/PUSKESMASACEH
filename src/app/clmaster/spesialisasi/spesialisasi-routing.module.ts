@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: spesialisasiComponent,
     data: {
-      title: 'spesialisasi'
-    }
-  }
+      title: 'spesialisasi',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class spesialisasiRoutingModule { }
+
+
+
+

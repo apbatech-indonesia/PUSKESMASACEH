@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { SelectComponent } from './select.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { SelectComponent } from "./select.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: SelectComponent,
     data: {
-      title: 'Select'
-    }
-  }
+      title: "Select",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class SelectRoutingModule { }
+export class SelectRoutingModule {}

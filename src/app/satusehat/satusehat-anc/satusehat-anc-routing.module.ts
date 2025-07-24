@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { satusehatAncComponent } from './satusehat-anc.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { satusehatAncComponent } from "./satusehat-anc.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: satusehatAncComponent,
     data: {
-      title: 'satusehatAnc'
-    }
-  }
+      title: "satusehatAnc",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class  satusehatAncRoutingModule { }
+export class satusehatAncRoutingModule {}

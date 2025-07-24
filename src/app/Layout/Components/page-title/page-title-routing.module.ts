@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { PageTitleComponent } from './page-title.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { PageTitleComponent } from "./page-title.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: PageTitleComponent,
     data: {
-      title: 'PageTitle'
-    }
-  }
+      title: "PageTitle",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PageTitleRoutingModule { }
+export class PageTitleRoutingModule {}

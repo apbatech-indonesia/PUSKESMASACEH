@@ -7,13 +7,17 @@ const routes: Routes = [
     path: '',
     component: MtarifComponent,
     data: {
-      title: 'mtarif'
-    }
-  }
+      title: 'mtarif',
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class  MtarifRoutingModule { }
+export class MtarifRoutingModule { }
+
+
+
+

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
@@ -58,11 +58,12 @@ const routes: Routes = [
         loadChildren: () => import('./dropzone/dropzone.module').then(m => m.DropzoneModules)
       },
     ]
-  }
-];
+  }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class FormWidgetsRoutingModule { }
+
+

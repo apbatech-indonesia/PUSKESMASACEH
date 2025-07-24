@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: MrekeningComponent,
     data: {
-      title: 'mrekening'
-    }
-  }
+      title: 'mrekening',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class MrekeningRoutingModule { }
+
+
+
+

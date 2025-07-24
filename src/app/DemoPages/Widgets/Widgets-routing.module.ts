@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
@@ -27,11 +27,12 @@ const routes: Routes = [
         loadChildren: () => import('./profile-boxes/profile-boxes.module').then(m => m.ProfileBoxesModule)
       },
     ]
-  }
-];
+  }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class WidgetsRoutingModule { }
+
+

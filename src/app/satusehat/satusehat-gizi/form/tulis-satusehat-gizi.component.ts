@@ -154,8 +154,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         objectSatuanPernapasan: ['']
       }),
       kondisiMata: [''],
-      kondisiBibir: [''],
-    });
+      kondisiBibir: ['']});
     this.formMalnitrisi = this.fb.group({
       nilaiSkorMalnutrisi: [''],
       items: this.fb.group({
@@ -342,11 +341,8 @@ export class TulisSatuSehatGiziComponent implements OnInit {
           return {
             linkId: question.link_id,
             text: question.text,
-            answer: parsedAnswer,
-          };
-        }),
-      },
-    ];
+            answer: parsedAnswer};
+        })}];
 
     const payload = {
       data: {
@@ -605,8 +601,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
         ],
         "effectiveDateTime": "2024-04-24T00:23:30+00:00",
         "issued": this.dateNow
-      },
-    ];
+      }];
     const headToToePayload = [
       {
         "name": "eye_narrative",
@@ -796,8 +791,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   }
   async cariTerminologiTingkatKesadaran() {
     let payload = {
-      terminology_id: 199,
-    };
+      terminology_id: 199};
     try
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
@@ -809,8 +803,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   }
   async cariTerminologiTandaVitalSistolik() {
     let payload = {
-      terminology_id: 172,
-    };
+      terminology_id: 172};
     try
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
@@ -822,8 +815,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   }
   async cariTerminologiTandaVitalDistolik() {
     let payload = {
-      terminology_id: 209,
-    };
+      terminology_id: 209};
     try
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
@@ -835,8 +827,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   }
   async cariTerminologiTandaVitalbodytemprature() {
     let payload = {
-      terminology_id: 170,
-    };
+      terminology_id: 170};
     try
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
@@ -848,8 +839,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   }
   async cariTerminologiTandaVitalHeartRate() {
     let payload = {
-      terminology_id: 170,
-    };
+      terminology_id: 170};
     try
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
@@ -861,8 +851,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   }
   async cariTerminologiTandaVitalRespiratoryRate() {
     let payload = {
-      terminology_id: 173,
-    };
+      terminology_id: 173};
     try
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
@@ -873,8 +862,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     }
   } async cariTerminologiKategoriMalnutrisi() {
     let payload = {
-      terminology_id: 252,
-    };
+      terminology_id: 252};
     try
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
@@ -886,8 +874,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   }
   async cariTerminologiEyeNarative() {
     let payload = {
-      terminology_id: 250,
-    };
+      terminology_id: 250};
     try
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
@@ -899,8 +886,7 @@ export class TulisSatuSehatGiziComponent implements OnInit {
   }
   async cariTerminologiFindingOfLip() {
     let payload = {
-      terminology_id: 251,
-    };
+      terminology_id: 251};
     try
     {
       let itemResponse: any = await this.GiziService.getDataTerminologi(payload);
@@ -1257,3 +1243,5 @@ export class TulisSatuSehatGiziComponent implements OnInit {
     return obj;
   }
 }
+
+

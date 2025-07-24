@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: TabsComponent,
     data: {
-      title: 'Tabs'
-    }
-  }
+      title: 'Tabs',
+    },
+  },
 ];
 
 @NgModule({
@@ -17,3 +17,7 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class TabsRoutingModule { }
+
+
+
+

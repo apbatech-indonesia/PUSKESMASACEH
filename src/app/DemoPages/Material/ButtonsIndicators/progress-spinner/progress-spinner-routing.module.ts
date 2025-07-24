@@ -1,19 +1,19 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ProgressSpinnerComponent } from './progress-spinner.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { ProgressSpinnerComponent } from "./progress-spinner.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: ProgressSpinnerComponent,
     data: {
-      title: 'ProgressSpinner'
-    }
-  }
+      title: "ProgressSpinner",
+    },
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ProgressSpinnerRoutingModule { }
+export class ProgressSpinnerRoutingModule {}
