@@ -4,6 +4,7 @@
 // @import '../../../../node_modules/flag-icon-css/sass/flag-icon-list';
 
 // Import the CSS version instead
+// FlagKit - Using CSS instead of SASS to avoid deprecation warnings
 @import '~flag-icon-css/css/flag-icon.min.css';
 
 .flag-icon-lg {
