@@ -5,10 +5,7 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
 @Component({
   selector: 'app-chips',
   templateUrl: './chips.component.html',
-  styles: [`
-    .demo-chip-list {
-      width: 100%;
-    }`]
+  styleUrls: ['./chips.component.css']
 })
 export class ChipsComponent {
 

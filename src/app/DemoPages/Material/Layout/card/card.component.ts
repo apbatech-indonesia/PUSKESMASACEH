@@ -3,15 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styles: [`
-    .example-card {
-      max-width: 400px;
-    }
-
-    .example-header-image {
-      background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
-      background-size: cover;
-    }`]
+  styleUrls: ['./card.component.css']
 })
 export class CardMatComponent implements OnInit {
 

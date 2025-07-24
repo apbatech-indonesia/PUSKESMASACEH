@@ -3,14 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-mat-tabs',
   templateUrl: './mat-tabs.component.html',
-  styles: [`
-    .demo-tab-group {
-      border: 1px solid #e8e8e8;
-    }
-
-    .demo-tab-content {
-      padding: 16px;
-    }`]
+  styleUrls: ['./mat-tabs.component.css']
 })
 export class MatTabsComponent implements OnInit {
 

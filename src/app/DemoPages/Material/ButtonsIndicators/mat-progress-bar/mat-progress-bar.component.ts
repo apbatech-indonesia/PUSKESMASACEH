@@ -3,21 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-mat-progress-bar',
   templateUrl: './mat-progress-bar.component.html',
-  styles: [`
-    .example-h2 {
-      margin: 10px;
-    }
-
-    .example-section {
-      display: flex;
-      align-content: center;
-      align-items: center;
-      height: 60px;
-    }
-
-    .example-margin {
-      margin: 0 10px;
-    }`]
+  styleUrls: ['./mat-progress-bar.component.css']
 })
 export class MatProgressBarComponent implements OnInit {
 

@@ -3,16 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-expansion-panel',
   templateUrl: './expansion-panel.component.html',
-  styles: [`
-    .example-headers-align .mat-expansion-panel-header-title,
-    .example-headers-align .mat-expansion-panel-header-description {
-      flex-basis: 0;
-    }
-
-    .example-headers-align .mat-expansion-panel-header-description {
-      justify-content: space-between;
-      align-items: center;
-    }`]
+  styleUrls: ['./expansion-panel.component.css']
 })
 export class ExpansionPanelComponent implements OnInit {
 

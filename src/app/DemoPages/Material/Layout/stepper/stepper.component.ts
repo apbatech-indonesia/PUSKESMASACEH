@@ -4,10 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-stepper',
   templateUrl: './stepper.component.html',
-  styles: [`
-    .mat-list-icon {
-      color: rgba(0, 0, 0, 0.54);
-    }`]
+  styleUrls: ['./stepper.component.css']
 })
 export class StepperComponent implements OnInit {
 

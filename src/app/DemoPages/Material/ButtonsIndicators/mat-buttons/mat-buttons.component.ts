@@ -3,12 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-mat-buttons',
   templateUrl: './mat-buttons.component.html',
-  styles: [`
-    .example-button-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-    }`]
+  styleUrls: ['./mat-buttons.component.css']
 })
 export class MatButtonsComponent implements OnInit {
 

@@ -3,21 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-slider-toggle',
   templateUrl: './slider-toggle.component.html',
-  styles: [`
-    .example-h2 {
-      margin: 10px;
-    }
-
-    .example-section {
-      display: flex;
-      align-content: center;
-      align-items: center;
-      height: 60px;
-    }
-
-    .example-margin {
-      margin: 10px;
-    }`]
+  styleUrls: ['./slider-toggle.component.css']
 })
 export class SliderToggleComponent implements OnInit {
 

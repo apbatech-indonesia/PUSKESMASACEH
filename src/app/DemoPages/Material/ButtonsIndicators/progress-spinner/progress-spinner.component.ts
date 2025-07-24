@@ -3,21 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-progress-spinner',
   templateUrl: './progress-spinner.component.html',
-  styles: [`
-    .example-h2 {
-      margin: 10px;
-    }
-
-    .example-section {
-      display: flex;
-      align-content: center;
-      align-items: center;
-      height: 60px;
-    }
-
-    .example-margin {
-      margin: 0 10px;
-    }`]
+  styleUrls: ['./progress-spinner.component.css']
 })
 export class ProgressSpinnerComponent implements OnInit {
 

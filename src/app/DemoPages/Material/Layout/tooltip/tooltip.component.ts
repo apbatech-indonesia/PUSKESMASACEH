@@ -3,16 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-tooltip',
   templateUrl: './tooltip.component.html',
-  styles: [`
-    .example-tooltip-host {
-      display: inline-flex;
-      align-items: center;
-      margin: 50px;
-    }
-
-    .example-select {
-      margin: 0 10px;
-    }`]
+  styleUrls: ['./tooltip.component.css']
 })
 export class TooltipComponent implements OnInit {
 

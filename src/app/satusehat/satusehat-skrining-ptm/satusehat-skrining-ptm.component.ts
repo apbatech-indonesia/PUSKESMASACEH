@@ -29,9 +29,6 @@ import { FarmasijualService } from 'src/app/clmaster/kasirfarmasijual/farmasijua
 @Component({
   selector: 'app-ermdokterrm',
   templateUrl: './satusehat-skrining-ptm.component.html',
-  styles: [
-   
-  ],
   providers: [
     DatePipe,
     // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing

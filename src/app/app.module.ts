@@ -33,7 +33,7 @@ import { SlickCarouselModule } from "ngx-slick-carousel";
 import { CalendarModule, DateAdapter } from "angular-calendar";
 import { adapterFactory } from "angular-calendar/date-adapters/date-fns";
 // import { CountUpModule } from 'countup.js-angular2';
-import { AgmCoreModule } from "@agm/core";
+import { GoogleMapsModule } from "@angular/google-maps";
 import { ImageCropperModule } from "ngx-image-cropper";
 import { NgBootstrapFormValidationModule } from "ng-bootstrap-form-validation";
 import { NouisliderModule } from "ng2-nouislider";
@@ -344,11 +344,7 @@ import { skriningModule } from "./clmaster/skrining/skrining.module";
       useFactory: adapterFactory,
     }),
     // CountUpModule,
-    AgmCoreModule.forRoot({
-      // please get your own API key here:
-      // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en
-      apiKey: "",
-    }),
+    GoogleMapsModule,
     ImageCropperModule,
     NouisliderModule,
     NgSelectModule,

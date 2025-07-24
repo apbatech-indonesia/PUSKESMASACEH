@@ -65,61 +65,7 @@ import { ItemsList } from "@ng-select/ng-select/lib/items-list";
 @Component({
   selector: "app-tuliserm",
   templateUrl: "./tuliserm.component.html",
-  styles: [
-    `
-      #img1 {
-        width: 400px;
-        height: 300px;
-        background-size: fit;
-      }
-      #emotRange {
-        width: 100%;
-      }
-      .container {
-        width: 300px;
-        margin: 2rem auto 0;
-      }
-      .moji {
-        font-size: 8em;
-        text-align: center;
-      }
-
-      .slider {
-        display: flex;
-        justify-content: space-between;
-      }
-      span {
-        font-weight: bold;
-        color: #5fcf80;
-      }
-      span:last-child {
-        color: tomato;
-      }
-
-      .sliderLabels {
-        list-style-type: none;
-        width: 320px;
-        margin-bottom: 0px;
-        padding-left: 25px;
-        padding-right: 0px;
-        margin-right: 0px;
-        text-align: justify;
-        display: flex;
-        justify-content: space-between;
-      }
-
-      .slider {
-        width: 300px;
-        margin-left: 25px;
-        cursor: pointer;
-      }
-
-      ul > li {
-        display: inline-block;
-        font-size: 10px;
-      }
-    `,
-  ],
+  styleUrls: ["./tuliserm.component.css"],
   providers: [
     // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
     // `MatMomentDateModule` in your applications root module. We provide it at the component level

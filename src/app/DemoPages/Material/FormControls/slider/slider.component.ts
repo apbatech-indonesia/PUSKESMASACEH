@@ -3,29 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 @Component({
   selector: 'app-slider',
   templateUrl: './slider.component.html',
-  styles: [`
-    .example-h2 {
-      margin: 10px;
-    }
-
-    .example-section {
-      display: flex;
-      align-content: center;
-      align-items: center;
-      height: 60px;
-    }
-
-    .example-margin {
-      margin: 10px;
-    }
-
-    .mat-slider-horizontal {
-      width: 300px;
-    }
-
-    .mat-slider-vertical {
-      height: 300px;
-    }`],
+  styleUrls: ['./slider.component.css'],
   encapsulation: ViewEncapsulation.None,
   preserveWhitespaces: false,
 })

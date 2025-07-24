@@ -13,15 +13,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 @Component({
   selector: 'app-input',
   templateUrl: './input.component.html',
-  styles: [`
-    .example-form {
-      min-width: 150px;
-      width: 100%;
-    }
-
-    .example-full-width {
-      width: 100%;
-    }`]
+  styleUrls: ['./input.component.css']
 })
 export class InputComponent implements OnInit {
 

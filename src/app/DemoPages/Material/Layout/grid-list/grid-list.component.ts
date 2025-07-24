@@ -3,10 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-grid-list',
   templateUrl: './grid-list.component.html',
-  styles: [`
-    mat-grid-tile {
-      background: #16aaff;
-    }`]
+  styleUrls: ['./grid-list.component.css']
 })
 export class GridListComponent implements OnInit {
 
