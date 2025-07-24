@@ -158,15 +158,15 @@ dialog p a:visited {
   background: #ffffff;
   padding: 0 8px;
   transition: border 0.3s ease;
+}
 
-  &::placeholder {
-    color: #cbd1dc;
-  }
+.form-field::placeholder {
+  color: #cbd1dc;
+}
 
-  &:focus {
-    outline: none;
-    border-color: #678efe;
-  }
+.form-field:focus {
+  outline: none;
+  border-color: #678efe;
 }
 
 .form-field-preview {
@@ -227,39 +227,37 @@ dialog p a:visited {
   position: relative;
   display: flex;
   width: 100%;
+}
 
-  > span,
-  .form-field {
-    white-space: nowrap;
-    display: block;
-  }
+.form-group > span,
+.form-group .form-field {
+  white-space: nowrap;
+  display: block;
+}
 
-  .form-field {
-    position: relative;
-    z-index: 1;
-    flex: 1 1 auto;
-    width: 1%;
-    margin: 0;
-  }
+.form-group .form-field {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  width: 1%;
+  margin: 0;
+}
 
-  > span {
-    text-align: center;
-    padding: 8px 12px;
-    font-size: 14px;
-    line-height: 25px;
-    color: #99a3ba;
-    background: #eef4ff;
-    border: 1px solid #cdd9ed;
-    transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
-  }
+.form-group > span {
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 25px;
+  color: #99a3ba;
+  background: #eef4ff;
+  border: 1px solid #cdd9ed;
+  transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
+}
 
-  &:focus-within {
-    > span {
-      color: #fff;
-      background: #678efe;
-      border-color: #678efe;
-    }
-  }
+.form-group:focus-within > span {
+  color: #fff;
+  background: #678efe;
+  border-color: #678efe;
 }
 
 /* // ================ Button with Tooltip ================== */
@@ -267,74 +265,74 @@ dialog p a:visited {
 .wrapper {
   display: inline-flex;
   list-style: none;
+}
 
-  .icon {
-    position: relative;
-    background: #ffffff;
-    border-radius: 50%;
-    padding: 15px;
-    margin: 10px;
-    width: 50px;
-    height: 50px;
-    font-size: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+.wrapper .icon {
+  position: relative;
+  background: #ffffff;
+  border-radius: 50%;
+  padding: 15px;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
 
-    .tooltip {
-      position: absolute;
-      top: 0;
-      font-size: 14px;
-      background: #ffffff;
-      color: #ffffff;
-      padding: 5px 8px;
-      border-radius: 5px;
-      box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+.wrapper .icon .tooltip {
+  position: absolute;
+  top: 0;
+  font-size: 14px;
+  background: #ffffff;
+  color: #ffffff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
 
-      &::before {
-        position: absolute;
-        content: "";
-        height: 8px;
-        width: 8px;
-        background: #ffffff;
-        bottom: -3px;
-        left: 50%;
-        transform: translate(-50%) rotate(45deg);
-      }
-    }
+.wrapper .icon .tooltip::before {
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  background: #ffffff;
+  bottom: -3px;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+}
 
-    &:hover .tooltip {
-      top: -45px;
-      opacity: 1;
-      visibility: visible;
-      pointer-events: auto;
-    }
+.wrapper .icon:hover .tooltip {
+  top: -45px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
 
-    &:hover span,
-    &:hover .tooltip {
-      text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
-    }
-  }
+.wrapper .icon:hover span,
+.wrapper .icon:hover .tooltip {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
+}
 
-  .youtube:hover,
-  .youtube:hover .tooltip,
-  .youtube:hover .tooltip::before {
-    background: #cd201f;
-    color: #ffffff;
-  }
+.wrapper .youtube:hover,
+.wrapper .youtube:hover .tooltip,
+.wrapper .youtube:hover .tooltip::before {
+  background: #cd201f;
+  color: #ffffff;
+}
 
-  .info-btn:hover,
-  .info-btn:hover .info,
-  .info-btn:hover .info::before {
-    background: #7fbeab;
-  }
+.wrapper .info-btn:hover,
+.wrapper .info-btn:hover .info,
+.wrapper .info-btn:hover .info::before {
+  background: #7fbeab;
 }
 
 /* // ================ Misc =============== */
@@ -353,30 +351,30 @@ dialog p a:visited {
   position: relative;
   transition: background-color 0.6s ease;
   overflow: hidden;
+}
 
-  &:after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 0;
-    top: var(--mouse-y);
-    left: var(--mouse-x);
-    transform: translate3d(-50%, -50%, 0);
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 100%;
-    transition: width 0.3s ease, height 0.3s ease;
-  }
+.button:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  top: var(--mouse-y);
+  left: var(--mouse-x);
+  transform: translate3d(-50%, -50%, 0);
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100%;
+  transition: width 0.3s ease, height 0.3s ease;
+}
 
-  &:focus,
-  &:hover {
-    background: #b71a17;
-    cursor: pointer;
-  }
+.button:focus,
+.button:hover {
+  background: #b71a17;
+  cursor: pointer;
+}
 
-  &:active:after {
-    width: 300px;
-    height: 300px;
-  }
+.button:active:after {
+  width: 300px;
+  height: 300px;
 }
 
 :host ::ng-deep .width-100 {

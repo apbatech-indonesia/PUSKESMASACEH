@@ -70,42 +70,46 @@ dialog {
   border: 0;
   box-shadow: 0 5px 30px 0 rgb(0 0 0 / 10%);
   animation: fadeIn 1s ease both;
-  &::backdrop {
-    animation: fadeIn 1s ease both;
-    background: rgb(255 255 255 / 40%);
-    z-index: 2;
-    backdrop-filter: blur(20px);
-  }
-  .x {
-    filter: grayscale(1);
-    border: none;
-    background: none;
-    position: absolute;
-    top: 15px;
-    right: 10px;
-    transition: ease filter, transform 0.3s;
-    cursor: pointer;
-    transform-origin: center;
-    &:hover {
-      filter: grayscale(0);
-      transform: scale(1.1);
-    }
-  }
-  h3 {
-    font-weight: 600;
-    font-size: 1.5rem;
-    padding-bottom: 0.1rem;
-  }
-  p {
-    font-size: 1rem;
-    line-height: 1rem;
-    padding: 0.5rem 0;
-    a {
-      &:visited {
-        color: rgb(var(--vs-primary));
-      }
-    }
-  }
+}
+
+dialog::backdrop {
+  animation: fadeIn 1s ease both;
+  background: rgb(255 255 255 / 40%);
+  z-index: 2;
+  backdrop-filter: blur(20px);
+}
+
+dialog .x {
+  filter: grayscale(1);
+  border: none;
+  background: none;
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  transition: ease filter, transform 0.3s;
+  cursor: pointer;
+  transform-origin: center;
+}
+
+dialog .x:hover {
+  filter: grayscale(0);
+  transform: scale(1.1);
+}
+
+dialog h3 {
+  font-weight: 600;
+  font-size: 1.5rem;
+  padding-bottom: 0.1rem;
+}
+
+dialog p {
+  font-size: 1rem;
+  line-height: 1rem;
+  padding: 0.5rem 0;
+}
+
+dialog p a:visited {
+  color: rgb(var(--vs-primary));
 }
 
 @keyframes fadeIn {
@@ -161,48 +165,58 @@ dialog {
   position: relative;
   display: flex;
   width: 100%;
-  & > span,
-  .form-field {
-    white-space: nowrap;
-    display: block;
-    &:not(:first-child):not(:last-child) {
-      border-radius: 0 6px 6px 0;
-    }
-    &:first-child {
-      border-radius: 6px 0 0 6px;
-    }
-    &:last-child {
-      border-radius: 0 6px 6px 0;
-    }
-    &:not(:first-child) {
-      margin-left: -1px;
-    }
-  }
-  .form-field {
-    position: relative;
-    z-index: 1;
-    flex: 1 1 auto;
-    width: 1%;
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-  & > span {
-    text-align: center;
-    padding: 8px 12px;
-    font-size: 14px;
-    line-height: 25px;
-    color: #99a3ba;
-    background: #eef4ff;
-    border: 1px solid #cdd9ed;
-    transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
-  }
-  &:focus-within {
-    & > span {
-      color: #fff;
-      background: #678efe;
-      border-color: #678efe;
-    }
-  }
+}
+
+.form-group > span,
+.form-group .form-field {
+  white-space: nowrap;
+  display: block;
+}
+
+.form-group > span:not(:first-child):not(:last-child),
+.form-group .form-field:not(:first-child):not(:last-child) {
+  border-radius: 0 6px 6px 0;
+}
+
+.form-group > span:first-child,
+.form-group .form-field:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.form-group > span:last-child,
+.form-group .form-field:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.form-group > span:not(:first-child),
+.form-group .form-field:not(:first-child) {
+  margin-left: -1px;
+}
+
+.form-group .form-field {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 auto;
+  width: 1%;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.form-group > span {
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 25px;
+  color: #99a3ba;
+  background: #eef4ff;
+  border: 1px solid #cdd9ed;
+  transition: background 0.3s ease, border 0.3s ease, color 0.3s ease;
+}
+
+.form-group:focus-within > span {
+  color: #fff;
+  background: #678efe;
+  border-color: #678efe;
 }
 
 html {
@@ -212,10 +226,11 @@ html {
 
 * {
   box-sizing: inherit;
-  &:before,
-  &:after {
-    box-sizing: inherit;
-  }
+}
+
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
 .form-field {
