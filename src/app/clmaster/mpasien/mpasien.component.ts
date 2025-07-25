@@ -947,7 +947,11 @@ export class MpasienComponent implements OnInit {
     this.propinsi = x.prov_name;
     this.kabupaten = x.city_name;
     this.kecamatan = x.dis_name;
-    this.keluarahan = keluarahan;
+
+    this.propinsiid = x.prov_id;
+    this.kabupatenid = x.city_id;
+    this.kecamatanid = x.dis_id;
+    this.keluarahanid = x.subdis_id;
     this.showtombolpasien = false;
 
     this.an = kdpanggil;
