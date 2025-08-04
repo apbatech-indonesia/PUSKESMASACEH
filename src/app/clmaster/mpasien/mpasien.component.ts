@@ -20,6 +20,8 @@ import {
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import { Observable, of } from "rxjs";
+import { map, catchError } from "rxjs/operators";
 
 // 1103072308910001
 @Component({
@@ -119,8 +121,8 @@ export class MpasienComponent implements OnInit {
   carinobpjs: any = "noka";
   isShowPasienList: boolean;
 
-  pendidikanList: any;
-  pekerjaanList: any;
+  pendidikanList$: Observable<any[]>;
+  pekerjaanList$: Observable<any[]>;
 
   slug: any;
 
@@ -175,8 +177,8 @@ export class MpasienComponent implements OnInit {
         console.log(Error);
       }
     );
-    this.getPendidikanList();
-    this.getPekerjaanList();
+    this.pendidikanList$ = this.getPendidikanList();
+    this.pekerjaanList$ = this.getPekerjaanList();
     // let body = {"id" : 'ax'};
 
     //     this.http.post<any>('https://clenicapp.com/phpjwt/crud-file/get-single-products.php',body).subscribe(data => {
@@ -1427,35 +1429,35 @@ export class MpasienComponent implements OnInit {
     console.log(this.usiadeal);
   }
 
-  getPendidikanList() {
-    this.authService.getPendidikanList(this.slug).subscribe(
-      (response) => {
+  getPendidikanList(): Observable<any[]> {
+    return this.authService.getPendidikanList(this.slug).pipe(
+      map((response) => {
         if (response && response.success) {
-          this.pendidikanList = response.data;
+          return response.data;
         } else {
-          this.pendidikanList = [];
+          return [];
         }
-      },
-      (error) => {
-        this.pendidikanList = [];
+      }),
+      catchError((error) => {
         console.error("Gagal mengambil data pendidikan", error);
-      }
+        return of([]);
+      })
     );
   }
 
-  getPekerjaanList() {
-    this.authService.getPekerjaanList(this.slug).subscribe(
-      (response) => {
+  getPekerjaanList(): Observable<any[]> {
+    return this.authService.getPekerjaanList(this.slug).pipe(
+      map((response) => {
         if (response && response.success) {
-          this.pekerjaanList = response.data;
+          return response.data;
         } else {
-          this.pekerjaanList = [];
+          return [];
         }
-      },
-      (error) => {
-        this.pekerjaanList = [];
+      }),
+      catchError((error) => {
         console.error("Gagal mengambil data pekerjaan", error);
-      }
+        return of([]);
+      })
     );
   }
 }

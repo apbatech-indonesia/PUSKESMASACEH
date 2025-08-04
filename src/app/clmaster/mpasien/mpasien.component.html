@@ -442,7 +442,7 @@
                 >
                   <option value="">-PILIH-</option>
                   <option
-                    *ngFor="let p of pendidikanList"
+                    *ngFor="let p of pendidikanList$ | async"
                     [value]="p.nama_pendidikan"
                   >
                     {{ p.nama_pendidikan }}
@@ -469,7 +469,7 @@
                   class="form-select"
                 >
                   <option value="">-PILIH-</option>
-                  <option *ngFor="let p of pekerjaanList" [value]="p.nama_pekerjaan">
+                  <option *ngFor="let p of pekerjaanList$ | async" [value]="p.nama_pekerjaan">
                     {{ p.nama_pekerjaan }}
                   </option>
                   <option value="TIDAK TAHU">TIDAK TAHU</option>
