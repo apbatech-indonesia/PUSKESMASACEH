@@ -201,6 +201,10 @@ export class ApiserviceService {
     );
   }
 
+  getPendidikanList(): Observable<any> {
+    return this.http.get<any>("/api/pendidikan");
+  }
+
   getAllBpjsKegiatanDropdown() {
     return this.http.get(
       environment.pcareUrl + environment.pcareKelompokPath + "/get-drop-down"
