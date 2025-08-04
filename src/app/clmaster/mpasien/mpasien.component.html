@@ -441,14 +441,12 @@
                   class="form-select"
                 >
                   <option value="">-PILIH-</option>
-                  <option value="SD">SD</option>
-                  <option value="SMP">SMP</option>
-                  <option value="SMA">SMA</option>
-                  <option value="D3">D3</option>
-                  <option value="D4">D4</option>
-                  <option value="S1">S1</option>
-                  <option value="S2">S2</option>
-                  <option value="S3">S3</option>
+                  <option
+                    *ngFor="let p of pendidikanList"
+                    [value]="p.nama_pendidikan"
+                  >
+                    {{ p.nama_pendidikan }}
+                  </option>
                   <option value="TIDAK TAHU">TIDAK TAHU</option>
                 </select>
               </div>
@@ -471,22 +469,9 @@
                   class="form-select"
                 >
                   <option value="">-PILIH-</option>
-                  <option *ngFor="let x of tgolonganlab" value="{{ x.metode }}">
-                    {{ x.metode }}
+                  <option *ngFor="let p of pekerjaanList" [value]="p.nama_pekerjaan">
+                    {{ p.nama_pekerjaan }}
                   </option>
-                  <option value="WIRAUSAHA">WIRAUSAHA</option>
-                  <option value="PEGAWAI NEGERI">PEGAWAI NEGERI</option>
-                  <option value="PEGAWAI SWASTA">PEGAWAI SWASTA</option>
-                  <option value="PENSIUNAN">PENSIUNAN</option>
-                  <option value="IRT">IRT</option>
-                  <option value="PELAJAR">PELAJAR</option>
-                  <option value="PENGAJAR">PENGAJAR</option>
-                  <option value="PETANI">PETANI</option>
-                  <option value="BURUH HARIAN LEPAS">BURUH HARIAN LEPAS</option>
-                  <option value="PEDAGANG">PEDAGANG</option>
-                  <option value="DOKTER">DOKTER</option>
-                  <option value="TNI">TNI</option>
-                  <option value="POLISI">POLISI</option>
                   <option value="TIDAK TAHU">TIDAK TAHU</option>
                 </select>
               </div>

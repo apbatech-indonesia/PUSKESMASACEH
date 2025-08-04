@@ -201,8 +201,12 @@ export class ApiserviceService {
     );
   }
 
-  getPendidikanList(): Observable<any> {
-    return this.http.get<any>("/api/pendidikan");
+  getPendidikanList(slug: any): Observable<any> {
+    return this.http.get<any>(`/api/${slug}/pendidikan`);
+  }
+
+  getPekerjaanList(slug: any): Observable<any> {
+    return this.http.get<any>(`/api/${slug}/pekerjaan`);
   }
 
   getAllBpjsKegiatanDropdown() {

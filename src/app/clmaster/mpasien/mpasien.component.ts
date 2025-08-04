@@ -119,6 +119,11 @@ export class MpasienComponent implements OnInit {
   carinobpjs: any = "noka";
   isShowPasienList: boolean;
 
+  pendidikanList: any;
+  pekerjaanList: any;
+
+  slug: any;
+
   constructor(
     public http: HttpClient,
     private datepipe: DatePipe,
@@ -170,6 +175,8 @@ export class MpasienComponent implements OnInit {
         console.log(Error);
       }
     );
+    this.getPendidikanList();
+    this.getPekerjaanList();
     // let body = {"id" : 'ax'};
 
     //     this.http.post<any>('https://clenicapp.com/phpjwt/crud-file/get-single-products.php',body).subscribe(data => {
@@ -201,6 +208,7 @@ export class MpasienComponent implements OnInit {
     this.authService.cabangper(this.kdklinik).subscribe(
       (data) => {
         this.cabangarr = data;
+        this.slug = data[0]?.slug; // Assuming slug is the first element in the array
       },
       (Error) => {
         console.log(Error);
@@ -1417,5 +1425,37 @@ export class MpasienComponent implements OnInit {
       " hari";
     // console.log('Selisih:', difference.years, 'tahun', difference.months, 'bulan', difference.days, 'hari');
     console.log(this.usiadeal);
+  }
+
+  getPendidikanList() {
+    this.authService.getPendidikanList(this.slug).subscribe(
+      (response) => {
+        if (response && response.success) {
+          this.pendidikanList = response.data;
+        } else {
+          this.pendidikanList = [];
+        }
+      },
+      (error) => {
+        this.pendidikanList = [];
+        console.error("Gagal mengambil data pendidikan", error);
+      }
+    );
+  }
+
+  getPekerjaanList() {
+    this.authService.getPekerjaanList(this.slug).subscribe(
+      (response) => {
+        if (response && response.success) {
+          this.pekerjaanList = response.data;
+        } else {
+          this.pekerjaanList = [];
+        }
+      },
+      (error) => {
+        this.pekerjaanList = [];
+        console.error("Gagal mengambil data pekerjaan", error);
+      }
+    );
   }
 }
