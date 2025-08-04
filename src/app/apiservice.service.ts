@@ -202,11 +202,11 @@ export class ApiserviceService {
   }
 
   getPendidikanList(slug: any): Observable<any> {
-    return this.http.get<any>(`/api/${slug}/pendidikan`);
+    return this.http.get<any>(`https://emr.clenicapp.com/api/${slug}/master/pendidikan`);
   }
 
   getPekerjaanList(slug: any): Observable<any> {
-    return this.http.get<any>(`/api/${slug}/pekerjaan`);
+    return this.http.get<any>(`https://emr.clenicapp.com/api/${slug}/master/pekerjaan`);
   }
 
   getAllBpjsKegiatanDropdown() {
