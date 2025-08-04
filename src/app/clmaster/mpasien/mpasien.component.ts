@@ -21,7 +21,7 @@ import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { Observable, of } from "rxjs";
-import { map, catchError } from "rxjs/operators";
+import { map, catchError, switchMap } from "rxjs/operators";
 
 // 1103072308910001
 @Component({
@@ -177,8 +177,7 @@ export class MpasienComponent implements OnInit {
         console.log(Error);
       }
     );
-    this.pendidikanList$ = this.getPendidikanList();
-    this.pekerjaanList$ = this.getPekerjaanList();
+    // Inisialisasi pendidikan dan pekerjaan dipindah ke klinik() method setelah slug tersedia
     // let body = {"id" : 'ax'};
 
     //     this.http.post<any>('https://clenicapp.com/phpjwt/crud-file/get-single-products.php',body).subscribe(data => {
@@ -211,6 +210,10 @@ export class MpasienComponent implements OnInit {
       (data) => {
         this.cabangarr = data;
         this.slug = data[0]?.slug; // Assuming slug is the first element in the array
+        
+        // Inisialisasi pendidikan dan pekerjaan setelah slug tersedia
+        this.pendidikanList$ = this.getPendidikanList();
+        this.pekerjaanList$ = this.getPekerjaanList();
       },
       (Error) => {
         console.log(Error);
