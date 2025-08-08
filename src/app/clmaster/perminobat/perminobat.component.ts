@@ -1413,9 +1413,10 @@ export class perminobatComponent implements OnInit {
           });
 
           this.tmpnonr();
+          this.bataledit();
+
           setTimeout(async () => {
             if (this.kdobatsatusehat) await this.simpanobatsatusehat();
-            this.bataledit();
           }, 200);
         } else {
           this.toastr.error("Simpan  Gagal", "Eror");
@@ -1526,11 +1527,11 @@ export class perminobatComponent implements OnInit {
           });
 
           this.tmpnonr();
+          this.select.handleClearClick();
 
           setTimeout(async () => {
             if (this.kdobatsatusehat) await this.simpanobatsatusehat();
             this.nmobat = "";
-            this.select.handleClearClick();
             this.frek = "";
             this.jmlpakai = "";
             this.signa = "";
