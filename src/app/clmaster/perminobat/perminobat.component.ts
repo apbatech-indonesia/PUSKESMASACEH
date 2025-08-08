@@ -1526,7 +1526,7 @@ export class perminobatComponent implements OnInit {
           });
 
           this.tmpnonr();
-          
+
           setTimeout(async () => {
             if (this.kdobatsatusehat) await this.simpanobatsatusehat();
             this.nmobat = "";
@@ -1541,8 +1541,6 @@ export class perminobatComponent implements OnInit {
             this.namaobatsatusehat = "";
             this.keterangan = "";
             this.Stok = 0;
-
-            
           }, 200);
         } else {
           this.toastr.error("Simpan  Gagal", "Eror");
