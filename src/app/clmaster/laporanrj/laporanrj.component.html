@@ -95,6 +95,18 @@
             </select>
           </div>
         </div>
+        <div *ngIf="judul === 'Kunjungan Rawat Jalan'">
+          <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label" style="color: black"
+              >Jenis Kelamin</label
+            >
+            <select [(ngModel)]="jk" id="exampleSelect" class="form-select">
+              <option value="semua"><b>SEMUA</b></option>
+              <option value="l"><b>Laki - Laki</b></option>
+              <option value="p"><b>Perempuan</b></option>
+            </select>
+          </div>
+        </div>
         <div *ngIf="judul === 'Pendapatan RJ/Konsumen'">
           <div class="position-relative mb-3">
             <label for="exampleSelect" class="form-label" style="color: black"

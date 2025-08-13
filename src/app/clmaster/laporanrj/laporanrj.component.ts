@@ -206,7 +206,9 @@ export class laporanrjComponent implements OnInit {
         "&tglsampai=" +
         this.tglsampai +
         "&status=" +
-        this.kdklinik,
+        this.kdklinik +
+        "&jk=" +
+        this.jk,
       "_blank",
       "location=no,toolbar=no,height=" +
         screen.height +
