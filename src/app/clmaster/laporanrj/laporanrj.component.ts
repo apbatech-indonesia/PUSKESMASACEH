@@ -51,7 +51,7 @@ export class laporanrjComponent implements OnInit {
   nama: any;
   akses: any;
 
-  kdklinik: any;
+  kdklinik: any = 1;
   cabangarr: any;
 
   cariuser: any;
@@ -60,6 +60,7 @@ export class laporanrjComponent implements OnInit {
   gudang = "";
   kdgudang = "";
   jk: any = "";
+  jeniskelamin: any = "semua";
 
   hakakses: any;
   tgldari = "2013-12-12";
