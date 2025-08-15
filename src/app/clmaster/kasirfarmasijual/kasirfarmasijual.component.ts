@@ -37,7 +37,6 @@ import { DatePipe } from "@angular/common";
 import { Router } from "@angular/router";
 import { McoaComponent } from "../mcoa/mcoa.component";
 import { MobatComponent } from "../mobat/mobat.component";
-import { isThursday } from "date-fns";
 import { mutasifarmasiComponent } from "../mutasifarmasi/mutasifarmasi.component";
 import { SampleService } from "src/app/services";
 import { io } from "socket.io-client";
