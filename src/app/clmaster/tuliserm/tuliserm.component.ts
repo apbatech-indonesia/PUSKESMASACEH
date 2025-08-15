@@ -1556,51 +1556,41 @@ export class tulisermComponent implements OnInit {
                   this.kdprovider = data.response.kdProviderPst.kdProvider;
                   this.pstProl = data.response.pstProl;
                   this.pstPrb = data.response.pstPrb;
-
+                  
                   // Check and send pstProl data if it exists
                   if (this.pstProl && this.pstProl !== "") {
                     const prolPayload = {
                       norm: this.norm,
                       notransaksi: this.notransaksi,
                       type: "pstProl",
-                      data: this.pstProl,
+                      data: this.pstProl
                     };
-                    this.authService
-                      .storeProlanisPrb(this.slug, prolPayload)
-                      .subscribe(
-                        (response) => {
-                          console.log(
-                            "pstProl data sent successfully:",
-                            response
-                          );
-                        },
-                        (error) => {
-                          console.error("Error sending pstProl data:", error);
-                        }
-                      );
+                    this.authService.storeProlanisPrb(this.slug, prolPayload).subscribe(
+                      (response) => {
+                        console.log('pstProl data sent successfully:', response);
+                      },
+                      (error) => {
+                        console.error('Error sending pstProl data:', error);
+                      }
+                    );
                   }
-
+                  
                   // Check and send pstPrb data if it exists
                   if (this.pstPrb && this.pstPrb !== "") {
                     const prbPayload = {
                       norm: this.norm,
                       notransaksi: this.notransaksi,
                       type: "pstPrb",
-                      data: this.pstPrb,
+                      data: this.pstPrb
                     };
-                    this.authService
-                      .storeProlanisPrb(this.slug, prbPayload)
-                      .subscribe(
-                        (response) => {
-                          console.log(
-                            "pstPrb data sent successfully:",
-                            response
-                          );
-                        },
-                        (error) => {
-                          console.error("Error sending pstPrb data:", error);
-                        }
-                      );
+                    this.authService.storeProlanisPrb(this.slug, prbPayload).subscribe(
+                      (response) => {
+                        console.log('pstPrb data sent successfully:', response);
+                      },
+                      (error) => {
+                        console.error('Error sending pstPrb data:', error);
+                      }
+                    );
                   }
                 } else if (data.metaData.code == 204) {
                   // this.showloading = false;
