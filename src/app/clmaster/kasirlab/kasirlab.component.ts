@@ -2553,18 +2553,28 @@ export class kasirlabComponent implements OnInit {
   }
 
   formatTanggalIndo(tgl: string): string {
-    if (!tgl || typeof tgl !== 'string') return '';
+    if (!tgl || typeof tgl !== "string") return "";
     const bulanIndo = [
-      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
     ];
-    const parts = tgl.split('-');
-    if (parts.length !== 3) return '';
+    const parts = tgl.split("-");
+    if (parts.length !== 3) return "";
     const [tahun, bulan, hari] = parts;
-    if (!tahun || !bulan || !hari) return '';
+    if (!tahun || !bulan || !hari) return "";
     const bulanIdx = parseInt(bulan, 10) - 1;
-    if (isNaN(bulanIdx) || bulanIdx < 0 || bulanIdx > 11) return '';
-    if (isNaN(Number(hari)) || isNaN(Number(tahun))) return '';
+    if (isNaN(bulanIdx) || bulanIdx < 0 || bulanIdx > 11) return "";
+    if (isNaN(Number(hari)) || isNaN(Number(tahun))) return "";
     const namaBulan = bulanIndo[bulanIdx];
     return `${hari} ${namaBulan} ${tahun}`;
   }
