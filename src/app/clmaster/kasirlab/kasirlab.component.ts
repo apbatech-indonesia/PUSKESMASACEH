@@ -2551,4 +2551,25 @@ export class kasirlabComponent implements OnInit {
         }
       });
   }
+
+  formatTanggalIndo(tgl: string): string {
+    if (!tgl) return "";
+    const bulanIndo = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+    const [tahun, bulan, hari] = tgl.split("-");
+    const namaBulan = bulanIndo[parseInt(bulan, 10) - 1];
+    return `${hari} ${namaBulan} ${tahun}`;
+  }
 }

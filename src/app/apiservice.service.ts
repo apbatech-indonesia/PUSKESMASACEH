@@ -3450,9 +3450,17 @@ export class ApiserviceService {
     );
   }
 
+
   updateCppt(slugCabang, data: any) {
     return this.http.post(
       `https://emr.clenicapp.com/api/${slugCabang}/cppt/update`,
+      data
+    );
+  }
+
+  validateRujukCppt(slugCabang, data: any) {
+    return this.http.post(
+      `https://emr.clenicapp.com/api/${slugCabang}/cppt/validate-rujuk`,
       data
     );
   }
