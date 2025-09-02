@@ -210,7 +210,7 @@ export class MpasienComponent implements OnInit {
       (data) => {
         this.cabangarr = data;
         this.slug = data[0]?.slug; // Assuming slug is the first element in the array
-        
+
         // Inisialisasi pendidikan dan pekerjaan setelah slug tersedia
         this.pendidikanList$ = this.getPendidikanList();
         this.pekerjaanList$ = this.getPekerjaanList();
@@ -960,6 +960,7 @@ export class MpasienComponent implements OnInit {
     this.propinsi = x.prov_name;
     this.kabupaten = x.city_name;
     this.kecamatan = x.dis_name;
+    this.keluarahan = x.subdis_name;
 
     this.propinsiid = x.prov_id;
     this.kabupatenid = x.city_id;
@@ -981,6 +982,8 @@ export class MpasienComponent implements OnInit {
       " Bulan " +
       difference.days +
       " hari";
+
+    console.log("keluarahan:", x.subdis_name);
 
     this.profileForm.get("keluarahan")?.setValue(x.kdkelurahan);
   }
