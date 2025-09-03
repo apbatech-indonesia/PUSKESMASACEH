@@ -203,15 +203,13 @@
             </form>
           </div>
           <div class="col-md-6">
-            <label for="exampleCity" class="form-label" style="color: black"
-              >Nama Orang Tua</label
-            >
-            <input
-              [(ngModel)]="namaorangtua"
-              placeholder=""
-              type="text"
-              class="form-control"
-            />
+            <!-- <form [formGroup]="profileForm" >
+              <div class="position-relative mb-3">
+                
+                <label for="exampleText" class="form-label" style="color:black;">Alamat Sekarang</label>
+                <textarea  maxlength="200"  formControlName="alamats" [(ngModel)]="alamats" id="exampleText" class="form-control"></textarea>
+              </div>
+            </form> -->
           </div>
         </div>
 
@@ -471,10 +469,7 @@
                   class="form-select"
                 >
                   <option value="">-PILIH-</option>
-                  <option
-                    *ngFor="let p of pekerjaanList$ | async"
-                    [value]="p.nama_pekerjaan"
-                  >
+                  <option *ngFor="let p of pekerjaanList$ | async" [value]="p.nama_pekerjaan">
                     {{ p.nama_pekerjaan }}
                   </option>
                   <option value="TIDAK TAHU">TIDAK TAHU</option>
