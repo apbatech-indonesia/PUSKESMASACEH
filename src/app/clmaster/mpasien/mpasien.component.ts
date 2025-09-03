@@ -125,6 +125,7 @@ export class MpasienComponent implements OnInit {
   pekerjaanList$: Observable<any[]>;
 
   slug: any;
+  namaorangtua: any;
 
   constructor(
     public http: HttpClient,
@@ -434,6 +435,7 @@ export class MpasienComponent implements OnInit {
       jeniskelamin: this.kelamin,
       tanggallahir: this.tgllahir,
       alamat: this.alamat,
+      namaorangtua: this.namaorangtua,
       kodekel: this.keluarahanid,
       identitas: this.indetitas,
       noidentitas: this.noindetitas,
@@ -501,6 +503,7 @@ export class MpasienComponent implements OnInit {
             jeniskelamin: this.kelamin,
             tanggallahir: this.tgllahir,
             alamat: this.alamat,
+            namaorangtua: this.namaorangtua,
             kodekel: this.keluarahanid,
             identitas: this.indetitas,
             noidentitas: this.noindetitas,
@@ -611,6 +614,7 @@ export class MpasienComponent implements OnInit {
                 jeniskelamin: this.kelamin,
                 tanggallahir: this.tgllahir,
                 alamat: this.alamat,
+                namaorangtua: this.namaorangtua,
                 kodekel: this.keluarahanid,
                 identitas: this.indetitas,
                 noidentitas: this.noindetitas,
@@ -682,6 +686,7 @@ export class MpasienComponent implements OnInit {
           jeniskelamin: this.kelamin,
           tanggallahir: this.tgllahir,
           alamat: this.alamat,
+          namaorangtua: this.namaorangtua,
           kodekel: this.keluarahanid,
           identitas: this.indetitas,
           noidentitas: this.noindetitas,
@@ -836,6 +841,7 @@ export class MpasienComponent implements OnInit {
     this.kelamin = "";
     this.alamat = "";
     this.alamats = "";
+    this.namaorangtua = "";
     this.noindetitas = "";
     this.nohp = "";
     this.agama = "TIDAK TAHU";
@@ -944,6 +950,7 @@ export class MpasienComponent implements OnInit {
     this.kelamin = jeniskelamin;
     this.alamat = alamat;
     this.alamats = alamatsekarang;
+    this.namaorangtua = x.namaorangtua;
     this.indetitas = tandapengenal;
     this.noindetitas = nopengenal;
     this.nohp = hp;
