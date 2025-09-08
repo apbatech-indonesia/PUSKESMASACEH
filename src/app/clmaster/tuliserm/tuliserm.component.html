@@ -2502,19 +2502,14 @@ Normal: teraba jelas
                           style="color: black"
                           >Sub Spesialis</label
                         >
-                        <select
-                          id="exampleSelect"
-                          class="form-select"
+                        <ng-select
+                          [items]="tspesialissub"
+                          bindLabel="nmSubSpesialis"
+                          bindValue="kdSubSpesialis"
+                          placeholder="-Pilih-"
                           [(ngModel)]="sspesialis"
                         >
-                          <option value="">-Pilih-</option>
-                          <option
-                            *ngFor="let x of tspesialissub"
-                            value="{{ x.kdSubSpesialis }}"
-                          >
-                            {{ x.nmSubSpesialis }}
-                          </option>
-                        </select>
+                        </ng-select>
                       </div>
 
                       <div
@@ -2602,7 +2597,6 @@ Normal: teraba jelas
                           style="color: black"
                           >Spesialis</label
                         >
-
                         <ng-select
                           [items]="tspesialis"
                           bindLabel="nmSpesialis"
@@ -2622,19 +2616,14 @@ Normal: teraba jelas
                           style="color: black"
                           >Sub Spesialis</label
                         >
-                        <select
-                          id="exampleSelect"
-                          class="form-select"
+                        <ng-select
+                          [items]="tspesialissub"
+                          bindLabel="nmSubSpesialis"
+                          bindValue="kdSubSpesialis"
+                          placeholder="-Pilih-"
                           [(ngModel)]="sspesialis"
                         >
-                          <option value="">-Pilih-</option>
-                          <option
-                            *ngFor="let x of tspesialissub"
-                            value="{{ x.kdSubSpesialis }}"
-                          >
-                            {{ x.nmSubSpesialis }}
-                          </option>
-                        </select>
+                        </ng-select>
                       </div>
                     </div>
                   </div>
