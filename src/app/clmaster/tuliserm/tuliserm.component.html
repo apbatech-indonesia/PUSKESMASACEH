@@ -2449,20 +2449,15 @@ Normal: teraba jelas
                           style="color: black"
                           >Spesialis</label
                         >
-                        <select
-                          id="exampleSelect"
-                          class="form-select"
+                        <ng-select
+                          [items]="tspesialis"
+                          bindLabel="nmSpesialis"
+                          bindValue="kdSpesialis"
+                          placeholder="-Pilih-"
                           [(ngModel)]="spesialis"
-                          (change)="pilihsubsp($event.target.value)"
+                          (change)="pilihsubsp(spesialis)"
                         >
-                          <option value="">-Pilih-</option>
-                          <option
-                            *ngFor="let x of tspesialis"
-                            value="{{ x.kdSpesialis }}"
-                          >
-                            {{ x.nmSpesialis }}
-                          </option>
-                        </select>
+                        </ng-select>
                       </div>
 
                       <div
@@ -2607,20 +2602,16 @@ Normal: teraba jelas
                           style="color: black"
                           >Spesialis</label
                         >
-                        <select
-                          id="exampleSelect"
-                          class="form-select"
+
+                        <ng-select
+                          [items]="tspesialis"
+                          bindLabel="nmSpesialis"
+                          bindValue="kdSpesialis"
+                          placeholder="-Pilih-"
                           [(ngModel)]="spesialis"
-                          (change)="pilihsubsp($event.target.value)"
+                          (change)="pilihsubsp(spesialis)"
                         >
-                          <option value="">-Pilih-</option>
-                          <option
-                            *ngFor="let x of tspesialis"
-                            value="{{ x.kdSpesialis }}"
-                          >
-                            {{ x.nmSpesialis }}
-                          </option>
-                        </select>
+                        </ng-select>
                       </div>
                     </div>
                     <div class="col-md-4">
@@ -3235,7 +3226,7 @@ Normal: teraba jelas
                     {{ x.noKunjungan }}
                   </td>
                   <td>
-                    {{ x.providerRujukLanjut.nmProvider ?? '-' }}
+                    {{ x.providerRujukLanjut.nmProvider ?? "-" }}
                   </td>
                   <td>
                     {{ x.poli.nmPoli }}
