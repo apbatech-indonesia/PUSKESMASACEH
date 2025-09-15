@@ -34,9 +34,8 @@ import {
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
 } from "@angular/material/core";
-import { NgSelectModule, NgOption } from "@ng-select/ng-select";
-import { AngularEditorConfig } from "@kolkov/angular-editor";
 import { DatePipe } from "@angular/common";
+import { HttpHeaders } from "@angular/common/http";
 
 @Component({
   selector: "app-skrining",
@@ -55,6 +54,7 @@ import { DatePipe } from "@angular/common";
 })
 export class skriningComponent implements OnInit {
   @Input() norm: string;
+  @Input() nopengenal: string;
   @Input() idpasien: string;
   @Input() notrans: string;
 
@@ -147,6 +147,24 @@ export class skriningComponent implements OnInit {
     this.getData();
     this.initPage();
     // this.ambilGroup();
+    this.getIdSatuSehat();
+  }
+
+  async getIdSatuSehat() {
+    if (
+      this.idpasien == undefined ||
+      this.idpasien == null ||
+      this.idpasien == ""
+    ) {
+      const headers = new HttpHeaders({
+        "kd-cabang": this.kdcabang,
+      });
+      let response: any = await this.authService
+        .getpasien(this.nopengenal, headers)
+        .toPromise();
+
+      this.idpasien = response.entry[0].resource.id;
+    }
   }
 
   showLoading() {
