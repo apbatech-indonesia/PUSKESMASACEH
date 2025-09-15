@@ -133,8 +133,9 @@ export class skriningComponent implements OnInit {
     private NgbAccordionConfig: NgbAccordionConfig
   ) {
     NgbAccordionConfig.closeOthers = true;
-    NgbAccordionConfig.type = "test";
     NgbAccordionConfig.animation = true;
+    NgbAccordionConfig.type = "test";
+
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
     this.nama = this.userDetails.nama;
