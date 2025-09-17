@@ -1,25 +1,5 @@
 <div>
-  <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
   <div class="app-inner-layout" style="margin: 0 auto; padding: 20px">
-    <!-- <div >
-
-    <input [formControl]="file" (change)="fileChange($event)" type="file" placeholder="File">
-    <br>
-
-    <button (click)="upload()">
-        Upload
-    </button>
-
-</div> -->
-
-    <!-- <input  (change)="onFileChange($event)"  id="file" type="file">         
-<button [disabled]="!status"class="btn btn-primary" type="submit" (click)="submit()">Upload</button>
-
-<img src="{{imageSrc}}"  /> -->
-    <!-- <ng-select   [items]="tobat" bindLabel="obat"  bindValue="kdobat" 
-  placeholder="Obat" [(ngModel)]="nmobat" (keyup)="cariobat($event)" >
-  </ng-select> -->
-
     <div class="app-inner-layout__header-boxed p-0">
       <div
         class="app-inner-layout__header page-title-icon-rounded text-white bg-royal mb-4"
@@ -43,7 +23,27 @@
                 <div style="font-size: 14px">
                   {{ nampoli }} | {{ costumer }}
                 </div>
-                <div style="font-size: 14px">{{ namdokter }}</div>
+                <div style="font-size: 14px">
+                  {{ namdokter }}
+                  <br />
+                  <button
+                    *ngIf="!editdokter"
+                    class="btn btn-info btn-sm"
+                    (click)="togleEditDokter()"
+                  >
+                    Edit Dokter
+                  </button>
+
+                  <div *ngIf="editdokter">
+                    <app-master-clenic-dokter
+                      (selectedItem)="
+                        gantidokter($event.code, notransaksi);
+                        namdokter = $event.name;
+                        editdokter = false
+                      "
+                    ></app-master-clenic-dokter>
+                  </div>
+                </div>
                 <div style="font-size: 14px">{{ alamat }}</div>
                 <div style="font-size: 14px">Prolanis : {{ pstProl }}</div>
                 <div style="font-size: 14px">Prb : {{ pstPrb }}</div>

@@ -363,6 +363,8 @@ export class tulisermComponent implements OnInit {
   jeniskun: any = "";
   isPeriksaPkg: any = false;
   selectedCppt: any = "";
+  editdokter: boolean = false;
+  test2: any = "2";
 
   constructor(
     public FarmasijualService: FarmasijualService,
@@ -10203,5 +10205,26 @@ export class tulisermComponent implements OnInit {
       "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
     );
     redirectWindow.location;
+  }
+
+  gantidokter(kddokter, notransaksi) {
+    let payload = {
+      kddokter: kddokter,
+      notransaksi: notransaksi,
+    };
+    this.authService.updateDokter(this.slug, payload).subscribe((data: any) => {
+      console.log(data);
+      if (data.message) {
+        this.toastr.success(data.message, "Sukses", {
+          timeOut: 2000,
+        });
+      } else {
+        this.toastr.error("Gagal Mengupdate", "Error");
+      }
+    });
+  }
+
+  togleEditDokter() {
+    this.editdokter = !this.editdokter;
   }
 }

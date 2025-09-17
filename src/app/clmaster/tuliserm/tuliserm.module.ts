@@ -46,6 +46,7 @@ import { KunjunganBumilModule } from "../Kebidanan/KunjunganBumil/KunjunganBumil
 import { CatatanImunisasiModule } from "../Kebidanan/CatatanImunisasi/CatatanImunisasi.module";
 import { BukuKontrasepsiModule } from "../Kebidanan/BukuKontrasepsi/BukuKontrasepsi.module";
 import { FormBalitaSakitModule } from "../Assesment/form-balita-sakit/form-balita-sakit.module";
+import { MasterClenicDokterModule } from "../master/master-clenic-dokter/master-clenic-dokter.module";
 
 @NgModule({
   imports: [
@@ -92,6 +93,7 @@ import { FormBalitaSakitModule } from "../Assesment/form-balita-sakit/form-balit
     CatatanImunisasiModule,
     BukuKontrasepsiModule,
     FormBalitaSakitModule,
+    MasterClenicDokterModule,
   ],
   declarations: [tulisermComponent],
 })

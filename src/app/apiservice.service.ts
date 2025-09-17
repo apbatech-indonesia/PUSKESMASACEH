@@ -202,11 +202,15 @@ export class ApiserviceService {
   }
 
   getPendidikanList(slug: any): Observable<any> {
-    return this.http.get<any>(`https://emr.clenicapp.com/api/${slug}/master/pendidikan`);
+    return this.http.get<any>(
+      `https://emr.clenicapp.com/api/${slug}/master/pendidikan`
+    );
   }
 
   getPekerjaanList(slug: any): Observable<any> {
-    return this.http.get<any>(`https://emr.clenicapp.com/api/${slug}/master/pekerjaan`);
+    return this.http.get<any>(
+      `https://emr.clenicapp.com/api/${slug}/master/pekerjaan`
+    );
   }
 
   getAllBpjsKegiatanDropdown() {
@@ -3450,7 +3454,6 @@ export class ApiserviceService {
     );
   }
 
-
   updateCppt(slugCabang, data: any) {
     return this.http.post(
       `https://emr.clenicapp.com/api/${slugCabang}/cppt/update`,
@@ -3468,6 +3471,13 @@ export class ApiserviceService {
   storeProlanisPrb(slugCabang, payload) {
     return this.http.post(
       `https://emr.clenicapp.com/api/${slugCabang}/prolanis-prb`,
+      payload
+    );
+  }
+
+  updateDokter(slugCabang, payload) {
+    return this.http.post(
+      `https://emr.clenicapp.com/api/${slugCabang}/cppt/update-kddokter`,
       payload
     );
   }
