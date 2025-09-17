@@ -22,7 +22,9 @@ export class MasterClenicDokterComponent implements OnInit {
 
   // ambil data dokter
   async cari(dataSearch: string = "") {
-    const data: any = await this.api.dokter("076").toPromise();
+    const kdcabang = JSON.parse(localStorage.getItem("userDatacl")).userData
+      .kdcabang;
+    const data: any = await this.api.dokter(kdcabang).toPromise();
 
     // pastikan code selalu string supaya binding ngModel konsisten
     this.list = data.map((item: any) => ({
