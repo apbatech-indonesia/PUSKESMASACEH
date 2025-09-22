@@ -1354,6 +1354,7 @@ export class kasirfarmasijualComponent implements OnInit {
 
           this.modalService.open(content, {
             size: "lg",
+            modalDialogClass: "modal-fullscreen",
           });
         } else if (
           /* Read more about handling dismissals below */

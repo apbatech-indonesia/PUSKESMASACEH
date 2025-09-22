@@ -1289,7 +1289,12 @@
   </div>
 
   <div class="card-body">
-    <ng-template #content6 let-c="close" let-d="dismiss">
+    <ng-template
+      #content6
+      let-c="close"
+      let-d="dismiss"
+      class="modal-fullscreen"
+    >
       <div class="modal-header">
         <h6 class="modal-title">List Pasien</h6>
         <button
@@ -2480,7 +2485,9 @@
                   <p>Aturan dan cara penggunaan obat</p>
                 </td>
                 <td>
-                  <mat-radio-group [(ngModel)]="aturan_dan_cara_penggunaan_obat">
+                  <mat-radio-group
+                    [(ngModel)]="aturan_dan_cara_penggunaan_obat"
+                  >
                     <mat-radio-button value="Ada">Ada</mat-radio-button>
                     <mat-radio-button value="Tidak">Tidak</mat-radio-button>
                   </mat-radio-group>
