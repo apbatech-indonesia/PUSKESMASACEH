@@ -8,6 +8,7 @@ import { ApiserviceService } from "src/app/apiservice.service";
 })
 export class MasterClenicDokterComponent implements OnInit {
   @Input() id: string = ""; // kddokter default
+  @Input() kdpoli: string = ""; // kdpoli default
   @Input() keyword: string = ""; // keyword search
   @Output() selectedItem = new EventEmitter<any>();
 
@@ -24,7 +25,9 @@ export class MasterClenicDokterComponent implements OnInit {
   async cari(dataSearch: string = "") {
     const kdcabang = JSON.parse(localStorage.getItem("userDatacl")).userData
       .kdcabang;
-    const data: any = await this.api.dokter(kdcabang).toPromise();
+    const data: any = await this.api
+      .dokterpolixv2(kdcabang, this.kdpoli, this.todayYMD())
+      .toPromise();
 
     // pastikan code selalu string supaya binding ngModel konsisten
     this.list = data.map((item: any) => ({
@@ -36,6 +39,14 @@ export class MasterClenicDokterComponent implements OnInit {
     if (this.id) {
       this.id = this.id.toString();
     }
+  }
+
+  todayYMD() {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, "0");
+    const d = String(today.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
   }
 
   // emit saat item dipilih

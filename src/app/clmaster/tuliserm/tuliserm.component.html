@@ -36,6 +36,7 @@
 
                   <div *ngIf="editdokter">
                     <app-master-clenic-dokter
+                      [kdpoli]="kdpoli"
                       (selectedItem)="
                         gantidokter($event.code, notransaksi);
                         namdokter = $event.name;
