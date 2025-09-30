@@ -126,6 +126,7 @@ export class MpasienComponent implements OnInit {
 
   slug: any;
   namaorangtua: any;
+  catatanpasien: any;
 
   constructor(
     public http: HttpClient,
@@ -436,6 +437,7 @@ export class MpasienComponent implements OnInit {
       tanggallahir: this.tgllahir,
       alamat: this.alamat,
       namaorangtua: this.namaorangtua,
+      catatanpasien: this.catatanpasien,
       kodekel: this.keluarahanid,
       identitas: this.indetitas,
       noidentitas: this.noindetitas,
@@ -504,6 +506,7 @@ export class MpasienComponent implements OnInit {
             tanggallahir: this.tgllahir,
             alamat: this.alamat,
             namaorangtua: this.namaorangtua,
+            catatanpasien: this.catatanpasien,
             kodekel: this.keluarahanid,
             identitas: this.indetitas,
             noidentitas: this.noindetitas,
@@ -615,6 +618,7 @@ export class MpasienComponent implements OnInit {
                 tanggallahir: this.tgllahir,
                 alamat: this.alamat,
                 namaorangtua: this.namaorangtua,
+                catatanpasien: this.catatanpasien,
                 kodekel: this.keluarahanid,
                 identitas: this.indetitas,
                 noidentitas: this.noindetitas,
@@ -687,6 +691,7 @@ export class MpasienComponent implements OnInit {
           tanggallahir: this.tgllahir,
           alamat: this.alamat,
           namaorangtua: this.namaorangtua,
+          catatanpasien: this.catatanpasien,
           kodekel: this.keluarahanid,
           identitas: this.indetitas,
           noidentitas: this.noindetitas,
@@ -842,6 +847,7 @@ export class MpasienComponent implements OnInit {
     this.alamat = "";
     this.alamats = "";
     this.namaorangtua = "";
+    this.catatanpasien = "";
     this.noindetitas = "";
     this.nohp = "";
     this.agama = "TIDAK TAHU";
@@ -951,6 +957,7 @@ export class MpasienComponent implements OnInit {
     this.alamat = alamat;
     this.alamats = alamatsekarang;
     this.namaorangtua = x.namaorangtua;
+    this.catatanpasien = x.catatanpasien;
     this.indetitas = tandapengenal;
     this.noindetitas = nopengenal;
     this.nohp = hp;

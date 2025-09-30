@@ -194,6 +194,7 @@
                 >
                 <textarea
                   maxlength="200"
+                  style="height: 120px"
                   formControlName="alamat"
                   [(ngModel)]="alamat"
                   id="exampleText"
@@ -211,6 +212,18 @@
               placeholder=""
               type="text"
               class="form-control"
+            />
+            <label
+              for="exampleCity"
+              class="form-label mt-2"
+              style="color: black"
+              >Catatan Pasien</label
+            >
+            <input
+              [(ngModel)]="catatanpasien"
+              placeholder=""
+              type="text"
+              class="form-control mb-2"
             />
           </div>
         </div>
