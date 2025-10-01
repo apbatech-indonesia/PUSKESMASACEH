@@ -11,9 +11,6 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
       - name: Ambil list branches dari API & generate matrix
         id: set-matrix
         run: |
