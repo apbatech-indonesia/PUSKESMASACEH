@@ -52,6 +52,16 @@
                   Nomor {{ costumer }} : {{ noasuransi }}
                 </div>
                 <div style="font-size: 14px">NIK : {{ nopengenal }}</div>
+                <div style="font-size: 14px" *ngIf="namaorangtua">
+                  Nama Orang Tua : {{ namaorangtua }}
+                </div>
+                <div *ngIf="catatanpasien" class="my-2">
+                  <div class="card border-danger bg-success">
+                    <div class="card-body p-2">
+                      <b class="text-white">Catatan Pasien: {{ catatanpasien }}</b>
+                    </div>
+                  </div>
+                </div>
 
                 <!-- <div class="btn-group" ngbDropdown *ngIf="talergishow">
 
