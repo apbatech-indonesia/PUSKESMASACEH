@@ -320,7 +320,7 @@
           </div>
         </div>
 
-        <div class="chat-box">
+        <div class="chat-box" *ngIf="isSameMonthAndYear">
           Pasien Ini Lahir di Tgl Hari ini - Bisa Masuk Ke Katagori
           PKG(Pemeriksaan Kesehatan Gratis)
         </div>
@@ -682,7 +682,14 @@
               </button>
             </div>
           </div>
-          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <a
+              href="https://webskrining.bpjs-kesehatan.go.id/skrining"
+              target="_blank"
+              class="btn btn-success btn-pill"
+              >Skrining BPJS</a
+            >
+          </div>
           <div class="col-md-6">
             <div class="d-grid gap-2">
               <button
@@ -907,12 +914,6 @@
                 >
                   Batal Priksa
                 </button>
-                <a
-                  href="https://webskrining.bpjs-kesehatan.go.id/skrining"
-                  target="_blank"
-                  class="dropdown-item"
-                  >Skrining BPJS</a
-                >
                 <button class="dropdown-item" (click)="cetaknoantrian()">
                   Cetak
                 </button>
