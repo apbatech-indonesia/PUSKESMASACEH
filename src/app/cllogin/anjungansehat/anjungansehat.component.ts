@@ -521,7 +521,8 @@ export class anjungansehatComponent implements OnInit {
 
                               this.showloading = false;
                             } else {
-                              let message = response.metaData.message ?? "";
+                              let message =
+                                response.metaData.message ?? "Simpan  Gagal";
                               this.toastr.error(message, "Eror");
 
                               this.showloading = false;
