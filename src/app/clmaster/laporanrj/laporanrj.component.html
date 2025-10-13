@@ -65,11 +65,21 @@
       <div class="card-body">
         <div class="position-relative mb-3">
           <label for="exampleEmail" class="form-label">Tgl Dari</label>
-          <input [(ngModel)]="tgldari" type="date" class="form-control" />
+          <input
+            [(ngModel)]="tgldari"
+            (change)="validateDateRange()"
+            type="date"
+            class="form-control"
+          />
         </div>
         <div class="position-relative mb-3">
           <label for="exampleEmail" class="form-label">Tgl Sampai</label>
-          <input [(ngModel)]="tglsampai" type="date" class="form-control" />
+          <input
+            [(ngModel)]="tglsampai"
+            (change)="validateDateRange()"
+            type="date"
+            class="form-control"
+          />
         </div>
 
         <div

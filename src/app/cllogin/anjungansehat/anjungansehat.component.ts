@@ -520,6 +520,11 @@ export class anjungansehatComponent implements OnInit {
                               );
 
                               this.showloading = false;
+                            } else {
+                              let message = response.metaData.message ?? "";
+                              this.toastr.error(message, "Eror");
+
+                              this.showloading = false;
                             }
                           } else {
                             this.toastr.error("Simpan  Gagal", "Eror");

@@ -48,6 +48,9 @@ export class laporanrjComponent implements OnInit {
 
   options: FormGroup;
   public userDetails: any;
+  dateForm: FormGroup;
+  dateRangeInvalid = false;
+
   nama: any;
   akses: any;
 
@@ -81,6 +84,11 @@ export class laporanrjComponent implements OnInit {
     //   floatLabel: 'auto',
     // });
 
+    this.dateForm = fb.group({
+      startDate: ["", Validators.required],
+      endDate: ["", Validators.required],
+    });
+
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
     this.nama = this.userDetails.nama;
@@ -93,8 +101,14 @@ export class laporanrjComponent implements OnInit {
 
   ngOnInit() {
     this.hostName = this.hots.getHostname();
-
     this.URLINVOICE = "https://" + this.hostName + "/";
+
+    // Set initial dates
+    const today = new Date();
+    this.dateForm.patchValue({
+      startDate: this.datepipe.transform(today, "yyyy-MM-dd"),
+      endDate: this.datepipe.transform(today, "yyyy-MM-dd"),
+    });
 
     this.klinik();
   }
@@ -601,5 +615,40 @@ export class laporanrjComponent implements OnInit {
         "Error"
       );
     }
+  }
+
+  validateDateRange() {
+    const startDate = this.dateForm.get("startDate").value;
+    const endDate = this.dateForm.get("endDate").value;
+
+    if (!startDate || !endDate) {
+      this.dateRangeInvalid = false;
+      return;
+    }
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    // Check if end date is before start date
+    if (end < start) {
+      this.toastr.error("Tanggal akhir harus setelah tanggal awal", "Error");
+      this.dateRangeInvalid = true;
+      return;
+    }
+
+    // Check if range is more than 31 days
+    const diffTime = Math.abs(end.getTime() - start.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays > 31) {
+      this.toastr.error(
+        "Range tanggal tidak boleh lebih dari 31 hari",
+        "Error"
+      );
+      this.dateRangeInvalid = true;
+      return;
+    }
+
+    this.dateRangeInvalid = false;
   }
 }
