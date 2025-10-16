@@ -209,6 +209,7 @@ export class ermdokterrmComponent implements OnInit {
       .pasienrm(this.kdcabang, "0", "", "1", this.tglpx, this.tglpxs)
       .subscribe(
         (data) => {
+          console.log("pasien blm", data.length);
           this.totalpassbelum = data.length;
         },
         (Error) => {
@@ -220,6 +221,7 @@ export class ermdokterrmComponent implements OnInit {
       .pasienrm(this.kdcabang, "1", "", "1", this.tglpx, this.tglpxs)
       .subscribe(
         (data) => {
+          console.log("pasien sudah", data.length);
           this.totalpasssudah = data.length;
         },
         (Error) => {
