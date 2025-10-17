@@ -91,7 +91,7 @@
         </div>
      
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
               <div class="position-relative mb-3">
                 <label for="exampleCity" class="form-label"><b>KAPASITAS</b></label>
               
@@ -99,6 +99,16 @@
                 <input [(ngModel)]="zakaktif"  id="exampleCity" type="text" class="form-control">
                
               </div>
+            </div>
+            <div class="col-md-6">
+              <div class="position-relative mb-3">
+                <label for="exampleCity" class="form-label"><b>satuan obat</b></label>
+              
+               
+                <input [(ngModel)]="satuanobat"  id="exampleCity" type="text" class="form-control">
+               
+              </div>
+
             </div>
            
         
@@ -512,7 +522,7 @@
               x.	nama,
               x.	sup,
               x.	jenis,
-              x.	golongan,x.kdcp,x.kdbs,x.zataktifasli,x.kdobatsatusehat)">P</div>
+              x.	golongan,x.kdcp,x.kdbs,x.zataktifasli,x.kdobatsatusehat,x.satuanobat)">P</div>
               <div style="font-size: 10px;color:black" class="badge bg-pill bg-warning" (click)="lihatstok(content1,x.kdobat)">Stok</div>
               <div class="badge bg-pill bg-danger" (click)="hapus(x.kdobat,
               x.	obat,
