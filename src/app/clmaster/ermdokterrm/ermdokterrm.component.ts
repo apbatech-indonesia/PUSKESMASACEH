@@ -210,7 +210,7 @@ export class ermdokterrmComponent implements OnInit {
       .subscribe(
         (data) => {
           console.log("pasien blm", data.length);
-          this.totalpassbelum = data;
+          this.totalpassbelum = data.length;
         },
         (Error) => {
           console.log(Error);
