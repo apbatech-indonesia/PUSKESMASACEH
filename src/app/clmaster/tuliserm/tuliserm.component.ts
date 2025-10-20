@@ -404,7 +404,7 @@ export class tulisermComponent implements OnInit {
     });
 
     this.form2 = fb.group({
-      gender: ["", Validators.required],
+      gender: ["Tindakan", Validators.required],
     });
 
     this.satusehatheaders = new HttpHeaders({

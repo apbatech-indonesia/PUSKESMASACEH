@@ -58,7 +58,9 @@
                 <div *ngIf="catatanpasien" class="my-2">
                   <div class="card border-danger bg-success">
                     <div class="card-body p-2">
-                      <b class="text-white">Catatan Pasien: {{ catatanpasien }}</b>
+                      <b class="text-white"
+                        >Catatan Pasien: {{ catatanpasien }}</b
+                      >
                     </div>
                   </div>
                 </div>
@@ -1774,6 +1776,125 @@ Normal: teraba jelas
                             <ul ngbNav #nav3="ngbNav" class="nav-tabs">
                               <li ngbNavItem>
                                 <a ngbNavLink style="font-weight: bold"
+                                  >ICD 9 (Tindakan)</a
+                                >
+                                <ng-template ngbNavContent>
+                                  <table
+                                    class="table table-striped"
+                                    *ngIf="ttindakshow"
+                                  >
+                                    <thead>
+                                      <tr
+                                        style="
+                                          border: 1px solid grey;
+                                          border-right: 1px solid grey;
+                                        "
+                                      >
+                                        <th scope="col">Kode</th>
+                                        <th scope="col">Tindakan</th>
+                                        <th scope="col">Aksi</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr
+                                        *ngFor="let x of ttindak"
+                                        style="border: 1px solid grey"
+                                      >
+                                        <td
+                                          style="
+                                            font-size: 12px;
+                                            color: black;
+                                            border-right: 1px solid grey;
+                                          "
+                                        >
+                                          {{ x.kddiagnosa }}
+                                        </td>
+                                        <td>
+                                          {{ x.diagnosa }}
+                                        </td>
+
+                                        <td
+                                          (click)="
+                                            hapusdiag(
+                                              x.notrans,
+                                              x.no,
+                                              x.diagnosa
+                                            )
+                                          "
+                                        >
+                                          <i
+                                            style="font-size: 15px"
+                                            class="pe-7s-trash btn-icon-wrapper"
+                                          >
+                                          </i>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+
+                                  <form [formGroup]="form2">
+                                    <input
+                                      type="radio"
+                                      value="Kode"
+                                      formControlName="gender"
+                                    />
+                                    Kode
+                                    <input
+                                      type="radio"
+                                      value="Tindakan"
+                                      formControlName="gender"
+                                    />
+                                    Tindakan
+                                  </form>
+
+                                  <input
+                                    [(ngModel)]="tindakanicd"
+                                    (keyup)="caritindakanicd($event)"
+                                    (keyup.enter)="senditx($event.target.value)"
+                                    type="text"
+                                    class="form-control"
+                                  />
+
+                                  <table
+                                    class="table table-striped"
+                                    *ngIf="tindaksshowicd"
+                                  >
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Kd Tindakan</th>
+                                        <th scope="col">Tindakan</th>
+                                        <th scope="col">Aksi</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr
+                                        *ngFor="let x of tindak"
+                                        (click)="
+                                          pilihtindak(x.kdtindakan, x.tindakan)
+                                        "
+                                      >
+                                        <td
+                                          style="font-size: 12px; color: black"
+                                        >
+                                          {{ x.kdtindakan }}
+                                        </td>
+                                        <td>
+                                          {{ x.tindakan }}
+                                        </td>
+                                        <td>
+                                          <button
+                                            class="mb-2 me-2 btn-hover-shine btn-pill btn btn-success"
+                                          >
+                                            +
+                                          </button>
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </ng-template>
+                              </li>
+                              <li ngbNavItem>
+                                <a ngbNavLink style="font-weight: bold"
                                   >Link Tarif</a
                                 >
                                 <ng-template ngbNavContent>
@@ -1893,126 +2014,6 @@ Normal: teraba jelas
                                         </td>
                                         <td>
                                           {{ x.harga | currency : "IDR" }}
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </ng-template>
-                              </li>
-
-                              <li ngbNavItem>
-                                <a ngbNavLink style="font-weight: bold"
-                                  >ICD 9 (Tindakan)</a
-                                >
-                                <ng-template ngbNavContent>
-                                  <table
-                                    class="table table-striped"
-                                    *ngIf="ttindakshow"
-                                  >
-                                    <thead>
-                                      <tr
-                                        style="
-                                          border: 1px solid grey;
-                                          border-right: 1px solid grey;
-                                        "
-                                      >
-                                        <th scope="col">Kode</th>
-                                        <th scope="col">Tindakan</th>
-                                        <th scope="col">Aksi</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr
-                                        *ngFor="let x of ttindak"
-                                        style="border: 1px solid grey"
-                                      >
-                                        <td
-                                          style="
-                                            font-size: 12px;
-                                            color: black;
-                                            border-right: 1px solid grey;
-                                          "
-                                        >
-                                          {{ x.kddiagnosa }}
-                                        </td>
-                                        <td>
-                                          {{ x.diagnosa }}
-                                        </td>
-
-                                        <td
-                                          (click)="
-                                            hapusdiag(
-                                              x.notrans,
-                                              x.no,
-                                              x.diagnosa
-                                            )
-                                          "
-                                        >
-                                          <i
-                                            style="font-size: 15px"
-                                            class="pe-7s-trash btn-icon-wrapper"
-                                          >
-                                          </i>
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-
-                                  <form [formGroup]="form2">
-                                    <input
-                                      type="radio"
-                                      value="Kode"
-                                      formControlName="gender"
-                                    />
-                                    Kode
-                                    <input
-                                      type="radio"
-                                      value="Tindakan"
-                                      formControlName="gender"
-                                    />
-                                    Tindakan
-                                  </form>
-
-                                  <input
-                                    [(ngModel)]="tindakanicd"
-                                    (keyup)="caritindakanicd($event)"
-                                    (keyup.enter)="senditx($event.target.value)"
-                                    type="text"
-                                    class="form-control"
-                                  />
-
-                                  <table
-                                    class="table table-striped"
-                                    *ngIf="tindaksshowicd"
-                                  >
-                                    <thead>
-                                      <tr>
-                                        <th scope="col">Kd Tindakan</th>
-                                        <th scope="col">Tindakan</th>
-                                        <th scope="col">Aksi</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr
-                                        *ngFor="let x of tindak"
-                                        (click)="
-                                          pilihtindak(x.kdtindakan, x.tindakan)
-                                        "
-                                      >
-                                        <td
-                                          style="font-size: 12px; color: black"
-                                        >
-                                          {{ x.kdtindakan }}
-                                        </td>
-                                        <td>
-                                          {{ x.tindakan }}
-                                        </td>
-                                        <td>
-                                          <button
-                                            class="mb-2 me-2 btn-hover-shine btn-pill btn btn-success"
-                                          >
-                                            +
-                                          </button>
                                         </td>
                                       </tr>
                                     </tbody>
