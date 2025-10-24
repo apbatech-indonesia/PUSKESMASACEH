@@ -1,66 +1,65 @@
-<div class="h-100 bg-animation" style="background-image: url(./assets/images/kkk.png);
-background-repeat: no-repeat;
-background-size: cover;">
+<div
+  class="h-100 bg-animation"
+  style="
+    background-image: url(./assets/images/kkk.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+  "
+>
   <div class="d-flex h-100 justify-content-center align-items-center">
     <div class="mx-auto app-login-box col-md-8">
-   
-        <div class="modal-content">
-       
-          <div class="modal-body">
-     
-            <div style="text-align:center ;color:rgb(0, 190, 102);font-size: 30px;">
-            
-              <b >
-               
-                <div>ANJUNGAN SAKIT PENDAFTARAN MANDIRI</div>
-              
-              </b>
-            </div>
-            <br>
+      <div class="modal-content">
+        <div class="modal-body">
+          <div
+            style="text-align: center; color: rgb(0, 190, 102); font-size: 30px"
+          >
+            <b>
+              <div>ANJUNGAN SAKIT PENDAFTARAN MANDIRI</div>
+            </b>
+          </div>
+          <br />
 
-            <div class="main-card mb-3 card">
-
-
-              <div *ngIf="depanshow">
+          <div class="main-card mb-3 card">
+            <div *ngIf="depanshow">
               <div class="grid-menu grid-menu-2col overflow-hidden">
                 <div class="g-0 row">
-                 
                   <div class="col-sm-6">
-                    <div class="widget-chart widget-chart-hover" (click)="kbpjs()">
+                    <div
+                      class="widget-chart widget-chart-hover"
+                      (click)="kbpjs()"
+                    >
                       <div class="icon-wrapper rounded-circle">
                         <div class="icon-wrapper-bg bg-primary"></div>
                         <i class="lnr-cog text-primary"></i>
                       </div>
                       <div class="widget-numbers">BPJS</div>
-                      <div class="widget-subheading">Bagi Pasien Peserta JKN</div>
-                     
+                      <div class="widget-subheading">
+                        Bagi Pasien Peserta JKN
+                      </div>
                     </div>
                   </div>
                   <div class="col-sm-6">
-                    <div class="widget-chart widget-chart-hover" (click)="kbpjsn()">
+                    <div
+                      class="widget-chart widget-chart-hover"
+                      (click)="kbpjsn()"
+                    >
                       <div class="icon-wrapper rounded-circle">
                         <div class="icon-wrapper-bg bg-info"></div>
                         <i class="lnr-graduation-hat text-info"></i>
                       </div>
                       <div class="widget-numbers">NON BPJS</div>
-                      <div class="widget-subheading">Bagi Pasien Bukan Peserta JKN</div>
-                    
+                      <div class="widget-subheading">
+                        Bagi Pasien Bukan Peserta JKN
+                      </div>
                     </div>
                   </div>
-               
                 </div>
               </div>
             </div>
 
-
-
-
             <!-- BPJS -->
 
-
-
-            <div *ngIf="bpjsshow" style="padding: 5px;">
-
+            <div *ngIf="bpjsshow" style="padding: 5px">
               <div class="grid-menu grid-menu-2col overflow-hidden">
                 <div class="g-0 row">
                   <!-- <div class="col-sm-4">
@@ -75,265 +74,414 @@ background-size: cover;">
                     
                     </div> -->
                   <div class="col-sm-6">
-                   
-                         <div class="position-relative mb-3">
-                <label for="exampleState" class="form-label" style="font-size: 18px;color:black;font-weight:bold;">NO KARTU BPJS/NO KTP</label>
-                <div class="col-sm-12">
-                  <div class="input-group">
-                  <input (click)="showpad()" [(ngModel)]="nomorasuransi" style="font-size: 16px;color:black;font-weight:bold;"  type="text" class="form-control">
-                    <div class="input-group-text" (click)="showpad()">
-                      <span class=""><img src="./assets/images/keyboard1.png"></span>
+                    <div class="position-relative mb-3">
+                      <label
+                        for="exampleState"
+                        class="form-label"
+                        style="font-size: 18px; color: black; font-weight: bold"
+                        >NO KARTU BPJS/NO KTP</label
+                      >
+                      <div class="col-sm-12">
+                        <div class="input-group">
+                          <input
+                            (click)="showpad()"
+                            [(ngModel)]="nomorasuransi"
+                            style="
+                              font-size: 16px;
+                              color: black;
+                              font-weight: bold;
+                            "
+                            type="text"
+                            class="form-control"
+                          />
+                          <div class="input-group-text" (click)="showpad()">
+                            <span class=""
+                              ><img src="./assets/images/keyboard1.png"
+                            /></span>
+                          </div>
+                        </div>
+                        <b style="color: red" *ngIf="showaktif"
+                          >STATUS PESERTA {{ ketaktif }}
+                        </b>
+                      </div>
                     </div>
-                
-                  </div>
-                  <b style="color: red;" *ngIf="showaktif">STATUS PESERTA {{ketaktif}} </b>
-                  </div>
-              </div>
-
-              <div class="position-relative mb-3">
-                <label for="exampleState" class="form-label" style="font-size: 18px;color:black;font-weight:bold;">POLIKLINIK</label>
-                <div class="col-sm-12">
-                  <div class="input-group">
-                    <select  (click)="showpadx()" [(ngModel)]="kdpoli"
-                    style="font-size: 18px;color:black;font-weight:bold;" 
-                     class="form-select"    (change)="pilihklinik($event.target.value)">
-                      <option value="">-PILIH POLIKLINIK-</option>
-                      <option  *ngFor="let x of tklinik" value="{{x.kdpoli}}" >{{x.nampoli}}</option>
-      
-                     </select>
-
-
-
-
-                   
-                  </div>
-                  </div>
-              </div>
-
-           
-                 
-              <div class="position-relative mb-3">
-                <label for="exampleState" class="form-label" style="font-size: 18px;color:black;font-weight:bold;">DOKTER</label>
-                <div class="col-sm-12">
-                  <div class="input-group">
-                    <select style="font-size: 18px;color:black;font-weight:bold;"   class="form-select" [(ngModel)]="kddokter"  (change)="pilihjadwal($event.target.value)" >
-                      <option value="">-PILIH DOKTER-</option>
-                      <option   *ngFor="let x of tdokter" value="{{x.kddokter}}" >{{x.namdokter}}</option>
-                     </select>
-                
-                  </div>
-                  </div>
-              </div>
-
-              <div class="position-relative mb-3">
-                <label for="exampleState" class="form-label" style="font-size: 18px; color: black; font-weight: bold">JADWAL</label>
-                <div class="col-sm-12">
-                  <div class="input-group">
-                    <select style="font-size: 18px; color: black; font-weight: bold" class="form-select" [(ngModel)]="jadwal">
-                      <option value="">-PILIH JADWAL-</option>
-                      <option *ngFor="let x of tjadwal" value="{{ x.jadwal }}">{{ x.jadwal }}</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="position-relative mb-3">
-               
-               
-                  <div class="col-sm-12">
-
-                    
-                <div class="row">
-                  <div class="col-sm-6">
-                    <button (click)="home()" class="btn-pill btn-shadow btn-wide fsize-1 btn btn-secondary btn-lg">
-                      <span class="me-2 opacity-7">
-                        <i class="icon icon-anim-pulse ion-ios-analytics-outline"></i>
-                      </span>
-                      <span class="me-1">KEMBALI</span>
-                    </button>
-                    </div>
-                    <div class="col-sm-6">
-                      <button  (click)="daftar()" class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg">
-                        <span class="me-2 opacity-7">
-                          <i class="icon icon-anim-pulse ion-ios-analytics-outline"></i>
-                        </span>
-                        <span class="me-1">DAFTAR</span>
-                      </button>
-                    </div>
-
-                </div>
-
-
-                    
-                  </div>
-              </div>
-
-
-
-
-                  </div>
-
-                  <div class="col-sm-6" style="padding: 2px;">
-
-                    <div *ngIf="padshow">
 
                     <div class="position-relative mb-3">
-                      <label for="exampleState" class="form-label" style="font-size: 18px;color:black;font-weight:bold;">KLIK NOMOR</label>
-                      
-                    <table>
-                      <tr>
-                        <td  (click)="enter(1)"> <span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success">1</span></td>
-                        <td (click)="enter(2)"> <span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success">2</span></td>
-                        <td (click)="enter(3)"> <span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success">3</span></td>
-                      </tr>
-                      <tr>
-                        <td (click)="enter(4)"> <span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success">4</span></td>
-                        <td (click)="enter(5)"> <span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success">5</span></td>
-                        <td (click)="enter(6)"> <span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success">6</span></td>
-                      </tr>
-                      <tr>
-                        <td (click)="enter(7)"> <span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success">7</span></td>
-                        <td (click)="enter(8)"> <span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success">8</span></td>
-                        <td (click)="enter(9)"> <span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success">9</span></td>
-                      </tr>
-                      <tr>
-                        <td (click)="cekkepsertaan(content9)"><span style="font-size: 20px; width: 60px" class="badge rounded-pill bg-primary btn">Cek</span></td>
-                        <td (click)="enter(0)"> <span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success">0</span></td>
-                        <td  (click)="hapus()"><span style="font-size: 30px;width: 60px;" class="badge rounded-pill bg-success"><</span></td>
-                      </tr>
-                    </table>
-                    </div>
-                  </div>
-
-
-
-                  <div style="text-align: center;" *ngIf="showloading">
-                    <div class="loader-wrapper d-flex justify-content-center align-items-center">
-                      <div class="loader">
-                        <div class="ball-pulse">
-                          <div></div>
-                          <div></div>
-                          <div></div>
+                      <label
+                        for="exampleState"
+                        class="form-label"
+                        style="font-size: 18px; color: black; font-weight: bold"
+                        >POLIKLINIK</label
+                      >
+                      <div class="col-sm-12">
+                        <div class="input-group">
+                          <select
+                            (click)="showpadx()"
+                            [(ngModel)]="kdpoli"
+                            style="
+                              font-size: 18px;
+                              color: black;
+                              font-weight: bold;
+                            "
+                            class="form-select"
+                            (change)="pilihklinik($event.target.value)"
+                          >
+                            <option value="">-PILIH POLIKLINIK-</option>
+                            <option
+                              *ngFor="let x of tklinik"
+                              value="{{ x.kdpoli }}"
+                            >
+                              {{ x.nampoli }}
+                            </option>
+                          </select>
                         </div>
                       </div>
                     </div>
-                 
-                   </div>
 
-
-                     <div  *ngIf="showantrian">
-                    
-                  
-                    <table class="table table-striped" *ngFor="let x of tantrian">
-                      
-                      <thead>
-                        <tr>
-                         
-                          <th scope="col" style="font-size: 18px;color:black;font-weight: bold;">Ruang : </th>
-                          <th scope="col"  style="font-size: 18px;color:black;font-weight: bold;"> {{x.nampoli}}</th>
-                          
-                        </tr>
-              
-                        <tr>
-                         
-                          <th scope="col"  style="font-size: 18px;color:black;font-weight: bold;">Dokter  : </th>
-                          <th scope="col"  style="font-size: 18px;color:black;font-weight: bold;">{{x.namdokter}}</th>
-                          
-                        </tr>
-                       
-                      </thead>
-                      <tbody style="color:black;">
-                        <tr >
-                       
-                          <td style="font-size: 25px;color:black;font-weight: bold;">
-                            
-                            {{x.kodeantrian}} 
-                          </td>
-                          <td style="font-size: 25px;color:black;font-weight: bold;" >
-                            {{x.noantrian}}
-                          </td>
-                          
-                        </tr>
-                     
-                        <tr >
-                       
-                          <td style="color:black;">
-                            
-                           No RM : 
-                          </td>
-                          <td>
-                            {{x.norm}}
-                          </td>
-                          
-                        </tr>
-                        <tr >
-                       
-                          <td style="color:black;">
-                            
-                           Pasien : 
-                          </td>
-                          <td>
-                            {{x.pasien}}
-                          </td>
-                          
-                        </tr>
-              
-                    
-                        <tr >
-                       
-                          <td >
-                            
-                           Tgl Priksa : 
-                          </td>
-                          <td>
-                            {{x.tglpriksa}}
-                          </td>
-                          
-                        </tr>
-                     
-              
-                    
-                      </tbody>
-                    </table>
-                    <div class="row" *ngFor="let x of tantrian">
-                      <div class="col-md-6">
-                        <button *ngIf="showtombolkirimpcare" class="mb-2 me-2 btn-pill btn btn-success" (click)="kirimpcare()">Kirim Pcare Daftar</button>
+                    <div class="position-relative mb-3">
+                      <label
+                        for="exampleState"
+                        class="form-label"
+                        style="font-size: 18px; color: black; font-weight: bold"
+                        >DOKTER</label
+                      >
+                      <div class="col-sm-12">
+                        <div class="input-group">
+                          <select
+                            style="
+                              font-size: 18px;
+                              color: black;
+                              font-weight: bold;
+                            "
+                            class="form-select"
+                            [(ngModel)]="kddokter"
+                            (change)="pilihjadwal($event.target.value)"
+                          >
+                            <option value="">-PILIH DOKTER-</option>
+                            <option
+                              *ngFor="let x of tdokter"
+                              value="{{ x.kddokter }}"
+                            >
+                              {{ x.namdokter }} - {{ x.jadwal }}
+                            </option>
+                          </select>
+                        </div>
                       </div>
+                    </div>
 
-                      <div class="col-md-6">
-                        <button class="mb-2 me-2 btn-pill btn btn-info" *ngIf="showcetak" (click)="cetaknoantrian(x.notransaksi)">Cetak</button>
+                    <div class="position-relative mb-3">
+                      <label
+                        for="exampleState"
+                        class="form-label"
+                        style="font-size: 18px; color: black; font-weight: bold"
+                        >JADWAL</label
+                      >
+                      <div class="col-sm-12">
+                        <div class="input-group">
+                          <select
+                            style="
+                              font-size: 18px;
+                              color: black;
+                              font-weight: bold;
+                            "
+                            class="form-select"
+                            [(ngModel)]="jadwal"
+                          >
+                            <option value="">-PILIH JADWAL-</option>
+                            <option
+                              *ngFor="let x of tjadwal"
+                              value="{{ x.jadwal }}"
+                            >
+                              {{ x.jadwal }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="position-relative mb-3">
+                      <div class="col-sm-12">
+                        <div class="row">
+                          <div class="col-sm-6">
+                            <button
+                              (click)="home()"
+                              class="btn-pill btn-shadow btn-wide fsize-1 btn btn-secondary btn-lg"
+                            >
+                              <span class="me-2 opacity-7">
+                                <i
+                                  class="icon icon-anim-pulse ion-ios-analytics-outline"
+                                ></i>
+                              </span>
+                              <span class="me-1">KEMBALI</span>
+                            </button>
+                          </div>
+                          <div class="col-sm-6">
+                            <button
+                              (click)="daftar()"
+                              class="btn-pill btn-shadow btn-wide fsize-1 btn btn-primary btn-lg"
+                            >
+                              <span class="me-2 opacity-7">
+                                <i
+                                  class="icon icon-anim-pulse ion-ios-analytics-outline"
+                                ></i>
+                              </span>
+                              <span class="me-1">DAFTAR</span>
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
 
-                   
-                  
+                  <div class="col-sm-6" style="padding: 2px">
+                    <div *ngIf="padshow">
+                      <div class="position-relative mb-3">
+                        <label
+                          for="exampleState"
+                          class="form-label"
+                          style="
+                            font-size: 18px;
+                            color: black;
+                            font-weight: bold;
+                          "
+                          >KLIK NOMOR</label
+                        >
+
+                        <table>
+                          <tr>
+                            <td (click)="enter(1)">
+                              <span
+                                style="font-size: 30px; width: 60px"
+                                class="badge rounded-pill bg-success"
+                                >1</span
+                              >
+                            </td>
+                            <td (click)="enter(2)">
+                              <span
+                                style="font-size: 30px; width: 60px"
+                                class="badge rounded-pill bg-success"
+                                >2</span
+                              >
+                            </td>
+                            <td (click)="enter(3)">
+                              <span
+                                style="font-size: 30px; width: 60px"
+                                class="badge rounded-pill bg-success"
+                                >3</span
+                              >
+                            </td>
+                          </tr>
+                          <tr>
+                            <td (click)="enter(4)">
+                              <span
+                                style="font-size: 30px; width: 60px"
+                                class="badge rounded-pill bg-success"
+                                >4</span
+                              >
+                            </td>
+                            <td (click)="enter(5)">
+                              <span
+                                style="font-size: 30px; width: 60px"
+                                class="badge rounded-pill bg-success"
+                                >5</span
+                              >
+                            </td>
+                            <td (click)="enter(6)">
+                              <span
+                                style="font-size: 30px; width: 60px"
+                                class="badge rounded-pill bg-success"
+                                >6</span
+                              >
+                            </td>
+                          </tr>
+                          <tr>
+                            <td (click)="enter(7)">
+                              <span
+                                style="font-size: 30px; width: 60px"
+                                class="badge rounded-pill bg-success"
+                                >7</span
+                              >
+                            </td>
+                            <td (click)="enter(8)">
+                              <span
+                                style="font-size: 30px; width: 60px"
+                                class="badge rounded-pill bg-success"
+                                >8</span
+                              >
+                            </td>
+                            <td (click)="enter(9)">
+                              <span
+                                style="font-size: 30px; width: 60px"
+                                class="badge rounded-pill bg-success"
+                                >9</span
+                              >
+                            </td>
+                          </tr>
+                          <tr>
+                            <td (click)="cekkepsertaan(content9)">
+                              <span
+                                style="font-size: 20px; width: 60px"
+                                class="badge rounded-pill bg-primary btn"
+                                >Cek</span
+                              >
+                            </td>
+                            <td (click)="enter(0)">
+                              <span
+                                style="font-size: 30px; width: 60px"
+                                class="badge rounded-pill bg-success"
+                                >0</span
+                              >
+                            </td>
+                            <td (click)="hapus()">
+                              <span
+                                style="font-size: 30px; width: 60px"
+                                class="badge rounded-pill bg-success"
+                                ><</span
+                              >
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
                     </div>
 
+                    <div style="text-align: center" *ngIf="showloading">
+                      <div
+                        class="loader-wrapper d-flex justify-content-center align-items-center"
+                      >
+                        <div class="loader">
+                          <div class="ball-pulse">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
+                    <div *ngIf="showantrian">
+                      <table
+                        class="table table-striped"
+                        *ngFor="let x of tantrian"
+                      >
+                        <thead>
+                          <tr>
+                            <th
+                              scope="col"
+                              style="
+                                font-size: 18px;
+                                color: black;
+                                font-weight: bold;
+                              "
+                            >
+                              Ruang :
+                            </th>
+                            <th
+                              scope="col"
+                              style="
+                                font-size: 18px;
+                                color: black;
+                                font-weight: bold;
+                              "
+                            >
+                              {{ x.nampoli }}
+                            </th>
+                          </tr>
+
+                          <tr>
+                            <th
+                              scope="col"
+                              style="
+                                font-size: 18px;
+                                color: black;
+                                font-weight: bold;
+                              "
+                            >
+                              Dokter :
+                            </th>
+                            <th
+                              scope="col"
+                              style="
+                                font-size: 18px;
+                                color: black;
+                                font-weight: bold;
+                              "
+                            >
+                              {{ x.namdokter }}
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody style="color: black">
+                          <tr>
+                            <td
+                              style="
+                                font-size: 25px;
+                                color: black;
+                                font-weight: bold;
+                              "
+                            >
+                              {{ x.kodeantrian }}
+                            </td>
+                            <td
+                              style="
+                                font-size: 25px;
+                                color: black;
+                                font-weight: bold;
+                              "
+                            >
+                              {{ x.noantrian }}
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td style="color: black">No RM :</td>
+                            <td>
+                              {{ x.norm }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="color: black">Pasien :</td>
+                            <td>
+                              {{ x.pasien }}
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td>Tgl Priksa :</td>
+                            <td>
+                              {{ x.tglpriksa }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="row" *ngFor="let x of tantrian">
+                        <div class="col-md-6">
+                          <button
+                            *ngIf="showtombolkirimpcare"
+                            class="mb-2 me-2 btn-pill btn btn-success"
+                            (click)="kirimpcare()"
+                          >
+                            Kirim Pcare Daftar
+                          </button>
+                        </div>
+
+                        <div class="col-md-6">
+                          <button
+                            class="mb-2 me-2 btn-pill btn btn-info"
+                            *ngIf="showcetak"
+                            (click)="cetaknoantrian(x.notransaksi)"
+                          >
+                            Cetak
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-
-                  
-                 
-               
                 </div>
               </div>
-
-
-
-          
-
-
             </div>
           </div>
-           
         </div>
-    
-
-
-   
-
       </div>
-    
+    </div>
   </div>
 </div>

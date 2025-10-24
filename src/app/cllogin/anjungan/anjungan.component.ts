@@ -300,7 +300,8 @@ export class anjunganComponent implements OnInit {
           this.kdpolibpjs = x.kdpolibpjs;
         }
         this.showloading = false;
-        this.authService.dokterperpolix(this.kdcabang, a).subscribe(
+        const datenow = new Date().toISOString().slice(0, 10);
+        this.authService.dokterpolixv2(this.kdcabang, a, datenow).subscribe(
           (data) => {
             this.tdokter = data;
           },
