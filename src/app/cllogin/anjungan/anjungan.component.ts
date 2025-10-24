@@ -64,6 +64,11 @@ export class anjunganComponent implements OnInit {
   hostName: string;
   URLINVOICE: string;
   kdprov: any = "";
+  tglp: any = new Date().toISOString().slice(0, 10);
+  kddokterbpjs: any;
+  namdokter: any;
+  jadwaltidak: string;
+  kdpolibpjsku: string;
 
   constructor(
     private modalService: NgbModal,
@@ -300,8 +305,7 @@ export class anjunganComponent implements OnInit {
           this.kdpolibpjs = x.kdpolibpjs;
         }
         this.showloading = false;
-        const datenow = new Date().toISOString().slice(0, 10);
-        this.authService.dokterpolixv2(this.kdcabang, a, datenow).subscribe(
+        this.authService.dokterpolixv2(this.kdcabang, a, this.tglp).subscribe(
           (data) => {
             this.tdokter = data;
           },
@@ -926,17 +930,82 @@ export class anjunganComponent implements OnInit {
   tjadwal: any;
 
   pilihjadwal(a) {
-    this.showloading = true;
-    this.authService.cekjadwal(a, this.kdpoli, "").subscribe((data) => {
-      if (data.length) {
-        this.tjadwal = data;
-        this.showloading = false;
-      } else {
-        this.toastr.error("Jadwal Belum di buat");
-        this.showloading = false;
+    this.authService.dokterbyid(this.kdcabang, a).subscribe(
+      (data) => {
+        if (data.status_code == 200) {
+          this.kddokterbpjs = data.response[0].kddokterbpjs;
+          this.namdokter = data.response[0].namdokter;
+
+          if (
+            this.kdpolibpjsku === "998" ||
+            this.kdpolibpjsku == "005" ||
+            this.kdpolibpjsku == "999" ||
+            this.kdpolibpjsku == "021"
+          ) {
+            this.jadwaltidak = "1";
+            this.authService
+              .cekjadwal(this.kddokter, this.kdpoli, this.tglp)
+              .subscribe((data) => {
+                if (data.length) {
+                  this.showloading = false;
+
+                  this.tjadwal = data;
+                  this.jadwal = data[0].jadwal;
+                  console.log(this.jadwal);
+                } else {
+                  this.showloading = false;
+                  // this.toastr.error(
+                  //   "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz"
+                  // );
+                  this.tjadwal = [];
+                }
+              });
+          } else {
+            this.showloading = true;
+            this.authService
+              .cekjadwalv222(this.kddokter, this.kdpoli, this.tglp)
+              .subscribe((data) => {
+                if (data.length) {
+                  this.jadwaltidak = "1";
+                  this.tjadwal = data;
+
+                  this.authService
+                    .cekjadwal(this.kddokter, this.kdpoli, this.tglp)
+                    .subscribe((data) => {
+                      if (data.length) {
+                        this.showloading = false;
+
+                        this.tjadwal = data;
+                        this.jadwal = data[0].jadwal;
+                        console.log(this.jadwal);
+                      } else {
+                        this.showloading = false;
+                        // this.toastr.error(
+                        //   "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz"
+                        // );
+                        this.tjadwal = [];
+                      }
+                    });
+                } else {
+                  this.jadwaltidak = "0";
+                  this.showloading = false;
+                  this.toastr.error(
+                    "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz"
+                  );
+                  this.tjadwal = [];
+                }
+              });
+          }
+        } else {
+          this.toastr.error(data.response.message);
+        }
+      },
+      (Error) => {
+        console.log(Error);
       }
-    });
+    );
   }
+
   cekkepsertaan(content) {
     var noasuransix: string;
 
