@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Subject, Observable, Observer } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { Subject, Observable, Observer } from "rxjs";
+import { map } from "rxjs/operators";
 
-const CHAT_URL = "wss://knmws.clenicapp.com";
+const CHAT_URL = "https://socketpkm.apbatech.com/";
 
 export interface Message {
   source: string;
@@ -28,11 +28,11 @@ export class WebsocketService {
     };
 
     this.ws.onerror = (error) => {
-      console.error('WebSocket error:', error);
+      console.error("WebSocket error:", error);
     };
 
     this.ws.onclose = () => {
-      console.log('WebSocket closed');
+      console.log("WebSocket closed");
     };
 
     console.log("Connected to: " + url);
