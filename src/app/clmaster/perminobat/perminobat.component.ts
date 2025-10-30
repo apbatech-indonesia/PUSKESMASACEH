@@ -34,6 +34,7 @@ import { AngularEditorConfig } from "@kolkov/angular-editor";
 import { DatePipe } from "@angular/common";
 import { FarmasijualService } from "../kasirfarmasijual/farmasijual.service";
 import { HttpHeaders } from "@angular/common/http";
+import { IGudang } from "./gudang.interface";
 
 @Component({
   selector: "app-perminobat",
@@ -53,6 +54,148 @@ import { HttpHeaders } from "@angular/common/http";
   ],
 })
 export class perminobatComponent implements OnInit {
+  // Data gudang
+  tgudang: IGudang[] = [];
+  gudang: string = "";
+  userDetails: any;
+  nama: string;
+  akses: string;
+  kdklinik: string;
+  kdcabang: string;
+  username: string;
+  kduser: string;
+  tglp: string;
+  tglb: string;
+  tgldari: string;
+  tglsampai: string;
+  myDate = new Date();
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private apiService: ApiserviceService,
+    private toastr: ToastrService,
+    private modalService: NgbModal,
+    private datePipe: DatePipe,
+    private farmasiJualService: FarmasijualService,
+    private authService: ApiserviceService,
+    private fb: FormBuilder
+  ) {
+    const data = JSON.parse(localStorage.getItem("userDatacl"));
+    if (data) {
+      this.userDetails = data.userData;
+      this.nama = this.userDetails.nama;
+      this.akses = this.userDetails.hakakses;
+      this.kdklinik = this.userDetails.kdklinik;
+      this.kdcabang = this.userDetails.kdcabang;
+      this.username = this.userDetails.username;
+      this.kduser = this.userDetails.kduser;
+    }
+
+    // Initialize dates
+    this.tglp = this.datePipe.transform(this.myDate, "yyyy-MM-dd");
+    this.tglb = this.datePipe.transform(this.myDate, "yyyy-MM-dd");
+    this.tgldari = this.datePipe.transform(this.myDate, "yyyy-MM-dd");
+    this.tglsampai = this.datePipe.transform(this.myDate, "yyyy-MM-dd");
+
+    // Get transaction data
+    const datano = JSON.parse(localStorage.getItem("noclenic"));
+    if (datano) {
+      this.userDetailss = datano;
+      this.notrans = this.userDetailss.notrans;
+      this.kddokter = this.userDetailss.kddokter;
+      this.satusehatheaders = new HttpHeaders({
+        "kd-cabang": this.kdcabang,
+      });
+    }
+  }
+
+  ngOnInit() {
+    this.tglp = this.datePipe.transform(this.myDate, "yyyy-MM-dd");
+    this.tglb = this.datePipe.transform(this.myDate, "yyyy-MM-dd");
+    this.tgldari = this.datePipe.transform(this.myDate, "yyyy-MM-dd");
+    this.tglsampai = this.datePipe.transform(this.myDate, "yyyy-MM-dd");
+    this.tampildata();
+    this.loadGudang();
+  }
+
+  loadGudang() {
+    const kdklinik: string = this.kdcabang || "076"; // Gunakan kdklinik dari user atau default ke '076'
+    this.apiService.getGudangList(kdklinik).subscribe({
+      next: (res: any) => {
+        if (res && Array.isArray(res)) {
+          this.tgudang = res.map((item: any) => ({
+            kdgudang: item.kdgudang,
+            nama: `${item.gudang} ${item.utama == 1 ? "(Utama)" : ""}`,
+            utama: parseInt(item.utama), // Pastikan utama adalah number
+            gudang: item.gudang, // Tambahkan original gudang name
+          }));
+
+          // Auto select gudang utama
+          const gudangUtama = this.tgudang.find((g) => g.utama === 1);
+          if (gudangUtama) {
+            this.gudang = gudangUtama.kdgudang;
+
+            // Set timeout untuk memastikan ng-select sudah terender
+            setTimeout(() => {
+              const selectedGudang = this.tgudang.find(
+                (g) => g.kdgudang === gudangUtama.kdgudang
+              );
+              if (selectedGudang) {
+                this.pilihGudang(selectedGudang);
+              }
+            }, 100);
+          }
+        }
+      },
+      error: (err) => {
+        console.error("Error loading gudang:", err);
+        this.toastr.error("Gagal memuat data gudang");
+      },
+    });
+  }
+
+  pilihGudang(event: any) {
+    if (event) {
+      this.gudang = event.kdgudang;
+      console.log("Gudang dipilih:", event);
+      // Tambahan logika setelah memilih gudang
+      // Misalnya load data obat berdasarkan gudang
+      this.loadObatByGudang(event.kdgudang);
+    }
+  }
+
+  loadObatByGudang(kdgudang: string) {
+    console.log("Loading obat untuk gudang:", kdgudang);
+
+    // Menggunakan data dari tabel obatstock
+    this.apiService.http
+      .get("https://tabaro.clenicapp.com/clenic/master/obat.php", {
+        params: {
+          kdcabang: this.kdcabang || "076",
+          kdgudang: kdgudang,
+        },
+      })
+      .subscribe({
+        next: (data: any) => {
+          // Map response untuk menggunakan obatx dan kdobat sebagai key
+          this.tobat = data.map((item) => ({
+            obatx: item.obat, // gunakan nama atau obat sebagai obatx
+            kdobat: item.kdobat, // gunakan kdobat sebagai kdobat
+            ...item, // tetap pertahankan properti lainnya
+          }));
+
+          if (data && data.length > 0) {
+            this.toastr.success("Data obat berhasil dimuat");
+          } else {
+            this.toastr.warning("Tidak ada data obat di gudang ini");
+          }
+        },
+        error: (err) => {
+          console.error("Error loading obat:", err);
+          this.toastr.error("Gagal memuat data obat");
+        },
+      });
+  }
   toggleMobileSidebar: any;
   satusehatheaders: any;
   faStar = faStar;
@@ -67,29 +210,7 @@ export class perminobatComponent implements OnInit {
   icon = "pe-7s-diamond icon-gradient bg-warm-flame";
 
   options: FormGroup;
-  public userDetails: any;
-  nama: any;
-  akses: any;
-
-  kdklinik: any;
-  cabangarr: any;
-
-  cariuser: any;
-  closeResult: string;
-
-  kdparent = "";
-  coa = "";
-  kdcabang: any;
-  username: any;
-
-  currentJustify = "start";
-  currentJustify2 = "center";
-  currentJustify3 = "start";
-
-  currentOrientation = "horizontal";
-
-  htmlContent = "";
-
+  // Angular Editor config
   config: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -131,15 +252,21 @@ export class perminobatComponent implements OnInit {
       ],
     ],
   };
-  kduser: any;
-  tglp = "2013-12-12";
-  tglb = "2013-12-12";
-  myDate = new Date();
-  showsimpan: boolean;
-  tgldari = "2013-12-12";
-  tglsampai = "2013-12-12";
+
+  // Other properties
+  cabangarr: any;
+  cariuser: any;
+  closeResult: string;
+  htmlContent = "";
   form: FormGroup;
-  public userDetailss: any;
+  userDetailss: any;
+  showsimpan: boolean;
+
+  // Justify modes
+  currentJustify = "start";
+  currentJustify2 = "center";
+  currentJustify3 = "start";
+  currentOrientation = "horizontal";
   @ViewChild("select") select: NgSelectComponent;
   @ViewChild("selectr") selectr: NgSelectComponent;
 
@@ -147,6 +274,7 @@ export class perminobatComponent implements OnInit {
   @ViewChild("myinputr") dfr: ElementRef;
 
   @ViewChild("myinputqty") ondf: ElementRef;
+
   @ViewChild("myinputqtyr") ondfr: ElementRef;
   @ViewChild("myinputket") ondfket: ElementRef;
 
@@ -165,38 +293,6 @@ export class perminobatComponent implements OnInit {
   @ViewChild("Stokai") Stokai: ElementRef;
 
   kddokter: string;
-  constructor(
-    public FarmasijualService: FarmasijualService,
-    private datepipe: DatePipe,
-    private modalService: NgbModal,
-    public toastr: ToastrService,
-    private authService: ApiserviceService,
-    private fb: FormBuilder
-  ) {
-    const data = JSON.parse(localStorage.getItem("userDatacl"));
-
-    this.userDetails = data.userData;
-    this.nama = this.userDetails.nama;
-    this.akses = this.userDetails.hakakses;
-    this.kdklinik = this.userDetails.kdklinik;
-    this.kdcabang = this.userDetails.kdcabang;
-    this.username = this.userDetails.username;
-    this.kduser = this.userDetails.kduser;
-    this.tglp = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
-    this.tglb = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
-    this.tgldari = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
-    this.tglsampai = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
-
-    const datano = JSON.parse(localStorage.getItem("noclenic"));
-    this.userDetailss = datano;
-    this.notrans = this.userDetailss.notrans;
-    this.kddokter = this.userDetailss.kddokter;
-    this.satusehatheaders = new HttpHeaders({
-      "kd-cabang": this.kdcabang,
-    });
-    // console.log(this.userDetailss.notrans,this.userDetailss.kddokter)
-    this.tampildata();
-  }
 
   norm: string;
   kdpoli: string;
@@ -300,17 +396,6 @@ export class perminobatComponent implements OnInit {
   }
   tdepo: any;
 
-  ngOnInit() {
-    // this.authService.gudang(this.kdcabang)
-    // .subscribe(
-    //   data => {
-    //     this.tdepo = data;
-    // },
-    //   Error => {
-    //    console.log(Error)
-    //   }
-    // )
-  }
   simno: boolean = true;
   simnor: boolean = false;
 
@@ -428,25 +513,55 @@ export class perminobatComponent implements OnInit {
   nmobata: any;
 
   cariobata(a) {
-    this.authService.obaterm(this.kdcabang, "2", a.target.value).subscribe(
-      (data) => {
-        this.tobata = data;
-      },
-      (Error) => {
-        console.log(Error);
-      }
-    );
+    // Menambahkan gudang yang dipilih ke parameter pencarian
+    this.apiService.http
+      .get("https://tabaro.clenicapp.com/clenic/master/obat.php", {
+        params: {
+          kdcabang: this.kdcabang || "076",
+          kdgudang: this.gudang || "", // Gunakan gudang yang dipilih
+          search: a.target.value, // Parameter pencarian
+        },
+      })
+      .subscribe({
+        next: (data: any) => {
+          // Map response untuk menggunakan obatx dan kdobat sebagai key
+          this.tobata = data.map((item) => ({
+            obatx: item.nama || item.obat,
+            kdobat: item.kdobat,
+            ...item,
+          }));
+        },
+        error: (err) => {
+          console.error("Error searching obat:", err);
+          this.toastr.error("Gagal mencari data obat");
+        },
+      });
   }
 
   cariobat(a) {
-    this.authService.obaterm(this.kdcabang, "2", a.target.value).subscribe(
-      (data) => {
-        this.tobat = data;
-      },
-      (Error) => {
-        console.log(Error);
-      }
-    );
+    // Menambahkan gudang yang dipilih ke parameter pencarian
+    this.apiService.http
+      .get("https://tabaro.clenicapp.com/clenic/master/obat.php", {
+        params: {
+          kdcabang: this.kdcabang || "076",
+          kdgudang: this.gudang || "", // Gunakan gudang yang dipilih
+          search: a.target.value, // Parameter pencarian
+        },
+      })
+      .subscribe({
+        next: (data: any) => {
+          // Map response untuk menggunakan obatx dan kdobat sebagai key
+          this.tobat = data.map((item) => ({
+            obatx: item.nama || item.obat,
+            kdobat: item.kdobat,
+            ...item,
+          }));
+        },
+        error: (err) => {
+          console.error("Error searching obat:", err);
+          this.toastr.error("Gagal mencari data obat");
+        },
+      });
   }
 
   profileForm = this.fb.group({

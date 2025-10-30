@@ -42,6 +42,15 @@ export class ApiserviceService {
     console.log("Base url rawat jalan : " + environment.rawatJalanUrl);
   }
 
+  // Service untuk mengambil data gudang
+  getGudangList(kdklinik: string): Observable<any> {
+    const baseUrl =
+      localStorage.getItem("baseUrx") || "https://tabaro.clenicapp.com/clenic/";
+    return this.http.get(`${baseUrl}master/gudang.php`, {
+      params: { kdklinik },
+    });
+  }
+
   setBaseUrlConfig(subDomain) {
     environment.subDomainName = subDomain;
     environment.baseUrl = environment.production

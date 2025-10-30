@@ -1,956 +1,1279 @@
 <div class="app-inner-layout">
-   <div class="card mb-3">
+  <div class="card mb-3">
     <div class="card-header-tab card-header">
       <div class="card-header-title font-size-lg text-capitalize fw-normal">
-        <i class="header-icon fa fa-bar-chart icon-gradient bg-happy-green"> </i>
-        <b style="font-size:14px;color:rgb(75, 75, 75)">Permintaan Obat </b>
+        <i class="header-icon fa fa-bar-chart icon-gradient bg-happy-green">
+        </i>
+        <b style="font-size: 14px; color: rgb(75, 75, 75)">Permintaan Obat </b>
 
-       <!-- <select  id="exampleSelect" class="form-select" >
+        <!-- <select  id="exampleSelect" class="form-select" >
           <option *ngFor="let a of tdepo" value="{{a.kdgudang}}" >{{a.gudang}}</option>
         
         </select> -->
-          
       </div>
-      <div class="btn-actions-pane-right text-capitalize">
-       
-
-
-
-
-      </div>
+      <div class="btn-actions-pane-right text-capitalize"></div>
     </div>
 
+    <div class="g-0 row"></div>
+  </div>
 
-    <div class="g-0 row">
-     
-    </div>
-  </div> 
+  <div style="height: 800px; overflow-x: scroll">
+    <ul ngbNav #nav2="ngbNav" class="nav-tabs">
+      <li ngbNavItem>
+        <a ngbNavLink (click)="kliknonr()"><span>Non Racik</span></a>
+        <ng-template ngbNavContent>
+          <div class="row px-2">
+            <div class="col-12">
+              <b>Gudang</b><br />
 
-
-
-<div style="height: 800px;overflow-x: scroll;">
-        
-<ul ngbNav #nav2="ngbNav" class="nav-tabs">
-      
-  <li ngbNavItem>
-   
-
-    <a ngbNavLink (click)="kliknonr()"><span>Non Racik</span></a>
-    <ng-template ngbNavContent>
-      <div class="input-group">
-        <div class="input-group-text" >
-          <div class="">
-            
-            <fa-icon [icon]="faSearch" ></fa-icon>
+              <ng-select
+                #selectGudang
+                [items]="tgudang"
+                bindLabel="nama"
+                bindValue="kdgudang"
+                placeholder="Pilih Gudang"
+                [(ngModel)]="gudang"
+                (change)="pilihGudang($event)"
+              >
+              </ng-select
+              ><br />
+            </div>
           </div>
-        </div>
-        <input placeholder="Cari Tamplate..." type="text" [(ngModel)]="caritam" class="form-control" (keyup)="caritamplate($event)">
-      </div>
+          <div class="input-group px-2">
+            <div class="input-group-text">
+              <div class="">
+                <fa-icon [icon]="faSearch"></fa-icon>
+              </div>
+            </div>
+            <input
+              placeholder="Cari Tamplate..."
+              type="text"
+              [(ngModel)]="caritam"
+              class="form-control"
+              (keyup)="caritamplate($event)"
+            />
+          </div>
 
-      <div class="table-responsive" style="font-size: 12px;" *ngIf="showtamplate">
-        <table  class="align-middle mb-0 table table-borderless table-striped table-hover">
-          <thead>
-            <tr style="border-bottom:1px solid black;">
-           
-              <th>OBAT</th>
-            <th class="text-center">ATURAN PAKAIa</th>
-            <th class="text-center">QTY</th>
-          
-            <th class="text-center">KETERANGAN</th>
-            <th class="text-center">ACT</th>
-            </tr>
-          </thead>
-         
+          <div
+            class="table-responsive"
+            style="font-size: 12px"
+            *ngIf="showtamplate"
+          >
+            <table
+              class="align-middle mb-0 table table-borderless table-striped table-hover"
+            >
+              <thead>
+                <tr style="border-bottom: 1px solid black">
+                  <th>OBAT</th>
+                  <th class="text-center">ATURAN PAKAIa</th>
+                  <th class="text-center">QTY</th>
 
+                  <th class="text-center">KETERANGAN</th>
+                  <th class="text-center">ACT</th>
+                </tr>
+              </thead>
 
-          
+              <tbody *ngFor="let x of ttamplate">
+                <tr>
+                  <td style="font-size: 12px; color: black">
+                    <b style="font-size: 12px">{{ x.nama }} | {{ x.status }}</b>
+                  </td>
+                  <td style="font-size: 12px; color: black"></td>
+                  <td style="font-size: 12px; color: black"></td>
+                  <td style="font-size: 12px; color: black"></td>
+                  <td class="text-center">
+                    <div
+                      class="badge bg-pill bg-warning"
+                      (click)="pilihobattam(x.kdtamplated, x.nama, x.status)"
+                    >
+                      P
+                    </div>
+                  </td>
+                </tr>
 
-           <tbody *ngFor="let x of ttamplate ">
-         
-          
-            <tr  >
-   
-              <td style="font-size: 12px;color:black;">
-        
-               <b style="font-size: 12px;">{{x.nama}} | {{x.status}}</b> 
+                <tr *ngFor="let y of x.detail">
+                  <td>
+                    <div
+                      *ngIf="y.kdobat == ''"
+                      class="mb-2 me-2 badge badge-dot bg-danger"
+                    >
+                      Primary
+                    </div>
+                    <div
+                      *ngIf="!y.kdobat == ''"
+                      class="mb-2 me-2 badge badge-dot bg-primary"
+                    >
+                      Primary
+                    </div>
 
-              </td>
-              <td style="font-size: 12px;color:black;">
-        
-               </td>
-               <td style="font-size: 12px;color:black;">
-        
-            
-               </td>
-               <td style="font-size: 12px;color:black;">
-        
-              </td>
-              <td class="text-center">
-       
-                <div class="badge bg-pill bg-warning"  (click)="pilihobattam(x.kdtamplated,x.nama,x.status)"  >P</div>             
-                 
-              </td>
-            </tr>
+                    <b style="color: black" *ngIf="y.kdobat == ''">{{
+                      y.obat
+                    }}</b>
+                    <span *ngIf="!y.kdobat == ''">{{ y.obat }}</span>
+                  </td>
 
+                  <td class="text-center">
+                    {{ y.aturan }}
+                  </td>
+                  <td class="text-center">
+                    {{ y.qty }}
 
-            <tr  *ngFor="let y of x.detail "  >
-     
-              <td >
-                <div *ngIf="y.kdobat == ''" class="mb-2 me-2 badge badge-dot bg-danger">Primary</div> 
-                <div *ngIf="!y.kdobat == ''" class="mb-2 me-2 badge badge-dot bg-primary">Primary</div> 
-                
-                <b style="color: black;" *ngIf="y.kdobat == ''">{{y.obat}}</b>
-                <span *ngIf="!y.kdobat == ''">{{y.obat}}</span>
-              </td>
-
-           
-              
-              <td class="text-center" >
-                {{y.aturan}}
-              </td>
-              <td  class="text-center">
-                {{y.qty}}     
-                
-                <span *ngIf="y.kdobat == ''" >{{y.satuan}}</span>
-                <span *ngIf="!y.kdobat == ''" >{{y.standart}}</span>
-              </td>
-              <td class="text-center" >
-                {{y.keterangan}}
-              </td>
-              <td  class="text-center">
-                {{y.status}}
-              </td>
-              <!-- <td style="border: 1px solid black;">
+                    <span *ngIf="y.kdobat == ''">{{ y.satuan }}</span>
+                    <span *ngIf="!y.kdobat == ''">{{ y.standart }}</span>
+                  </td>
+                  <td class="text-center">
+                    {{ y.keterangan }}
+                  </td>
+                  <td class="text-center">
+                    {{ y.status }}
+                  </td>
+                  <!-- <td style="border: 1px solid black;">
                 <div class="badge bg-pill bg-danger"  (click)="pilihgol()"  >Hapus</div>             
               </td> -->
-            </tr>
-
-
-
-           
-          </tbody>
-        </table>
-      </div>
-
-      <div class="table" style="font-size: 11px;color:black">
-        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-          <thead>
-            <tr style="border-bottom:1px solid black;">
-           
-              <th>Obat</th>
-            
-              <th class="text-center">Aturan Pakai </th>
-              <th class="text-center">Qty</th>
-            
-              <th class="text-center">Keterangan</th>
-              <th class="text-center">Aksi</th>
-            </tr>
-          </thead>
-          <tbody>
-
-        <tr *ngFor="let x  of tlistobatn">
-              <td   width="40%">
-           {{x.nama}}
-          </td>
-            
-              <td class="text-center"  width="15%" >
-                {{x.aturan}} 
-
-                <!-- (click)="aturannonracik(x.aturan,x.norm,x.kdpoli,x.kddokter,
-                x.notransaksi,x.kdpruduk,x.no)" -->
-              </td>
-              <td  class="text-center"  width="10%"  >
-                <b>{{x.qty}}</b>
-                <!-- (click)="qtynonracik(x.aturan,x.norm,x.kdpoli,x.kddokter,
-              x.notransaksi,x.kdpruduk,x.qty,x.harga,x.no)" -->
-              </td>
-            
-              <td class="text-center"  width="15%"  >
-                {{x.keterangan}}
-
-                <!-- (click)="ketnonracik(x.keterangan,x.norm,x.kdpoli,x.kddokter,
-              x.notransaksi,x.kdpruduk,x.no)"  -->
-              
-              </td>
-              <td style="text-align:center;" width="15%" > 
-                <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-danger" (click)="hapusobat(x.notransaksi,x.kdpoli,x.kdpruduk,x.statuso,x.dari,x.kunci,x.no,x.kdcppt,x.nama,x.kdobatbpjs,x.kdObatSK,x.kdRacikan)"><i style="font-size:15px ;"  class="pe-7s-trash btn-icon-wrapper"> </i></button>
-                <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-primary"  (click)="editobat(x.kdpruduk,x.nama,x.qty,x.keterangan,x.signa,x.hari,x.frekuensi,x.jmlpakai,x.no)"><i style="font-size:15px ;"  class="pe-7s-note btn-icon-wrapper"> </i></button>
-                <!-- <div class="badge bg-pill bg-danger" (click)="hapusobat(x.notransaksi,x.kdpoli,x.kdpruduk,x.statuso,x.dari,x.kunci,x.no,x.kdcppt,x.nama)">X</div>
-                 -->
-              </td>
-            </tr>
-      
-     
-
-<br>
-
-
-
-      
-
-
-           
-          </tbody>
-        </table>
-
-
-
-<br>
-<br>
-
-
-        <div class="row">
-          <b style="font-size: 12px;text-align: center;">TULIS PERMINTAAN OBAT</b>
-        
-        </div>
-        <div  style="background-color:#cecbcb ;">
-         
-          <table  class="table">
-      
-            <tbody style="font-size:11px;color:black"  >
-              <tr>
-               
-                <td  style="width: 300px;border: 1px dashed rgb(63, 63, 63);">
-                 <b>Obat</b><br>
-
-
-                  <ng-select *ngIf="!showtomboledit"   #select   [items]="tobat" bindLabel="obatx"  bindValue="kdobat" 
-                placeholder="Obat" [(ngModel)]="nmobat" (keyup)="cariobat($event)"  (keyup.enter)="onobat($event)"  (click)="onobat($event)" (change)="pilihObat($event)">
-                </ng-select>
-                <h1>{{nmobatx}}</h1>
-               
-                <b *ngIf="showtomboledit">{{namaobat}}</b>
-                </td>
-
-                <td>
-                  <app-master-kfa
-                    [id]="kdobatsatusehat"
-                    [title]="'Obat Satusehat'"
-                    [searchKfaText]="namaobatsatusehat"
-                    [isShowCode]="false"
-                    [isDisabled]="false"
-                    (selectedItem)="
-                      kdobatsatusehat = $event.code;
-                      namaobatsatusehat = $event.name;
-                      standart = $event.net_weight_uom_name;
-                      satuan = $event.satuan;
-                      simpanMappingObat(nmobat, kdobatsatusehat);"
-                  ></app-master-kfa>
-                </td>
-
-                <td  style="border: 1px dashed rgb(63, 63, 63);">
-                  <b>Stok</b><br>
-
-                  <input style="width: 100%;" disabled [(ngModel)]="Stok" style="width: 70px;"class="form-control"   placeholder="Stok" type="text"  >
-                 
-
-
-                  </td>
-               
-                <td  style="border: 1px dashed rgb(63, 63, 63);">
-                 <b>Frekuensi</b><br>
-
-                 
-                  <input style="width: 100%;"  style="width: 250px;" class="form-control"  #frekuensi [(ngModel)]="frek" (keyup.enter)="pilihfrekx($event)"  (keyup)="tulisfrek($event)"  placeholder="Frekuensi..." type="text"  >
-                 
-                   
-                  <div *ngIf="showfrekuensi">
-
-             
-                  <span style="font-size: 10px;font-style: italic;font-weight: bold;">Rekomendasi</span><br>
-
-                    <button  *ngFor="let x of tfrekuensi" style="font-size: 12px;"  (click)="pilihfrek(x.APJML)" class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info" >{{x.APJML}}
-                    </button>
-
-                  </div>
-                </td>
-                <td  style="border: 1px dashed rgb(63, 63, 63);">
-                  <b>Jml/Pakai</b><br>
-                  <input style="width: 100%;"  style="width: 250px;"   #jmlpakaii [(ngModel)]="jmlpakai"   class="form-control" (keyup)="tulisjmlpakai($event)" (keyup.enter)="pilihjmlpakaix($event)"   placeholder="Jml/Pakai..." type="text"  >
-
-                  <div *ngIf="showjmlpakai">
-
-             
-                    <span style="font-size: 10px;font-style: italic;font-weight: bold;">Rekomendasi</span><br>
-  
-                      <button  *ngFor="let x of tjmlberi" style="font-size: 12px;"  (click)="pilihjmlpakai(x.APWAKTU)"  class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info" >{{x.APWAKTU}}
-                      </button>
-  
-                    </div>
-
-
-                </td>
-              </tr>
-              <tr >
-                <td  style="border: 1px dashed rgb(63, 63, 63);">
-                  <b>Aturan</b><br>
-                  <input style="width: 100%;"  style="width: 250px;" class="form-control"  #aturani [(ngModel)]="signa"  (keyup)="tulissigna($event)" (keyup.enter)="tulissignax($event)"   placeholder="Aturan..." type="text"  >
-               
-                  <div *ngIf="showsigna">
-
-             
-                    <span style="font-size: 10px;font-style: italic;font-weight: bold;">Rekomendasi</span><br>
-  
-                      <button  *ngFor="let x of tsigna" style="font-size: 12px;" (click)="pilihsigna(x.APUSE)" class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info" >{{x.APUSE}}
-                      </button>
-  
-                    </div>
-                </td>
-                <td  style="border: 1px dashed rgb(63, 63, 63);">
-                  <b>Jml Hari</b><br>
-                  <input style="width: 100%;" [(ngModel)]="jmlhari" #jmlharii (keyup)="tulisjmlhari($event)"  (keyup.enter)="pilihharix($event)" class="form-control" placeholder="Jml Hari...." type="number" >
-                  <div *ngIf="showjmlhari">
-
-             
-                    <span style="font-size: 10px;font-style: italic;font-weight: bold;">Rekomendasi</span><br>
-  
-                      <button  *ngFor="let x of tjmlhari" style="font-size: 12px;" (click)="pilihhari(x.hari)" class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info" >{{x.hari}}
-                      </button>
-  
-                    </div>
-
-
-                
-                
-                </td>
-                <td style="border: 1px dashed rgb(63, 63, 63);">
-                 
-                  <b>Qty</b><br>
-                  <input style="width: 70px;" [(ngModel)]="qtyk"  class="form-control" placeholder="Qty..." type="number"   >
-               
-                </td>
-               
-                <td style="border: 1px dashed rgb(63, 63, 63);">
-                  <b>Catatan</b><br>
-                 
-                  <input  [(ngModel)]="keterangan"  style="width: 100%;"    #myinputket placeholder="Catatan..." class="form-control" (keyup.enter)="onsimpan($event)">
-
-
-                </td>
-             
-              <td>
-                <b></b><br>
-
-                <div  *ngIf="!showtomboledit">
-                  <button *ngIf="simno"  class="mb-2 me-2  btn btn-success"   (click)="tambahobat()">Simpan
-                  </button>
-                </div>
-              
-                <button *ngIf="showtomboledit" class="mb-2 me-2  btn btn-primary"   (click)="tambahobatedit()">Edit
-                </button>
-
-                <button *ngIf="showtomboledit" class="mb-2 me-2  btn btn-warning"   (click)="bataledit()">Batal
-                </button>
-              </td>
-              </tr> 
+                </tr>
               </tbody>
             </table>
-            
-      </div>
+          </div>
 
+          <div class="table" style="font-size: 11px; color: black">
+            <table
+              class="align-middle mb-0 table table-borderless table-striped table-hover"
+            >
+              <thead>
+                <tr style="border-bottom: 1px solid black">
+                  <th>Obat</th>
 
-      
-      </div>
+                  <th class="text-center">Aturan Pakai</th>
+                  <th class="text-center">Qty</th>
 
-    </ng-template>
-  </li>
+                  <th class="text-center">Keterangan</th>
+                  <th class="text-center">Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of tlistobatn">
+                  <td width="40%">
+                    {{ x.nama }}
+                  </td>
 
-  <li ngbNavItem>
-    <a ngbNavLink (click)="klikr()"><span>Racik</span></a>
-    <ng-template ngbNavContent>
-       <div class="table" style="font-size: 12px;">
-        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                  <td class="text-center" width="15%">
+                    {{ x.aturan }}
 
-          <thead>
-            <tr style="border-bottom:1px solid black;">
-           
-              <th>Nama Racik</th>
-         
-             <th>Aturan</th>
-        
-             
-              <th >Metode Racik</th>
-              <th >Qty</th>
-              <th >Keterangan</th>
-              <th >Aksi</th>
-            </tr>
-          </thead>
-          
+                    <!-- (click)="aturannonracik(x.aturan,x.norm,x.kdpoli,x.kddokter,
+                x.notransaksi,x.kdpruduk,x.no)" -->
+                  </td>
+                  <td class="text-center" width="10%">
+                    <b>{{ x.qty }}</b>
+                    <!-- (click)="qtynonracik(x.aturan,x.norm,x.kdpoli,x.kddokter,
+              x.notransaksi,x.kdpruduk,x.qty,x.harga,x.no)" -->
+                  </td>
 
+                  <td class="text-center" width="15%">
+                    {{ x.keterangan }}
 
-          <tbody *ngFor="let x of tlistobatr" style="border-bottom:1px solid grey ;">
-            <tr >
-   
-              <td  >
-            
-              {{x.namaracik}}
+                    <!-- (click)="ketnonracik(x.keterangan,x.norm,x.kdpoli,x.kddokter,
+              x.notransaksi,x.kdpruduk,x.no)"  -->
+                  </td>
+                  <td style="text-align: center" width="15%">
+                    <button
+                      class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-danger"
+                      (click)="
+                        hapusobat(
+                          x.notransaksi,
+                          x.kdpoli,
+                          x.kdpruduk,
+                          x.statuso,
+                          x.dari,
+                          x.kunci,
+                          x.no,
+                          x.kdcppt,
+                          x.nama,
+                          x.kdobatbpjs,
+                          x.kdObatSK,
+                          x.kdRacikan
+                        )
+                      "
+                    >
+                      <i
+                        style="font-size: 15px"
+                        class="pe-7s-trash btn-icon-wrapper"
+                      >
+                      </i>
+                    </button>
+                    <button
+                      class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-primary"
+                      (click)="
+                        editobat(
+                          x.kdpruduk,
+                          x.nama,
+                          x.qty,
+                          x.keterangan,
+                          x.signa,
+                          x.hari,
+                          x.frekuensi,
+                          x.jmlpakai,
+                          x.no
+                        )
+                      "
+                    >
+                      <i
+                        style="font-size: 15px"
+                        class="pe-7s-note btn-icon-wrapper"
+                      >
+                      </i>
+                    </button>
+                    <!-- <div class="badge bg-pill bg-danger" (click)="hapusobat(x.notransaksi,x.kdpoli,x.kdpruduk,x.statuso,x.dari,x.kunci,x.no,x.kdcppt,x.nama)">X</div>
+                 -->
+                  </td>
+                </tr>
 
-            </td>
+                <br />
+              </tbody>
+            </table>
 
-            <td    (click)="aturanracikm(x.kdtamplated,x.namaracik,x.metode,x.aturan,x.qty,
-            x.keterangan,x.notransaksi,x.kdpoli)"  >
-              {{x.aturan}}
+            <br />
+            <br />
 
-            </td>
-          
-            <td  (click)="metoderacik(x.kdtamplated,x.namaracik,x.metode,x.aturan,x.qty,
-            x.keterangan,x.notransaksi,x.kdpoli)" >
-            
-              {{x.metode}}
+            <div class="row">
+              <b style="font-size: 12px; text-align: center"
+                >TULIS PERMINTAAN OBAT</b
+              >
+            </div>
+            <div style="background-color: #cecbcb">
+              <table class="table">
+                <tbody style="font-size: 11px; color: black">
+                  <tr>
+                    <td
+                      style="width: 300px; border: 1px dashed rgb(63, 63, 63)"
+                    >
+                      <b>Obat</b><br />
 
-            </td>
+                      <ng-select
+                        *ngIf="!showtomboledit"
+                        #select
+                        [items]="tobat"
+                        bindLabel="obatx"
+                        bindValue="kdobat"
+                        placeholder="Obat"
+                        [(ngModel)]="nmobat"
+                        (keyup)="cariobat($event)"
+                        (keyup.enter)="onobat($event)"
+                        (click)="onobat($event)"
+                        (change)="pilihObat($event)"
+                      >
+                      </ng-select>
+                      <h1>{{ nmobatx }}</h1>
 
-    
-         
-              <td   (click)="qtyracikm(x.kdtamplated,x.namaracik,x.metode,x.aturan,x.qty,
-              x.keterangan,x.notransaksi,x.kdpoli)" >
-                {{x.qty}}
-              </td>
-              <td  (click)="keteranganracikm(x.kdtamplated,x.namaracik,x.metode,x.aturan,x.qty,
-              x.keterangan,x.notransaksi,x.kdpoli)">
-                {{x.keterangan}}
-              
-             
-              </td>
-              <td >
-                <!-- <div class="badge bg-pill bg-info" (click)="hapusobatt(x.kdtamplated)" >X</div> -->
-               
-                <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-danger"
-                (click)="hapusobatt(x.kdtamplated)"><i style="font-size:15px ;"  class="pe-7s-trash btn-icon-wrapper"> </i></button>
+                      <b *ngIf="showtomboledit">{{ namaobat }}</b>
+                    </td>
 
-                <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-primary" (click)="kshowracik(x.kdtamplated,x.namaracik,x.metode,x.aturan,x.qty,
-                x.keterangan,x.notransaksi,x.kdpoli)" >
-                  <i style="font-size:15px ;"  class="pe-7s-plus btn-icon-wrapper"> </i></button>
-              
-              </td>
-            
-            </tr>
+                    <td>
+                      <app-master-kfa
+                        [id]="kdobatsatusehat"
+                        [title]="'Obat Satusehat'"
+                        [searchKfaText]="namaobatsatusehat"
+                        [isShowCode]="false"
+                        [isDisabled]="false"
+                        (selectedItem)="
+                          kdobatsatusehat = $event.code;
+                          namaobatsatusehat = $event.name;
+                          standart = $event.net_weight_uom_name;
+                          satuan = $event.satuan;
+                          simpanMappingObat(nmobat, kdobatsatusehat)
+                        "
+                      ></app-master-kfa>
+                    </td>
 
-            <tr *ngFor="let y of x.detail">
-              <td colspan="3" >
-            
-                <div  class="mb-2 me-2 badge badge-dot bg-primary">Primary</div>         {{y.nama}}
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Stok</b><br />
 
-              </td>
-              <td   (click)="qtyracik(y.aturan,y.norm,y.kdpoli,y.kddokter,
-              y.notransaksi,y.kdpruduk,y.qty,y.harga,y.no)">
-            
-                {{y.qty}}
+                      <input
+                        style="width: 100%"
+                        disabled
+                        [(ngModel)]="Stok"
+                        style="width: 70px"
+                        class="form-control"
+                        placeholder="Stok"
+                        type="text"
+                      />
+                    </td>
 
-              </td>
-              <td    (click)="keteranganracik(y.keterangan,y.norm,y.kdpoli,y.kddokter,
-              y.notransaksi,y.kdpruduk,y.qty,y.harga,y.no)" >
-            
-                {{y.keterangan}}
-               
-             
-                
-              </td>
-              <td   >
-                <!-- <div class="badge bg-pill bg-danger" (click)="hapusobat(y.notransaksi,y.kdpoli,y.kdpruduk,y.statuso,y.dari,y.kunci,y.no,y.kdcppt,y.nama)" >X</div> -->
-                <i style="font-size:15px ;"  (click)="hapusobat(y.notransaksi,y.kdpoli,y.kdpruduk,y.statuso,y.dari,y.kunci,y.no,y.kdcppt,y.nama)" class="pe-7s-trash btn-icon-wrapper"> </i>
-              </td>
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Frekuensi</b><br />
 
-              </tr>
+                      <input
+                        style="width: 100%"
+                        style="width: 250px"
+                        class="form-control"
+                        #frekuensi
+                        [(ngModel)]="frek"
+                        (keyup.enter)="pilihfrekx($event)"
+                        (keyup)="tulisfrek($event)"
+                        placeholder="Frekuensi..."
+                        type="text"
+                      />
 
-              <tr *ngIf="x.kdtamplated === ketshow">
-     
-              <td  colspan="3" >
-            
-                <span>Obat</span>
-                <ng-select  #selectr [items]="tobatx" bindLabel="obat"  bindValue="kdobat" 
-                placeholder="Obat" [(ngModel)]="nmobatx" (keyup)="cariobatx($event)" (keyup.enter)="onobatr($event)" >
-                </ng-select>
-  
-              
-  
-            </td>
-           
-              <td  class="text-center" >
-                <span>Qty</span>
-                <input  #myinputr [(ngModel)]="qtykx" placeholder="Qty" type="number" class="form-control" (keyup.enter)="onqtyr($event)">
-              </td>
-            
-              <td class="text-center"  >
-                <span>Catatan</span>
-                <input #myinputqtyr [(ngModel)]="keteranganx" placeholder="Catatan.." type="text" class="form-control" (keyup.enter)="onketsimpan($event)">
-              </td>
-              <td class="text-center">
-         
-                <br>
-                <!-- <i style="font-size:20px ;color: black;font-weight: bold;"   class="font-icon-wrapper pe-7s-diskette" (click)="tambahobatr()"> </i> -->
-  
-  
+                      <div *ngIf="showfrekuensi">
+                        <span
+                          style="
+                            font-size: 10px;
+                            font-style: italic;
+                            font-weight: bold;
+                          "
+                          >Rekomendasi</span
+                        ><br />
 
-                <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-primary"  (click)="tambahobatr()"><i style="font-size:15px ;"  class="pe-7s-diskette btn-icon-wrapper"> </i></button>
-              
-                <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-warning"  (click)="batalinput()"><i style="font-size:15px ;"  class="pe-7s-back btn-icon-wrapper"> </i></button>
-              
+                        <button
+                          *ngFor="let x of tfrekuensi"
+                          style="font-size: 12px"
+                          (click)="pilihfrek(x.APJML)"
+                          class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info"
+                        >
+                          {{ x.APJML }}
+                        </button>
+                      </div>
+                    </td>
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Jml/Pakai</b><br />
+                      <input
+                        style="width: 100%"
+                        style="width: 250px"
+                        #jmlpakaii
+                        [(ngModel)]="jmlpakai"
+                        class="form-control"
+                        (keyup)="tulisjmlpakai($event)"
+                        (keyup.enter)="pilihjmlpakaix($event)"
+                        placeholder="Jml/Pakai..."
+                        type="text"
+                      />
 
-             
-              </td>
-            
-            </tr>
+                      <div *ngIf="showjmlpakai">
+                        <span
+                          style="
+                            font-size: 10px;
+                            font-style: italic;
+                            font-weight: bold;
+                          "
+                          >Rekomendasi</span
+                        ><br />
 
+                        <button
+                          *ngFor="let x of tjmlberi"
+                          style="font-size: 12px"
+                          (click)="pilihjmlpakai(x.APWAKTU)"
+                          class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info"
+                        >
+                          {{ x.APWAKTU }}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Aturan</b><br />
+                      <input
+                        style="width: 100%"
+                        style="width: 250px"
+                        class="form-control"
+                        #aturani
+                        [(ngModel)]="signa"
+                        (keyup)="tulissigna($event)"
+                        (keyup.enter)="tulissignax($event)"
+                        placeholder="Aturan..."
+                        type="text"
+                      />
 
+                      <div *ngIf="showsigna">
+                        <span
+                          style="
+                            font-size: 10px;
+                            font-style: italic;
+                            font-weight: bold;
+                          "
+                          >Rekomendasi</span
+                        ><br />
 
+                        <button
+                          *ngFor="let x of tsigna"
+                          style="font-size: 12px"
+                          (click)="pilihsigna(x.APUSE)"
+                          class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info"
+                        >
+                          {{ x.APUSE }}
+                        </button>
+                      </div>
+                    </td>
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Jml Hari</b><br />
+                      <input
+                        style="width: 100%"
+                        [(ngModel)]="jmlhari"
+                        #jmlharii
+                        (keyup)="tulisjmlhari($event)"
+                        (keyup.enter)="pilihharix($event)"
+                        class="form-control"
+                        placeholder="Jml Hari...."
+                        type="number"
+                      />
+                      <div *ngIf="showjmlhari">
+                        <span
+                          style="
+                            font-size: 10px;
+                            font-style: italic;
+                            font-weight: bold;
+                          "
+                          >Rekomendasi</span
+                        ><br />
 
+                        <button
+                          *ngFor="let x of tjmlhari"
+                          style="font-size: 12px"
+                          (click)="pilihhari(x.hari)"
+                          class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info"
+                        >
+                          {{ x.hari }}
+                        </button>
+                      </div>
+                    </td>
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Qty</b><br />
+                      <input
+                        style="width: 70px"
+                        [(ngModel)]="qtyk"
+                        class="form-control"
+                        placeholder="Qty..."
+                        type="number"
+                      />
+                    </td>
 
-            </tbody>
-      
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Catatan</b><br />
 
-            <br>
+                      <input
+                        [(ngModel)]="keterangan"
+                        style="width: 100%"
+                        #myinputket
+                        placeholder="Catatan..."
+                        class="form-control"
+                        (keyup.enter)="onsimpan($event)"
+                      />
+                    </td>
 
-  
-        </table>
+                    <td>
+                      <b></b><br />
 
-        <div class="row">
-          <b style="font-size: 12px;text-align: center;">TULIS PERMINTAAN OBAT RACIK</b>
-        
-        </div>
-        <div style="background-color:#cecbcb ;">
+                      <div *ngIf="!showtomboledit">
+                        <button
+                          *ngIf="simno"
+                          class="mb-2 me-2 btn btn-success"
+                          (click)="tambahobat()"
+                        >
+                          Simpan
+                        </button>
+                      </div>
 
-          <table class="table">
-                    
-          <tbody style="font-size:11px;color:black">
-            <tr style="border: 1px dashed grey;">
-              <td   style="border: 1px dashed rgb(63, 63, 63);">
-                <b>Nama Racik</b><br>
-  
-                <input   [(ngModel)]="namaracikm" placeholder="Nama Racik" type="text" class="form-control">
-              </td>
-              <td  style="border: 1px dashed rgb(63, 63, 63);">
-                <b>Metode Racik</b><br>
-                <select  [(ngModel)]="metode" id="exampleSelect" class="form-select" (change)="onChange($event.target.value)">
-                  <option *ngFor="let x of tmetoderacik" value="{{x.nama}}" >{{x.nama}}</option>
-                  <!-- <option value="Puyer" >Puyer</option>
+                      <button
+                        *ngIf="showtomboledit"
+                        class="mb-2 me-2 btn btn-primary"
+                        (click)="tambahobatedit()"
+                      >
+                        Edit
+                      </button>
+
+                      <button
+                        *ngIf="showtomboledit"
+                        class="mb-2 me-2 btn btn-warning"
+                        (click)="bataledit()"
+                      >
+                        Batal
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+      <li ngbNavItem>
+        <a ngbNavLink (click)="klikr()"><span>Racik</span></a>
+        <ng-template ngbNavContent>
+          <div class="table" style="font-size: 12px">
+            <table
+              class="align-middle mb-0 table table-borderless table-striped table-hover"
+            >
+              <thead>
+                <tr style="border-bottom: 1px solid black">
+                  <th>Nama Racik</th>
+
+                  <th>Aturan</th>
+
+                  <th>Metode Racik</th>
+                  <th>Qty</th>
+                  <th>Keterangan</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+
+              <tbody
+                *ngFor="let x of tlistobatr"
+                style="border-bottom: 1px solid grey"
+              >
+                <tr>
+                  <td>
+                    {{ x.namaracik }}
+                  </td>
+
+                  <td
+                    (click)="
+                      aturanracikm(
+                        x.kdtamplated,
+                        x.namaracik,
+                        x.metode,
+                        x.aturan,
+                        x.qty,
+                        x.keterangan,
+                        x.notransaksi,
+                        x.kdpoli
+                      )
+                    "
+                  >
+                    {{ x.aturan }}
+                  </td>
+
+                  <td
+                    (click)="
+                      metoderacik(
+                        x.kdtamplated,
+                        x.namaracik,
+                        x.metode,
+                        x.aturan,
+                        x.qty,
+                        x.keterangan,
+                        x.notransaksi,
+                        x.kdpoli
+                      )
+                    "
+                  >
+                    {{ x.metode }}
+                  </td>
+
+                  <td
+                    (click)="
+                      qtyracikm(
+                        x.kdtamplated,
+                        x.namaracik,
+                        x.metode,
+                        x.aturan,
+                        x.qty,
+                        x.keterangan,
+                        x.notransaksi,
+                        x.kdpoli
+                      )
+                    "
+                  >
+                    {{ x.qty }}
+                  </td>
+                  <td
+                    (click)="
+                      keteranganracikm(
+                        x.kdtamplated,
+                        x.namaracik,
+                        x.metode,
+                        x.aturan,
+                        x.qty,
+                        x.keterangan,
+                        x.notransaksi,
+                        x.kdpoli
+                      )
+                    "
+                  >
+                    {{ x.keterangan }}
+                  </td>
+                  <td>
+                    <!-- <div class="badge bg-pill bg-info" (click)="hapusobatt(x.kdtamplated)" >X</div> -->
+
+                    <button
+                      class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-danger"
+                      (click)="hapusobatt(x.kdtamplated)"
+                    >
+                      <i
+                        style="font-size: 15px"
+                        class="pe-7s-trash btn-icon-wrapper"
+                      >
+                      </i>
+                    </button>
+
+                    <button
+                      class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-primary"
+                      (click)="
+                        kshowracik(
+                          x.kdtamplated,
+                          x.namaracik,
+                          x.metode,
+                          x.aturan,
+                          x.qty,
+                          x.keterangan,
+                          x.notransaksi,
+                          x.kdpoli
+                        )
+                      "
+                    >
+                      <i
+                        style="font-size: 15px"
+                        class="pe-7s-plus btn-icon-wrapper"
+                      >
+                      </i>
+                    </button>
+                  </td>
+                </tr>
+
+                <tr *ngFor="let y of x.detail">
+                  <td colspan="3">
+                    <div class="mb-2 me-2 badge badge-dot bg-primary">
+                      Primary
+                    </div>
+                    {{ y.nama }}
+                  </td>
+                  <td
+                    (click)="
+                      qtyracik(
+                        y.aturan,
+                        y.norm,
+                        y.kdpoli,
+                        y.kddokter,
+                        y.notransaksi,
+                        y.kdpruduk,
+                        y.qty,
+                        y.harga,
+                        y.no
+                      )
+                    "
+                  >
+                    {{ y.qty }}
+                  </td>
+                  <td
+                    (click)="
+                      keteranganracik(
+                        y.keterangan,
+                        y.norm,
+                        y.kdpoli,
+                        y.kddokter,
+                        y.notransaksi,
+                        y.kdpruduk,
+                        y.qty,
+                        y.harga,
+                        y.no
+                      )
+                    "
+                  >
+                    {{ y.keterangan }}
+                  </td>
+                  <td>
+                    <!-- <div class="badge bg-pill bg-danger" (click)="hapusobat(y.notransaksi,y.kdpoli,y.kdpruduk,y.statuso,y.dari,y.kunci,y.no,y.kdcppt,y.nama)" >X</div> -->
+                    <i
+                      style="font-size: 15px"
+                      (click)="
+                        hapusobat(
+                          y.notransaksi,
+                          y.kdpoli,
+                          y.kdpruduk,
+                          y.statuso,
+                          y.dari,
+                          y.kunci,
+                          y.no,
+                          y.kdcppt,
+                          y.nama
+                        )
+                      "
+                      class="pe-7s-trash btn-icon-wrapper"
+                    >
+                    </i>
+                  </td>
+                </tr>
+
+                <tr *ngIf="x.kdtamplated === ketshow">
+                  <td colspan="3">
+                    <span>Obat</span>
+                    <ng-select
+                      #selectr
+                      [items]="tobatx"
+                      bindLabel="obat"
+                      bindValue="kdobat"
+                      placeholder="Obat"
+                      [(ngModel)]="nmobatx"
+                      (keyup)="cariobatx($event)"
+                      (keyup.enter)="onobatr($event)"
+                    >
+                    </ng-select>
+                  </td>
+
+                  <td class="text-center">
+                    <span>Qty</span>
+                    <input
+                      #myinputr
+                      [(ngModel)]="qtykx"
+                      placeholder="Qty"
+                      type="number"
+                      class="form-control"
+                      (keyup.enter)="onqtyr($event)"
+                    />
+                  </td>
+
+                  <td class="text-center">
+                    <span>Catatan</span>
+                    <input
+                      #myinputqtyr
+                      [(ngModel)]="keteranganx"
+                      placeholder="Catatan.."
+                      type="text"
+                      class="form-control"
+                      (keyup.enter)="onketsimpan($event)"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <br />
+                    <!-- <i style="font-size:20px ;color: black;font-weight: bold;"   class="font-icon-wrapper pe-7s-diskette" (click)="tambahobatr()"> </i> -->
+
+                    <button
+                      class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-primary"
+                      (click)="tambahobatr()"
+                    >
+                      <i
+                        style="font-size: 15px"
+                        class="pe-7s-diskette btn-icon-wrapper"
+                      >
+                      </i>
+                    </button>
+
+                    <button
+                      class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-warning"
+                      (click)="batalinput()"
+                    >
+                      <i
+                        style="font-size: 15px"
+                        class="pe-7s-back btn-icon-wrapper"
+                      >
+                      </i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+
+              <br />
+            </table>
+
+            <div class="row">
+              <b style="font-size: 12px; text-align: center"
+                >TULIS PERMINTAAN OBAT RACIK</b
+              >
+            </div>
+            <div style="background-color: #cecbcb">
+              <table class="table">
+                <tbody style="font-size: 11px; color: black">
+                  <tr style="border: 1px dashed grey">
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Nama Racik</b><br />
+
+                      <input
+                        [(ngModel)]="namaracikm"
+                        placeholder="Nama Racik"
+                        type="text"
+                        class="form-control"
+                      />
+                    </td>
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Metode Racik</b><br />
+                      <select
+                        [(ngModel)]="metode"
+                        id="exampleSelect"
+                        class="form-select"
+                        (change)="onChange($event.target.value)"
+                      >
+                        <option
+                          *ngFor="let x of tmetoderacik"
+                          value="{{ x.nama }}"
+                        >
+                          {{ x.nama }}
+                        </option>
+                        <!-- <option value="Puyer" >Puyer</option>
                   <option value="Salep" >Salep</option>
                   <option value="Sirup" >Sirup</option>
                    -->
-  
-                </select>
-              </td>
-           
-              <td   style="border: 1px dashed rgb(63, 63, 63);" >
-                <b>Frekuensi</b><br>
-                <input  [(ngModel)]="frekracik" #frekuensir placeholder="Frekuensi" (keyup)="tulisfrekr($event)" (keyup.enter)="tulisfrekre($event)"   type="text" class="form-control" >
-             
-             
-                <div *ngIf="showfrekuensir">
+                      </select>
+                    </td>
 
-             
-                  <span style="font-size: 10px;font-style: italic;font-weight: bold;">Rekomendasi</span><br>
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Frekuensi</b><br />
+                      <input
+                        [(ngModel)]="frekracik"
+                        #frekuensir
+                        placeholder="Frekuensi"
+                        (keyup)="tulisfrekr($event)"
+                        (keyup.enter)="tulisfrekre($event)"
+                        type="text"
+                        class="form-control"
+                      />
 
-                    <button  *ngFor="let x of tfrekuensir" style="font-size: 12px;"  (click)="pilihfrekr(x.APJML)" class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info" >{{x.APJML}}
-                    </button>
+                      <div *ngIf="showfrekuensir">
+                        <span
+                          style="
+                            font-size: 10px;
+                            font-style: italic;
+                            font-weight: bold;
+                          "
+                          >Rekomendasi</span
+                        ><br />
 
-                  </div>
+                        <button
+                          *ngFor="let x of tfrekuensir"
+                          style="font-size: 12px"
+                          (click)="pilihfrekr(x.APJML)"
+                          class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info"
+                        >
+                          {{ x.APJML }}
+                        </button>
+                      </div>
+                    </td>
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Jml/Pakai</b><br />
+                      <input
+                        [(ngModel)]="jmlpakairacik"
+                        #jmlpakaiir
+                        placeholder="Jml/Pakai"
+                        type="text"
+                        (keyup.enter)="pilihjmlpakaire($event)"
+                        class="form-control"
+                      />
 
+                      <div *ngIf="showjmlpakair">
+                        <span
+                          style="
+                            font-size: 10px;
+                            font-style: italic;
+                            font-weight: bold;
+                          "
+                          >Rekomendasi</span
+                        ><br />
 
-              </td>
-              <td   style="border: 1px dashed rgb(63, 63, 63);" >
-                <b>Jml/Pakai</b><br>
-                <input  [(ngModel)]="jmlpakairacik" #jmlpakaiir placeholder="Jml/Pakai" type="text" (keyup.enter)="pilihjmlpakaire($event)"  class="form-control" >
-              
-                <div *ngIf="showjmlpakair">
+                        <button
+                          *ngFor="let x of tjmlberir"
+                          style="font-size: 12px"
+                          (click)="pilihjmlpakair(x.APWAKTU)"
+                          class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info"
+                        >
+                          {{ x.APWAKTU }}
+                        </button>
+                      </div>
+                    </td>
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Aturan</b><br />
+                      <input
+                        [(ngModel)]="aturanracik"
+                        #aturanir
+                        placeholder="Aturan"
+                        (keyup.enter)="pilihsignarr($event)"
+                        type="text"
+                        class="form-control"
+                      />
 
-             
-                  <span style="font-size: 10px;font-style: italic;font-weight: bold;">Rekomendasi</span><br>
+                      <div *ngIf="showsignar">
+                        <span
+                          style="
+                            font-size: 10px;
+                            font-style: italic;
+                            font-weight: bold;
+                          "
+                          >Rekomendasi</span
+                        ><br />
 
-                    <button  *ngFor="let x of tjmlberir" style="font-size: 12px;"  (click)="pilihjmlpakair(x.APWAKTU)"  class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info" >{{x.APWAKTU}}
-                    </button>
+                        <button
+                          *ngFor="let x of tsignar"
+                          style="font-size: 12px"
+                          (click)="pilihsignar(x.APUSE)"
+                          class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info"
+                        >
+                          {{ x.APUSE }}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
 
-                  </div>
+                  <tr style="border: 1px dashed grey">
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Jml Hari</b><br />
+                      <input
+                        [(ngModel)]="jmlhariracik"
+                        #jmlhariir
+                        placeholder="Jml Hari"
+                        (keyup.enter)="pilihharire($event)"
+                        type="text"
+                        class="form-control"
+                      />
 
-         
+                      <div *ngIf="showjmlharir">
+                        <span
+                          style="
+                            font-size: 10px;
+                            font-style: italic;
+                            font-weight: bold;
+                          "
+                          >Rekomendasi</span
+                        ><br />
 
-              
-              </td>
-              <td  style="border: 1px dashed rgb(63, 63, 63);" >
-                <b>Aturan</b><br>
-                <input  [(ngModel)]="aturanracik" #aturanir placeholder="Aturan" (keyup.enter)="pilihsignarr($event)" type="text" class="form-control" >
-              
-              
-                <div *ngIf="showsignar">
+                        <button
+                          *ngFor="let x of tjmlharir"
+                          style="font-size: 12px"
+                          (click)="pilihharir(x.hari)"
+                          class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info"
+                        >
+                          {{ x.hari }}
+                        </button>
+                      </div>
+                    </td>
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Jadi Berapa {{ metode }}</b
+                      ><br />
+                      <input
+                        [(ngModel)]="qtykm"
+                        placeholder="Qty"
+                        type="number"
+                        class="form-control"
+                      />
+                    </td>
 
-             
-                  <span style="font-size: 10px;font-style: italic;font-weight: bold;">Rekomendasi</span><br>
+                    <td style="border: 1px dashed rgb(63, 63, 63)">
+                      <b>Catatan</b><br />
+                      <textarea
+                        [(ngModel)]="keteranganm"
+                        #keteranganmr
+                        placeholder="Catatan.."
+                        class="form-control"
+                        autosize
+                      ></textarea>
+                    </td>
 
-                    <button  *ngFor="let x of tsignar" style="font-size: 12px;" (click)="pilihsignar(x.APUSE)" class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info" >{{x.APUSE}}
-                    </button>
+                    <td>
+                      <br />
 
-                  </div>
+                      <button
+                        *ngIf="simnor"
+                        class="mb-2 me-2 btn btn-success"
+                        (click)="verifracik()"
+                      >
+                        Simpan Racik
+                      </button>
+                    </td>
+                  </tr>
 
+                  <tr>
+                    <td colspan="2"></td>
 
-              
-              </td>
-  
-            
-            
-            </tr>
-  
-            <tr style="border: 1px dashed grey;">
-              <td   style="border: 1px dashed rgb(63, 63, 63);">
-                <b>Jml Hari</b><br>
-                <input  [(ngModel)]="jmlhariracik" #jmlhariir placeholder="Jml Hari" (keyup.enter)="pilihharire($event)" type="text" class="form-control" >
-              
-              
-                <div *ngIf="showjmlharir">
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
 
-             
-                  <span style="font-size: 10px;font-style: italic;font-weight: bold;">Rekomendasi</span><br>
-
-                    <button  *ngFor="let x of tjmlharir" style="font-size: 12px;" (click)="pilihharir(x.hari)" class="mb-2 me-2 btn-hover-shine btn-pill btn btn-info" >{{x.hari}}
-                    </button>
-
-                  </div>
-
-
-              
-              </td>
-              <td    style="border: 1px dashed rgb(63, 63, 63);">
-                <b>Jadi Berapa {{metode}}</b><br>
-                <input   [(ngModel)]="qtykm" placeholder="Qty" type="number" class="form-control">
-              </td>
-            
-              <td   style="border: 1px dashed rgb(63, 63, 63);">
-                <b>Catatan</b><br>
-                <textarea  [(ngModel)]="keteranganm"  #keteranganmr  placeholder="Catatan.." class="form-control" autosize></textarea>
-              </td>
-
-              <td>
-                  <br>
-
-  <button *ngIf="simnor" class="mb-2 me-2  btn btn-success"  (click)="verifracik()">Simpan Racik
-  </button>
-  
-
-
-              </td>
-              </tr>
-  
-  
-          
-  
-  
-            <tr >
-     
-              <td  colspan="2" >
-            
-           
-  
-            </td>
-           
-              <td class="text-center"  >
-               
-              </td>
-              <td  class="text-center" >
-                
-              </td>
-            
-              <td class="text-center">
-         
-            
-             
-              </td>
-            
-            </tr>
-  
-  
-  
-  
-   
-   
-  
-  
-  
-  
-  
-  
-  
-             
-            </tbody>
-          </table>
-
-        </div>
-      </div>
-    
-    </ng-template>
-  </li>
-
-  <li ngbNavItem>
-    <a ngbNavLink (click)="klikbhp()"><span>Bhp/Alkes</span></a>
-    <ng-template ngbNavContent>
-      <div class="input-group">
-        <div class="input-group-text" >
-          <div class="">
-            
-            <fa-icon [icon]="faSearch" ></fa-icon>
-          </div>
-        </div>
-        <input placeholder="Cari Tamplate BHP Tindakan..." type="text" [(ngModel)]="caribhpt" class="form-control" (keyup)="caribhp($event)">
-      </div>
-<br>
-<div  style="background-color:#cecbcb ;">
-  <table  class="table">
-      
-    <tbody style="font-size:11px;color:black"  >
-      <tr>
-       
-        <td  style="width: 300px;border: 1px dashed rgb(63, 63, 63);">
-         <b>Obat</b><br>
-
-
-          <ng-select    #select   [items]="tobata" bindLabel="obatx"  bindValue="kdobat" 
-        placeholder="Obat" [(ngModel)]="nmobata" (keyup)="cariobata($event)"  (keyup.enter)="onobatx($event)"  (click)="onobatx($event)">
-        </ng-select>
-       
-      
-
-         
-        </td>
-
-        <td  style="border: 1px dashed rgb(63, 63, 63);">
-          <b>Stok</b><br>
-
-          <input style="width: 100%;" disabled [(ngModel)]="Stoka" style="width: 50px;" class="inx"   placeholder="Stok" type="text"  >
-         
-
-
-          </td>
-       
-    
-          <td style="border: 1px dashed rgb(63, 63, 63);">
-         
-            <b>Qty Pakai</b><br>
-            <input style="width: 100%;" #Stokai  [(ngModel)]="qtyk"  class="inx" placeholder="Qty..." type="number"   >
-         
-          </td>
-
-          <td>
-            <b></b><br>
-    
-            <div >
-              <button   class="mb-2 me-2  btn btn-success"   (click)="tambahobatal()">Simpan
-              </button>
-            </div>
-          
-          </td>
-      </tr>
-      
-      </tbody>
-    </table>
-
-  </div>
-<table class="table table-striped">
-  <thead>
-    <tr style="border-bottom:1px solid black;">
-   
-      <th>BHP</th>
-   
-    <th>QTY</th>
-    <th>ACT</th>
-    </tr>
-  </thead>
-
-
-  <tbody>
-    <tr *ngFor="let x of tlistbhpr">
-      <td style="font-size: 11px;color: black">
-        {{x.nama}}  
-      </td>
-
-      <td style="font-size: 11px;color: black" >
-        
-{{x.qty}} 
-      </td>
-      <td>
-        <div class="badge bg-pill bg-danger" (click)="hapusobat(x.notransaksi,x.kdpoli,x.kdpruduk,x.statuso,x.dari,x.kunci,x.no,x.kdcppt,x.nama)">X</div>
-      </td>
-    
-</tr>
- </tbody>
-  </table>
-
-
-      <div class="table-responsive" style="font-size: 12px;" *ngIf="showtamplateb">
-        <table  class="align-middle mb-0 table table-borderless table-striped table-hover">
-          <thead>
-            <tr style="border-bottom:1px solid black;">
-           
-              <th>OBAT</th>
-           
-            <th class="text-center">QTY</th>
-          
-            <th class="text-center">KETERANGAN</th>
-            <th class="text-center">AKSI</th>
-            </tr>
-          </thead>
-         
-
-
-          
-
-           <tbody *ngFor="let x of ttamplateb " style="font-size: 11px;color:black;">
-         
-          
-            <tr  >
-   
-              <td >
-        
-               <b >{{x.nama}} | {{x.status}}</b> 
-
-              </td>
-            
-               <td >
-        
-            
-               </td>
-               <td >
-        
-              </td>
-              <td class="text-center">
-       
-                <div class="badge bg-pill bg-warning"  (click)="pilihobattamb(x.kdtamplated,x.nama,x.status)"  >PILIH</div>             
-                 
-              </td>
-            </tr>
-
-
-            <tr  *ngFor="let y of x.detail "  >
-     
-              <td >
-                <div *ngIf="y.kdobat == ''" class="mb-2 me-2 badge badge-dot bg-danger">Primary</div> 
-                <div *ngIf="!y.kdobat == ''" class="mb-2 me-2 badge badge-dot bg-primary">Primary</div> 
-                
-                <b style="color: black;" *ngIf="y.kdobat == ''">{{y.obat}}</b>
-                <span *ngIf="!y.kdobat == ''">{{y.obat}}</span>
-              </td>
-
-           
-              
-            
-              <td  class="text-center">
-                {{y.qty}}     
-                
-                <span *ngIf="y.kdobat == ''" >{{y.satuan}}</span>
-                <span *ngIf="!y.kdobat == ''" >{{y.standart}}</span>
-              </td>
-              <td class="text-center" >
-                {{y.keterangan}}
-              </td>
-              <td  class="text-center">
-                {{y.status}}
-              </td>
-             
-            </tr>
-
-
-
-           
-          </tbody>
-        </table>
-      </div>
-
-
-
-      </ng-template>
-  </li>
-
-
-  <li ngbNavItem>
-    <a ngbNavLink (click)="klikorb()"><span>Copy Obat Sebelumnya</span></a>
-    <ng-template ngbNavContent>
-      <div class="vertical-without-time vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
-        <div class="vertical-timeline-item vertical-timeline-element" *ngFor="let x of tterapi">
-          <div ><span class="vertical-timeline-element-icon bounce-in"><i
-                class="badge badge-dot badge-dot-xl bg-success"> </i></span>
-            <div class="vertical-timeline-element-content bounce-in">
-              <h4 class="timeline-title">{{x.tglpriksa}}<i style="font-size:20px ;"  (click)="copyterapi(x.notransaksi,x.tglpriksa)" class="font-icon-wrapper pe-7s-copy-file"> </i> </h4>
-              <p *ngFor="let y of x.detail">{{y.nama}} | {{y.aturan}} |
-                {{y.qty}} </p>
+                    <td class="text-center"></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
-        </div>
-        </div>
-      </ng-template>
-    </li>
-
-
-    <li ngbNavItem>
-      <a ngbNavLink (click)="klikcekobatbpjs()"><span>Cek BPJS</span></a>
-      <ng-template ngbNavContent>
-        <div class="table" style="font-size: 11px;color:black">
-          <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-            <thead>
-              <tr style="border-bottom:1px solid black;">
-                <th>kdObatSK</th>
-                <th>Obat</th>
-              
-                <th >Aturan Pakai </th>
-             
-                <th >Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-  
-          <tr *ngFor="let x  of lobatbpjs">
-                <td   >
-             {{x.kdObatSK}}
-            </td>
-              
-                <td  >
-                  {{x.obat.nmObat}}
-  
-                 
-                </td>
-              
-              
-                <td >
-                  {{x.signa1}} * {{x.signa2}}
-  
-                
-                </td>
-                <td > 
-                  <button class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-danger" (click)="hapusobatbpjs(x.kdObatSK)"><i style="font-size:15px ;"  class="pe-7s-trash btn-icon-wrapper"> </i></button>
-                 
-                </td>
-              </tr>
-        
-       
-  
-  <br>
-  
-  
-  
-        
-  
-  
-             
-            </tbody>
-          </table>
-  
-  
-
-
-  
-  
-        
-        </div>
         </ng-template>
       </li>
-  </ul>
 
+      <li ngbNavItem>
+        <a ngbNavLink (click)="klikbhp()"><span>Bhp/Alkes</span></a>
+        <ng-template ngbNavContent>
+          <div class="input-group">
+            <div class="input-group-text">
+              <div class="">
+                <fa-icon [icon]="faSearch"></fa-icon>
+              </div>
+            </div>
+            <input
+              placeholder="Cari Tamplate BHP Tindakan..."
+              type="text"
+              [(ngModel)]="caribhpt"
+              class="form-control"
+              (keyup)="caribhp($event)"
+            />
+          </div>
+          <br />
+          <div style="background-color: #cecbcb">
+            <table class="table">
+              <tbody style="font-size: 11px; color: black">
+                <tr>
+                  <td style="width: 300px; border: 1px dashed rgb(63, 63, 63)">
+                    <b>Obat</b><br />
 
+                    <ng-select
+                      #select
+                      [items]="tobata"
+                      bindLabel="obatx"
+                      bindValue="kdobat"
+                      placeholder="Obat"
+                      [(ngModel)]="nmobata"
+                      (keyup)="cariobata($event)"
+                      (keyup.enter)="onobatx($event)"
+                      (click)="onobatx($event)"
+                    >
+                    </ng-select>
+                  </td>
 
-<div [ngbNavOutlet]="nav2"></div>
-<!-- <div style="text-align:center ;">
+                  <td style="border: 1px dashed rgb(63, 63, 63)">
+                    <b>Stok</b><br />
+
+                    <input
+                      style="width: 100%"
+                      disabled
+                      [(ngModel)]="Stoka"
+                      style="width: 50px"
+                      class="inx"
+                      placeholder="Stok"
+                      type="text"
+                    />
+                  </td>
+
+                  <td style="border: 1px dashed rgb(63, 63, 63)">
+                    <b>Qty Pakai</b><br />
+                    <input
+                      style="width: 100%"
+                      #Stokai
+                      [(ngModel)]="qtyk"
+                      class="inx"
+                      placeholder="Qty..."
+                      type="number"
+                    />
+                  </td>
+
+                  <td>
+                    <b></b><br />
+
+                    <div>
+                      <button
+                        class="mb-2 me-2 btn btn-success"
+                        (click)="tambahobatal()"
+                      >
+                        Simpan
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <table class="table table-striped">
+            <thead>
+              <tr style="border-bottom: 1px solid black">
+                <th>BHP</th>
+
+                <th>QTY</th>
+                <th>ACT</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let x of tlistbhpr">
+                <td style="font-size: 11px; color: black">
+                  {{ x.nama }}
+                </td>
+
+                <td style="font-size: 11px; color: black">
+                  {{ x.qty }}
+                </td>
+                <td>
+                  <div
+                    class="badge bg-pill bg-danger"
+                    (click)="
+                      hapusobat(
+                        x.notransaksi,
+                        x.kdpoli,
+                        x.kdpruduk,
+                        x.statuso,
+                        x.dari,
+                        x.kunci,
+                        x.no,
+                        x.kdcppt,
+                        x.nama
+                      )
+                    "
+                  >
+                    X
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div
+            class="table-responsive"
+            style="font-size: 12px"
+            *ngIf="showtamplateb"
+          >
+            <table
+              class="align-middle mb-0 table table-borderless table-striped table-hover"
+            >
+              <thead>
+                <tr style="border-bottom: 1px solid black">
+                  <th>OBAT</th>
+
+                  <th class="text-center">QTY</th>
+
+                  <th class="text-center">KETERANGAN</th>
+                  <th class="text-center">AKSI</th>
+                </tr>
+              </thead>
+
+              <tbody
+                *ngFor="let x of ttamplateb"
+                style="font-size: 11px; color: black"
+              >
+                <tr>
+                  <td>
+                    <b>{{ x.nama }} | {{ x.status }}</b>
+                  </td>
+
+                  <td></td>
+                  <td></td>
+                  <td class="text-center">
+                    <div
+                      class="badge bg-pill bg-warning"
+                      (click)="pilihobattamb(x.kdtamplated, x.nama, x.status)"
+                    >
+                      PILIH
+                    </div>
+                  </td>
+                </tr>
+
+                <tr *ngFor="let y of x.detail">
+                  <td>
+                    <div
+                      *ngIf="y.kdobat == ''"
+                      class="mb-2 me-2 badge badge-dot bg-danger"
+                    >
+                      Primary
+                    </div>
+                    <div
+                      *ngIf="!y.kdobat == ''"
+                      class="mb-2 me-2 badge badge-dot bg-primary"
+                    >
+                      Primary
+                    </div>
+
+                    <b style="color: black" *ngIf="y.kdobat == ''">{{
+                      y.obat
+                    }}</b>
+                    <span *ngIf="!y.kdobat == ''">{{ y.obat }}</span>
+                  </td>
+
+                  <td class="text-center">
+                    {{ y.qty }}
+
+                    <span *ngIf="y.kdobat == ''">{{ y.satuan }}</span>
+                    <span *ngIf="!y.kdobat == ''">{{ y.standart }}</span>
+                  </td>
+                  <td class="text-center">
+                    {{ y.keterangan }}
+                  </td>
+                  <td class="text-center">
+                    {{ y.status }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </li>
+
+      <li ngbNavItem>
+        <a ngbNavLink (click)="klikorb()"><span>Copy Obat Sebelumnya</span></a>
+        <ng-template ngbNavContent>
+          <div
+            class="vertical-without-time vertical-timeline vertical-timeline--animate vertical-timeline--one-column"
+          >
+            <div
+              class="vertical-timeline-item vertical-timeline-element"
+              *ngFor="let x of tterapi"
+            >
+              <div>
+                <span class="vertical-timeline-element-icon bounce-in"
+                  ><i class="badge badge-dot badge-dot-xl bg-success"> </i
+                ></span>
+                <div class="vertical-timeline-element-content bounce-in">
+                  <h4 class="timeline-title">
+                    {{ x.tglpriksa
+                    }}<i
+                      style="font-size: 20px"
+                      (click)="copyterapi(x.notransaksi, x.tglpriksa)"
+                      class="font-icon-wrapper pe-7s-copy-file"
+                    >
+                    </i>
+                  </h4>
+                  <p *ngFor="let y of x.detail">
+                    {{ y.nama }} | {{ y.aturan }} | {{ y.qty }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </li>
+
+      <li ngbNavItem>
+        <a ngbNavLink (click)="klikcekobatbpjs()"><span>Cek BPJS</span></a>
+        <ng-template ngbNavContent>
+          <div class="table" style="font-size: 11px; color: black">
+            <table
+              class="align-middle mb-0 table table-borderless table-striped table-hover"
+            >
+              <thead>
+                <tr style="border-bottom: 1px solid black">
+                  <th>kdObatSK</th>
+                  <th>Obat</th>
+
+                  <th>Aturan Pakai</th>
+
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of lobatbpjs">
+                  <td>
+                    {{ x.kdObatSK }}
+                  </td>
+
+                  <td>
+                    {{ x.obat.nmObat }}
+                  </td>
+
+                  <td>{{ x.signa1 }} * {{ x.signa2 }}</td>
+                  <td>
+                    <button
+                      class="mb-2 me-2 btn-icon btn-icon-only btn-shadow btn-dashed btn btn-outline-danger"
+                      (click)="hapusobatbpjs(x.kdObatSK)"
+                    >
+                      <i
+                        style="font-size: 15px"
+                        class="pe-7s-trash btn-icon-wrapper"
+                      >
+                      </i>
+                    </button>
+                  </td>
+                </tr>
+
+                <br />
+              </tbody>
+            </table>
+          </div>
+        </ng-template>
+      </li>
+    </ul>
+
+    <div [ngbNavOutlet]="nav2"></div>
+    <!-- <div style="text-align:center ;">
 
 
 </div> -->
-
-
-</div>
-
-
+  </div>
 </div>
