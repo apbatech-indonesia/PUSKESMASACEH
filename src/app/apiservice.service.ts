@@ -44,9 +44,9 @@ export class ApiserviceService {
 
   // Service untuk mengambil data gudang
   getGudangList(kdklinik: string): Observable<any> {
-    const baseUrl =
-      localStorage.getItem("baseUrx") || "https://tabaro.clenicapp.com/clenic/";
-    return this.http.get(`${baseUrl}master/gudang.php`, {
+    // const baseUrl =
+    //   localStorage.getItem("baseUrx") || "https://tabaro.clenicapp.com/clenic/";
+    return this.http.get(apiurx + "master/gudang.php", {
       params: { kdklinik },
     });
   }
