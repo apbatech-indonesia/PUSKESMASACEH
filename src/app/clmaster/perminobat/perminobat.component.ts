@@ -35,6 +35,7 @@ import { DatePipe } from "@angular/common";
 import { FarmasijualService } from "../kasirfarmasijual/farmasijual.service";
 import { HttpHeaders } from "@angular/common/http";
 import { IGudang } from "./gudang.interface";
+import { SampleService } from "src/app/services";
 
 @Component({
   selector: "app-perminobat",
@@ -78,7 +79,8 @@ export class perminobatComponent implements OnInit {
     private datePipe: DatePipe,
     private farmasiJualService: FarmasijualService,
     private authService: ApiserviceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public hots: SampleService
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     if (data) {
@@ -108,7 +110,8 @@ export class perminobatComponent implements OnInit {
       });
     }
   }
-
+  URLINVOICE: string;
+  hostName: string;
   ngOnInit() {
     this.tglp = this.datePipe.transform(this.myDate, "yyyy-MM-dd");
     this.tglb = this.datePipe.transform(this.myDate, "yyyy-MM-dd");
@@ -116,6 +119,8 @@ export class perminobatComponent implements OnInit {
     this.tglsampai = this.datePipe.transform(this.myDate, "yyyy-MM-dd");
     this.tampildata();
     this.loadGudang();
+    this.hostName = this.hots.getHostname();
+    this.URLINVOICE = "https://" + this.hostName + "/";
   }
 
   loadGudang() {
@@ -169,7 +174,7 @@ export class perminobatComponent implements OnInit {
 
     // Menggunakan data dari tabel obatstock
     this.apiService.http
-      .get("https://tabaro.clenicapp.com/clenic/master/obat.php", {
+      .get(this.URLINVOICE + "/clenic/master/obat.php", {
         params: {
           kdcabang: this.kdcabang || "076",
           kdgudang: kdgudang,
