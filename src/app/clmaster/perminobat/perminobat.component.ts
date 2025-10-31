@@ -169,12 +169,12 @@ export class perminobatComponent implements OnInit {
     }
   }
 
-  loadObatByGudang(kdgudang: string) {
-    console.log("Loading obat untuk gudang:", kdgudang);
+  async loadObatByGudang(kdgudang: string) {
+    let cabang: any = await this.getCabang(this.userDetails.kdklinik);
 
     // Menggunakan data dari tabel obatstock
     this.apiService.http
-      .get(this.URLINVOICE + "/clenic/master/obat.php", {
+      .get(`https://${cabang.slug}.clenicapp.com/clenic/master/obat.php`, {
         params: {
           kdcabang: this.kdcabang || "076",
           kdgudang: kdgudang,
@@ -517,10 +517,12 @@ export class perminobatComponent implements OnInit {
   tobata: any;
   nmobata: any;
 
-  cariobata(a) {
+  async cariobata(a) {
+    let cabang: any = await this.getCabang(this.userDetails.kdklinik);
+
     // Menambahkan gudang yang dipilih ke parameter pencarian
     this.apiService.http
-      .get(this.URLINVOICE + "/clenic/master/obat.php", {
+      .get(`https://${cabang.slug}.clenicapp.com/clenic/master/obat.php`, {
         params: {
           kdcabang: this.kdcabang || "076",
           kdgudang: this.gudang || "", // Gunakan gudang yang dipilih
@@ -543,10 +545,12 @@ export class perminobatComponent implements OnInit {
       });
   }
 
-  cariobat(a) {
+  async cariobat(a) {
+    let cabang: any = await this.getCabang(this.userDetails.kdklinik);
+
     // Menambahkan gudang yang dipilih ke parameter pencarian
     this.apiService.http
-      .get(this.URLINVOICE + "/clenic/master/obat.php", {
+      .get(`https://${cabang.slug}.clenicapp.com/clenic/master/obat.php`, {
         params: {
           kdcabang: this.kdcabang || "076",
           kdgudang: this.gudang || "", // Gunakan gudang yang dipilih
