@@ -520,7 +520,7 @@ export class perminobatComponent implements OnInit {
   cariobata(a) {
     // Menambahkan gudang yang dipilih ke parameter pencarian
     this.apiService.http
-      .get("https://tabaro.clenicapp.com/clenic/master/obat.php", {
+      .get(this.URLINVOICE + "/clenic/master/obat.php", {
         params: {
           kdcabang: this.kdcabang || "076",
           kdgudang: this.gudang || "", // Gunakan gudang yang dipilih
@@ -546,7 +546,7 @@ export class perminobatComponent implements OnInit {
   cariobat(a) {
     // Menambahkan gudang yang dipilih ke parameter pencarian
     this.apiService.http
-      .get("https://tabaro.clenicapp.com/clenic/master/obat.php", {
+      .get(this.URLINVOICE + "/clenic/master/obat.php", {
         params: {
           kdcabang: this.kdcabang || "076",
           kdgudang: this.gudang || "", // Gunakan gudang yang dipilih
