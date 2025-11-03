@@ -2,12 +2,11 @@ import { Component } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 
 import Swal from "sweetalert2";
-import { WebsocketService } from "./websocket.service";
 
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
-  providers: [WebsocketService],
+  providers: [],
 })
 export class AppComponent {
   public userDetails: any;
@@ -59,26 +58,13 @@ export class AppComponent {
     });
   }
 
-  constructor(
-    private WebsocketService: WebsocketService,
-    public toastr: ToastrService
-  ) {}
+  constructor(public toastr: ToastrService) {}
 
   sendMsg() {
-    let message = {
-      source: "",
-      content: "",
-    };
-
-    message.source = "localhost";
-    message.content = this.content;
-
-    this.sent.push(message);
-    this.WebsocketService.sendMessage(message);
+    // WebSocket functionality removed
   }
 
   sendNotificationDokter(kodeDokter) {
-    this.sent.push(kodeDokter);
-    this.WebsocketService.sendMessage(kodeDokter);
+    // WebSocket functionality removed
   }
 }

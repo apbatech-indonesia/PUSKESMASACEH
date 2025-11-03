@@ -27,16 +27,13 @@ import {
 } from "@angular/material/core";
 import { NgSelectModule, NgOption } from "@ng-select/ng-select";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
-import { WebsocketService } from "../../websocket.service";
-// import { ChatService } from '../../chat.service';
-
 import { io } from "socket.io-client";
 
 @Component({
   selector: "app-ermdisplay",
   templateUrl: "./ermdisplay.component.html",
 
-  providers: [WebsocketService],
+  providers: [],
 })
 export class ermdisplayComponent implements OnInit {
   toggleMobileSidebar: any;
@@ -107,9 +104,6 @@ export class ermdisplayComponent implements OnInit {
   vidioid: any;
   videoId = "dQw4w9WgXcQ";
   constructor(
-    // private chatService: ChatService,
-    private WebsocketService: WebsocketService,
-
     private modalService: NgbModal,
     public toastr: ToastrService,
     private authService: ApiserviceService,
@@ -178,13 +172,6 @@ export class ermdisplayComponent implements OnInit {
   pasienNotificationl(msg) {
     //  this.tmptotal()
   }
-
-  // sendNotificationAntrian(kodeDokter)
-  // {
-  //   this.sent.push(kodeDokter);
-  //   this.WebsocketService.messages.next(kodeDokter);
-  // }
-
   rec: any;
   nampasien: any;
   nampoli: any;

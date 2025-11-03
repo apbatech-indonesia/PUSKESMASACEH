@@ -27,14 +27,12 @@ import {
 } from "@angular/material/core";
 import { NgSelectModule, NgOption } from "@ng-select/ng-select";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
-import { WebsocketService } from "../../websocket.service";
 
 @Component({
   selector: "app-ermdokterpasienri",
   templateUrl: "./ermdokterpasienri.component.html",
   styles: [],
   providers: [
-    WebsocketService,
     // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
     // `MatMomentDateModule` in your applications root module. We provide it at the component level
     // here, due to limitations of our example generation script.
@@ -129,7 +127,6 @@ export class ermdokterpasienriComponent implements OnInit {
   received = [];
   sent = [];
   constructor(
-    private WebsocketService: WebsocketService,
     private modalService: NgbModal,
     public toastr: ToastrService,
     private authService: ApiserviceService,
@@ -143,43 +140,19 @@ export class ermdokterpasienriComponent implements OnInit {
     this.kdcabang = this.userDetails.kdcabang;
     this.username = this.userDetails.username;
     this.kduser = this.userDetails.kduser;
-
-    WebsocketService.messages.subscribe((msg) => {
-      this.received.push(msg);
-      console.log("Ini hasil cetak di Angular");
-      console.log("Ini nilai msg");
-      console.log(msg);
-      console.log("Ini nilai pesan");
-      console.log(msg["pesan"]);
-      const pesan = JSON.parse(msg["pesan"]);
-      const userData = JSON.parse(localStorage.getItem("userDatacl"));
-      console.log(pesan);
-
-      if (pesan == userData["userData"]["kduser"]) {
-        this.pasienNotification("Anda mendapatkan pasien baru");
-      }
-    });
   }
 
+  // WebSocket functionality removed
   pasienNotification(msg) {
     this.tmptotal();
   }
 
   sendMsg() {
-    let message = {
-      source: "",
-      content: "",
-    };
-
-    message.source = "localhost";
-    message.content = this.content;
-
-    this.sent.push(message);
-    this.WebsocketService.sendMessage(message);
+    // WebSocket functionality removed
   }
+
   sendNotificationDokter(kodeDokter) {
-    this.sent.push(kodeDokter);
-    this.WebsocketService.sendMessage(kodeDokter);
+    // WebSocket functionality removed
   }
 
   ngOnInit() {
