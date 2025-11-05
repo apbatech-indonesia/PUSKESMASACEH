@@ -18,6 +18,7 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { skriningService } from "./skrining.service";
+import { QuestionsModule } from "./components/questions/questions.module";
 
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -104,6 +105,8 @@ export class skriningComponent implements OnInit {
     costumer: "-",
     namdokter: "-",
     alamat: "-",
+    tinggiBadan: "-",
+    beratBadan: "-",
   };
   cabangData: any;
   useCaseId: any;
@@ -295,6 +298,14 @@ export class skriningComponent implements OnInit {
     this.titleModal = `${cluster} - ${subCluster}`;
     this.subTitleNumber = `${number}. `;
     this.subTitleModal = data.name;
+    // Set default answers for Input type questions first
+    data.questionnaires.forEach((question) => {
+      if (question.type === "Input") {
+        this.setDefaultAnswer(question);
+      }
+    });
+
+    console.log("Raw questionnaires:", data.questionnaires);
 
     let mapQuestion = data.questionnaires.map((parent) => {
       return {
@@ -325,6 +336,7 @@ export class skriningComponent implements OnInit {
       .filter((item) => item.category == "Penurutan Kognitif")
       .map((item) => item.text);
     this.questions = mapQuestion;
+    console.log("Processed questions:", this.questions);
     this.cekCategories = this.questions.some((q) => q.category);
     this.idScreening = data.id;
 
@@ -392,8 +404,6 @@ export class skriningComponent implements OnInit {
       };
       this.serviceUrl.getDataKelurahan(body, slug).subscribe(
         (data: any) => {
-          console.log("kelurahan");
-          console.log(data);
           if (data.data.subdistrict_id) {
             let dataKelurahan = data.data.subdistrict_id;
             this.registerAndSave(dataKelurahan);
@@ -478,6 +488,50 @@ export class skriningComponent implements OnInit {
       this.cekKelurahan();
     } else {
       this.saveDataScreening();
+    }
+  }
+
+  private readonly MEASUREMENT_TYPES = {
+    WEIGHT: {
+      type: "weight",
+      field: "berat_badan",
+      questionText: "Berat Badan",
+    },
+    HEIGHT: {
+      type: "height",
+      field: "tinggi_badan",
+      questionText: "Tinggi Badan",
+    },
+  };
+
+  private getExistingMeasurement(type: string): string | null {
+    const measurementConfig = Object.values(this.MEASUREMENT_TYPES).find(
+      (config) => config.type === type
+    );
+
+    if (!measurementConfig) {
+      return null;
+    }
+
+    return this.patientData?.[measurementConfig.field] ?? null;
+  }
+
+  private setDefaultAnswer(question: any) {
+    if (question.type !== "Input") {
+      return;
+    }
+
+    const measurementConfig = Object.values(this.MEASUREMENT_TYPES).find(
+      (config) => config.questionText === question.text
+    );
+
+    if (!measurementConfig) {
+      return;
+    }
+
+    const existingValue = this.getExistingMeasurement(measurementConfig.type);
+    if (existingValue && (!question.answered || question.answered === "")) {
+      question.answered = existingValue;
     }
   }
 
@@ -658,7 +712,7 @@ export class skriningComponent implements OnInit {
         this.dataHistory = filteredData;
       },
       (error: any) => {
-        console.log(error.error.statusMsg);
+        // Error handled silently
       }
     );
   }

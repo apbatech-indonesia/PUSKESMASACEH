@@ -17,6 +17,7 @@ import { MatIconModule } from "@angular/material/icon";
 // import { PageTitleModule } from '../../../../Layout/Components/page-title/page-title.module';
 import { PageTitleModule } from "src/app/Layout/Components/page-title/page-title.module";
 import { skriningComponent } from "./skrining.component";
+import { QuestionsModule } from "./components/questions/questions.module";
 // import { MpoliRoutingModule } from './mpoli.routing.module';
 import { skriningRoutingModule } from "./skrining-routing.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -50,6 +51,7 @@ import { NgbAccordionModule } from "@ng-bootstrap/ng-bootstrap";
     PageTitleModule,
     AngularEditorModule,
     NgbAccordionModule,
+    QuestionsModule,
   ],
   declarations: [skriningComponent],
   exports: [skriningComponent],

@@ -175,122 +175,47 @@
               <td>{{ question.text }}</td>
             </ng-template>
             <td *ngIf="question.type == 'ValueText'">
-              <div
-                class="form-check form-check-inline"
-                *ngFor="let option of question.default_options; let no = index"
-              >
-                <input
-                  class="form-check-input"
-                  [name]="'question' + question.id"
-                  type="radio"
-                  [id]="'option-' + question.id + no"
-                  [value]="option.ValueText"
-                  [(ngModel)]="question.answered"
-                  (change)="doSdqCalculation(questions)"
-                />
-                <label
-                  class="form-check-label pointer"
-                  [for]="'option-' + question.id + no"
-                  >{{ option.display }}</label
-                >
-              </div>
+              <app-value-text-question
+                [options]="question.default_options"
+                [questionId]="question.id"
+                [(ngModel)]="question.answered"
+                (ngModelChange)="doSdqCalculation(questions)"
+              ></app-value-text-question>
             </td>
-            <td *ngIf="question.type == 'Boolean'">
-              <div
-                class="form-check form-check-inline"
-                *ngFor="let option of question.default_options; let no = index"
-              >
-                <input
-                  class="form-check-input"
-                  [name]="'question' + question.id"
-                  type="radio"
-                  [id]="'option-' + question.id + no"
-                  [value]="option.valueBoolean"
-                  [(ngModel)]="question.answered"
-                />
-                <label
-                  class="form-check-label pointer"
-                  [for]="'option-' + question.id + no"
-                  >{{ option.display }}</label
-                >
-              </div>
+            <td *ngIf="question.type === 'Boolean'">
+              <app-boolean-question
+                [options]="question.default_options"
+                [questionId]="question.id"
+                [(ngModel)]="question.answered"
+              ></app-boolean-question>
             </td>
-            <td *ngIf="question.type == 'Input'">
-              <div
-                class="input-group mb-2"
-                *ngFor="let option of question.default_options; let no = index"
-              >
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="question.answered"
-                />
-                <div class="input-group-prepend" *ngIf="option?.display">
-                  <div class="input-group-text">{{ option.display }}</div>
-                </div>
-              </div>
+            <td *ngIf="question.type === 'Input'">
+              <app-input-question
+                [options]="question.default_options"
+                [questionId]="question.id"
+                [(ngModel)]="question.answered"
+              ></app-input-question>
             </td>
-            <td *ngIf="question.type == 'Singgle'">
-              <div class="row">
-                <div
-                  class="col-6"
-                  *ngFor="let option of question.options; let no = index"
-                >
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      [name]="'question' + question.id"
-                      type="radio"
-                      [id]="'option-' + question.id + no"
-                      [value]="option.option_value?.Singgle ?? ''"
-                      [(ngModel)]="question.answered"
-                    />
-                    <label
-                      class="form-check-label pointer"
-                      [for]="'option-' + question.id + no"
-                      >{{ option.display }}</label
-                    >
-                  </div>
-                </div>
-              </div>
+            <td *ngIf="question.type === 'Singgle'">
+              <app-single-question
+                [options]="question.options"
+                [questionId]="question.id"
+                [(ngModel)]="question.answered"
+              ></app-single-question>
             </td>
             <td *ngIf="question.type == 'reference'">
-              <div class="row">
-                <div
-                  class="col-6"
-                  *ngFor="let option of question.options; let no = index"
-                >
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      [name]="'question' + question.id"
-                      type="checkbox"
-                      [id]="'option-' + question.id + no"
-                      [value]="option.option_value.valueReference"
-                      [(ngModel)]="option.isChecked"
-                    />
-                    <label
-                      class="form-check-label pointer"
-                      [for]="'option-' + question.id + no"
-                      >{{ option.display }}</label
-                    >
-                  </div>
-                </div>
-              </div>
+              <app-reference-question
+                [options]="question.options"
+                [questionId]="question.id"
+                [(value)]="question.isChecked"
+              ></app-reference-question>
             </td>
             <td *ngIf="question.type == 'Select'">
-              <select
-                name="question'+question.id"
-                class="form-select"
+              <app-select-question
+                [options]="question.options"
+                [questionId]="question.id"
                 [(ngModel)]="question.answered"
-              >
-                <option
-                  *ngFor="let option of question.options; let no = index"
-                  value="{{ option.option_value.selectOption }}"
-                >
-                  {{ option.display }}
-                </option>
-              </select>
+              ></app-select-question>
             </td>
           </tr>
         </tbody>
@@ -491,126 +416,52 @@
             <td>{{ question.text }}</td>
           </ng-template>
           <td *ngIf="question.type == 'ValueText'">
-            <div
-              class="form-check form-check-inline"
-              *ngFor="let option of question.default_options; let no = index"
-            >
-              <input
-                disabled
-                class="form-check-input"
-                [name]="'question' + question.id"
-                type="radio"
-                [id]="'option-' + question.id + no"
-                [value]="option.ValueText"
-                [(ngModel)]="question.answer"
-              />
-              <label
-                class="form-check-label"
-                [for]="'option-' + question.id + no"
-                >{{ option.display }}</label
-              >
-            </div>
+            <app-value-text-question
+              [options]="question.default_options"
+              [questionId]="question.id"
+              [(value)]="question.answer"
+              [disabled]="true"
+            ></app-value-text-question>
           </td>
           <td *ngIf="question.type == 'Boolean'">
-            <div
-              class="form-check form-check-inline"
-              *ngFor="let option of question.default_options; let no = index"
-            >
-              <input
-                disabled
-                class="form-check-input"
-                [name]="'question' + question.id"
-                type="radio"
-                [id]="'option-' + question.id + no"
-                [value]="option.valueBoolean"
-                [(ngModel)]="question.answer"
-              />
-              <label
-                class="form-check-label"
-                [for]="'option-' + question.id + no"
-                >{{ option.display }}</label
-              >
-            </div>
+            <app-boolean-question
+              [options]="question.default_options"
+              [questionId]="question.id"
+              [(value)]="question.answer"
+              [disabled]="true"
+            ></app-boolean-question>
           </td>
           <td *ngIf="question.type == 'Input'">
-            <div
-              class="input-group mb-2"
-              *ngFor="let option of question.default_options; let no = index"
-            >
-              <input
-                disabled
-                type="text"
-                class="form-control"
-                [(ngModel)]="question.answer"
-              />
-              <div class="input-group-prepend" *ngIf="option?.display">
-                <div class="input-group-text">{{ option.display }}</div>
-              </div>
-            </div>
+            <app-input-question
+              [options]="question.default_options"
+              [questionId]="question.id"
+              [(value)]="question.answer"
+              [disabled]="true"
+            ></app-input-question>
           </td>
           <td *ngIf="question.type == 'Singgle'">
-            <div class="row">
-              <div
-                class="col-6"
-                *ngFor="let option of question.options; let no = index"
-              >
-                <div class="form-check form-check-inline">
-                  <input
-                    disabled
-                    class="form-check-input"
-                    [name]="'question' + question.id"
-                    type="radio"
-                    [id]="'option-' + question.id + no"
-                    [value]="option.option_value?.Singgle ?? ''"
-                    [(ngModel)]="question.answer"
-                  />
-                  <label
-                    class="form-check-label"
-                    [for]="'option-' + question.id + no"
-                    >{{ option.display }}</label
-                  >
-                </div>
-              </div>
-            </div>
+            <app-single-question
+              [options]="question.options"
+              [questionId]="question.id"
+              [(value)]="question.answer"
+              [disabled]="true"
+            ></app-single-question>
           </td>
           <td *ngIf="question.type == 'reference'">
-            <div class="row">
-              <div
-                class="col-6"
-                *ngFor="let option of question.options; let no = index"
-              >
-                <div class="form-check form-check-inline">
-                  <input
-                    disabled
-                    class="form-check-input"
-                    [name]="'question' + question.id"
-                    type="checkbox"
-                    [id]="'option-' + question.id + no"
-                    [value]="option.option_value.valueReference"
-                    [(ngModel)]="option.isChecked"
-                  />
-                  <label
-                    class="form-check-label"
-                    [for]="'option-' + question.id + no"
-                    >{{ option.display }}</label
-                  >
-                </div>
-              </div>
-            </div>
+            <app-reference-question
+              [options]="question.options"
+              [questionId]="question.id"
+              [(value)]="question.isChecked"
+              [disabled]="true"
+            ></app-reference-question>
           </td>
           <td *ngIf="question.type == 'Select'">
-            <select
-              name="question'+question.id"
-              class="form-select"
-              [(ngModel)]="question.answer"
-            >
-              <option
-                *ngFor="let option of question.options; let no = index"
-                value="{{ option.option_value.selectOption }}"
-              >
-                {{ option.display }}
-              </option>
-            </select>
+            <app-select-question
+              [options]="question.options"
+              [questionId]="question.id"
+              [(value)]="question.answer"
+              [disabled]="true"
+            ></app-select-question>
           </td>
         </tr>
       </tbody>
