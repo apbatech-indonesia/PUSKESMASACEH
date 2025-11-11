@@ -118,7 +118,7 @@ export class MpdaftarpasienComponent implements OnInit {
   slug: any;
   myDatev2 = new Date();
   kdprov: any = "";
-  ri: any;
+  ri: any = "1";
 
   constructor(
     private appComponent: AppComponent,
