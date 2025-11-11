@@ -1591,7 +1591,9 @@
             required
           >
             <option value="10"><b>RJTP</b></option>
-            <option value="20"><b>RITP</b></option>
+            <option value="20" *ngIf="ri">
+              <b>RITP</b>
+            </option>
             <option value="50"><b>Promotif</b></option>
           </select>
         </div>

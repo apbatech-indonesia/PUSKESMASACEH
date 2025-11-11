@@ -118,6 +118,7 @@ export class MpdaftarpasienComponent implements OnInit {
   slug: any;
   myDatev2 = new Date();
   kdprov: any = "";
+  ri: any;
 
   constructor(
     private appComponent: AppComponent,
@@ -312,6 +313,7 @@ export class MpdaftarpasienComponent implements OnInit {
       (data) => {
         for (let x of data) {
           this.rj = x.rj;
+          this.ri = x.ri;
           this.far = x.farmasi;
           this.lab = x.lab;
           this.rad = x.rad;
