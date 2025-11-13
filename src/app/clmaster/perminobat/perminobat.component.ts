@@ -184,7 +184,7 @@ export class perminobatComponent implements OnInit {
         next: (data: any) => {
           // Map response untuk menggunakan obatx dan kdobat sebagai key
           this.tobat = data.map((item) => ({
-            obatx: item.obat, // gunakan nama atau obat sebagai obatx
+            obatx: `${item.obat} STOK : ${item.stok ?? 0}`, // gunakan nama atau obat sebagai obatx
             kdobat: item.kdobat, // gunakan kdobat sebagai kdobat
             ...item, // tetap pertahankan properti lainnya
           }));
@@ -533,7 +533,7 @@ export class perminobatComponent implements OnInit {
         next: (data: any) => {
           // Map response untuk menggunakan obatx dan kdobat sebagai key
           this.tobata = data.map((item) => ({
-            obatx: item.nama || item.obat,
+            obatx: `${item.obat} STOK : ${item.stok ?? 0}`,
             kdobat: item.kdobat,
             ...item,
           }));
@@ -561,7 +561,7 @@ export class perminobatComponent implements OnInit {
         next: (data: any) => {
           // Map response untuk menggunakan obatx dan kdobat sebagai key
           this.tobat = data.map((item) => ({
-            obatx: item.nama || item.obat,
+            obatx: `${item.obat} STOK : ${item.stok ?? 0}`,
             kdobat: item.kdobat,
             ...item,
           }));
