@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 @Injectable({
   providedIn: "root",
 })
-export class FormBalitaSakitService {
+export class FormAssessmentResikojatuh {
   private baseUrl = "https://emr.clenicapp.com/api"; // sesuaikan prefix route API-mu
 
   constructor(private http: HttpClient) {}

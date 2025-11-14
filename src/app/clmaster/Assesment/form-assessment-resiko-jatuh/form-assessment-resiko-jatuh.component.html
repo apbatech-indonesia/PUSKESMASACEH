@@ -1,0 +1,423 @@
+<div class="container-xl form-wrapper py-4">
+  <div class="card shadow rounded form-card">
+    <div
+      class="card-header bg-happy-fisher text-success-emphasis text-center fs-4 fw-bold border-0 rounded-top form-section-title"
+    >
+      ASESMEN RISIKO JATUH RAWAT JALAN GET UP AND GO
+    </div>
+
+    <div class="card-body">
+      <div class="card mb-3 shadow-sm form-section">
+        <div class="card-header bg-info-subtle fw-semibold">
+          <i class="fa fa-clipboard-list me-2 text-info"></i> 1. Pengkajian
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th style="width: 5%">No</th>
+                  <th>Penilaian/Pengkajian</th>
+                  <th style="width: 10%" class="text-center">Ya</th>
+                  <th style="width: 10%" class="text-center">Tidak</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>a.</td>
+                  <td>
+                    <strong
+                      >Cara berjalan pasien (salah satu atau lebih)</strong
+                    >
+                    <div class="form-check ms-3 mt-2">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="k1_a_1"
+                        [(ngModel)]="payload.pengkajian_tidak_seimbang"
+                        name="pengkajian_tidak_seimbang"
+                      />
+                      <label class="form-check-label" for="k1_a_1">
+                        Tidak seimbang/sempoyongan/limbung
+                      </label>
+                    </div>
+                    <div class="form-check ms-3">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="k1_a_2"
+                        [(ngModel)]="payload.pengkajian_alat_bantu"
+                        name="pengkajian_alat_bantu"
+                      />
+                      <label class="form-check-label" for="k1_a_2">
+                        Jalan dengan menggunakan alat bantu (kruk, tripot, kursi
+                        roda, orang lain)
+                      </label>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radio_kriteria_a"
+                      [checked]="kriteriaA"
+                      disabled
+                    />
+                  </td>
+                  <td class="text-center">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radio_kriteria_a"
+                      [checked]="!kriteriaA"
+                      disabled
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>b.</td>
+                  <td>
+                    <strong>Menopang saat akan duduk :</strong> tampak memegang
+                    pinggiran kursi atau meja atau benda lain sebagai penopang
+                    saat akan duduk
+                  </td>
+                  <td class="text-center">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radio_kriteria_b"
+                      [(ngModel)]="payload.pengkajian_menopang_duduk"
+                      [value]="true"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radio_kriteria_b"
+                      [(ngModel)]="payload.pengkajian_menopang_duduk"
+                      [value]="false"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3 shadow-sm form-section">
+        <div class="card-header bg-info-subtle fw-semibold">
+          <i class="fa fa-tasks me-2 text-info"></i> 2. Hasil
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th style="width: 5%">No</th>
+                  <th>Hasil</th>
+                  <th>Penilaian/Pengkajian</th>
+                  <th style="width: 15%" class="text-center">Keterangan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1.</td>
+                  <td>Tidak berisiko</td>
+                  <td>Tidak ditemukan a & b</td>
+                  <td class="text-center fs-5">
+                    <i
+                      class="fa fa-check-circle text-success"
+                      *ngIf="hasilRisiko === 'tidak_berisiko'"
+                    ></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td>2.</td>
+                  <td>Berisiko sedang</td>
+                  <td>Ditemukan salah satu dari a atau b</td>
+                  <td class="text-center fs-5">
+                    <i
+                      class="fa fa-check-circle text-warning"
+                      *ngIf="hasilRisiko === 'risiko_sedang'"
+                    ></i>
+                  </td>
+                </tr>
+                <tr>
+                  <td>3.</td>
+                  <td>Berisiko tinggi</td>
+                  <td>Ditemukan a & b</td>
+                  <td class="text-center fs-5">
+                    <i
+                      class="fa fa-check-circle text-danger"
+                      *ngIf="hasilRisiko === 'risiko_tinggi'"
+                    ></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-3 shadow-sm form-section">
+        <div class="card-header bg-info-subtle fw-semibold">
+          <i class="fa fa-medkit me-2 text-info"></i> 3. Tindakan
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th style="width: 5%">No</th>
+                  <th>Hasil Kajian</th>
+                  <th>Tindakan</th>
+                  <th style="width: 10%" class="text-center">Ya</th>
+                  <th style="width: 10%" class="text-center">Tidak</th>
+                  <th style="width: 30%">TTD/Nama Petugas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="hasilRisiko === 'tidak_berisiko'">
+                  <td>1.</td>
+                  <td>Tidak berisiko</td>
+                  <td>Tidak ada tindakan</td>
+                  <td class="text-center">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radio_tindakan_1"
+                      [(ngModel)]="payload.tindakan_tidak_berisiko.dilakukan"
+                      [value]="true"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radio_tindakan_1"
+                      [(ngModel)]="payload.tindakan_tidak_berisiko.dilakukan"
+                      [value]="false"
+                    />
+                  </td>
+                  <td>
+                    <div
+                      *ngIf="namaPemeriksaList$ | async as list; else loading"
+                    >
+                      <select
+                        class="form-select"
+                        [(ngModel)]="payload.tindakan_tidak_berisiko.petugas"
+                        name="petugas_1"
+                      >
+                        <option [ngValue]="null" disabled selected>
+                          Pilih Petugas
+                        </option>
+                        <option *ngFor="let item of list" [ngValue]="item.nama">
+                          {{ item.nama }}
+                        </option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr *ngIf="hasilRisiko === 'risiko_sedang'">
+                  <td>2.</td>
+                  <td>Risiko rendah</td>
+                  <td>Edukasi</td>
+                  <td class="text-center">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radio_tindakan_2"
+                      [(ngModel)]="payload.tindakan_risiko_rendah.dilakukan"
+                      [value]="true"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="radio_tindakan_2"
+                      [(ngModel)]="payload.tindakan_risiko_rendah.dilakukan"
+                      [value]="false"
+                    />
+                  </td>
+                  <td>
+                    <div
+                      *ngIf="namaPemeriksaList$ | async as list; else loading"
+                    >
+                      <select
+                        class="form-select"
+                        [(ngModel)]="payload.tindakan_risiko_rendah.petugas"
+                        name="petugas_2"
+                      >
+                        <option [ngValue]="null" disabled selected>
+                          Pilih Petugas
+                        </option>
+                        <option *ngFor="let item of list" [ngValue]="item.nama">
+                          {{ item.nama }}
+                        </option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+
+                <ng-container *ngIf="hasilRisiko === 'risiko_tinggi'">
+                  <tr>
+                    <td rowspan="2">3.</td>
+                    <td rowspan="2">Risiko tinggi</td>
+                    <td>Pasang pita kuning</td>
+                    <td class="text-center">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="radio_tindakan_3a"
+                        [(ngModel)]="
+                          payload.tindakan_risiko_tinggi_pita.dilakukan
+                        "
+                        [value]="true"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="radio_tindakan_3a"
+                        [(ngModel)]="
+                          payload.tindakan_risiko_tinggi_pita.dilakukan
+                        "
+                        [value]="false"
+                      />
+                    </td>
+                    <td>
+                      <div
+                        *ngIf="namaPemeriksaList$ | async as list; else loading"
+                      >
+                        <select
+                          class="form-select"
+                          [(ngModel)]="
+                            payload.tindakan_risiko_tinggi_pita.petugas
+                          "
+                          name="petugas_3a"
+                        >
+                          <option [ngValue]="null" disabled selected>
+                            Pilih Petugas
+                          </option>
+                          <option
+                            *ngFor="let item of list"
+                            [ngValue]="item.nama"
+                          >
+                            {{ item.nama }}
+                          </option>
+                        </select>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Edukasi</td>
+                    <td class="text-center">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="radio_tindakan_3b"
+                        [(ngModel)]="
+                          payload.tindakan_risiko_tinggi_edukasi.dilakukan
+                        "
+                        [value]="true"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        name="radio_tindakan_3b"
+                        [(ngModel)]="
+                          payload.tindakan_risiko_tinggi_edukasi.dilakukan
+                        "
+                        [value]="false"
+                      />
+                    </td>
+                    <td>
+                      <div
+                        *ngIf="namaPemeriksaList$ | async as list; else loading"
+                      >
+                        <select
+                          class="form-select"
+                          [(ngModel)]="
+                            payload.tindakan_risiko_tinggi_edukasi.petugas
+                          "
+                          name="petugas_3b"
+                        >
+                          <option [ngValue]="null" disabled selected>
+                            Pilih Petugas
+                          </option>
+                          <option
+                            *ngFor="let item of list"
+                            [ngValue]="item.nama"
+                          >
+                            {{ item.nama }}
+                          </option>
+                        </select>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <button
+              (click)="submit()"
+              class="btn btn-lg"
+              [class]="isEdit ? 'btn-info' : 'btn-success '"
+              [disabled]="isLoading"
+            >
+              <span
+                *ngIf="isLoading"
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              {{
+                isLoading
+                  ? isEdit
+                    ? "Updating..."
+                    : "Menyimpan..."
+                  : isEdit
+                  ? "Update"
+                  : "Simpan"
+              }}
+            </button>
+            <button
+              *ngIf="isEdit"
+              (click)="downloadPdf()"
+              [disabled]="loadingDownload"
+              class="btn btn-danger btn-lg ms-2"
+            >
+              <i class="fa fa-file-pdf"></i>
+              {{ loadingDownload ? "Mengunduh..." : "Download PDF" }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #loading>
+      <div
+        class="skeleton skeleton-select"
+        style="
+          height: 38px;
+          width: 100%;
+          border-radius: 6px;
+          background-color: #e9ecef;
+        "
+      ></div>
+    </ng-template>
+  </div>
+</div>

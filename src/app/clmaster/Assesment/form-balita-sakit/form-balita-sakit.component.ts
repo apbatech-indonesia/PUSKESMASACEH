@@ -258,6 +258,8 @@ export class FormBalitaSakitComponent implements OnInit {
   loadingDownload: boolean;
   namaPemeriksaList$: any;
 
+  formSlug: string = "emr_balita_sakit";
+
   constructor(
     private toastr: ToastrService,
     private formBalitaSakitService: FormBalitaSakitService,
@@ -275,7 +277,12 @@ export class FormBalitaSakitComponent implements OnInit {
     this.namaPemeriksaList$ = this.apiservice.tampiluser(this.kdCabang);
 
     this.formBalitaSakitService
-      .getByNormAndTransaksi(this.slugCabang, this.norm, this.notransaksi)
+      .getByNormAndTransaksi(
+        this.slugCabang,
+        this.norm,
+        this.notransaksi,
+        this.formSlug
+      )
       .pipe(finalize(() => (this.isLoading = false)))
       .subscribe({
         next: (res) => {
@@ -304,6 +311,7 @@ export class FormBalitaSakitComponent implements OnInit {
       norm: this.norm,
       notransaksi: this.notransaksi,
       payload: this.payload,
+      slug: this.formSlug,
     };
 
     if (this.isEdit) {
@@ -357,13 +365,13 @@ export class FormBalitaSakitComponent implements OnInit {
   downloadPdf() {
     this.loadingDownload = true;
     this.formBalitaSakitService
-      .downloadPdf(this.slugCabang, this.norm, this.notransaksi)
+      .downloadPdf(this.slugCabang, this.norm, this.notransaksi, this.formSlug)
       .subscribe({
         next: (blob) => {
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.href = url;
-          a.download = `balita_sakit_${this.norm}_${this.notransaksi}.pdf`;
+          a.download = `BALITA_SAKIT_${this.norm}_${this.notransaksi}.pdf`;
           a.click();
           window.URL.revokeObjectURL(url);
           this.loadingDownload = false;

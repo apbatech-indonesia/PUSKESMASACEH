@@ -4131,6 +4131,13 @@ Normal: teraba jelas
                       [slugCabang]="slug"
                     ></app-form-balita-sakit>
                   </div>
+
+                  <div *ngIf="halaman === '9'">
+                    <app-form-assessment-resiko-jatuh
+                      [kdCabang]="kdcabang"
+                      [slugCabang]="slug"
+                    ></app-form-assessment-resiko-jatuh>
+                  </div>
                 </div>
               </div>
 
@@ -4201,6 +4208,13 @@ Normal: teraba jelas
                     <a class="nav-link" (click)="lihatbid('8')">
                       <i class="nav-link-icon pe-7s-angle-right"></i
                       ><span>Form Balita Sakit</span>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" (click)="lihatbid('9')">
+                      <i class="nav-link-icon pe-7s-angle-right"></i
+                      ><span>Form Assessment Resiko Jatuh</span>
                     </a>
                   </li>
                 </ul>
