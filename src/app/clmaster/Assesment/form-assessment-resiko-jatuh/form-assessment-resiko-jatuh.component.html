@@ -224,24 +224,6 @@
                       [value]="false"
                     />
                   </td>
-                  <td>
-                    <div
-                      *ngIf="namaPemeriksaList$ | async as list; else loading"
-                    >
-                      <select
-                        class="form-select"
-                        [(ngModel)]="payload.tindakan_risiko_rendah.petugas"
-                        name="petugas_2"
-                      >
-                        <option [ngValue]="null" disabled selected>
-                          Pilih Petugas
-                        </option>
-                        <option *ngFor="let item of list" [ngValue]="item.nama">
-                          {{ item.nama }}
-                        </option>
-                      </select>
-                    </div>
-                  </td>
                 </tr>
 
                 <ng-container *ngIf="hasilRisiko === 'risiko_tinggi'">
