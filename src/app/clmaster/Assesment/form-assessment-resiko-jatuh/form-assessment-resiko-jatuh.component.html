@@ -175,7 +175,6 @@
                   <th>Tindakan</th>
                   <th style="width: 10%" class="text-center">Ya</th>
                   <th style="width: 10%" class="text-center">Tidak</th>
-                  <th style="width: 30%">TTD/Nama Petugas</th>
                 </tr>
               </thead>
               <tbody>
@@ -200,24 +199,6 @@
                       [(ngModel)]="payload.tindakan_tidak_berisiko.dilakukan"
                       [value]="false"
                     />
-                  </td>
-                  <td>
-                    <div
-                      *ngIf="namaPemeriksaList$ | async as list; else loading"
-                    >
-                      <select
-                        class="form-select"
-                        [(ngModel)]="payload.tindakan_tidak_berisiko.petugas"
-                        name="petugas_1"
-                      >
-                        <option [ngValue]="null" disabled selected>
-                          Pilih Petugas
-                        </option>
-                        <option *ngFor="let item of list" [ngValue]="item.nama">
-                          {{ item.nama }}
-                        </option>
-                      </select>
-                    </div>
                   </td>
                 </tr>
 
