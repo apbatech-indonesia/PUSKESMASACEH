@@ -236,9 +236,8 @@
                 type="checkbox"
                 class="form-check-input"
                 id="pasienbaru"
-                [(ngModel)]="pasienbaru"
-                [ngModelOptions]="{ getterSetter: false }"
-                (change)="pasienbaru = pasienbaru ? 1 : 0"
+                [checked]="pasienbaru === 1 || pasienbaru === '1'"
+                (change)="pasienbaru = $event.target.checked ? 1 : 0"
               />
               <label class="form-check-label" for="pasienbaru">
                 Pasien Baru
