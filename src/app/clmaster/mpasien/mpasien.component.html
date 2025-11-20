@@ -225,6 +225,25 @@
               type="text"
               class="form-control mb-2"
             />
+            <label
+              for="exampleCity"
+              class="form-label mt-2"
+              style="color: black"
+              >Pasien Baru</label
+            >
+            <div class="form-check mb-2">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="pasienbaru"
+                [(ngModel)]="pasienbaru"
+                [ngModelOptions]="{ getterSetter: false }"
+                (change)="pasienbaru = pasienbaru ? 1 : 0"
+              />
+              <label class="form-check-label" for="pasienbaru">
+                Pasien Baru
+              </label>
+            </div>
           </div>
         </div>
 

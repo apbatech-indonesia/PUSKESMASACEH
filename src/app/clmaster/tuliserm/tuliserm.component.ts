@@ -367,6 +367,7 @@ export class tulisermComponent implements OnInit {
   test2: any = "2";
   namaorangtua: any;
   catatanpasien: any;
+  pasienbaru: any = 0;
 
   constructor(
     public FarmasijualService: FarmasijualService,
@@ -1552,6 +1553,7 @@ export class tulisermComponent implements OnInit {
           this.locationid = x.locationid;
           this.namaorangtua = x.namaorangtua;
           this.catatanpasien = x.catatanpasien;
+          this.pasienbaru = x.pasienbaru || 0;
           this.isPeriksaPkg = x.isPeriksaPkg == "Y";
 
           this.authService.tmpbpjs(this.noasuransi, "noka").subscribe(
