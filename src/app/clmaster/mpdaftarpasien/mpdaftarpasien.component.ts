@@ -297,6 +297,48 @@ export class MpdaftarpasienComponent implements OnInit {
     this.min = year + "-" + month + "-" + date;
     this.minbpjs = date + "-" + month + "-" + year;
   }
+
+  // Indonesian month names for display
+  private monthNamesId = [
+    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+  ];
+
+  /**
+   * Format tanggal ke format: "dd Month yyyy" (contoh: "15 Desember 2025").
+   * Menerima input dalam format: yyyy-mm-dd, dd-mm-yyyy, yyyy/mm/dd, atau Date object/string.
+   */
+  formatTgllahir(dateInput: any): string {
+    if (!dateInput) return '';
+    const s = String(dateInput).trim();
+
+    let day: number, month: number, year: number;
+
+    // yyyy-mm-dd or yyyy/mm/dd
+    if (/^\d{4}[-\/]\d{1,2}[-\/]\d{1,2}$/.test(s)) {
+      const parts = s.split(/[-\/]/);
+      year = parseInt(parts[0], 10);
+      month = parseInt(parts[1], 10);
+      day = parseInt(parts[2], 10);
+    }
+    // dd-mm-yyyy or dd/mm/yyyy
+    else if (/^\d{1,2}[-\/]\d{1,2}[-\/]\d{4}$/.test(s)) {
+      const parts = s.split(/[-\/]/);
+      day = parseInt(parts[0], 10);
+      month = parseInt(parts[1], 10);
+      year = parseInt(parts[2], 10);
+    } else {
+      const d = new Date(s);
+      if (isNaN(d.getTime())) return '';
+      day = d.getDate();
+      month = d.getMonth() + 1;
+      year = d.getFullYear();
+    }
+
+    if (!day || !month || !year) return '';
+    const mName = this.monthNamesId[month - 1] || '';
+    return `${day} ${mName} ${year}`;
+  }
   non(a) {
     this.tglp = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
 

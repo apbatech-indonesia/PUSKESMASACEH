@@ -252,11 +252,14 @@
                 >Tgl.Lahir</label
               >
               <input
-                [(ngModel)]="tgllahir"
+                [value]="formatTgllahir(tgllahir)"
                 id="exampleCity"
                 type="text"
                 class="form-control"
+                readonly
               />
+              <!-- keep underlying model in sync (hidden) -->
+              <input [(ngModel)]="tgllahir" type="hidden" />
             </div>
           </div>
           <div class="col-md-2">
