@@ -300,8 +300,18 @@ export class MpdaftarpasienComponent implements OnInit {
 
   // Indonesian month names for display
   private monthNamesId = [
-    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+    "Januari",
+    "Februari",
+    "Maret",
+    "April",
+    "Mei",
+    "Juni",
+    "Juli",
+    "Agustus",
+    "September",
+    "Oktober",
+    "November",
+    "Desember",
   ];
 
   /**
@@ -309,7 +319,7 @@ export class MpdaftarpasienComponent implements OnInit {
    * Menerima input dalam format: yyyy-mm-dd, dd-mm-yyyy, yyyy/mm/dd, atau Date object/string.
    */
   formatTgllahir(dateInput: any): string {
-    if (!dateInput) return '';
+    if (!dateInput) return "";
     const s = String(dateInput).trim();
 
     let day: number, month: number, year: number;
@@ -329,14 +339,14 @@ export class MpdaftarpasienComponent implements OnInit {
       year = parseInt(parts[2], 10);
     } else {
       const d = new Date(s);
-      if (isNaN(d.getTime())) return '';
+      if (isNaN(d.getTime())) return "";
       day = d.getDate();
       month = d.getMonth() + 1;
       year = d.getFullYear();
     }
 
-    if (!day || !month || !year) return '';
-    const mName = this.monthNamesId[month - 1] || '';
+    if (!day || !month || !year) return "";
+    const mName = this.monthNamesId[month - 1] || "";
     return `${day} ${mName} ${year}`;
   }
   non(a) {
