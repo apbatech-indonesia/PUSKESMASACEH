@@ -315,10 +315,12 @@ export class MpdaftarpasienComponent implements OnInit {
   ];
 
   /**
-   * Format tanggal ke format: "dd Month yyyy" (contoh: "15 Desember 2025").
-   * Menerima input dalam format: yyyy-mm-dd, dd-mm-yyyy, yyyy/mm/dd, atau Date object/string.
+   * Format tanggal lahir.
+   * - Default (`'short'`): "dd-mm-yyyy" (contoh: "15-12-2025").
+   * - Long (`'long'`): "dd Month yyyy" (contoh: "15 Desember 2025").
+   * Menerima input dalam format: yyyy-mm-dd, dd-mm-yyyy, yyyy/mm/dd, dd/mm/yyyy, atau Date object/string.
    */
-  formatTgllahir(dateInput: any): string {
+  formatTgllahir(dateInput: any, style: "long" | "short" = "short"): string {
     if (!dateInput) return "";
     const s = String(dateInput).trim();
 
@@ -346,6 +348,13 @@ export class MpdaftarpasienComponent implements OnInit {
     }
 
     if (!day || !month || !year) return "";
+
+    if (style === "short") {
+      const dd = day < 10 ? "0" + day : String(day);
+      const mm = month < 10 ? "0" + month : String(month);
+      return `${dd}-${mm}-${year}`;
+    }
+
     const mName = this.monthNamesId[month - 1] || "";
     return `${day} ${mName} ${year}`;
   }
