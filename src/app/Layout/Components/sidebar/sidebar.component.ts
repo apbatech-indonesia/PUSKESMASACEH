@@ -7,7 +7,8 @@ import { Router } from "@angular/router";
 import { ApiserviceService } from "src/app/apiservice.service";
 @Component({
   selector: "app-sidebar",
-  templateUrl: "./sidebar.component.html"})
+  templateUrl: "./sidebar.component.html",
+})
 export class SidebarComponent implements OnInit {
   public extraParameter: any;
   public userDetails: any;
@@ -25,6 +26,7 @@ export class SidebarComponent implements OnInit {
   kddokter = "";
   slugCity: any;
   isDinkes: any;
+  vidioid: string | null = null;
   constructor(
     public globals: ThemeOptions,
     private activatedRoute: ActivatedRoute,
@@ -38,6 +40,12 @@ export class SidebarComponent implements OnInit {
     this.kdklinik = this.userDetails.kdklinik;
     this.kdcabang = this.userDetails.kdcabang;
     this.isDinkes = this.akses.includes("Dinkes");
+    // read video id from localStorage for display realtime URL
+    try {
+      this.vidioid = localStorage.getItem("vidioid");
+    } catch (e) {
+      this.vidioid = null;
+    }
     if (this.isDinkes) {
       this.slugCity = this.akses.split("Dinkes ")[1];
       this.slugCity = this.slugCity.toLowerCase().replace(/\s+/g, "-");
@@ -157,5 +165,14 @@ export class SidebarComponent implements OnInit {
   }
   displayc() {
     this.router.navigate(["/ermdisplay"]);
+  }
+
+  get displayRealtimeUrl(): string {
+    const raw = this.vidioid ? String(this.vidioid).trim() : "";
+    const vid = raw.length > 0 ? encodeURIComponent(raw) : "";
+    const cab = this.kdcabang ? String(this.kdcabang).trim() : "";
+    const base = `https://websocket.clenicapp.com`;
+    const path = cab ? `/${cab}/queue` : `/queue`;
+    return vid ? `${base}${path}?videoId=${vid}` : `${base}${path}`;
   }
 }
