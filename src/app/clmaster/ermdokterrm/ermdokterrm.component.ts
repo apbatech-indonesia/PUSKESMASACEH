@@ -36,6 +36,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { FarmasijualService } from "../kasirfarmasijual/farmasijual.service";
 
 import { ActivatedRoute, Router } from "@angular/router";
+import { WebsocketService } from "src/app/services";
 
 @Component({
   selector: "app-ermdokterrm",
@@ -146,6 +147,7 @@ export class ermdokterrmComponent implements OnInit {
     public FarmasijualService: FarmasijualService,
     private router: Router,
     private chatService: ChatService,
+    private websocketService: WebsocketService,
     private datepipe: DatePipe,
     private modalService: NgbModal,
     public toastr: ToastrService,
@@ -360,6 +362,16 @@ export class ermdokterrmComponent implements OnInit {
               kdcabang: this.kdcabang,
             },
           ]);
+
+          this.websocketService
+            .callQueueForCabang(this.kdcabang, {
+              prefix: kodeantrian,
+              number: a,
+              pasien: pasien,
+              poli: nampoli,
+              channel: this.kdcabang,
+            })
+            .subscribe();
         } else if (result.isDenied) {
           let body = {
             tanggalperiksa: tglpriksa,

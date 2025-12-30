@@ -28,7 +28,7 @@
   </div>
   <div class="app-sidebar-content">
     <div class="app-sidebar-scroll">
-      <div style="max-height: 650px; overflow-y: auto;">
+      <div style="max-height: 650px; overflow-y: auto">
         <div class="v-sidebar-menu vsm-default">
           <div class="vsm-list">
             <ngb-accordion
@@ -1386,7 +1386,7 @@
                           <span class="vsm-title">Ass Perawat</span></a
                         >
                       </div>
-                      <div class="vsm-item">
+                      <!-- <div class="vsm-item">
                         <a
                           routerLinkActive="active-item"
                           (click)="displayc()"
@@ -1394,6 +1394,16 @@
                         >
                           <span class="vsm-title">Display Antrian</span></a
                         >
+                      </div> -->
+                      <div class="vsm-item">
+                        <a
+                          class="vsm-link"
+                          [href]="displayRealtimeUrl"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <span class="vsm-title">Display Antrian</span>
+                        </a>
                       </div>
                       <div class="vsm-item">
                         <a
@@ -1439,5 +1449,3 @@
     </div>
   </div>
 </div>
-
-

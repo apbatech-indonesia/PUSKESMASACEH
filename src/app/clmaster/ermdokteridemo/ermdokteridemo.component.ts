@@ -33,6 +33,7 @@ import { FarmasijualService } from "../kasirfarmasijual/farmasijual.service";
 import { DatePipe } from "@angular/common";
 import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { WebsocketService } from "src/app/services";
 
 @Component({
   selector: "app-ermdokteridemo",
@@ -138,6 +139,7 @@ export class ermdokteridemoComponent implements OnInit {
   myDate = new Date();
   constructor(
     private chatService: ChatService,
+    private websocketService: WebsocketService,
     public FarmasijualService: FarmasijualService,
     private datepipe: DatePipe,
     private router: Router,
@@ -359,6 +361,16 @@ export class ermdokteridemoComponent implements OnInit {
               nampoli: nampoli,
             },
           ]);
+
+          this.websocketService
+            .callQueueForCabang(this.kdcabang, {
+              prefix: kodeantrian,
+              number: a,
+              pasien: v,
+              poli: nampoli,
+              channel: this.kdcabang,
+            })
+            .subscribe();
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel

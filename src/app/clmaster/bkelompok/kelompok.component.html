@@ -46,6 +46,9 @@
         </div>
         <div>
           <div class="flex-container data-header">
+            <div style="flex-basis: 2%">
+              <h6>No</h6>
+            </div>
             <div style="flex-basis: 12.5%">
               <h6>Edu ID</h6>
             </div>
@@ -82,13 +85,16 @@
             "
           ></ng-container>
           <ng-template #contentKegiatan>
-            <div *ngFor="let kegiatan of listOfKegiatan">
+            <div *ngFor="let kegiatan of listOfKegiatan; let i = index">
               <div class="flex-container" style="align-items: baseline">
                 <div
                   class="flex-container item-kegiatan"
                   (click)="selectItem(kegiatan)"
                   style="flex-basis: 85%"
                 >
+                  <div style="flex-basis: 2%">
+                    <p>{{ i + 1 }}</p>
+                  </div>
                   <div style="flex-basis: 12.5%">
                     <p>{{ kegiatan.eduId }}</p>
                   </div>
@@ -723,6 +729,9 @@
             <div style="flex-basis: 40%"></div>
           </div>
           <div class="flex-container data-header">
+            <div style="flex-basis: 4%">
+              <h6>No</h6>
+            </div>
             <div style="flex-basis: 7%">
               <h6>Nomor Kartu</h6>
             </div>
@@ -756,7 +765,7 @@
             <div style="flex-basis: 7%">
               <h6>Pst Prb</h6>
             </div>
-            <div style="flex-basis: 7%">
+            <div style="flex-basis: 2%">
               <h6>Gol. Darah</h6>
             </div>
             <div style="flex-basis: 7%">
@@ -774,9 +783,14 @@
         <ng-template #content>
           <div
             style="align-items: baseline"
-            *ngFor="let peserta of listOfPesertaKegiatan"
+            *ngFor="let peserta of listOfPesertaKegiatan; index as i"
           >
             <div class="flex-container">
+              <div style="flex-basis: 4%; padding-top: 15px">
+                <p>
+                  <small>{{ i + 1 }}</small>
+                </p>
+              </div>
               <div style="flex-basis: 7%; padding-top: 15px">
                 <p>
                   <small>{{ peserta.noKartu }}</small>
@@ -834,7 +848,7 @@
                   <small>{{ peserta.pstprb }}</small>
                 </p>
               </div>
-              <div style="flex-basis: 7%; padding-top: 15px">
+              <div style="flex-basis: 2%; padding-top: 15px">
                 <p>
                   <small>{{ peserta.golDarah }}</small>
                 </p>
