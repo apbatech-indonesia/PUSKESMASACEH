@@ -366,7 +366,7 @@ export class ermdokteridemoComponent implements OnInit {
             .callQueueForCabang(this.kdcabang, {
               prefix: kodeantrian,
               number: a,
-              pasien: v,
+              pasien: v.toLowerCase(),
               poli: nampoli,
               channel: this.kdcabang,
             })
