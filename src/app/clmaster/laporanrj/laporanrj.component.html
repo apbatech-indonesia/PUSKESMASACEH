@@ -117,6 +117,22 @@
             </select>
           </div>
         </div>
+        <div *ngIf="judul === 'Kunjungan Rawat Jalan'">
+          <div class="position-relative mb-3">
+            <label class="form-label" style="color: black">Kelurahan</label>
+            <ng-select
+              [items]="kelurahanFiltered"
+              bindLabel="name"
+              bindValue="id"
+              [(ngModel)]="selectedKelurahanId"
+              (search)="searchKelurahan($event)"
+              (ngModelChange)="selectKelurahanById($event)"
+              placeholder="Cari atau pilih kelurahan"
+              notFoundText="Tidak ditemukan"
+              [clearable]="true"
+            ></ng-select>
+          </div>
+        </div>
         <div *ngIf="judul === 'Pendapatan RJ/Konsumen'">
           <div class="position-relative mb-3">
             <label for="exampleSelect" class="form-label" style="color: black"

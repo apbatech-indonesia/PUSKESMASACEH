@@ -10,6 +10,7 @@ import { ToastrService } from "ngx-toastr";
 import { ApiserviceService } from "src/app/apiservice.service";
 import Swal from "sweetalert2";
 import { SampleService } from "src/app/services";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-laporanrj",
@@ -57,6 +58,13 @@ export class laporanrjComponent implements OnInit {
   kdklinik: any = 1;
   cabangarr: any;
 
+  // Kelurahan (desa) filter/select - declarations
+  kelurahanList: any[] = [];
+  kelurahanFiltered: any[] = [];
+  // default to 'semua' to represent no filter
+  selectedKelurahanId: any = "semua";
+  selectedKelurahanName: any = null;
+
   cariuser: any;
   kdcabang: any;
 
@@ -77,7 +85,8 @@ export class laporanrjComponent implements OnInit {
     private datepipe: DatePipe,
     public toastr: ToastrService,
     private authService: ApiserviceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private http: HttpClient,
   ) {
     // this.options = fb.group({
     //   hideRequired: false,
@@ -122,18 +131,99 @@ export class laporanrjComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.cabangper(this.kdklinik).subscribe(
       (data) => {
         this.cabangarr = data;
-        this.slug = data.map((item) => item.slug);
+        // store single slug value (API expects a single slug)
+        if (Array.isArray(data) && data.length > 0) {
+          this.slug = data[0].slug;
+        } else if (data && data.slug) {
+          this.slug = data.slug;
+        } else {
+          this.slug = null;
+        }
+        // load kelurahan list once slug is known
+        if (this.slug) this.loadKelurahan();
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
+  }
+
+  // --- Kelurahan (desa) helpers ---
+  loadKelurahan() {
+    const url = `https://emr.clenicapp.com/api/${this.slug}/satusehat/desa-from-pasien`;
+    this.http.get<any>(url).subscribe(
+      (res) => {
+        if (res && res.data) {
+          this.kelurahanList = res.data;
+          // include a special 'SEMUA' option at the top
+          this.kelurahanFiltered = [
+            { id: "semua", name: "SEMUA" },
+            ...this.kelurahanList,
+          ];
+        } else {
+          this.kelurahanList = [];
+          this.kelurahanFiltered = [{ id: "semua", name: "SEMUA" }];
+        }
+      },
+      (err) => {
+        console.error("Error loading kelurahan:", err);
+        this.toastr.error("Gagal memuat daftar kelurahan", "Error");
+      },
+    );
+  }
+
+  searchKelurahan(term: string) {
+    if (!term || term.trim() === "") {
+      this.kelurahanFiltered = [
+        { id: "semua", name: "SEMUA" },
+        ...this.kelurahanList,
+      ];
+      return;
+    }
+    const q = term.toLowerCase();
+    const filtered = this.kelurahanList.filter(
+      (k) => k.name && k.name.toLowerCase().includes(q),
+    );
+    this.kelurahanFiltered = [{ id: "semua", name: "SEMUA" }, ...filtered];
+  }
+
+  selectKelurahan(item: any) {
+    if (!item) {
+      this.selectedKelurahanId = null;
+      this.selectedKelurahanName = null;
+      return;
+    }
+    this.selectedKelurahanId = item.id;
+    this.selectedKelurahanName = item.name;
+  }
+
+  selectKelurahanById(id: any) {
+    // treat special 'semua' value as the "all" selection (no subDistrict filter)
+    if (id === "semua") {
+      this.selectedKelurahanId = "semua";
+      this.selectedKelurahanName = "SEMUA";
+      return;
+    }
+
+    if (!id) {
+      this.selectedKelurahanId = null;
+      this.selectedKelurahanName = null;
+      return;
+    }
+
+    const found = this.kelurahanList.find((k) => k.id == id);
+    if (found) {
+      this.selectKelurahan(found);
+    } else {
+      this.selectedKelurahanId = id;
+      this.selectedKelurahanName = null;
+    }
   }
 
   judul: any;
@@ -147,7 +237,7 @@ export class laporanrjComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   tkostumer: any;
@@ -159,7 +249,7 @@ export class laporanrjComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -172,7 +262,7 @@ export class laporanrjComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   tkom: any;
@@ -183,7 +273,7 @@ export class laporanrjComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -212,6 +302,10 @@ export class laporanrjComponent implements OnInit {
   // clenic/report/invoiceall.php?notransaksi='+this.notransaksi+'&kdcabang='+this.kdcabang+'&username=fredy';
 
   lihatkunjungan() {
+    const subDistrictParam =
+      this.selectedKelurahanId && this.selectedKelurahanId !== "semua"
+        ? "&subDistrict=" + this.selectedKelurahanId
+        : "";
     var redirectWindow = window.open(
       this.URLINVOICE +
         "clenic/report/kunjungan.php?tgldari=" +
@@ -223,13 +317,14 @@ export class laporanrjComponent implements OnInit {
         "&status=" +
         this.kdklinik +
         "&jk=" +
-        this.jk,
+        this.jk +
+        subDistrictParam,
       "_blank",
       "location=no,toolbar=no,height=" +
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -249,11 +344,15 @@ export class laporanrjComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
   lihatkunjunganexcel() {
+    const subDistrictParam =
+      this.selectedKelurahanId && this.selectedKelurahanId !== "semua"
+        ? "&subDistrict=" + this.selectedKelurahanId
+        : "";
     var redirectWindow = window.open(
       this.URLINVOICE +
         "clenic/report/kunjunganexcel.php?tgldari=" +
@@ -263,13 +362,14 @@ export class laporanrjComponent implements OnInit {
         "&tglsampai=" +
         this.tglsampai +
         "&status=" +
-        this.kdklinik,
+        this.kdklinik +
+        subDistrictParam,
       "_blank",
       "location=no,toolbar=no,height=" +
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -293,7 +393,7 @@ export class laporanrjComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -319,7 +419,7 @@ export class laporanrjComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -343,7 +443,7 @@ export class laporanrjComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -369,7 +469,7 @@ export class laporanrjComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -390,7 +490,7 @@ export class laporanrjComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -411,7 +511,7 @@ export class laporanrjComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -428,7 +528,7 @@ export class laporanrjComponent implements OnInit {
         "&status=" +
         this.kdkom,
       "_blank",
-      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -445,7 +545,7 @@ export class laporanrjComponent implements OnInit {
         "&status=" +
         this.kdkom,
       "_blank",
-      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -459,7 +559,7 @@ export class laporanrjComponent implements OnInit {
         "&tglsampai=" +
         this.tglsampai,
       "_blank",
-      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -474,7 +574,7 @@ export class laporanrjComponent implements OnInit {
         "&tglsampai=" +
         this.tglsampai,
       "_blank",
-      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -491,7 +591,7 @@ export class laporanrjComponent implements OnInit {
         "&jk=" +
         this.jk,
       "_blank",
-      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -538,13 +638,13 @@ export class laporanrjComponent implements OnInit {
 
           // Ambil filename dari Content-Disposition header jika ada
           const contentDisposition = response.headers.get(
-            "content-disposition"
+            "content-disposition",
           );
           let filename = `laporan-prolanis-${this.tgldari}-${this.tglsampai}.pdf`;
 
           if (contentDisposition) {
             const filenameMatch = contentDisposition.match(
-              /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/
+              /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/,
             );
             if (filenameMatch && filenameMatch[1]) {
               filename = filenameMatch[1].replace(/['"]/g, "");
@@ -586,7 +686,7 @@ export class laporanrjComponent implements OnInit {
         }
 
         this.toastr.error(errorMessage, "Error");
-      }
+      },
     );
   }
 
@@ -604,7 +704,7 @@ export class laporanrjComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
 
     if (redirectWindow) {
@@ -612,7 +712,7 @@ export class laporanrjComponent implements OnInit {
     } else {
       this.toastr.error(
         "Gagal membuka tab baru. Periksa popup blocker.",
-        "Error"
+        "Error",
       );
     }
   }
@@ -643,7 +743,7 @@ export class laporanrjComponent implements OnInit {
     if (diffDays > 31) {
       this.toastr.error(
         "Range tanggal tidak boleh lebih dari 31 hari",
-        "Error"
+        "Error",
       );
       this.dateRangeInvalid = true;
       return;
