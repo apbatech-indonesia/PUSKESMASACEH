@@ -61,6 +61,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { ChatService } from "../../chat.service";
 import { FarmasijualService } from "../kasirfarmasijual/farmasijual.service";
 import { ItemsList } from "@ng-select/ng-select/lib/items-list";
+import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
 
 @Component({
   selector: "app-tuliserm",
@@ -3290,7 +3291,7 @@ export class tulisermComponent implements OnInit {
                       this.websocketService.sendNotification({
                         title: "Resep Obat",
                         message: `Resep obat pasien ${this.pasien}`,
-                        channel: `${this.kdcabang}.resep.notification`,
+                        channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.RESEP}`,
                       });
                     } else {
                       this.terapiObat = "tidak ada obat";
@@ -6071,7 +6072,7 @@ export class tulisermComponent implements OnInit {
     this.websocketService.sendNotification({
       title: "Permintaan Laborat",
       message: `Permintaan laborat pasien ${this.pasien}`,
-      channel: `${this.kdcabang}.permintaan-laborat.notification`,
+      channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.PERMINTAAN_LAB}`,
     });
   }
 
@@ -6079,7 +6080,7 @@ export class tulisermComponent implements OnInit {
     this.websocketService.sendNotification({
       title: "Hasil Laborat",
       message: `Hasil laborat pasien ${this.pasien}`,
-      channel: `${this.kdcabang}.hasil-laborat.notification`,
+      channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
     });
   }
 

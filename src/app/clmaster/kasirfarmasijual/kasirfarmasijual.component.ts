@@ -48,6 +48,7 @@ import { SampleService } from "src/app/services";
 import { EchoService } from "src/app/services/echo.service";
 import { GlobalComponent } from "src/app/clmaster/Globals/global.component";
 import { FarmasijualService } from "./farmasijual.service";
+import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
 
 @Component({
   selector: "app-kasirfarmasijual",
@@ -584,7 +585,7 @@ export class kasirfarmasijualComponent implements OnInit {
         enabledTransports: ["ws", "wss"],
       });
       this.echoUnsub = this.echoService.subscribe(
-        `${this.kdcabang}.resep.notification`,
+        `${this.kdcabang}.${NOTIFICATION_CHANNELS.RESEP}`,
         "NotificationSent",
         (payload: any) => {
           console.log("Echo event on", "NotificationSent", payload);

@@ -33,6 +33,7 @@ import { TreeNode } from "primeng/api";
 import { GlobalComponent } from "src/app/clmaster/Globals/global.component";
 import { HttpHeaders } from "@angular/common/http";
 import { ChatService } from "src/app/chat.service";
+import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
 
 @Component({
   selector: "app-kasirlab",
@@ -119,6 +120,7 @@ export class kasirlabComponent implements OnInit, OnDestroy {
   thasillab: any;
 
   ngOnInit() {
+    this.requestPermission();
     this.URLINVOICE = localStorage.getItem("baseUrx");
 
     this.hostName = this.hots.getHostname();
@@ -170,7 +172,7 @@ export class kasirlabComponent implements OnInit, OnDestroy {
       this.echoUnsub = [] as any[];
 
       const subLab = this.echoService.subscribe(
-        `${this.kdcabang}.permintaan-laborat.notification`,
+        `${this.kdcabang}.${NOTIFICATION_CHANNELS.PERMINTAAN_LAB}`,
         "NotificationSent",
         (payload: any) => {
           try {
@@ -183,7 +185,7 @@ export class kasirlabComponent implements OnInit, OnDestroy {
       this.echoUnsub.push(subLab);
 
       const subHasil = this.echoService.subscribe(
-        `${this.kdcabang}.hasil-laborat.notification`,
+        `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
         "NotificationSent",
         (payload: any) => {
           try {
@@ -2220,7 +2222,7 @@ export class kasirlabComponent implements OnInit, OnDestroy {
     this.websocketService.sendNotification({
       title: "Hasil Laborat",
       message: `Hasil laborat pasien ${this.pasien}`,
-      channel: `${this.kdcabang}.hasil-laborat.notification`,
+      channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
     });
   }
   cariteslab(a) {
@@ -2234,6 +2236,18 @@ export class kasirlabComponent implements OnInit, OnDestroy {
           console.log(Error);
         },
       );
+  }
+
+  requestPermission() {
+    if ("Notification" in window) {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          console.log("Notification permission granted.");
+        } else {
+          console.log("Notification permission denied.");
+        }
+      });
+    }
   }
 
   generateUUID() {
