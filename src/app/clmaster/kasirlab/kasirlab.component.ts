@@ -2219,11 +2219,13 @@ export class kasirlabComponent implements OnInit, OnDestroy {
   }
 
   doNotifHasilLab() {
-    this.websocketService.sendNotification({
-      title: "Hasil Laborat",
-      message: `Hasil laborat pasien ${this.pasien}`,
-      channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
-    });
+    this.websocketService
+      .sendNotification({
+        title: "Hasil Laborat",
+        message: `Hasil laborat pasien ${this.pasien}`,
+        channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
+      })
+      .subscribe();
   }
   cariteslab(a) {
     this.authService

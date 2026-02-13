@@ -3288,11 +3288,13 @@ export class tulisermComponent implements OnInit {
                         .call(data, (s) => s.nama)
                         .toString();
 
-                      this.websocketService.sendNotification({
-                        title: "Resep Obat",
-                        message: `Resep obat pasien ${this.pasien}`,
-                        channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.RESEP}`,
-                      });
+                      this.websocketService
+                        .sendNotification({
+                          title: "Resep Obat",
+                          message: `Resep obat pasien ${this.pasien}`,
+                          channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.RESEP}`,
+                        })
+                        .subscribe();
                     } else {
                       this.terapiObat = "tidak ada obat";
                     }
@@ -6069,19 +6071,23 @@ export class tulisermComponent implements OnInit {
   }
 
   doNotifPermintaanLab() {
-    this.websocketService.sendNotification({
-      title: "Permintaan Laborat",
-      message: `Permintaan laborat pasien ${this.pasien}`,
-      channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.PERMINTAAN_LAB}`,
-    });
+    this.websocketService
+      .sendNotification({
+        title: "Permintaan Laborat",
+        message: `Permintaan laborat pasien ${this.pasien}`,
+        channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.PERMINTAAN_LAB}`,
+      })
+      .subscribe();
   }
 
   doNotifHasilLab() {
-    this.websocketService.sendNotification({
-      title: "Hasil Laborat",
-      message: `Hasil laborat pasien ${this.pasien}`,
-      channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
-    });
+    this.websocketService
+      .sendNotification({
+        title: "Hasil Laborat",
+        message: `Hasil laborat pasien ${this.pasien}`,
+        channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
+      })
+      .subscribe();
   }
 
   nmobat: any;
