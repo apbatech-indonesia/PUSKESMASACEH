@@ -147,7 +147,7 @@ export class ermdokteridemoComponent implements OnInit {
     private modalService: NgbModal,
     public toastr: ToastrService,
     private authService: ApiserviceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -165,11 +165,11 @@ export class ermdokteridemoComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
     this.tglss = this.datepipe.transform(
       this.myDate,
-      "yyyy-MM-ddTHH:mm:ss+07:00"
+      "yyyy-MM-ddTHH:mm:ss+07:00",
     );
 
     this.authService.cabangper(this.kdklinik).subscribe(
@@ -180,7 +180,7 @@ export class ermdokteridemoComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -201,7 +201,7 @@ export class ermdokteridemoComponent implements OnInit {
         "BELUM",
         "",
         "2",
-        this.statuscari
+        this.statuscari,
       )
       .subscribe(
         (data) => {
@@ -210,7 +210,7 @@ export class ermdokteridemoComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService
@@ -220,7 +220,7 @@ export class ermdokteridemoComponent implements OnInit {
         "BELUM",
         "",
         "1",
-        this.statuscari
+        this.statuscari,
       )
       .subscribe(
         (data) => {
@@ -228,7 +228,7 @@ export class ermdokteridemoComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService
@@ -238,7 +238,7 @@ export class ermdokteridemoComponent implements OnInit {
         "SUDAH",
         "",
         "1",
-        this.statuscari
+        this.statuscari,
       )
       .subscribe(
         (data) => {
@@ -246,7 +246,7 @@ export class ermdokteridemoComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -258,7 +258,7 @@ export class ermdokteridemoComponent implements OnInit {
         "BELUM",
         a.target.value,
         "2",
-        this.statuscari
+        this.statuscari,
       )
       .subscribe(
         (data) => {
@@ -266,7 +266,7 @@ export class ermdokteridemoComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -304,7 +304,7 @@ export class ermdokteridemoComponent implements OnInit {
     costumer,
     alamat,
     kdtarif,
-    kelas
+    kelas,
   ) {
     this.showdata = true;
     this.norm = norm;
@@ -351,17 +351,6 @@ export class ermdokteridemoComponent implements OnInit {
       })
       .then((result) => {
         if (result.value) {
-          this.chatService.sendMessage([
-            {
-              antrian: a,
-              kddokter: kddokter,
-              namadokter: namdokter,
-              kdantrian: kodeantrian,
-              pasien: v,
-              nampoli: nampoli,
-            },
-          ]);
-
           this.websocketService
             .callQueueForCabang(this.kdcabang, {
               prefix: kodeantrian,
@@ -394,7 +383,7 @@ export class ermdokteridemoComponent implements OnInit {
     namdokter,
     nopengenal,
     kddokter,
-    sts
+    sts,
   ) {
     if (this.akses === "Dokter") {
       this.router.navigate([

@@ -1,5 +1,11 @@
 // ...import dan deklarasi class yang sudah ada, hapus duplikasi ini...
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+} from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -39,7 +45,7 @@ import { McoaComponent } from "../mcoa/mcoa.component";
 import { MobatComponent } from "../mobat/mobat.component";
 import { mutasifarmasiComponent } from "../mutasifarmasi/mutasifarmasi.component";
 import { SampleService } from "src/app/services";
-import { io } from "socket.io-client";
+import { EchoService } from "src/app/services/echo.service";
 import { GlobalComponent } from "src/app/clmaster/Globals/global.component";
 import { FarmasijualService } from "./farmasijual.service";
 
@@ -50,9 +56,6 @@ import { FarmasijualService } from "./farmasijual.service";
 
   providers: [
     DatePipe,
-    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
-    // `MatMomentDateModule` in your applications root module. We provide it at the component level
-    // here, due to limitations of our example generation script.
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
@@ -213,8 +216,8 @@ export class kasirfarmasijualComponent implements OnInit {
   showlunas: boolean = false;
   hostName: string;
   URLINVOICE: string;
-  private socketx: any;
-  private baseUrl = GlobalComponent.urlsocketv;
+  private audio2IntervalId?: any;
+  private echoUnsub?: () => void;
   slug: any;
   nama_pasien_ket: any;
   umur_pasien: string = "Ada";
@@ -251,7 +254,8 @@ export class kasirfarmasijualComponent implements OnInit {
     private modalService: NgbModal,
     public toastr: ToastrService,
     private authService: ApiserviceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private echoService: EchoService,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -269,8 +273,30 @@ export class kasirfarmasijualComponent implements OnInit {
     this.tglsampai = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
 
     console.log(this.akses);
+  }
 
-    this.socketx = io("https://socketpkm.apbatech.com/");
+  // Echo logic removed from this component. Keep socket.io usage below.
+
+  ngOnDestroy(): void {
+    // unsubscribe Echo listener if set
+    try {
+      if (this.echoUnsub) {
+        this.echoUnsub();
+        this.echoUnsub = undefined;
+      }
+    } catch (e) {
+      console.warn("Failed to unsubscribe Echo listener", e);
+    }
+
+    // clear any pending audio2 interval
+    try {
+      if (this.audio2IntervalId) {
+        clearInterval(this.audio2IntervalId);
+        this.audio2IntervalId = undefined;
+      }
+    } catch (e) {
+      console.warn("Failed to clear audio2 interval", e);
+    }
   }
 
   // Method untuk tombol Kajian Resep
@@ -338,7 +364,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   // date:any;
@@ -447,7 +473,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   jenisobat: any;
@@ -474,7 +500,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -543,45 +569,73 @@ export class kasirfarmasijualComponent implements OnInit {
   ngOnInit() {
     this.requestPermission();
     this.hostName = this.hots.getHostname();
-    this.socketx.on("message", (data) => {
-      const pesan = JSON.parse(data);
-
-      var kddokter;
-      var noantrian;
-      var namdokter;
-      var kdantrian;
-      var kdcabang;
-      var kdcabangasli = this.kdcabang;
-      for (let x of pesan) {
-        // console.log(x.namadokter)
-        kddokter = x.kddokter;
-        noantrian = x.antrian;
-        namdokter = x.namadokter;
-        kdantrian = x.kdantrian;
-        kdcabang = x.kdcabang;
-      }
-      if (kdcabangasli === kdcabang) {
-        if (kddokter === "Farmasi") {
-          this.triggerNotification();
-          this.toastr.success("Ada Resep Baru");
-          this.resepbaru = "Ada Resep Baru";
-          let audiox = new Audio();
-          audiox.src = "https://knm.clenicapp.com/clenic/sound/RESEP.wav";
-          audiox.play();
-
-          var indexl = 1;
-          audiox.onended = function () {
-            if (indexl < 2) {
-              audiox.src = "https://knm.clenicapp.com/clenic/sound/RESEP.wav";
-              audiox.play();
-              indexl++;
-            }
-          };
-        }
-      }
-    });
 
     this.URLINVOICE = "https://" + this.hostName + "/";
+
+    // Initialize EchoService locally for this component only
+    try {
+      this.echoService.init({
+        broadcaster: "reverb",
+        key: "tal3xzzkbakc0vjnidjhasdasd",
+        wsHost: "websocket.clenicapp.com",
+        wsPort: 80,
+        wssPort: 443,
+        forceTLS: true,
+        enabledTransports: ["ws", "wss"],
+      });
+      this.echoUnsub = this.echoService.subscribe(
+        `${this.kdcabang}.resep.notification`,
+        "NotificationSent",
+        (payload: any) => {
+          console.log("Echo event on", "NotificationSent", payload);
+          this.toastr.success("Ada Resep Baru");
+
+          let audio1 = new Audio(
+            "https://knm.clenicapp.com/clenic/sound/notify.wav",
+          );
+          let audio2 = new Audio(
+            "https://knm.clenicapp.com/clenic/sound/RESEP.wav",
+          );
+
+          audio1.onended = () => {
+            let plays = 0;
+            const delay =
+              audio2.duration && !isNaN(audio2.duration)
+                ? audio2.duration * 1000
+                : 1000;
+
+            const playOnce = () => {
+              try {
+                audio2.currentTime = 0;
+                audio2
+                  .play()
+                  .catch((e) => console.warn("audio2 play failed", e));
+              } catch (e) {
+                console.warn("audio2 play error", e);
+              }
+              plays++;
+            };
+
+            // play immediately once
+            playOnce();
+            // schedule repeats using setInterval, clear after 2 plays total
+            this.audio2IntervalId = setInterval(() => {
+              if (plays >= 2) {
+                clearInterval(this.audio2IntervalId);
+                this.audio2IntervalId = undefined;
+                return;
+              }
+              playOnce();
+            }, delay);
+          };
+
+          audio1.play();
+        },
+      );
+      console.log("EchoService initialized for kasirfarmasijual");
+    } catch (err) {
+      console.warn("Failed to init local EchoService", err);
+    }
 
     this.authService.obated(this.kdcabang).subscribe(
       (data) => {
@@ -594,7 +648,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.verifshowdd(this.kdcabang).subscribe(
@@ -607,7 +661,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.tmpgudang();
@@ -725,7 +779,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.cabangbyid(this.kdklinik, this.kdcabang).subscribe(
@@ -737,7 +791,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -757,7 +811,7 @@ export class kasirfarmasijualComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else {
       this.tsupshow = false;
@@ -808,7 +862,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   ubahqty(a, kdobat, notransaksi, nomor, qty, disc, discrp, harga) {
@@ -822,7 +876,7 @@ export class kasirfarmasijualComponent implements OnInit {
           "Notransaksi Tidak Ada silahkan simpan terlebih dahulu",
           {
             timeOut: 2000,
-          }
+          },
         );
       } else {
         let body = {
@@ -880,7 +934,7 @@ export class kasirfarmasijualComponent implements OnInit {
           "Notransaksi Tidak Ada silahkan simpan terlebih dahulu",
           {
             timeOut: 2000,
-          }
+          },
         );
       } else {
         let body = {
@@ -931,7 +985,7 @@ export class kasirfarmasijualComponent implements OnInit {
           "Notransaksi Tidak Ada silahkan simpan terlebih dahulu",
           {
             timeOut: 2000,
-          }
+          },
         );
       } else {
         let body = {
@@ -1032,7 +1086,7 @@ export class kasirfarmasijualComponent implements OnInit {
               if (response === "1") {
                 this.toastr.error(
                   "Hapus Gagal Karena Transaksi Belum di hapus atau trasaksi sudah di bayar",
-                  "error"
+                  "error",
                 );
               } else {
                 this.toastr.success("Berhasil", "Sukses", {
@@ -1132,7 +1186,7 @@ export class kasirfarmasijualComponent implements OnInit {
                 },
                 (Error) => {
                   console.log(Error);
-                }
+                },
               );
 
               this.authService.verifshowdd(this.kdcabang).subscribe(
@@ -1145,7 +1199,7 @@ export class kasirfarmasijualComponent implements OnInit {
                 },
                 (Error) => {
                   console.log(Error);
-                }
+                },
               );
 
               this.modalService.dismissAll();
@@ -1240,7 +1294,7 @@ export class kasirfarmasijualComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else {
       // ri
@@ -1253,7 +1307,7 @@ export class kasirfarmasijualComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     }
 
@@ -1284,7 +1338,7 @@ export class kasirfarmasijualComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else {
       // ri
@@ -1297,7 +1351,7 @@ export class kasirfarmasijualComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     }
     //   this.authService.listfarmasijual(this.kdcabang,this.caripas,a.target.value,this.tglp)
@@ -1323,7 +1377,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   statusku: any;
@@ -1390,7 +1444,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -1402,7 +1456,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -1417,7 +1471,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -1445,7 +1499,7 @@ export class kasirfarmasijualComponent implements OnInit {
             if (data == "1") {
               this.toastr.error(
                 "Stok Di Gudang Utama Tidak Cukup Silahkan Cek Kembali atau Mutasi dari Stok Lain",
-                "error"
+                "error",
               );
             } else {
               let body = {
@@ -1516,7 +1570,7 @@ export class kasirfarmasijualComponent implements OnInit {
                   }));
 
                   this.FarmasijualService.simpanbeliakhir(
-                    dataDisimpan
+                    dataDisimpan,
                   ).subscribe((response) => {
                     if (response) {
                       this.toastr.success("" + response.status, "Sukses", {
@@ -1536,7 +1590,7 @@ export class kasirfarmasijualComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else if (this.stssimpan == "2") {
       console.log("simpanbaru");
@@ -1586,7 +1640,7 @@ export class kasirfarmasijualComponent implements OnInit {
               } else {
                 this.toastr.error("Simpan  Gagal", "error");
               }
-            }
+            },
           );
 
           console.log("Data yang disimpan:", dataDisimpan);
@@ -1635,7 +1689,7 @@ export class kasirfarmasijualComponent implements OnInit {
               } else {
                 this.toastr.error("Simpan  Gagal", "error");
               }
-            }
+            },
           );
 
           console.log("Data yang disimpan:", dataDisimpan);
@@ -1651,14 +1705,14 @@ export class kasirfarmasijualComponent implements OnInit {
 
                 this.modalService.open(content).result.then(
                   (result) => {},
-                  (reason) => {}
+                  (reason) => {},
                 );
               } else {
               }
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
 
           setTimeout(() => {
@@ -1730,7 +1784,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -1818,7 +1872,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     } else {
       this.stssimpan = "1";
@@ -1866,7 +1920,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     }, 150);
 
@@ -1918,7 +1972,7 @@ export class kasirfarmasijualComponent implements OnInit {
     this.FarmasijualService.getPersyaratanObat(
       this.slug,
       norm,
-      notransaksi
+      notransaksi,
     ).subscribe((res: any) => {
       if (res) {
         this.tomboledit = true;
@@ -2109,7 +2163,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -2156,7 +2210,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService.listpobaterm(this.kdcabang, this.nofaktur).subscribe(
@@ -2165,7 +2219,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
     this.authService.listobatermracik(this.kdcabang, this.nofaktur).subscribe(
       (data) => {
@@ -2173,7 +2227,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.alergi(this.norm, this.kdcabang).subscribe(
@@ -2183,7 +2237,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   bb: any = "";
@@ -2371,7 +2425,7 @@ export class kasirfarmasijualComponent implements OnInit {
         "&username=" +
         this.username,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -2386,7 +2440,7 @@ export class kasirfarmasijualComponent implements OnInit {
         "&kdcabang=" +
         this.kdcabang,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -2403,7 +2457,7 @@ export class kasirfarmasijualComponent implements OnInit {
         "&user=" +
         this.usercetak,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -2421,7 +2475,7 @@ export class kasirfarmasijualComponent implements OnInit {
         this.usercetak +
         "&status=1",
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -2433,7 +2487,7 @@ export class kasirfarmasijualComponent implements OnInit {
         this.kdcabang +
         "&status=1",
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -2448,7 +2502,7 @@ export class kasirfarmasijualComponent implements OnInit {
         "&kdcabang=" +
         this.kdcabang,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -2463,7 +2517,7 @@ export class kasirfarmasijualComponent implements OnInit {
         "&kdcabang=" +
         this.kdcabang,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -2477,7 +2531,7 @@ export class kasirfarmasijualComponent implements OnInit {
         "&kdcabang=" +
         this.kdcabang,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -2503,7 +2557,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     } else if (a == "3") {
       this.num1 = false;
@@ -2525,7 +2579,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.modalService.open(content, {});
@@ -2551,7 +2605,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -2564,7 +2618,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   tmplpasiensemua() {
@@ -2574,7 +2628,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   enterpasien(content) {
@@ -2608,7 +2662,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -2620,7 +2674,7 @@ export class kasirfarmasijualComponent implements OnInit {
           this.caritipe,
           "",
           a.target.value,
-          this.tglp
+          this.tglp,
         )
         .subscribe(
           (data) => {
@@ -2628,7 +2682,7 @@ export class kasirfarmasijualComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else {
       this.authService
@@ -2639,7 +2693,7 @@ export class kasirfarmasijualComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     }
   }
@@ -2656,7 +2710,7 @@ export class kasirfarmasijualComponent implements OnInit {
     nama,
     kdpoli,
     sts,
-    kdkamar
+    kdkamar,
   ) {
     console.log(
       norm,
@@ -2669,7 +2723,7 @@ export class kasirfarmasijualComponent implements OnInit {
       nama,
       kdpoli,
       sts,
-      kdkamar
+      kdkamar,
     );
 
     if (sts === "semua") {
@@ -2717,7 +2771,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
     this.modalService.dismissAll();
   }
@@ -2730,7 +2784,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   enterdokter(content) {
@@ -2745,7 +2799,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -2758,7 +2812,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   carikostumer(a) {
@@ -2768,7 +2822,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   enterkostumer(content) {
@@ -2802,7 +2856,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   caripoli(a) {
@@ -2812,7 +2866,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -2896,7 +2950,7 @@ export class kasirfarmasijualComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
         }
@@ -2944,7 +2998,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   simpanetiket() {
@@ -3044,7 +3098,7 @@ export class kasirfarmasijualComponent implements OnInit {
 
           this.modalService.open(contex).result.then(
             (result) => {},
-            (reason) => {}
+            (reason) => {},
           );
         } else {
           if (this.nofaktur === "") {
@@ -3064,7 +3118,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   listbank() {
@@ -3074,7 +3128,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   jbayar(a) {
@@ -3089,7 +3143,7 @@ export class kasirfarmasijualComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     if (a === "2") {
@@ -3107,7 +3161,7 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     }
   }
@@ -3139,14 +3193,14 @@ export class kasirfarmasijualComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   bayartagihanakhir() {
     if (this.kembalian < 0) {
       this.toastr.error(
         "Tidak Bisa Simpan Karena Uang Dari Pasien Kurang",
-        "error"
+        "error",
       );
     } else {
       if (this.ttlsisaterbayar <= 0) {
@@ -3390,7 +3444,7 @@ export class kasirfarmasijualComponent implements OnInit {
         "&kdcabang=" +
         this.kdcabang,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -3403,7 +3457,7 @@ export class kasirfarmasijualComponent implements OnInit {
         "&kdcabang=" +
         this.kdcabang,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -3481,7 +3535,7 @@ export class kasirfarmasijualComponent implements OnInit {
         "&kdcabang=" +
         this.kdcabang,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -3625,7 +3679,7 @@ export class kasirfarmasijualComponent implements OnInit {
             const messages = errors[key];
             if (Array.isArray(messages)) {
               messages.forEach((msg) =>
-                this.toastr.error(msg, "Validasi Gagal")
+                this.toastr.error(msg, "Validasi Gagal"),
               );
             } else {
               this.toastr.error(messages, "Validasi Gagal");
@@ -3635,7 +3689,7 @@ export class kasirfarmasijualComponent implements OnInit {
           this.toastr.error("Terjadi kesalahan saat menyimpan data", "Error");
           console.log(error);
         }
-      }
+      },
     );
   }
 
@@ -3714,7 +3768,7 @@ export class kasirfarmasijualComponent implements OnInit {
             const messages = errors[key];
             if (Array.isArray(messages)) {
               messages.forEach((msg) =>
-                this.toastr.error(msg, "Validasi Gagal")
+                this.toastr.error(msg, "Validasi Gagal"),
               );
             } else {
               this.toastr.error(messages, "Validasi Gagal");
@@ -3724,7 +3778,7 @@ export class kasirfarmasijualComponent implements OnInit {
           this.toastr.error("Terjadi kesalahan saat mengedit data", "Error");
           console.log(error);
         }
-      }
+      },
     );
   }
 }

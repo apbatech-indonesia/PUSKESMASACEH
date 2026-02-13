@@ -107,7 +107,7 @@ export class ermdisplayComponent implements OnInit {
     private modalService: NgbModal,
     public toastr: ToastrService,
     private authService: ApiserviceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -151,7 +151,7 @@ export class ermdisplayComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.socketx = io("https://socketpkm.apbatech.com/");
@@ -166,7 +166,6 @@ export class ermdisplayComponent implements OnInit {
   };
 
   sendMessage() {
-    // this.chatService.sendMessage(this.newMessage);
     // this.newMessage = '';
   }
   pasienNotificationl(msg) {
@@ -383,12 +382,6 @@ export class ermdisplayComponent implements OnInit {
 
     //     });
 
-    // this.chatService.getNewMessage().subscribe((message: string) => {
-    //   this.received.push(message);
-    //   console.log(  this.received)
-
-    // })
-
     // this.tmptotal()
   }
   totalpass: number = 0;
@@ -485,7 +478,7 @@ export class ermdisplayComponent implements OnInit {
     costumer,
     alamat,
     kdtarif,
-    kelas
+    kelas,
   ) {
     this.showdata = true;
     this.norm = norm;
@@ -524,7 +517,7 @@ export class ermdisplayComponent implements OnInit {
       "0",
       "0",
       "0",
-      "0"
+      "0",
     );
     var kata = new Array(
       "",
@@ -536,7 +529,7 @@ export class ermdisplayComponent implements OnInit {
       "enam",
       "tujuh",
       "delapan",
-      "sembilan"
+      "sembilan",
     );
     var tingkat = new Array("", "Ribu", "Juta", "Milyar", "Triliun");
 
@@ -721,7 +714,7 @@ export class ermdisplayComponent implements OnInit {
         kddokter1: a,
         namadokter1: b,
         kolom1: c,
-      })
+      }),
     );
 
     setTimeout(() => {
@@ -742,7 +735,7 @@ export class ermdisplayComponent implements OnInit {
         kddokter2: a,
         namadokter2: b,
         kolom2: c,
-      })
+      }),
     );
 
     setTimeout(() => {
@@ -763,7 +756,7 @@ export class ermdisplayComponent implements OnInit {
         kddokter3: "NS",
         namadokter3: "Nursetation",
         kolom3: "3",
-      })
+      }),
     );
 
     setTimeout(() => {
@@ -783,7 +776,7 @@ export class ermdisplayComponent implements OnInit {
         kddokter3: a,
         namadokter3: b,
         kolom3: c,
-      })
+      }),
     );
 
     setTimeout(() => {

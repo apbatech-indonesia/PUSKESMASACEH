@@ -146,7 +146,7 @@ export class satusehatGigiComponent implements OnInit {
     private modalService: NgbModal,
     public toastr: ToastrService,
     private authService: ApiserviceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -160,7 +160,7 @@ export class satusehatGigiComponent implements OnInit {
     this.tglpxs = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
     this.tglss = this.datepipe.transform(
       this.myDate,
-      "yyyy-MM-ddTHH:mm:ss+07:00"
+      "yyyy-MM-ddTHH:mm:ss+07:00",
     );
   }
   slug: any;
@@ -176,7 +176,7 @@ export class satusehatGigiComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   tampilpas: any;
@@ -192,7 +192,7 @@ export class satusehatGigiComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -210,7 +210,7 @@ export class satusehatGigiComponent implements OnInit {
         a.target.value,
         "2",
         this.tglpx,
-        this.tglpxs
+        this.tglpxs,
       )
       .subscribe(
         (data) => {
@@ -218,7 +218,7 @@ export class satusehatGigiComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -256,7 +256,7 @@ export class satusehatGigiComponent implements OnInit {
     costumer,
     alamat,
     kdtarif,
-    kelas
+    kelas,
   ) {
     this.showdata = true;
     this.norm = norm;
@@ -287,7 +287,7 @@ export class satusehatGigiComponent implements OnInit {
     noasuransi,
     tglpriksa,
     pasien,
-    nampoli
+    nampoli,
   ) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -313,17 +313,6 @@ export class satusehatGigiComponent implements OnInit {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          this.chatService.sendMessage([
-            {
-              antrian: a,
-              kddokter: kddokter,
-              namadokter: namdokter,
-              kdantrian: kodeantrian,
-              pasien: pasien,
-              nampoli: nampoli,
-              kdcabang: this.kdcabang,
-            },
-          ]);
         } else if (result.isDenied) {
           let body = {
             tanggalperiksa: tglpriksa,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -27,9 +27,9 @@ import {
 } from "@angular/material/core";
 import { NgSelectModule, NgOption } from "@ng-select/ng-select";
 import { DatePipe } from "@angular/common";
-import { SampleService } from "src/app/services";
+import { SampleService, WebsocketService } from "src/app/services";
+import { EchoService } from "src/app/services/echo.service";
 import { TreeNode } from "primeng/api";
-import { io } from "socket.io-client";
 import { GlobalComponent } from "src/app/clmaster/Globals/global.component";
 import { HttpHeaders } from "@angular/common/http";
 import { ChatService } from "src/app/chat.service";
@@ -40,7 +40,7 @@ import { ChatService } from "src/app/chat.service";
   styles: [],
   providers: [DatePipe],
 })
-export class kasirlabComponent implements OnInit {
+export class kasirlabComponent implements OnInit, OnDestroy {
   toggleMobileSidebar: any;
   faStar = faStar;
   faPlus = faPlus;
@@ -86,8 +86,8 @@ export class kasirlabComponent implements OnInit {
 
   files1: TreeNode[];
   selectedFile: TreeNode;
-  private socketx: any;
-  private baseUrl = GlobalComponent.urlsocketv;
+  echoUnsub: any;
+  audio2IntervalId: any;
 
   constructor(
     public hots: SampleService,
@@ -96,7 +96,8 @@ export class kasirlabComponent implements OnInit {
     public toastr: ToastrService,
     private authService: ApiserviceService,
     private fb: FormBuilder,
-    public chatService: ChatService
+    private echoService: EchoService,
+    public websocketService: WebsocketService,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -111,8 +112,6 @@ export class kasirlabComponent implements OnInit {
     this.satusehatheaders = new HttpHeaders({
       "kd-cabang": this.kdcabang,
     });
-
-    this.socketx = io("https://socketpkm.apbatech.com/");
   }
   profileForm = this.fb.group({
     jbayari: ["", Validators.required],
@@ -123,31 +122,9 @@ export class kasirlabComponent implements OnInit {
     this.URLINVOICE = localStorage.getItem("baseUrx");
 
     this.hostName = this.hots.getHostname();
-    this.socketx.on("message", (data) => {
-      const pesan = JSON.parse(data);
 
-      var kddokter;
-      var noantrian;
-      var namdokter;
-      var kdantrian;
-      var kdcabang;
-      var kdcabangasli = this.kdcabang;
-      for (let x of pesan) {
-        // console.log(x.namadokter)
-        kddokter = x.kddokter;
-        noantrian = x.antrian;
-        namdokter = x.namadokter;
-        kdantrian = x.kdantrian;
-        kdcabang = x.kdcabang;
-      }
-      if (kdcabangasli === kdcabang) {
-        this.notifcenter(kddokter);
-      }
-    });
-
-    this.hostName = this.hots.getHostname();
-
-    // this.tmptarif()
+    this.initEchoNotifications();
+    // Initialize EchoService for realtime notifications (lab)
   }
 
   notifcenter(kddokter) {
@@ -164,11 +141,133 @@ export class kasirlabComponent implements OnInit {
       audio2.src = "https://knm.clenicapp.com/clenic/sound/hasil-lab.wav";
     }
 
-    audio1.onended = function () {
-      audio2.play();
+    audio1.onended = () => {
+      try {
+        audio2.currentTime = 0;
+        audio2.play().catch((e) => console.warn("audio2 play failed", e));
+      } catch (e) {
+        console.warn("audio2 play error", e);
+      }
     };
 
-    audio1.play();
+    audio1.play().catch((e) => console.warn("audio1 play failed", e));
+  }
+
+  private initEchoNotifications() {
+    try {
+      this.echoService.init({
+        broadcaster: "reverb",
+        key: "tal3xzzkbakc0vjnidjhasdasd",
+        wsHost: "websocket.clenicapp.com",
+        wsPort: 80,
+        wssPort: 443,
+        forceTLS: true,
+        enabledTransports: ["ws", "wss"],
+      });
+
+      // Subscribe to dedicated lab channels instead of a generic notification
+      // so we can avoid branching on payload titles.
+      this.echoUnsub = [] as any[];
+
+      const subLab = this.echoService.subscribe(
+        `${this.kdcabang}.permintaan-laborat.notification`,
+        "NotificationSent",
+        (payload: any) => {
+          try {
+            this.notifcenter("Laborat");
+          } catch (e) {
+            console.warn("Error handling laborat event", e);
+          }
+        },
+      );
+      this.echoUnsub.push(subLab);
+
+      const subHasil = this.echoService.subscribe(
+        `${this.kdcabang}.hasil-laborat.notification`,
+        "NotificationSent",
+        (payload: any) => {
+          try {
+            this.notifcenter("Hasil Laborat");
+          } catch (e) {
+            console.warn("Error handling hasil-laborat event", e);
+          }
+        },
+      );
+      this.echoUnsub.push(subHasil);
+      console.log("EchoService initialized for kasirlab");
+    } catch (err) {
+      console.warn("Failed to init local EchoService", err);
+    }
+  }
+
+  private handleEchoPayload(payload: any) {
+    try {
+      const title =
+        payload && payload.title ? String(payload.title).toLowerCase() : "";
+      if (title === "hasil laborat" || title === "permintaan laborat baru") {
+        this.playLabSound(title);
+      }
+    } catch (e) {
+      console.warn("Error handling Echo payload", e);
+    }
+  }
+
+  private playLabSound(title: string) {
+    const audio1 = new Audio(
+      "https://knm.clenicapp.com/clenic/sound/notify.wav",
+    );
+    const audio2 = new Audio();
+
+    if (title === "hasil laborat") {
+      audio2.src = "https://knm.clenicapp.com/clenic/sound/hasil-lab.wav";
+      this.toastr.success("Hasil Laborat Baru");
+    } else if (title === "permintaan laborat baru") {
+      audio2.src = "https://knm.clenicapp.com/clenic/sound/permintaan-lab.wav";
+      this.toastr.success("Permintaan Laborat Baru");
+    }
+
+    audio1.onended = () => {
+      try {
+        audio2.currentTime = 0;
+        audio2.play().catch((e) => console.warn("audio2 play failed", e));
+      } catch (e) {
+        console.warn("audio2 play error", e);
+      }
+    };
+
+    audio1.play().catch((e) => console.warn("audio1 play failed", e));
+  }
+
+  ngOnDestroy() {
+    try {
+      if (this.echoUnsub) {
+        if (Array.isArray(this.echoUnsub)) {
+          this.echoUnsub.forEach((u: any) => {
+            try {
+              if (typeof u === "function") {
+                u();
+              } else if (u && u.unsubscribe) {
+                u.unsubscribe();
+              }
+            } catch (e) {
+              console.warn("Error unsubscribing", e);
+            }
+          });
+        } else {
+          if (typeof this.echoUnsub === "function") {
+            this.echoUnsub();
+          } else if (this.echoUnsub.unsubscribe) {
+            this.echoUnsub.unsubscribe();
+          }
+        }
+      }
+      if (this.audio2IntervalId) {
+        clearInterval(this.audio2IntervalId);
+        this.audio2IntervalId = undefined;
+      }
+    } catch (e) {
+      console.warn("Error during ngOnDestroy cleanup", e);
+    }
   }
 
   ttarif: any;
@@ -184,7 +283,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   tmptarif() {
@@ -196,7 +295,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     //   this.authService.listtarif(this.kdcabang,'LAB','',this.kdtarif)
@@ -225,7 +324,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -238,7 +337,7 @@ export class kasirlabComponent implements OnInit {
         this.caripas,
         "",
         this.tglp,
-        this.statuscari
+        this.statuscari,
       )
       .subscribe(
         (data) => {
@@ -247,7 +346,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.modalService.open(content, {
@@ -263,7 +362,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.modalService.open(content, {});
@@ -321,7 +420,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.modalService.open(content, {});
@@ -333,7 +432,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   openLargex(content) {
@@ -354,7 +453,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -372,7 +471,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.mapinglab(this.kdcabang, kdproduk).subscribe(
@@ -381,7 +480,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.teslab(this.kdcabang, this.jenistc, "", "1").subscribe(
@@ -390,7 +489,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.modalService.open(content, {
@@ -412,7 +511,7 @@ export class kasirlabComponent implements OnInit {
         this.caripas,
         "",
         this.tglp,
-        this.statuscari
+        this.statuscari,
       )
       .subscribe(
         (data) => {
@@ -421,7 +520,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   caripass(a) {
@@ -431,7 +530,7 @@ export class kasirlabComponent implements OnInit {
         this.caripas,
         a.target.value,
         this.tglp,
-        this.statuscari
+        this.statuscari,
       )
       .subscribe(
         (data) => {
@@ -440,7 +539,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -500,7 +599,7 @@ export class kasirlabComponent implements OnInit {
     statusverif,
     kddokterpengirim,
     kdcppt,
-    x
+    x,
   ) {
     console.log(x);
     this.showdata = true;
@@ -554,7 +653,7 @@ export class kasirlabComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
 
       this.authService
@@ -567,7 +666,7 @@ export class kasirlabComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
 
       this.authService.doktertunjang(this.kdcabang, "lab").subscribe(
@@ -576,7 +675,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     } else {
     }
@@ -682,7 +781,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService.t_ceknorm(this.kdcabang, this.norm).subscribe(
@@ -700,7 +799,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -721,7 +820,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -931,7 +1030,7 @@ export class kasirlabComponent implements OnInit {
     harga,
     nofaktur,
     kridita,
-    kdpoli
+    kdpoli,
   ) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -1019,7 +1118,7 @@ export class kasirlabComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Qty Belum di isi'
+            '<i class="fa fa-info-circle"></i> Qty Belum di isi',
           );
         } else {
           let body = {
@@ -1133,7 +1232,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   diskonprodukp(
@@ -1143,7 +1242,7 @@ export class kasirlabComponent implements OnInit {
     produk,
     notransaksi,
     harga,
-    nofaktur
+    nofaktur,
   ) {
     // console.log(content,nomor,kdproduk,produk,notransaksi,harga,nofaktur)
 
@@ -1153,7 +1252,7 @@ export class kasirlabComponent implements OnInit {
 
     this.modalService.open(content).result.then(
       (result) => {},
-      (reason) => {}
+      (reason) => {},
     );
   }
   kemasand: number;
@@ -1171,7 +1270,7 @@ export class kasirlabComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Qty Belum di isi'
+            '<i class="fa fa-info-circle"></i> Qty Belum di isi',
           );
         } else {
           if (value > 100) {
@@ -1255,7 +1354,7 @@ export class kasirlabComponent implements OnInit {
               "",
               {
                 timeOut: 2000,
-              }
+              },
             );
           } else {
             this.authService
@@ -1268,7 +1367,7 @@ export class kasirlabComponent implements OnInit {
                       "Sukses",
                       {
                         timeOut: 2000,
-                      }
+                      },
                     );
                   } else {
                     this.jumlahpasienx = 0;
@@ -1283,18 +1382,18 @@ export class kasirlabComponent implements OnInit {
                       },
                       (Error) => {
                         console.log(Error);
-                      }
+                      },
                     );
 
                     this.modalService.open(content).result.then(
                       (result) => {},
-                      (reason) => {}
+                      (reason) => {},
                     );
                   }
                 },
                 (Error) => {
                   console.log(Error);
-                }
+                },
               );
           }
         }
@@ -1310,18 +1409,18 @@ export class kasirlabComponent implements OnInit {
             "Sukses",
             {
               timeOut: 2000,
-            }
+            },
           );
         } else {
           this.modalService.open(content).result.then(
             (result) => {},
-            (reason) => {}
+            (reason) => {},
           );
         }
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   lstbank: any;
@@ -1344,7 +1443,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     if (a === "2") {
@@ -1365,7 +1464,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     }
   }
@@ -1383,7 +1482,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     if (a === "2") {
@@ -1402,7 +1501,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     }
   }
@@ -1607,13 +1706,13 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   transaksitx() {
     this.toastr.error(
       "Transaksi Sudah Di Tutup,Kalo Ingin Hapus Silahkan Batal Transaksi Terlebih Dahulu di Kasir Rj",
-      "Eror"
+      "Eror",
     );
   }
 
@@ -1624,7 +1723,7 @@ export class kasirlabComponent implements OnInit {
       if (b === "1") {
         this.toastr.error(
           "Transaksi Sudah Di proses tidak bisa di batal",
-          "Eror"
+          "Eror",
         );
       } else {
         const swalWithBootstrapButtons = Swal.mixin({
@@ -1692,7 +1791,7 @@ export class kasirlabComponent implements OnInit {
               swalWithBootstrapButtons.fire(
                 "Berhasil Batal ",
                 "Batal Telah Berhasil.",
-                "success"
+                "success",
               );
             } else if (
               /* Read more about handling dismissals below */
@@ -1725,7 +1824,7 @@ export class kasirlabComponent implements OnInit {
         "&username=" +
         this.username,
       "_blank",
-      "location=no,toolbar=no,height=570,width=520,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=570,width=520,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -1740,7 +1839,7 @@ export class kasirlabComponent implements OnInit {
         "&username=" +
         this.username,
       "_blank",
-      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -1753,7 +1852,7 @@ export class kasirlabComponent implements OnInit {
         "&kdcabang=" +
         this.kdcabang,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -1766,7 +1865,7 @@ export class kasirlabComponent implements OnInit {
         "&kdcabang=" +
         this.kdcabang,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -1787,7 +1886,7 @@ export class kasirlabComponent implements OnInit {
         "&kdpoli=" +
         this.kliniks,
       "_blank",
-      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -1807,7 +1906,7 @@ export class kasirlabComponent implements OnInit {
         "&kdpoli=" +
         this.kliniks,
       "_blank",
-      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -1828,7 +1927,7 @@ export class kasirlabComponent implements OnInit {
         "&kdpoli=" +
         this.kliniks,
       "_blank",
-      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=570,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -1850,7 +1949,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.tampiluser(this.kdcabang).subscribe(
@@ -1859,7 +1958,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.modalService.open(content, {});
@@ -1878,7 +1977,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   totaltagihanfar: number;
@@ -1961,7 +2060,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.dokter(this.kdcabang).subscribe(
@@ -1970,7 +2069,7 @@ export class kasirlabComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService
@@ -1981,7 +2080,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -2018,7 +2117,7 @@ export class kasirlabComponent implements OnInit {
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
 
         this.bataltunjang();
@@ -2037,7 +2136,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   checkedItems: any;
@@ -2078,7 +2177,7 @@ export class kasirlabComponent implements OnInit {
         group.detail
           .filter((item) => item.hasil !== "")
           .map((item) => item.specimenDetail)
-          .filter((detail) => detail.code !== null && detail.display !== null)
+          .filter((detail) => detail.code !== null && detail.display !== null),
       );
 
       this.kirimSpesimenSatuSehat(listOfSpecimen);
@@ -2118,15 +2217,11 @@ export class kasirlabComponent implements OnInit {
   }
 
   doNotifHasilLab() {
-    this.chatService.sendMessage([
-      {
-        antrian: "0",
-        kddokter: "Hasil Laborat",
-        namadokter: "Hasil Laborat",
-        kdantrian: "L",
-        kdcabang: this.kdcabang,
-      },
-    ]);
+    this.websocketService.sendNotification({
+      title: "Hasil Laborat",
+      message: `Hasil laborat pasien ${this.pasien}`,
+      channel: `${this.kdcabang}.hasil-laborat.notification`,
+    });
   }
   cariteslab(a) {
     this.authService
@@ -2137,7 +2232,7 @@ export class kasirlabComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -2155,15 +2250,15 @@ export class kasirlabComponent implements OnInit {
         var r = Math.random() * 16; //random number between 0 and 16
         if (d > 0) {
           //Use timestamp until depleted
-          r = (d + r) % 16 | 0;
+          r = ((d + r) % 16) | 0;
           d = Math.floor(d / 16);
         } else {
           //Use microseconds since page-load if supported
-          r = (d2 + r) % 16 | 0;
+          r = ((d2 + r) % 16) | 0;
           d2 = Math.floor(d2 / 16);
         }
         return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-      }
+      },
     );
   }
 
@@ -2192,7 +2287,7 @@ export class kasirlabComponent implements OnInit {
           issuedDate: date.toISOString(),
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     // // Service Request
@@ -2227,7 +2322,7 @@ export class kasirlabComponent implements OnInit {
           instruksi: `hasil lab pasien ${this.pasien}`,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     let specimen: any = await this.authService.specimen(
@@ -2249,7 +2344,7 @@ export class kasirlabComponent implements OnInit {
           extensionDate: date.toISOString(),
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     // Diagnostic Report
@@ -2269,7 +2364,7 @@ export class kasirlabComponent implements OnInit {
           specimenId: specimen.id,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     // clinical impression
@@ -2293,7 +2388,7 @@ export class kasirlabComponent implements OnInit {
           summary: `spesimen pasien ${this.pasien}`,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
   }
 
@@ -2340,7 +2435,7 @@ export class kasirlabComponent implements OnInit {
                 },
                 (Error) => {
                   console.log(Error);
-                }
+                },
               );
             } else {
               this.toastr.error("Simpan  Gagal", "Eror");
@@ -2350,7 +2445,7 @@ export class kasirlabComponent implements OnInit {
           swalWithBootstrapButtons.fire(
             "Berhasil Batal ",
             "Batal Telah Berhasil.",
-            "success"
+            "success",
           );
         } else if (
           /* Read more about handling dismissals below */
@@ -2398,7 +2493,7 @@ export class kasirlabComponent implements OnInit {
                 },
                 (Error) => {
                   console.log(Error);
-                }
+                },
               );
 
               setTimeout(() => {
@@ -2412,7 +2507,7 @@ export class kasirlabComponent implements OnInit {
           swalWithBootstrapButtons.fire(
             "Berhasil Mapping",
             "Mapping Telah Berhasil.",
-            "success"
+            "success",
           );
         } else if (
           /* Read more about handling dismissals below */
@@ -2483,7 +2578,7 @@ export class kasirlabComponent implements OnInit {
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
         }, 500);
 

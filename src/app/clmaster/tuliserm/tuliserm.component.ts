@@ -53,7 +53,7 @@ import {
   SignaturePadComponent,
 } from "@almothafar/angular-signature-pad";
 import { G } from "@angular/cdk/keycodes";
-import { SampleService } from "src/app/services";
+import { SampleService, WebsocketService } from "src/app/services";
 import { TreeNode } from "primeng/api";
 import { DatePipe } from "@angular/common";
 import { AppComponent } from "../../app.component";
@@ -372,6 +372,7 @@ export class tulisermComponent implements OnInit {
   constructor(
     public FarmasijualService: FarmasijualService,
     public chatService: ChatService,
+    public websocketService: WebsocketService,
     private appComponent: AppComponent,
     public hots: SampleService,
     private router: Router,
@@ -380,7 +381,7 @@ export class tulisermComponent implements OnInit {
     public toastr: ToastrService,
     private authService: ApiserviceService,
     private fb: FormBuilder,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -499,7 +500,7 @@ export class tulisermComponent implements OnInit {
           () => {},
           (dismiss) => {
             this.onResetForm();
-          }
+          },
         );
       }
     });
@@ -530,7 +531,7 @@ export class tulisermComponent implements OnInit {
           () => {},
           (dismiss) => {
             location.reload();
-          }
+          },
         );
       }
     });
@@ -593,7 +594,7 @@ export class tulisermComponent implements OnInit {
       },
       (error: any) => {
         this.toastr.error(error.error.message, "Error");
-      }
+      },
     );
   }
 
@@ -676,7 +677,7 @@ export class tulisermComponent implements OnInit {
       },
       (error: any) => {
         this.toastr.error(error.error.message, "Error");
-      }
+      },
     );
   }
 
@@ -839,7 +840,7 @@ export class tulisermComponent implements OnInit {
       },
       (error: any) => {
         this.toastr.error(error.error.message, "Error");
-      }
+      },
     );
 
     console.log(this.unitPelayanan);
@@ -988,7 +989,7 @@ export class tulisermComponent implements OnInit {
       },
       (error: any) => {
         this.toastr.error(error.error.message, "Error");
-      }
+      },
     );
   }
 
@@ -1077,7 +1078,7 @@ export class tulisermComponent implements OnInit {
       } else {
         this.toastr.error(
           "Berkas Foto Terlalu Besar Harus Di Bawah 4mb",
-          "Eror"
+          "Eror",
         );
 
         //this.snackBar.open('File size exceeds 4 MB. Please choose less than 4 MB','',{duration: 2000});
@@ -1207,7 +1208,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -1272,7 +1273,7 @@ export class tulisermComponent implements OnInit {
         JSON.stringify({
           notrans: this.notrans,
           kddokter: this.kddokter,
-        })
+        }),
       );
     }, 0);
 
@@ -1294,7 +1295,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     // this.talergibpjs()
@@ -1305,7 +1306,7 @@ export class tulisermComponent implements OnInit {
           this.kdcabang,
           this.notrans,
           "LABORAT",
-          this.notrans + this.kddokter
+          this.notrans + this.kddokter,
         )
         .subscribe(
           (data) => {
@@ -1318,7 +1319,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     }, 100);
 
@@ -1328,7 +1329,7 @@ export class tulisermComponent implements OnInit {
           this.kdcabang,
           this.notrans,
           "RADIOLOGI",
-          this.notrans + this.kddokter
+          this.notrans + this.kddokter,
         )
         .subscribe(
           (data) => {
@@ -1341,7 +1342,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     }, 150);
 
@@ -1361,7 +1362,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
 
       this.authService
@@ -1369,7 +1370,7 @@ export class tulisermComponent implements OnInit {
           this.kdcabang,
           this.notrans,
           this.notrans + this.kddokter,
-          this.nomorracik
+          this.nomorracik,
         )
         .subscribe(
           (data) => {
@@ -1377,7 +1378,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
 
       this.authService
@@ -1395,7 +1396,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
 
       //   this.authService.alergi(this.norm,this.kdcabang)
@@ -1437,7 +1438,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.alergis("02").subscribe(
@@ -1446,7 +1447,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.alergis("03").subscribe(
@@ -1455,7 +1456,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.getprognosa().subscribe(
@@ -1464,7 +1465,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   tprognosa: any;
@@ -1579,12 +1580,12 @@ export class tulisermComponent implements OnInit {
                         (response) => {
                           console.log(
                             "pstProl data sent successfully:",
-                            response
+                            response,
                           );
                         },
                         (error) => {
                           console.error("Error sending pstProl data:", error);
-                        }
+                        },
                       );
                   }
 
@@ -1602,12 +1603,12 @@ export class tulisermComponent implements OnInit {
                         (response) => {
                           console.log(
                             "pstPrb data sent successfully:",
-                            response
+                            response,
                           );
                         },
                         (error) => {
                           console.error("Error sending pstPrb data:", error);
-                        }
+                        },
                       );
                   }
                 } else if (data.metaData.code == 204) {
@@ -1623,7 +1624,7 @@ export class tulisermComponent implements OnInit {
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
 
           // if(x.ri === 'No'){
@@ -1649,7 +1650,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService
@@ -1715,7 +1716,7 @@ export class tulisermComponent implements OnInit {
             this.alergi = x.alergi;
             this.tdd = x.tdd;
             this.hr = x.hr;
-            (this.rwtp = [x.rwytp]), (this.tb = x.tb);
+            ((this.rwtp = [x.rwytp]), (this.tb = x.tb));
             this.subjekp = x.subjekp;
             this.plankon = x.rencanatindakan;
             this.myDatekon = x.tglkontrol;
@@ -1726,12 +1727,12 @@ export class tulisermComponent implements OnInit {
             this.lingkarkepala = x.lingkarkepala;
             this.lingkarlenganatas = x.lingkarlenganatas;
             this.lingkarbetis = x.lingkarbetis;
-            (this.stspulang = x.stspulang),
+            ((this.stspulang = x.stspulang),
               (this.alergiudara = x.alergiudara),
               (this.alergiobat = x.alergiobat),
               (this.catatandiet = x.catatandiet),
               (this.kdprognosa = x.kdprognosa),
-              (this.terapinonobat = x.terapinonobat);
+              (this.terapinonobat = x.terapinonobat));
             this.lingkarperut = x.lp;
           }
         } else {
@@ -1743,7 +1744,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   tlab: any;
@@ -1761,7 +1762,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   klab() {
@@ -1776,7 +1777,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   monitoringurl: SafeResourceUrl;
@@ -1805,7 +1806,7 @@ export class tulisermComponent implements OnInit {
           "&kdcabang=" +
           kdcabang +
           "&kdproduk=" +
-          kdproduk
+          kdproduk,
       );
     } else {
       this.monitoringurlx = this.domSanitizer.bypassSecurityTrustResourceUrl(
@@ -1815,7 +1816,7 @@ export class tulisermComponent implements OnInit {
           "&kdcabang=" +
           kdcabang +
           "&kdproduk=" +
-          nmfile
+          nmfile,
       );
     }
   }
@@ -1834,7 +1835,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
       // this.monitoringurl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.URLINVOICE+'clenic/report/hasillab.php?notransaksi='+notrans+'&kdcabang='+kdcabang);
@@ -1847,7 +1848,7 @@ export class tulisermComponent implements OnInit {
           "&kdcabang=" +
           kdcabang +
           "&x=" +
-          nmfile
+          nmfile,
       );
       this.monitoringshowcontent = true;
     }
@@ -1863,7 +1864,7 @@ export class tulisermComponent implements OnInit {
         "&norm=" +
         norm +
         "&kdcabang=" +
-        kdcabang
+        kdcabang,
     );
   }
 
@@ -1871,7 +1872,7 @@ export class tulisermComponent implements OnInit {
     this.monitoringurlemrshow = true;
 
     this.monitoringurlemr = this.domSanitizer.bypassSecurityTrustResourceUrl(
-      "https://fronttemprs.clenic.id/#/masuk/002000001/002000001/Wirahman/Wirahman Usman/Super Admin/002/12345"
+      "https://fronttemprs.clenic.id/#/masuk/002000001/002000001/Wirahman/Wirahman Usman/Super Admin/002/12345",
     );
   }
 
@@ -1900,7 +1901,7 @@ export class tulisermComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
 
@@ -1923,7 +1924,7 @@ export class tulisermComponent implements OnInit {
         "&kdcabang=" +
         this.kdcabang +
         "&kddokter=" +
-        this.kddokter
+        this.kddokter,
     );
   }
   ksehat() {
@@ -1937,7 +1938,7 @@ export class tulisermComponent implements OnInit {
         "&kdcabang=" +
         this.kdcabang +
         "&kddokter=" +
-        this.kddokter
+        this.kddokter,
     );
   }
 
@@ -1949,7 +1950,7 @@ export class tulisermComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -2119,7 +2120,7 @@ export class tulisermComponent implements OnInit {
                   note: `kunjungan pasien ${this.pasien}`,
                 },
               },
-              this.satusehatheaders
+              this.satusehatheaders,
             );
           }
         } else {
@@ -2170,7 +2171,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -2195,7 +2196,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   klikrwo() {
@@ -2206,7 +2207,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   tdiag: any;
@@ -2242,7 +2243,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService
@@ -2258,7 +2259,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -2419,7 +2420,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
       // this.authService.caritindakan(a.target.value,'2')
       // .subscribe(data => {
@@ -2536,7 +2537,7 @@ export class tulisermComponent implements OnInit {
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
       }
 
@@ -2574,7 +2575,7 @@ export class tulisermComponent implements OnInit {
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
       }
 
@@ -2672,7 +2673,7 @@ export class tulisermComponent implements OnInit {
             } else if (response.metaData.code == 412) {
               this.toastr.error(
                 response.response.field + response.response.message,
-                "Eror"
+                "Eror",
               );
 
               this.showloading = false;
@@ -2819,7 +2820,7 @@ export class tulisermComponent implements OnInit {
                             "Gagal simpan : " +
                               response.response.field +
                               response.response.message,
-                            "Eror"
+                            "Eror",
                           );
 
                           this.showloading = false;
@@ -2839,7 +2840,7 @@ export class tulisermComponent implements OnInit {
                 if (this.subjek === "") {
                   this.toastr.error(
                     "Keluhan harus di isi agar terkirim ke pcare",
-                    "Eror"
+                    "Eror",
                   );
 
                   return;
@@ -2848,7 +2849,7 @@ export class tulisermComponent implements OnInit {
                 if (this.terapinonobat === "") {
                   this.toastr.error(
                     "terapi non obat tidak boleh kosong atau isi - apabila tidak ada",
-                    "Eror"
+                    "Eror",
                   );
                   return;
                 }
@@ -3011,7 +3012,7 @@ export class tulisermComponent implements OnInit {
           bodyMassIndex: this.imt,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     // rencana tindak lanjut
@@ -3029,7 +3030,7 @@ export class tulisermComponent implements OnInit {
           date: new Date(this.myDatekon).toISOString(),
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     // resume diet
@@ -3051,7 +3052,7 @@ export class tulisermComponent implements OnInit {
           display: this.catatandiet || "Discharge diet (narrative)",
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     // alergi
@@ -3069,7 +3070,7 @@ export class tulisermComponent implements OnInit {
           description: `alergi makanan : ${this.alergi}`,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
     this.authService.allergyIntolerance(
       {
@@ -3085,7 +3086,7 @@ export class tulisermComponent implements OnInit {
           description: `alergi udara : ${this.alergiudara}`,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
     this.authService.allergyIntolerance(
       {
@@ -3101,7 +3102,7 @@ export class tulisermComponent implements OnInit {
           description: `alergi obat : ${this.alergiobat}`,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     // Service Request
@@ -3128,7 +3129,7 @@ export class tulisermComponent implements OnInit {
           instruksi: `rencana tindak lanjut pasien ${this.pasien}`,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     // Diagnostic Report
@@ -3147,7 +3148,7 @@ export class tulisermComponent implements OnInit {
           observationId: observationResponse.id,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     // Questionnaire Response
@@ -3162,7 +3163,7 @@ export class tulisermComponent implements OnInit {
           statusKeluarga: this.kondisiKeluarga,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     // clinical impression
@@ -3186,7 +3187,7 @@ export class tulisermComponent implements OnInit {
           summary: this.subjek,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
   }
   getSelectedOptionText(event: Event, model: any) {
@@ -3277,7 +3278,7 @@ export class tulisermComponent implements OnInit {
                 .obatnonracik(
                   this.kdcabang,
                   this.notrans,
-                  this.notrans + this.kddokter
+                  this.notrans + this.kddokter,
                 )
                 .subscribe(
                   (data) => {
@@ -3285,22 +3286,19 @@ export class tulisermComponent implements OnInit {
                       this.terapiObat = Array.prototype.map
                         .call(data, (s) => s.nama)
                         .toString();
-                      this.chatService.sendMessage([
-                        {
-                          antrian: "0",
-                          kddokter: "Farmasi",
-                          namadokter: "Farmasi",
-                          kdantrian: "A",
-                          kdcabang: this.kdcabang,
-                        },
-                      ]);
+
+                      this.websocketService.sendNotification({
+                        title: "Resep Obat",
+                        message: `Resep obat pasien ${this.pasien}`,
+                        channel: `${this.kdcabang}.resep.notification`,
+                      });
                     } else {
                       this.terapiObat = "tidak ada obat";
                     }
                   },
                   (Error) => {
                     console.log(Error);
-                  }
+                  },
                 );
             }
           } else {
@@ -3463,7 +3461,7 @@ export class tulisermComponent implements OnInit {
                   "Berhasil Kirim Kunjungan" + this.stspulang,
                   {
                     timeOut: 2000,
-                  }
+                  },
                 );
               }
             });
@@ -3681,7 +3679,7 @@ export class tulisermComponent implements OnInit {
                     "Berhasil Kirim Kunjungan" + this.stspulang,
                     {
                       timeOut: 2000,
-                    }
+                    },
                   );
                 }
               });
@@ -3755,7 +3753,7 @@ export class tulisermComponent implements OnInit {
         },
         (error) => {
           this.toastr.error(error.error.message, "Gagal");
-        }
+        },
       );
   }
 
@@ -3906,7 +3904,7 @@ export class tulisermComponent implements OnInit {
               "Berhasil Kirim Kunjungan" + this.stspulang,
               {
                 timeOut: 2000,
-              }
+              },
             );
           }
         });
@@ -4108,7 +4106,7 @@ export class tulisermComponent implements OnInit {
                 "Berhasil Kirim Kunjungan" + this.stspulang,
                 {
                   timeOut: 2000,
-                }
+                },
               );
             }
           });
@@ -4317,7 +4315,7 @@ export class tulisermComponent implements OnInit {
                   "Berhasil Kirim Kunjungan" + this.stspulang,
                   {
                     timeOut: 2000,
-                  }
+                  },
                 );
               }
             });
@@ -4451,7 +4449,7 @@ export class tulisermComponent implements OnInit {
                   "Berhasil Kirim Kunjungan" + this.stspulang,
                   {
                     timeOut: 2000,
-                  }
+                  },
                 );
               }
             });
@@ -4587,7 +4585,7 @@ export class tulisermComponent implements OnInit {
                   "Berhasil Kirim Kunjungan" + this.stspulang,
                   {
                     timeOut: 2000,
-                  }
+                  },
                 );
               }
             });
@@ -4803,7 +4801,7 @@ export class tulisermComponent implements OnInit {
                 "Berhasil Kirim Kunjungan" + this.stspulang,
                 {
                   timeOut: 2000,
-                }
+                },
               );
             }
           });
@@ -4940,7 +4938,7 @@ export class tulisermComponent implements OnInit {
                 "Berhasil Kirim Kunjungan" + this.stspulang,
                 {
                   timeOut: 2000,
-                }
+                },
               );
             }
           });
@@ -5073,7 +5071,7 @@ export class tulisermComponent implements OnInit {
                 "Berhasil Kirim Kunjungan" + this.stspulang,
                 {
                   timeOut: 2000,
-                }
+                },
               );
             }
           });
@@ -5162,7 +5160,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else if (a === "pf") {
       this.modalpf = true;
@@ -5180,7 +5178,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else if (a === "plan") {
       this.modalplan = true;
@@ -5198,7 +5196,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else if (a === "diag") {
       this.modaldiag = true;
@@ -5217,7 +5215,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else if (a === "tindak") {
       this.modaltindak = true;
@@ -5236,7 +5234,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else if (a === "terapi") {
       this.modaltindak = false;
@@ -5252,7 +5250,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     } else {
     }
@@ -5356,7 +5354,7 @@ export class tulisermComponent implements OnInit {
                   },
                   (Error) => {
                     console.log(Error);
-                  }
+                  },
                 );
 
               setTimeout(() => {
@@ -5418,7 +5416,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -5433,7 +5431,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -5446,7 +5444,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -5459,7 +5457,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   ttarifrad: any;
@@ -5473,7 +5471,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -5488,7 +5486,7 @@ export class tulisermComponent implements OnInit {
         this.kdcabang,
         this.notrans,
         "LABORAT",
-        this.notrans + this.kddokter
+        this.notrans + this.kddokter,
       )
       .subscribe(
         (data) => {
@@ -5502,7 +5500,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService
@@ -5510,7 +5508,7 @@ export class tulisermComponent implements OnInit {
         this.kdcabang,
         this.notrans,
         "LABORAT",
-        this.notrans + this.kddokter
+        this.notrans + this.kddokter,
       )
       .subscribe(
         (data) => {
@@ -5520,7 +5518,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -5533,7 +5531,7 @@ export class tulisermComponent implements OnInit {
         this.kdcabang,
         this.notrans,
         "RADIOLOGI",
-        this.notrans + this.kddokter
+        this.notrans + this.kddokter,
       )
       .subscribe(
         (data) => {
@@ -5547,7 +5545,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService
@@ -5555,7 +5553,7 @@ export class tulisermComponent implements OnInit {
         this.kdcabang,
         this.notrans,
         "RADIOLOGI",
-        this.notrans + this.kddokter
+        this.notrans + this.kddokter,
       )
       .subscribe(
         (data) => {
@@ -5565,7 +5563,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -5597,7 +5595,7 @@ export class tulisermComponent implements OnInit {
       (result) => {},
       (reason) => {
         this.tmpnonr();
-      }
+      },
     );
   }
   private expandRecursive(node: TreeNode, isExpand: boolean) {
@@ -5726,7 +5724,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.tmplistintruksilab();
@@ -5749,7 +5747,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.modalService.open(contentrj, {
@@ -5767,7 +5765,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   perminrad(content2) {
@@ -5781,7 +5779,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.tmplistintruksirad();
@@ -5836,7 +5834,7 @@ export class tulisermComponent implements OnInit {
         this.notrans + this.kddokter,
         this.kddokter,
         kdpoli,
-        kdpruduk
+        kdpruduk,
       )
       .subscribe(
         (data) => {
@@ -5878,13 +5876,13 @@ export class tulisermComponent implements OnInit {
           } else {
             this.toastr.error(
               "Tidak Bisa Di Hapus Karena Sudah Di Kunci",
-              "Eror"
+              "Eror",
             );
           }
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -5897,7 +5895,7 @@ export class tulisermComponent implements OnInit {
         this.notrans + this.kddokter,
         this.kddokter,
         kdpoli,
-        kdpruduk
+        kdpruduk,
       )
       .subscribe(
         (data) => {
@@ -5938,13 +5936,13 @@ export class tulisermComponent implements OnInit {
           } else {
             this.toastr.error(
               "Tidak Bisa Di Hapus Karena Sudah Di Kunci",
-              "Eror"
+              "Eror",
             );
           }
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -5981,7 +5979,7 @@ export class tulisermComponent implements OnInit {
           "Sukses",
           {
             timeOut: 2000,
-          }
+          },
         );
 
         this.tmplistintruksirad();
@@ -6027,7 +6025,7 @@ export class tulisermComponent implements OnInit {
           "Sukses",
           {
             timeOut: 2000,
-          }
+          },
         );
 
         this.tmplistintruksilab();
@@ -6052,7 +6050,7 @@ export class tulisermComponent implements OnInit {
         "&norm=" +
         this.norm,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -6065,32 +6063,24 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
   doNotifPermintaanLab() {
-    this.chatService.sendMessage([
-      {
-        antrian: "0",
-        kddokter: "Laborat",
-        namadokter: "Laborat",
-        kdantrian: "L",
-        kdcabang: this.kdcabang,
-      },
-    ]);
+    this.websocketService.sendNotification({
+      title: "Permintaan Laborat",
+      message: `Permintaan laborat pasien ${this.pasien}`,
+      channel: `${this.kdcabang}.permintaan-laborat.notification`,
+    });
   }
 
   doNotifHasilLab() {
-    this.chatService.sendMessage([
-      {
-        antrian: "0",
-        kddokter: "Hasil Laborat",
-        namadokter: "Hasil Laborat",
-        kdantrian: "L",
-        kdcabang: this.kdcabang,
-      },
-    ]);
+    this.websocketService.sendNotification({
+      title: "Hasil Laborat",
+      message: `Hasil laborat pasien ${this.pasien}`,
+      channel: `${this.kdcabang}.hasil-laborat.notification`,
+    });
   }
 
   nmobat: any;
@@ -6172,7 +6162,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -6191,7 +6181,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     setTimeout(() => {
@@ -6236,7 +6226,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -6365,7 +6355,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService
@@ -6373,7 +6363,7 @@ export class tulisermComponent implements OnInit {
         this.kdcabang,
         this.notrans,
         this.notrans + this.kddokter,
-        this.nomorracik
+        this.nomorracik,
       )
       .subscribe(
         (data) => {
@@ -6387,7 +6377,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService
@@ -6399,7 +6389,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   tlistbhpr: any;
@@ -6413,7 +6403,7 @@ export class tulisermComponent implements OnInit {
     kunci,
     no,
     kdcppt,
-    nama
+    nama,
   ) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -6438,7 +6428,7 @@ export class tulisermComponent implements OnInit {
           if (kunci === "1") {
             this.toastr.error(
               "Data telah di verifikasi tidak bisa di hapus",
-              "Eror"
+              "Eror",
             );
           } else {
             let body = {
@@ -6567,7 +6557,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -6580,7 +6570,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -6663,7 +6653,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else {
       this.showtamplate = false;
@@ -6781,7 +6771,7 @@ export class tulisermComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
           let body = {
@@ -6828,7 +6818,7 @@ export class tulisermComponent implements OnInit {
     kdpruduk,
     qty,
     harga,
-    no
+    no,
   ) {
     Swal.fire({
       title: "Masukan Qty Terbaru",
@@ -6841,7 +6831,7 @@ export class tulisermComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Qty Belum disi'
+            '<i class="fa fa-info-circle"></i> Qty Belum disi',
           );
         } else {
           let body = {
@@ -6889,7 +6879,7 @@ export class tulisermComponent implements OnInit {
     kdpruduk,
     qty,
     harga,
-    no
+    no,
   ) {
     Swal.fire({
       title: "Masukan Qty Terbaru",
@@ -6902,7 +6892,7 @@ export class tulisermComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Qty Belum disi'
+            '<i class="fa fa-info-circle"></i> Qty Belum disi',
           );
         } else {
           let body = {
@@ -6952,7 +6942,7 @@ export class tulisermComponent implements OnInit {
     kdpruduk,
     qty,
     harga,
-    no
+    no,
   ) {
     Swal.fire({
       title: "Masukan Keterangan Terbaru",
@@ -6965,7 +6955,7 @@ export class tulisermComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Qty Belum disi'
+            '<i class="fa fa-info-circle"></i> Qty Belum disi',
           );
         } else {
           let body = {
@@ -7018,7 +7008,7 @@ export class tulisermComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
           let body = {
@@ -7064,7 +7054,7 @@ export class tulisermComponent implements OnInit {
     qty,
     keterangan,
     notransaksi,
-    kdpoli
+    kdpoli,
   ) {
     Swal.fire({
       title: "Masukan Aturan Terbaru",
@@ -7077,7 +7067,7 @@ export class tulisermComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
           let body = {
@@ -7123,7 +7113,7 @@ export class tulisermComponent implements OnInit {
     qty,
     keterangan,
     notransaksi,
-    kdpoli
+    kdpoli,
   ) {
     Swal.fire({
       title: "Masukan Qty Terbaru",
@@ -7136,7 +7126,7 @@ export class tulisermComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
           let body = {
@@ -7182,7 +7172,7 @@ export class tulisermComponent implements OnInit {
     qty,
     keterangan,
     notransaksi,
-    kdpoli
+    kdpoli,
   ) {
     Swal.fire({
       title: "Masukan keterangan Terbaru",
@@ -7196,7 +7186,7 @@ export class tulisermComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
           let body = {
@@ -7242,7 +7232,7 @@ export class tulisermComponent implements OnInit {
     qty,
     keterangan,
     notransaksi,
-    kdpoli
+    kdpoli,
   ) {
     Swal.fire({
       title: "Masukan keterangan Terbaru",
@@ -7262,7 +7252,7 @@ export class tulisermComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
           let body = {
@@ -7311,7 +7301,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -7357,7 +7347,7 @@ export class tulisermComponent implements OnInit {
         this.notransaksi,
         this.imageSrcx,
         this.norm,
-        this.keteranganakhirx
+        this.keteranganakhirx,
       )
       .then((data) => {
         if (data) {
@@ -7371,7 +7361,7 @@ export class tulisermComponent implements OnInit {
               },
               (Error) => {
                 console.log(Error);
-              }
+              },
             );
           }, 200);
         } else {
@@ -7387,7 +7377,7 @@ export class tulisermComponent implements OnInit {
         this.notransaksi,
         this.imageSrcxx,
         this.norm,
-        this.keteranganakhirxx
+        this.keteranganakhirxx,
       )
       .then((data) => {
         if (data) {
@@ -7403,7 +7393,7 @@ export class tulisermComponent implements OnInit {
                 },
                 (Error) => {
                   console.log(Error);
-                }
+                },
               );
           }, 200);
         } else {
@@ -7650,7 +7640,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   simpanrujuk() {
@@ -7700,7 +7690,7 @@ export class tulisermComponent implements OnInit {
                     },
                     (Error) => {
                       console.log(Error);
-                    }
+                    },
                   );
               }, 200);
             } else {
@@ -7714,7 +7704,7 @@ export class tulisermComponent implements OnInit {
           swalWithBootstrapButtons.fire(
             "Cancelled",
             "Your imaginary file is safe :)",
-            "error"
+            "error",
           );
         }
       });
@@ -7739,7 +7729,7 @@ export class tulisermComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -7756,7 +7746,7 @@ export class tulisermComponent implements OnInit {
     harga,
     contentdokter,
     contentperawat,
-    kdTindakanSK
+    kdTindakanSK,
   ) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -7795,7 +7785,7 @@ export class tulisermComponent implements OnInit {
               },
               (Error) => {
                 console.log(Error);
-              }
+              },
             );
           } else {
             this.authService.listkomponen(this.kdcabang, kdtarif).subscribe(
@@ -7817,7 +7807,7 @@ export class tulisermComponent implements OnInit {
                     },
                     (Error) => {
                       console.log(Error);
-                    }
+                    },
                   );
                 } else {
                   var kdTindakanin = "";
@@ -7887,7 +7877,7 @@ export class tulisermComponent implements OnInit {
                           "Sukses",
                           {
                             timeOut: 2000,
-                          }
+                          },
                         );
                       }
                     });
@@ -7895,7 +7885,7 @@ export class tulisermComponent implements OnInit {
               },
               (Error) => {
                 console.log(Error);
-              }
+              },
             );
           }
         } else if (
@@ -8113,7 +8103,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -8137,7 +8127,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService
@@ -8154,7 +8144,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -8167,7 +8157,7 @@ export class tulisermComponent implements OnInit {
     nofaktur,
     kridita,
     kdpoli,
-    kdTindakanSK
+    kdTindakanSK,
   ) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -8198,7 +8188,7 @@ export class tulisermComponent implements OnInit {
                   "Sukses",
                   {
                     timeOut: 2000,
-                  }
+                  },
                 );
                 let body = {
                   user: this.username,
@@ -8241,7 +8231,7 @@ export class tulisermComponent implements OnInit {
                   "Sukses",
                   {
                     timeOut: 2000,
-                  }
+                  },
                 );
               }
             });
@@ -8295,7 +8285,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -8326,7 +8316,7 @@ export class tulisermComponent implements OnInit {
           console.log(
             this.kddiagnosabpjs,
             this.kddiagnosabpjs2,
-            this.kddiagnosabpjs3
+            this.kddiagnosabpjs3,
           );
         } else {
           this.kddiagnosabpjs = "";
@@ -8334,7 +8324,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -8407,7 +8397,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     } else {
       this.showrujuknon = false;
@@ -8426,7 +8416,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     }
   }
@@ -8445,7 +8435,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -8466,7 +8456,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     } else {
       this.tsarana = "";
@@ -8485,7 +8475,7 @@ export class tulisermComponent implements OnInit {
           this.toastr.error(data.message);
         }
       },
-      (error) => {}
+      (error) => {},
     );
   }
 
@@ -8493,7 +8483,7 @@ export class tulisermComponent implements OnInit {
     if (this.alerttacc === "1") {
       if (this.alasantacc === "") {
         this.toastr.error(
-          "diagnosa ini ketika di rujuk harus menggunakan TACC , silahkan pilih tacc dan alasanya terlebih dahulu"
+          "diagnosa ini ketika di rujuk harus menggunakan TACC , silahkan pilih tacc dan alasanya terlebih dahulu",
         );
         return;
       } else {
@@ -8503,7 +8493,7 @@ export class tulisermComponent implements OnInit {
           .getfaskessp(
             this.sspesialis,
             this.nsarana,
-            this.pipe.transform(this.mydaterujuk, "dd-MM-yyyy")
+            this.pipe.transform(this.mydaterujuk, "dd-MM-yyyy"),
           )
           .subscribe(
             (data) => {
@@ -8526,7 +8516,7 @@ export class tulisermComponent implements OnInit {
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
       }
     } else {
@@ -8536,7 +8526,7 @@ export class tulisermComponent implements OnInit {
         .getfaskessp(
           this.sspesialis,
           this.nsarana,
-          this.pipe.transform(this.mydaterujuk, "dd-MM-yyyy")
+          this.pipe.transform(this.mydaterujuk, "dd-MM-yyyy"),
         )
         .subscribe(
           (data) => {
@@ -8559,7 +8549,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     }
 
@@ -8685,7 +8675,7 @@ export class tulisermComponent implements OnInit {
           this.khususap,
           this.pipe.transform(this.mydaterujuk, "dd-MM-yyyy"),
           this.sspesialis,
-          this.noasuransi
+          this.noasuransi,
         )
         .subscribe(
           (data) => {
@@ -8710,7 +8700,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else {
       console.log("noigd");
@@ -8721,7 +8711,7 @@ export class tulisermComponent implements OnInit {
           this.khususap,
           this.pipe.transform(this.mydaterujuk, "dd-MM-yyyy"),
           this.sspesialis,
-          this.noasuransi
+          this.noasuransi,
         )
         .subscribe(
           (data) => {
@@ -8748,7 +8738,7 @@ export class tulisermComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     }
   }
@@ -8779,7 +8769,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     } else if (a === "HEM") {
       this.thanon = 1;
@@ -8794,7 +8784,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     } else {
       this.thanon = 0;
@@ -8829,7 +8819,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   diskonprodukp(
@@ -8839,7 +8829,7 @@ export class tulisermComponent implements OnInit {
     produk,
     notransaksi,
     harga,
-    nofaktur
+    nofaktur,
   ) {
     this.tmpkomp(notransaksi, kdproduk, nomor);
 
@@ -8847,7 +8837,7 @@ export class tulisermComponent implements OnInit {
 
     this.modalService.open(content).result.then(
       (result) => {},
-      (reason) => {}
+      (reason) => {},
     );
   }
 
@@ -8864,7 +8854,7 @@ export class tulisermComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Qty Belum di isi'
+            '<i class="fa fa-info-circle"></i> Qty Belum di isi',
           );
         } else {
           if (value > 100) {
@@ -8925,14 +8915,14 @@ export class tulisermComponent implements OnInit {
 
           this.modalService.open(content).result.then(
             (result) => {},
-            (reason) => {}
+            (reason) => {},
           );
         } else {
         }
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   tdoktunjang: any;
@@ -8945,7 +8935,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.polibyid(this.kdcabang, a).subscribe(
@@ -8954,7 +8944,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   pilihdokterr(a) {
@@ -9035,7 +9025,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -9085,7 +9075,7 @@ export class tulisermComponent implements OnInit {
               screen.height +
               ",width=" +
               screen.width +
-              ",scrollbars=yes,status=yes"
+              ",scrollbars=yes,status=yes",
           );
           redirectWindow.location;
         } else {
@@ -9098,7 +9088,7 @@ export class tulisermComponent implements OnInit {
               screen.height +
               ",width=" +
               screen.width +
-              ",scrollbars=yes,status=yes"
+              ",scrollbars=yes,status=yes",
           );
           redirectWindow.location;
         }
@@ -9184,7 +9174,7 @@ export class tulisermComponent implements OnInit {
                     screen.height +
                     ",width=" +
                     screen.width +
-                    ",scrollbars=yes,status=yes"
+                    ",scrollbars=yes,status=yes",
                 );
                 redirectWindow.location;
               } else {
@@ -9197,7 +9187,7 @@ export class tulisermComponent implements OnInit {
                     screen.height +
                     ",width=" +
                     screen.width +
-                    ",scrollbars=yes,status=yes"
+                    ",scrollbars=yes,status=yes",
                 );
                 redirectWindow.location;
               }
@@ -9211,7 +9201,7 @@ export class tulisermComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -9255,7 +9245,7 @@ export class tulisermComponent implements OnInit {
                   },
                   (Error) => {
                     console.log(Error);
-                  }
+                  },
                 );
               } else {
                 this.toastr.error(data.response[0].message, "Eror");
@@ -9263,7 +9253,7 @@ export class tulisermComponent implements OnInit {
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
         } else if (
           /* Read more about handling dismissals below */
@@ -9285,7 +9275,7 @@ export class tulisermComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -9345,7 +9335,7 @@ export class tulisermComponent implements OnInit {
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
         } else if (
           /* Read more about handling dismissals below */
@@ -9497,7 +9487,7 @@ export class tulisermComponent implements OnInit {
                                 "Sukses",
                                 {
                                   timeOut: 2000,
-                                }
+                                },
                               );
 
                               setTimeout(() => {
@@ -9520,7 +9510,7 @@ export class tulisermComponent implements OnInit {
                     },
                     (Error) => {
                       console.log(Error);
-                    }
+                    },
                   );
 
                 let body = {
@@ -9580,7 +9570,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -9645,7 +9635,7 @@ export class tulisermComponent implements OnInit {
           swalWithBootstrapButtons.fire(
             "Cancelled",
             "Your imaginary file is safe :)",
-            "error"
+            "error",
           );
         }
       });
@@ -9659,7 +9649,7 @@ export class tulisermComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -9884,7 +9874,7 @@ export class tulisermComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
       this.alasantacc = this.kddiagb + " - " + this.namadiagb;
@@ -9916,7 +9906,7 @@ export class tulisermComponent implements OnInit {
       if (response.metaData.code == 200) {
         this.monitoringshowcontenticare = true;
         this.icareurl = this.domSanitizer.bypassSecurityTrustResourceUrl(
-          response.response.url
+          response.response.url,
         );
       } else if (response.metaData.code === 401) {
         this.toastr.error(response.metaData.message, "Eror");
@@ -9995,7 +9985,7 @@ export class tulisermComponent implements OnInit {
                             this.noasuransi,
                             this.tglpriksa,
                             this.noantrianbpjs,
-                            this.kdpolibpjs
+                            this.kdpolibpjs,
                           )
                           .subscribe((data) => {
                             if (data.metaData.code == 200) {
@@ -10052,7 +10042,7 @@ export class tulisermComponent implements OnInit {
                             this.noasuransi,
                             this.tglpriksa,
                             this.noantrianbpjs,
-                            this.kdpolibpjs
+                            this.kdpolibpjs,
                           )
                           .subscribe((data) => {
                             if (data.metaData.code == 200) {
@@ -10186,15 +10176,15 @@ export class tulisermComponent implements OnInit {
         var r = Math.random() * 16; //random number between 0 and 16
         if (d > 0) {
           //Use timestamp until depleted
-          r = (d + r) % 16 | 0;
+          r = ((d + r) % 16) | 0;
           d = Math.floor(d / 16);
         } else {
           //Use microseconds since page-load if supported
-          r = (d2 + r) % 16 | 0;
+          r = ((d2 + r) % 16) | 0;
           d2 = Math.floor(d2 / 16);
         }
         return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-      }
+      },
     );
   }
 
@@ -10208,7 +10198,7 @@ export class tulisermComponent implements OnInit {
         "&norm=" +
         this.norm,
       "_blank",
-      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=1000,width=1000,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }

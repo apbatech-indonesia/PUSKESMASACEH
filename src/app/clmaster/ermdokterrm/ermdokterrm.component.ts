@@ -153,7 +153,7 @@ export class ermdokterrmComponent implements OnInit {
     public toastr: ToastrService,
     private authService: ApiserviceService,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -167,7 +167,7 @@ export class ermdokterrmComponent implements OnInit {
     this.tglpxs = this.datepipe.transform(this.myDate, "yyyy-MM-dd");
     this.tglss = this.datepipe.transform(
       this.myDate,
-      "yyyy-MM-ddTHH:mm:ss+07:00"
+      "yyyy-MM-ddTHH:mm:ss+07:00",
     );
   }
   slug: any;
@@ -184,7 +184,7 @@ export class ermdokterrmComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   totalpass: number = 0;
@@ -204,7 +204,7 @@ export class ermdokterrmComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService
@@ -216,7 +216,7 @@ export class ermdokterrmComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService
@@ -228,7 +228,7 @@ export class ermdokterrmComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -248,7 +248,7 @@ export class ermdokterrmComponent implements OnInit {
         a.target.value,
         "2",
         this.tglpx,
-        this.tglpxs
+        this.tglpxs,
       )
       .subscribe(
         (data) => {
@@ -256,7 +256,7 @@ export class ermdokterrmComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -294,7 +294,7 @@ export class ermdokterrmComponent implements OnInit {
     costumer,
     alamat,
     kdtarif,
-    kelas
+    kelas,
   ) {
     this.showdata = true;
     this.norm = norm;
@@ -325,7 +325,7 @@ export class ermdokterrmComponent implements OnInit {
     noasuransi,
     tglpriksa,
     pasien,
-    nampoli
+    nampoli,
   ) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -351,18 +351,6 @@ export class ermdokterrmComponent implements OnInit {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          this.chatService.sendMessage([
-            {
-              antrian: a,
-              kddokter: kddokter,
-              namadokter: namdokter,
-              kdantrian: kodeantrian,
-              pasien: pasien,
-              nampoli: nampoli,
-              kdcabang: this.kdcabang,
-            },
-          ]);
-
           this.websocketService
             .callQueueForCabang(this.kdcabang, {
               prefix: kodeantrian,
@@ -443,7 +431,7 @@ export class ermdokterrmComponent implements OnInit {
           this.tglpx,
           this.tglpxs,
           orderby,
-          order
+          order,
         )
         .subscribe(
           (data) => {
@@ -451,7 +439,7 @@ export class ermdokterrmComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else {
       this.authService
@@ -462,7 +450,7 @@ export class ermdokterrmComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     }
   }
@@ -479,7 +467,7 @@ export class ermdokterrmComponent implements OnInit {
           this.tglpxs,
           "",
           "",
-          this.filterPoli
+          this.filterPoli,
         )
         .subscribe(
           (data) => {
@@ -487,7 +475,7 @@ export class ermdokterrmComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else {
       this.authService
@@ -498,7 +486,7 @@ export class ermdokterrmComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     }
   }
@@ -511,7 +499,7 @@ export class ermdokterrmComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 }
