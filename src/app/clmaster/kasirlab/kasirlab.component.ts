@@ -120,7 +120,6 @@ export class kasirlabComponent implements OnInit, OnDestroy {
   thasillab: any;
 
   ngOnInit() {
-    this.requestPermission();
     this.URLINVOICE = localStorage.getItem("baseUrx");
 
     this.hostName = this.hots.getHostname();
@@ -156,6 +155,8 @@ export class kasirlabComponent implements OnInit, OnDestroy {
   }
 
   private initEchoNotifications() {
+    this.requestPermission();
+
     try {
       this.echoService.init({
         broadcaster: "reverb",

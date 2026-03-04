@@ -552,6 +552,7 @@ export class kasirfarmasijualComponent implements OnInit {
       });
     }
   }
+
   triggerNotification() {
     this.showNotification("Resep Baru", {
       body: "Anda Memiliki Resep Baru.",

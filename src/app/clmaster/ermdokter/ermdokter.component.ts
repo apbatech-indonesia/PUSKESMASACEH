@@ -34,6 +34,8 @@ import { DatePipe } from "@angular/common";
 import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { WebsocketService } from "src/app/services";
+import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
+import { EchoService } from "src/app/services/echo.service";
 
 @Component({
   selector: "app-ermdokter",
@@ -137,9 +139,10 @@ export class ermdokterComponent implements OnInit {
   kodeorg: any = "";
   tglss: any;
   myDate = new Date();
+  echoUnsub: any;
   constructor(
-    private chatService: ChatService,
     private websocketService: WebsocketService,
+    private echoService: EchoService,
     public FarmasijualService: FarmasijualService,
     private datepipe: DatePipe,
     private router: Router,
@@ -186,7 +189,9 @@ export class ermdokterComponent implements OnInit {
 
   ngOnInit() {
     this.tmptotal();
+    this.initEchoNotifications();
   }
+
   totalpass: number = 0;
   totalpassbelum: number = 0;
   totalpasssudah: number = 0;
@@ -519,5 +524,91 @@ export class ermdokterComponent implements OnInit {
           // [routerLink]="['/emrform/tuliserm', x.notransaksi,x.kddokter,'dokter',x.norm]"
         }
       });
+  }
+
+  private initEchoNotifications() {
+    this.requestPermission();
+    try {
+      this.echoService.init({
+        broadcaster: "reverb",
+        key: "tal3xzzkbakc0vjnidjhasdasd",
+        wsHost: "websocket.clenicapp.com",
+        wsPort: 80,
+        wssPort: 443,
+        forceTLS: true,
+        enabledTransports: ["ws", "wss"],
+      });
+
+      // Subscribe to dedicated lab channels instead of a generic notification
+      // so we can avoid branching on payload titles.
+      this.echoUnsub = [] as any[];
+
+      const subLab = this.echoService.subscribe(
+        `${this.kdcabang}.${NOTIFICATION_CHANNELS.PERMINTAAN_LAB}`,
+        "NotificationSent",
+        (payload: any) => {
+          try {
+            this.notifcenter("Laborat");
+          } catch (e) {
+            console.warn("Error handling laborat event", e);
+          }
+        },
+      );
+      this.echoUnsub.push(subLab);
+
+      const subHasil = this.echoService.subscribe(
+        `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
+        "NotificationSent",
+        (payload: any) => {
+          try {
+            this.notifcenter("Hasil Laborat");
+          } catch (e) {
+            console.warn("Error handling hasil-laborat event", e);
+          }
+        },
+      );
+      this.echoUnsub.push(subHasil);
+      console.log("EchoService initialized for kasirlab");
+    } catch (err) {
+      console.warn("Failed to init local EchoService", err);
+    }
+  }
+
+  notifcenter(kddokter) {
+    let audio1 = new Audio("https://knm.clenicapp.com/clenic/sound/notify.wav");
+    let audio2 = new Audio();
+
+    if (kddokter === "Laborat") {
+      this.toastr.success("Permintaan Laborat Baru");
+      audio2.src = "https://knm.clenicapp.com/clenic/sound/permintaan-lab.wav";
+    }
+
+    if (kddokter === "Hasil Laborat") {
+      this.toastr.success("Hasil Laborat Baru");
+      audio2.src = "https://knm.clenicapp.com/clenic/sound/hasil-lab.wav";
+    }
+
+    audio1.onended = () => {
+      try {
+        audio2.currentTime = 0;
+        audio2.play().catch((e) => console.warn("audio2 play failed", e));
+      } catch (e) {
+        console.warn("audio2 play error", e);
+      }
+    };
+
+    audio1.play().catch((e) => console.warn("audio1 play failed", e));
+  }
+
+  requestPermission() {
+    if ("Notification" in window) {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          console.log("Notification permission granted.");
+        } else {
+          console.log("Notification permission denied.");
+        }
+      });
+    }
   }
 }
