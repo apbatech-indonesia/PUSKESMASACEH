@@ -75,3 +75,4 @@ jobs:
           protocol: ftp
           local-dir: ./dist/clenicappdemo/
           server-dir: /${{ matrix.folder }}.clenicapp.com/v1/
+          dangerous-clean-slate: false
