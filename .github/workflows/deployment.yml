@@ -49,6 +49,7 @@ jobs:
         with:
           name: app-build
           path: ./dist/clenicappdemo/
+          retention-days: 1
 
   deploy:
     needs: [build, generate-matrix]
