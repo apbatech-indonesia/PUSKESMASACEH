@@ -73,4 +73,4 @@ jobs:
           port: ${{ secrets.FTP_PORT }}
           protocol: ftp
           local-dir: ./dist/clenicappdemo/
-          server-dir: /${{ matrix.folder }}.clenicapp.com/v1-test/
+          server-dir: /${{ matrix.folder }}.clenicapp.com/v1/
