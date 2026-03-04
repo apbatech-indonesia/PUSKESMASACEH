@@ -4,7 +4,7 @@ Provide quick, actionable guidance for AI coding agents working on this reposito
 
 ## Quickstart (Commands)
 
-- **Install deps:** `npm install` (project uses Angular 12; `postinstall` runs `ngcc after install)`)
+- **Install deps:** `npm install` (project uses Angular 12; `postinstall` runs `ngcc`)
 - **Run dev server:** `npm run start-dev` (maps to `ng serve --configuration=development`)
 - **Build production:** `npm run start-prod` (runs `ng build --prod --aot --output-hashing=all`)
 - **Run unit tests:** `npm test` (Karma + Jasmine)
