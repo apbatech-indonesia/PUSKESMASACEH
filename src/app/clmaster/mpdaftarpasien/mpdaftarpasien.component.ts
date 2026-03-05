@@ -406,9 +406,12 @@ export class MpdaftarpasienComponent implements OnInit {
   });
 
   get isRejectedInsurance(): boolean {
+    const data = JSON.parse(localStorage.getItem("userDatacl"));
+    const userDetails = data.userData;
+
     return (
       (this.noasuransi || "").toString().trim() === "0000001290947" &&
-      this.kdcabang == "085"
+      userDetails.kdcabang == "085"
     );
   }
 
