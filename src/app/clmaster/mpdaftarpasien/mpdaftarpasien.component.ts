@@ -405,6 +405,10 @@ export class MpdaftarpasienComponent implements OnInit {
     noasuransi: ["", Validators.required],
   });
 
+  get isRejectedInsurance(): boolean {
+    return (this.noasuransi || "").toString().trim() === "0000001290947";
+  }
+
   cities12 = [
     { id: 1, name: "Vilnius" },
     { id: 2, name: "Kaunas" },

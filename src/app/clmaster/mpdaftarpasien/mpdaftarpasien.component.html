@@ -696,9 +696,17 @@
           </div>
           <div class="col-md-6">
             <div class="d-grid gap-2">
+              <div
+                *ngIf="isRejectedInsurance"
+                class="alert alert-danger mb-2"
+                role="alert"
+              >
+                Maaf, pendaftaran ditolak. Fasilitas Kesehatan (Faskes) Anda
+                tidak terdaftar di Puskesmas ini.
+              </div>
               <button
                 class="mb-2 me-2 btn-pill btn btn-info"
-                [disabled]="!profileForm.valid"
+                [disabled]="!profileForm.valid || isRejectedInsurance"
                 (click)="simpan(content71u)"
               >
                 Daftar
