@@ -119,6 +119,7 @@ export class MpdaftarpasienComponent implements OnInit {
   myDatev2 = new Date();
   kdprov: any = "";
   ri: any = "1";
+  alamat: any;
 
   constructor(
     private appComponent: AppComponent,
@@ -128,7 +129,7 @@ export class MpdaftarpasienComponent implements OnInit {
     private modalService: NgbModal,
     public toastr: ToastrService,
     private authService: ApiserviceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     // this.options = fb.group({
     //   hideRequired: false,
@@ -147,7 +148,7 @@ export class MpdaftarpasienComponent implements OnInit {
 
     this.tglss = this.datepipe.transform(
       this.myDate,
-      "yyyy-MM-ddTHH:mm:ss+07:00"
+      "yyyy-MM-ddTHH:mm:ss+07:00",
     );
     // 2024-01-26T10:32:37+07:00
     // "2024-01-26T10:31:37+07:00",
@@ -161,14 +162,14 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.editpoli().subscribe(
       (data) => {},
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.pastdate();
@@ -185,7 +186,7 @@ export class MpdaftarpasienComponent implements OnInit {
     pasien,
     nampoli,
     namdokter,
-    nopengenal
+    nopengenal,
   ) {
     this.showloadss = true;
 
@@ -257,19 +258,19 @@ export class MpdaftarpasienComponent implements OnInit {
                   "SATU SEHAT ID PASIEN",
                   {
                     timeOut: 2000,
-                  }
+                  },
                 );
               }
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
         }
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   rj: number;
@@ -386,7 +387,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -423,7 +424,7 @@ export class MpdaftarpasienComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -450,7 +451,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -468,7 +469,7 @@ export class MpdaftarpasienComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -480,7 +481,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -494,7 +495,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.listpolidaf(this.kdcabang).subscribe(
@@ -503,7 +504,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   klinik() {
@@ -528,7 +529,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -543,7 +544,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -644,7 +645,7 @@ export class MpdaftarpasienComponent implements OnInit {
                         },
                         (Error) => {
                           console.log(Error);
-                        }
+                        },
                       );
                   } else {
                     this.showloading = false;
@@ -660,24 +661,24 @@ export class MpdaftarpasienComponent implements OnInit {
                         },
                         (Error) => {
                           console.log(Error);
-                        }
+                        },
                       );
 
                     this.toastr.error(
-                      "jadwal tidak ada di tanggal " + this.tglp
+                      "jadwal tidak ada di tanggal " + this.tglp,
                     );
                     return;
                   }
                 },
                 (Error) => {
                   console.log(Error);
-                }
+                },
               );
           }
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     } else {
       this.authService.polibyid(this.kdcabang, a).subscribe(
@@ -692,7 +693,7 @@ export class MpdaftarpasienComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
       this.authService.dokterpolixv2(this.kdcabang, a, this.tglp).subscribe(
@@ -701,7 +702,7 @@ export class MpdaftarpasienComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     }
   }
@@ -716,7 +717,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -738,7 +739,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -812,7 +813,7 @@ export class MpdaftarpasienComponent implements OnInit {
                     this.jadwaltidak = "0";
                     this.showloading = false;
                     this.toastr.error(
-                      "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz"
+                      "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz",
                     );
                     this.tjadwal = [];
                   }
@@ -832,7 +833,7 @@ export class MpdaftarpasienComponent implements OnInit {
                 } else {
                   this.showloading = false;
                   this.toastr.error(
-                    "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz"
+                    "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz",
                   );
                   this.tjadwal = [];
                 }
@@ -844,7 +845,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -866,7 +867,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   pasienin = "";
@@ -893,13 +894,14 @@ export class MpdaftarpasienComponent implements OnInit {
             this.kdprovider = x.kdprovider;
             this.sudahpcare = x.spcare;
             this.noantrianbpjs = x.noantrianbpjs;
+            this.alamat = x.alamat;
             this.isPeriksaPkg = x.isPeriksaPkg;
             this.isSameMonthAndYear = x.isPeriksaPkg === "Y";
           }
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   bataldaf() {
@@ -953,7 +955,7 @@ export class MpdaftarpasienComponent implements OnInit {
       // }
       if (this.jadwaltidak === "0") {
         this.toastr.error(
-          "Tidak ada jadwal Dokter tersebut pada harini di poli yang di pilih"
+          "Tidak ada jadwal Dokter tersebut pada harini di poli yang di pilih",
         );
         return;
       }
@@ -965,7 +967,7 @@ export class MpdaftarpasienComponent implements OnInit {
       ) {
         if (this.jadwaltidak === "0") {
           this.toastr.error(
-            "Jadwal Dokter / Poliklinik yang di pilih tidak terdapat jadwal hafis hari ini , silahkan ganti dokter atau tambahkan jadwal dokter terlebih dahulu di hafis"
+            "Jadwal Dokter / Poliklinik yang di pilih tidak terdapat jadwal hafis hari ini , silahkan ganti dokter atau tambahkan jadwal dokter terlebih dahulu di hafis",
           );
 
           this.modalService.open(content71, {});
@@ -1036,14 +1038,14 @@ export class MpdaftarpasienComponent implements OnInit {
                             this.norm,
                             this.kdcabang,
                             this.kliniks,
-                            this.tglp
+                            this.tglp,
                           )
                           .subscribe(
                             (data) => {
                               if (data.length) {
                                 this.toastr.error(
                                   "Anda Sudah Terdaftar di Poli yang sama",
-                                  "Eror"
+                                  "Eror",
                                 );
                               } else {
                                 // add disini fktp sama
@@ -1055,7 +1057,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                       this.dokter,
                                       this.kliniks,
                                       this.tglp,
-                                      this.kdcabang
+                                      this.kdcabang,
                                     )
                                     .subscribe(
                                       (data) => {
@@ -1069,7 +1071,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                           norm: this.norm,
                                           tanggalperiksa: this.tglp,
                                           kodedokter: parseInt(
-                                            this.kddokterbpjs
+                                            this.kddokterbpjs,
                                           ),
                                           namadokter: this.namdokter,
                                           jampraktek: this.jadwal,
@@ -1078,7 +1080,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                             "-" +
                                             data.response[0].noantrian,
                                           angkaantrean: parseInt(
-                                            data.response[0].noantrian
+                                            data.response[0].noantrian,
                                           ),
                                           keterangan: "daftar",
                                         };
@@ -1086,7 +1088,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                         this.authService
                                           .addBpjsAntrian(
                                             bodyAddFktp,
-                                            this.slug
+                                            this.slug,
                                           )
                                           .subscribe((response) => {
                                             if (response.data.code == 200) {
@@ -1095,7 +1097,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                 "Sukses",
                                                 {
                                                   timeOut: 2000,
-                                                }
+                                                },
                                               );
 
                                               this.showloadantrian = false;
@@ -1108,7 +1110,7 @@ export class MpdaftarpasienComponent implements OnInit {
 
                                                 this.authService
                                                   .editobatsk(
-                                                    bodyeditfarmasiterkirim
+                                                    bodyeditfarmasiterkirim,
                                                   )
                                                   .subscribe((response) => {
                                                     console.log(response);
@@ -1146,10 +1148,10 @@ export class MpdaftarpasienComponent implements OnInit {
                                                       "Sukses",
                                                       {
                                                         timeOut: 2000,
-                                                      }
+                                                      },
                                                     );
                                                     this.appComponent.sendNotificationDokter(
-                                                      this.dokter
+                                                      this.dokter,
                                                     );
                                                     this.pasienc = response;
 
@@ -1159,7 +1161,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                         "2",
                                                         response,
                                                         "",
-                                                        ""
+                                                        "",
                                                       )
                                                       .subscribe((data) => {
                                                         if (data.length) {
@@ -1187,7 +1189,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                             .getpasien(
                                                               this.tantrian[0]
                                                                 .nopengenal,
-                                                              headers
+                                                              headers,
                                                             )
                                                             .subscribe(
                                                               (data) => {
@@ -1240,11 +1242,11 @@ export class MpdaftarpasienComponent implements OnInit {
                                                                   this.authService
                                                                     .simpanencounter(
                                                                       bodyvvv,
-                                                                      headers
+                                                                      headers,
                                                                     )
                                                                     .subscribe(
                                                                       (
-                                                                        response
+                                                                        response,
                                                                       ) => {
                                                                         if (
                                                                           response.resourceType ===
@@ -1269,28 +1271,27 @@ export class MpdaftarpasienComponent implements OnInit {
                                                                             };
                                                                           this.authService
                                                                             .simpantoken(
-                                                                              bodyxss
+                                                                              bodyxss,
                                                                             )
                                                                             .subscribe(
                                                                               (
-                                                                                response
+                                                                                response,
                                                                               ) => {
                                                                                 if (
                                                                                   response.length
                                                                                 ) {
                                                                                   // this.toastr.success('Berhasil Kirim ');
                                                                                 }
-                                                                              }
+                                                                              },
                                                                             );
                                                                         } else {
                                                                           // console.log(response.issue[0])
                                                                           // this.toastr.error(response.issue[0].diagnostics);
                                                                         }
-                                                                      }
+                                                                      },
                                                                     );
                                                                 } else {
-                                                                  this.showloading =
-                                                                    false;
+                                                                  this.showloading = false;
 
                                                                   this.idhs =
                                                                     "Gagal Get IHS";
@@ -1299,15 +1300,15 @@ export class MpdaftarpasienComponent implements OnInit {
                                                                     "SATU SEHAT ID PASIEN",
                                                                     {
                                                                       timeOut: 2000,
-                                                                    }
+                                                                    },
                                                                   );
                                                                 }
                                                               },
                                                               (Error) => {
                                                                 console.log(
-                                                                  Error
+                                                                  Error,
                                                                 );
-                                                              }
+                                                              },
                                                             );
                                                         }
                                                       });
@@ -1318,14 +1319,14 @@ export class MpdaftarpasienComponent implements OnInit {
 
                                               this.toastr.error(
                                                 response.data.message,
-                                                ""
+                                                "",
                                               );
                                             }
                                           });
                                       },
                                       (Error) => {
                                         console.log(Error);
-                                      }
+                                      },
                                     );
                                 } else {
                                   // poli sakit false
@@ -1361,10 +1362,10 @@ export class MpdaftarpasienComponent implements OnInit {
                                           "Sukses",
                                           {
                                             timeOut: 2000,
-                                          }
+                                          },
                                         );
                                         this.appComponent.sendNotificationDokter(
-                                          this.dokter
+                                          this.dokter,
                                         );
                                         this.pasienc = response;
 
@@ -1374,7 +1375,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                             "2",
                                             response,
                                             "",
-                                            ""
+                                            "",
                                           )
                                           .subscribe((data) => {
                                             if (data.length) {
@@ -1395,7 +1396,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                               this.authService
                                                 .getpasien(
                                                   this.tantrian[0].nopengenal,
-                                                  headers
+                                                  headers,
                                                 )
                                                 .subscribe(
                                                   (data) => {
@@ -1434,7 +1435,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                       this.authService
                                                         .simpanencounter(
                                                           bodyvvv,
-                                                          headers
+                                                          headers,
                                                         )
                                                         .subscribe(
                                                           (response) => {
@@ -1458,24 +1459,24 @@ export class MpdaftarpasienComponent implements OnInit {
                                                               };
                                                               this.authService
                                                                 .simpantoken(
-                                                                  bodyxss
+                                                                  bodyxss,
                                                                 )
                                                                 .subscribe(
                                                                   (
-                                                                    response
+                                                                    response,
                                                                   ) => {
                                                                     if (
                                                                       response.length
                                                                     ) {
                                                                       // this.toastr.success('Berhasil Kirim ');
                                                                     }
-                                                                  }
+                                                                  },
                                                                 );
                                                             } else {
                                                               // console.log(response.issue[0])
                                                               // this.toastr.error(response.issue[0].diagnostics);
                                                             }
-                                                          }
+                                                          },
                                                         );
                                                     } else {
                                                       this.showloading = false;
@@ -1487,13 +1488,13 @@ export class MpdaftarpasienComponent implements OnInit {
                                                         "SATU SEHAT ID PASIEN",
                                                         {
                                                           timeOut: 2000,
-                                                        }
+                                                        },
                                                       );
                                                     }
                                                   },
                                                   (Error) => {
                                                     console.log(Error);
-                                                  }
+                                                  },
                                                 );
                                             }
                                           });
@@ -1506,14 +1507,14 @@ export class MpdaftarpasienComponent implements OnInit {
                             },
                             (Error) => {
                               console.log(Error);
-                            }
+                            },
                           );
                       } else {
                         this.toastr.error(
                           "STATUS KEPERSETAAN TIDAK AKTIF KARENA" +
                             this.ketaktif +
                             "SILAHKAN PESERTA MENGHUBUNGI BPJS SETEMPAT",
-                          "Eror"
+                          "Eror",
                         );
                       }
                     } else if (
@@ -1530,14 +1531,14 @@ export class MpdaftarpasienComponent implements OnInit {
                       this.norm,
                       this.kdcabang,
                       this.kliniks,
-                      this.tglp
+                      this.tglp,
                     )
                     .subscribe(
                       (data) => {
                         if (data.length) {
                           this.toastr.error(
                             "Anda Sudah Terdaftar di Poli yang sama",
-                            "Eror"
+                            "Eror",
                           );
                         } else {
                           // add disini fktp sama
@@ -1549,7 +1550,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                 this.dokter,
                                 this.kliniks,
                                 this.tglp,
-                                this.kdcabang
+                                this.kdcabang,
                               )
                               .subscribe(
                                 (data) => {
@@ -1570,7 +1571,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                       "-" +
                                       data.response[0].noantrian,
                                     angkaantrean: parseInt(
-                                      data.response[0].noantrian
+                                      data.response[0].noantrian,
                                     ),
                                     keterangan: "daftar",
                                   };
@@ -1584,7 +1585,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                           "Sukses",
                                           {
                                             timeOut: 2000,
-                                          }
+                                          },
                                         );
 
                                         this.showloadantrian = false;
@@ -1620,10 +1621,10 @@ export class MpdaftarpasienComponent implements OnInit {
                                                 "Sukses",
                                                 {
                                                   timeOut: 2000,
-                                                }
+                                                },
                                               );
                                               this.appComponent.sendNotificationDokter(
-                                                this.dokter
+                                                this.dokter,
                                               );
                                               this.pasienc = response;
                                               setTimeout(() => {
@@ -1634,7 +1635,7 @@ export class MpdaftarpasienComponent implements OnInit {
 
                                                 this.authService
                                                   .editobatsk(
-                                                    bodyeditfarmasiterkirim
+                                                    bodyeditfarmasiterkirim,
                                                   )
                                                   .subscribe((response) => {
                                                     console.log(response);
@@ -1646,7 +1647,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                   "2",
                                                   response,
                                                   "",
-                                                  ""
+                                                  "",
                                                 )
                                                 .subscribe((data) => {
                                                   if (data.length) {
@@ -1674,7 +1675,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                       .getpasien(
                                                         this.tantrian[0]
                                                           .nopengenal,
-                                                        headers
+                                                        headers,
                                                       )
                                                       .subscribe(
                                                         (data) => {
@@ -1721,7 +1722,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                             this.authService
                                                               .simpanencounter(
                                                                 bodyvvv,
-                                                                headers
+                                                                headers,
                                                               )
                                                               .subscribe(
                                                                 (response) => {
@@ -1748,28 +1749,27 @@ export class MpdaftarpasienComponent implements OnInit {
                                                                       };
                                                                     this.authService
                                                                       .simpantoken(
-                                                                        bodyxss
+                                                                        bodyxss,
                                                                       )
                                                                       .subscribe(
                                                                         (
-                                                                          response
+                                                                          response,
                                                                         ) => {
                                                                           if (
                                                                             response.length
                                                                           ) {
                                                                             // this.toastr.success('Berhasil Kirim ');
                                                                           }
-                                                                        }
+                                                                        },
                                                                       );
                                                                   } else {
                                                                     // console.log(response.issue[0])
                                                                     // this.toastr.error(response.issue[0].diagnostics);
                                                                   }
-                                                                }
+                                                                },
                                                               );
                                                           } else {
-                                                            this.showloading =
-                                                              false;
+                                                            this.showloading = false;
 
                                                             this.idhs =
                                                               "Gagal Get IHS";
@@ -1778,13 +1778,13 @@ export class MpdaftarpasienComponent implements OnInit {
                                                               "SATU SEHAT ID PASIEN",
                                                               {
                                                                 timeOut: 2000,
-                                                              }
+                                                              },
                                                             );
                                                           }
                                                         },
                                                         (Error) => {
                                                           console.log(Error);
-                                                        }
+                                                        },
                                                       );
                                                   }
                                                 });
@@ -1795,7 +1795,7 @@ export class MpdaftarpasienComponent implements OnInit {
 
                                         this.toastr.error(
                                           response.data.message,
-                                          ""
+                                          "",
                                         );
 
                                         if (
@@ -1811,12 +1811,12 @@ export class MpdaftarpasienComponent implements OnInit {
                                           this.authService
                                             .cancelBpjsAntrian(
                                               bodyFktp,
-                                              this.slug
+                                              this.slug,
                                             )
                                             .subscribe((data) => {
                                               if (data.data.code == 200) {
                                                 this.toastr.error(
-                                                  "Silahkan Klik Daftar Kembali"
+                                                  "Silahkan Klik Daftar Kembali",
                                                 );
                                               } else {
                                                 let body = {
@@ -1851,10 +1851,10 @@ export class MpdaftarpasienComponent implements OnInit {
                                                         "Sukses",
                                                         {
                                                           timeOut: 2000,
-                                                        }
+                                                        },
                                                       );
                                                       this.appComponent.sendNotificationDokter(
-                                                        this.dokter
+                                                        this.dokter,
                                                       );
                                                       this.pasienc = response;
 
@@ -1864,7 +1864,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                           "2",
                                                           response,
                                                           "",
-                                                          ""
+                                                          "",
                                                         )
                                                         .subscribe((data) => {
                                                           if (data.length) {
@@ -1894,7 +1894,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                               .getpasien(
                                                                 this.tantrian[0]
                                                                   .nopengenal,
-                                                                headers
+                                                                headers,
                                                               )
                                                               .subscribe(
                                                                 (data) => {
@@ -1947,11 +1947,11 @@ export class MpdaftarpasienComponent implements OnInit {
                                                                     this.authService
                                                                       .simpanencounter(
                                                                         bodyvvv,
-                                                                        headers
+                                                                        headers,
                                                                       )
                                                                       .subscribe(
                                                                         (
-                                                                          response
+                                                                          response,
                                                                         ) => {
                                                                           if (
                                                                             response.resourceType ===
@@ -1976,28 +1976,27 @@ export class MpdaftarpasienComponent implements OnInit {
                                                                               };
                                                                             this.authService
                                                                               .simpantoken(
-                                                                                bodyxss
+                                                                                bodyxss,
                                                                               )
                                                                               .subscribe(
                                                                                 (
-                                                                                  response
+                                                                                  response,
                                                                                 ) => {
                                                                                   if (
                                                                                     response.length
                                                                                   ) {
                                                                                     // this.toastr.success('Berhasil Kirim ');
                                                                                   }
-                                                                                }
+                                                                                },
                                                                               );
                                                                           } else {
                                                                             // console.log(response.issue[0])
                                                                             // this.toastr.error(response.issue[0].diagnostics);
                                                                           }
-                                                                        }
+                                                                        },
                                                                       );
                                                                   } else {
-                                                                    this.showloading =
-                                                                      false;
+                                                                    this.showloading = false;
 
                                                                     this.idhs =
                                                                       "Gagal Get IHS";
@@ -2006,15 +2005,15 @@ export class MpdaftarpasienComponent implements OnInit {
                                                                       "SATU SEHAT ID PASIEN",
                                                                       {
                                                                         timeOut: 2000,
-                                                                      }
+                                                                      },
                                                                     );
                                                                   }
                                                                 },
                                                                 (Error) => {
                                                                   console.log(
-                                                                    Error
+                                                                    Error,
                                                                   );
-                                                                }
+                                                                },
                                                               );
                                                           }
                                                         });
@@ -2030,7 +2029,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                 },
                                 (Error) => {
                                   console.log(Error);
-                                }
+                                },
                               );
                           } else {
                             // poli sakit false
@@ -2065,7 +2064,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                     timeOut: 2000,
                                   });
                                   this.appComponent.sendNotificationDokter(
-                                    this.dokter
+                                    this.dokter,
                                   );
                                   this.pasienc = response;
 
@@ -2075,7 +2074,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                       "2",
                                       response,
                                       "",
-                                      ""
+                                      "",
                                     )
                                     .subscribe((data) => {
                                       if (data.length) {
@@ -2095,7 +2094,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                         this.authService
                                           .getpasien(
                                             this.tantrian[0].nopengenal,
-                                            headers
+                                            headers,
                                           )
                                           .subscribe(
                                             (data) => {
@@ -2128,7 +2127,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                 this.authService
                                                   .simpanencounter(
                                                     bodyvvv,
-                                                    headers
+                                                    headers,
                                                   )
                                                   .subscribe((response) => {
                                                     if (
@@ -2154,7 +2153,7 @@ export class MpdaftarpasienComponent implements OnInit {
                                                             ) {
                                                               // this.toastr.success('Berhasil Kirim ');
                                                             }
-                                                          }
+                                                          },
                                                         );
                                                     } else {
                                                       // console.log(response.issue[0])
@@ -2170,13 +2169,13 @@ export class MpdaftarpasienComponent implements OnInit {
                                                   "SATU SEHAT ID PASIEN",
                                                   {
                                                     timeOut: 2000,
-                                                  }
+                                                  },
                                                 );
                                               }
                                             },
                                             (Error) => {
                                               console.log(Error);
-                                            }
+                                            },
                                           );
                                       }
                                     });
@@ -2189,14 +2188,14 @@ export class MpdaftarpasienComponent implements OnInit {
                       },
                       (Error) => {
                         console.log(Error);
-                      }
+                      },
                     );
                 } else {
                   this.toastr.error(
                     "STATUS KEPERSETAAN TIDAK AKTIF KARENA" +
                       this.ketaktif +
                       "SILAHKAN PESERTA MENGHUBUNGI BPJS SETEMPAT",
-                    "Eror"
+                    "Eror",
                   );
                 }
               }
@@ -2209,7 +2208,7 @@ export class MpdaftarpasienComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     } else {
       console.log("xs");
@@ -2316,13 +2315,13 @@ export class MpdaftarpasienComponent implements OnInit {
                           "SATU SEHAT ID PASIEN",
                           {
                             timeOut: 2000,
-                          }
+                          },
                         );
                       }
                     },
                     (Error) => {
                       console.log(Error);
-                    }
+                    },
                   );
 
                 if (this.dash === "BPJS") {
@@ -2363,7 +2362,7 @@ export class MpdaftarpasienComponent implements OnInit {
               },
               (Error) => {
                 console.log(Error);
-              }
+              },
             );
 
           this.bataldaf();
@@ -2418,7 +2417,7 @@ export class MpdaftarpasienComponent implements OnInit {
               },
               (Error) => {
                 console.log(Error);
-              }
+              },
             );
 
             alert("1");
@@ -2431,7 +2430,7 @@ export class MpdaftarpasienComponent implements OnInit {
               },
               (Error) => {
                 console.log(Error);
-              }
+              },
             );
           }, 4500);
 
@@ -2442,14 +2441,14 @@ export class MpdaftarpasienComponent implements OnInit {
               },
               (Error) => {
                 console.log(Error);
-              }
+              },
             );
           }, 5600);
 
           swalWithBootstrapButtons.fire(
             "Berhasil Cetak ",
             "Cetak Telah Berhasil.",
-            "success"
+            "success",
           );
         } else if (
           /* Read more about handling dismissals below */
@@ -2458,7 +2457,7 @@ export class MpdaftarpasienComponent implements OnInit {
           swalWithBootstrapButtons.fire(
             "Cancelled",
             "Your imaginary file is safe :)",
-            "error"
+            "error",
           );
         }
       });
@@ -2505,14 +2504,14 @@ export class MpdaftarpasienComponent implements OnInit {
               },
               (Error) => {
                 console.log(Error);
-              }
+              },
             );
           }, 4000);
 
           swalWithBootstrapButtons.fire(
             "Berhasil Cetak ",
             "Cetak Telah Berhasil.",
-            "success"
+            "success",
           );
         } else if (
           /* Read more about handling dismissals below */
@@ -2521,7 +2520,7 @@ export class MpdaftarpasienComponent implements OnInit {
           swalWithBootstrapButtons.fire(
             "Cancelled",
             "Your imaginary file is safe :)",
-            "error"
+            "error",
           );
         }
       });
@@ -2554,13 +2553,13 @@ export class MpdaftarpasienComponent implements OnInit {
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
 
           swalWithBootstrapButtons.fire(
             "Berhasil Cetak ",
             "Cetak Telah Berhasil.",
-            "success"
+            "success",
           );
         } else if (
           /* Read more about handling dismissals below */
@@ -2569,7 +2568,7 @@ export class MpdaftarpasienComponent implements OnInit {
           swalWithBootstrapButtons.fire(
             "Cancelled",
             "Your imaginary file is safe :)",
-            "error"
+            "error",
           );
         }
       });
@@ -2582,7 +2581,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.modalService.open(content, {
@@ -2605,7 +2604,7 @@ export class MpdaftarpasienComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -2630,7 +2629,7 @@ export class MpdaftarpasienComponent implements OnInit {
     pendidikan,
     perkerjaan,
     idhs,
-    isPeriksaPkg
+    isPeriksaPkg,
   ) {
     // this.cusid = "";
     this.noasuransi = "";
@@ -2668,18 +2667,18 @@ export class MpdaftarpasienComponent implements OnInit {
             "SATU SEHAT ID PASIEN",
             {
               timeOut: 2000,
-            }
+            },
           );
         }
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     const difference = this.calculateDifferenceInYearsMonthsDays(
       this.tgllahir,
-      this.tglp
+      this.tglp,
     );
     console.log("Selisih:", difference.years, "tahun", difference.days, "hari");
     this.usia =
@@ -2706,7 +2705,7 @@ export class MpdaftarpasienComponent implements OnInit {
         "&notransaksi=" +
         this.pasienc,
       "_blank",
-      "location=no,toolbar=no,height=570,width=500,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=570,width=500,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -2723,7 +2722,7 @@ export class MpdaftarpasienComponent implements OnInit {
     tglPeriksa,
     status,
     dash,
-    spcare
+    spcare,
   ) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -2786,7 +2785,7 @@ export class MpdaftarpasienComponent implements OnInit {
                       },
                       (Error) => {
                         console.log(Error);
-                      }
+                      },
                     );
                   } else {
                     this.authService.deletekunjungan(nokunjungan).subscribe(
@@ -2813,7 +2812,7 @@ export class MpdaftarpasienComponent implements OnInit {
                       },
                       (Error) => {
                         console.log(Error);
-                      }
+                      },
                     );
 
                     this.toastr.error(data.data.message, "Error");
@@ -2856,7 +2855,7 @@ export class MpdaftarpasienComponent implements OnInit {
                           noasuransi,
                           "",
                           noantrianbpjs,
-                          kdpolibpjs
+                          kdpolibpjs,
                         )
                         .subscribe((data) => {
                           if (data.metaData.code == 200) {
@@ -3132,7 +3131,7 @@ export class MpdaftarpasienComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
       this.authService
@@ -3239,7 +3238,7 @@ export class MpdaftarpasienComponent implements OnInit {
                           } else {
                             this.toastr.error(
                               "NOMOR PESERTA : " + this.ketaktif,
-                              "Eror"
+                              "Eror",
                             );
                           }
                         } else if (data.metaData.code == 204) {
@@ -3266,7 +3265,7 @@ export class MpdaftarpasienComponent implements OnInit {
                     },
                     (Error) => {
                       console.log(Error);
-                    }
+                    },
                   );
               }
             }
@@ -3275,7 +3274,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   cekbpjs(content) {
@@ -3328,7 +3327,7 @@ export class MpdaftarpasienComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
       }
     }
@@ -3375,7 +3374,7 @@ export class MpdaftarpasienComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     } else {
       this.authService.tmpbpjs(this.noindetitas, this.carinobpjs).subscribe(
@@ -3417,7 +3416,7 @@ export class MpdaftarpasienComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     }
   }
@@ -3504,7 +3503,7 @@ export class MpdaftarpasienComponent implements OnInit {
         .cekjadwal(
           this.tantrian[0].kddokter,
           this.tantrian[0].kdpoli,
-          this.tantrian[0].tglpriksa
+          this.tantrian[0].tglpriksa,
         )
         .subscribe((data) => {
           this.jadwal = data[0].jadwal;
@@ -3525,7 +3524,7 @@ export class MpdaftarpasienComponent implements OnInit {
       .cekjadwal(
         this.tantrian[0].kddokter,
         this.tantrian[0].kdpoli,
-        this.tantrian[0].tglpriksa
+        this.tantrian[0].tglpriksa,
       )
       .subscribe((data) => {
         this.jadwal = data[0].jadwal;
@@ -3572,7 +3571,7 @@ export class MpdaftarpasienComponent implements OnInit {
     if (this.kdprovider === "3") {
       this.toastr.error(
         "Kode Provider Kosong Tidak Bisa Melalui Bridging",
-        "Eror"
+        "Eror",
       );
     } else {
       this.showloading = true;
@@ -3626,7 +3625,7 @@ export class MpdaftarpasienComponent implements OnInit {
           } else if (response.metaData.code == 412) {
             this.toastr.error(
               response.response.field + response.response.message,
-              "Eror"
+              "Eror",
             );
 
             this.showloading = false;
@@ -3649,7 +3648,7 @@ export class MpdaftarpasienComponent implements OnInit {
     if (this.kdprovider === "3") {
       this.toastr.error(
         "Kode Provider Kosong Tidak Bisa Melalui Bridging",
-        "Eror"
+        "Eror",
       );
     } else {
       this.showloading = true;
@@ -3701,7 +3700,7 @@ export class MpdaftarpasienComponent implements OnInit {
           } else if (response.metaData.code == 412) {
             this.toastr.error(
               response.response.field + response.response.message,
-              "Eror"
+              "Eror",
             );
 
             this.showloading = false;
@@ -3745,7 +3744,7 @@ export class MpdaftarpasienComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   lihatprov() {
@@ -3770,7 +3769,7 @@ export class MpdaftarpasienComponent implements OnInit {
     this.authService
       .getpendaftaranprovider(
         this.datepipe.transform(a, "dd-MM-yyyy"),
-        this.nourut
+        this.nourut,
       )
       .subscribe((data) => {
         if (data.metaData.code == 200) {
@@ -3864,7 +3863,7 @@ export class MpdaftarpasienComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   tpasientgl: any;
@@ -3886,7 +3885,7 @@ export class MpdaftarpasienComponent implements OnInit {
 
   calculateDifferenceInYearsMonthsDays(
     startDate: Date,
-    endDate: Date
+    endDate: Date,
   ): { years: number; months: number; days: number } {
     const start = new Date(startDate);
     const end = new Date(endDate);
