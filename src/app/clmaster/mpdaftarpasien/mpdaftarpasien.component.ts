@@ -406,7 +406,10 @@ export class MpdaftarpasienComponent implements OnInit {
   });
 
   get isRejectedInsurance(): boolean {
-    return (this.noasuransi || "").toString().trim() === "0000001290947";
+    return (
+      (this.noasuransi || "").toString().trim() === "0000001290947" &&
+      this.kdcabang == "085"
+    );
   }
 
   cities12 = [
