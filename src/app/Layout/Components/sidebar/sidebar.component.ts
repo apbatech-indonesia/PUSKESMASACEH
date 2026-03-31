@@ -31,7 +31,7 @@ export class SidebarComponent implements OnInit {
     public globals: ThemeOptions,
     private activatedRoute: ActivatedRoute,
     public router: Router,
-    private authService: ApiserviceService
+    private authService: ApiserviceService,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -100,7 +100,7 @@ export class SidebarComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -138,7 +138,7 @@ export class SidebarComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -150,7 +150,7 @@ export class SidebarComponent implements OnInit {
         screen.height +
         ",width=" +
         screen.width +
-        ",scrollbars=yes,status=yes"
+        ",scrollbars=yes,status=yes",
     );
     redirectWindow.location;
   }
@@ -171,8 +171,10 @@ export class SidebarComponent implements OnInit {
     const raw = this.vidioid ? String(this.vidioid).trim() : "";
     const vid = raw.length > 0 ? encodeURIComponent(raw) : "";
     const cab = this.kdcabang ? String(this.kdcabang).trim() : "";
-    const base = `https://websocket.clenicapp.com`;
-    const path = cab ? `/${cab}/queue` : `/queue`;
+    // const base = `https://websocket.clenicapp.com`;
+    // const path = cab ? `/${cab}/queue` : `/queue`;
+    const base = `https://emr.clenicapp.com/`;
+    const path = `${cab}/display-antrian`;
     return vid ? `${base}${path}?videoId=${vid}` : `${base}${path}`;
   }
 }

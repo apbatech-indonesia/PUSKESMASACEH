@@ -46,6 +46,7 @@ import { MobatComponent } from "../mobat/mobat.component";
 import { mutasifarmasiComponent } from "../mutasifarmasi/mutasifarmasi.component";
 import { SampleService } from "src/app/services";
 import { EchoService } from "src/app/services/echo.service";
+import { NotificationService } from "src/app/services/notification.service";
 import { GlobalComponent } from "src/app/clmaster/Globals/global.component";
 import { FarmasijualService } from "./farmasijual.service";
 import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
@@ -257,6 +258,7 @@ export class kasirfarmasijualComponent implements OnInit {
     private authService: ApiserviceService,
     private fb: FormBuilder,
     private echoService: EchoService,
+    private notificationService: NotificationService,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -297,6 +299,13 @@ export class kasirfarmasijualComponent implements OnInit {
       }
     } catch (e) {
       console.warn("Failed to clear audio2 interval", e);
+    }
+
+    // stop resep polling
+    try {
+      this.notificationService.stop(this.kdcabang, NOTIFICATION_CHANNELS.RESEP);
+    } catch (e) {
+      // ignore
     }
   }
 
@@ -575,69 +584,72 @@ export class kasirfarmasijualComponent implements OnInit {
     this.URLINVOICE = "https://" + this.hostName + "/";
 
     // Initialize EchoService locally for this component only
-    try {
-      this.echoService.init({
-        broadcaster: "reverb",
-        key: "tal3xzzkbakc0vjnidjhasdasd",
-        wsHost: "websocket.clenicapp.com",
-        wsPort: 80,
-        wssPort: 443,
-        forceTLS: true,
-        enabledTransports: ["ws", "wss"],
-      });
-      this.echoUnsub = this.echoService.subscribe(
-        `${this.kdcabang}.${NOTIFICATION_CHANNELS.RESEP}`,
-        "NotificationSent",
-        (payload: any) => {
-          console.log("Echo event on", "NotificationSent", payload);
-          this.toastr.success("Ada Resep Baru");
+    // try {
+    //   this.echoService.init({
+    //     broadcaster: "reverb",
+    //     key: "tal3xzzkbakc0vjnidjhasdasd",
+    //     wsHost: "websocket.clenicapp.com",
+    //     wsPort: 80,
+    //     wssPort: 443,
+    //     forceTLS: true,
+    //     enabledTransports: ["ws", "wss"],
+    //   });
+    //   this.echoUnsub = this.echoService.subscribe(
+    //     `${this.kdcabang}.${NOTIFICATION_CHANNELS.RESEP}`,
+    //     "NotificationSent",
+    //     (payload: any) => {
+    //       console.log("Echo event on", "NotificationSent", payload);
+    //       this.toastr.success("Ada Resep Baru");
 
-          let audio1 = new Audio(
-            "https://knm.clenicapp.com/clenic/sound/notify.wav",
-          );
-          let audio2 = new Audio(
-            "https://knm.clenicapp.com/clenic/sound/RESEP.wav",
-          );
+    //       let audio1 = new Audio(
+    //         "https://knm.clenicapp.com/clenic/sound/notify.wav",
+    //       );
+    //       let audio2 = new Audio(
+    //         "https://knm.clenicapp.com/clenic/sound/RESEP.wav",
+    //       );
 
-          audio1.onended = () => {
-            let plays = 0;
-            const delay =
-              audio2.duration && !isNaN(audio2.duration)
-                ? audio2.duration * 1000
-                : 1000;
+    //       audio1.onended = () => {
+    //         let plays = 0;
+    //         const delay =
+    //           audio2.duration && !isNaN(audio2.duration)
+    //             ? audio2.duration * 1000
+    //             : 1000;
 
-            const playOnce = () => {
-              try {
-                audio2.currentTime = 0;
-                audio2
-                  .play()
-                  .catch((e) => console.warn("audio2 play failed", e));
-              } catch (e) {
-                console.warn("audio2 play error", e);
-              }
-              plays++;
-            };
+    //         const playOnce = () => {
+    //           try {
+    //             audio2.currentTime = 0;
+    //             audio2
+    //               .play()
+    //               .catch((e) => console.warn("audio2 play failed", e));
+    //           } catch (e) {
+    //             console.warn("audio2 play error", e);
+    //           }
+    //           plays++;
+    //         };
 
-            // play immediately once
-            playOnce();
-            // schedule repeats using setInterval, clear after 2 plays total
-            this.audio2IntervalId = setInterval(() => {
-              if (plays >= 2) {
-                clearInterval(this.audio2IntervalId);
-                this.audio2IntervalId = undefined;
-                return;
-              }
-              playOnce();
-            }, delay);
-          };
+    //         // play immediately once
+    //         playOnce();
+    //         // schedule repeats using setInterval, clear after 2 plays total
+    //         this.audio2IntervalId = setInterval(() => {
+    //           if (plays >= 2) {
+    //             clearInterval(this.audio2IntervalId);
+    //             this.audio2IntervalId = undefined;
+    //             return;
+    //           }
+    //           playOnce();
+    //         }, delay);
+    //       };
 
-          audio1.play();
-        },
-      );
-      console.log("EchoService initialized for kasirfarmasijual");
-    } catch (err) {
-      console.warn("Failed to init local EchoService", err);
-    }
+    //       audio1.play();
+    //     },
+    //   );
+    //   console.log("EchoService initialized for kasirfarmasijual");
+    // } catch (err) {
+    //   console.warn("Failed to init local EchoService", err);
+    // }
+
+    // start polling resep notifications via NotificationService
+    this.startResepNotifications();
 
     this.authService.obated(this.kdcabang).subscribe(
       (data) => {
@@ -686,6 +698,32 @@ export class kasirfarmasijualComponent implements OnInit {
       console.log("data is ", response);
       this.filterData(response);
     });
+  }
+
+  private startResepNotifications(): void {
+    try {
+      const dataRaw = localStorage.getItem("userDatacl");
+      if (!dataRaw) return;
+      const data = JSON.parse(dataRaw);
+      const cabang = data?.userData?.kdcabang || this.kdcabang;
+
+      this.notificationService
+        .start(cabang, NOTIFICATION_CHANNELS.RESEP, {
+          audio: "https://knm.clenicapp.com/clenic/sound/RESEP.wav",
+          title: "Resep Baru",
+          body: "Ada Resep Baru.",
+          repeat: true,
+        })
+        .subscribe((count: number) => {
+          try {
+            this.resepbaru = count;
+          } catch (e) {
+            console.warn("Error handling resep notification", e);
+          }
+        });
+    } catch (e) {
+      console.warn("Failed to start resep notifications", e);
+    }
   }
 
   filterData(enteredData) {

@@ -28,6 +28,7 @@ import {
 import { NgSelectModule, NgOption } from "@ng-select/ng-select";
 import { DatePipe } from "@angular/common";
 import { SampleService, WebsocketService } from "src/app/services";
+import { NotificationService } from "src/app/services/notification.service";
 import { EchoService } from "src/app/services/echo.service";
 import { TreeNode } from "primeng/api";
 import { GlobalComponent } from "src/app/clmaster/Globals/global.component";
@@ -89,6 +90,8 @@ export class kasirlabComponent implements OnInit, OnDestroy {
   selectedFile: TreeNode;
   echoUnsub: any;
   audio2IntervalId: any;
+  hasilLabCount: number;
+  permintaanLabCount: number;
 
   constructor(
     public hots: SampleService,
@@ -99,6 +102,7 @@ export class kasirlabComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private echoService: EchoService,
     public websocketService: WebsocketService,
+    private notificationService: NotificationService,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -124,8 +128,9 @@ export class kasirlabComponent implements OnInit, OnDestroy {
 
     this.hostName = this.hots.getHostname();
 
-    this.initEchoNotifications();
     // Initialize EchoService for realtime notifications (lab)
+    this.initEchoNotifications();
+    this.startLabNotifications();
   }
 
   notifcenter(kddokter) {
@@ -203,6 +208,48 @@ export class kasirlabComponent implements OnInit, OnDestroy {
     }
   }
 
+  private startLabNotifications(): void {
+    this.requestPermission();
+    try {
+      const dataRaw = localStorage.getItem("userDatacl");
+      if (!dataRaw) return;
+      const data = JSON.parse(dataRaw);
+      const cabang = data?.userData?.kdcabang || this.kdcabang;
+
+      this.notificationService
+        .start(cabang, NOTIFICATION_CHANNELS.PERMINTAAN_LAB, {
+          audio: "https://knm.clenicapp.com/clenic/sound/permintaan-lab.wav",
+          title: "Permintaan Laborat",
+          body: "Permintaan Laborat Baru.",
+          repeat: false,
+        })
+        .subscribe((count: number) => {
+          try {
+            this.permintaanLabCount = count;
+          } catch (e) {
+            console.warn("Error handling permintaan-lab notification", e);
+          }
+        });
+
+      this.notificationService
+        .start(cabang, NOTIFICATION_CHANNELS.HASIL_LAB, {
+          audio: "https://knm.clenicapp.com/clenic/sound/hasil-lab.wav",
+          title: "Hasil Laborat",
+          body: "Hasil Laborat Baru.",
+          repeat: false,
+        })
+        .subscribe((count: number) => {
+          try {
+            this.hasilLabCount = count;
+          } catch (e) {
+            console.warn("Error handling hasil-lab notification", e);
+          }
+        });
+    } catch (e) {
+      console.warn("Failed to start lab notifications", e);
+    }
+  }
+
   private handleEchoPayload(payload: any) {
     try {
       const title =
@@ -270,6 +317,20 @@ export class kasirlabComponent implements OnInit, OnDestroy {
       }
     } catch (e) {
       console.warn("Error during ngOnDestroy cleanup", e);
+    }
+
+    // stop polling notifications
+    try {
+      const dataRaw = localStorage.getItem("userDatacl");
+      const data = dataRaw ? JSON.parse(dataRaw) : null;
+      const cabang = data?.userData?.kdcabang || this.kdcabang;
+      this.notificationService.stop(
+        cabang,
+        NOTIFICATION_CHANNELS.PERMINTAAN_LAB,
+      );
+      this.notificationService.stop(cabang, NOTIFICATION_CHANNELS.HASIL_LAB);
+    } catch (e) {
+      console.warn("Failed to stop lab notifications", e);
     }
   }
 
@@ -2220,13 +2281,28 @@ export class kasirlabComponent implements OnInit, OnDestroy {
   }
 
   doNotifHasilLab() {
-    this.websocketService
-      .sendNotification({
-        title: "Hasil Laborat",
-        message: `Hasil laborat pasien ${this.pasien}`,
-        channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
-      })
-      .subscribe();
+    // this.websocketService
+    //   .sendNotification({
+    //     title: "Hasil Laborat",
+    //     message: `Hasil laborat pasien ${this.pasien}`,
+    //     channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
+    //   })
+    //   .subscribe();
+
+    const data = JSON.parse(localStorage.getItem("userDatacl"));
+
+    this.notificationService
+      .pushNotification(
+        data.userData.kdcabang,
+        NOTIFICATION_CHANNELS.HASIL_LAB,
+        {
+          value: Date.now(),
+        },
+      )
+      .subscribe(
+        () => {},
+        (err) => console.warn("pushNotification failed", err),
+      );
   }
   cariteslab(a) {
     this.authService

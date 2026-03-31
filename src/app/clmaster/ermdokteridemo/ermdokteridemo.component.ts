@@ -34,6 +34,8 @@ import { DatePipe } from "@angular/common";
 import { Router } from "@angular/router";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { WebsocketService } from "src/app/services";
+import { NotificationService } from "src/app/services/notification.service";
+import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
 
 @Component({
   selector: "app-ermdokteridemo",
@@ -140,6 +142,7 @@ export class ermdokteridemoComponent implements OnInit {
   constructor(
     private chatService: ChatService,
     private websocketService: WebsocketService,
+    private notificationService: NotificationService,
     public FarmasijualService: FarmasijualService,
     private datepipe: DatePipe,
     private router: Router,
@@ -351,15 +354,30 @@ export class ermdokteridemoComponent implements OnInit {
       })
       .then((result) => {
         if (result.value) {
-          this.websocketService
-            .callQueueForCabang(this.kdcabang, {
-              prefix: kodeantrian,
-              number: a,
-              pasien: v.toLowerCase(),
-              poli: nampoli,
-              channel: this.kdcabang,
+          /*
+            this.websocketService
+              .callQueueForCabang(this.kdcabang, {
+                prefix: kodeantrian,
+                number: a,
+                pasien: v.toLowerCase(),
+                poli: nampoli,
+                channel: this.kdcabang,
+              })
+              .subscribe();
+            */
+
+          this.notificationService
+            .pushNotification(this.kdcabang, NOTIFICATION_CHANNELS.ANTRIAN, {
+              antrian: {
+                name: v,
+                antrian: `${kodeantrian}${a}`,
+                poli: nampoli,
+              },
             })
-            .subscribe();
+            .subscribe(
+              () => {},
+              (err) => console.warn("pushNotification failed", err),
+            );
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel

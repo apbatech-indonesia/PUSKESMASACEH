@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -39,6 +39,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { WebsocketService } from "src/app/services";
 import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
 import { EchoService } from "src/app/services/echo.service";
+import { NotificationService } from "src/app/services/notification.service";
 
 @Component({
   selector: "app-ermdokterrm",
@@ -57,7 +58,7 @@ import { EchoService } from "src/app/services/echo.service";
     { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
   ],
 })
-export class ermdokterrmComponent implements OnInit {
+export class ermdokterrmComponent implements OnInit, OnDestroy {
   toggleMobileSidebar: any;
   faStar = faStar;
   faPlus = faPlus;
@@ -145,11 +146,14 @@ export class ermdokterrmComponent implements OnInit {
   filterPoli: any = null;
   tklinik: any;
   echoUnsub: any;
+  hasilLabCount: number;
+  permintaanLabCount: number;
 
   constructor(
     public FarmasijualService: FarmasijualService,
     private router: Router,
     private chatService: ChatService,
+    private notificationService: NotificationService,
     private websocketService: WebsocketService,
     private echoService: EchoService,
     private datepipe: DatePipe,
@@ -180,6 +184,7 @@ export class ermdokterrmComponent implements OnInit {
     this.tmppuser();
     this.tmptotal();
     this.initEchoNotifications();
+    this.startLabNotifications();
 
     this.authService.cabangper(this.kdklinik).subscribe(
       (data) => {
@@ -356,6 +361,7 @@ export class ermdokterrmComponent implements OnInit {
       })
       .then((result) => {
         if (result.isConfirmed) {
+          /*
           this.websocketService
             .callQueueForCabang(this.kdcabang, {
               prefix: kodeantrian,
@@ -365,6 +371,20 @@ export class ermdokterrmComponent implements OnInit {
               channel: this.kdcabang,
             })
             .subscribe();
+          */
+
+          this.notificationService
+            .pushNotification(this.kdcabang, NOTIFICATION_CHANNELS.ANTRIAN, {
+              antrian: {
+                name: pasien,
+                antrian: `${kodeantrian}${a}`,
+                poli: nampoli,
+              },
+            })
+            .subscribe(
+              () => {},
+              (err) => console.warn("pushNotification failed", err),
+            );
         } else if (result.isDenied) {
           let body = {
             tanggalperiksa: tglpriksa,
@@ -508,6 +528,44 @@ export class ermdokterrmComponent implements OnInit {
     );
   }
 
+  private notifcenter(kddokter) {
+    let audio1 = new Audio("https://knm.clenicapp.com/clenic/sound/notify.wav");
+    let audio2 = new Audio();
+
+    if (kddokter === "Laborat") {
+      this.toastr.success("Permintaan Laborat Baru");
+      audio2.src = "https://knm.clenicapp.com/clenic/sound/permintaan-lab.wav";
+    }
+
+    if (kddokter === "Hasil Laborat") {
+      this.toastr.success("Hasil Laborat Baru");
+      audio2.src = "https://knm.clenicapp.com/clenic/sound/hasil-lab.wav";
+    }
+
+    audio1.onended = () => {
+      try {
+        audio2.currentTime = 0;
+        audio2.play().catch((e) => console.warn("audio2 play failed", e));
+      } catch (e) {
+        console.warn("audio2 play error", e);
+      }
+    };
+
+    audio1.play().catch((e) => console.warn("audio1 play failed", e));
+  }
+
+  private requestPermission() {
+    if ("Notification" in window) {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          console.log("Notification permission granted.");
+        } else {
+          console.log("Notification permission denied.");
+        }
+      });
+    }
+  }
+
   private initEchoNotifications() {
     this.requestPermission();
     try {
@@ -556,41 +614,86 @@ export class ermdokterrmComponent implements OnInit {
     }
   }
 
-  notifcenter(kddokter) {
-    let audio1 = new Audio("https://knm.clenicapp.com/clenic/sound/notify.wav");
-    let audio2 = new Audio();
+  private startLabNotifications(): void {
+    this.requestPermission();
+    try {
+      const dataRaw = localStorage.getItem("userDatacl");
+      if (!dataRaw) return;
+      const data = JSON.parse(dataRaw);
+      const cabang = data?.userData?.kdcabang || this.kdcabang;
 
-    if (kddokter === "Laborat") {
-      this.toastr.success("Permintaan Laborat Baru");
-      audio2.src = "https://knm.clenicapp.com/clenic/sound/permintaan-lab.wav";
+      this.notificationService
+        .start(cabang, NOTIFICATION_CHANNELS.PERMINTAAN_LAB, {
+          audio: "https://knm.clenicapp.com/clenic/sound/permintaan-lab.wav",
+          title: "Permintaan Laborat",
+          body: "Permintaan Laborat Baru.",
+          repeat: false,
+        })
+        .subscribe((count: number) => {
+          try {
+            this.permintaanLabCount = count;
+          } catch (e) {
+            console.warn("Error handling permintaan-lab notification", e);
+          }
+        });
+
+      this.notificationService
+        .start(cabang, NOTIFICATION_CHANNELS.HASIL_LAB, {
+          audio: "https://knm.clenicapp.com/clenic/sound/hasil-lab.wav",
+          title: "Hasil Laborat",
+          body: "Hasil Laborat Baru.",
+          repeat: false,
+        })
+        .subscribe((count: number) => {
+          try {
+            this.hasilLabCount = count;
+          } catch (e) {
+            console.warn("Error handling hasil-lab notification", e);
+          }
+        });
+    } catch (e) {
+      console.warn("Failed to start lab notifications", e);
     }
-
-    if (kddokter === "Hasil Laborat") {
-      this.toastr.success("Hasil Laborat Baru");
-      audio2.src = "https://knm.clenicapp.com/clenic/sound/hasil-lab.wav";
-    }
-
-    audio1.onended = () => {
-      try {
-        audio2.currentTime = 0;
-        audio2.play().catch((e) => console.warn("audio2 play failed", e));
-      } catch (e) {
-        console.warn("audio2 play error", e);
-      }
-    };
-
-    audio1.play().catch((e) => console.warn("audio1 play failed", e));
   }
 
-  requestPermission() {
-    if ("Notification" in window) {
-      Notification.requestPermission().then((permission) => {
-        if (permission === "granted") {
-          console.log("Notification permission granted.");
+  ngOnDestroy() {
+    try {
+      if (this.echoUnsub) {
+        if (Array.isArray(this.echoUnsub)) {
+          this.echoUnsub.forEach((u: any) => {
+            try {
+              if (typeof u === "function") {
+                u();
+              } else if (u && u.unsubscribe) {
+                u.unsubscribe();
+              }
+            } catch (e) {
+              console.warn("Error unsubscribing", e);
+            }
+          });
         } else {
-          console.log("Notification permission denied.");
+          if (typeof this.echoUnsub === "function") {
+            this.echoUnsub();
+          } else if (this.echoUnsub.unsubscribe) {
+            this.echoUnsub.unsubscribe();
+          }
         }
-      });
+      }
+    } catch (e) {
+      console.warn("Error during ngOnDestroy cleanup", e);
+    }
+
+    try {
+      const dataRaw = localStorage.getItem("userDatacl");
+      const data = dataRaw ? JSON.parse(dataRaw) : null;
+      const cabang = data?.userData?.kdcabang || this.kdcabang;
+      this.notificationService.stop(
+        cabang,
+        NOTIFICATION_CHANNELS.PERMINTAAN_LAB,
+      );
+      this.notificationService.stop(cabang, NOTIFICATION_CHANNELS.HASIL_LAB);
+    } catch (e) {
+      console.warn("Failed to stop lab notifications", e);
     }
   }
 }

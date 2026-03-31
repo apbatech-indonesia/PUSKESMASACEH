@@ -62,6 +62,7 @@ import { ChatService } from "../../chat.service";
 import { FarmasijualService } from "../kasirfarmasijual/farmasijual.service";
 import { ItemsList } from "@ng-select/ng-select/lib/items-list";
 import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
+import { NotificationService } from "src/app/services/notification.service";
 
 @Component({
   selector: "app-tuliserm",
@@ -374,6 +375,7 @@ export class tulisermComponent implements OnInit {
     public FarmasijualService: FarmasijualService,
     public chatService: ChatService,
     public websocketService: WebsocketService,
+    private notificationService: NotificationService,
     private appComponent: AppComponent,
     public hots: SampleService,
     private router: Router,
@@ -3288,13 +3290,30 @@ export class tulisermComponent implements OnInit {
                         .call(data, (s) => s.nama)
                         .toString();
 
-                      this.websocketService
-                        .sendNotification({
-                          title: "Resep Obat",
-                          message: `Resep obat pasien ${this.pasien}`,
-                          channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.RESEP}`,
-                        })
-                        .subscribe();
+                      // this.websocketService
+                      //   .sendNotification({
+                      //     title: "Resep Obat",
+                      //     message: `Resep obat pasien ${this.pasien}`,
+                      //     channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.RESEP}`,
+                      //   })
+                      //   .subscribe();
+
+                      const userdata = JSON.parse(
+                        localStorage.getItem("userDatacl"),
+                      ).userData;
+
+                      this.notificationService
+                        .pushNotification(
+                          userdata.kdcabang,
+                          NOTIFICATION_CHANNELS.RESEP,
+                          {
+                            value: Date.now(),
+                          },
+                        )
+                        .subscribe(
+                          () => {},
+                          (err) => console.warn("pushNotification failed", err),
+                        );
                     } else {
                       this.terapiObat = "tidak ada obat";
                     }
@@ -6071,23 +6090,53 @@ export class tulisermComponent implements OnInit {
   }
 
   doNotifPermintaanLab() {
-    this.websocketService
-      .sendNotification({
-        title: "Permintaan Laborat",
-        message: `Permintaan laborat pasien ${this.pasien}`,
-        channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.PERMINTAAN_LAB}`,
-      })
-      .subscribe();
+    // this.websocketService
+    //   .sendNotification({
+    //     title: "Permintaan Laborat",
+    //     message: `Permintaan laborat pasien ${this.pasien}`,
+    //     channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.PERMINTAAN_LAB}`,
+    //   })
+    //   .subscribe();
+
+    const data = JSON.parse(localStorage.getItem("userDatacl"));
+
+    this.notificationService
+      .pushNotification(
+        data.userData.kdcabang,
+        NOTIFICATION_CHANNELS.PERMINTAAN_LAB,
+        {
+          value: Date.now(),
+        },
+      )
+      .subscribe(
+        () => {},
+        (err) => console.warn("pushNotification failed", err),
+      );
   }
 
   doNotifHasilLab() {
-    this.websocketService
-      .sendNotification({
-        title: "Hasil Laborat",
-        message: `Hasil laborat pasien ${this.pasien}`,
-        channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
-      })
-      .subscribe();
+    // this.websocketService
+    //   .sendNotification({
+    //     title: "Hasil Laborat",
+    //     message: `Hasil laborat pasien ${this.pasien}`,
+    //     channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
+    //   })
+    //   .subscribe();
+
+    const data = JSON.parse(localStorage.getItem("userDatacl"));
+
+    this.notificationService
+      .pushNotification(
+        data.userData.kdcabang,
+        NOTIFICATION_CHANNELS.HASIL_LAB,
+        {
+          value: Date.now(),
+        },
+      )
+      .subscribe(
+        () => {},
+        (err) => console.warn("pushNotification failed", err),
+      );
   }
 
   nmobat: any;

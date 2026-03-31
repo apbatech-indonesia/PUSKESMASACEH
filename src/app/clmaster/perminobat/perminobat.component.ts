@@ -36,6 +36,8 @@ import { FarmasijualService } from "../kasirfarmasijual/farmasijual.service";
 import { HttpHeaders } from "@angular/common/http";
 import { IGudang } from "./gudang.interface";
 import { SampleService } from "src/app/services";
+import { NotificationService } from "src/app/services/notification.service";
+import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
 
 @Component({
   selector: "app-perminobat",
@@ -80,7 +82,8 @@ export class perminobatComponent implements OnInit {
     private farmasiJualService: FarmasijualService,
     private authService: ApiserviceService,
     private fb: FormBuilder,
-    public hots: SampleService
+    public hots: SampleService,
+    private notificationService: NotificationService,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     if (data) {
@@ -143,7 +146,7 @@ export class perminobatComponent implements OnInit {
             // Set timeout untuk memastikan ng-select sudah terender
             setTimeout(() => {
               const selectedGudang = this.tgudang.find(
-                (g) => g.kdgudang === gudangUtama.kdgudang
+                (g) => g.kdgudang === gudangUtama.kdgudang,
               );
               if (selectedGudang) {
                 this.pilihGudang(selectedGudang);
@@ -386,13 +389,13 @@ export class perminobatComponent implements OnInit {
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
         }
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     setTimeout(() => {
@@ -420,7 +423,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService
@@ -431,7 +434,7 @@ export class perminobatComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.tmpnonr();
@@ -457,7 +460,7 @@ export class perminobatComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else {
       this.showtamplate = false;
@@ -481,7 +484,7 @@ export class perminobatComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
     } else {
       this.showtamplateb = false;
@@ -498,7 +501,7 @@ export class perminobatComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   nmobat: any;
@@ -587,7 +590,7 @@ export class perminobatComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService
@@ -595,7 +598,7 @@ export class perminobatComponent implements OnInit {
         this.kdcabang,
         this.notrans,
         this.notrans + this.kddokter,
-        this.nomorracik
+        this.nomorracik,
       )
       .subscribe(
         (data) => {
@@ -603,7 +606,7 @@ export class perminobatComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
 
     this.authService
@@ -614,7 +617,7 @@ export class perminobatComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
   tlistbhpr: any;
@@ -796,7 +799,7 @@ export class perminobatComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
           let body = {
@@ -843,7 +846,7 @@ export class perminobatComponent implements OnInit {
     kdpruduk,
     qty,
     harga,
-    no
+    no,
   ) {
     Swal.fire({
       title: "Masukan Qty Terbaru",
@@ -856,7 +859,7 @@ export class perminobatComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Qty Belum disi'
+            '<i class="fa fa-info-circle"></i> Qty Belum disi',
           );
         } else {
           let body = {
@@ -904,7 +907,7 @@ export class perminobatComponent implements OnInit {
     kdpruduk,
     qty,
     harga,
-    no
+    no,
   ) {
     Swal.fire({
       title: "Masukan Qty Terbaru",
@@ -917,7 +920,7 @@ export class perminobatComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Qty Belum disi'
+            '<i class="fa fa-info-circle"></i> Qty Belum disi',
           );
         } else {
           let body = {
@@ -967,7 +970,7 @@ export class perminobatComponent implements OnInit {
     kdpruduk,
     qty,
     harga,
-    no
+    no,
   ) {
     Swal.fire({
       title: "Masukan Keterangan Terbaru",
@@ -980,7 +983,7 @@ export class perminobatComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Qty Belum disi'
+            '<i class="fa fa-info-circle"></i> Qty Belum disi',
           );
         } else {
           let body = {
@@ -1033,7 +1036,7 @@ export class perminobatComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
           let body = {
@@ -1079,7 +1082,7 @@ export class perminobatComponent implements OnInit {
     qty,
     keterangan,
     notransaksi,
-    kdpoli
+    kdpoli,
   ) {
     Swal.fire({
       title: "Masukan Aturan Terbaru",
@@ -1092,7 +1095,7 @@ export class perminobatComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
           let body = {
@@ -1138,7 +1141,7 @@ export class perminobatComponent implements OnInit {
     qty,
     keterangan,
     notransaksi,
-    kdpoli
+    kdpoli,
   ) {
     Swal.fire({
       title: "Masukan Qty Terbaru",
@@ -1151,7 +1154,7 @@ export class perminobatComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
           let body = {
@@ -1197,7 +1200,7 @@ export class perminobatComponent implements OnInit {
     qty,
     keterangan,
     notransaksi,
-    kdpoli
+    kdpoli,
   ) {
     Swal.fire({
       title: "Masukan keterangan Terbaru",
@@ -1211,7 +1214,7 @@ export class perminobatComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
           let body = {
@@ -1257,7 +1260,7 @@ export class perminobatComponent implements OnInit {
     qty,
     keterangan,
     notransaksi,
-    kdpoli
+    kdpoli,
   ) {
     Swal.fire({
       title: "Masukan keterangan Terbaru",
@@ -1277,7 +1280,7 @@ export class perminobatComponent implements OnInit {
       preConfirm: (value) => {
         if (!value) {
           Swal.showValidationMessage(
-            '<i class="fa fa-info-circle"></i> Aturan Belum disi'
+            '<i class="fa fa-info-circle"></i> Aturan Belum disi',
           );
         } else {
           let body = {
@@ -1325,7 +1328,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -1341,7 +1344,7 @@ export class perminobatComponent implements OnInit {
     nama,
     kdobatbpjs,
     kdObatSK,
-    kdRacikan
+    kdRacikan,
   ) {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -1366,7 +1369,7 @@ export class perminobatComponent implements OnInit {
           if (kunci === "1") {
             this.toastr.error(
               "Data telah di verifikasi tidak bisa di hapus",
-              "Eror"
+              "Eror",
             );
           } else {
             let body = {
@@ -1405,7 +1408,7 @@ export class perminobatComponent implements OnInit {
                     },
                     (Error) => {
                       console.log(Error);
-                    }
+                    },
                   );
               } else {
                 this.toastr.error("Simpan  Gagal", "Eror");
@@ -1500,7 +1503,7 @@ export class perminobatComponent implements OnInit {
         "Stok Tidak Menyukupi untuk " +
           this.jmlhari +
           " Hari,Silahkan Sesuikan",
-        "Eror"
+        "Eror",
       );
     } else {
       let body = {
@@ -1554,7 +1557,7 @@ export class perminobatComponent implements OnInit {
         "Stok Tidak Menyukupi untuk " +
           this.jmlhari +
           " Hari,Silahkan Sesuikan",
-        "Eror"
+        "Eror",
       );
     } else {
       let body = {
@@ -1613,7 +1616,7 @@ export class perminobatComponent implements OnInit {
         "Stok Tidak Menyukupi untuk " +
           this.jmlhari +
           " Hari,Silahkan Sesuikan",
-        "Eror"
+        "Eror",
       );
     } else {
       let body = {
@@ -1653,6 +1656,25 @@ export class perminobatComponent implements OnInit {
           this.tmpnonr();
           this.select.handleClearClick();
 
+          try {
+            const data = JSON.parse(localStorage.getItem("userDatacl"));
+
+            this.notificationService
+              .pushNotification(
+                data.userData.kdcabang,
+                NOTIFICATION_CHANNELS.RESEP,
+                {
+                  value: Date.now(),
+                },
+              )
+              .subscribe(
+                () => {},
+                (err) => console.warn("pushNotification failed", err),
+              );
+          } catch (e) {
+            console.warn("pushNotification error", e);
+          }
+
           setTimeout(async () => {
             if (this.kdobatsatusehat) await this.simpanobatsatusehat();
             this.nmobat = "";
@@ -1686,7 +1708,7 @@ export class perminobatComponent implements OnInit {
           listObat: this.namaobatsatusehat,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     let medicationRequest: any = await this.authService.medicationRequest(
@@ -1711,7 +1733,7 @@ export class perminobatComponent implements OnInit {
           validityEndDate: this.myDate.toISOString(),
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     await this.authService.medicationDispense(
@@ -1738,7 +1760,7 @@ export class perminobatComponent implements OnInit {
           standart: this.standart,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
 
     await this.authService.medicationStatement(
@@ -1757,7 +1779,7 @@ export class perminobatComponent implements OnInit {
           encounterId: this.idsatusehat,
         },
       },
-      this.satusehatheaders
+      this.satusehatheaders,
     );
   }
 
@@ -1804,13 +1826,13 @@ export class perminobatComponent implements OnInit {
                         },
                         (Error) => {
                           console.log(Error);
-                        }
+                        },
                       );
                     }
                   },
                   (Error) => {
                     console.log(Error);
-                  }
+                  },
                 );
               }, 200);
             }
@@ -1821,7 +1843,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     // this.df.nativeElement.focus();
@@ -1851,7 +1873,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     // this.df.nativeElement.focus();
@@ -1897,7 +1919,7 @@ export class perminobatComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     }, 200);
   }
@@ -1935,13 +1957,13 @@ export class perminobatComponent implements OnInit {
               },
               (Error) => {
                 console.log(Error);
-              }
+              },
             );
           }
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     }, 200);
   }
@@ -1957,7 +1979,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   showsigna: boolean;
@@ -1984,7 +2006,7 @@ export class perminobatComponent implements OnInit {
               },
               (Error) => {
                 console.log(Error);
-              }
+              },
             );
 
             // pilihjmlpakai
@@ -1992,7 +2014,7 @@ export class perminobatComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     }, 200);
   }
@@ -2008,7 +2030,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   tjmlhari: any;
@@ -2028,7 +2050,7 @@ export class perminobatComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
     }, 200);
   }
@@ -2154,7 +2176,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -2218,7 +2240,7 @@ export class perminobatComponent implements OnInit {
               },
               (Error) => {
                 console.log(Error);
-              }
+              },
             );
         }, 250);
       } else {
@@ -2302,7 +2324,7 @@ export class perminobatComponent implements OnInit {
     hari,
     frekuensi,
     jmlpakai,
-    no
+    no,
   ) {
     this.qtyk = qty;
     this.qtydulu = qty;
@@ -2345,13 +2367,13 @@ export class perminobatComponent implements OnInit {
                         },
                         (Error) => {
                           console.log(Error);
-                        }
+                        },
                       );
                     }
                   },
                   (Error) => {
                     console.log(Error);
-                  }
+                  },
                 );
               }, 200);
             }
@@ -2362,7 +2384,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.showtomboledit = true;
@@ -2406,7 +2428,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -2429,7 +2451,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -2445,7 +2467,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -2460,7 +2482,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
     this.aturanir.nativeElement.focus();
   }
@@ -2476,7 +2498,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -2494,7 +2516,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -2510,7 +2532,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   showjmlharir: boolean;
@@ -2561,7 +2583,7 @@ export class perminobatComponent implements OnInit {
     qty,
     keterangan,
     notransaksi,
-    kdpoli
+    kdpoli,
   ) {
     this.ketshow = kdtamplated;
   }
@@ -2604,7 +2626,7 @@ export class perminobatComponent implements OnInit {
             },
             (Error) => {
               console.log(Error);
-            }
+            },
           );
         } else if (
           /* Read more about handling dismissals below */
@@ -2627,7 +2649,7 @@ export class perminobatComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -2659,15 +2681,15 @@ export class perminobatComponent implements OnInit {
         var r = Math.random() * 16; //random number between 0 and 16
         if (d > 0) {
           //Use timestamp until depleted
-          r = (d + r) % 16 | 0;
+          r = ((d + r) % 16) | 0;
           d = Math.floor(d / 16);
         } else {
           //Use microseconds since page-load if supported
-          r = (d2 + r) % 16 | 0;
+          r = ((d2 + r) % 16) | 0;
           d2 = Math.floor(d2 / 16);
         }
         return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
-      }
+      },
     );
   }
 
