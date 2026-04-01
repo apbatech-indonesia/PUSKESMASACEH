@@ -41,6 +41,12 @@ import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
 import { EchoService } from "src/app/services/echo.service";
 import { NotificationService } from "src/app/services/notification.service";
 
+export function normalizeText(text) {
+  return text.replace(/\b[A-Z]{2,}\b/g, (match) => {
+    return match.split("").join(" ");
+  });
+}
+
 @Component({
   selector: "app-ermdokterrm",
   templateUrl: "./ermdokterrm.component.html",
@@ -378,7 +384,7 @@ export class ermdokterrmComponent implements OnInit, OnDestroy {
               antrian: {
                 name: pasien.toLowerCase(),
                 antrian: `${kodeantrian}${a}`,
-                poli: nampoli,
+                poli: normalizeText(nampoli),
               },
             })
             .subscribe(
