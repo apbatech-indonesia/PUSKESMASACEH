@@ -369,7 +369,7 @@ export class ermdokteridemoComponent implements OnInit {
           this.notificationService
             .pushNotification(this.kdcabang, NOTIFICATION_CHANNELS.ANTRIAN, {
               antrian: {
-                name: v,
+                name: v.toLowerCase(),
                 antrian: `${kodeantrian}${a}`,
                 poli: nampoli,
               },

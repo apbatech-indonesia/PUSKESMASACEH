@@ -376,7 +376,7 @@ export class ermdokterrmComponent implements OnInit, OnDestroy {
           this.notificationService
             .pushNotification(this.kdcabang, NOTIFICATION_CHANNELS.ANTRIAN, {
               antrian: {
-                name: pasien,
+                name: pasien.toLowerCase(),
                 antrian: `${kodeantrian}${a}`,
                 poli: nampoli,
               },
