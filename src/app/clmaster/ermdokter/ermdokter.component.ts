@@ -37,7 +37,6 @@ import { WebsocketService } from "src/app/services";
 import { NotificationService } from "src/app/services/notification.service";
 import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
 import { EchoService } from "src/app/services/echo.service";
-import { normalizeText } from "../ermdokterrm/ermdokterrm.component";
 
 @Component({
   selector: "app-ermdokter",
