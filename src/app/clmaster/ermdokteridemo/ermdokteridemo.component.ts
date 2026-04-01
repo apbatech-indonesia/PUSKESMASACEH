@@ -372,7 +372,7 @@ export class ermdokteridemoComponent implements OnInit {
               antrian: {
                 name: v.toLowerCase(),
                 antrian: `${kodeantrian}${a}`,
-                poli: normalizeText(nampoli),
+                poli: nampoli,
               },
             })
             .subscribe(

@@ -380,7 +380,7 @@ export class ermdokterComponent implements OnInit, OnDestroy {
               antrian: {
                 name: v.toLowerCase(),
                 antrian: `${kodeantrian}${a}`,
-                poli: normalizeText(nampoli),
+                poli: nampoli,
               },
             })
             .subscribe(
