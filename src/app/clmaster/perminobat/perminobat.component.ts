@@ -1656,25 +1656,6 @@ export class perminobatComponent implements OnInit {
           this.tmpnonr();
           this.select.handleClearClick();
 
-          try {
-            const data = JSON.parse(localStorage.getItem("userDatacl"));
-
-            this.notificationService
-              .pushNotification(
-                data.userData.kdcabang,
-                NOTIFICATION_CHANNELS.RESEP,
-                {
-                  value: Date.now(),
-                },
-              )
-              .subscribe(
-                () => {},
-                (err) => console.warn("pushNotification failed", err),
-              );
-          } catch (e) {
-            console.warn("pushNotification error", e);
-          }
-
           setTimeout(async () => {
             if (this.kdobatsatusehat) await this.simpanobatsatusehat();
             this.nmobat = "";
