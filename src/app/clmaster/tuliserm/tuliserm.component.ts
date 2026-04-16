@@ -3298,22 +3298,25 @@ export class tulisermComponent implements OnInit {
                       //   })
                       //   .subscribe();
 
-                      const userdata = JSON.parse(
-                        localStorage.getItem("userDatacl"),
-                      ).userData;
+                      if (data.length <= 1) {
+                        const userdata = JSON.parse(
+                          localStorage.getItem("userDatacl") || "{userData: null}",
+                        ).userData;
 
-                      this.notificationService
-                        .pushNotification(
-                          userdata.kdcabang,
-                          NOTIFICATION_CHANNELS.RESEP,
-                          {
-                            value: Date.now(),
-                          },
-                        )
-                        .subscribe(
-                          () => {},
-                          (err) => console.warn("pushNotification failed", err),
-                        );
+                        this.notificationService
+                          .pushNotification(
+                            userdata.kdcabang,
+                            NOTIFICATION_CHANNELS.RESEP,
+                            {
+                              value: Date.now(),
+                            },
+                          )
+                          .subscribe(
+                            () => {},
+                            (err) =>
+                              console.warn("pushNotification failed", err),
+                          );
+                      }
                     } else {
                       this.terapiObat = "tidak ada obat";
                     }
