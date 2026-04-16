@@ -3298,10 +3298,11 @@ export class tulisermComponent implements OnInit {
                       //   })
                       //   .subscribe();
 
-                      console.log(data.length)
+                      console.log(`data.length: ${data.length}`);
                       if (data.length <= 1) {
                         const userdata = JSON.parse(
-                          localStorage.getItem("userDatacl") || "{userData: null}",
+                          localStorage.getItem("userDatacl") ||
+                            "{userData: null}",
                         ).userData;
 
                         this.notificationService
