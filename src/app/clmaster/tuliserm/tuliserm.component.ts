@@ -3298,6 +3298,7 @@ export class tulisermComponent implements OnInit {
                       //   })
                       //   .subscribe();
 
+                      console.log(data.length)
                       if (data.length <= 1) {
                         const userdata = JSON.parse(
                           localStorage.getItem("userDatacl") || "{userData: null}",
