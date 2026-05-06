@@ -3277,6 +3277,23 @@ export class tulisermComponent implements OnInit {
             console.log(response);
 
             if ((response.metadata.messagexx = 1)) {
+              const userdata = JSON.parse(
+                localStorage.getItem("userDatacl") || "{userData: null}",
+              ).userData;
+
+              this.notificationService
+                .pushNotification(
+                  userdata.kdcabang,
+                  NOTIFICATION_CHANNELS.RESEP,
+                  {
+                    value: Date.now(),
+                  },
+                )
+                .subscribe(
+                  () => {},
+                  (err) => console.warn("pushNotification failed", err),
+                );
+
               this.authService
                 .obatnonracik(
                   this.kdcabang,
@@ -3297,24 +3314,6 @@ export class tulisermComponent implements OnInit {
                       //     channel: `${this.kdcabang}.${NOTIFICATION_CHANNELS.RESEP}`,
                       //   })
                       //   .subscribe();
-
-                      const userdata = JSON.parse(
-                        localStorage.getItem("userDatacl") ||
-                          "{userData: null}",
-                      ).userData;
-
-                      this.notificationService
-                        .pushNotification(
-                          userdata.kdcabang,
-                          NOTIFICATION_CHANNELS.RESEP,
-                          {
-                            value: Date.now(),
-                          },
-                        )
-                        .subscribe(
-                          () => {},
-                          (err) => console.warn("pushNotification failed", err),
-                        );
                     } else {
                       this.terapiObat = "tidak ada obat";
                     }
