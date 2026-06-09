@@ -3831,7 +3831,7 @@ export class kasirfarmasijualComponent implements OnInit {
       .pushNotification(userdata.kdcabang, NOTIFICATION_CHANNELS.FARMASI, {
         farmasi: {
           antrian: `F${data.no_antrian}`,
-          name: data.pasien,
+          name: data.pasien.toLowerCase(),
           poli: "FARMASI",
         },
       })

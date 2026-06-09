@@ -1411,19 +1411,18 @@
                   {{ x.notransaksi }}
                 </td>
                 <td>
+		  <div
+                    class="badge bg-pill bg-warning btn me-2"
+                    (click)="panggilFarmasi(x)"
+                  >
+                    Panggil
+                  </div>
                   <div
                     class="badge bg-pill bg-danger btn"
                     (click)="pilihpasien(x)"
                   >
                     P
                   </div>
-		  <div
-                    class="badge bg-pill bg-danger btn"
-                    (click)="panggilFarmasi(x)"
-                  >
-                    Panggil Pasien
-                  </div>
-
                 </td>
               </tr>
             </tbody>
