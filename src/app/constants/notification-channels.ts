@@ -4,5 +4,4 @@ export const NOTIFICATION_CHANNELS = {
   HASIL_LAB: "hasil-lab",
   PERMINTAAN_LAB: "permintaan-lab",
   ANTRIAN: "antrian",
-  FARMASI: "farmasi",
 };

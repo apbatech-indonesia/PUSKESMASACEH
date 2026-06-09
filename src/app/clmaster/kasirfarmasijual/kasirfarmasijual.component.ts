@@ -2004,21 +2004,6 @@ export class kasirfarmasijualComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  panggilfarmasi(data: any) {
-    this.notificationService
-      .pushNotification(data.userData.kdcabang, NOTIFICATION_CHANNELS.FARMASI, {
-        farmasi: {
-          antrian: `F${data.no_antrian}`,
-          name: data.pasien,
-          poli: "FARMASI",
-        },
-      })
-      .subscribe(
-        () => {},
-        (err) => console.warn("pushNotification failed", err),
-      );
-  }
-
   setKajianResep(data: any) {
     this.nama_pasien_ket = data.pasien;
     const norm = data.norm;
