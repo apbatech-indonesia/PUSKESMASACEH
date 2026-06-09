@@ -1,10 +1,22 @@
 // ...import dan deklarasi class yang sudah ada, hapus duplikasi ini...
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+} from "@angular/core";
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+  FormArray,
+} from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { ApiserviceService } from "src/app/apiservice.service";
 import Swal from "sweetalert2";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -1951,6 +1963,43 @@ export class kasirfarmasijualComponent implements OnInit {
         },
       );
     }, 150);
+
+    //   if(this.sts === '0'){
+    //     // this.ttldisc = 0;
+    //         }else{
+
+    // // this.admresep = this.admresepblm;
+
+    // // this.tuslahresep = this.tuslahresepblm;
+    // // this.pembulatan = this.pembulatanblm
+    // // this.ttlterbayar = this.ttlterbayarblm
+
+    // // this.nettobmx = (Number(this.totalsebelumadm) + Number(this.admresep)) + Number(this.tuslahresep) ;
+
+    // // console.log("nettobmx",this.nettobmx)
+
+    // // let num = this.nettobmx;
+    // //   let text = num.toString()
+
+    // //   var angka = text.substr(-2);
+    // // var angka1 = parseInt(angka);
+
+    // // var akhir:number;
+    // // if(angka1 < 50){
+    // // akhir = this.nettobmx - angka1;
+    // // }else{
+    // // akhir = this.nettobmx + (100 - angka1);
+
+    // // }
+
+    // // this.netto = akhir;
+    // // this.pembulatan = this.netto-this.nettobmx;
+    // // this.ttlsisaterbayar = this.netto - this.ttlterbayar
+
+    // // console.log(this.ttlterbayar)
+    // // console.log("nett",this.netto)
+
+    //         }
 
     this.modalService.dismissAll();
   }
