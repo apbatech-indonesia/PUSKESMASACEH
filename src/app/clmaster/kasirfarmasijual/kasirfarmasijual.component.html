@@ -797,7 +797,7 @@
                             prefix: ' ',
                             thousands: '.',
                             decimal: ',',
-                            precision: 0
+                            precision: 0,
                           }"
                         />
                       </div>
@@ -825,7 +825,7 @@
                             prefix: ' ',
                             thousands: '.',
                             decimal: ',',
-                            precision: 0
+                            precision: 0,
                           }"
                           style="
                             border-radius: 5px;
@@ -859,7 +859,7 @@
                           [options]="{
                             prefix: ' ',
                             thousands: '.',
-                            decimal: ','
+                            decimal: ',',
                           }"
                           style="
                             border-radius: 5px;
@@ -917,7 +917,7 @@
                             prefix: ' ',
                             thousands: '.',
                             decimal: ',',
-                            precision: 0
+                            precision: 0,
                           }"
                           placeholder="Hasil..."
                           [(ngModel)]="netto"
@@ -1003,7 +1003,7 @@
                             prefix: ' ',
                             thousands: '.',
                             decimal: ',',
-                            precision: 0
+                            precision: 0,
                           }"
                         />
                       </div>
@@ -1038,7 +1038,7 @@
                             prefix: ' ',
                             thousands: '.',
                             decimal: ',',
-                            precision: 0
+                            precision: 0,
                           }"
                         />
                       </div>
@@ -1416,6 +1416,12 @@
                     (click)="pilihpasien(x)"
                   >
                     P
+                  </div>
+                  <div
+                    class="badge bg-pill bg-danger btn"
+                    (click)="panggilfarmasi(x)"
+                  >
+                    Panggil
                   </div>
                 </td>
               </tr>
@@ -1988,7 +1994,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <b>Nominal : {{ ttlsisaterbayar | currency : "IDR" }}</b>
+        <b>Nominal : {{ ttlsisaterbayar | currency: "IDR" }}</b>
         <form [formGroup]="profileForm">
           <div class="position-relative mb-3">
             <label for="exampleSelect" class="form-label"
@@ -2088,7 +2094,7 @@
               prefix: ' ',
               precision: 0,
               thousands: '.',
-              decimal: ','
+              decimal: ',',
             }"
             class="form-control"
           />
