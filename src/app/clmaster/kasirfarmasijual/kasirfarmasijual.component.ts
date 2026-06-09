@@ -3821,4 +3821,23 @@ export class kasirfarmasijualComponent implements OnInit {
       },
     );
   }
+
+  panggilFarmasi(data: any) {
+    const userdata = JSON.parse(
+      localStorage.getItem("userDatacl") || "{userData: null}",
+    ).userData;
+
+    this.notificationService
+      .pushNotification(userdata.kdcabang, NOTIFICATION_CHANNELS.FARMASI, {
+        farmasi: {
+          antrian: `F${data.no_antrian}`,
+          name: data.pasien,
+          poli: "FARMASI",
+        },
+      })
+      .subscribe(
+        () => {},
+        (err) => console.warn("pushNotification failed", err),
+      );
+  }
 }
