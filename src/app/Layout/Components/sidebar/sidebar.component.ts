@@ -167,7 +167,7 @@ export class SidebarComponent implements OnInit {
     this.router.navigate(["/ermdisplay"]);
   }
 
-  get displayRealtimeUrl(prefix): string {
+  displayRealtimeUrl(prefix: string): string {
     const raw = this.vidioid ? String(this.vidioid).trim() : "";
     const vid = raw.length > 0 ? encodeURIComponent(raw) : "";
     const cab = this.kdcabang ? String(this.kdcabang).trim() : "";
