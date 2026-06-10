@@ -167,14 +167,14 @@ export class SidebarComponent implements OnInit {
     this.router.navigate(["/ermdisplay"]);
   }
 
-  get displayRealtimeUrl(): string {
+  get displayRealtimeUrl(prefix): string {
     const raw = this.vidioid ? String(this.vidioid).trim() : "";
     const vid = raw.length > 0 ? encodeURIComponent(raw) : "";
     const cab = this.kdcabang ? String(this.kdcabang).trim() : "";
     // const base = `https://websocket.clenicapp.com`;
     // const path = cab ? `/${cab}/queue` : `/queue`;
     const base = `https://emr.clenicapp.com/`;
-    const path = `${cab}/display-antrian`;
+    const path = `${cab}/${prefix}`;
     return vid ? `${base}${path}?videoId=${vid}` : `${base}${path}`;
   }
 }
