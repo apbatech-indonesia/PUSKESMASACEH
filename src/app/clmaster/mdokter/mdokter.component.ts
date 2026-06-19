@@ -67,7 +67,7 @@ export class MdokterComponent implements OnInit {
     private modalService: NgbModal,
     public toastr: ToastrService,
     private authService: ApiserviceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.nik = data.nik;
@@ -101,7 +101,7 @@ export class MdokterComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   tdokter: any;
@@ -114,7 +114,7 @@ export class MdokterComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.authService.cekdokter().subscribe(
@@ -123,7 +123,7 @@ export class MdokterComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   kddokterbpjs: any = "";
@@ -144,7 +144,7 @@ export class MdokterComponent implements OnInit {
         this.kddokterbpjs,
         this.usericare,
         this.passicare,
-        this.signature
+        this.signature,
       )
       .then((data) => {
         this.dafatrdokter();
@@ -184,7 +184,7 @@ export class MdokterComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -223,6 +223,7 @@ export class MdokterComponent implements OnInit {
     this.clearTrigger = new Date().getTime(); // Trigger untuk membersihkan signature pad
   }
   edituser() {
+    console.log("nip", this.nip);
     this.authService
       .simpandokter(
         this.nik,
@@ -238,7 +239,7 @@ export class MdokterComponent implements OnInit {
         this.kddokterbpjs,
         this.usericare,
         this.passicare,
-        this.signature
+        this.signature,
       )
       .then((data) => {
         this.dafatrdokter();
@@ -288,7 +289,7 @@ export class MdokterComponent implements OnInit {
               this.kdcabang,
               kddokter,
               kdpoli,
-              "3"
+              "3",
             )
             .then((data) => {
               if (data) {
@@ -306,7 +307,7 @@ export class MdokterComponent implements OnInit {
           swalWithBootstrapButtons.fire(
             "Berhasil Hapus User",
             "User Telah Terhapus Dari Database.",
-            "success"
+            "success",
           );
         } else if (
           /* Read more about handling dismissals below */
@@ -325,7 +326,7 @@ export class MdokterComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
   dokter: any;
@@ -342,7 +343,7 @@ export class MdokterComponent implements OnInit {
       },
       (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      }
+      },
     );
   }
   kodeihs: any;
@@ -362,7 +363,7 @@ export class MdokterComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
 
     this.modalService.open(content).result.then(
@@ -371,7 +372,7 @@ export class MdokterComponent implements OnInit {
       },
       (reason) => {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      }
+      },
     );
   }
 
@@ -391,7 +392,7 @@ export class MdokterComponent implements OnInit {
         this.kddokterbpjs,
         this.usericare,
         this.passicare,
-        this.signature
+        this.signature,
       )
       .then((data) => {
         this.dafatrdokter();
@@ -439,7 +440,7 @@ export class MdokterComponent implements OnInit {
         this.kdcabang,
         this.kddokter,
         this.selectedCity,
-        "1"
+        "1",
       )
       .then((data) => {
         console.log(data);
