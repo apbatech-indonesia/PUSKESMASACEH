@@ -3281,19 +3281,6 @@ export class tulisermComponent implements OnInit {
                 localStorage.getItem("userDatacl") || "{userData: null}",
               ).userData;
 
-              this.notificationService
-                .pushNotification(
-                  userdata.kdcabang,
-                  NOTIFICATION_CHANNELS.RESEP,
-                  {
-                    value: Date.now(),
-                  },
-                )
-                .subscribe(
-                  () => {},
-                  (err) => console.warn("pushNotification failed", err),
-                );
-
               this.authService
                 .obatnonracik(
                   this.kdcabang,
@@ -3306,6 +3293,19 @@ export class tulisermComponent implements OnInit {
                       this.terapiObat = Array.prototype.map
                         .call(data, (s) => s.nama)
                         .toString();
+
+                      this.notificationService
+                        .pushNotification(
+                          userdata.kdcabang,
+                          NOTIFICATION_CHANNELS.RESEP,
+                          {
+                            value: Date.now(),
+                          },
+                        )
+                        .subscribe(
+                          () => {},
+                          (err) => console.warn("pushNotification failed", err),
+                        );
 
                       // this.websocketService
                       //   .sendNotification({
