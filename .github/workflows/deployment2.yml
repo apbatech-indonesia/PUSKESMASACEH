@@ -74,37 +74,51 @@ jobs:
             rm -rf v1-old && [ -d v1 ] && mv v1 v1-old
             mv v1-new v1
 
-      - name: Save Stats
+      - name: Save Stats to Cache
         if: always()
         run: |
           DURATION=$(( $(date +%s) - $START_TIME ))
-          echo "{\"folder\": \"${{ matrix.folder }}\", \"duration\": $DURATION}" > stats.json
+          # Simpan ke direktori unik agar tidak tertimpa
+          mkdir -p stats-data
+          echo "{\"folder\": \"${{ matrix.folder }}\", \"duration\": $DURATION}" > stats-data/${{ matrix.folder }}.json
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/cache@v4
         if: always()
         with:
-          name: stats-${{ matrix.folder }}
-          path: stats.json
+          path: stats-data/*.json
+          key: deploy-stats-${{ github.run_id }}-${{ matrix.folder }}
 
   report:
     needs: [deploy]
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Restore All Stats
+        uses: actions/cache@v4
         with:
-          path: ./all-stats
+          path: stats-data/*.json
+          key: deploy-stats-${{ github.run_id }}-
+          # Restore-keys memungkinkan mengambil semua cache yang diawali prefix ini
+          restore-keys: |
+            deploy-stats-${{ github.run_id }}-
+
       - name: Generate Report
         run: |
-          stats=$(cat ./all-stats/**/*.json | jq -s '.')
-          echo "### Deployment Performance Report" >> $GITHUB_STEP_SUMMARY
-          echo "$stats" | jq -r '["| Branch | Duration |", "|---|---|", (.[] | "| \(.folder) | \(.duration)s |")] | join("\n")' >> $GITHUB_STEP_SUMMARY
+          # Gabungkan semua file json di folder stats-data
+          if [ -d "stats-data" ] && [ "$(ls -A stats-data)" ]; then
+            stats=$(cat stats-data/*.json | jq -s '.')
+            
+            echo "### Deployment Performance Report" >> $GITHUB_STEP_SUMMARY
+            echo "$stats" | jq -r '["| Branch | Duration |", "|---|---|", (.[] | "| \(.folder) | \(.duration)s |")] | join("\n")' >> $GITHUB_STEP_SUMMARY
 
-          echo -e "\n--- SUMMARY STATS ---"
-          echo "$stats" | jq -r '
-            {
-              total: length,
-              avg: (map(.duration) | add / length),
-              high: (map(.duration) | max),
-              low: (map(.duration) | min)
-            } | "Total Deploy: \(.total) | Avg: \(.avg)s | High: \(.high)s | Low: \(.low)s"'
+            echo -e "\n--- SUMMARY STATS ---"
+            echo "$stats" | jq -r '
+              {
+                total: length,
+                avg: (map(.duration) | add / length),
+                high: (map(.duration) | max),
+                low: (map(.duration) | min)
+              } | "Total Deploy: \(.total) | Avg: \(.avg)s | High: \(.high)s | Low: \(.low)s"'
+          else
+            echo "Tidak ada data statistik ditemukan." >> $GITHUB_STEP_SUMMARY
+          fi
