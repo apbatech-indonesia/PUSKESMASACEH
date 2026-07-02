@@ -55,6 +55,7 @@ jobs:
       - uses: easingthemes/ssh-deploy@v5.0.0
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_PORT: ${{ secrets.SSH_PORT }}
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
           REMOTE_USER: ${{ secrets.SSH_USER }}
           SOURCE: "./dist/clenicappdemo/"
@@ -66,6 +67,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
           script: |
             cd /home/clenicapp.com/apps/${{ matrix.folder }}.clenicapp.com
             [ -d v1-new ] || exit 1
