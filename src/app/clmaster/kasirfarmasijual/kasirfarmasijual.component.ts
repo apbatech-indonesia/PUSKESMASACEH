@@ -2005,6 +2005,7 @@ export class kasirfarmasijualComponent implements OnInit {
   }
 
   setKajianResep(data: any) {
+    this.resetForm();
     this.nama_pasien_ket = data.pasien;
     const norm = data.norm;
     const notransaksi = data.nofaktur;
@@ -2086,60 +2087,64 @@ export class kasirfarmasijualComponent implements OnInit {
         this.analisa = res.analisa;
         this.konseling = res.konseling;
       } else {
-        this.nama_pasien = "Ada";
-        this.nama_pasien_ket = "";
-        this.alamat_pasien = "Ada";
-        this.alamat_pasien_ket = "";
-        this.umur_pasien = "Ada";
-        this.umur_pasien_ket = "";
-        this.berat_badan = "Tidak";
-        this.berat_badan_ket = "Konfirmasi Dokter";
-        this.jenis_kelamin = "Ada";
-        this.jenis_kelamin_ket = "";
-        this.nama_dokter = "Ada";
-        this.nama_dokter_ket = "";
-        this.nomor_ijin = "Tidak";
-        this.nomor_ijin_ket = "Konfirmasi Dokter";
-        this.alamat_dokter = "Tidak";
-        this.alamat_dokter_ket = "Konfirmasi Dokter";
-        this.tanda_tangan_dokter = "Ada";
-        this.tanda_tangan_dokter_ket = "";
-        this.tempat_tanggal_resep = "Tidak";
-        this.tempat_tanggal_resep_ket = "Konfirmasi Dokter";
-        this.nama_obat = "Ada";
-        this.nama_obat_ket = "";
-        this.bentuk_sediaan = "Ada";
-        this.bentuk_sediaan_ket = "";
-        this.kekuatan_sediaan_obat = "Ada";
-        this.kekuatan_sediaan_obat_ket = "";
-        this.jumlah_obat = "Ada";
-        this.jumlah_obat_ket = "";
-        this.stabilitas_dan_inkompabilitas = "Tidak";
-        this.stabilitas_dan_inkompabilitas_ket = "";
-        this.aturan_dan_cara_penggunaan_obat = "Ada";
-        this.aturan_dan_cara_penggunaan_obat_ket = "";
-        this.ketidaktepatan_seleksi_obat = "Tidak";
-        this.ketidaktepatan_seleksi_obat_ket = "";
-        this.dosis_kurang = "Tidak";
-        this.dosis_kurang_ket = "";
-        this.dosis_lebih = "Tidak";
-        this.dosis_lebih_ket = "";
-        this.duplikasi = "Tidak";
-        this.duplikasi_ket = "";
-        this.obat_tanpa_indikasi = "Tidak";
-        this.obat_tanpa_indikasi_ket = "";
-        this.indikasi_tidak_diobati = "Tidak";
-        this.indikasi_tidak_diobati_ket = "";
-        this.interaksi_obat = "Tidak";
-        this.interaksi_obat_ket = "";
-        this.reaksi_obat_merugikan = "Tidak";
-        this.reaksi_obat_merugikan_ket = "";
-        this.gagal_menerima_obat = "Tidak";
-        this.gagal_menerima_obat_ket = "";
-        this.analisa = "";
-        this.konseling = "";
+        this.resetForm();
       }
     });
+  }
+
+  resetForm() {
+    this.nama_pasien = "Ada";
+    this.nama_pasien_ket = "";
+    this.alamat_pasien = "Ada";
+    this.alamat_pasien_ket = "";
+    this.umur_pasien = "Ada";
+    this.umur_pasien_ket = "";
+    this.berat_badan = "Tidak";
+    this.berat_badan_ket = "Konfirmasi Dokter";
+    this.jenis_kelamin = "Ada";
+    this.jenis_kelamin_ket = "";
+    this.nama_dokter = "Ada";
+    this.nama_dokter_ket = "";
+    this.nomor_ijin = "Tidak";
+    this.nomor_ijin_ket = "Konfirmasi Dokter";
+    this.alamat_dokter = "Tidak";
+    this.alamat_dokter_ket = "Konfirmasi Dokter";
+    this.tanda_tangan_dokter = "Ada";
+    this.tanda_tangan_dokter_ket = "";
+    this.tempat_tanggal_resep = "Tidak";
+    this.tempat_tanggal_resep_ket = "Konfirmasi Dokter";
+    this.nama_obat = "Ada";
+    this.nama_obat_ket = "";
+    this.bentuk_sediaan = "Ada";
+    this.bentuk_sediaan_ket = "";
+    this.kekuatan_sediaan_obat = "Ada";
+    this.kekuatan_sediaan_obat_ket = "";
+    this.jumlah_obat = "Ada";
+    this.jumlah_obat_ket = "";
+    this.stabilitas_dan_inkompabilitas = "Tidak";
+    this.stabilitas_dan_inkompabilitas_ket = "";
+    this.aturan_dan_cara_penggunaan_obat = "Ada";
+    this.aturan_dan_cara_penggunaan_obat_ket = "";
+    this.ketidaktepatan_seleksi_obat = "Tidak";
+    this.ketidaktepatan_seleksi_obat_ket = "";
+    this.dosis_kurang = "Tidak";
+    this.dosis_kurang_ket = "";
+    this.dosis_lebih = "Tidak";
+    this.dosis_lebih_ket = "";
+    this.duplikasi = "Tidak";
+    this.duplikasi_ket = "";
+    this.obat_tanpa_indikasi = "Tidak";
+    this.obat_tanpa_indikasi_ket = "";
+    this.indikasi_tidak_diobati = "Tidak";
+    this.indikasi_tidak_diobati_ket = "";
+    this.interaksi_obat = "Tidak";
+    this.interaksi_obat_ket = "";
+    this.reaksi_obat_merugikan = "Tidak";
+    this.reaksi_obat_merugikan_ket = "";
+    this.gagal_menerima_obat = "Tidak";
+    this.gagal_menerima_obat_ket = "";
+    this.analisa = "";
+    this.konseling = "";
   }
 
   lunas: string;
