@@ -10,28 +10,47 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - name: Fetch branches
+      - name: Ambil list branches dari API & generate matrix
         id: set-matrix
         run: |
-          json=$(curl -fsSL --max-time 10 https://emr.clenicapp.com/api/get-branches)
-          if [ $? -ne 0 ]; then echo "API Error"; exit 1; fi
-          matrix=$(echo "$json" | jq -c '.data')
+          echo "Fetching branches…"
+          sudo apt-get update && sudo apt-get install -y jq
+          json=$(curl -sS --max-time 10 https://emr.clenicapp.com/api/get-branches) || true
+          if [ -z "${json}" ] || ! echo "${json}" | jq -e . >/dev/null 2>&1; then
+            echo "Warning: failed to fetch or parse branches API response; using empty matrix."
+            matrix='[]'
+          else
+            matrix=$(echo "${json}" | jq -c '.data' 2>/dev/null) || matrix='[]'
+          fi
+          echo "Matrix: $matrix"
           echo "matrix=$matrix" >> $GITHUB_OUTPUT
 
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: "16"
-      - uses: actions/cache@v4
+
+      - name: Cache NPM
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      - run: npm install --legacy-peer-deps
-      - run: npm run build -- --configuration production
-      - uses: actions/upload-artifact@v4
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps --no-audit --no-fund
+
+      - name: Build app
+        run: npm run build -- --configuration production
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
         with:
           name: app-build
           path: ./dist/clenicappdemo/
@@ -42,69 +61,53 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        folder: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
-    steps:
-      - name: Start Timer
-        run: echo "START_TIME=$(date +%s)" >> $GITHUB_ENV
+        folder: "${{ fromJson(needs.generate-matrix.outputs.matrix) }}"
 
-      - uses: actions/download-artifact@v4
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
         with:
           name: app-build
           path: ./dist/clenicappdemo/
 
-      - uses: easingthemes/ssh-deploy@v5.0.0
+      - name: SFTP Deploy to ${{ matrix.folder }}
+        uses: easingthemes/ssh-deploy@v5.0.0
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_PORT: ${{ secrets.SSH_PORT }}
           REMOTE_HOST: ${{ secrets.SSH_HOST }}
           REMOTE_USER: ${{ secrets.SSH_USER }}
+          REMOTE_PORT: ${{ secrets.SSH_PORT }} # default 22 jika tidak diisi
           SOURCE: "./dist/clenicappdemo/"
           TARGET: "/home/clenicapp.com/apps/${{ matrix.folder }}.clenicapp.com/v1-new/"
           ARGS: "-avz --no-times --chown=cleni3473:cleni3473"
 
-      - uses: appleboy/ssh-action@v1.0.0
+      - name: Cleanup and Swap Versions on Server
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            echo "Navigating to target folder..."
             cd /home/clenicapp.com/apps/${{ matrix.folder }}.clenicapp.com
-            [ -d v1-new ] || exit 1
-            rm -rf v1-old && [ -d v1 ] && mv v1 v1-old
+
+            echo "Checking if v1-new exists..."
+            if [ ! -d v1-new ]; then
+              echo "ERROR: v1-new does not exist. Deployment aborted."
+              exit 1
+            fi
+
+            echo "Removing v1-old if exists..."
+            rm -rf v1-old
+
+            echo "Renaming v1 to v1-old if exists..."
+            [ -d v1 ] && mv v1 v1-old
+
+            echo "Renaming v1-new to v1..."
             mv v1-new v1
 
-      - name: Save Stats
-        if: always()
-        run: |
-          DURATION=$(( $(date +%s) - $START_TIME ))
-          echo "{\"folder\": \"${{ matrix.folder }}\", \"duration\": $DURATION}" > stats.json
+            echo "Removing v1-new if exists..."
+            rm -rf v1-new
 
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: stats-${{ matrix.folder }}
-          path: stats.json
-
-  report:
-    needs: [deploy]
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          path: ./all-stats
-      - name: Generate Report
-        run: |
-          stats=$(cat ./all-stats/**/*.json | jq -s '.')
-          echo "### Deployment Performance Report" >> $GITHUB_STEP_SUMMARY
-          echo "$stats" | jq -r '["| Branch | Duration |", "|---|---|", (.[] | "| \(.folder) | \(.duration)s |")] | join("\n")' >> $GITHUB_STEP_SUMMARY
-
-          echo -e "\n--- SUMMARY STATS ---"
-          echo "$stats" | jq -r '
-            {
-              total: length,
-              avg: (map(.duration) | add / length),
-              high: (map(.duration) | max),
-              low: (map(.duration) | min)
-            } | "Total Deploy: \(.total) | Avg: \(.avg)s | High: \(.high)s | Low: \(.low)s"'
+            echo "Cleanup and swap completed successfully."

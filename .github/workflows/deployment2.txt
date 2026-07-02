@@ -1,0 +1,110 @@
+name: Build & Deploy workflow
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Fetch branches
+        id: set-matrix
+        run: |
+          json=$(curl -fsSL --max-time 10 https://emr.clenicapp.com/api/get-branches)
+          if [ $? -ne 0 ]; then echo "API Error"; exit 1; fi
+          matrix=$(echo "$json" | jq -c '.data')
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      - run: npm install --legacy-peer-deps
+      - run: npm run build -- --configuration production
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-build
+          path: ./dist/clenicappdemo/
+          retention-days: 1
+
+  deploy:
+    needs: [build, generate-matrix]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        folder: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+    steps:
+      - name: Start Timer
+        run: echo "START_TIME=$(date +%s)" >> $GITHUB_ENV
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: app-build
+          path: ./dist/clenicappdemo/
+
+      - uses: easingthemes/ssh-deploy@v5.0.0
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_PORT: ${{ secrets.SSH_PORT }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          SOURCE: "./dist/clenicappdemo/"
+          TARGET: "/home/clenicapp.com/apps/${{ matrix.folder }}.clenicapp.com/v1-new/"
+          ARGS: "-avz --no-times --chown=cleni3473:cleni3473"
+
+      - uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd /home/clenicapp.com/apps/${{ matrix.folder }}.clenicapp.com
+            [ -d v1-new ] || exit 1
+            rm -rf v1-old && [ -d v1 ] && mv v1 v1-old
+            mv v1-new v1
+
+      - name: Save Stats
+        if: always()
+        run: |
+          DURATION=$(( $(date +%s) - $START_TIME ))
+          echo "{\"folder\": \"${{ matrix.folder }}\", \"duration\": $DURATION}" > stats.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: stats-${{ matrix.folder }}
+          path: stats.json
+
+  report:
+    needs: [deploy]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: ./all-stats
+      - name: Generate Report
+        run: |
+          stats=$(cat ./all-stats/**/*.json | jq -s '.')
+          echo "### Deployment Performance Report" >> $GITHUB_STEP_SUMMARY
+          echo "$stats" | jq -r '["| Branch | Duration |", "|---|---|", (.[] | "| \(.folder) | \(.duration)s |")] | join("\n")' >> $GITHUB_STEP_SUMMARY
+
+          echo -e "\n--- SUMMARY STATS ---"
+          echo "$stats" | jq -r '
+            {
+              total: length,
+              avg: (map(.duration) | add / length),
+              high: (map(.duration) | max),
+              low: (map(.duration) | min)
+            } | "Total Deploy: \(.total) | Avg: \(.avg)s | High: \(.high)s | Low: \(.low)s"'
