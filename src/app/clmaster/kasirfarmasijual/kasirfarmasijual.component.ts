@@ -2093,6 +2093,7 @@ export class kasirfarmasijualComponent implements OnInit {
   }
 
   resetForm() {
+    this.tomboledit = false;
     this.nama_pasien = "Ada";
     this.nama_pasien_ket = "";
     this.alamat_pasien = "Ada";
