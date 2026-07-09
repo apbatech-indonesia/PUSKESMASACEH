@@ -3647,7 +3647,7 @@ export class kasirfarmasijualComponent implements OnInit {
   simpankajian() {
     let payload = {
       norm: this.norm || "",
-      notransaksi: this.nofaktur || "",
+      notransaksi: this.notransaksi || "",
       nama_pasien: this.nama_pasien === "Ada",
       nama_pasien_ket: this.nama_pasien_ket || "",
       alamat_pasien: this.alamat_pasien === "Ada",
