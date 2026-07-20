@@ -3226,57 +3226,57 @@ export class MpdaftarpasienComponent implements OnInit {
               if (this.noasuransi.length <= 5) {
                 this.toastr.error("Silahkan Isi No Kartu BPJS", "Eror");
               } else {
-                this.authService
-                  .tmpbpjs(this.noasuransi, this.carinobpjs)
-                  .subscribe(
-                    (data) => {
-                      if (data) {
-                        console.log(data.metaData.code);
-                        if (data.metaData.code == 200) {
-                          this.namabpjs = data.response.nama;
-                          this.tglakhirberlaku = data.response.tglAkhirBerlaku;
-                          this.jeniskelas = data.response.jnsKelas.nama;
-                          this.jenispeserta = data.response.jnsPeserta.nama;
-                          this.aktif = data.response.aktif;
-                          this.ketaktif = data.response.ketAktif;
-                          this.kdprovider =
-                            data.response.kdProviderPst.kdProvider;
-                          this.namaprovider =
-                            data.response.kdProviderPst.nmProvider;
+                // this.authService
+                //   .tmpbpjs(this.noasuransi, this.carinobpjs)
+                //   .subscribe(
+                //     (data) => {
+                //       if (data) {
+                //         console.log(data.metaData.code);
+                //         if (data.metaData.code == 200) {
+                //           this.namabpjs = data.response.nama;
+                //           this.tglakhirberlaku = data.response.tglAkhirBerlaku;
+                //           this.jeniskelas = data.response.jnsKelas.nama;
+                //           this.jenispeserta = data.response.jnsPeserta.nama;
+                //           this.aktif = data.response.aktif;
+                //           this.ketaktif = data.response.ketAktif;
+                //           this.kdprovider =
+                //             data.response.kdProviderPst.kdProvider;
+                //           this.namaprovider =
+                //             data.response.kdProviderPst.nmProvider;
 
-                          if (this.aktif == true) {
-                          } else {
-                            this.toastr.error(
-                              "NOMOR PESERTA : " + this.ketaktif,
-                              "Eror",
-                            );
-                          }
-                        } else if (data.metaData.code == 204) {
-                          this.toastr.error("Kartu Tidak di temukan", "Eror");
+                //           if (this.aktif == true) {
+                //           } else {
+                //             this.toastr.error(
+                //               "NOMOR PESERTA : " + this.ketaktif,
+                //               "Eror",
+                //             );
+                //           }
+                //         } else if (data.metaData.code == 204) {
+                //           this.toastr.error("Kartu Tidak di temukan", "Eror");
 
-                          this.namabpjs = "";
-                          this.tglakhirberlaku = "";
-                          this.jeniskelas = "";
-                          this.jenispeserta = "";
-                          this.aktif = "";
-                          this.ketaktif = "";
-                          this.kdprovider = "";
-                          this.namaprovider = "";
+                //           this.namabpjs = "";
+                //           this.tglakhirberlaku = "";
+                //           this.jeniskelas = "";
+                //           this.jenispeserta = "";
+                //           this.aktif = "";
+                //           this.ketaktif = "";
+                //           this.kdprovider = "";
+                //           this.namaprovider = "";
 
-                          this.showloading = false;
-                        } else {
-                          this.toastr.error(data.response.message, "Eror");
-                          this.showloading = false;
-                        }
-                      } else {
-                        this.toastr.error("Gagal Memuat Data BPJS", "Eror");
-                        this.showloading = false;
-                      }
-                    },
-                    (Error) => {
-                      console.log(Error);
-                    },
-                  );
+                //           this.showloading = false;
+                //         } else {
+                //           this.toastr.error(data.response.message, "Eror");
+                //           this.showloading = false;
+                //         }
+                //       } else {
+                //         this.toastr.error("Gagal Memuat Data BPJS", "Eror");
+                //         this.showloading = false;
+                //       }
+                //     },
+                //     (Error) => {
+                //       console.log(Error);
+                //     },
+                //   );
               }
             }
           }
