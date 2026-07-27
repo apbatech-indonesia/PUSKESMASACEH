@@ -90,7 +90,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             echo "Navigating to target folder..."
-            cd /home/clenicapp.com/apps/${{ matrix.folder }}.clenicapp.com
+            cd /clenicapp.com/apps/${{ matrix.folder }}.clenicapp.com
 
             echo "Checking if v1-new exists..."
             if [ ! -d v1-new ]; then
