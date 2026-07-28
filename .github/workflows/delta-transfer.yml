@@ -47,8 +47,6 @@ jobs:
         run: npm ci --legacy-peer-deps --no-audit --no-fund
 
       - name: Build app
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
         run: npm run build -- --configuration production
 
       - name: Upload build artifact
