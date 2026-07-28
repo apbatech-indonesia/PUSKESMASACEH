@@ -45,7 +45,6 @@ import { McoaComponent } from "../mcoa/mcoa.component";
 import { MobatComponent } from "../mobat/mobat.component";
 import { mutasifarmasiComponent } from "../mutasifarmasi/mutasifarmasi.component";
 import { SampleService } from "src/app/services";
-import { EchoService } from "src/app/services/echo.service";
 import { NotificationService } from "src/app/services/notification.service";
 import { GlobalComponent } from "src/app/clmaster/Globals/global.component";
 import { FarmasijualService } from "./farmasijual.service";
@@ -219,7 +218,6 @@ export class kasirfarmasijualComponent implements OnInit {
   hostName: string;
   URLINVOICE: string;
   private audio2IntervalId?: any;
-  private echoUnsub?: () => void;
   slug: any;
   nama_pasien_ket: any;
   umur_pasien: string = "Ada";
@@ -257,7 +255,6 @@ export class kasirfarmasijualComponent implements OnInit {
     public toastr: ToastrService,
     private authService: ApiserviceService,
     private fb: FormBuilder,
-    private echoService: EchoService,
     private notificationService: NotificationService,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
@@ -278,19 +275,7 @@ export class kasirfarmasijualComponent implements OnInit {
     console.log(this.akses);
   }
 
-  // Echo logic removed from this component. Keep socket.io usage below.
-
   ngOnDestroy(): void {
-    // unsubscribe Echo listener if set
-    try {
-      if (this.echoUnsub) {
-        this.echoUnsub();
-        this.echoUnsub = undefined;
-      }
-    } catch (e) {
-      console.warn("Failed to unsubscribe Echo listener", e);
-    }
-
     // clear any pending audio2 interval
     try {
       if (this.audio2IntervalId) {
@@ -582,71 +567,6 @@ export class kasirfarmasijualComponent implements OnInit {
     this.hostName = this.hots.getHostname();
 
     this.URLINVOICE = "https://" + this.hostName + "/";
-
-    // Initialize EchoService locally for this component only
-    // try {
-    //   this.echoService.init({
-    //     broadcaster: "reverb",
-    //     key: "tal3xzzkbakc0vjnidjhasdasd",
-    //     wsHost: "websocket.clenicapp.com",
-    //     wsPort: 80,
-    //     wssPort: 443,
-    //     forceTLS: true,
-    //     enabledTransports: ["ws", "wss"],
-    //   });
-    //   this.echoUnsub = this.echoService.subscribe(
-    //     `${this.kdcabang}.${NOTIFICATION_CHANNELS.RESEP}`,
-    //     "NotificationSent",
-    //     (payload: any) => {
-    //       console.log("Echo event on", "NotificationSent", payload);
-    //       this.toastr.success("Ada Resep Baru");
-
-    //       let audio1 = new Audio(
-    //         "https://knm.clenicapp.com/clenic/sound/notify.wav",
-    //       );
-    //       let audio2 = new Audio(
-    //         "https://knm.clenicapp.com/clenic/sound/RESEP.wav",
-    //       );
-
-    //       audio1.onended = () => {
-    //         let plays = 0;
-    //         const delay =
-    //           audio2.duration && !isNaN(audio2.duration)
-    //             ? audio2.duration * 1000
-    //             : 1000;
-
-    //         const playOnce = () => {
-    //           try {
-    //             audio2.currentTime = 0;
-    //             audio2
-    //               .play()
-    //               .catch((e) => console.warn("audio2 play failed", e));
-    //           } catch (e) {
-    //             console.warn("audio2 play error", e);
-    //           }
-    //           plays++;
-    //         };
-
-    //         // play immediately once
-    //         playOnce();
-    //         // schedule repeats using setInterval, clear after 2 plays total
-    //         this.audio2IntervalId = setInterval(() => {
-    //           if (plays >= 2) {
-    //             clearInterval(this.audio2IntervalId);
-    //             this.audio2IntervalId = undefined;
-    //             return;
-    //           }
-    //           playOnce();
-    //         }, delay);
-    //       };
-
-    //       audio1.play();
-    //     },
-    //   );
-    //   console.log("EchoService initialized for kasirfarmasijual");
-    // } catch (err) {
-    //   console.warn("Failed to init local EchoService", err);
-    // }
 
     // start polling resep notifications via NotificationService
     this.startResepNotifications();

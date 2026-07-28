@@ -38,7 +38,6 @@ import { FarmasijualService } from "../kasirfarmasijual/farmasijual.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { WebsocketService } from "src/app/services";
 import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
-import { EchoService } from "src/app/services/echo.service";
 import { NotificationService } from "src/app/services/notification.service";
 
 @Component({
@@ -145,7 +144,6 @@ export class ermdokterrmComponent implements OnInit, OnDestroy {
   sortValue: any = null;
   filterPoli: any = null;
   tklinik: any;
-  echoUnsub: any;
   hasilLabCount: number;
   permintaanLabCount: number;
 
@@ -155,7 +153,6 @@ export class ermdokterrmComponent implements OnInit, OnDestroy {
     private chatService: ChatService,
     private notificationService: NotificationService,
     private websocketService: WebsocketService,
-    private echoService: EchoService,
     private datepipe: DatePipe,
     private modalService: NgbModal,
     public toastr: ToastrService,
@@ -183,7 +180,6 @@ export class ermdokterrmComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.tmppuser();
     this.tmptotal();
-    this.initEchoNotifications();
     this.startLabNotifications();
 
     this.authService.cabangper(this.kdklinik).subscribe(
@@ -566,54 +562,6 @@ export class ermdokterrmComponent implements OnInit, OnDestroy {
     }
   }
 
-  private initEchoNotifications() {
-    this.requestPermission();
-    try {
-      this.echoService.init({
-        broadcaster: "reverb",
-        key: "tal3xzzkbakc0vjnidjhasdasd",
-        wsHost: "websocket.clenicapp.com",
-        wsPort: 80,
-        wssPort: 443,
-        forceTLS: true,
-        enabledTransports: ["ws", "wss"],
-      });
-
-      // Subscribe to dedicated lab channels instead of a generic notification
-      // so we can avoid branching on payload titles.
-      this.echoUnsub = [] as any[];
-
-      const subLab = this.echoService.subscribe(
-        `${this.kdcabang}.${NOTIFICATION_CHANNELS.PERMINTAAN_LAB}`,
-        "NotificationSent",
-        (payload: any) => {
-          try {
-            this.notifcenter("Laborat");
-          } catch (e) {
-            console.warn("Error handling laborat event", e);
-          }
-        },
-      );
-      this.echoUnsub.push(subLab);
-
-      const subHasil = this.echoService.subscribe(
-        `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
-        "NotificationSent",
-        (payload: any) => {
-          try {
-            this.notifcenter("Hasil Laborat");
-          } catch (e) {
-            console.warn("Error handling hasil-laborat event", e);
-          }
-        },
-      );
-      this.echoUnsub.push(subHasil);
-      console.log("EchoService initialized for kasirlab");
-    } catch (err) {
-      console.warn("Failed to init local EchoService", err);
-    }
-  }
-
   private startLabNotifications(): void {
     this.requestPermission();
     try {
@@ -657,32 +605,6 @@ export class ermdokterrmComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    try {
-      if (this.echoUnsub) {
-        if (Array.isArray(this.echoUnsub)) {
-          this.echoUnsub.forEach((u: any) => {
-            try {
-              if (typeof u === "function") {
-                u();
-              } else if (u && u.unsubscribe) {
-                u.unsubscribe();
-              }
-            } catch (e) {
-              console.warn("Error unsubscribing", e);
-            }
-          });
-        } else {
-          if (typeof this.echoUnsub === "function") {
-            this.echoUnsub();
-          } else if (this.echoUnsub.unsubscribe) {
-            this.echoUnsub.unsubscribe();
-          }
-        }
-      }
-    } catch (e) {
-      console.warn("Error during ngOnDestroy cleanup", e);
-    }
-
     try {
       const dataRaw = localStorage.getItem("userDatacl");
       const data = dataRaw ? JSON.parse(dataRaw) : null;

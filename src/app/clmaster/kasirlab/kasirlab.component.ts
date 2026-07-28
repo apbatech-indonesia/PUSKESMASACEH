@@ -29,7 +29,6 @@ import { NgSelectModule, NgOption } from "@ng-select/ng-select";
 import { DatePipe } from "@angular/common";
 import { SampleService, WebsocketService } from "src/app/services";
 import { NotificationService } from "src/app/services/notification.service";
-import { EchoService } from "src/app/services/echo.service";
 import { TreeNode } from "primeng/api";
 import { GlobalComponent } from "src/app/clmaster/Globals/global.component";
 import { HttpHeaders } from "@angular/common/http";
@@ -88,7 +87,6 @@ export class kasirlabComponent implements OnInit, OnDestroy {
 
   files1: TreeNode[];
   selectedFile: TreeNode;
-  echoUnsub: any;
   audio2IntervalId: any;
   hasilLabCount: number;
   permintaanLabCount: number;
@@ -100,7 +98,6 @@ export class kasirlabComponent implements OnInit, OnDestroy {
     public toastr: ToastrService,
     private authService: ApiserviceService,
     private fb: FormBuilder,
-    private echoService: EchoService,
     public websocketService: WebsocketService,
     private notificationService: NotificationService,
   ) {
@@ -128,8 +125,6 @@ export class kasirlabComponent implements OnInit, OnDestroy {
 
     this.hostName = this.hots.getHostname();
 
-    // Initialize EchoService for realtime notifications (lab)
-    this.initEchoNotifications();
     this.startLabNotifications();
   }
 
@@ -157,55 +152,6 @@ export class kasirlabComponent implements OnInit, OnDestroy {
     };
 
     audio1.play().catch((e) => console.warn("audio1 play failed", e));
-  }
-
-  private initEchoNotifications() {
-    this.requestPermission();
-
-    try {
-      this.echoService.init({
-        broadcaster: "reverb",
-        key: "tal3xzzkbakc0vjnidjhasdasd",
-        wsHost: "websocket.clenicapp.com",
-        wsPort: 80,
-        wssPort: 443,
-        forceTLS: true,
-        enabledTransports: ["ws", "wss"],
-      });
-
-      // Subscribe to dedicated lab channels instead of a generic notification
-      // so we can avoid branching on payload titles.
-      this.echoUnsub = [] as any[];
-
-      const subLab = this.echoService.subscribe(
-        `${this.kdcabang}.${NOTIFICATION_CHANNELS.PERMINTAAN_LAB}`,
-        "NotificationSent",
-        (payload: any) => {
-          try {
-            this.notifcenter("Laborat");
-          } catch (e) {
-            console.warn("Error handling laborat event", e);
-          }
-        },
-      );
-      this.echoUnsub.push(subLab);
-
-      const subHasil = this.echoService.subscribe(
-        `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
-        "NotificationSent",
-        (payload: any) => {
-          try {
-            this.notifcenter("Hasil Laborat");
-          } catch (e) {
-            console.warn("Error handling hasil-laborat event", e);
-          }
-        },
-      );
-      this.echoUnsub.push(subHasil);
-      console.log("EchoService initialized for kasirlab");
-    } catch (err) {
-      console.warn("Failed to init local EchoService", err);
-    }
   }
 
   private startLabNotifications(): void {
@@ -250,76 +196,7 @@ export class kasirlabComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleEchoPayload(payload: any) {
-    try {
-      const title =
-        payload && payload.title ? String(payload.title).toLowerCase() : "";
-      if (title === "hasil laborat" || title === "permintaan laborat baru") {
-        this.playLabSound(title);
-      }
-    } catch (e) {
-      console.warn("Error handling Echo payload", e);
-    }
-  }
-
-  private playLabSound(title: string) {
-    const audio1 = new Audio(
-      "https://knm.clenicapp.com/clenic/sound/notify.wav",
-    );
-    const audio2 = new Audio();
-
-    if (title === "hasil laborat") {
-      audio2.src = "https://knm.clenicapp.com/clenic/sound/hasil-lab.wav";
-      this.toastr.success("Hasil Laborat Baru");
-    } else if (title === "permintaan laborat baru") {
-      audio2.src = "https://knm.clenicapp.com/clenic/sound/permintaan-lab.wav";
-      this.toastr.success("Permintaan Laborat Baru");
-    }
-
-    audio1.onended = () => {
-      try {
-        audio2.currentTime = 0;
-        audio2.play().catch((e) => console.warn("audio2 play failed", e));
-      } catch (e) {
-        console.warn("audio2 play error", e);
-      }
-    };
-
-    audio1.play().catch((e) => console.warn("audio1 play failed", e));
-  }
-
   ngOnDestroy() {
-    try {
-      if (this.echoUnsub) {
-        if (Array.isArray(this.echoUnsub)) {
-          this.echoUnsub.forEach((u: any) => {
-            try {
-              if (typeof u === "function") {
-                u();
-              } else if (u && u.unsubscribe) {
-                u.unsubscribe();
-              }
-            } catch (e) {
-              console.warn("Error unsubscribing", e);
-            }
-          });
-        } else {
-          if (typeof this.echoUnsub === "function") {
-            this.echoUnsub();
-          } else if (this.echoUnsub.unsubscribe) {
-            this.echoUnsub.unsubscribe();
-          }
-        }
-      }
-      if (this.audio2IntervalId) {
-        clearInterval(this.audio2IntervalId);
-        this.audio2IntervalId = undefined;
-      }
-    } catch (e) {
-      console.warn("Error during ngOnDestroy cleanup", e);
-    }
-
-    // stop polling notifications
     try {
       const dataRaw = localStorage.getItem("userDatacl");
       const data = dataRaw ? JSON.parse(dataRaw) : null;

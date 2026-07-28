@@ -36,7 +36,6 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { WebsocketService } from "src/app/services";
 import { NotificationService } from "src/app/services/notification.service";
 import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
-import { EchoService } from "src/app/services/echo.service";
 
 @Component({
   selector: "app-ermdokter",
@@ -44,9 +43,6 @@ import { EchoService } from "src/app/services/echo.service";
   styles: [],
   providers: [
     DatePipe,
-    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
-    // `MatMomentDateModule` in your applications root module. We provide it at the component level
-    // here, due to limitations of our example generation script.
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
@@ -140,13 +136,11 @@ export class ermdokterComponent implements OnInit, OnDestroy {
   kodeorg: any = "";
   tglss: any;
   myDate = new Date();
-  echoUnsub: any;
   resepbaru: number = 0;
   permintaanLabCount: number = 0;
   hasilLabCount: number = 0;
   constructor(
     private websocketService: WebsocketService,
-    private echoService: EchoService,
     public FarmasijualService: FarmasijualService,
     private datepipe: DatePipe,
     private router: Router,
@@ -194,7 +188,6 @@ export class ermdokterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.tmptotal();
-    this.initEchoNotifications();
     this.startLabNotifications();
   }
 
@@ -585,54 +578,6 @@ export class ermdokterComponent implements OnInit, OnDestroy {
     }
   }
 
-  private initEchoNotifications() {
-    this.requestPermission();
-    try {
-      this.echoService.init({
-        broadcaster: "reverb",
-        key: "tal3xzzkbakc0vjnidjhasdasd",
-        wsHost: "websocket.clenicapp.com",
-        wsPort: 80,
-        wssPort: 443,
-        forceTLS: true,
-        enabledTransports: ["ws", "wss"],
-      });
-
-      // Subscribe to dedicated lab channels instead of a generic notification
-      // so we can avoid branching on payload titles.
-      this.echoUnsub = [] as any[];
-
-      const subLab = this.echoService.subscribe(
-        `${this.kdcabang}.${NOTIFICATION_CHANNELS.PERMINTAAN_LAB}`,
-        "NotificationSent",
-        (payload: any) => {
-          try {
-            this.notifcenter("Laborat");
-          } catch (e) {
-            console.warn("Error handling laborat event", e);
-          }
-        },
-      );
-      this.echoUnsub.push(subLab);
-
-      const subHasil = this.echoService.subscribe(
-        `${this.kdcabang}.${NOTIFICATION_CHANNELS.HASIL_LAB}`,
-        "NotificationSent",
-        (payload: any) => {
-          try {
-            this.notifcenter("Hasil Laborat");
-          } catch (e) {
-            console.warn("Error handling hasil-laborat event", e);
-          }
-        },
-      );
-      this.echoUnsub.push(subHasil);
-      console.log("EchoService initialized for kasirlab");
-    } catch (err) {
-      console.warn("Failed to init local EchoService", err);
-    }
-  }
-
   private startLabNotifications(): void {
     this.requestPermission();
     try {
@@ -676,32 +621,6 @@ export class ermdokterComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    try {
-      if (this.echoUnsub) {
-        if (Array.isArray(this.echoUnsub)) {
-          this.echoUnsub.forEach((u: any) => {
-            try {
-              if (typeof u === "function") {
-                u();
-              } else if (u && u.unsubscribe) {
-                u.unsubscribe();
-              }
-            } catch (e) {
-              console.warn("Error unsubscribing", e);
-            }
-          });
-        } else {
-          if (typeof this.echoUnsub === "function") {
-            this.echoUnsub();
-          } else if (this.echoUnsub.unsubscribe) {
-            this.echoUnsub.unsubscribe();
-          }
-        }
-      }
-    } catch (e) {
-      console.warn("Error during ngOnDestroy cleanup", e);
-    }
-
     try {
       const dataRaw = localStorage.getItem("userDatacl");
       const data = dataRaw ? JSON.parse(dataRaw) : null;
