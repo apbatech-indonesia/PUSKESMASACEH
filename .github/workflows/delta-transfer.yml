@@ -34,19 +34,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "26"
-
-      - name: Cache NPM
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: Cache Angular
         uses: actions/cache@v4
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: .angular/cache
+          key: angular-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
-
+            angular-${{ runner.os }}-
       - name: Install dependencies
-        run: npm install --legacy-peer-deps --no-audit --no-fund
+        run: npm ci --legacy-peer-deps --no-audit --no-fund
 
       - name: Build app
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
         run: npm run build -- --configuration production
 
       - name: Upload build artifact
