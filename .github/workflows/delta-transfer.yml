@@ -14,7 +14,7 @@ jobs:
         id: set-matrix
         run: |
           echo "Fetching branches…"
-          jq --version
+          sudo apt-get update && sudo apt-get install -y jq
           json=$(curl -sS --max-time 10 https://emr.clenicapp.com/api/get-branches) || true
           if [ -z "${json}" ] || ! echo "${json}" | jq -e . >/dev/null 2>&1; then
             echo "Warning: failed to fetch or parse branches API response; using empty matrix."
@@ -34,17 +34,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "16"
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: Cache Angular
+
+      - name: Cache NPM
         uses: actions/cache@v4
         with:
-          path: .angular/cache
-          key: angular-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            angular-${{ runner.os }}-
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps --no-audit --no-fund
+        run: npm install --legacy-peer-deps --no-audit --no-fund
 
       - name: Build app
         run: npm run build -- --configuration production
