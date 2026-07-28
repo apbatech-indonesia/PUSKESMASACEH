@@ -33,7 +33,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "16"
+          node-version: "24"
           cache: npm
           cache-dependency-path: package-lock.json
       - name: Cache Angular
@@ -47,6 +47,8 @@ jobs:
         run: npm ci --legacy-peer-deps --no-audit --no-fund
 
       - name: Build app
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
         run: npm run build -- --configuration production
 
       - name: Upload build artifact
