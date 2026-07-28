@@ -73,7 +73,7 @@ jobs:
           name: app-build
           path: ./dist/clenicappdemo/
 
-      - name: FTP Deploy to ${{ matrix.folder }}
+      - name: Delta Transfer Deploy to ${{ matrix.folder }}
         uses: SamKirkland/FTP-Deploy-Action@v4.3.0
         with:
           server: ${{ secrets.FTP_HOST }}
