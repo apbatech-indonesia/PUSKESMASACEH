@@ -10270,6 +10270,7 @@ export class tulisermComponent implements OnInit {
         this.toastr.success(data.message, "Sukses", {
           timeOut: 2000,
         });
+        location.reload();
       } else {
         this.toastr.error("Gagal Mengupdate", "Error");
       }
