@@ -48,7 +48,7 @@ jobs:
 
       - name: Build app
         env:
-          NODE_OPTIONS: --openssl-legacy-provider
+          NODE_OPTIONS: "--openssl-legacy-provider --max-old-space-size=8192"
         run: npm run build -- --configuration production
 
       - name: Upload build artifact
