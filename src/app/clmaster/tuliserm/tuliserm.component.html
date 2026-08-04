@@ -64,6 +64,13 @@
                     </div>
                   </div>
                 </div>
+                <div *ngIf="alergi" class="my-2">
+                  <div class="card border-danger bg-success">
+                    <div class="card-body p-2">
+                      <b class="text-white">Catatan Pasien: {{ alergi }}</b>
+                    </div>
+                  </div>
+                </div>
                 <div
                   *ngIf="pasienbaru === 1 || pasienbaru === '1'"
                   class="my-2"
@@ -1942,7 +1949,7 @@ Normal: teraba jelas
                                           {{ x.produk }}
                                         </td>
                                         <td *ngIf="x.user === username">
-                                          {{ x.harga | currency : "IDR" }}
+                                          {{ x.harga | currency: "IDR" }}
                                         </td>
                                         <td *ngIf="x.user === username">
                                           <div
@@ -2025,7 +2032,7 @@ Normal: teraba jelas
                                           {{ x.nama }}
                                         </td>
                                         <td>
-                                          {{ x.harga | currency : "IDR" }}
+                                          {{ x.harga | currency: "IDR" }}
                                         </td>
                                       </tr>
                                     </tbody>
@@ -2995,7 +3002,7 @@ Normal: teraba jelas
                     {{ x.produk }}
                   </td>
                   <td *ngIf="x.user === username">
-                    {{ x.harga | currency : "IDR" }}
+                    {{ x.harga | currency: "IDR" }}
                   </td>
                   <td *ngIf="x.user === username">
                     <div
@@ -3672,17 +3679,17 @@ Normal: teraba jelas
                                   [series]="[
                                     {
                                       name: nmlabshow,
-                                      data: listtot
-                                    }
+                                      data: listtot,
+                                    },
                                   ]"
                                   [stroke]="{
-                                    curve: 'smooth'
+                                    curve: 'smooth',
                                   }"
                                   [xaxis]="{ categories: listpol }"
                                   [chart]="{
                                     height: '250',
                                     width: '500',
-                                    type: 'area'
+                                    type: 'area',
                                   }"
                                   [annotations]="{
                                     yaxis: [
@@ -3693,10 +3700,10 @@ Normal: teraba jelas
                                           borderColor: 'red',
                                           style: {
                                             color: '#fff',
-                                            background: 'red'
+                                            background: 'red',
                                           },
-                                          text: 'Batas Atas'
-                                        }
+                                          text: 'Batas Atas',
+                                        },
                                       },
                                       {
                                         y: min,
@@ -3705,12 +3712,12 @@ Normal: teraba jelas
                                           borderColor: 'red',
                                           style: {
                                             color: '#fff',
-                                            background: 'red'
+                                            background: 'red',
                                           },
-                                          text: 'Batas Bawah'
-                                        }
-                                      }
-                                    ]
+                                          text: 'Batas Bawah',
+                                        },
+                                      },
+                                    ],
                                   }"
                                 ></apx-chart>
                               </div>
@@ -4552,7 +4559,7 @@ Normal: teraba jelas
                       {{ x.nama }}
                     </td>
                     <td style="font-size: 11px; color: black">
-                      {{ x.harga | currency : "IDR" }}
+                      {{ x.harga | currency: "IDR" }}
                     </td>
 
                     <td>
@@ -4661,7 +4668,7 @@ Normal: teraba jelas
                       {{ x.nama }}
                     </td>
                     <td style="font-size: 11px; color: black">
-                      {{ x.harga | currency : "IDR" }}
+                      {{ x.harga | currency: "IDR" }}
                     </td>
 
                     <td>
@@ -5655,7 +5662,7 @@ Normal: teraba jelas
                     {{ x.nama }}
                   </td>
                   <td style="font-size: 11px; color: black">
-                    {{ x.harga | currency : "IDR" }}
+                    {{ x.harga | currency: "IDR" }}
                   </td>
 
                   <td>
@@ -5711,13 +5718,13 @@ Normal: teraba jelas
                 {{ x.tarif }}
               </td>
               <td style="font-size: 11px; color: black">
-                {{ x.jasa | currency : "IDR" }}
+                {{ x.jasa | currency: "IDR" }}
               </td>
               <td style="font-size: 11px; color: black">
                 {{ x.discp }}
               </td>
               <td style="font-size: 11px; color: black">
-                {{ x.nominal | currency : "IDR" }}
+                {{ x.nominal | currency: "IDR" }}
               </td>
               <td *ngIf="x.kdkomponen === '3'">
                 <div
@@ -5741,9 +5748,9 @@ Normal: teraba jelas
       </div>
       <div class="modal-footer">
         Total Disc :
-        <span style="color: red">{{ totaldiscnom | currency : "IDR" }}</span>
+        <span style="color: red">{{ totaldiscnom | currency: "IDR" }}</span>
         Total Nominal :
-        <span style="color: red">{{ totaljasakom | currency : "IDR" }}</span>
+        <span style="color: red">{{ totaljasakom | currency: "IDR" }}</span>
         <!-- <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button> -->
       </div>
     </ng-template>
