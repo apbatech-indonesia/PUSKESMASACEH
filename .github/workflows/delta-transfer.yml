@@ -33,7 +33,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "26"
+          node-version: "16"
           cache: npm
           cache-dependency-path: package-lock.json
       - name: Cache Angular
@@ -62,7 +62,7 @@ jobs:
     needs: [build, generate-matrix]
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 21
+      max-parallel: 20
       matrix:
         folder: "${{ fromJson(needs.generate-matrix.outputs.matrix) }}"
 
