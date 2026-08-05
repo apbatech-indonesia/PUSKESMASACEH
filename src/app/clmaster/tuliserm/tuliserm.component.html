@@ -56,7 +56,7 @@
                   Nama Orang Tua : {{ namaorangtua }}
                 </div>
                 <div style="font-size: 14px" *ngIf="alergi">
-                  Alergi : {{ alergi }}
+                  Alergi : {{ getSelectedOptionText(alergi, "alergiText") }}
                 </div>
                 <div *ngIf="catatanpasien" class="my-2">
                   <div class="card border-danger bg-success">
