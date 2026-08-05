@@ -114,6 +114,10 @@ export class tulisermComponent implements OnInit {
   subheading: any;
   icon = "pe-7s-diamond icon-gradient bg-warm-flame";
 
+  // Opsi Statis
+  chartStroke: any = { curve: "smooth" };
+  chartDetails: any = { height: "250", width: "500", type: "area" };
+
   options: FormGroup;
   public userDetails: any;
   nama: any;
@@ -10279,5 +10283,39 @@ export class tulisermComponent implements OnInit {
 
   togleEditDokter() {
     this.editdokter = !this.editdokter;
+  }
+
+  // Getter dinamis agar otomatis menyesuaikan saat variabel nmlabshow, listtot, listpol, max, & min berubah
+  get chartSeries() {
+    return [{ name: this.nmlabshow, data: this.listtot }];
+  }
+
+  get chartXaxis() {
+    return { categories: this.listpol };
+  }
+
+  get chartAnnotations() {
+    return {
+      yaxis: [
+        {
+          y: this.max,
+          borderColor: "red",
+          label: {
+            borderColor: "red",
+            style: { color: "#fff", background: "red" },
+            text: "Batas Atas",
+          },
+        },
+        {
+          y: this.min,
+          borderColor: "red",
+          label: {
+            borderColor: "red",
+            style: { color: "#fff", background: "red" },
+            text: "Batas Bawah",
+          },
+        },
+      ],
+    };
   }
 }
