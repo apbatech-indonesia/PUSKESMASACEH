@@ -44,6 +44,8 @@ jobs:
           restore-keys: |
             angular-${{ runner.os }}-
       - name: Install dependencies
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
         run: npm ci --legacy-peer-deps --no-audit --no-fund
 
       - name: Build app
