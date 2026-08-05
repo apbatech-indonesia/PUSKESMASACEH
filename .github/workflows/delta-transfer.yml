@@ -33,7 +33,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "26"
+          node-version: "16"
           cache: npm
           cache-dependency-path: package-lock.json
       - name: Cache Angular
@@ -44,8 +44,6 @@ jobs:
           restore-keys: |
             angular-${{ runner.os }}-
       - name: Install dependencies
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
         run: npm ci --legacy-peer-deps --no-audit --no-fund
 
       - name: Build app
