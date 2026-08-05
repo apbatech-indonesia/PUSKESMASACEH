@@ -101,6 +101,14 @@ export class tulisermComponent implements OnInit {
     backgroundColor: "rgb(252, 252, 252)",
   };
 
+  alergiMakanan = {
+    "00": "Tidak ada",
+    "01": "Seafood",
+    "02": "Gandum",
+    "03": "Susu Sapi",
+    "04": "Kacang-Kacangan",
+    "05": "Makanan Lain",
+  };
   toggleMobileSidebar: any;
   faStar = faStar;
   faPlus = faPlus;
