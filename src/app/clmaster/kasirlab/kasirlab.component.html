@@ -548,7 +548,7 @@
                     <i class="nav-link-icon pe-7s-wallet"></i
                     ><span>Total Tagihan</span>
                     <div class="ms-auto badge rounded-pill bg-info">
-                      {{ totaltagihan | currency : "IDR" }}
+                      {{ totaltagihan | currency: "IDR" }}
                     </div>
                   </a>
                 </li>
@@ -558,7 +558,7 @@
                     <i class="nav-link-icon pe-7s-wallet"></i
                     ><span>Terbayar</span>
                     <div class="ms-auto badge rounded-pill bg-info">
-                      {{ totalbayar | currency : "IDR" }}
+                      {{ totalbayar | currency: "IDR" }}
                     </div>
                   </a>
                 </li>
@@ -574,7 +574,7 @@
                     <i class="nav-link-icon pe-7s-gift"></i>
                     <span>Total Diskon</span>
                     <div class="ms-auto badge bg-success">
-                      {{ totaldisc | currency : "IDR" }}
+                      {{ totaldisc | currency: "IDR" }}
                     </div>
                   </a>
                 </li>
@@ -584,7 +584,7 @@
                     <i class="nav-link-icon pe-7s-cash"></i>
                     <span>Total Netto</span>
                     <div class="ms-auto badge bg-warning">
-                      {{ netto | currency : "IDR" }}
+                      {{ netto | currency: "IDR" }}
                     </div>
                   </a>
                 </li>
@@ -602,7 +602,7 @@
                     <i class="nav-link-icon pe-7s-cash"></i>
                     <span>Netto RJ</span>
                     <div class="ms-auto badge bg-warning">
-                      {{ totalrjsaja | currency : "IDR" }}
+                      {{ totalrjsaja | currency: "IDR" }}
                     </div>
                   </a>
                 </li>
@@ -823,6 +823,8 @@
                             <option value="Merah">Merah/Upnormal(Hi)</option>
                             <option value="Merahl">Merah/Upnormal(Low)</option>
                             <option value="Kuning">Kuning/Hati"</option>
+                            <option value="Positif">Positif"</option>
+                            <option value="Negatif">Negatif"</option>
                           </select>
                         </td>
                       </tr>
@@ -994,8 +996,8 @@
             </thead>
             <tbody>
               <tr *ngFor="let x of tpasien; let i = index">
-		<td style="font-size: 12px; color: black">
-                  {{ i+1 }}
+                <td style="font-size: 12px; color: black">
+                  {{ i + 1 }}
                 </td>
                 <td style="font-size: 12px; color: black">
                   {{ x.norm }}
@@ -1119,7 +1121,7 @@
                     {{ x.nama }}
                   </td>
                   <td style="font-size: 11px; color: black">
-                    {{ x.harga | currency : "IDR" }}
+                    {{ x.harga | currency: "IDR" }}
                   </td>
 
                   <td>
@@ -1230,13 +1232,13 @@
                 {{ x.tarif }}
               </td>
               <td style="font-size: 11px; color: black">
-                {{ x.jasa | currency : "IDR" }}
+                {{ x.jasa | currency: "IDR" }}
               </td>
               <td style="font-size: 11px; color: black">
                 {{ x.discp }}
               </td>
               <td style="font-size: 11px; color: black">
-                {{ x.nominal | currency : "IDR" }}
+                {{ x.nominal | currency: "IDR" }}
               </td>
 
               <td>
@@ -1253,9 +1255,9 @@
       </div>
       <div class="modal-footer">
         Total Disc :
-        <span style="color: red">{{ totaldiscnom | currency : "IDR" }}</span>
+        <span style="color: red">{{ totaldiscnom | currency: "IDR" }}</span>
         Total Nominal :
-        <span style="color: red">{{ totaljasakom | currency : "IDR" }}</span>
+        <span style="color: red">{{ totaljasakom | currency: "IDR" }}</span>
       </div>
     </ng-template>
 
@@ -1271,7 +1273,7 @@
         ></button>
       </div>
       <div class="modal-body" *ngIf="showbayarrjasa">
-        <b>Nominal Tagihan : {{ totalrjsaja | currency : "IDR" }} </b>
+        <b>Nominal Tagihan : {{ totalrjsaja | currency: "IDR" }} </b>
         <form [formGroup]="profileForm">
           <div class="position-relative mb-3">
             <label for="exampleSelect" class="form-label"
@@ -1375,7 +1377,7 @@
               prefix: ' ',
               precision: 0,
               thousands: '.',
-              decimal: ','
+              decimal: ',',
             }"
             class="form-control"
           />
@@ -1389,7 +1391,7 @@
       </div>
 
       <div class="modal-body" *ngIf="!showbayarrjasa">
-        <b>Nominal Tagihan : {{ sisanumber | currency : "IDR" }} </b>
+        <b>Nominal Tagihan : {{ sisanumber | currency: "IDR" }} </b>
 
         <div class="position-relative mb-3">
           <label for="exampleSelect" class="form-label">Jenis Pembayaran</label>
@@ -1488,7 +1490,7 @@
               prefix: ' ',
               precision: 0,
               thousands: '.',
-              decimal: ','
+              decimal: ',',
             }"
             class="form-control"
           />
