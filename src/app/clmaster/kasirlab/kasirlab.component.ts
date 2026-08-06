@@ -77,7 +77,12 @@ export class kasirlabComponent implements OnInit, OnDestroy {
   currentJustify3 = "start";
 
   currentOrientation = "horizontal";
-
+  curmaxOptions = {
+    prefix: " ",
+    precision: 0,
+    thousands: ".",
+    decimal: ",",
+  };
   tgldari = "2013-12-12";
 
   myDate = new Date();
