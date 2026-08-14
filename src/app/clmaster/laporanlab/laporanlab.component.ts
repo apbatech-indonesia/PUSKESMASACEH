@@ -196,7 +196,7 @@ export class laporanlabComponent implements OnInit {
   lihatkunjungan() {
     var redirectWindow = window.open(
       this.URLINVOICE +
-        "clenic/report/kunjungan.php?tgldari=" +
+        "clenic/report/kunjunganlab.php?tgldari=" +
         this.tgldari +
         "&kdcabang=" +
         this.kdcabang +
@@ -212,7 +212,7 @@ export class laporanlabComponent implements OnInit {
   lihatkunjunganexcel() {
     var redirectWindow = window.open(
       this.URLINVOICE +
-        "clenic/report/kunjunganexcel.php?tgldari=" +
+        "clenic/report/kunjunganlabexcel.php?tgldari=" +
         this.tgldari +
         "&kdcabang=" +
         this.kdcabang +
