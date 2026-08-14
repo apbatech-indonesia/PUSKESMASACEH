@@ -233,7 +233,7 @@ export class laporanrjComponent implements OnInit {
   tmp() {
     this.authService.poli(this.kdcabang).subscribe(
       (data) => {
-        this.tklinik = data;
+        this.tklinik = data.filter((x) => x.sts !== "lab");
       },
       (Error) => {
         console.log(Error);
