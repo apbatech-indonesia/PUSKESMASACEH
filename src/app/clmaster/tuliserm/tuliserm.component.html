@@ -345,16 +345,7 @@
                         type="number"
                         class="form-control"
                         (keyup)="ctd($event)"
-                        (focus)="openRecentValue()"
                       />
-
-                      <!-- Datalist untuk Sistole -->
-                      <datalist id="recentTdList">
-                        <option *ngFor="let val of recentTd" [value]="val">
-                          {{ val }} mmHg
-                        </option>
-                      </datalist>
-
                       <span *ngIf="showtd" style="font-size: 9px; color: red"
                         >Sistole hanya boleh di: 40 sd 250 mmhg
                       </span>
@@ -371,14 +362,6 @@
                         class="form-control"
                         (keyup)="ctdd($event)"
                       />
-
-                      <!-- Datalist untuk Diastole -->
-                      <datalist id="recentTddList">
-                        <option *ngFor="let val of recentTdd" [value]="val">
-                          {{ val }} mmHg
-                        </option>
-                      </datalist>
-
                       <span *ngIf="showtdd" style="font-size: 9px; color: red"
                         >Distole hanya boleh di : 30 sd 180 mmhg</span
                       >
