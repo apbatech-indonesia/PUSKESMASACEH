@@ -63,6 +63,7 @@ import { FarmasijualService } from "../kasirfarmasijual/farmasijual.service";
 import { ItemsList } from "@ng-select/ng-select/lib/items-list";
 import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
 import { NotificationService } from "src/app/services/notification.service";
+import { CpptInputService } from "src/app/services/cppt-input.service";
 
 @Component({
   selector: "app-tuliserm",
@@ -397,6 +398,7 @@ export class tulisermComponent implements OnInit {
     private authService: ApiserviceService,
     private fb: FormBuilder,
     private domSanitizer: DomSanitizer,
+    private cpptService: CpptInputService,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -474,20 +476,6 @@ export class tulisermComponent implements OnInit {
 
     console.log(this.statusResiko);
   }
-
-  // onConfirmationFormBeforeReset() {
-  //   Swal.fire({
-  //     title: "Apakah anda yakin?",
-  //     text: "Form akan dikosongkan kembali",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Ya, Reset!"
-  //   }).then((result) => {
-
-  //   })
-  // }
 
   res: any;
   onConfirmationDataBeforeSaving(name: string) {
@@ -10325,5 +10313,9 @@ export class tulisermComponent implements OnInit {
         },
       ],
     };
+  }
+
+  openRecentValue(key: any) {
+    return console.log("recent value", this.cpptService[key]);
   }
 }
