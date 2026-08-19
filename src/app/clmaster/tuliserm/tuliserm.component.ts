@@ -63,6 +63,7 @@ import { FarmasijualService } from "../kasirfarmasijual/farmasijual.service";
 import { ItemsList } from "@ng-select/ng-select/lib/items-list";
 import { NOTIFICATION_CHANNELS } from "src/app/constants/notification-channels";
 import { NotificationService } from "src/app/services/notification.service";
+import { CpptService } from "src/app/services/cppt.service";
 
 @Component({
   selector: "app-tuliserm",
@@ -91,15 +92,8 @@ export class tulisermComponent implements OnInit {
   @ViewChild("rangeInput") rangeInput: ElementRef;
   @ViewChild("mojiDiv") mojiDiv: ElementRef;
 
-  private signaturePadOptions: NgSignaturePadOptions = {
-    // passed through to szimek/signature_pad constructor
-    minWidth: 1,
-    canvasWidth: 500,
-    canvasHeight: 300,
-    penColor: "rgb(255, 3, 3)",
-
-    backgroundColor: "rgb(252, 252, 252)",
-  };
+  showrecentTd = false;
+  showrecentTdd = false;
 
   alergiMakanan = {
     "00": "Tidak ada",
@@ -397,6 +391,7 @@ export class tulisermComponent implements OnInit {
     private authService: ApiserviceService,
     private fb: FormBuilder,
     private domSanitizer: DomSanitizer,
+    private cpptService: CpptService,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -1305,6 +1300,8 @@ export class tulisermComponent implements OnInit {
       (data) => {
         for (let x of data) {
           this.slug = x.slug;
+          this.cpptService.fetchRecentValues(this.slug);
+
           this.kdorg = x.kodeorg;
         }
       },
@@ -10325,5 +10322,17 @@ export class tulisermComponent implements OnInit {
         },
       ],
     };
+  }
+
+  activeFocus: "td" | "tdd" | null = null;
+  onFocusCppt(type: "td" | "tdd") {
+    this.activeFocus = type;
+  }
+  onBlurCppt() {
+    this.activeFocus = null;
+  }
+  pilihValue(type: "td" | "tdd", value: any) {
+    this[type] = value; // Mengisi properti this.td atau this.tdd secara dinamis
+    this.activeFocus = null;
   }
 }

@@ -345,7 +345,21 @@
                         type="number"
                         class="form-control"
                         (keyup)="ctd($event)"
+                        (focus)="onFocusCppt('td')"
+                        (blur)="onBlurCppt()"
                       />
+
+                      <div *ngIf="activeFocus == 'td'">
+                        <button
+                          class="btn btn-info m-1 p-1"
+                          *ngFor="let val of cpptService.recentTd"
+                          [value]="val"
+                          (click)="pilihValue('td', val)"
+                        >
+                          {{ val }}
+                        </button>
+                      </div>
+
                       <span *ngIf="showtd" style="font-size: 9px; color: red"
                         >Sistole hanya boleh di: 40 sd 250 mmhg
                       </span>
@@ -361,7 +375,21 @@
                         type="number"
                         class="form-control"
                         (keyup)="ctdd($event)"
+                        (focus)="onFocusCppt('tdd')"
+                        (blur)="onBlurCppt()"
                       />
+
+                      <div *ngIf="activeFocus == 'tdd'">
+                        <button
+                          class="btn btn-info m-1 p-1"
+                          *ngFor="let val of cpptService.recentTdd"
+                          [value]="val"
+                          (click)="pilihValue('tdd', val)"
+                        >
+                          {{ val }}
+                        </button>
+                      </div>
+
                       <span *ngIf="showtdd" style="font-size: 9px; color: red"
                         >Distole hanya boleh di : 30 sd 180 mmhg</span
                       >
