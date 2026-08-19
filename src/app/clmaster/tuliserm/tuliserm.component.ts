@@ -10326,13 +10326,16 @@ export class tulisermComponent implements OnInit {
 
   activeFocus: "td" | "tdd" | null = null;
   onFocusCppt(type: "td" | "tdd") {
-    this.activeFocus = type;
+    setTimeout(() => {
+      this.activeFocus = type;
+    }, 300);
   }
   onBlurCppt() {
-    this.activeFocus = null;
+    setTimeout(() => {
+      this.activeFocus = null;
+    }, 300);
   }
   pilihValue(type: "td" | "tdd", value: any) {
     this[type] = value; // Mengisi properti this.td atau this.tdd secara dinamis
-    this.activeFocus = null;
   }
 }
