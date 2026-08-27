@@ -240,7 +240,21 @@
                         type="number"
                         class="form-control"
                         (keyup)="chr($event)"
+                        (focus)="onFocusCppt('hr')"
+                        (blur)="onBlurCppt()"
                       />
+
+                      <div *ngIf="activeFocus == 'hr'">
+                        <button
+                          class="btn btn-info m-1 p-1"
+                          *ngFor="let val of cpptService.hr"
+                          [value]="val"
+                          (click)="pilihValue('hr', val)"
+                        >
+                          {{ val }}
+                        </button>
+                      </div>
+
                       <span *ngIf="showhr" style="font-size: 9px; color: red"
                         >Refrensi Hr: (30 sd 160 bpm)</span
                       >
@@ -275,10 +289,23 @@
                           type="number"
                           class="form-control"
                           (keyup)="csuhu($event)"
+                          (focus)="onFocusCppt('suhu')"
+                          (blur)="onBlurCppt()"
                         />
                         <div class="input-group-text">
                           <span class="">C</span>
                         </div>
+                      </div>
+
+                      <div *ngIf="activeFocus == 'suhu'">
+                        <button
+                          class="btn btn-info m-1 p-1"
+                          *ngFor="let val of cpptService.suhu"
+                          [value]="val"
+                          (click)="pilihValue('suhu', val)"
+                        >
+                          {{ val }}
+                        </button>
                       </div>
 
                       <span *ngIf="showsuhu" style="font-size: 9px; color: red"
@@ -295,7 +322,19 @@
                         type="number"
                         class="form-control"
                         (keyup)="crr($event)"
+                        (focus)="onFocusCppt('rr')"
+                        (blur)="onBlurCppt()"
                       />
+                      <div *ngIf="activeFocus == 'rr'">
+                        <button
+                          class="btn btn-info m-1 p-1"
+                          *ngFor="let val of cpptService.rr"
+                          [value]="val"
+                          (click)="pilihValue('rr', val)"
+                        >
+                          {{ val }}
+                        </button>
+                      </div>
                       <span *ngIf="showrr" style="font-size: 9px; color: red"
                         >Refrensi Rr : (5 sd 70)</span
                       >
@@ -310,7 +349,19 @@
                         type="number"
                         class="form-control"
                         (keyup)="cpp($event)"
+                        (focus)="onFocusCppt('spo')"
+                        (blur)="onBlurCppt()"
                       />
+                      <div *ngIf="activeFocus == 'spo'">
+                        <button
+                          class="btn btn-info m-1 p-1"
+                          *ngFor="let val of cpptService.spo"
+                          [value]="val"
+                          (click)="pilihValue('spo', val)"
+                        >
+                          {{ val }}
+                        </button>
+                      </div>
                       <span *ngIf="showpp" style="font-size: 9px; color: red"
                         >Spo : (95 - 100)</span
                       >
@@ -326,7 +377,19 @@
                         type="number"
                         class="form-control"
                         (keyup)="cll($event)"
+                        (focus)="onFocusCppt('lp')"
+                        (blur)="onBlurCppt()"
                       />
+                      <div *ngIf="activeFocus == 'lp'">
+                        <button
+                          class="btn btn-info m-1 p-1"
+                          *ngFor="let val of cpptService.lp"
+                          [value]="val"
+                          (click)="pilihValue('lp', val)"
+                        >
+                          {{ val }}
+                        </button>
+                      </div>
                       <span *ngIf="showlp" style="font-size: 9px; color: red"
                         >Refrensi lingkarperut : (25 - 300)</span
                       >
@@ -352,7 +415,7 @@
                       <div *ngIf="activeFocus == 'td'">
                         <button
                           class="btn btn-info m-1 p-1"
-                          *ngFor="let val of cpptService.recentTd"
+                          *ngFor="let val of cpptService.td"
                           [value]="val"
                           (click)="pilihValue('td', val)"
                         >
@@ -382,7 +445,7 @@
                       <div *ngIf="activeFocus == 'tdd'">
                         <button
                           class="btn btn-info m-1 p-1"
-                          *ngFor="let val of cpptService.recentTdd"
+                          *ngFor="let val of cpptService.tdd"
                           [value]="val"
                           (click)="pilihValue('tdd', val)"
                         >
@@ -405,8 +468,19 @@
                           type="number"
                           class="form-control"
                           (keyup)="ctb($event)"
+                          (focus)="onFocusCppt('tb')"
+                          (blur)="onBlurCppt()"
                         />
-
+                        <div *ngIf="activeFocus == 'tb'">
+                          <button
+                            class="btn btn-info m-1 p-1"
+                            *ngFor="let val of cpptService.tb"
+                            [value]="val"
+                            (click)="pilihValue('tb', val)"
+                          >
+                            {{ val }}
+                          </button>
+                        </div>
                         <div class="input-group-text">
                           <span class="">CM</span>
                         </div>
@@ -427,7 +501,19 @@
                           type="number"
                           class="form-control"
                           (keyup)="cbb($event)"
+                          (focus)="onFocusCppt('bb')"
+                          (blur)="onBlurCppt()"
                         />
+                        <div *ngIf="activeFocus == 'bb'">
+                          <button
+                            class="btn btn-info m-1 p-1"
+                            *ngFor="let val of cpptService.bb"
+                            [value]="val"
+                            (click)="pilihValue('bb', val)"
+                          >
+                            {{ val }}
+                          </button>
+                        </div>
                         <div class="input-group-text">
                           <span class="">KG</span>
                         </div>
@@ -503,10 +589,23 @@
                           [(ngModel)]="lingkarkepala"
                           type="number"
                           class="form-control"
+                          (focus)="onFocusCppt('lingkarkepala')"
+                          (blur)="onBlurCppt()"
                         />
+
                         <div class="input-group-text">
                           <span class="">CM</span>
                         </div>
+                      </div>
+                      <div *ngIf="activeFocus == 'lingkarkepala'">
+                        <button
+                          class="btn btn-info m-1 p-1"
+                          *ngFor="let val of cpptService.lingkarkepala"
+                          [value]="val"
+                          (click)="pilihValue('lingkarkepala', val)"
+                        >
+                          {{ val }}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -522,10 +621,23 @@
                           [(ngModel)]="lingkarlenganatas"
                           type="number"
                           class="form-control"
+                          (focus)="onFocusCppt('lingkarlenganatas')"
+                          (blur)="onBlurCppt()"
                         />
+
                         <div class="input-group-text">
                           <span class="">CM</span>
                         </div>
+                      </div>
+                      <div *ngIf="activeFocus == 'lingkarlenganatas'">
+                        <button
+                          class="btn btn-info m-1 p-1"
+                          *ngFor="let val of cpptService.lingkarlenganatas"
+                          [value]="val"
+                          (click)="pilihValue('lingkarlenganatas', val)"
+                        >
+                          {{ val }}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -541,10 +653,24 @@
                           [(ngModel)]="lingkarbetis"
                           type="number"
                           class="form-control"
+                          (focus)="onFocusCppt('lingkarbetis')"
+                          (blur)="onBlurCppt()"
                         />
+
                         <div class="input-group-text">
                           <span class="">CM</span>
                         </div>
+                      </div>
+
+                      <div *ngIf="activeFocus == 'lingkarbetis'">
+                        <button
+                          class="btn btn-info m-1 p-1"
+                          *ngFor="let val of cpptService.lingkarbetis"
+                          [value]="val"
+                          (click)="pilihValue('lingkarbetis', val)"
+                        >
+                          {{ val }}
+                        </button>
                       </div>
                     </div>
                   </div>

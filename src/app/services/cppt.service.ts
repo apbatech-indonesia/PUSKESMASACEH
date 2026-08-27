@@ -6,8 +6,18 @@ import { HttpClient } from "@angular/common/http";
 })
 export class CpptService {
   // Variabel tempat menyimpan hasil API
-  recentTd: string[] = [];
-  recentTdd: string[] = [];
+  td: string[] = [];
+  tdd: string[] = [];
+  hr: string[] = [];
+  suhu: string[] = [];
+  rr: string[] = [];
+  spo: string[] = [];
+  lp: string[] = [];
+  tb: string[] = [];
+  bb: string[] = [];
+  lingkarkepala: string[] = [];
+  lingkarlenganatas: string[] = [];
+  lingkarbetis: string[] = [];
 
   constructor(private http: HttpClient) {}
 
@@ -17,8 +27,18 @@ export class CpptService {
     this.http.get<any>(apiUrl).subscribe({
       next: (res) => {
         if (res && res.data) {
-          this.recentTd = res.data.td || [];
-          this.recentTdd = res.data.tdd || [];
+          this.td = res.data.td || [];
+          this.tdd = res.data.tdd || [];
+          this.hr = res.data.hr || [];
+          this.suhu = res.data.suhu || [];
+          this.rr = res.data.rr || [];
+          this.spo = res.data.spo || [];
+          this.lp = res.data.lp || [];
+          this.tb = res.data.tb || [];
+          this.bb = res.data.bb || [];
+          this.lingkarkepala = res.data.lingkarkepala || [];
+          this.lingkarlenganatas = res.data.lingkarlenganatas || [];
+          this.lingkarbetis = res.data.lingkarbetis || [];
         }
       },
       error: (err) => console.error("Gagal mengambil recent values:", err),

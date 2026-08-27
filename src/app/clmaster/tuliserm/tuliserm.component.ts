@@ -92,9 +92,6 @@ export class tulisermComponent implements OnInit {
   @ViewChild("rangeInput") rangeInput: ElementRef;
   @ViewChild("mojiDiv") mojiDiv: ElementRef;
 
-  showrecentTd = false;
-  showrecentTdd = false;
-
   alergiMakanan = {
     "00": "Tidak ada",
     "01": "Seafood",
@@ -10335,7 +10332,7 @@ export class tulisermComponent implements OnInit {
       this.activeFocus = null;
     }, 300);
   }
-  pilihValue(type: "td" | "tdd", value: any) {
+  pilihValue(type: "td" | "tdd" | "hr" | "suhu" | "rr" | "spo" | "lp" | "tb" | "bb" | "lingkarkepala" | "lingkarlenganatas" | "lingkarbetis", value: any) {
     this[type] = value; // Mengisi properti this.td atau this.tdd secara dinamis
   }
 }
