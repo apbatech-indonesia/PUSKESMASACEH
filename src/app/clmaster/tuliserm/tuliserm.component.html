@@ -471,22 +471,23 @@
                           (focus)="onFocusCppt('tb')"
                           (blur)="onBlurCppt()"
                         />
-                        <div *ngIf="activeFocus == 'tb'">
-                          <button
-                            class="btn btn-info m-1 p-1"
-                            *ngFor="let val of cpptService.tb"
-                            [value]="val"
-                            (click)="pilihValue('tb', val)"
-                          >
-                            {{ val }}
-                          </button>
-                        </div>
                         <div class="input-group-text">
                           <span class="">CM</span>
                         </div>
                         <span *ngIf="showtb" style="font-size: 9px; color: red"
                           >Refrensi TB di : 30 sd 250 cm</span
                         >
+                      </div>
+
+                      <div *ngIf="activeFocus == 'tb'">
+                        <button
+                          class="btn btn-info m-1 p-1"
+                          *ngFor="let val of cpptService.tb"
+                          [value]="val"
+                          (click)="pilihValue('tb', val)"
+                        >
+                          {{ val }}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -504,19 +505,20 @@
                           (focus)="onFocusCppt('bb')"
                           (blur)="onBlurCppt()"
                         />
-                        <div *ngIf="activeFocus == 'bb'">
-                          <button
-                            class="btn btn-info m-1 p-1"
-                            *ngFor="let val of cpptService.bb"
-                            [value]="val"
-                            (click)="pilihValue('bb', val)"
-                          >
-                            {{ val }}
-                          </button>
-                        </div>
                         <div class="input-group-text">
                           <span class="">KG</span>
                         </div>
+                      </div>
+
+                      <div *ngIf="activeFocus == 'bb'">
+                        <button
+                          class="btn btn-info m-1 p-1"
+                          *ngFor="let val of cpptService.bb"
+                          [value]="val"
+                          (click)="pilihValue('bb', val)"
+                        >
+                          {{ val }}
+                        </button>
                       </div>
                       <span *ngIf="showbb" style="font-size: 9px; color: red"
                         >Refrensi BB adalah : (2 sd 300Kg)</span
