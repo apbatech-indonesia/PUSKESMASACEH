@@ -377,15 +377,15 @@
                         type="number"
                         class="form-control"
                         (keyup)="cll($event)"
-                        (focus)="onFocusCppt('lp')"
+                        (focus)="onFocusCppt('lingkarperut')"
                         (blur)="onBlurCppt()"
                       />
-                      <div *ngIf="activeFocus == 'lp'">
+                      <div *ngIf="activeFocus == 'lingkarperut'">
                         <button
                           class="btn btn-info m-1 p-1"
-                          *ngFor="let val of cpptService.lp"
+                          *ngFor="let val of cpptService.lingkarperut"
                           [value]="val"
-                          (click)="pilihValue('lp', val)"
+                          (click)="pilihValue('lingkarperut', val)"
                         >
                           {{ val }}
                         </button>
@@ -467,7 +467,7 @@
                           placeholder="Tb"
                           type="number"
                           class="form-control"
-                          (keyup)="ctb($event)"
+                          (change)="ctb($event)"
                           (focus)="onFocusCppt('tb')"
                           (blur)="onBlurCppt()"
                         />
@@ -501,8 +501,8 @@
                           [(ngModel)]="bb"
                           type="number"
                           class="form-control"
-                          (keyup)="cbb($event)"
-                          (focus)="onFocusCppt('bb')"
+                          (change)="cbb()"
+                          (focus)="onFocusCppt('bb'); cbb()"
                           (blur)="onBlurCppt()"
                         />
                         <div class="input-group-text">

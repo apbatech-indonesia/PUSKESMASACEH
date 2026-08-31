@@ -7496,14 +7496,14 @@ export class tulisermComponent implements OnInit {
   verifikasiangka: number = 0;
 
   cll(a) {
-    if (a.target.value.length <= 0) {
+    if (this.bb.length <= 0) {
       this.showlp = false;
       this.verifikasiangka = 0;
-    } else if (a.target.value < 25) {
+    } else if (this.bb < 25) {
       this.showlp = true;
 
       this.verifikasiangka = 1;
-    } else if (a.target.value > 300) {
+    } else if (this.bb > 300) {
       this.showlp = true;
       // this.lingkarperut =0;
       this.verifikasiangka = 1;
@@ -7513,14 +7513,14 @@ export class tulisermComponent implements OnInit {
     }
   }
   ctb(a) {
-    if (a.target.value.length <= 0) {
+    if (this.bb.length <= 0) {
       this.showtb = false;
       this.verifikasiangka = 0;
-    } else if (a.target.value < 30) {
+    } else if (this.bb < 30) {
       this.showtb = true;
       // this.tb ='';
       this.verifikasiangka = 1;
-    } else if (a.target.value > 250) {
+    } else if (this.bb > 250) {
       this.showtb = true;
       // this.tb ='';
       this.verifikasiangka = 1;
@@ -7529,24 +7529,23 @@ export class tulisermComponent implements OnInit {
       this.verifikasiangka = 0;
     }
   }
-  cbb(a) {
-    if (a.target.value.length <= 0) {
+  cbb() {
+    console.log(this.bb);
+    if (this.bb.length <= 0) {
       this.showbb = false;
       this.verifikasiangka = 0;
-    } else if (a.target.value < 2) {
+    } else if (this.bb < 2) {
       this.showbb = true;
-      //  this.bb ='';
       this.verifikasiangka = 1;
-    } else if (a.target.value > 300) {
+    } else if (this.bb > 300) {
       this.showbb = true;
-      //  this.bb ='';
       this.verifikasiangka = 1;
     } else {
       this.showbb = false;
       this.verifikasiangka = 0;
     }
     var tb: number = parseFloat(this.tb); // Tinggi dalam cm
-    var berat: number = parseFloat(a.target.value); // Berat badan dalam kg
+    var berat: number = parseFloat(this.bb); // Berat badan dalam kg
 
     if (isNaN(tb) || isNaN(berat) || tb <= 0 || berat <= 0) {
       this.imt = "0.0";
@@ -10321,8 +10320,8 @@ export class tulisermComponent implements OnInit {
     };
   }
 
-  activeFocus: "td" | "tdd" | null = null;
-  onFocusCppt(type: "td" | "tdd") {
+  activeFocus: any | null = null;
+  onFocusCppt(type: any) {
     setTimeout(() => {
       this.activeFocus = type;
     }, 300);
@@ -10332,7 +10331,7 @@ export class tulisermComponent implements OnInit {
       this.activeFocus = null;
     }, 300);
   }
-  pilihValue(type: "td" | "tdd" | "hr" | "suhu" | "rr" | "spo" | "lp" | "tb" | "bb" | "lingkarkepala" | "lingkarlenganatas" | "lingkarbetis", value: any) {
+  pilihValue(type: any, value: any) {
     this[type] = value; // Mengisi properti this.td atau this.tdd secara dinamis
   }
 }

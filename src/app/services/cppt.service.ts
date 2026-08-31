@@ -12,9 +12,9 @@ export class CpptService {
   suhu: string[] = [];
   rr: string[] = [];
   spo: string[] = [];
-  lp: string[] = [];
   tb: string[] = [];
   bb: string[] = [];
+  lingkarperut: string[] = [];
   lingkarkepala: string[] = [];
   lingkarlenganatas: string[] = [];
   lingkarbetis: string[] = [];
@@ -33,9 +33,9 @@ export class CpptService {
           this.suhu = res.data.suhu || [];
           this.rr = res.data.rr || [];
           this.spo = res.data.spo || [];
-          this.lp = res.data.lp || [];
           this.tb = res.data.tb || [];
           this.bb = res.data.bb || [];
+          this.lingkarperut = res.data.lingkarperut || [];
           this.lingkarkepala = res.data.lingkarkepala || [];
           this.lingkarlenganatas = res.data.lingkarlenganatas || [];
           this.lingkarbetis = res.data.lingkarbetis || [];
