@@ -7530,7 +7530,6 @@ export class tulisermComponent implements OnInit {
     }
   }
   cbb() {
-    console.log(this.bb);
     if (this.bb.length <= 0) {
       this.showbb = false;
       this.verifikasiangka = 0;
@@ -10329,6 +10328,7 @@ export class tulisermComponent implements OnInit {
   onBlurCppt() {
     setTimeout(() => {
       this.activeFocus = null;
+      this.cbb();
     }, 300);
   }
   pilihValue(type: any, value: any) {
