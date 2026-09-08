@@ -109,6 +109,7 @@ export class MpoliComponent implements OnInit {
   polisakit = "";
 
   onPoliChange(kdPoli: string) {
+    console.log("test");
     const poli = this.tpolibpjs.find((x) => x.kdPoli == kdPoli);
 
     this.polisakit = poli?.statussakit === "true" ? "1" : "2";
