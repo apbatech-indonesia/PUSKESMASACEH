@@ -33,7 +33,7 @@ export class ApiserviceService {
       "Is Production : " +
         environment.production +
         " Envi name : " +
-        environment.name
+        environment.name,
     );
     console.log("Base urx : " + apiurx);
     console.log("Base url : " + environment.baseUrl);
@@ -88,7 +88,7 @@ export class ApiserviceService {
         a +
         environment.antrianFktpPath +
         "add",
-      data
+      data,
     );
   }
 
@@ -98,7 +98,7 @@ export class ApiserviceService {
         a +
         environment.antrianFktpPath +
         "batal",
-      data
+      data,
     );
   }
   PanggilBpjsAntrian(data: any, a): Observable<any> {
@@ -107,7 +107,7 @@ export class ApiserviceService {
         a +
         environment.antrianFktpPath +
         "panggil",
-      data
+      data,
     );
   }
 
@@ -118,11 +118,11 @@ export class ApiserviceService {
     isSuccess: any,
     urlType: any,
     dateFrom: any,
-    dateTo: any
+    dateTo: any,
   ) {
     return this.http
       .get(
-        `https://emr.clenicapp.com/api/${cabang}/reporting-antrean?search=${search}&page=${page}&isSuccess=${isSuccess}&urlType=${urlType}&dateFrom=${dateFrom}&dateTo=${dateTo}`
+        `https://emr.clenicapp.com/api/${cabang}/reporting-antrean?search=${search}&page=${page}&isSuccess=${isSuccess}&urlType=${urlType}&dateFrom=${dateFrom}&dateTo=${dateTo}`,
       )
       .toPromise();
   }
@@ -130,7 +130,7 @@ export class ApiserviceService {
   getDetailPasien(cabang: any, bpjsnumber: number) {
     return this.http
       .get(
-        `https://emr.clenicapp.com/api/${cabang}/reporting-antrean/pasien/${bpjsnumber}`
+        `https://emr.clenicapp.com/api/${cabang}/reporting-antrean/pasien/${bpjsnumber}`,
       )
       .toPromise();
   }
@@ -141,7 +141,7 @@ export class ApiserviceService {
       `https://emr.clenicapp.com/api/${cabang}/manajemen-obat/maping/${kdobat}`,
       {
         kdobatsatusehat: kdobatsatusehat,
-      }
+      },
     );
   }
 
@@ -149,18 +149,18 @@ export class ApiserviceService {
     cabang: any,
     tandapengenal: string,
     nopengenal: string,
-    noasuransi: string = ""
+    noasuransi: string = "",
   ) {
     return this.http
       .get(
-        `https://emr.clenicapp.com/api/${cabang}/pasien/tanda-pengenal/${tandapengenal}/no-pengenal/${nopengenal}/${noasuransi}`
+        `https://emr.clenicapp.com/api/${cabang}/pasien/tanda-pengenal/${tandapengenal}/no-pengenal/${nopengenal}/${noasuransi}`,
       )
       .toPromise();
   }
 
   getBaseUrlConfig(branchCode: string): Observable<any> {
     let dataProd = this.http.get(
-      environment.emrUrl + environment.cabangPath + branchCode
+      environment.emrUrl + environment.cabangPath + branchCode,
     );
     return dataProd;
   }
@@ -171,7 +171,7 @@ export class ApiserviceService {
 
   getDetailDataKajianAwal(noRm, noTransaksi): Observable<Object> {
     return this.http.get(
-      environment.rawatJalanUrl + "/" + noRm + "/" + noTransaksi
+      environment.rawatJalanUrl + "/" + noRm + "/" + noTransaksi,
     );
   }
 
@@ -188,7 +188,7 @@ export class ApiserviceService {
       environment.pcareUrl +
         environment.pcareKelompokPath +
         "/get-club/" +
-        clubCode
+        clubCode,
     );
   }
 
@@ -197,7 +197,7 @@ export class ApiserviceService {
       environment.pcareUrl +
         environment.pcareKelompokPath +
         "/get-kegiatan/" +
-        date
+        date,
     );
   }
 
@@ -206,25 +206,25 @@ export class ApiserviceService {
       environment.pcareUrl +
         environment.pcareKelompokPath +
         "/get-peserta/" +
-        eduID
+        eduID,
     );
   }
 
   getPendidikanList(slug: any): Observable<any> {
     return this.http.get<any>(
-      `https://emr.clenicapp.com/api/${slug}/master/pendidikan`
+      `https://emr.clenicapp.com/api/${slug}/master/pendidikan`,
     );
   }
 
   getPekerjaanList(slug: any): Observable<any> {
     return this.http.get<any>(
-      `https://emr.clenicapp.com/api/${slug}/master/pekerjaan`
+      `https://emr.clenicapp.com/api/${slug}/master/pekerjaan`,
     );
   }
 
   getAllBpjsKegiatanDropdown() {
     return this.http.get(
-      environment.pcareUrl + environment.pcareKelompokPath + "/get-drop-down"
+      environment.pcareUrl + environment.pcareKelompokPath + "/get-drop-down",
     );
   }
 
@@ -233,7 +233,7 @@ export class ApiserviceService {
       environment.pcareUrl +
         environment.pcareKelompokPath +
         "/delete-kegiatan/" +
-        eduID
+        eduID,
     );
   }
 
@@ -244,21 +244,21 @@ export class ApiserviceService {
         "/delete-peserta/" +
         eduID +
         "/" +
-        noKartu
+        noKartu,
     );
   }
 
   addBpjsKegiatan(data: Object): Observable<Object> {
     return this.http.post(
       environment.pcareUrl + environment.pcareKelompokPath + "/add-kegiatan",
-      data
+      data,
     );
   }
 
   addBpjsPesertaKegiatan(data: Object): Observable<Object> {
     return this.http.post(
       environment.pcareUrl + environment.pcareKelompokPath + "/add-peserta",
-      data
+      data,
     );
   }
 
@@ -270,17 +270,20 @@ export class ApiserviceService {
           "/pasien?nama=" +
           nama +
           "&tglperiksa=" +
-          tglPeriksa
+          tglPeriksa,
       );
     else
       return this.http.get(
-        environment.pcareUrl + environment.pcareMcuPath + "/pasien"
+        environment.pcareUrl + environment.pcareMcuPath + "/pasien",
       );
   }
 
   getBpjsMCUPasienDetail(noTransaksi: string = "") {
     return this.http.get(
-      environment.pcareUrl + environment.pcareMcuPath + "/pasien/" + noTransaksi
+      environment.pcareUrl +
+        environment.pcareMcuPath +
+        "/pasien/" +
+        noTransaksi,
     );
   }
 
@@ -289,14 +292,14 @@ export class ApiserviceService {
       environment.pcareUrl +
         environment.pcareMcuPath +
         "/kunjungan/" +
-        noKunjungan
+        noKunjungan,
     );
   }
 
   addBpjsMCU(data: Object): Observable<Object> {
     return this.http.post(
       environment.pcareUrl + environment.pcareMcuPath,
-      data
+      data,
     );
   }
 
@@ -311,7 +314,7 @@ export class ApiserviceService {
         "/" +
         kodeMCU +
         "/kunjungan/" +
-        noKunjungan
+        noKunjungan,
     );
   }
 
@@ -320,14 +323,14 @@ export class ApiserviceService {
       environment.pcareUrl +
         environment.pcareObatPath +
         "/kunjungan/" +
-        noKunjungan
+        noKunjungan,
     );
   }
 
   addBpjsObat(data: Object): Observable<Object> {
     return this.http.post(
       environment.pcareUrl + environment.pcareObatPath + "/kunjungan",
-      data
+      data,
     );
   }
 
@@ -338,7 +341,7 @@ export class ApiserviceService {
         "/" +
         kodeObat +
         "/kunjungan/" +
-        noKunjungan
+        noKunjungan,
     );
   }
 
@@ -351,7 +354,7 @@ export class ApiserviceService {
         },
         (err) => {
           reject(err);
-        }
+        },
       );
     });
   }
@@ -373,7 +376,7 @@ export class ApiserviceService {
         "&status=" +
         b +
         "&kdtarif=" +
-        c
+        c,
     );
   }
 
@@ -389,7 +392,7 @@ export class ApiserviceService {
         "&status=" +
         b +
         "&kdtarif=" +
-        c
+        c,
     );
   }
 
@@ -407,7 +410,7 @@ export class ApiserviceService {
 
   coaper(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/coaper.php?kdakun=" + a + "&kdcabang=" + b
+      apiurx + "master/coaper.php?kdakun=" + a + "&kdcabang=" + b,
     );
   }
 
@@ -416,12 +419,12 @@ export class ApiserviceService {
   }
   gudangcab(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/gudangcab.php?kdklinik=" + a + "&kdcabang=" + b
+      apiurx + "master/gudangcab.php?kdklinik=" + a + "&kdcabang=" + b,
     );
   }
   carigudang(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/carigudang.php?kdklinik=" + a + "&nama=" + b
+      apiurx + "master/carigudang.php?kdklinik=" + a + "&nama=" + b,
     );
   }
 
@@ -433,13 +436,13 @@ export class ApiserviceService {
   }
   cabangbyid(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/cabangbyid.php?kdklinik=" + a + "&kdcabang=" + b
+      apiurx + "master/cabangbyid.php?kdklinik=" + a + "&kdcabang=" + b,
     );
   }
 
   caricabang(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/caricabang.php?kdklinik=" + a + "&nama=" + b
+      apiurx + "master/caricabang.php?kdklinik=" + a + "&nama=" + b,
     );
   }
   tampiluser(a): Observable<any> {
@@ -448,7 +451,7 @@ export class ApiserviceService {
 
   cariuser(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/cariuser.php?kdklinik=" + a + "&nama=" + b
+      apiurx + "master/cariuser.php?kdklinik=" + a + "&nama=" + b,
     );
   }
   caricoa(a, b, c, d): Observable<any> {
@@ -461,18 +464,18 @@ export class ApiserviceService {
         "&sts=" +
         c +
         "&parent=" +
-        d
+        d,
     );
   }
   caridiagnosa(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/caridiagnosa.php?diagnosa=" + a + "&sts=" + b
+      apiurx + "master/caridiagnosa.php?diagnosa=" + a + "&sts=" + b,
     );
   }
 
   caritindakan(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/caritindakan.php?tindakan=" + a + "&sts=" + b
+      apiurx + "master/caritindakan.php?tindakan=" + a + "&sts=" + b,
     );
   }
 
@@ -487,25 +490,25 @@ export class ApiserviceService {
         "master/polibystatussakit.php?kdcabang=" +
         a +
         "&statussakit=" +
-        statussakit
+        statussakit,
     );
   }
 
   caripoli(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/caripoli.php?kdcabang=" + a + "&nampoli=" + b
+      apiurx + "master/caripoli.php?kdcabang=" + a + "&nampoli=" + b,
     );
   }
 
   rakobat(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/rakobat.php?kdcabang=" + a + "&namarak=" + b
+      apiurx + "master/rakobat.php?kdcabang=" + a + "&namarak=" + b,
     );
   }
 
   carigolobat(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/carigolobat.php?dari=" + a + "&nama=" + b
+      apiurx + "master/carigolobat.php?dari=" + a + "&nama=" + b,
     );
   }
 
@@ -517,7 +520,7 @@ export class ApiserviceService {
         "&nama=" +
         b +
         "&kdcabang=" +
-        c
+        c,
     );
   }
 
@@ -526,7 +529,7 @@ export class ApiserviceService {
   }
   promo(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/tampilpromo.php?kdcabang=" + a + "&judulpromo=" + b
+      apiurx + "transaksi/tampilpromo.php?kdcabang=" + a + "&judulpromo=" + b,
     );
   }
   dokter(a): Observable<any> {
@@ -538,28 +541,28 @@ export class ApiserviceService {
 
   doktertunjang(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/doktertunjang.php?kdcabang=" + a + "&sts=" + b
+      apiurx + "master/doktertunjang.php?kdcabang=" + a + "&sts=" + b,
     );
   }
 
   dokterperpoli(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/dokterperpoli.php?kdcabang=" + a + "&kddokter=" + b
+      apiurx + "master/dokterperpoli.php?kdcabang=" + a + "&kddokter=" + b,
     );
   }
   profil(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/profil.php?kdcabang=" + a + "&kddokter=" + b
+      apiurx + "transaksi/profil.php?kdcabang=" + a + "&kddokter=" + b,
     );
   }
   ulasan(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/ulasan.php?kdcabang=" + a + "&kddokter=" + b
+      apiurx + "transaksi/ulasan.php?kdcabang=" + a + "&kddokter=" + b,
     );
   }
   dokterperpolix(a, kdpoli): Observable<any> {
     return this.http.get(
-      apiurx + "master/dokterperpolix.php?kdcabang=" + a + "&kdpoli=" + kdpoli
+      apiurx + "master/dokterperpolix.php?kdcabang=" + a + "&kdpoli=" + kdpoli,
     );
   }
 
@@ -571,24 +574,24 @@ export class ApiserviceService {
         "&kdpoli=" +
         kdpoli +
         "&tgl=" +
-        tgl
+        tgl,
     );
   }
 
   caridokter(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/caridokter.php?kdcabang=" + a + "&dokter=" + b
+      apiurx + "master/caridokter.php?kdcabang=" + a + "&dokter=" + b,
     );
   }
 
   dokterbyid(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/dokterbyid.php?kdcabang=" + a + "&dokter=" + b
+      apiurx + "master/dokterbyid.php?kdcabang=" + a + "&dokter=" + b,
     );
   }
   carirekening(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/carirekening.php?kdcabang=" + a + "&akun=" + b
+      apiurx + "master/carirekening.php?kdcabang=" + a + "&akun=" + b,
     );
   }
 
@@ -600,7 +603,7 @@ export class ApiserviceService {
     kdcb,
     kdklinik,
     stssimpan,
-    kduser
+    kduser,
   ) {
     let url = apiurx + "master/simpanuser.php";
     let param = {
@@ -665,7 +668,16 @@ export class ApiserviceService {
     return request.toPromise();
   }
 
-  simpanpoli(kdklinik, kdcabang, kdpoli, nampoli, sts, hakakses, polibpjs) {
+  simpanpoli(
+    kdklinik,
+    kdcabang,
+    kdpoli,
+    nampoli,
+    sts,
+    hakakses,
+    polibpjs,
+    polisakit,
+  ) {
     let url = apiurx + "master/simpanpoli.php";
     let param = {
       kdklinik: kdklinik,
@@ -675,6 +687,7 @@ export class ApiserviceService {
       poli: nampoli,
       hakakses: hakakses,
       polibpjs: polibpjs,
+      polisakit: polisakit,
     };
     let request = this.http.post(url, param);
     return request.toPromise();
@@ -720,7 +733,7 @@ export class ApiserviceService {
     norekening,
     norekeningl,
     kdcoarek,
-    sts
+    sts,
   ) {
     let url = apiurx + "master/simpanrekening.php";
     let param = {
@@ -750,7 +763,7 @@ export class ApiserviceService {
     kddokterbpjs,
     usericare,
     passicare,
-    signature
+    signature,
   ) {
     let url = apiurx + "master/simpandokter.php";
     let param = {
@@ -875,7 +888,7 @@ export class ApiserviceService {
     lulusan,
     diskripsi,
     pengalaman,
-    file
+    file,
   ) {
     let url = apiurx + "transaksi/simpanprofildokter.php";
     let param = {
@@ -900,7 +913,7 @@ export class ApiserviceService {
     file,
     kdklinik,
     kdpromo,
-    showkkk
+    showkkk,
   ) {
     let url = apiurx + "transaksi/simpanpromo.php";
     let param = {
@@ -953,19 +966,19 @@ export class ApiserviceService {
   }
   kabupaten(a, nama): Observable<any> {
     return this.http.get(
-      apidaftar + "kabupaten.php?kdprop=" + a + "&nama=" + nama
+      apidaftar + "kabupaten.php?kdprop=" + a + "&nama=" + nama,
     );
   }
 
   kecamatan(a, nama): Observable<any> {
     return this.http.get(
-      apidaftar + "kecamatan.php?kdkab=" + a + "&nama=" + nama
+      apidaftar + "kecamatan.php?kdkab=" + a + "&nama=" + nama,
     );
   }
 
   keluarahan(a, nama): Observable<any> {
     return this.http.get(
-      apidaftar + "keluarahan.php?kdkec=" + a + "&nama=" + nama
+      apidaftar + "keluarahan.php?kdkec=" + a + "&nama=" + nama,
     );
   }
   klinikperdokter(a): Observable<any> {
@@ -993,7 +1006,7 @@ export class ApiserviceService {
 
   kloter(a, b): Observable<any> {
     return this.http.get(
-      apidaftar + "kloter.php?kdklinik=" + a + "&kddokter=" + b
+      apidaftar + "kloter.php?kdklinik=" + a + "&kddokter=" + b,
     );
   }
 
@@ -1017,7 +1030,7 @@ export class ApiserviceService {
         "&no=" +
         no +
         "&norm=" +
-        norm
+        norm,
     );
   }
 
@@ -1028,7 +1041,7 @@ export class ApiserviceService {
         "&no=" +
         no +
         "&norm=" +
-        norm
+        norm,
     );
   }
 
@@ -1037,7 +1050,7 @@ export class ApiserviceService {
       "https://clenicapp.com/rjx/ws_antrianbpjs/waktuTunggucb.php?notrans=" +
         notrans +
         "&no=" +
-        no
+        no,
     );
   }
 
@@ -1049,7 +1062,7 @@ export class ApiserviceService {
 
   obat(a, b, c): Observable<any> {
     return this.http.get(
-      apiurx + "master/obat.php?kdcabang=" + a + "&sts=" + b + "&nama=" + c
+      apiurx + "master/obat.php?kdcabang=" + a + "&sts=" + b + "&nama=" + c,
     );
   }
   obatmaster(a, b, c, d): Observable<any> {
@@ -1062,25 +1075,31 @@ export class ApiserviceService {
         "&nama=" +
         c +
         "&type=" +
-        d
+        d,
     );
   }
 
   obaterm(a, b, c): Observable<any> {
     return this.http.get(
-      apiurx + "master/obaterm.php?kdcabang=" + a + "&sts=" + b + "&nama=" + c
+      apiurx + "master/obaterm.php?kdcabang=" + a + "&sts=" + b + "&nama=" + c,
     );
   }
 
   cobatbeli(a, b, c): Observable<any> {
     return this.http.get(
-      apiurx + "master/cobatbeli.php?kdcabang=" + a + "&sts=" + b + "&nama=" + c
+      apiurx +
+        "master/cobatbeli.php?kdcabang=" +
+        a +
+        "&sts=" +
+        b +
+        "&nama=" +
+        c,
     );
   }
 
   obatbykode(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/obatbykode.php?kdcabang=" + a + "&kdobat=" + b
+      apiurx + "master/obatbykode.php?kdcabang=" + a + "&kdobat=" + b,
     );
   }
 
@@ -1092,7 +1111,7 @@ export class ApiserviceService {
         "&kdobat=" +
         b +
         "&satuan=" +
-        c
+        c,
     );
   }
 
@@ -1104,7 +1123,7 @@ export class ApiserviceService {
         "&kdobat=" +
         b +
         "&kdgudang=" +
-        c
+        c,
     );
   }
 
@@ -1116,19 +1135,19 @@ export class ApiserviceService {
         "&kddokter=" +
         b +
         "&kdtamplate=" +
-        c
+        c,
     );
   }
 
   obatbyid(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/obatbyid.php?kdcabang=" + a + "&kdobat=" + b
+      apiurx + "master/obatbyid.php?kdcabang=" + a + "&kdobat=" + b,
     );
   }
 
   riwayatobat(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/riwayatobat.php?kdcabang=" + a + "&norm=" + b
+      apiurx + "transaksi/riwayatobat.php?kdcabang=" + a + "&norm=" + b,
     );
   }
   politunjang(a): Observable<any> {
@@ -1137,13 +1156,13 @@ export class ApiserviceService {
 
   kostumer(a, b, c): Observable<any> {
     return this.http.get(
-      apiurx + "master/kostumer.php?kdcabang=" + a + "&sts=" + b + "&nama=" + c
+      apiurx + "master/kostumer.php?kdcabang=" + a + "&sts=" + b + "&nama=" + c,
     );
   }
 
   tarifm(a, b, c): Observable<any> {
     return this.http.get(
-      apiurx + "master/tarifm.php?kdcabang=" + a + "&sts=" + b + "&nama=" + c
+      apiurx + "master/tarifm.php?kdcabang=" + a + "&sts=" + b + "&nama=" + c,
     );
   }
   teslab(a, b, c, d): Observable<any> {
@@ -1157,13 +1176,13 @@ export class ApiserviceService {
         "&nama=" +
         c +
         "&dari=" +
-        d
+        d,
     );
   }
 
   tarifkomponen(a, c): Observable<any> {
     return this.http.get(
-      apiurx + "master/tarifkomponen.php?kdcabang=" + a + "&kdtarif=" + c
+      apiurx + "master/tarifkomponen.php?kdcabang=" + a + "&kdtarif=" + c,
     );
   }
 
@@ -1179,7 +1198,7 @@ export class ApiserviceService {
         "&kdtarifm=" +
         kdtarifm +
         "&statust=" +
-        statust
+        statust,
     );
   }
 
@@ -1193,7 +1212,7 @@ export class ApiserviceService {
         "&nama=" +
         c +
         "&kdkelompok=" +
-        kdkelompok
+        kdkelompok,
     );
   }
 
@@ -1207,7 +1226,7 @@ export class ApiserviceService {
         "&status=" +
         c +
         "&nama=" +
-        nama
+        nama,
     );
   }
   tamplateobat(a, b, c, nama, kdtamplate): Observable<any> {
@@ -1222,13 +1241,19 @@ export class ApiserviceService {
         "&nama=" +
         nama +
         "&kdtamplate=" +
-        kdtamplate
+        kdtamplate,
     );
   }
 
   pasien(a, b, nama): Observable<any> {
     return this.http.get(
-      apiurx + "master/pasien.php?kdcabang=" + a + "&sts=" + b + "&nama=" + nama
+      apiurx +
+        "master/pasien.php?kdcabang=" +
+        a +
+        "&sts=" +
+        b +
+        "&nama=" +
+        nama,
     );
   }
 
@@ -1240,13 +1265,13 @@ export class ApiserviceService {
         "&kduser=" +
         b +
         "&nama=" +
-        nama
+        nama,
     );
   }
 
   hasiltamplatebhp(a, nama): Observable<any> {
     return this.http.get(
-      apiurx + "master/hasiltamplatebhp.php?kdcabang=" + a + "&nama=" + nama
+      apiurx + "master/hasiltamplatebhp.php?kdcabang=" + a + "&nama=" + nama,
     );
   }
 
@@ -1263,7 +1288,7 @@ export class ApiserviceService {
   updatenorm(data: Object, cabang): Observable<any> {
     return this.http.post(
       `https://emr.clenicapp.com/api/${cabang}/pasien/update-norm`,
-      data
+      data,
     );
   }
   simpanmtarif(data: any): Observable<any> {
@@ -1349,37 +1374,37 @@ export class ApiserviceService {
 
   nomorobat(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/nomorobat.php?kdcabang=" + a + "&kduser=" + b
+      apiurx + "master/nomorobat.php?kdcabang=" + a + "&kduser=" + b,
     );
   }
 
   t_masterkelaskamar(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_masterkelaskamar.php?kdcabang=" + a + "&nama=" + b
+      apiurx + "ri/t_masterkelaskamar.php?kdcabang=" + a + "&nama=" + b,
     );
   }
 
   datapasienri(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/datapasienri.php?kdcabang=" + a + "&notrans=" + b
+      apiurx + "ri/datapasienri.php?kdcabang=" + a + "&notrans=" + b,
     );
   }
 
   t_outstandingrj(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_outstandingrj.php?kdcabang=" + a + "&norm=" + b
+      apiurx + "ri/t_outstandingrj.php?kdcabang=" + a + "&norm=" + b,
     );
   }
 
   t_outstandingfar(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_outstandingfar.php?kdcabang=" + a + "&norm=" + b
+      apiurx + "ri/t_outstandingfar.php?kdcabang=" + a + "&norm=" + b,
     );
   }
 
   t_spesialisasimaping(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_spesialisasimaping.php?kdcabang=" + a + "&kdspesial=" + b
+      apiurx + "ri/t_spesialisasimaping.php?kdcabang=" + a + "&kdspesial=" + b,
     );
   }
 
@@ -1391,13 +1416,13 @@ export class ApiserviceService {
         "&nama=" +
         b +
         "&tgl=" +
-        c
+        c,
     );
   }
 
   t_listpasienri(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_listpasienri.php?kdcabang=" + a + "&nama=" + b
+      apiurx + "ri/t_listpasienri.php?kdcabang=" + a + "&nama=" + b,
     );
   }
   t_rwtlistpasienri(a, b, c): Observable<any> {
@@ -1408,17 +1433,17 @@ export class ApiserviceService {
         "&nama=" +
         b +
         "&tgl=" +
-        c
+        c,
     );
   }
   t_listtrxrekap(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_listtrxrekap.php?kdcabang=" + a + "&notransaksi=" + b
+      apiurx + "ri/t_listtrxrekap.php?kdcabang=" + a + "&notransaksi=" + b,
     );
   }
   t_kostumerd(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_kostumerd.php?kdcabang=" + a + "&nama=" + b
+      apiurx + "ri/t_kostumerd.php?kdcabang=" + a + "&nama=" + b,
     );
   }
   t_pendapatand(a): Observable<any> {
@@ -1432,7 +1457,7 @@ export class ApiserviceService {
         "&nama=" +
         b +
         "&kddokter=" +
-        c
+        c,
     );
   }
 
@@ -1446,7 +1471,7 @@ export class ApiserviceService {
         "&nama=" +
         c +
         "&kdtarif=" +
-        kdtarif
+        kdtarif,
     );
   }
   kdcppt(a): Observable<any> {
@@ -1464,7 +1489,7 @@ export class ApiserviceService {
         "&nama=" +
         nama +
         "&tgl=" +
-        tgl
+        tgl,
     );
   }
   pasienantrianppoli(kdcabang, sts, nama, tgl, statuscari): Observable<any> {
@@ -1479,7 +1504,7 @@ export class ApiserviceService {
         "&tgl=" +
         tgl +
         "&statuscari=" +
-        statuscari
+        statuscari,
     );
   }
 
@@ -1495,7 +1520,7 @@ export class ApiserviceService {
         "&tgl=" +
         tgl +
         "&statuscari=" +
-        statuscari
+        statuscari,
     );
   }
 
@@ -1607,7 +1632,7 @@ export class ApiserviceService {
         "&nama=" +
         c +
         "&sts=" +
-        sts
+        sts,
     );
   }
   listtrxri(a, b, c): Observable<any> {
@@ -1618,7 +1643,7 @@ export class ApiserviceService {
         "&nofaktur=" +
         b +
         "&nama=" +
-        c
+        c,
     );
   }
 
@@ -1632,7 +1657,7 @@ export class ApiserviceService {
         "&nama=" +
         c +
         "&sts=" +
-        sts
+        sts,
     );
   }
   t_listtrxpen(a, b, c, sts): Observable<any> {
@@ -1645,7 +1670,7 @@ export class ApiserviceService {
         "&nama=" +
         c +
         "&sts=" +
-        sts
+        sts,
     );
   }
 
@@ -1659,18 +1684,18 @@ export class ApiserviceService {
         "&nama=" +
         c +
         "&sts=" +
-        sts
+        sts,
     );
   }
 
   totalfarmasi(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/totalfarmasi.php?kdcabang=" + a + "&nofaktur=" + b
+      apiurx + "transaksi/totalfarmasi.php?kdcabang=" + a + "&nofaktur=" + b,
     );
   }
   trigerbayar(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/trigerbayar.php?kdcabang=" + a + "&notrans=" + b
+      apiurx + "transaksi/trigerbayar.php?kdcabang=" + a + "&notrans=" + b,
     );
   }
   listdaftartunjang(a, b): Observable<any> {
@@ -1679,13 +1704,13 @@ export class ApiserviceService {
         "transaksi/listdaftartunjang.php?kdcabang=" +
         a +
         "&nofaktur=" +
-        b
+        b,
     );
   }
 
   jenisbayar(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/jenisbayar.php?sts=" + a + "&kd=" + b
+      apiurx + "transaksi/jenisbayar.php?sts=" + a + "&kd=" + b,
     );
   }
   listbank(a): Observable<any> {
@@ -1693,7 +1718,7 @@ export class ApiserviceService {
   }
   plafonbpjs(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/plafonbpjs.php?kdcabang=" + a + "&kelas=" + b
+      apiurx + "transaksi/plafonbpjs.php?kdcabang=" + a + "&kelas=" + b,
     );
   }
 
@@ -1707,39 +1732,49 @@ export class ApiserviceService {
         "&sts=" +
         c +
         "&obat=" +
-        d
+        d,
     );
   }
 
   listtrxfarrja(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/listtrxfarrja.php?kdcabang=" + a + "&notransaksi=" + b
+      apiurx +
+        "transaksi/listtrxfarrja.php?kdcabang=" +
+        a +
+        "&notransaksi=" +
+        b,
     );
   }
   metode(a, b, c): Observable<any> {
     return this.http.get(
-      apiurx + "master/metode.php?kdcabang=" + a + "&nama=" + b + "&dari=" + c
+      apiurx + "master/metode.php?kdcabang=" + a + "&nama=" + b + "&dari=" + c,
     );
   }
   golongan(a, b, c): Observable<any> {
     return this.http.get(
-      apiurx + "master/golongan.php?kdcabang=" + a + "&nama=" + b + "&dari=" + c
+      apiurx +
+        "master/golongan.php?kdcabang=" +
+        a +
+        "&nama=" +
+        b +
+        "&dari=" +
+        c,
     );
   }
 
   t_masterkamarinduk(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_masterkamarinduk.php?kdcabang=" + a + "&nama=" + b
+      apiurx + "ri/t_masterkamarinduk.php?kdcabang=" + a + "&nama=" + b,
     );
   }
   t_ceknorm(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_ceknorm.php?kdcabang=" + a + "&norm=" + b
+      apiurx + "ri/t_ceknorm.php?kdcabang=" + a + "&norm=" + b,
     );
   }
   t_kamar(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_kamar.php?kdcabang=" + a + "&nama=" + b
+      apiurx + "ri/t_kamar.php?kdcabang=" + a + "&nama=" + b,
     );
   }
   t_kamarkelas(a, b, c): Observable<any> {
@@ -1750,23 +1785,23 @@ export class ApiserviceService {
         "&nama=" +
         b +
         "&kdkelas=" +
-        c
+        c,
     );
   }
 
   t_oktindakan(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_oktindakan.php?kdcabang=" + a + "&nama=" + b
+      apiurx + "ri/t_oktindakan.php?kdcabang=" + a + "&nama=" + b,
     );
   }
   t_spesialisasi(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_spesialisasi.php?kdcabang=" + a + "&nama=" + b
+      apiurx + "ri/t_spesialisasi.php?kdcabang=" + a + "&nama=" + b,
     );
   }
   t_mperawat(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "ri/t_mperawat.php?kdcabang=" + a + "&nama=" + b
+      apiurx + "ri/t_mperawat.php?kdcabang=" + a + "&nama=" + b,
     );
   }
   tamplatelab(a, b, c): Observable<any> {
@@ -1777,7 +1812,7 @@ export class ApiserviceService {
         "&notransaksi=" +
         b +
         "&jk=" +
-        c
+        c,
     );
   }
   tamplatelabb(a, b, c): Observable<any> {
@@ -1788,12 +1823,12 @@ export class ApiserviceService {
         "&notransaksi=" +
         b +
         "&jk=" +
-        c
+        c,
     );
   }
   mapinglab(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/mapinglab.php?kdcabang=" + a + "&kdproduk=" + b
+      apiurx + "master/mapinglab.php?kdcabang=" + a + "&kdproduk=" + b,
     );
   }
 
@@ -1807,7 +1842,7 @@ export class ApiserviceService {
         "&kdproduk=" +
         c +
         "&nomor=" +
-        nomor
+        nomor,
     );
   }
   jumlahpasiendashboard(a, b, c): Observable<any> {
@@ -1818,12 +1853,12 @@ export class ApiserviceService {
         "&sts=" +
         b +
         "&tgl=" +
-        c
+        c,
     );
   }
   polipie(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/polipie.php?kdcabang=" + a + "&tgl=" + b
+      apiurx + "master/polipie.php?kdcabang=" + a + "&tgl=" + b,
     );
   }
   grafik(a): Observable<any> {
@@ -1831,7 +1866,7 @@ export class ApiserviceService {
   }
   grafikbpjs(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/grafikbpjs.php?kdcabang=" + a + "&sts=" + b
+      apiurx + "master/grafikbpjs.php?kdcabang=" + a + "&sts=" + b,
     );
   }
   hasilradiologi(a, b, c): Observable<any> {
@@ -1842,7 +1877,7 @@ export class ApiserviceService {
         "&notransaksi=" +
         b +
         "&kdproduk=" +
-        c
+        c,
     );
   }
 
@@ -1860,7 +1895,7 @@ export class ApiserviceService {
         "&stss=" +
         e +
         "&status=" +
-        f
+        f,
     );
   }
   pasienperdokterri(a, b, c, d, e, f): Observable<any> {
@@ -1877,13 +1912,13 @@ export class ApiserviceService {
         "&stss=" +
         e +
         "&status=" +
-        f
+        f,
     );
   }
 
   datapasien(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/datapasien.php?kdcabang=" + a + "&notrans=" + b
+      apiurx + "transaksi/datapasien.php?kdcabang=" + a + "&notrans=" + b,
     );
   }
 
@@ -1892,7 +1927,7 @@ export class ApiserviceService {
   }
   riwayatlaborat(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/riwayatlaborat.php?kdcabang=" + a + "&norm=" + b
+      apiurx + "transaksi/riwayatlaborat.php?kdcabang=" + a + "&norm=" + b,
     );
   }
 
@@ -1904,7 +1939,7 @@ export class ApiserviceService {
         "&norm=" +
         b +
         "&kdlab=" +
-        c
+        c,
     );
   }
 
@@ -1914,7 +1949,7 @@ export class ApiserviceService {
 
   riwayatradiologi(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/riwayatradiologi.php?kdcabang=" + a + "&norm=" + b
+      apiurx + "transaksi/riwayatradiologi.php?kdcabang=" + a + "&norm=" + b,
     );
   }
   diagnosatmp(a, b, c): Observable<any> {
@@ -1925,7 +1960,7 @@ export class ApiserviceService {
         "&notrans=" +
         b +
         "&sts=" +
-        c
+        c,
     );
   }
   diagnosacopy(a, b, c, d): Observable<any> {
@@ -1938,13 +1973,13 @@ export class ApiserviceService {
         "&sts=" +
         c +
         "&kdpoli=" +
-        d
+        d,
     );
   }
 
   tampilcppt(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/tampilcppt.php?kdcabang=" + a + "&notrans=" + b
+      apiurx + "transaksi/tampilcppt.php?kdcabang=" + a + "&notrans=" + b,
     );
   }
 
@@ -1956,7 +1991,7 @@ export class ApiserviceService {
         "&notrans=" +
         b +
         "&sts=" +
-        c
+        c,
     );
   }
   tampilcpptlist(a, b, c, d): Observable<any> {
@@ -1969,7 +2004,7 @@ export class ApiserviceService {
         "&kddokter=" +
         c +
         "&kdpoli=" +
-        d
+        d,
     );
   }
 
@@ -1983,7 +2018,7 @@ export class ApiserviceService {
         "&sts=" +
         c +
         "&kdcppt=" +
-        d
+        d,
     );
   }
 
@@ -2003,7 +2038,7 @@ export class ApiserviceService {
         "&kdpoli=" +
         f +
         "&kdpruduk=" +
-        g
+        g,
     );
   }
 
@@ -2017,7 +2052,7 @@ export class ApiserviceService {
         "&sts=" +
         c +
         "&kdcppt=" +
-        d
+        d,
     );
   }
 
@@ -2029,7 +2064,7 @@ export class ApiserviceService {
         "&notrans=" +
         b +
         "&norm=" +
-        c
+        c,
     );
   }
 
@@ -2041,7 +2076,7 @@ export class ApiserviceService {
         "&notrans=" +
         b +
         "&kdcppt=" +
-        c
+        c,
     );
   }
 
@@ -2053,19 +2088,19 @@ export class ApiserviceService {
         "&notrans=" +
         b +
         "&kdcppt=" +
-        c
+        c,
     );
   }
 
   listpobaterm(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/listpobaterm.php?kdcabang=" + a + "&notrans=" + b
+      apiurx + "transaksi/listpobaterm.php?kdcabang=" + a + "&notrans=" + b,
     );
   }
 
   listobatermracik(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/listobatermracik.php?kdcabang=" + a + "&notrans=" + b
+      apiurx + "transaksi/listobatermracik.php?kdcabang=" + a + "&notrans=" + b,
     );
   }
   obatracik(a, b, c, d): Observable<any> {
@@ -2078,13 +2113,13 @@ export class ApiserviceService {
         "&kdcppt=" +
         c +
         "&kode=" +
-        d
+        d,
     );
   }
 
   estimasibiaya(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/estimasibiaya.php?kdcabang=" + a + "&notrans=" + b
+      apiurx + "transaksi/estimasibiaya.php?kdcabang=" + a + "&notrans=" + b,
     );
   }
 
@@ -2105,7 +2140,7 @@ export class ApiserviceService {
         "&nama=" +
         d +
         "&tgls=" +
-        tgls
+        tgls,
     );
   }
 
@@ -2119,7 +2154,7 @@ export class ApiserviceService {
         "&sts=" +
         c +
         "&nama=" +
-        d
+        d,
     );
   }
   listmutasiin(a, b, c, d): Observable<any> {
@@ -2132,7 +2167,7 @@ export class ApiserviceService {
         "&sts=" +
         c +
         "&nama=" +
-        d
+        d,
     );
   }
   listmutasiout(a, b, c, d): Observable<any> {
@@ -2145,7 +2180,7 @@ export class ApiserviceService {
         "&sts=" +
         c +
         "&nama=" +
-        d
+        d,
     );
   }
   caripembelianr(a, b, c, d): Observable<any> {
@@ -2158,7 +2193,7 @@ export class ApiserviceService {
         "&sts=" +
         c +
         "&nama=" +
-        d
+        d,
     );
   }
 
@@ -2172,7 +2207,7 @@ export class ApiserviceService {
         "&nama=" +
         d +
         "&tgl=" +
-        e
+        e,
     );
   }
 
@@ -2186,7 +2221,7 @@ export class ApiserviceService {
         "&nama=" +
         d +
         "&tgl=" +
-        e
+        e,
     );
   }
 
@@ -2200,7 +2235,7 @@ export class ApiserviceService {
         "&nama=" +
         d +
         "&tgl=" +
-        e
+        e,
     );
   }
 
@@ -2214,7 +2249,7 @@ export class ApiserviceService {
         "&sts=" +
         c +
         "&nama=" +
-        d
+        d,
     );
   }
 
@@ -2226,7 +2261,7 @@ export class ApiserviceService {
         "&nofaktur=" +
         b +
         "&nolpb=" +
-        c
+        c,
     );
   }
   // pasienrm(a, b, c, d, e, tgls): Observable<any> {
@@ -2243,7 +2278,7 @@ export class ApiserviceService {
     tgls: string, // tgls
     orderby?: string, // opsional
     order?: string, // opsional
-    kdpoli?: string // opsional
+    kdpoli?: string, // opsional
   ): Observable<any> {
     let url =
       apiurx +
@@ -2284,7 +2319,7 @@ export class ApiserviceService {
         "&nofaktur=" +
         b +
         "&notrans=" +
-        c
+        c,
     );
   }
 
@@ -2296,7 +2331,7 @@ export class ApiserviceService {
         "&nofaktur=" +
         b +
         "&notrans=" +
-        c
+        c,
     );
   }
   trxjualx(a, b, c): Observable<any> {
@@ -2307,7 +2342,7 @@ export class ApiserviceService {
         "&nofaktur=" +
         b +
         "&notrans=" +
-        c
+        c,
     );
   }
   gudangdefault(a): Observable<any> {
@@ -2320,7 +2355,7 @@ export class ApiserviceService {
 
   panggiladmisi(a): Observable<any> {
     return this.http.get(
-      "http://localhost:8011/clenic/transaksi/panggiladmisi.php?no=" + a
+      "http://localhost:8011/clenic/transaksi/panggiladmisi.php?no=" + a,
     );
   }
   panggilantrian(a, b): Observable<any> {
@@ -2328,13 +2363,13 @@ export class ApiserviceService {
       "http://localhost:8011/clenic/transaksi/panggilantrian.php?no=" +
         a +
         "&dokter=" +
-        b
+        b,
     );
   }
 
   listtrxcppt(a, c): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/listtrxcppt.php?kdcabang=" + a + "&notrans=" + c
+      apiurx + "transaksi/listtrxcppt.php?kdcabang=" + a + "&notrans=" + c,
     );
   }
 
@@ -2344,7 +2379,7 @@ export class ApiserviceService {
 
   totalpenjualan(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/totalpenjualan.php?kdcabang=" + a + "&tgl=" + b
+      apiurx + "master/totalpenjualan.php?kdcabang=" + a + "&tgl=" + b,
     );
   }
 
@@ -2359,7 +2394,7 @@ export class ApiserviceService {
         "&kdgudang=" +
         b +
         "&nama=" +
-        c
+        c,
     );
   }
   pasiensemua(a, b, c): Observable<any> {
@@ -2370,7 +2405,7 @@ export class ApiserviceService {
         "&sts=" +
         b +
         "&nama=" +
-        c
+        c,
     );
   }
   tescoba(a, b, c): Observable<any> {
@@ -2381,39 +2416,39 @@ export class ApiserviceService {
         "&notransaksi=" +
         b +
         "&nofaktur=" +
-        c
+        c,
     );
   }
 
   etiket(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/etiket.php?kdcabang=" + a + "&notransaksi=" + b
+      apiurx + "transaksi/etiket.php?kdcabang=" + a + "&notransaksi=" + b,
     );
   }
   kostumerlist(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/kostumerlist.php?kdcabang=" + a + "&nama=" + b
+      apiurx + "master/kostumerlist.php?kdcabang=" + a + "&nama=" + b,
     );
   }
   trxmutasi(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/trxmutasi.php?kdcabang=" + a + "&nomutasi=" + b
+      apiurx + "transaksi/trxmutasi.php?kdcabang=" + a + "&nomutasi=" + b,
     );
   }
   trxmutasiin(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/trxmutasiin.php?kdcabang=" + a + "&nomutasi=" + b
+      apiurx + "transaksi/trxmutasiin.php?kdcabang=" + a + "&nomutasi=" + b,
     );
   }
 
   trxmutasiout(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/trxmutasiout.php?kdcabang=" + a + "&nomutasi=" + b
+      apiurx + "transaksi/trxmutasiout.php?kdcabang=" + a + "&nomutasi=" + b,
     );
   }
   pendapatanrjdepan(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/pendapatanrjdepan.php?kdcabang=" + a + "&tgl=" + b
+      apiurx + "transaksi/pendapatanrjdepan.php?kdcabang=" + a + "&tgl=" + b,
     );
   }
 
@@ -2423,13 +2458,13 @@ export class ApiserviceService {
 
   listbayarpiutang(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/listbayarpiutang.php?kdcabang=" + a + "&notrans=" + b
+      apiurx + "master/listbayarpiutang.php?kdcabang=" + a + "&notrans=" + b,
     );
   }
 
   stokobat(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/stokobat.php?kdcabang=" + a + "&kdobat=" + b
+      apiurx + "transaksi/stokobat.php?kdcabang=" + a + "&kdobat=" + b,
     );
   }
   listbayarpiutangh(a, b, c, d): Observable<any> {
@@ -2442,7 +2477,7 @@ export class ApiserviceService {
         "&nama=" +
         c +
         "&tgl=" +
-        d
+        d,
     );
   }
 
@@ -2462,7 +2497,7 @@ export class ApiserviceService {
         "&verif=" +
         f +
         "&cariby=" +
-        e
+        e,
     );
   }
 
@@ -2476,24 +2511,24 @@ export class ApiserviceService {
         "&verif=" +
         d +
         "&cariby=" +
-        e
+        e,
     );
   }
 
   coax(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/coa.php?kdcabang=" + a + "&nama=" + b
+      apiurx + "transaksi/coa.php?kdcabang=" + a + "&nama=" + b,
     );
   }
   coad(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/coad.php?kdcabang=" + a + "&kdgl=" + b
+      apiurx + "transaksi/coad.php?kdcabang=" + a + "&kdgl=" + b,
     );
   }
 
   coadbawah(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/coadbawah.php?kdcabang=" + a + "&kdgl=" + b
+      apiurx + "transaksi/coadbawah.php?kdcabang=" + a + "&kdgl=" + b,
     );
   }
   cekdiag(a): Observable<any> {
@@ -2504,13 +2539,19 @@ export class ApiserviceService {
   }
   listgl(a, b, c): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/listgl.php?kdcabang=" + a + "&nama=" + b + "&tgl=" + c
+      apiurx +
+        "transaksi/listgl.php?kdcabang=" +
+        a +
+        "&nama=" +
+        b +
+        "&tgl=" +
+        c,
     );
   }
 
   tmpbpjs(nokartu, status): Observable<any> {
     return this.http.get(
-      apiurx + "pcare/cekpeserta.php?no=" + nokartu + "&status=" + status
+      apiurx + "pcare/cekpeserta.php?no=" + nokartu + "&status=" + status,
     );
   }
 
@@ -2529,13 +2570,13 @@ export class ApiserviceService {
   }
   ceklistdaftarpcare(no, tgl): Observable<any> {
     return this.http.get(
-      apiurx + "pcare/ceklistdaftarpcare.php?no=" + no + "&tgl=" + tgl
+      apiurx + "pcare/ceklistdaftarpcare.php?no=" + no + "&tgl=" + tgl,
     );
   }
 
   cekjadwalv2(no, tgl): Observable<any> {
     return this.http.get(
-      apiurx + "pcare/cekjadwal.php?kdpoli=" + no + "&tgl=" + tgl
+      apiurx + "pcare/cekjadwal.php?kdpoli=" + no + "&tgl=" + tgl,
     );
   }
   cekjadwalv22(no, tgl, c): Observable<any> {
@@ -2546,7 +2587,7 @@ export class ApiserviceService {
         "&tgl=" +
         tgl +
         "&kdpoliin=" +
-        c
+        c,
     );
   }
 
@@ -2558,7 +2599,7 @@ export class ApiserviceService {
         "&kdsarana=" +
         b +
         "&tgl=" +
-        c
+        c,
     );
   }
 
@@ -2568,13 +2609,13 @@ export class ApiserviceService {
         "pcare/getpendaftaranprovider.php?tgl=" +
         tgl +
         "&nourut=" +
-        nourut
+        nourut,
     );
   }
 
   pendaftaranbynourut(tgl, b): Observable<any> {
     return this.http.get(
-      apiurx + "pcare/pendaftaranbynourut.php?tgl=" + tgl + "&nourut=" + b
+      apiurx + "pcare/pendaftaranbynourut.php?tgl=" + tgl + "&nourut=" + b,
     );
   }
 
@@ -2619,7 +2660,7 @@ export class ApiserviceService {
         "&kdsubsp=" +
         kdsubsp +
         "&nokartu=" +
-        nokartu
+        nokartu,
     );
   }
 
@@ -2628,7 +2669,7 @@ export class ApiserviceService {
   }
   alergi(norm, kdcabang): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/alergi.php?norm=" + norm + "&kdcabang=" + kdcabang
+      apiurx + "transaksi/alergi.php?norm=" + norm + "&kdcabang=" + kdcabang,
     );
   }
 
@@ -2638,7 +2679,7 @@ export class ApiserviceService {
         "transaksi/diagnosaambilpcarev.php?notrans=" +
         notrans +
         "&kdcabang=" +
-        kdcabang
+        kdcabang,
     );
   }
 
@@ -2652,7 +2693,7 @@ export class ApiserviceService {
         "&sts=" +
         sts +
         "&pasien=" +
-        pasien
+        pasien,
     );
   }
 
@@ -2663,7 +2704,7 @@ export class ApiserviceService {
         "&tahun=" +
         tahun +
         "&waktu=" +
-        waktu
+        waktu,
     );
   }
 
@@ -2677,7 +2718,7 @@ export class ApiserviceService {
         "&kdpoli=" +
         kdpoli +
         "&tgl=" +
-        tglp
+        tglp,
     );
   }
 
@@ -2693,7 +2734,7 @@ export class ApiserviceService {
         "&kdcabang=" +
         kdcabang +
         "&notransasal=" +
-        notransasal
+        notransasal,
     );
   }
 
@@ -2714,7 +2755,7 @@ export class ApiserviceService {
   simpanpcaredaftarv1(data: any): Observable<any> {
     return this.http.post(
       apiurx + "pcare/adddaftarpcarekunjungansehat.php",
-      data
+      data,
     );
   }
 
@@ -2725,7 +2766,7 @@ export class ApiserviceService {
   adddaftarpcarekunjungansehat(data: any): Observable<any> {
     return this.http.post(
       apiurx + "pcare/adddaftarpcarekunjungansehat.php",
-      data
+      data,
     );
   }
   addkunjungan(data: any): Observable<any> {
@@ -2829,7 +2870,7 @@ export class ApiserviceService {
   }
   listkostumer(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/listkostumer.php?kdcabang=" + a + "&nama=" + b
+      apiurx + "transaksi/listkostumer.php?kdcabang=" + a + "&nama=" + b,
     );
   }
 
@@ -2845,7 +2886,7 @@ export class ApiserviceService {
         "&nama=" +
         b +
         "&kdpoli=" +
-        c
+        c,
     );
   }
   listpolidaf(a): Observable<any> {
@@ -2853,7 +2894,7 @@ export class ApiserviceService {
   }
   riwayatpriksa(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/riwayatpriksa.php?kdcabang=" + a + "&norm=" + b
+      apiurx + "transaksi/riwayatpriksa.php?kdcabang=" + a + "&norm=" + b,
     );
   }
   verifshowdd(a): Observable<any> {
@@ -2868,12 +2909,12 @@ export class ApiserviceService {
         "&tgl=" +
         b +
         "&nama=" +
-        c
+        c,
     );
   }
   listadjustd(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/listadjustd.php?kdcabang=" + a + "&noadjust=" + b
+      apiurx + "transaksi/listadjustd.php?kdcabang=" + a + "&noadjust=" + b,
     );
   }
 
@@ -2887,7 +2928,7 @@ export class ApiserviceService {
 
   tampilcoa(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/tampilcoa.php?kdcabang=" + a + "&coa=" + b
+      apiurx + "master/tampilcoa.php?kdcabang=" + a + "&coa=" + b,
     );
   }
   spesialis(a): Observable<any> {
@@ -2898,18 +2939,18 @@ export class ApiserviceService {
   }
   dokterspesialis(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/dokterspesialis.php?kdcabang=" + a + "&kdspesialis=" + b
+      apiurx + "master/dokterspesialis.php?kdcabang=" + a + "&kdspesialis=" + b,
     );
   }
   kamar(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/kamar.php?kdcabang=" + a + "&kdkelas=" + b
+      apiurx + "master/kamar.php?kdcabang=" + a + "&kdkelas=" + b,
     );
   }
 
   listpasienri(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/listpasienri.php?kdcabang=" + a + "&nama=" + b
+      apiurx + "master/listpasienri.php?kdcabang=" + a + "&nama=" + b,
     );
   }
 
@@ -2918,13 +2959,13 @@ export class ApiserviceService {
   }
   tampilrujukan(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/tampilrujukan.php?kdcabang=" + a + "&notrans=" + b
+      apiurx + "transaksi/tampilrujukan.php?kdcabang=" + a + "&notrans=" + b,
     );
   }
 
   listkomponen(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/listkomponen.php?kdcabang=" + a + "&kdtarif=" + b
+      apiurx + "transaksi/listkomponen.php?kdcabang=" + a + "&kdtarif=" + b,
     );
   }
 
@@ -2934,18 +2975,18 @@ export class ApiserviceService {
         "transaksi/listkomponendokter.php?kdcabang=" +
         a +
         "&kdtarif=" +
-        b
+        b,
     );
   }
   tarifmri(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/treeview.php?kdcabang=" + a + "&kdtarif=" + b
+      apiurx + "master/treeview.php?kdcabang=" + a + "&kdtarif=" + b,
     );
   }
 
   rwtobat(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/rwtobat.php?kdcabang=" + a + "&norm=" + b
+      apiurx + "master/rwtobat.php?kdcabang=" + a + "&norm=" + b,
     );
   }
   rwtobatd(a, b, notransaksi): Observable<any> {
@@ -2956,7 +2997,7 @@ export class ApiserviceService {
         "&norm=" +
         b +
         "&notransaksi=" +
-        notransaksi
+        notransaksi,
     );
   }
 
@@ -2968,7 +3009,7 @@ export class ApiserviceService {
   }
   frekuensiobat(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/frekuensiobat.php?kdcp=" + a + "&kdbs=" + b
+      apiurx + "master/frekuensiobat.php?kdcp=" + a + "&kdbs=" + b,
     );
   }
 
@@ -2977,13 +3018,13 @@ export class ApiserviceService {
   }
   jmlobathari(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/jmlobathari.php?kdcp=" + a + "&kdbs=" + b
+      apiurx + "master/jmlobathari.php?kdcp=" + a + "&kdbs=" + b,
     );
   }
 
   obatermbyid(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/obatermbyid.php?kdcabang=" + a + "&kdobat=" + b
+      apiurx + "master/obatermbyid.php?kdcabang=" + a + "&kdobat=" + b,
     );
   }
   jenisrujukankhusus(): Observable<any> {
@@ -3002,7 +3043,11 @@ export class ApiserviceService {
 
   cekpasienlamadanbaru(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/cekpasienlamadanbaru.php?norm=" + a + "&kdcabang=" + b
+      apiurx +
+        "transaksi/cekpasienlamadanbaru.php?norm=" +
+        a +
+        "&kdcabang=" +
+        b,
     );
   }
   metoderacik(): Observable<any> {
@@ -3023,7 +3068,7 @@ export class ApiserviceService {
   getlabtree(a, b) {
     return this.http
       .get<any>(
-        apiurx + "master/listtariftree.php?status=" + a + "&kdcabang=" + b
+        apiurx + "master/listtariftree.php?status=" + a + "&kdcabang=" + b,
       )
       .toPromise()
       .then((res) => <TreeNode[]>res);
@@ -3034,7 +3079,7 @@ export class ApiserviceService {
 
   cekpasien(a, b, c): Observable<any> {
     return this.http.get(
-      apiurx + "master/cekpasien.php?no=" + a + "&kdcabang=" + b + "&sts=" + c
+      apiurx + "master/cekpasien.php?no=" + a + "&kdcabang=" + b + "&sts=" + c,
     );
   }
 
@@ -3074,7 +3119,7 @@ export class ApiserviceService {
     return this.http.post(
       satusehat + "KnowYourCustomer/generate-url",
       payload,
-      { headers: headers }
+      { headers: headers },
     );
   }
   observation(payload: any, headers: any) {
@@ -3222,13 +3267,13 @@ export class ApiserviceService {
       satusehat +
         "Practitioner?identifier=https://fhir.kemkes.go.id/id/nik|" +
         a,
-      { headers: heder }
+      { headers: heder },
     );
   }
   getpasien(a, heder): Observable<any> {
     return this.http.get(
       satusehat + "Patient?identifier=https://fhir.kemkes.go.id/id/nik|" + a,
-      { headers: heder }
+      { headers: heder },
     );
   }
 
@@ -3255,7 +3300,7 @@ export class ApiserviceService {
         "&nourut=" +
         c +
         "&kdpoli=" +
-        d
+        d,
     );
   }
   deletependaftaranpcarev(a, b, c, d): Observable<any> {
@@ -3273,7 +3318,7 @@ export class ApiserviceService {
         "&nourut=" +
         c +
         "&kdpoli=" +
-        d
+        d,
     );
   }
   kajianrsesepa(data: any): Observable<any> {
@@ -3281,12 +3326,12 @@ export class ApiserviceService {
   }
   tampilkajianresep(a): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/tampilkajianresep.php?noresep=" + a
+      apiurx + "transaksi/tampilkajianresep.php?noresep=" + a,
     );
   }
   polibyid(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/polibyid.php?kdcabang=" + a + "&kdpoli=" + b
+      apiurx + "master/polibyid.php?kdcabang=" + a + "&kdpoli=" + b,
     );
   }
 
@@ -3316,23 +3361,23 @@ export class ApiserviceService {
 
   riwayattriase(data, status): Observable<any> {
     return this.http.get(
-      apiurx + "emr/riwayattriase.php?data=" + data + "&status=" + status
+      apiurx + "emr/riwayattriase.php?data=" + data + "&status=" + status,
     );
   }
 
   rwttindakan(data, status): Observable<any> {
     return this.http.get(
-      apiurx + "emr/rwttindakan.php?data=" + data + "&status=" + status
+      apiurx + "emr/rwttindakan.php?data=" + data + "&status=" + status,
     );
   }
   rwtkajianawal(data, status): Observable<any> {
     return this.http.get(
-      apiurx + "emr/rwtkajianawal.php?data=" + data + "&status=" + status
+      apiurx + "emr/rwtkajianawal.php?data=" + data + "&status=" + status,
     );
   }
   rwtaskep(data, status): Observable<any> {
     return this.http.get(
-      apiurx + "emr/rwtaskep.php?data=" + data + "&status=" + status
+      apiurx + "emr/rwtaskep.php?data=" + data + "&status=" + status,
     );
   }
 
@@ -3342,13 +3387,17 @@ export class ApiserviceService {
 
   rwtkajianperawatawal(data, status): Observable<any> {
     return this.http.get(
-      apiurx + "emr/rwtkajianperawatawal.php?data=" + data + "&status=" + status
+      apiurx +
+        "emr/rwtkajianperawatawal.php?data=" +
+        data +
+        "&status=" +
+        status,
     );
   }
 
   ceknokunjungan(notransasal): Observable<any> {
     return this.http.get(
-      apiurx + "master/ceknokunjungan.php?notransaksi=" + notransasal
+      apiurx + "master/ceknokunjungan.php?notransaksi=" + notransasal,
     );
   }
   simpanobatbpjs(data: any): Observable<any> {
@@ -3356,12 +3405,12 @@ export class ApiserviceService {
   }
   cekkunjunganobat(a): Observable<any> {
     return this.http.get(
-      apiurx + "pcare/cekkunjunganobat.php?nokunjungan=" + a
+      apiurx + "pcare/cekkunjunganobat.php?nokunjungan=" + a,
     );
   }
   deleteobat(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "pcare/deleteobat.php?nokunjungan=" + a + "&kodeObatSK=" + b
+      apiurx + "pcare/deleteobat.php?nokunjungan=" + a + "&kodeObatSK=" + b,
     );
   }
 
@@ -3378,7 +3427,7 @@ export class ApiserviceService {
 
   cektindakankunjungan(a): Observable<any> {
     return this.http.get(
-      apiurx + "pcare/cektindakankunjungan.php?nokunjungan=" + a
+      apiurx + "pcare/cektindakankunjungan.php?nokunjungan=" + a,
     );
   }
 
@@ -3397,7 +3446,7 @@ export class ApiserviceService {
   }
   deletetindakan(a: any, b): Observable<any> {
     return this.http.get(
-      apiurx + "pcare/deletetindakan.php?nokunjungan=" + a + "&kdtindakan=" + b
+      apiurx + "pcare/deletetindakan.php?nokunjungan=" + a + "&kdtindakan=" + b,
     );
   }
   getriwayatkunjungan(a): Observable<any> {
@@ -3410,12 +3459,12 @@ export class ApiserviceService {
         "transaksi/listobatkirimpcare.php?kdcabang=" +
         a +
         "&notrans=" +
-        b
+        b,
     );
   }
   ceksatusehat(a): Observable<any> {
     return this.http.get(
-      apiurx + "transaksi/ceksatusehat.php?notransaksi=" + a
+      apiurx + "transaksi/ceksatusehat.php?notransaksi=" + a,
     );
   }
   cekjadwal(a, b, c): Observable<any> {
@@ -3426,7 +3475,7 @@ export class ApiserviceService {
         "&kodepoliasli=" +
         b +
         "&tgl=" +
-        c
+        c,
     );
   }
   cekjadwalv222(a, b, c): Observable<any> {
@@ -3437,7 +3486,7 @@ export class ApiserviceService {
         "&kodepoliasli=" +
         b +
         "&tgl=" +
-        c
+        c,
     );
   }
   ceknoantrian(a, b, c, d): Observable<any> {
@@ -3450,7 +3499,7 @@ export class ApiserviceService {
         "&tgl=" +
         c +
         "&kdcabang=" +
-        d
+        d,
     );
   }
   editpoli(): Observable<any> {
@@ -3459,35 +3508,35 @@ export class ApiserviceService {
 
   getCpptByNorm(slugCabang, norm) {
     return this.http.get(
-      `https://emr.clenicapp.com/api/${slugCabang}/cppt?norm=${norm}`
+      `https://emr.clenicapp.com/api/${slugCabang}/cppt?norm=${norm}`,
     );
   }
 
   updateCppt(slugCabang, data: any) {
     return this.http.post(
       `https://emr.clenicapp.com/api/${slugCabang}/cppt/update`,
-      data
+      data,
     );
   }
 
   validateRujukCppt(slugCabang, data: any) {
     return this.http.post(
       `https://emr.clenicapp.com/api/${slugCabang}/cppt/validate-rujuk`,
-      data
+      data,
     );
   }
 
   storeProlanisPrb(slugCabang, payload) {
     return this.http.post(
       `https://emr.clenicapp.com/api/${slugCabang}/prolanis-prb`,
-      payload
+      payload,
     );
   }
 
   updateDokter(slugCabang, payload) {
     return this.http.post(
       `https://emr.clenicapp.com/api/${slugCabang}/cppt/update-kddokter`,
-      payload
+      payload,
     );
   }
 
