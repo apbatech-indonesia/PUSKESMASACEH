@@ -79,7 +79,7 @@ export class anjunganComponent implements OnInit {
     public fb: FormBuilder,
     private router: Router,
     private http: HttpClient,
-    private authService: ApiserviceService
+    private authService: ApiserviceService,
   ) {
     const data = JSON.parse(localStorage.getItem("userDatacl"));
     this.userDetails = data.userData;
@@ -130,7 +130,7 @@ export class anjunganComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -164,7 +164,7 @@ export class anjunganComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -184,7 +184,7 @@ export class anjunganComponent implements OnInit {
               "Gagal Login",
               {
                 timeOut: 2000,
-              }
+              },
             );
           } else {
             this.toastr.success("Berhasil Login", "Sukses", {
@@ -221,7 +221,7 @@ export class anjunganComponent implements OnInit {
 
             localStorage.setItem(
               "userDatacl",
-              JSON.stringify(this.resposeData)
+              JSON.stringify(this.resposeData),
             );
           }
         } else {
@@ -231,7 +231,7 @@ export class anjunganComponent implements OnInit {
       (err) => {
         //Connection failed message
         this.toastr.error("Username atau Password Salah", "Error");
-      }
+      },
     );
   }
 
@@ -281,7 +281,7 @@ export class anjunganComponent implements OnInit {
   kliniks: string = "";
 
   tmppuser() {
-    this.authService.poli(this.kdcabang).subscribe(
+    this.authService.poliByStatussakit(this.kdcabang).subscribe(
       (data) => {
         this.tklinik = data;
 
@@ -291,7 +291,7 @@ export class anjunganComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
@@ -311,7 +311,7 @@ export class anjunganComponent implements OnInit {
           },
           (Error) => {
             console.log(Error);
-          }
+          },
         );
       }
     });
@@ -390,7 +390,7 @@ export class anjunganComponent implements OnInit {
             this.showloading = false;
             if (data.response.kdProviderPst.kdProvider != this.kdprov) {
               this.toastr.error(
-                "No Kartu tidak sesuai faskes jika ingin daftar silahkan menggunakan menu daftar rawat jalan"
+                "No Kartu tidak sesuai faskes jika ingin daftar silahkan menggunakan menu daftar rawat jalan",
               );
               return;
             }
@@ -469,7 +469,7 @@ export class anjunganComponent implements OnInit {
                                   "2",
                                   this.notransaksi,
                                   "",
-                                  ""
+                                  "",
                                 )
                                 .subscribe(
                                   (data) => {
@@ -491,7 +491,7 @@ export class anjunganComponent implements OnInit {
                                           tanggalperiksa:
                                             this.tantrian[0].tglpriksa,
                                           kodedokter: parseInt(
-                                            this.tantrian[0].kddokterbpjs
+                                            this.tantrian[0].kddokterbpjs,
                                           ),
                                           namadokter:
                                             this.tantrian[0].namdokter,
@@ -501,7 +501,7 @@ export class anjunganComponent implements OnInit {
                                             "-" +
                                             this.tantrian[0].noantrian,
                                           angkaantrean: parseInt(
-                                            this.tantrian[0].noantrian
+                                            this.tantrian[0].noantrian,
                                           ),
                                           keterangan: "daftar",
                                         };
@@ -510,7 +510,7 @@ export class anjunganComponent implements OnInit {
                                         this.authService
                                           .addBpjsAntrian(
                                             bodyAddFktp,
-                                            this.slug
+                                            this.slug,
                                           )
                                           .subscribe((Response) => {
                                             if (Response) {
@@ -520,11 +520,10 @@ export class anjunganComponent implements OnInit {
                                                   "Sukses",
                                                   {
                                                     timeOut: 2000,
-                                                  }
+                                                  },
                                                 );
 
-                                                this.showtombolkirimpcare =
-                                                  true;
+                                                this.showtombolkirimpcare = true;
 
                                                 // setTimeout(() => {
 
@@ -583,7 +582,7 @@ export class anjunganComponent implements OnInit {
                                               } else {
                                                 this.toastr.error(
                                                   Response.data.message,
-                                                  "Error"
+                                                  "Error",
                                                 );
                                               }
                                             }
@@ -595,7 +594,7 @@ export class anjunganComponent implements OnInit {
                                   },
                                   (Error) => {
                                     console.log(Error);
-                                  }
+                                  },
                                 );
 
                               this.toastr.success(
@@ -603,7 +602,7 @@ export class anjunganComponent implements OnInit {
                                 "Sukses",
                                 {
                                   timeOut: 2000,
-                                }
+                                },
                               );
                             }
                           } else {
@@ -676,7 +675,7 @@ export class anjunganComponent implements OnInit {
                                   if (response.kode === 201) {
                                     this.toastr.error(
                                       response.keterangan,
-                                      "Eror"
+                                      "Eror",
                                     );
                                   } else {
                                     this.showantrian = true;
@@ -689,7 +688,7 @@ export class anjunganComponent implements OnInit {
                                         "2",
                                         this.notransaksi,
                                         "",
-                                        ""
+                                        "",
                                       )
                                       .subscribe(
                                         (data) => {
@@ -712,7 +711,7 @@ export class anjunganComponent implements OnInit {
                                               tanggalperiksa:
                                                 this.tantrian[0].tglpriksa,
                                               kodedokter: parseInt(
-                                                this.tantrian[0].kddokterbpjs
+                                                this.tantrian[0].kddokterbpjs,
                                               ),
                                               namadokter:
                                                 this.tantrian[0].namdokter,
@@ -722,7 +721,7 @@ export class anjunganComponent implements OnInit {
                                                 "-" +
                                                 this.tantrian[0].noantrian,
                                               angkaantrean: parseInt(
-                                                this.tantrian[0].noantrian
+                                                this.tantrian[0].noantrian,
                                               ),
                                               keterangan: "daftar",
                                             };
@@ -731,7 +730,7 @@ export class anjunganComponent implements OnInit {
                                             this.authService
                                               .addBpjsAntrian(
                                                 bodyAddFktp,
-                                                this.slug
+                                                this.slug,
                                               )
                                               .subscribe((Response) => {
                                                 if (Response) {
@@ -743,7 +742,7 @@ export class anjunganComponent implements OnInit {
                                                       "Sukses",
                                                       {
                                                         timeOut: 2000,
-                                                      }
+                                                      },
                                                     );
 
                                                     this.toastr.success(
@@ -751,7 +750,7 @@ export class anjunganComponent implements OnInit {
                                                       "Sukses",
                                                       {
                                                         timeOut: 2000,
-                                                      }
+                                                      },
                                                     );
 
                                                     let body = {
@@ -797,37 +796,37 @@ export class anjunganComponent implements OnInit {
                                                             this.authService
                                                               .updatepcare(body)
                                                               .subscribe(
-                                                                (response) => {}
+                                                                (
+                                                                  response,
+                                                                ) => {},
                                                               );
 
                                                             this.nomorasuransi =
                                                               "";
 
-                                                            this.showloading =
-                                                              false;
+                                                            this.showloading = false;
                                                           } else if (
                                                             response.metaData
                                                               .code == 412
                                                           ) {
                                                             this.toastr.error(
                                                               "Gagal terkirim kode provider tidak ada",
-                                                              "Eror"
+                                                              "Eror",
                                                             );
 
-                                                            this.showloading =
-                                                              false;
+                                                            this.showloading = false;
                                                           }
                                                         } else {
                                                           this.toastr.error(
                                                             "Simpan  Gagal",
-                                                            "Eror"
+                                                            "Eror",
                                                           );
                                                         }
                                                       });
                                                   } else {
                                                     this.toastr.error(
                                                       Response.data.message,
-                                                      "Error"
+                                                      "Error",
                                                     );
                                                   }
                                                 }
@@ -838,7 +837,7 @@ export class anjunganComponent implements OnInit {
                                         },
                                         (Error) => {
                                           console.log(Error);
-                                        }
+                                        },
                                       );
 
                                     this.toastr.success(
@@ -846,7 +845,7 @@ export class anjunganComponent implements OnInit {
                                       "Sukses",
                                       {
                                         timeOut: 2000,
-                                      }
+                                      },
                                     );
                                   }
                                 } else {
@@ -861,7 +860,7 @@ export class anjunganComponent implements OnInit {
                   },
                   (Error) => {
                     console.log(Error);
-                  }
+                  },
                 );
             } else {
               this.showaktif = true;
@@ -876,14 +875,14 @@ export class anjunganComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
   kbpjsn() {
     this.toastr.error(
       "SEDANG PENGEMBANGAN SILAHKAN DAFTAR DI BAGIAN PENDAFTARAAN",
-      "Eror"
+      "Eror",
     );
   }
 
@@ -903,7 +902,7 @@ export class anjunganComponent implements OnInit {
         },
         (Error) => {
           console.log(Error);
-        }
+        },
       );
   }
 
@@ -917,7 +916,7 @@ export class anjunganComponent implements OnInit {
         "&notransaksi=" +
         notransaksi,
       "_blank",
-      "location=no,toolbar=no,height=570,width=500,scrollbars=yes,status=yes"
+      "location=no,toolbar=no,height=570,width=500,scrollbars=yes,status=yes",
     );
     redirectWindow.location;
     this.home();
@@ -990,7 +989,7 @@ export class anjunganComponent implements OnInit {
                   this.jadwaltidak = "0";
                   this.showloading = false;
                   this.toastr.error(
-                    "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz"
+                    "Jadwal Di Hafiz tidak ada silahkan ganti dokter yang hari ini praktek sesuai hafiz",
                   );
                   this.tjadwal = [];
                 }
@@ -1002,7 +1001,7 @@ export class anjunganComponent implements OnInit {
       },
       (Error) => {
         console.log(Error);
-      }
+      },
     );
   }
 
