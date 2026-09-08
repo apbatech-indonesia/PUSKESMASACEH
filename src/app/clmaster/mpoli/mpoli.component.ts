@@ -109,10 +109,10 @@ export class MpoliComponent implements OnInit {
   polisakit = "";
 
   onPoliChange(kdPoli: string) {
-    console.log(this.polisakit);
     const poli = this.tpolibpjs.find((x) => x.kdPoli == kdPoli);
 
-    this.polisakit = poli?.statussakit === "true" ? "1" : "2";
+    this.polisakit = poli?.poliSakit === true ? "1" : "2";
+    console.log(this.polisakit);
   }
 
   klinik() {
@@ -209,6 +209,7 @@ export class MpoliComponent implements OnInit {
     this.nampoli = b;
     this.hakakses = c;
     this.polibpjs = d;
+    this.onPoliChange(d);
     this.showedit = true;
   }
   batal() {
