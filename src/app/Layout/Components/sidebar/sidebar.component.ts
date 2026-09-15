@@ -27,6 +27,8 @@ export class SidebarComponent implements OnInit {
   slugCity: any;
   isDinkes: any;
   vidioid: string | null = null;
+  public lokasi = localStorage.getItem("lokasi") || "utama";
+
   constructor(
     public globals: ThemeOptions,
     private activatedRoute: ActivatedRoute,

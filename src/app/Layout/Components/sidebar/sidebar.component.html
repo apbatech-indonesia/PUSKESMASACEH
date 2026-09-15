@@ -1,4 +1,6 @@
+<!-- SIDEBAR PKM UTAMA -->
 <div
+  *ngIf="lokasi == 'utama'"
   [class]="'app-sidebar sidebar-shadow ' + (config$ | async).sidebarTheme"
   (mouseover)="sidebarHoverMouseIn()"
   (mouseout)="sidebarHoverMouseOut()"
@@ -12,7 +14,6 @@
       "
     ></div>
 
-    <!-- <div style="font-size: large;font-weight: bold;">SIM KLINIK</div> -->
     <div class="header__pane ms-auto">
       <button
         type="button"
@@ -63,7 +64,7 @@
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-rocket"></i>
-                    <span class="vsm-title">Dashboards - test</span>
+                    <span class="vsm-title">Dashboard</span>
                     <i class="vsm-arrow"></i>
                   </button>
                 </ng-template>
@@ -327,17 +328,6 @@
                           <span class="vsm-title">MCU</span>
                         </a>
                       </div>
-
-                      <!-- <div class="vsm-item"  *ngIf="akses === 'Kasir RJ' || akses === 'Manajemen' || akses === 'Kasir Koordinator' || akses === 'Admisi' ">
-                        <a routerLink="/master/bobat" routerLinkActive="active-item" class="vsm-link">
-                          <span class="vsm-title">Obat</span> 
-                        </a>
-                      </div> -->
-                      <!-- <div class="vsm-item"  *ngIf="akses === 'Kasir RJ' || akses === 'Manajemen' || akses === 'Kasir Koordinator' || akses === 'Admisi' ">
-                        <a routerLink="/master/bobat" routerLinkActive="active-item" class="vsm-link">
-                          <span class="vsm-title">Tindakan</span> 
-                        </a>
-                      </div> -->
                     </div>
                   </div>
                 </ng-template>
@@ -680,11 +670,6 @@
                         akses === 'Kasir RJ'
                       "
                     >
-                      <!-- <div class="vsm-item">
-                        <a routerLinkActive="active-item" routerLink="/dashboards/managementlab" class="vsm-link">
-                          <span class="vsm-title">Dashboard  Laboratorium</span>
-                        </a>
-                      </div> -->
                       <div class="vsm-item">
                         <a
                           routerLinkActive="active-item"
@@ -862,21 +847,8 @@
                   >
                     <i class="vsm-icon pe-7s-ribbon"></i>
                     <span class="vsm-title">Mini General Ledger</span>
-                    <!-- <i class="vsm-arrow"></i> -->
                   </button>
                 </ng-template>
-                <!-- <ng-template ngbPanelContent>
-                  <div class="vsm-dropdown" >
-                    <div class="vsm-list">
-                      <div class="vsm-item" *ngIf="akses === 'Kasir' || akses === 'Manajemen'  ">
-                        <a routerLinkActive="active-item"  routerLink="/master/bayarpiutangrj" class="vsm-link" >
-                          <span class="vsm-title">Mini General Ladger</span>
-                        </a>
-                      </div>
-                  
-                    </div>
-                  </div>
-                </ng-template> -->
               </ngb-panel>
 
               <ngb-panel
@@ -1289,10 +1261,6 @@
                           <span class="vsm-title">Jadwal Dokter</span></a
                         >
                       </div>
-                      <!-- <div class="vsm-item">
-                        <a routerLinkActive="active-item" class="vsm-link">
-                          <span class="vsm-title">Login</span></a>
-                      </div> -->
 
                       <div
                         class="vsm-item"
@@ -1399,15 +1367,6 @@
                           <span class="vsm-title">Ass Perawat</span></a
                         >
                       </div>
-                      <!-- <div class="vsm-item">
-                        <a
-                          routerLinkActive="active-item"
-                          (click)="displayc()"
-                          class="vsm-link"
-                        >
-                          <span class="vsm-title">Display Antrian</span></a
-                        >
-                      </div> -->
                       <div class="vsm-item">
                         <a
                           class="vsm-link"
@@ -1446,21 +1405,6 @@
                           <span class="vsm-title">Anjungan SEHAT</span></a
                         >
                       </div>
-
-                      <!-- <div class="vsm-item" *ngIf="akses === 'Manajemen' || akses === 'administrator'  ">
-                        <a routerLinkActive="active-item" routerLink="/master/promo" class="vsm-link">
-                          <span class="vsm-title">Promo</span></a>
-                      </div>
-                   
-                      <div class="vsm-item" *ngIf="akses === 'Manajemen'  || akses === 'administrator' ">
-                        <a routerLinkActive="active-item" routerLink="/master/berita" class="vsm-link">
-                          <span class="vsm-title">Berita</span></a>
-                      </div> -->
-
-                      <!-- <div class="vsm-item" >
-                        <a routerLinkActive="active-item" routerLink="/master/tree" class="vsm-link">
-                          <span class="vsm-title">tree</span></a>
-                      </div> -->
                     </div>
                   </div>
                 </ng-template>
@@ -1472,3 +1416,177 @@
     </div>
   </div>
 </div>
+<!-- SIDEBAR PKM UTAMA -->
+
+<!-- SIDEBAR PKM PUSTU -->
+<div
+  *ngIf="lokasi == 'pustu'"
+  [class]="'app-sidebar sidebar-shadow ' + (config$ | async).sidebarTheme"
+  (mouseover)="sidebarHoverMouseIn()"
+  (mouseout)="sidebarHoverMouseOut()"
+>
+  <div class="app-header__logo">
+    <div
+      style="
+        height: 30px;
+        width: 135px;
+        background: url(./assets/images/logo-inverse.svg);
+      "
+    ></div>
+
+    <div class="header__pane ms-auto">
+      <button
+        type="button"
+        class="hamburger close-sidebar-btn hamburger--elastic"
+        [ngClass]="{ 'is-active': globals.toggleSidebar }"
+        (click)="toggleSidebar()"
+      >
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div class="app-sidebar-content">
+    <div class="app-sidebar-scroll">
+      <div style="max-height: 650px; overflow-y: auto">
+        <div class="v-sidebar-menu vsm-default">
+          <div class="vsm-list">
+            <ngb-accordion
+              [destroyOnHide]="false"
+              [closeOthers]="true"
+              #acc="ngbAccordion"
+              activeIds="{{ extraParameter }}"
+            >
+              <ngb-panel>
+                <ng-template ngbPanelHeader>
+                  <div class="vsm-header">Dashboard - Pustu</div>
+                </ng-template>
+              </ngb-panel>
+              <ngb-panel id="dashboards">
+                <ng-template ngbPanelHeader>
+                  <button ngbPanelToggle class="vsm-link">
+                    <i class="vsm-icon pe-7s-rocket"></i>
+                    <span class="vsm-title">Dashboard</span>
+                    <i class="vsm-arrow"></i>
+                  </button>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="vsm-dropdown">
+                    <div class="vsm-list">
+                      <div class="vsm-item">
+                        <a
+                          routerLink="/dashboards/management"
+                          routerLinkActive="active-item"
+                          class="vsm-link"
+                        >
+                          <span class="vsm-title">Dashboard Management</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+
+              <ngb-panel>
+                <ng-template ngbPanelHeader>
+                  <div class="vsm-header">Transaksi</div>
+                </ng-template>
+              </ngb-panel>
+              <ngb-panel id="elements">
+                <ng-template ngbPanelHeader>
+                  <button ngbPanelToggle class="vsm-link">
+                    <i class="vsm-icon pe-7s-diamond"></i>
+                    <span class="vsm-title">Transaksi</span>
+                    <i class="vsm-arrow"></i>
+                  </button>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="vsm-dropdown">
+                    <div class="vsm-list">
+                      <div class="vsm-item">
+                        <a
+                          routerLinkActive="active-item"
+                          routerLink="/master/mpasien"
+                          class="vsm-link"
+                        >
+                          <span class="vsm-title">Pasien Baru</span>
+                        </a>
+                      </div>
+
+                      <div class="vsm-item">
+                        <a
+                          routerLinkActive="active-item"
+                          routerLink="/master/mpdaftarpasien"
+                          class="vsm-link"
+                        >
+                          <span class="vsm-title">Daftar RJ</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+
+              <ngb-panel id="components">
+                <ng-template ngbPanelHeader>
+                  <button ngbPanelToggle class="vsm-link">
+                    <i class="vsm-icon pe-7s-car"></i>
+                    <span class="vsm-title">Farmasi</span>
+                    <i class="vsm-arrow"></i>
+                  </button>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="vsm-dropdown">
+                    <div class="vsm-list">
+                      <div class="vsm-item">
+                        <a
+                          routerLinkActive="active-item"
+                          routerLink="/master/kasirfarmasijual"
+                          class="vsm-link"
+                        >
+                          <span class="vsm-title">Pelayanan Resep</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+
+              <ngb-panel>
+                <ng-template ngbPanelHeader>
+                  <div class="vsm-header">E-Medical Record</div>
+                </ng-template>
+              </ngb-panel>
+              <ngb-panel id="form-controls">
+                <ng-template ngbPanelHeader>
+                  <button ngbPanelToggle class="vsm-link">
+                    <i class="vsm-icon pe-7s-ribbon"></i>
+                    <span class="vsm-title">Pasien Klinik</span>
+                    <i class="vsm-arrow"></i>
+                  </button>
+                </ng-template>
+                <ng-template ngbPanelContent>
+                  <div class="vsm-dropdown">
+                    <div class="vsm-list">
+                      <div class="vsm-item">
+                        <a
+                          routerLinkActive="active-item"
+                          routerLink="/master/ermdokterrm"
+                          class="vsm-link"
+                        >
+                          <span class="vsm-title">Pasien Semua RJ</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- SIDEBAR PKM PUSTU -->

@@ -3243,7 +3243,6 @@ export class MpdaftarpasienComponent implements OnInit {
                 //             data.response.kdProviderPst.kdProvider;
                 //           this.namaprovider =
                 //             data.response.kdProviderPst.nmProvider;
-
                 //           if (this.aktif == true) {
                 //           } else {
                 //             this.toastr.error(
@@ -3253,7 +3252,6 @@ export class MpdaftarpasienComponent implements OnInit {
                 //           }
                 //         } else if (data.metaData.code == 204) {
                 //           this.toastr.error("Kartu Tidak di temukan", "Eror");
-
                 //           this.namabpjs = "";
                 //           this.tglakhirberlaku = "";
                 //           this.jeniskelas = "";
@@ -3262,7 +3260,6 @@ export class MpdaftarpasienComponent implements OnInit {
                 //           this.ketaktif = "";
                 //           this.kdprovider = "";
                 //           this.namaprovider = "";
-
                 //           this.showloading = false;
                 //         } else {
                 //           this.toastr.error(data.response.message, "Eror");

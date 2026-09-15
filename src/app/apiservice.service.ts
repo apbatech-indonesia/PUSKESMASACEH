@@ -21,6 +21,8 @@ let satusehat = "https://besatusehat.clenicapp.com/api/";
   providedIn: "root",
 })
 export class ApiserviceService {
+  lokasi = localStorage.getItem("lokasi") || "utama";
+
   constructor(public http: HttpClient) {
     if (environment.baseUrl === null) environment.baseUrl = apiurl;
     environment.rawatJalanUrl = localStorage.getItem("urlRawatJalan");
@@ -490,7 +492,9 @@ export class ApiserviceService {
         "master/polibystatussakit.php?kdcabang=" +
         a +
         "&statussakit=" +
-        statussakit,
+        statussakit +
+        "&statuspustu=" +
+        this.lokasi,
     );
   }
 
@@ -1489,7 +1493,9 @@ export class ApiserviceService {
         "&nama=" +
         nama +
         "&tgl=" +
-        tgl,
+        tgl +
+        "&statuspustu=" +
+        this.lokasi,
     );
   }
   pasienantrianppoli(kdcabang, sts, nama, tgl, statuscari): Observable<any> {
@@ -2207,7 +2213,9 @@ export class ApiserviceService {
         "&nama=" +
         d +
         "&tgl=" +
-        e,
+        e +
+        "&statuspustu=" +
+        this.lokasi,
     );
   }
 
@@ -2294,7 +2302,9 @@ export class ApiserviceService {
       "&tgl=" +
       e +
       "&tgls=" +
-      tgls;
+      tgls +
+      "&statuspustu=" +
+      this.lokasi;
 
     if (orderby) {
       url += "&orderby=" + encodeURIComponent(orderby);
@@ -2886,7 +2896,9 @@ export class ApiserviceService {
         "&nama=" +
         b +
         "&kdpoli=" +
-        c,
+        c +
+        "&statuspustu=" +
+        this.lokasi,
     );
   }
   listpolidaf(a): Observable<any> {
