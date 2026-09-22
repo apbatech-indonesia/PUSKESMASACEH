@@ -57,6 +57,7 @@ export class MdokterComponent implements OnInit {
   namadokter = "";
   online: string = "";
   kddokter = "";
+  statuspustu = "utama";
   public usericare: any;
   public passicare: any;
   signature: any;
@@ -145,6 +146,7 @@ export class MdokterComponent implements OnInit {
         this.usericare,
         this.passicare,
         this.signature,
+        this.statuspustu,
       )
       .then((data) => {
         this.dafatrdokter();
@@ -199,6 +201,7 @@ export class MdokterComponent implements OnInit {
     this.nip = data.nip;
     this.kddokterbpjs = data.kddokterbpjs;
     this.sn = data.status;
+    this.statuspustu = data.statuspustu;
     this.usericare = data.usericare;
     this.passicare = data.passicare;
     this.signature = data.signature;
@@ -216,6 +219,7 @@ export class MdokterComponent implements OnInit {
     this.nip = "";
     this.kddokterbpjs = "";
     this.sn = "";
+    this.statuspustu = "";
     this.usericare = "";
     this.passicare = "";
     this.signature = "";
@@ -240,6 +244,7 @@ export class MdokterComponent implements OnInit {
         this.usericare,
         this.passicare,
         this.signature,
+        this.statuspustu,
       )
       .then((data) => {
         this.dafatrdokter();
@@ -393,6 +398,7 @@ export class MdokterComponent implements OnInit {
         this.usericare,
         this.passicare,
         this.signature,
+        this.statuspustu,
       )
       .then((data) => {
         this.dafatrdokter();

@@ -92,6 +92,19 @@
             </option>
           </select>
         </div>
+
+        <div class="position-relative mb-3">
+          <label for="statuspustu" class="form-label">Status Pustu</label>
+          <select
+            [(ngModel)]="statuspustu"
+            id="statuspustu"
+            class="form-select"
+          >
+            <option value="">-- PILIH PUSTU --</option>
+            <option value="utama">UTAMA</option>
+            <option value="pustu">PUSTU</option>
+          </select>
+        </div>
         <div class="position-relative mb-3">
           <label for="userIcare" class="form-label">User I-Care</label>
           <input

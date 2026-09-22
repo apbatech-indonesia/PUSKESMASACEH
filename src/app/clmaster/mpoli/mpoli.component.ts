@@ -80,6 +80,7 @@ export class MpoliComponent implements OnInit {
   poliform = this.fb.group({
     nampoli: ["", Validators.required],
     hakakses: ["", Validators.required],
+    statuspustu: ["", Validators.required],
   });
 
   tpolibpjs: any;
@@ -106,6 +107,7 @@ export class MpoliComponent implements OnInit {
   kodepos: any = "";
   longtitude: number;
   latitude: number;
+  statuspustu: string = "utama";
   polisakit = "";
 
   onPoliChange(kdPoli: string) {
@@ -165,6 +167,7 @@ export class MpoliComponent implements OnInit {
         this.hakakses,
         this.polibpjs,
         this.polisakit,
+        this.statuspustu,
       )
       .then((data) => {
         if (data) {
@@ -204,12 +207,13 @@ export class MpoliComponent implements OnInit {
       });
   }
   showedit: boolean;
-  edit(a, b, c, d) {
+  edit(a, b, c, d, e) {
     this.kdpoli = a;
     this.nampoli = b;
     this.hakakses = c;
     this.polibpjs = d;
     this.onPoliChange(d);
+    this.statuspustu = e;
     this.showedit = true;
   }
   batal() {
@@ -217,6 +221,7 @@ export class MpoliComponent implements OnInit {
     this.nampoli = "";
     this.polibpjs = "";
     this.polisakit = "";
+    this.statuspustu = "utama";
     this.showedit = false;
   }
   edituser() {
@@ -230,6 +235,7 @@ export class MpoliComponent implements OnInit {
         this.hakakses,
         this.polibpjs,
         this.polisakit,
+        this.statuspustu,
       )
       .then((data) => {
         if (data) {
@@ -279,6 +285,7 @@ export class MpoliComponent implements OnInit {
               this.hakakses,
               this.polibpjs,
               this.polisakit,
+              this.statuspustu,
             )
             .then((data) => {
               if (data === 200) {

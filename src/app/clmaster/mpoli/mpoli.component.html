@@ -30,6 +30,20 @@
               <option value="igd">IGD</option>
             </select>
           </div>
+
+          <div class="position-relative mb-3">
+            <label for="exampleSelect" class="form-label">Status Pustu</label>
+            <select
+              formControlName="statuspustu"
+              [(ngModel)]="statuspustu"
+              placeholder="Pilih Status Pustu"
+              class="form-select"
+            >
+              <option value="">-- PILIH PUSTU --</option>
+              <option value="utama">UTAMA</option>
+              <option value="pustu">PUSTU</option>
+            </select>
+          </div>
         </form>
 
         <div class="position-relative mb-3">
@@ -140,7 +154,15 @@
                     <td class="text-center">
                       <button
                         class="mb-2 me-2 btn-pill btn btn-outline-primary"
-                        (click)="edit(a.kdpoli, a.nampoli, a.sts, a.kdpolibpjs)"
+                        (click)="
+                          edit(
+                            a.kdpoli,
+                            a.nampoli,
+                            a.sts,
+                            a.kdpolibpjs,
+                            a.statuspustu
+                          )
+                        "
                       >
                         Edit
                       </button>

@@ -631,6 +631,7 @@ export class ApiserviceService {
     kdklinik,
     stssimpan,
     kduser,
+    statuspustu,
   ) {
     let url = apiurx + "master/simpanuser.php";
     let param = {
@@ -642,6 +643,7 @@ export class ApiserviceService {
       kdklinik: kdklinik,
       stssimpan: stssimpan,
       kduserlogin: kduser,
+      statuspustu: statuspustu,
     };
     let request = this.http.post(url, param);
     return request.toPromise();
@@ -681,7 +683,15 @@ export class ApiserviceService {
     return request.toPromise();
   }
 
-  simpangudang(kdgudang, gudang, kdklinik, kdcabang, sts, hakakses) {
+  simpangudang(
+    kdgudang,
+    gudang,
+    kdklinik,
+    kdcabang,
+    sts,
+    hakakses,
+    statuspustu,
+  ) {
     let url = apiurx + "master/simpangudang.php";
     let param = {
       kdgudang: kdgudang,
@@ -690,6 +700,7 @@ export class ApiserviceService {
       kdcabang: kdcabang,
       stssimpan: sts,
       hakakses: hakakses,
+      statuspustu: statuspustu,
     };
     let request = this.http.post(url, param);
     return request.toPromise();
@@ -704,6 +715,7 @@ export class ApiserviceService {
     hakakses,
     polibpjs,
     polisakit,
+    statuspustu,
   ) {
     let url = apiurx + "master/simpanpoli.php";
     let param = {
@@ -715,6 +727,7 @@ export class ApiserviceService {
       hakakses: hakakses,
       polibpjs: polibpjs,
       polisakit: polisakit,
+      statuspustu: statuspustu,
     };
     let request = this.http.post(url, param);
     return request.toPromise();
@@ -791,6 +804,7 @@ export class ApiserviceService {
     usericare,
     passicare,
     signature,
+    statuspustu = "utama",
   ) {
     let url = apiurx + "master/simpandokter.php";
     let param = {
@@ -808,6 +822,7 @@ export class ApiserviceService {
       nik: nik,
       nip: nip,
       signature: signature,
+      statuspustu: statuspustu,
     };
     let request = this.http.post(url, param);
     return request.toPromise();
