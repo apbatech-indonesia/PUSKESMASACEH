@@ -1528,7 +1528,10 @@
                 </ng-template>
               </ngb-panel>
 
-              <ngb-panel id="components">
+              <ngb-panel
+                id="components"
+                *ngIf="web_settings.farmasi_pustu == true"
+              >
                 <ng-template ngbPanelHeader>
                   <button ngbPanelToggle class="vsm-link">
                     <i class="vsm-icon pe-7s-car"></i>

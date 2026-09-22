@@ -16,12 +16,12 @@ export class UserBoxComponent implements OnInit {
   }
 
   public userDetails: any;
+  lokasi: string = "utama";
   nama: any;
   akses: any;
-  lokasi: string = "utama";
-
   kdcabang: any;
   username: any;
+  statuspustu: any;
 
   constructor(
     public globals: ThemeOptions,
@@ -34,9 +34,11 @@ export class UserBoxComponent implements OnInit {
     this.akses = this.userDetails.hakakses;
     this.kdcabang = this.userDetails.kdcabang;
     this.username = this.userDetails.username;
+    this.statuspustu = this.userDetails.statuspustu;
   }
 
   ngOnInit(): void {
+    console.log(this.userDetails);
     this.lokasi = localStorage.getItem("lokasi") || "utama";
   }
 

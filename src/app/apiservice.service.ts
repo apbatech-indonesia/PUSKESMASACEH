@@ -48,9 +48,12 @@ export class ApiserviceService {
   getGudangList(kdklinik: string): Observable<any> {
     // const baseUrl =
     //   localStorage.getItem("baseUrx") || "https://tabaro.clenicapp.com/clenic/";
-    return this.http.get(apiurx + "master/gudang.php", {
-      params: { kdklinik },
-    });
+    return this.http.get(
+      apiurx + "master/gudang.php?statuspustu=" + this.lokasi,
+      {
+        params: { kdklinik },
+      },
+    );
   }
 
   setBaseUrlConfig(subDomain) {
@@ -417,7 +420,13 @@ export class ApiserviceService {
   }
 
   gudang(a): Observable<any> {
-    return this.http.get(apiurx + "master/gudang.php?kdklinik=" + a);
+    return this.http.get(
+      apiurx +
+        "master/gudang.php?kdklinik=" +
+        a +
+        "&statuspustu=" +
+        this.lokasi,
+    );
   }
   gudangcab(a, b): Observable<any> {
     return this.http.get(
@@ -537,7 +546,13 @@ export class ApiserviceService {
     );
   }
   dokter(a): Observable<any> {
-    return this.http.get(apiurx + "master/dokter.php?kdcabang=" + a);
+    return this.http.get(
+      apiurx +
+        "master/dokter.php?kdcabang=" +
+        a +
+        "&statuspustu=" +
+        this.lokasi,
+    );
   }
   perawat(a): Observable<any> {
     return this.http.get(apiurx + "master/perawat.php?kdcabang=" + a);
@@ -578,7 +593,9 @@ export class ApiserviceService {
         "&kdpoli=" +
         kdpoli +
         "&tgl=" +
-        tgl,
+        tgl +
+        "&statuspustu=" +
+        this.lokasi,
     );
   }
 
@@ -590,7 +607,13 @@ export class ApiserviceService {
 
   dokterbyid(a, b): Observable<any> {
     return this.http.get(
-      apiurx + "master/dokterbyid.php?kdcabang=" + a + "&dokter=" + b,
+      apiurx +
+        "master/dokterbyid.php?kdcabang=" +
+        a +
+        "&dokter=" +
+        b +
+        "&statuspustu=" +
+        this.lokasi,
     );
   }
   carirekening(a, b): Observable<any> {
@@ -1066,7 +1089,15 @@ export class ApiserviceService {
 
   obat(a, b, c): Observable<any> {
     return this.http.get(
-      apiurx + "master/obat.php?kdcabang=" + a + "&sts=" + b + "&nama=" + c,
+      apiurx +
+        "master/obat.php?kdcabang=" +
+        a +
+        "&sts=" +
+        b +
+        "&nama=" +
+        c +
+        "&statuspustu=" +
+        this.lokasi,
     );
   }
   obatmaster(a, b, c, d): Observable<any> {
@@ -1079,7 +1110,9 @@ export class ApiserviceService {
         "&nama=" +
         c +
         "&type=" +
-        d,
+        d +
+        "&statuspustu=" +
+        this.lokasi,
     );
   }
 

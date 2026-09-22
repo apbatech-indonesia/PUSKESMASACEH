@@ -70,12 +70,13 @@
                     </button>
 
                     <button
+                      *ngIf="statuspustu == 'pustu'"
                       type="button"
                       class="dropdown-item"
                       (click)="pilihLokasi('pustu')"
                     >
                       <i class="pe-7s-map-marker me-2"></i>
-                      PUSTU
+                      PUSTU {{ statuspustu }}
 
                       <span *ngIf="lokasi === 'pustu'" class="float-end ms-2">
                         ✓

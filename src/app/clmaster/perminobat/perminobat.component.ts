@@ -72,6 +72,7 @@ export class perminobatComponent implements OnInit {
   tgldari: string;
   tglsampai: string;
   myDate = new Date();
+  lokasi = localStorage.getItem("lokasi") || "utama";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -181,6 +182,7 @@ export class perminobatComponent implements OnInit {
         params: {
           kdcabang: this.kdcabang || "076",
           kdgudang: kdgudang,
+          statuspustu: this.lokasi,
         },
       })
       .subscribe({
@@ -529,7 +531,8 @@ export class perminobatComponent implements OnInit {
         params: {
           kdcabang: this.kdcabang || "076",
           kdgudang: this.gudang || "", // Gunakan gudang yang dipilih
-          search: a.target.value, // Parameter pencarian
+          statuspustu: this.lokasi,
+          search: a.target.value, // Parameter pencarian,
         },
       })
       .subscribe({
@@ -557,6 +560,7 @@ export class perminobatComponent implements OnInit {
         params: {
           kdcabang: this.kdcabang || "076",
           kdgudang: this.gudang || "", // Gunakan gudang yang dipilih
+          statuspustu: this.lokasi,
           search: a.target.value, // Parameter pencarian
         },
       })

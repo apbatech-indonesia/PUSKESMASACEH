@@ -87,6 +87,7 @@ export class SidebarComponent implements OnInit {
   rad: number;
   emr: number;
   ri: number;
+  web_settings: any;
 
   hak() {
     this.authService.hakakses(this.kdcabang).subscribe(
@@ -98,6 +99,7 @@ export class SidebarComponent implements OnInit {
           this.rad = x.rad;
           this.emr = x.emr;
           this.ri = x.ri;
+          this.web_settings = x.web_settings;
         }
       },
       (Error) => {
