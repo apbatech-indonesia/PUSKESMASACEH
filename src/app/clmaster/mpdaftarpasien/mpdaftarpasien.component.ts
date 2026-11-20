@@ -956,7 +956,7 @@ export class MpdaftarpasienComponent implements OnInit {
 
   showloadantrian: boolean = false;
 
-  simpan(content71) {
+  simpan(content71, content8?: any) {
     console.log(this.jadwal);
     if (this.dash === "BPJS") {
       // if (this.jadwal === "") {
@@ -1190,6 +1190,11 @@ export class MpdaftarpasienComponent implements OnInit {
                                                               x.noantrianbpjs;
                                                           }
                                                           this.tantrian = data;
+                                                          if (content8) {
+                                                            this.kdtkp = "10";
+                                                            this.jeniskun = this.statusdaftar === "1" ? "true" : "false";
+                                                            this.daftarbpjs(content8, this.tantrian[0]);
+                                                          }
                                                           const headers =
                                                             new HttpHeaders({
                                                               "kd-cabang":
@@ -1400,6 +1405,11 @@ export class MpdaftarpasienComponent implements OnInit {
                                                   x.noantrianbpjs;
                                               }
                                               this.tantrian = data;
+                                              if (content8) {
+                                                this.kdtkp = "10";
+                                                this.jeniskun = this.statusdaftar === "1" ? "true" : "false";
+                                                this.daftarbpjs(content8, this.tantrian[0]);
+                                              }
                                               const headers = new HttpHeaders({
                                                 "kd-cabang": this.kdcabang,
                                               });
@@ -1676,6 +1686,11 @@ export class MpdaftarpasienComponent implements OnInit {
                                                         x.noantrianbpjs;
                                                     }
                                                     this.tantrian = data;
+                                                    if (content8) {
+                                                      this.kdtkp = "10";
+                                                      this.jeniskun = this.statusdaftar === "1" ? "true" : "false";
+                                                      this.daftarbpjs(content8, this.tantrian[0]);
+                                                    }
                                                     const headers =
                                                       new HttpHeaders({
                                                         "kd-cabang":
@@ -1895,6 +1910,11 @@ export class MpdaftarpasienComponent implements OnInit {
                                                             }
                                                             this.tantrian =
                                                               data;
+                                                            if (content8) {
+                                                              this.kdtkp = "10";
+                                                              this.jeniskun = this.statusdaftar === "1" ? "true" : "false";
+                                                              this.daftarbpjs(content8, this.tantrian[0]);
+                                                            }
                                                             const headers =
                                                               new HttpHeaders({
                                                                 "kd-cabang":
@@ -2098,6 +2118,11 @@ export class MpdaftarpasienComponent implements OnInit {
                                           this.noantrianbpjs = x.noantrianbpjs;
                                         }
                                         this.tantrian = data;
+                                        if (content8) {
+                                          this.kdtkp = "10";
+                                          this.jeniskun = this.statusdaftar === "1" ? "true" : "false";
+                                          this.daftarbpjs(content8, this.tantrian[0]);
+                                        }
                                         const headers = new HttpHeaders({
                                           "kd-cabang": this.kdcabang,
                                         });
